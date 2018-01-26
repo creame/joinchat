@@ -7,7 +7,7 @@
  *
  * @wordpress-plugin
  * Plugin Name:       WhatsApp Me
- * Plugin URI:        https://crea.me
+ * Plugin URI:        https://github.com/creame/whatsappme
  * Description:       Add support to your visitors directly with WhatsApp.
  * Version:           1.0.0
  * Author:            Creame
