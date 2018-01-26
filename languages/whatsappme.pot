@@ -1,0 +1,89 @@
+# WordPress Blank Pot
+# Copyright (C) 2014 ...
+# This file is distributed under the GNU General Public License v2 or later.
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: WhatsApp Me\n"
+"POT-Creation-Date: 2018-01-18 20:37+0100\n"
+"PO-Revision-Date: \n"
+"Last-Translator: Your Name <you@example.com>\n"
+"Language-Team: Creame <hola@crea.me>\n"
+"Report-Msgid-Bugs-To: Translator Name "
+"<translations@example.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Textdomain-Support: yesX-Generator: Poedit 1.6.4\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;esc_html_e;esc_html_x:1,2c;"
+"esc_html__;esc_attr_e;esc_attr_x:1,2c;esc_attr__;_ex:1,2c;"
+"_nx:4c,1,2;_nx_noop:4c,1,2;_x:1,2c;_n:1,2;_n_noop:1,2;"
+"__ngettext:1,2;__ngettext_noop:1,2;_c,_nc:4c,1,2\n"
+"X-Poedit-Basepath: ..\n"
+"Language: en_US\n"
+"X-Generator: Poedit 1.8.7.1\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: admin/class-whatsappme-admin.php:106
+msgid "Telephone"
+msgstr ""
+
+#: admin/class-whatsappme-admin.php:107
+msgid "Only mobile"
+msgstr ""
+
+#: admin/class-whatsappme-admin.php:108
+msgid "Call to action"
+msgstr ""
+
+#: admin/class-whatsappme-admin.php:109
+msgid "Delay"
+msgstr ""
+
+#: admin/class-whatsappme-admin.php:126
+msgid "Settings saved"
+msgstr ""
+
+#: admin/class-whatsappme-admin.php:132
+msgid ""
+"From here you can configure the behavior of the WhatsApp "
+"button on your site."
+msgstr ""
+
+#: admin/class-whatsappme-admin.php:138
+msgid ""
+"Contact phone number. <strong>The button will not be "
+"shown if it's empty.</strong>"
+msgstr ""
+
+#: admin/class-whatsappme-admin.php:143
+msgid ""
+"Optional text to invite the user to use the contact via "
+"WhatsApp. <strong>Leave empty to disable.</strong>"
+msgstr ""
+
+#: admin/class-whatsappme-admin.php:147
+msgid "milliseconds"
+msgstr ""
+
+#: admin/class-whatsappme-admin.php:148
+msgid ""
+"The <strong>Call to action</strong> will only be "
+"displayed once when the user exceeds the estimated delay "
+"on a page. It will also be displayed when the user stops "
+"the cursor over the WhatsApp button."
+msgstr ""
+
+#: admin/class-whatsappme-admin.php:155
+msgid "Only display the button on mobile devices"
+msgstr ""
+
+#: admin/class-whatsappme-admin.php:180
+msgid "Settings"
+msgstr ""
+
+#. Description of the theme
+msgid "Add support to your visitors directly with WhatsApp."
+msgstr ""
