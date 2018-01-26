@@ -1,0 +1,19 @@
+{
+  "name": "creame/whatsappme",
+  "description": "Add support to your visitors directly with WhatsApp",
+  "keywords": ["wordpress", "plugin", "whatsapp", "creame"],
+  "homepage": "https://crea.me",
+  "license": "GPLv2 or later",
+  "authors": [
+    {
+      "name": "Pacotole",
+      "email": "pacotole@crea.me",
+      "homepage": "https://pacotole.com"
+    }
+  ],
+  "type": "wordpress-plugin",
+  "require": {
+    "php": ">=5.3.2",
+    "composer/installers": "v1.0.6"
+  }
+}
