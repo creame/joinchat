@@ -125,8 +125,10 @@ class WhatsAppMe {
 
 		$this->loader->add_action( 'admin_init', $plugin_admin, 'settings_init' );
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'add_menu' );
+		$this->loader->add_action( 'add_meta_boxes', $plugin_admin, 'add_meta_boxes' );
+		$this->loader->add_action( 'save_post', $plugin_admin, 'save_post' );
 
-		$this->loader->add_filter( "plugin_action_links_{$this->plugin_name}/{$this->plugin_name}.php", $plugin_admin, 'settings_link' );
+		$this->loader->add_filter( "plugin_action_links_creame-whatsapp-me/{$this->plugin_name}.php", $plugin_admin, 'settings_link' );
 
 	}
 
@@ -141,6 +143,7 @@ class WhatsAppMe {
 
 		$plugin_public = new WhatsAppMe_Public( $this->get_plugin_name(), $this->get_version() );
 
+		$this->loader->add_action( 'wp', $plugin_public, 'get_settings' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
 		$this->loader->add_action( 'wp_footer', $plugin_public, 'footer_html' );

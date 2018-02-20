@@ -94,10 +94,10 @@ class WhatsAppMe_Admin {
 		add_settings_section( 'whatsappme_section', null, array( $this, 'section_text' ), 'whatsappme' );
 
 		$field_names = 	array(
-			'telephone'      => __( 'Telephone', 'whatsappme' ),
-			'mobile_only'    => __( 'Only mobile', 'whatsappme' ),
-			'message_text'   => __( 'Call to action', 'whatsappme' ),
-			'message_delay'  => __( 'Delay', 'whatsappme' ),
+			'telephone'      => __( 'Telephone', 'creame-whatsapp-me' ),
+			'mobile_only'    => __( 'Mobile only', 'creame-whatsapp-me' ),
+			'message_text'   => __( 'Call to action', 'creame-whatsapp-me' ),
+			'message_delay'  => __( 'Delay', 'creame-whatsapp-me' ),
 		);
 
 		foreach ( $this->settings as $key => $value ) {
@@ -106,7 +106,7 @@ class WhatsAppMe_Admin {
 	}
 
 	/**
-	 * Validate settings, claen and set defaults before save
+	 * Validate settings, clean and set defaults before save
 	 *
 	 * @since    1.0.0
 	 * @return   array
@@ -120,7 +120,7 @@ class WhatsAppMe_Admin {
 		$input['message_text']  = trim($input['message_text']);
 		$input['message_delay'] = intval($input['message_delay']);
 
-		add_settings_error( 'whatsappme', 'settings_updated', __( 'Settings saved', 'whatsappme' ), 'updated' );
+		add_settings_error( 'whatsappme', 'settings_updated', __( 'Settings saved', 'creame-whatsapp-me' ), 'updated' );
 
 		return $input;
 	}
@@ -132,7 +132,7 @@ class WhatsAppMe_Admin {
 	 * @return   void
 	 */
 	public function section_text() {
-		echo '<p>' . __( 'From here you can configure the behavior of the WhatsApp button on your site.', 'whatsappme' ) . '</p>';
+		echo '<p>' . __( 'From here you can configure the behavior of the WhatsApp button on your site.', 'creame-whatsapp-me' ) . '</p>';
 	}
 
 	/**
@@ -143,7 +143,7 @@ class WhatsAppMe_Admin {
 	 */
 	public function field_telephone() {
 		echo '<input name="whatsappme[telephone]" value="' . $this->settings['telephone'] . '" class="regular-text" type="text">' .
-			'<p class="description">' . __( "Contact phone number. <strong>The button will not be shown if it's empty.</strong>", 'whatsappme' ) . '</p>';
+			'<p class="description">' . __( "Contact phone number. <strong>The button will not be shown if it's empty.</strong>", 'creame-whatsapp-me' ) . '</p>';
 	}
 
 	/**
@@ -154,7 +154,7 @@ class WhatsAppMe_Admin {
 	 */
 	public function field_message_text() {
 		echo '<textarea name="whatsappme[message_text]" rows="3" class="regular-text">' . $this->settings['message_text'] . '</textarea>' .
-			'<p class="description">' . __( 'Optional text to invite the user to use the contact via WhatsApp. <strong>Leave empty to disable.</strong>', 'whatsappme' ) . '</p>';
+			'<p class="description">' . __( 'Optional text to invite the user to use the contact via WhatsApp. <strong>Leave empty to disable.</strong>', 'creame-whatsapp-me' ) . '</p>';
 	}
 
 	/**
@@ -164,9 +164,8 @@ class WhatsAppMe_Admin {
 	 * @return   void
 	 */
 	public function field_message_delay() {
-		echo '<input name="whatsappme[message_delay]" value="' . $this->settings['message_delay'] . '" class="small-text" type="number" min="0"> ' . __( 'milliseconds', 'whatsappme' ) .
-			'<p class="description"> ' . __( 'The <strong>Call to action</strong> will only be displayed once when the user exceeds the estimated delay on a page. ' .
-			'It will also be displayed when the user stops the cursor over the WhatsApp button.', 'whatsappme' ) . '</p>';
+		echo '<input name="whatsappme[message_delay]" value="' . $this->settings['message_delay'] . '" class="small-text" type="number" min="0"> ' . __( 'milliseconds', 'creame-whatsapp-me' ) .
+			'<p class="description"> ' . __( 'The <strong>Call to action</strong> will only be displayed once when the user exceeds the estimated delay on a page. It will also be displayed when the user stops the cursor over the WhatsApp button.', 'creame-whatsapp-me' ) . '</p>';
 	}
 
 	/**
@@ -176,9 +175,9 @@ class WhatsAppMe_Admin {
 	 * @return   void
 	 */
 	public function field_mobile_only() {
-		echo '<fieldset><legend class="screen-reader-text"><span>Solo móvil</span></legend>' .
+		echo '<fieldset><legend class="screen-reader-text"><span>' . __( 'Mobile only', 'creame-whatsapp-me' ) . '</span></legend>' .
 			'<label><input name="whatsappme[mobile_only]" value="yes" type="checkbox"' . checked( 'yes', $this->settings['mobile_only'], false ) . '> ' .
-			__('Only display the button on mobile devices', 'whatsappme' ) . '</label></fieldset>';
+			__('Only display the button on mobile devices', 'creame-whatsapp-me' ) . '</label></fieldset>';
 	}
 
 	/**
@@ -190,7 +189,7 @@ class WhatsAppMe_Admin {
 	 */
 	public function add_menu() {
 
-		add_options_page('WhatsApp Me', 'WhatsApp Me', 'manage_options', 'whatsappme', array( $this, 'options_page' ));
+		add_options_page('WhatsApp me', 'WhatsApp me', 'manage_options', 'whatsappme', array( $this, 'options_page' ));
 
 	}
 
@@ -203,7 +202,7 @@ class WhatsAppMe_Admin {
 	 */
 	public function settings_link( $links ) {
 
-		$settings_link = '<a href="options-general.php?page=' . $this->plugin_name . '">' . __( 'Settings', 'whatsappme' ) . '</a>';
+		$settings_link = '<a href="options-general.php?page=' . $this->plugin_name . '">' . __( 'Settings', 'creame-whatsapp-me' ) . '</a>';
 		array_unshift( $links, $settings_link );
 		return $links;
 
@@ -219,7 +218,7 @@ class WhatsAppMe_Admin {
 	function options_page() {
 		?>
 			<div class="wrap">
-				<h1>WhatsApp Me</h1>
+				<h1>WhatsApp me</h1>
 
 				<form method="post" id="whatsappme_form" action="options.php">
 					<?php
@@ -230,5 +229,91 @@ class WhatsAppMe_Admin {
 				</form>
 			</div>
 		<?php
+	}
+
+	/**
+	 * Add Meta Box for all the public post types
+	 *
+	 * @since    1.1.0
+	 * @access   public
+	 * @return   void
+	 */
+	public function add_meta_boxes() {
+		// Default post types
+		$builtin_post_types = array( 'post', 'page' );
+		// Custom post types with public url
+		$custom_post_types = array_keys( get_post_types( array( 'rewrite' => true ), 'names' ) );
+
+		// Add/remove posts types for "WhatsApp me" meta box
+		$post_types = apply_filters( 'whatsappme_post_types_meta_box', array_merge( $builtin_post_types, $custom_post_types ) );
+
+		foreach ( $post_types as $post_type ) {
+			add_meta_box(
+				'whatsappme',
+				__( 'WhatsApp me', 'creame-whatsapp-me' ),
+				array( $this, 'add_meta_box' ),
+				$post_type,
+				'side',
+				'default'
+			);
+		}
+	}
+
+	/**
+	 * Generate Meta Box html
+	 *
+	 * @since    1.1.0
+	 * @access   public
+	 * @return   void
+	 */
+	public function add_meta_box( $post ) {
+
+		$metadata = get_post_meta( $post->ID, '_whatsappme', true ) ?: array();
+		$metadata = array_merge( array(
+			'message_text' => '',
+			'hide' => false
+		), $metadata );
+
+		$post_type = get_post_type_object( get_post_type( $post->ID ) );
+		$post_type_name = mb_strtolower( $post_type->labels->singular_name );
+
+		wp_nonce_field( 'whatsappme_data', 'whatsappme_nonce' );
+		?>
+			<p>
+				<label for="whatsappme_message"><?php _e( 'Call to action', 'creame-whatsapp-me' ); ?></label><br>
+				<textarea name="whatsappme_message" rows="3" class="large-text"><?php echo $metadata['message_text']; ?></textarea>
+			</p>
+			<p>
+				<input type="checkbox" name="whatsappme_hide" id="whatsappme_hide" value="1" <?php echo $metadata['hide'] ? 'checked' : ''; ?>>
+				<label for="whatsappme_hide"><?php printf( __( 'Hide on this %s', 'creame-whatsapp-me' ), $post_type_name ); ?></label>
+			</p>
+		<?php
+	}
+
+	/**
+	 * Save meta data from "WhatsApp me" Meta Box on post save
+	 *
+	 * @since    1.1.0
+	 * @access   public
+	 * @return   void
+	 */
+	public function save_post( $post_id ) {
+		if ( wp_is_post_autosave( $post_id ) ||
+			 ! isset( $_POST['whatsappme_nonce'] ) ||
+			 ! wp_verify_nonce( $_POST['whatsappme_nonce'], 'whatsappme_data' ) ) {
+			return;
+		}
+
+		// Delete empty/false fields
+		$metadata = array_filter( array(
+			'message_text' => trim( $_POST['whatsappme_message'] ),
+			'hide' => isset( $_POST['whatsappme_hide'] ) ? 1 : 0,
+		) );
+
+		if ( count( $metadata ) ) {
+			update_post_meta( $post_id, '_whatsappme', $metadata );
+		} else {
+			delete_post_meta( $post_id, '_whatsappme' );
+		}
 	}
 }

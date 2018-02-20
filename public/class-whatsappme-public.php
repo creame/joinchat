@@ -50,33 +50,53 @@ class WhatsAppMe_Public {
 
 		$this->plugin_name = $plugin_name;
 		$this->version = $version;
-		$this->get_settings();
+		$this->settings = array(
+			'show'          => false,
+			'telephone'     => '',
+			'message_text'  => '',
+			'message_delay' => 10000,
+			'mobile_only'   => false,
+		);
 
 	}
 
 	/**
-	 * Get all settings or set defaults
+	 * Get global settings and current post settings and prepare
 	 *
 	 * @since    1.0.0
 	 */
-	private function get_settings() {
+	public function get_settings() {
 
-		$this->settings = array(
-			'telephone'     => '',
-			'message_text'  => '',
-			'message_delay' => 10000,
-			'mobile_only'   => 'no',
-		);
+		global $post;
 
-		$saved_settings = get_option( 'whatsappme' );
+		$global_settings = get_option( 'whatsappme' );
 
-		if ( is_array( $saved_settings ) ) {
-			// clean unused saved settings
-			$saved_settings = array_intersect_key( $saved_settings, $this->settings );
-			// merge defaults with saved settings
-			$this->settings = array_merge( $this->settings, $saved_settings );
+		if ( is_array( $global_settings ) ) {
+			// Clean unused saved settings
+			$settings = array_intersect_key( $global_settings, $this->settings );
+			// Merge defaults with saved settings
+			$settings = array_merge( $this->settings, $settings );
+
+			// Post custom settings
+			$post_settings = get_post_meta( $post->ID, '_whatsappme', true ) ?: array();
+
+			// Prepare settings
+			$settings['show'] = $settings['telephone'] != '' && ! isset( $post_settings['hide'] );
+			$settings['mobile_only'] = $settings['mobile_only'] == 'yes';
+			if ( isset( $post_settings['message_text'] ) ) {
+				$settings['message_text'] = $post_settings['message_text'];
+			}
+
+			$this->settings = $settings;
 		}
 
+		// Apply filter to settings
+		$this->settings = apply_filters( 'whatsappme_get_settings', $this->settings, $post );
+
+		// Ensure not show if not phone
+		if ( ! $this->settings['telephone'] ) {
+			$this->settings['show'] = false;
+		}
 	}
 
 	/**
@@ -86,7 +106,9 @@ class WhatsAppMe_Public {
 	 */
 	public function enqueue_styles() {
 
-		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/whatsappme.css', array(), $this->version, 'all' );
+		if ( $this->settings['show'] ) {
+			wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/whatsappme.css', array(), $this->version, 'all' );
+		}
 
 	}
 
@@ -97,7 +119,9 @@ class WhatsAppMe_Public {
 	 */
 	public function enqueue_scripts() {
 
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/whatsappme.js', array( 'jquery' ), $this->version, false );
+		if ( $this->settings['show'] ) {
+			wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/whatsappme.js', array( 'jquery' ), $this->version, false );
+		}
 
 	}
 
@@ -108,7 +132,7 @@ class WhatsAppMe_Public {
 	 */
 	public function footer_html() {
 
-		if ( $this->settings['telephone']) {
+		if ( $this->settings['show'] ) {
 		?>
 		<div class="whatsappme" data-settings="<?php echo esc_attr(json_encode($this->settings)); ?>">
 			<div class="whatsappme__button">
@@ -128,4 +152,5 @@ class WhatsAppMe_Public {
 		}
 
 	}
+
 }

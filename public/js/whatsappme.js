@@ -21,7 +21,7 @@
       localStorage.whatsappme_views = views;
 
       // show button / dialog
-      if (settings.mobile_only == 'no' || is_mobile) {
+      if (!settings.mobile_only || is_mobile) {
         setTimeout(function () {
           $whatsappme.addClass('whatsappme--show');
         }, delay_on_start);

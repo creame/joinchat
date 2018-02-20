@@ -32,4 +32,5 @@ Si dispones de Google Analytics se dispara un evento cuando el usuario lanza Wha
 
 ## Changelog
 
+- **v 1.1.0** Added Custom CTA or hide on every post/page.
 - **v 1.0.0** First version

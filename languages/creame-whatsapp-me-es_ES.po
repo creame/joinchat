@@ -3,9 +3,9 @@
 # This file is distributed under the GNU General Public License v2 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: WhatsApp Me\n"
+"Project-Id-Version: WhatsApp me\n"
 "Report-Msgid-Bugs-To: Translator Name <translations@example.com>\n"
-"POT-Creation-Date: 2018-01-26 10:36+0100\n"
+"POT-Creation-Date: 2018-02-20 12:21+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Pacotole <pacotole@crea.me>\n"
 "Language-Team: Creame <hola@crea.me>\n"
@@ -23,34 +23,34 @@ msgstr ""
 "X-Generator: Poedit 1.8.7.1\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: admin/class-whatsappme-admin.php:106
+#: admin/class-whatsappme-admin.php:97
 msgid "Telephone"
 msgstr "Teléfono"
 
-#: admin/class-whatsappme-admin.php:107
-msgid "Only mobile"
+#: admin/class-whatsappme-admin.php:98 admin/class-whatsappme-admin.php:178
+msgid "Mobile only"
 msgstr "Solo Móvil"
 
-#: admin/class-whatsappme-admin.php:108
+#: admin/class-whatsappme-admin.php:99 admin/class-whatsappme-admin.php:280
 msgid "Call to action"
 msgstr "Llamada a la acción"
 
-#: admin/class-whatsappme-admin.php:109
+#: admin/class-whatsappme-admin.php:100
 msgid "Delay"
 msgstr "Retardo"
 
-#: admin/class-whatsappme-admin.php:126
+#: admin/class-whatsappme-admin.php:123
 msgid "Settings saved"
 msgstr "Ajustes guardados"
 
-#: admin/class-whatsappme-admin.php:132
+#: admin/class-whatsappme-admin.php:135
 msgid ""
 "From here you can configure the behavior of the WhatsApp button on your site."
 msgstr ""
 "Desde aquí puedes configurar el comportamiento del botón de WhatsApp en tu "
 "sitio web."
 
-#: admin/class-whatsappme-admin.php:138
+#: admin/class-whatsappme-admin.php:146
 msgid ""
 "Contact phone number. <strong>The button will not be shown if it's empty.</"
 "strong>"
@@ -58,7 +58,7 @@ msgstr ""
 "Número de teléfono de contacto. <strong>El botón no se mostrará si está "
 "vacío.</strong>"
 
-#: admin/class-whatsappme-admin.php:143
+#: admin/class-whatsappme-admin.php:157
 msgid ""
 "Optional text to invite the user to use the contact via WhatsApp. "
 "<strong>Leave empty to disable.</strong>"
@@ -66,11 +66,11 @@ msgstr ""
 "Texto opcional para invitar al usuario a usar el contacto por WhatsApp. "
 "<strong>Dejar vacío para desactivarlo.</strong>"
 
-#: admin/class-whatsappme-admin.php:147
+#: admin/class-whatsappme-admin.php:167
 msgid "milliseconds"
 msgstr "milisegundos"
 
-#: admin/class-whatsappme-admin.php:148
+#: admin/class-whatsappme-admin.php:168
 msgid ""
 "The <strong>Call to action</strong> will only be displayed once when the "
 "user exceeds the estimated delay on a page. It will also be displayed when "
@@ -80,14 +80,36 @@ msgstr ""
 "cuando el usuario supere el retardo estimado en una página. También se "
 "mostrará cuando el usuario detenga el cursor sobre el botón de WhastApp."
 
-#: admin/class-whatsappme-admin.php:155
+#: admin/class-whatsappme-admin.php:180
 msgid "Only display the button on mobile devices"
 msgstr "Solo mostrar el botón en móviles"
 
-#: admin/class-whatsappme-admin.php:180
+#: admin/class-whatsappme-admin.php:205
 msgid "Settings"
 msgstr "Ajustes"
 
+#. Name of the plugin
+#: admin/class-whatsappme-admin.php:253
+msgid "WhatsApp me"
+msgstr "WhatsApp me"
+
+#: admin/class-whatsappme-admin.php:285
+#, php-format
+msgid "Hide on this %s"
+msgstr "Ocultar en este %s"
+
 #. Description of the theme
-msgid "Add support to your visitors directly with WhatsApp."
-msgstr "Añade soporte a tus visitantes directamente con WhatsApp."
+msgid "Add support to your clients directly with WhatsApp."
+msgstr "Da soporte a tus clientes directamente con WhatsApp."
+
+#. URI of the plugin
+msgid "https://github.com/creame/whatsappme"
+msgstr "https://github.com/creame/whatsappme"
+
+#. Author of the plugin
+msgid "Creame"
+msgstr "Creame"
+
+#. Author URI of the plugin
+msgid "https://crea.me"
+msgstr "https://crea.me"

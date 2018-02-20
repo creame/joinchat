@@ -6,15 +6,15 @@
  * @package           WhatsAppMe
  *
  * @wordpress-plugin
- * Plugin Name:       WhatsApp Me
+ * Plugin Name:       WhatsApp me
  * Plugin URI:        https://github.com/creame/whatsappme
- * Description:       Add support to your visitors directly with WhatsApp.
- * Version:           1.0.0
+ * Description:       Add support to your clients directly with WhatsApp.
+ * Version:           1.1.0
  * Author:            Creame
  * Author URI:        https://crea.me
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
- * Text Domain:       whatsappme
+ * Text Domain:       creame-whatsapp-me
  * Domain Path:       /languages
  */
 
@@ -27,7 +27,7 @@ if ( ! defined( 'WPINC' ) ) {
  * Currently plugin version.
  * Start at version 1.0.0 and use SemVer - https://semver.org
  */
-define( 'WHATSAPPME_VERSION', '1.0.0' );
+define( 'WHATSAPPME_VERSION', '1.1.0' );
 
 /**
  * The core plugin class that is used to define internationalization,
