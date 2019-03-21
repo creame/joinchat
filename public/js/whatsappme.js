@@ -51,8 +51,11 @@
           ga('send', 'event', 'WhatsAppMe', 'click');
         }
 
+        // check if is mobile or desktop device
+        var waPrefix = is_mobile ? 'api' : 'web';
+
         // open WhatsApp link
-        window.open('https://api.whatsapp.com/send?phone=' + settings.telephone, 'whatsappme');
+        window.open('https://' + waPrefix + '.whatsapp.com/send?phone=' + settings.telephone, 'whatsappme');
       });
 
       $('.whatsappme__close').click(function () {
