@@ -10,6 +10,13 @@
   transform: scale3d(0, 0, 0);
   transition: transform .3s ease-in-out;
   user-select: none;
+  -ms-user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+}
+
+.whatsappme svg path {
+  fill: currentColor !important;
 }
 
 .whatsappme--show {
@@ -30,17 +37,99 @@
   border-radius: 30px;
   box-shadow: 1px 6px 24px 0 rgba(7, 94, 84, .24);
   cursor: pointer;
-  transition: background-color 500ms ease-in-out;
+  transition: background-color 0.2s linear;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+.whatsappme__button:hover {
+  background-color: #128C7E;
+  transition: background-color 1.5s linear;
+}
+
+.whatsappme--dialog .whatsappme__button {
+  background-color: #128C7E;
+  transition: background-color 0.2s linear;
+}
+
+.whatsappme--dialog .whatsappme__button:hover {
+  background-color: #075E54;
+}
+
+.whatsappme__button:active {
+  background-color: #075E54;
+  transition: none;
+}
+
+/* iOS styles */
+@supports (-webkit-overflow-scrolling: touch) {
+  .whatsappme--dialog .whatsappme__button {
+    background-color: #34B7F1;
+  }
+
+  .whatsappme--dialog .whatsappme__button:hover,
+  .whatsappme__button:active {
+    background-color: #228bb9;
+  }
 }
 
 .whatsappme__button svg {
   width: 36px;
-  height: 60px;
-  margin: 0 12px;
+  height: 36px;
+  margin: 12px 12px;
+}
+
+.whatsappme__badge {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  width: 20px;
+  height: 20px;
+  border: none;
+  border-radius: 50%;
+  background: #e82c0c;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 20px;
+  text-align: center;
+  box-shadow: none;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.whatsappme__badge.whatsappme__badge--in {
+  animation: badge--in 500ms cubic-bezier(0.27, 0.9, 0.41, 1.28) 1 both;
+}
+
+.whatsappme__badge.whatsappme__badge--out {
+  animation: badge--out 400ms cubic-bezier(0.215, 0.61, 0.355, 1) 1 both;
 }
 
 .whatsappme--dialog .whatsappme__button {
-  box-shadow: 0 1px 2px 0 rgba(0,0,0,0.3);
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+}
+
+.whatsappme--dialog .whatsappme__button svg {
+  margin: 12px 11px 12px 13px;
+}
+
+.whatsappme .whatsappme__button__send path {
+  fill: none !important;
+  stroke: #fff !important;
+  animation: wame_plain 6s 0s ease-in-out infinite;
+}
+
+.whatsappme .whatsappme__button__send path.wame_chat {
+  animation-name: wame_chat;
+}
+
+.whatsappme__button__open,
+.whatsappme--dialog .whatsappme__button__send {
+  display: block;
+}
+
+.whatsappme__button__send,
+.whatsappme--dialog .whatsappme__button__open {
+  display: none;
 }
 
 .whatsappme__box {
@@ -53,33 +142,44 @@
   min-height: 280px;
   padding-bottom: 60px;
   border-radius: 32px;
-  background: #ede4dd url(../images/background.png) center repeat-y;
+  background: #ede4dd url(../images/background.webp) center repeat-y;
   background-size: 100% auto;
   box-shadow: 0 2px 6px 0 rgba(0, 0, 0, .5);
   overflow: hidden;
   transform: scale3d(0, 0, 0);
   opacity: 0;
-  transition: opacity 300ms ease-out, transform 0ms linear 300ms;
+  transition: opacity 400ms ease-out, transform 0ms linear 300ms;
+}
+
+.nowebp .whatsappme__box {
+  background-image: url(../images/background.png);
 }
 
 .whatsappme--dialog .whatsappme__box {
   opacity: 1;
   transform: scale3d(1, 1, 1);
-  transition: opacity 100ms ease-out, transform 0ms linear;
+  transition: opacity 200ms ease-out, transform 0ms linear;
 }
 
 .whatsappme__header {
+  float: none;
+  display: block;
+  position: static;
+  width: 100%;
   height: 70px;
   padding: 0 26px;
+  margin: 0;
   background-color: #2e8c7d;
   color: rgba(255, 255, 255, .5);
 }
 
 .whatsappme__header svg {
+  width: 120px;
   height: 100%;
 }
 
 .whatsappme__close {
+  display: flex;
   position: absolute;
   top: 18px;
   right: 24px;
@@ -88,15 +188,22 @@
   border-radius: 50%;
   background: #000;
   color: #fff;
-  line-height: 34px;
-  font-size: 25px;
   text-align: center;
   opacity: .4;
   cursor: pointer;
   transition: opacity 300ms ease-out;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
+
 .whatsappme__close:hover {
   opacity: .6;
+}
+
+.whatsappme__close svg {
+  display: block;
+  width: 12px;
+  height: 12px;
+  margin: auto;
 }
 
 .whatsappme__message {
@@ -122,10 +229,66 @@
   background-size: 100%;
 }
 
+.whatsappme__copy {
+  position: absolute;
+  bottom: 4px;
+  left: 40px;
+  color: #2e8c7d;
+  font-size: 11px;
+  letter-spacing: 0.2px;
+  opacity: 0.4;
+  transition: opacity 0.25s;
+}
+
+.whatsappme--left .whatsappme__copy {
+  left: auto;
+  right: 40px;
+}
+
+.whatsappme__copy:hover {
+  opacity: 0.8;
+  transition: opacity 0.5s ease-out 0.5s;
+}
+
+.whatsappme__copy a,
+.whatsappme__copy a:hover,
+.whatsappme__copy a:active {
+  color: inherit;
+  text-decoration: none;
+}
+
+.whatsappme__copy svg {
+  width: 40px;
+  height: 10px;
+  vertical-align: inherit;
+}
+
+/* Align left */
+
+.whatsappme--left {
+  right: auto;
+  left: 20px;
+}
+
+.whatsappme--left .whatsappme__button {
+  right: auto;
+  left: 8px;
+}
+
+.whatsappme--left .whatsappme__box {
+  right: auto;
+  left: 0;
+}
+
 @media (max-width: 480px) {
   .whatsappme {
     bottom: 6px;
     right: 6px;
+  }
+
+  .whatsappme--left {
+    right: auto;
+    left: 6px;
   }
 
   .whatsappme__box {
@@ -141,12 +304,67 @@
     top: 13px;
     width: 28px;
     height: 28px;
-    line-height: 28px;
   }
 
   .whatsappme__message {
     padding: 14px 20px;
     margin: 15px 21px 20px;
     line-height: 24px;
+  }
+}
+
+@keyframes badge--in {
+  from {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes badge--out {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  to {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+}
+
+@keyframes wame_plain {
+  5% {
+    stroke-dashoffset: 0;
+  }
+
+  45% {
+    stroke-dashoffset: 0;
+  }
+
+  50% {
+    stroke-dashoffset: 1096.67;
+  }
+
+  100% {
+    stroke-dashoffset: 1096.67;
+  }
+}
+
+@keyframes wame_chat {
+  50% {
+    stroke-dashoffset: 1019.22;
+  }
+
+  55% {
+    stroke-dashoffset: 0;
+  }
+
+  95% {
+    stroke-dashoffset: 0;
   }
 }

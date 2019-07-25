@@ -7,9 +7,9 @@
  *
  * @wordpress-plugin
  * Plugin Name:       WhatsApp me
- * Plugin URI:        https://github.com/creame/whatsappme
- * Description:       Add support to your clients directly with WhatsApp.
- * Version:           1.1.0
+ * Plugin URI:        https://wame.chat
+ * Description:       Connect a WordPress chat with WhatsApp. The best solution for marketing and support. Stop losing customers and increase your sales.
+ * Version:           2.3.2
  * Author:            Creame
  * Author URI:        https://crea.me
  * License:           GPL-2.0+
@@ -27,7 +27,7 @@ if ( ! defined( 'WPINC' ) ) {
  * Currently plugin version.
  * Start at version 1.0.0 and use SemVer - https://semver.org
  */
-define( 'WHATSAPPME_VERSION', '1.1.0' );
+define( 'WHATSAPPME_VERSION', '2.3.2' );
 
 /**
  * The core plugin class that is used to define internationalization,
