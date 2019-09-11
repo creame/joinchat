@@ -150,7 +150,7 @@
         'event_label': link,
         'transport_type': 'beacon'
       });
-    } else if (typeof ga == 'function') {
+    } else if (typeof ga == 'function' && typeof ga.getAll == 'function') {
       // Send event (Universal Analtics - analytics.js)
       ga('set', 'transport', 'beacon');
       var trackers = ga.getAll();
