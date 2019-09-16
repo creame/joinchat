@@ -5,31 +5,31 @@
     if (typeof (intlTelInput) === 'function') {
       var country_request = JSON.parse(localStorage.whatsappme_country_code || '{}');
       var country_code = (country_request.code && country_request.date == new Date().toDateString()) ? country_request.code : false;
-      var $phone = $("#whatsappme_phone");
+      var $phone = $('#whatsappme_phone');
       var iti = intlTelInput($phone.get(0), {
-        hiddenInput: $phone.data("name") || "whatsappme[telephone]",
-        initialCountry: "auto",
+        hiddenInput: $phone.data('name') || 'whatsappme[telephone]',
+        initialCountry: 'auto',
         preferredCountries: [country_code || ''],
         geoIpLookup: function (callback) {
           if (country_code) {
             callback(country_code);
           } else {
             $.getJSON('https://ipinfo.io').always(function (resp) {
-              var countryCode = (resp && resp.country) ? resp.country : "";
+              var countryCode = (resp && resp.country) ? resp.country : '';
               localStorage.whatsappme_country_code = JSON.stringify({ code: countryCode, date: new Date().toDateString() });
               callback(countryCode);
             });
           }
         },
-        utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/15.0.1/js/utils.js"
+        utilsScript: 'https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/15.0.1/js/utils.js'
       });
 
-      $phone.on("keyup change", function () {
+      $phone.on('keyup change', function () {
         $phone.css('border-color', '');
         // Ensures number it's updated on AJAX save (Gutemberg)
         iti.hiddenInput.value = iti.getNumber();
       });
-      $phone.on("blur", function () {
+      $phone.on('blur', function () {
         $phone.css('border-color', $phone.val().trim() && !iti.isValidNumber() ? '#ff0000' : '');
       });
     }
@@ -69,12 +69,11 @@
         $('#whatsappme_whatsapp_web').closest('tr').toggleClass('hide-if-js', this.checked);
       }).change();
 
-      var $tab_advanced = $('#tab-advanced');
-      var inheritance = {
-        'all': ['front_page', 'blog_page', '404_page', 'search', 'archive', 'singular', 'woocommerce', 'cpts'],
+      var $tab_advanced = $('#whatsappme_tab_advanced');
+      var inheritance = $('.whatsappme_view_all').data('inheritance') || {
+        'all': ['front_page', 'blog_page', '404_page', 'search', 'archive', 'singular', 'cpts'],
         'archive': ['date', 'author'],
         'singular': ['page', 'post'],
-        'woocommerce': ['product', 'cart', 'checkout', 'account_page']
       };
 
       $('input', $tab_advanced).change(function () {
@@ -89,6 +88,10 @@
       });
 
       propagate_inheritance();
+
+      $('textarea', '#whatsappme_form').on('keyup', function () {
+        $(this).height(0).height(this.scrollHeight + 3);
+      }).keyup();
     }
   });
 })(jQuery);

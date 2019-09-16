@@ -9,7 +9,7 @@
  * Plugin Name:       WhatsApp me
  * Plugin URI:        https://wame.chat
  * Description:       Connect a WordPress chat with WhatsApp. The best solution for marketing and support. Stop losing customers and increase your sales.
- * Version:           2.3.2
+ * Version:           3.0.0
  * Author:            Creame
  * Author URI:        https://crea.me
  * License:           GPL-2.0+
@@ -27,7 +27,7 @@ if ( ! defined( 'WPINC' ) ) {
  * Currently plugin version.
  * Start at version 1.0.0 and use SemVer - https://semver.org
  */
-define( 'WHATSAPPME_VERSION', '2.3.2' );
+define( 'WHATSAPPME_VERSION', '3.0.0' );
 
 /**
  * The core plugin class that is used to define internationalization,
@@ -38,16 +38,18 @@ require plugin_dir_path( __FILE__ ) . 'includes/class-whatsappme.php';
 /**
  * Begins execution of the plugin.
  *
- * Since everything within the plugin is registered via hooks,
- * then kicking off the plugin from this point in the file does
- * not affect the page life cycle.
+ * Everything within the plugin is registered via hooks,
+ * but initiation is delayed to 'init' hook to allow extensions
+ * or third party plugins to change WhatsApp me behavior.
  *
  * @since    1.0.0
+ * @since    3.0.0     Replaced direct run() to launch via 'init' hook
  */
 function run_whatsappme() {
 
 	$plugin = new WhatsAppMe();
-	$plugin->run();
+
+	add_action( 'init', array( $plugin, 'run' ) );
 
 }
 run_whatsappme();

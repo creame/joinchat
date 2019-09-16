@@ -54,11 +54,7 @@ class WhatsAppMe {
 	 * @since    1.0.0
 	 */
 	public function __construct() {
-		if ( defined( 'WHATSAPPME_VERSION' ) ) {
-			$this->version = WHATSAPPME_VERSION;
-		} else {
-			$this->version = '1.0.0';
-		}
+		$this->version = defined( 'WHATSAPPME_VERSION' ) ? WHATSAPPME_VERSION : '1.0.0';
 		$this->plugin_name = 'whatsappme';
 
 		$this->load_dependencies();
@@ -107,7 +103,8 @@ class WhatsAppMe {
 
 		$plugin_i18n = new WhatsAppMe_i18n();
 
-		$this->loader->add_action( 'plugins_loaded', $plugin_i18n, 'load_plugin_textdomain' );
+		// No delegate to $this->loader, use WordPress add_action
+		add_action( 'plugins_loaded', array( $plugin_i18n, 'load_plugin_textdomain' ) );
 
 	}
 
@@ -122,9 +119,10 @@ class WhatsAppMe {
 
 		$plugin_admin = new WhatsAppMe_Admin( $this->get_plugin_name(), $this->get_version() );
 
+		$this->loader->add_action( 'admin_init',            $plugin_admin, 'get_settings', 5 );
 		$this->loader->add_action( 'admin_init',            $plugin_admin, 'settings_init' );
-		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
-		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
+		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'register_styles' );
+		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'register_scripts' );
 		$this->loader->add_action( 'admin_menu',            $plugin_admin, 'add_menu' );
 		$this->loader->add_action( 'add_meta_boxes',        $plugin_admin, 'add_meta_boxes' );
 		$this->loader->add_action( 'save_post',             $plugin_admin, 'save_post' );
@@ -156,9 +154,16 @@ class WhatsAppMe {
 	 * Run the loader to execute all of the hooks with WordPress.
 	 *
 	 * @since    1.0.0
+	 * @since    3.0.0     Added actions
 	 */
 	public function run() {
+
+		do_action( 'whatsappme_run_pre', $this );
+
 		$this->loader->run();
+
+		do_action( 'whatsappme_run_pos', $this );
+
 	}
 
 	/**

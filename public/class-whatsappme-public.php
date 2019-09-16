@@ -6,6 +6,8 @@
  * Defines the plugin name, version, and two examples hooks for how to
  * enqueue the public-facing stylesheet and JavaScript.
  *
+ * @since      1.0.0
+ * @since      3.0.0      Added $show property and more hooks
  * @package    WhatsAppMe
  * @subpackage WhatsAppMe/public
  * @author     Creame <hola@crea.me>
@@ -40,6 +42,15 @@ class WhatsAppMe_Public {
 	private $settings;
 
 	/**
+	 * Show WhatsApp button in front.
+	 *
+	 * @since    3.0.0
+	 * @access   private
+	 * @var      bool     $show    Show button on front.
+	 */
+	private $show;
+
+	/**
 	 * Initialize the class and set its properties.
 	 *
 	 * @since    1.0.0
@@ -52,20 +63,11 @@ class WhatsAppMe_Public {
 	public function __construct( $plugin_name, $version ) {
 
 		$this->plugin_name = $plugin_name;
-		$this->version = $version;
-		$this->settings = array(
-			'show'          => false,
-			'telephone'     => '',
-			'mobile_only'   => false,
-			'button_delay'  => 3,
-			'whatsapp_web'  => false,
-			'message_text'  => '',
-			'message_delay' => 10,
-			'message_badge' => 'no',
-			'message_send'  => '',
-			'position'      => 'right',
-			'visibility'    => array( 'all' => 'yes' ),
-		);
+		$this->version     = $version;
+
+		// Updated in get_settings() at 'wp' hook
+		$this->show        = false;
+		$this->settings    = array();
 
 	}
 
@@ -76,21 +78,37 @@ class WhatsAppMe_Public {
 	 * @since    2.0.0   Check visibility
 	 * @since    2.2.0   Post settings can also change "telephone". Added 'whastapp_web' setting
 	 * @since    2.3.0   Fix global $post incorrect post id on loops. WPML integration.
+	 * @since    3.0.0   New filters.
 	 * @return   void
 	 */
 	public function get_settings() {
 
 		// If use "global $post;" take first post in loop on archive pages
-		$post = get_queried_object();
+		$obj = get_queried_object();
 
-		$global_settings = get_option( 'whatsappme' );
+		$default_settings = array_merge(
+			array(
+				'telephone'     => '',
+				'mobile_only'   => 'no',
+				'button_delay'  => 3,
+				'whatsapp_web'  => 'no',
+				'message_text'  => '',
+				'message_delay' => 10,
+				'message_badge' => 'no',
+				'message_send'  => '',
+				'position'      => 'right',
+				'visibility'    => array( 'all' => 'yes' ),
+			),
+			apply_filters( 'whatsappme_extra_settings', array() )
+		);
 
-		if ( is_array( $global_settings ) ) {
+		$site_settings = get_option( 'whatsappme' );
+
+		if ( is_array( $site_settings ) ) {
 			// Clean unused saved settings
-			$settings = array_intersect_key( $global_settings, $this->settings );
+			$settings = array_intersect_key( $site_settings, $default_settings );
 			// Merge defaults with saved settings
-			$settings = array_merge( $this->settings, $settings );
-
+			$settings = array_merge( $default_settings, $settings );
 			// miliseconds (<v2.3) to seconds
 			if ( $settings['message_delay'] > 120 ) {
 				$settings['message_delay'] = round( $settings['message_delay'] / 1000 );
@@ -100,8 +118,12 @@ class WhatsAppMe_Public {
 			$settings['message_text'] = apply_filters( 'wpml_translate_single_string', $settings['message_text'], 'WhatsApp me', 'Call To Action' );
 			$settings['message_send'] = apply_filters( 'wpml_translate_single_string', $settings['message_send'], 'WhatsApp me', 'Message' );
 
-			// Post custom settings
-			$post_settings = is_a( $post, 'WP_Post' ) ? get_post_meta( $post->ID, '_whatsappme', true ) : '';
+			// Filter for site settings (can be overriden by post settings)
+			// You can translate more WPML strings or add/change other settings
+			$settings = apply_filters( 'whatsappme_get_settings_site', $settings, $obj );
+
+			// Post custom settings override site settings
+			$post_settings = is_a( $obj, 'WP_Post' ) ? get_post_meta( $obj->ID, '_whatsappme', true ) : '';
 
 			if ( is_array( $post_settings ) ) {
 				// Move old 'hide' to new 'view' field
@@ -115,31 +137,38 @@ class WhatsAppMe_Public {
 
 			// Prepare settings
 			$settings['telephone']     = preg_replace( '/^0+|\D/', '', $settings['telephone'] );
-			$settings['position']      = $settings['position'] != 'left' ? 'right' : 'left';
-			$settings['mobile_only']   = $settings['mobile_only'] == 'yes';
-			$settings['message_badge'] = $settings['message_text'] && $settings['message_badge'] == 'yes';
+			$settings['mobile_only']   = 'yes' == $settings['mobile_only'];
+			$settings['whatsapp_web']  = 'yes' == $settings['whatsapp_web'];
+			$settings['message_badge'] = 'yes' == $settings['message_badge'] && '' != $settings['message_text'];
+			$settings['position']      = 'right' == $settings['position'] ? 'right' : 'left';
 			$settings['message_send']  = $this->replace_message_variables( $settings['message_send'] );
-
-			$settings['show'] = $settings['telephone'] != '';
-			if ( $settings['show'] ) {
-				$settings['show'] = isset( $settings['view'] ) ?
-					$settings['view'] == 'yes' :
-					$this->check_visibility( $settings['visibility'] );
-			}
-			unset( $settings['view'] );
-
 			// Set true to link http://web.whatsapp.com instead http://api.whatsapp.com
-			$settings['whatsapp_web'] = apply_filters( 'whatsappme_whatsapp_web', $settings['whatsapp_web'] == 'yes' );
+			$settings['whatsapp_web']  = apply_filters( 'whatsappme_whatsapp_web',  'yes' == $settings['whatsapp_web'] );
+
+			// Only show if there is a phone number
+			if ( '' != $settings['telephone'] ) {
+				if ( isset( $settings['view'] ) && 'yes' == $settings['view'] ) {
+					$this->show = true;
+				} else if ( isset( $settings['view'] ) && 'no' == $settings['view'] ) {
+					$this->show = false;
+				} else {
+					$this->show = $this->check_visibility( $settings['visibility'] );
+				}
+			}
+			// Unset post 'view' setting
+			unset( $settings['view'] );
 
 			$this->settings = $settings;
 		}
 
-		// Apply filter to settings
-		$this->settings = apply_filters( 'whatsappme_get_settings', $this->settings, $post );
+		// Apply filters to final settings after site and post settings
+		$this->settings = apply_filters( 'whatsappme_get_settings', $this->settings, $obj );
+		// Apply filters to alter 'show' value
+		$this->show     = apply_filters( 'whatsappme_show', $this->show, $this->settings, $obj );
 
 		// Ensure not show if not phone
-		if ( ! $this->settings['telephone'] ) {
-			$this->settings['show'] = false;
+		if ( '' == $this->settings['telephone'] ) {
+			$this->show = false;
 		}
 	}
 
@@ -151,7 +180,7 @@ class WhatsAppMe_Public {
 	 */
 	public function enqueue_styles() {
 
-		if ( $this->settings['show'] ) {
+		if ( $this->show ) {
 			$styles = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? 'whatsappme.css' : 'whatsappme.min.css';
 			wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/' . $styles, array(), $this->version, 'all' );
 		}
@@ -166,7 +195,7 @@ class WhatsAppMe_Public {
 	 */
 	public function enqueue_scripts() {
 
-		if ( $this->settings['show'] ) {
+		if ( $this->show ) {
 			$script = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? 'whatsappme.js' : 'whatsappme.min.js';
 			wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/' . $script, array( 'jquery' ), $this->version, true );
 		}
@@ -181,16 +210,17 @@ class WhatsAppMe_Public {
 	public function footer_html() {
 		global $wp;
 
-		if ( $this->settings['show'] ) {
+		if ( $this->show ) {
 
 			// Clean unnecessary settings on front
-			$data = array_diff_key( $this->settings, array_flip( array( 'show', 'visibility', 'position' ) ) );
+			$excluded_fields = apply_filters( 'whatsappme_excluded_fields', array( 'visibility', 'position' ) );
+			$data = array_diff_key( $this->settings, array_flip( $excluded_fields ) );
 
 			$copy = apply_filters( 'whatsappme_copy', __( 'Powered by', 'creame-whatsapp-me' ) );
 
-			$link_url = urlencode( home_url( $wp->request ) );
-			$link_site = urlencode( get_bloginfo( 'name' ) );
-			$link = "https://wame.chat/powered/?site=$link_site&url=$link_url";
+			$powered_url  = urlencode( home_url( $wp->request ) );
+			$powered_site = urlencode( get_bloginfo( 'name' ) );
+			$powered_link = "https://wame.chat/powered/?site={$powered_site}&url={$powered_url}";
 
 			?>
 			<div class="whatsappme <?php echo apply_filters( 'whatsappme_classes', "whatsappme--{$this->settings['position']}" ); ?>" data-settings="<?php echo esc_attr( json_encode( $data ) ); ?>">
@@ -209,7 +239,7 @@ class WhatsAppMe_Public {
 							<div class="whatsappme__close"><svg viewBox="0 0 24 24"><path fill="#fff" d="M24 2.4L21.6 0 12 9.6 2.4 0 0 2.4 9.6 12 0 21.6 2.4 24l9.6-9.6 9.6 9.6 2.4-2.4-9.6-9.6L24 2.4z"/></svg></div>
 						</div>
 						<div class="whatsappme__message"><?php echo $this->formated_message(); ?></div>
-						<?php if ($copy): ?><div class="whatsappme__copy"><?php echo $copy; ?> <a href="<?php echo $link; ?>" rel="nofollow noopener" target="_blank"><svg viewBox="0 0 72 17"><path fill="#fff" fill-rule="evenodd" d="M25.371 10.429l2.122-6.239h.045l2.054 6.239h-4.22zm32.2 2.397c-.439.495-.88.953-1.325 1.375-.797.755-1.332 1.232-1.604 1.43-.622.438-1.156.706-1.604.805-.447.1-.787.13-1.02.09a3.561 3.561 0 0 1-.7-.239c-.66-.318-1.02-.864-1.079-1.64-.058-.774.03-1.619.263-2.533.35-1.987 1.108-4.133 2.274-6.438a73.481 73.481 0 0 0-2.8 3.04c-.816.954-1.7 2.096-2.653 3.428a44.068 44.068 0 0 0-2.77 4.441c-.738 0-1.341-.159-1.808-.477-.427-.278-.748-.695-.962-1.252-.214-.556-.165-1.41.146-2.563l.204-.626c.097-.298.204-.606.32-.924.117-.318.234-.626.35-.924.117-.298.195-.507.234-.626v.06c.272-.756.603-1.56.991-2.415a56.92 56.92 0 0 1 1.4-2.832 62.832 62.832 0 0 0-3.266 3.875 61.101 61.101 0 0 0-2.945 3.995 57.072 57.072 0 0 0-2.886 4.71c-.387 0-.736-.044-1.048-.131l.195.545h-3.72l-1.23-3.786h-6.093L23.158 17h-3.605l6.16-17h3.674l4.357 12.16c.389-1.35.97-2.736 1.74-4.16a41.336 41.336 0 0 0 2.013-4.232.465.465 0 0 0 .058-.18c0-.039.02-.098.058-.178.04-.08.078-.199.117-.358.039-.159.097-.337.175-.536.039-.12.078-.219.117-.298a.465.465 0 0 0 .058-.18c.078-.277.175-.575.292-.893.116-.318.194-.597.233-.835V.25c-.039-.04-.039-.08 0-.119l.233-.12c.117-.039.292.02.525.18.156.08.292.179.408.298.272.199.564.427.875.685.311.259.583.557.816.895a2.9 2.9 0 0 1 .467 1.043c.078.358.039.735-.117 1.133a8.127 8.127 0 0 1-.35.775c0 .08-.038.159-.116.238a2.93 2.93 0 0 1-.175.298 7.05 7.05 0 0 0-.35.656c-.039.04-.058.07-.058.09 0 .02-.02.05-.059.089a61.988 61.988 0 0 1-1.633 2.385c-.544.755-.913 1.35-1.108 1.788a79.39 79.39 0 0 1 3.5-4.233 101.59 101.59 0 0 1 3.12-3.398C45.651 1.82 46.612.986 47.468.43c.739.278 1.341.596 1.808.954.428.318.768.676 1.02 1.073.253.398.244.835-.029 1.312l-1.4 2.325a36.928 36.928 0 0 0-1.749 3.279 53.748 53.748 0 0 1 1.633-1.848 46.815 46.815 0 0 1 4.024-3.875c.7-.597 1.38-1.113 2.041-1.55.739.278 1.341.596 1.808.953.428.318.768.676 1.02 1.073.253.398.243.835-.029 1.312-.155.318-.408.795-.758 1.43a152.853 152.853 0 0 0-2.04 3.846 97.87 97.87 0 0 0-.467.924c-.35.835-.632 1.55-.846 2.146-.214.597-.282.934-.204 1.014a.63.63 0 0 0 .291-.06c.234-.119.564-.348.992-.685.428-.338.875-.736 1.341-1.193.467-.457.914-.914 1.341-1.37.217-.232.409-.45.575-.657a15.4 15.4 0 0 1 .957-2.514c.34-.696.708-1.333 1.108-1.91.399-.576.778-1.044 1.137-1.402a19.553 19.553 0 0 1 1.796-1.7 32.727 32.727 0 0 1 1.497-1.164 8.821 8.821 0 0 1 1.317-.835C66.292.989 66.83.83 67.269.83c.32 0 .649.11.988.328.34.22.649.478.928.776.28.299.519.607.718.925.2.318.3.557.3.716.04.597-.06 1.253-.3 1.97a7.14 7.14 0 0 1-1.107 2.058 8.534 8.534 0 0 1-1.826 1.76 6.522 6.522 0 0 1-2.395 1.074c-.2.08-.36.06-.48-.06a.644.644 0 0 1-.179-.477c0-.358.14-.616.42-.776.837-.318 1.536-.735 2.095-1.253.559-.517.998-1.034 1.317-1.551.4-.597.699-1.213.898-1.85 0-.199-.09-.308-.27-.328a4.173 4.173 0 0 0-.448-.03 4.83 4.83 0 0 0-1.318.597c-.399.239-.848.577-1.347 1.014-.499.438-1.028 1.015-1.586 1.73-.918 1.154-1.587 2.298-2.006 3.432-.42 1.134-.629 1.979-.629 2.536 0 .915.19 1.482.569 1.7.38.22.728.329 1.048.329.638 0 1.347-.15 2.125-.448a16.248 16.248 0 0 0 2.305-1.104 30.05 30.05 0 0 0 2.126-1.342 27.256 27.256 0 0 0 1.646-1.224c.08-.04.18-.1.3-.179l.24-.12a.54.54 0 0 1 .239-.059c.08 0 .16.02.24.06.08.04.119.16.119.358 0 .239-.08.457-.24.656a19.115 19.115 0 0 1-2.245 1.82 35.445 35.445 0 0 1-2.185 1.403c-.759.437-1.497.855-2.215 1.253a8.461 8.461 0 0 1-1.647.387c-.499.06-.968.09-1.407.09-.998 0-1.796-.16-2.395-.477-.599-.319-1.048-.706-1.347-1.164a4.113 4.113 0 0 1-.599-1.372c-.1-.457-.15-.843-.15-1.161zm-42.354-1.111L17.887 0h3.514L17.02 17h-3.56L10.7 5.428h-.046L7.94 17H4.312L0 0h3.582L6.16 11.571h.045L9.035 0h3.354l2.783 11.715h.045z"/></svg></a></div><?php endif; ?>
+						<?php if ($copy): ?><div class="whatsappme__copy"><?php echo $copy; ?> <a href="<?php echo $powered_link; ?>" rel="nofollow noopener" target="_blank"><svg viewBox="0 0 72 17"><path fill="#fff" fill-rule="evenodd" d="M25.371 10.429l2.122-6.239h.045l2.054 6.239h-4.22zm32.2 2.397c-.439.495-.88.953-1.325 1.375-.797.755-1.332 1.232-1.604 1.43-.622.438-1.156.706-1.604.805-.447.1-.787.13-1.02.09a3.561 3.561 0 0 1-.7-.239c-.66-.318-1.02-.864-1.079-1.64-.058-.774.03-1.619.263-2.533.35-1.987 1.108-4.133 2.274-6.438a73.481 73.481 0 0 0-2.8 3.04c-.816.954-1.7 2.096-2.653 3.428a44.068 44.068 0 0 0-2.77 4.441c-.738 0-1.341-.159-1.808-.477-.427-.278-.748-.695-.962-1.252-.214-.556-.165-1.41.146-2.563l.204-.626c.097-.298.204-.606.32-.924.117-.318.234-.626.35-.924.117-.298.195-.507.234-.626v.06c.272-.756.603-1.56.991-2.415a56.92 56.92 0 0 1 1.4-2.832 62.832 62.832 0 0 0-3.266 3.875 61.101 61.101 0 0 0-2.945 3.995 57.072 57.072 0 0 0-2.886 4.71c-.387 0-.736-.044-1.048-.131l.195.545h-3.72l-1.23-3.786h-6.093L23.158 17h-3.605l6.16-17h3.674l4.357 12.16c.389-1.35.97-2.736 1.74-4.16a41.336 41.336 0 0 0 2.013-4.232.465.465 0 0 0 .058-.18c0-.039.02-.098.058-.178.04-.08.078-.199.117-.358.039-.159.097-.337.175-.536.039-.12.078-.219.117-.298a.465.465 0 0 0 .058-.18c.078-.277.175-.575.292-.893.116-.318.194-.597.233-.835V.25c-.039-.04-.039-.08 0-.119l.233-.12c.117-.039.292.02.525.18.156.08.292.179.408.298.272.199.564.427.875.685.311.259.583.557.816.895a2.9 2.9 0 0 1 .467 1.043c.078.358.039.735-.117 1.133a8.127 8.127 0 0 1-.35.775c0 .08-.038.159-.116.238a2.93 2.93 0 0 1-.175.298 7.05 7.05 0 0 0-.35.656c-.039.04-.058.07-.058.09 0 .02-.02.05-.059.089a61.988 61.988 0 0 1-1.633 2.385c-.544.755-.913 1.35-1.108 1.788a79.39 79.39 0 0 1 3.5-4.233 101.59 101.59 0 0 1 3.12-3.398C45.651 1.82 46.612.986 47.468.43c.739.278 1.341.596 1.808.954.428.318.768.676 1.02 1.073.253.398.244.835-.029 1.312l-1.4 2.325a36.928 36.928 0 0 0-1.749 3.279 53.748 53.748 0 0 1 1.633-1.848 46.815 46.815 0 0 1 4.024-3.875c.7-.597 1.38-1.113 2.041-1.55.739.278 1.341.596 1.808.953.428.318.768.676 1.02 1.073.253.398.243.835-.029 1.312-.155.318-.408.795-.758 1.43a152.853 152.853 0 0 0-2.04 3.846 97.87 97.87 0 0 0-.467.924c-.35.835-.632 1.55-.846 2.146-.214.597-.282.934-.204 1.014a.63.63 0 0 0 .291-.06c.234-.119.564-.348.992-.685.428-.338.875-.736 1.341-1.193.467-.457.914-.914 1.341-1.37.217-.232.409-.45.575-.657a15.4 15.4 0 0 1 .957-2.514c.34-.696.708-1.333 1.108-1.91.399-.576.778-1.044 1.137-1.402a19.553 19.553 0 0 1 1.796-1.7 32.727 32.727 0 0 1 1.497-1.164 8.821 8.821 0 0 1 1.317-.835C66.292.989 66.83.83 67.269.83c.32 0 .649.11.988.328.34.22.649.478.928.776.28.299.519.607.718.925.2.318.3.557.3.716.04.597-.06 1.253-.3 1.97a7.14 7.14 0 0 1-1.107 2.058 8.534 8.534 0 0 1-1.826 1.76 6.522 6.522 0 0 1-2.395 1.074c-.2.08-.36.06-.48-.06a.644.644 0 0 1-.179-.477c0-.358.14-.616.42-.776.837-.318 1.536-.735 2.095-1.253.559-.517.998-1.034 1.317-1.551.4-.597.699-1.213.898-1.85 0-.199-.09-.308-.27-.328a4.173 4.173 0 0 0-.448-.03 4.83 4.83 0 0 0-1.318.597c-.399.239-.848.577-1.347 1.014-.499.438-1.028 1.015-1.586 1.73-.918 1.154-1.587 2.298-2.006 3.432-.42 1.134-.629 1.979-.629 2.536 0 .915.19 1.482.569 1.7.38.22.728.329 1.048.329.638 0 1.347-.15 2.125-.448a16.248 16.248 0 0 0 2.305-1.104 30.05 30.05 0 0 0 2.126-1.342 27.256 27.256 0 0 0 1.646-1.224c.08-.04.18-.1.3-.179l.24-.12a.54.54 0 0 1 .239-.059c.08 0 .16.02.24.06.08.04.119.16.119.358 0 .239-.08.457-.24.656a19.115 19.115 0 0 1-2.245 1.82 35.445 35.445 0 0 1-2.185 1.403c-.759.437-1.497.855-2.215 1.253a8.461 8.461 0 0 1-1.647.387c-.499.06-.968.09-1.407.09-.998 0-1.796-.16-2.395-.477-.599-.319-1.048-.706-1.347-1.164a4.113 4.113 0 0 1-.599-1.372c-.1-.457-.15-.843-.15-1.161zm-42.354-1.111L17.887 0h3.514L17.02 17h-3.56L10.7 5.428h-.046L7.94 17H4.312L0 0h3.582L6.16 11.571h.045L9.035 0h3.354l2.783 11.715h.045z"/></svg></a></div><?php endif; ?>
 					</div>
 				<?php endif; ?>
 			</div>
@@ -298,55 +328,33 @@ class WhatsAppMe_Public {
 	 * Check visibility on current page
 	 *
 	 * @since    2.0.0
+	 * @since    3.0.0       Added filter to 'whatsappme_visibility'
 	 * @param    array       $options    array of visibility settings
 	 * @return   boolean     is visible or not on current page
 	 */
 	public function check_visibility($options) {
 
-		$global = isset( $options['all'] ) ? $options['all'] == 'yes' : true;
+		// Custom visibility, bypass all checks if not null
+		$visibility = apply_filters( 'whatsappme_visibility', null, $options );
+		if ( ! is_null( $visibility ) ) {
+			return $visibility;
+		}
+
+		$global = isset( $options['all'] ) ? 'yes' == $options['all'] : true;
 
 		// Check front page
 		if ( is_front_page() ) {
-			return isset( $options['front_page'] ) ? $options['front_page'] == 'yes' : $global;
+			return isset( $options['front_page'] ) ? 'yes' == $options['front_page'] : $global;
 		}
 
 		// Check blog page
 		if ( is_home() ) {
-			return isset( $options['blog_page'] ) ? $options['blog_page'] == 'yes' : $global;
+			return isset( $options['blog_page'] ) ? 'yes' == $options['blog_page'] : $global;
 		}
 
 		// Check 404 page
 		if ( is_404() ) {
-			return isset( $options['404_page'] ) ? $options['404_page'] == 'yes' : $global;
-		}
-
-		// Check WooCommerce
-		if ( class_exists( 'WooCommerce' ) ) {
-			$woo = isset( $options['woocommerce'] ) ? $options['woocommerce'] == 'yes' : $global;
-
-			// Product page
-			if ( is_product() ) {
-				return isset( $options['product'] ) ? $options['product'] == 'yes' : $woo;
-			}
-
-			// Cart page
-			if ( is_cart() ) {
-				return isset( $options['cart'] ) ? $options['cart'] == 'yes' : $woo;
-			}
-
-			// Checkout page
-			if ( is_checkout() ) {
-				return isset( $options['checkout'] ) ? $options['checkout'] == 'yes' : $woo;
-			}
-
-			// Customer account pages
-			if ( is_account_page() ) {
-				return isset( $options['account_page'] ) ? $options['account_page'] == 'yes': $woo;
-			}
-
-			if ( is_woocommerce() ) {
-				return $woo;
-			}
+			return isset( $options['404_page'] ) ? 'yes' == $options['404_page'] : $global;
 		}
 
 		// Check Custom Post Types
@@ -355,7 +363,7 @@ class WhatsAppMe_Public {
 				if ( substr( $cpt, 0, 4 ) == 'cpt_' ) {
 					$cpt = substr( $cpt, 4 );
 					if ( is_singular( $cpt ) || is_post_type_archive( $cpt ) ) {
-						return $view == 'yes';
+						return 'yes' == $view;
 					}
 				}
 			}
@@ -363,7 +371,7 @@ class WhatsAppMe_Public {
 
 		// Search results
 		if ( is_search() ) {
-			return isset( $options['search'] ) ? $options['search'] == 'yes' : $global;
+			return isset( $options['search'] ) ? 'yes' == $options['search'] : $global;
 		}
 
 		// Check archives
@@ -371,15 +379,15 @@ class WhatsAppMe_Public {
 
 			// Date archive
 			if ( isset( $options['date'] ) && is_date() ) {
-				return $options['date'] == 'yes';
+				return 'yes' == $options['date'];
 			}
 
 			// Author archive
 			if ( isset( $options['author'] ) && is_author() ) {
-				return $options['author'] == 'yes';
+				return 'yes' == $options['author'];
 			}
 
-			return isset( $options['archive'] ) ? $options['archive'] == 'yes' : $global;
+			return isset( $options['archive'] ) ? 'yes' == $options['archive'] : $global;
 		}
 
 		// Check singular
@@ -387,15 +395,15 @@ class WhatsAppMe_Public {
 
 			// Page
 			if ( isset( $options['page'] ) && is_page() ) {
-				return $options['page'] == 'yes';
+				return 'yes' == $options['page'];
 			}
 
 			// Post (or other custom posts)
 			if ( isset( $options['post'] ) && is_single() ) {
-				return $options['post'] == 'yes';
+				return 'yes' == $options['post'];
 			}
 
-			return isset( $options['singular'] ) ? $options['singular'] == 'yes' : $global;
+			return isset( $options['singular'] ) ? 'yes' == $options['singular'] : $global;
 		}
 
 		return $global;
@@ -410,7 +418,8 @@ class WhatsAppMe_Public {
 	 */
 	public function elementor_preview_disable($elementor_preview) {
 
-		$this->settings['show'] = apply_filters( 'whatsappme_elementor_preview_show', false );
+		$this->show = apply_filters( 'whatsappme_elementor_preview_show', false );
 
 	}
+
 }

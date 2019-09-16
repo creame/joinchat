@@ -1,3 +1,8 @@
+.js #whatsappme_form textarea {
+  overflow: hidden;
+  min-height: 100px;
+}
+
 .tab {
   display: none;
 }
@@ -6,32 +11,32 @@
   display: block;
 }
 
-#tab-advanced tr:hover {
+#whatsappme_tab_advanced tr:hover {
   background: rgba(0, 0, 0, .05);
 }
 
-#tab-advanced th,
-#tab-advanced td {
+#whatsappme_tab_advanced th,
+#whatsappme_tab_advanced td {
   padding: 7px 15px;
 }
 
-#tab-advanced label {
+#whatsappme_tab_advanced label {
   margin-right: 15px;
 }
 
-#tab-advanced .dashicons {
+#whatsappme_tab_advanced .dashicons {
   opacity: .5;
 }
 
-#tab-advanced input[type=radio]+span {
+#whatsappme_tab_advanced input[type=radio]+span {
   transition: all 200ms;
 }
 
-#tab-advanced input[type=radio]:checked+span {
+#whatsappme_tab_advanced input[type=radio]:checked+span {
   color: #79ba49;
   opacity: 1;
 }
 
-#tab-advanced input[type=radio]:checked+.dashicons-hidden {
+#whatsappme_tab_advanced input[type=radio]:checked+.dashicons-hidden {
   color: #ca4a1f;
 }
