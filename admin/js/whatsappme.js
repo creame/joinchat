@@ -54,6 +54,10 @@
       }
     }
 
+    function textarea_autoheight() {
+      $(this).height(0).height(this.scrollHeight);
+    }
+
     if ($('#whatsappme_form').length === 1) {
       $('.nav-tab').click(function (e) {
         var $tab = $(this);
@@ -89,9 +93,7 @@
 
       propagate_inheritance();
 
-      $('textarea', '#whatsappme_form').on('keyup', function () {
-        $(this).height(0).height(this.scrollHeight + 3);
-      }).keyup();
+      $('textarea', '#whatsappme_form').on('input', textarea_autoheight).each(textarea_autoheight);
     }
   });
 })(jQuery);
