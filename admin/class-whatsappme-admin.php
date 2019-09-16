@@ -490,7 +490,7 @@ class WhatsAppMe_Admin {
 
 				case 'message_delay':
 					$output = '<input id="whatsappme_message_delay" name="whatsappme[message_delay]" value="' . $value . '" type="number" min="0" max="120" style="width:5em"> ' . __( 'seconds', 'creame-whatsapp-me' ) .
-						'<p class="description">' . __( 'Time since the the WhatsApp button is displayed until the Chat Window opens', 'creame-whatsapp-me' ) . '</p>';
+						'<p class="description">' . __( 'Time since the WhatsApp button is displayed until the Chat Window opens', 'creame-whatsapp-me' ) . '</p>';
 					break;
 
 				case 'message_badge':

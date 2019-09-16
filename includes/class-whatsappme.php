@@ -59,6 +59,7 @@ class WhatsAppMe {
 
 		$this->load_dependencies();
 		$this->set_locale();
+		$this->load_integrations();
 		is_admin() ? $this->define_admin_hooks() : $this->define_public_hooks();
 
 	}
@@ -83,6 +84,7 @@ class WhatsAppMe {
 
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-whatsappme-loader.php';
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-whatsappme-i18n.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-whatsappme-integrations.php';
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-whatsappme-admin.php';
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-whatsappme-public.php';
 
@@ -107,6 +109,23 @@ class WhatsAppMe {
 		add_action( 'plugins_loaded', array( $plugin_i18n, 'load_plugin_textdomain' ) );
 
 	}
+
+	/**
+	 * Load third party plugins integrations
+	 *
+	 * @since    3.0.0
+	 * @access   private
+	 */
+	private function load_integrations() {
+
+		$plugin_integrations = new WhatsAppMe_Integrations();
+
+		// No delegate to $this->loader, use WordPress add_action.
+		// At 'plugins_loaded' hook can determine if other plugins are present.
+		add_action( 'plugins_loaded', array( $plugin_integrations, 'load_integrations' ) );
+
+	}
+
 
 	/**
 	 * Register all of the hooks related to the admin area functionality
