@@ -396,8 +396,8 @@ class WhatsAppMe_Admin {
 				$output = '<h2 class="title">' . __( 'Chat Window', 'creame-whatsapp-me' ) . '</h2>' .
 					'<p>' .
 						__( 'Set the behavior of the chat window.', 'creame-whatsapp-me' ) . ' ' .
-						__( "You can use the dynamic variables <code>{SITE}</code>, <code>{URL}</code> and <code>{TITLE}</code> which will be replaced by the values of the user's current page.", 'creame-whatsapp-me' ) . ' ' .
-						__( 'You can also use formatting styles like in WhatsApp: _<em>italic</em>_ *<strong>bold</strong>* ~<del>strikethrough</del>~.', 'creame-whatsapp-me' ) .
+						' <em>' . __( 'You can use styles and dynamic variables', 'creame-whatsapp-me' ) . '</em> ' .
+						'<a class="whatsappme-show-help" href="#" title="' . __( 'Show Help', 'creame-whatsapp-me' ) . '">?</a>' .
 					'</p>';
 				break;
 
@@ -450,7 +450,9 @@ class WhatsAppMe_Admin {
 			switch ( $field_id ) {
 				case 'telephone':
 					$output = '<input id="whatsappme_phone" ' . ( $this->enhanced_phone ? 'data-' : '' ) . 'name="whatsappme[telephone]" value="' . $value . '" type="text" style="width:15em">' .
-						'<p class="description">' . __( "Contact phone number <strong>(the button will not be shown if it's empty)</strong>", 'creame-whatsapp-me' ) . '</p>';
+						'<p class="description">' . __( "Contact phone number <strong>(the button will not be shown if it's empty)</strong>", 'creame-whatsapp-me' ) . '</p>' .
+						'<p class="whatsappme-addon">' . sprintf( __( "Add unlimited numbers with %s", 'creame-whatsapp-me' ),
+							'<a href="https://wame.chat/en/addons/random-phone-addon/" target="_blank">\'WAme Random Phone\'</a>' ) . '</p>';
 					break;
 
 				case 'mobile_only':
@@ -544,6 +546,56 @@ class WhatsAppMe_Admin {
 
 		add_options_page('WhatsApp me', 'WhatsApp me', 'manage_options', 'whatsappme', array( $this, 'options_page' ));
 
+	}
+
+	/**
+	 * Add a help tab to the options page in the wordpress admin
+	 *
+	 * @since    3.0.0
+	 * @access   public
+	 * @return   void
+	 */
+	function help_tab () {
+		$screen = get_current_screen();
+
+		$screen->add_help_tab( array(
+			'id'	=> 'styles-and-vars',
+			'title'	=> __('Styles and Variables', 'creame-whatsapp-me'),
+			'content'	=> apply_filters(
+				'whatsappme_styles_and_vars_help',
+				'<p>' . __( 'You can use formatting styles like in WhatsApp: _<em>italic</em>_ *<strong>bold</strong>* ~<del>strikethrough</del>~.', 'creame-whatsapp-me' ) . '</p>' .
+				'<p>' . __( 'You can use dynamic variables that will be replaced by the values of the page the user visits:', 'creame-whatsapp-me' ) .
+				'<p>' .
+					'<span><code>{SITE}</code> ➜ ' . get_bloginfo( 'name', 'display' ) . '</span>, ' .
+					'<span><code>{URL}</code>  ➜ ' . home_url( 'example' ) .'</span>, ' .
+					'<span><code>{TITLE}</code>  ➜ ' . __( 'Page Title', 'creame-whatsapp-me' ) . '</span>' .
+				'</p>' )
+		) );
+
+		$screen->add_help_tab( array(
+			'id'	=> 'support',
+			'title'	=> __('Support and Help', 'creame-whatsapp-me'),
+			'content'	=>
+				'<p>' . sprintf(
+					__( 'If you need help, please check the <a href="%s" rel="external" target="_blank">plugin support forum</a>.', 'creame-whatsapp-me' ),
+					esc_url( 'https://wordpress.org/support/plugin/creame-whatsapp-me/' )
+				) . '</p>' .
+				'<p>' . __( 'If you like WAme 😍', 'creame-whatsapp-me' ) . '</p>' .
+				'<ul>' .
+					'<li>' . sprintf(
+						__( 'Subscribe to our newsletter and our blog at %s.', 'creame-whatsapp-me' ),
+						'<a href="https://wame.chat/blog/" rel="external" target="_blank">wame.chat</a>'
+					) . '</li>' .
+					'<li>' . sprintf(
+						__( 'Learn from our tutorials on %s.', 'creame-whatsapp-me' ),
+						'<a href="https://www.youtube.com/channel/UCqHiSNPBaQ918fpVnCU1wog/" rel="external" target="_blank">Youtube</a>'
+					) . '</li>' .
+					'<li>' . sprintf(
+						__( 'Or rate us on %s.', 'creame-whatsapp-me' ),
+						'<a href="https://wordpress.org/support/plugin/creame-whatsapp-me/reviews/#new-post" rel="external" target="_blank">wordpress.org</a>'
+					) . '</li>' .
+				'</ul>'
+		) );
 	}
 
 	/**

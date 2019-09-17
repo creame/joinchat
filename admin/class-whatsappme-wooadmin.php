@@ -30,6 +30,7 @@ class WhatsAppMe_WooAdmin {
 		$loader->add_filter( 'whatsappme_section_output', $this, 'section_ouput', 10, 2 );
 		$loader->add_filter( 'whatsappme_field_output', $this, 'field_ouput', 10, 3 );
 		$loader->add_filter( 'whatsappme_advanced_inheritance', $this, 'advanced_inheritance' );
+		$loader->add_filter( 'whatsappme_styles_and_vars_help', $this, 'help_vars' );
 	}
 
 	/**
@@ -148,8 +149,9 @@ class WhatsAppMe_WooAdmin {
 
 			$output = '<h2 class="title">' . __( 'Product Chat Window', 'creame-whatsapp-me' ) . '</h2>' .
 				'<p>' .
-				__( 'You can define other different texts for the Chat Window on the product pages.', 'creame-whatsapp-me' ) . ' ' .
-				__( "In addition to the general variables you can use <code>{PRODUCT}</code>, <code>{SKU}</code> and <code>{PRICE}</code> that will be replaced by the values of the current product.", 'creame-whatsapp-me' ) .
+				__( 'You can define other different texts for the Chat Window on the product pages.', 'creame-whatsapp-me' ) .
+				' <em>' . __( 'You can use styles and dynamic variables', 'creame-whatsapp-me' ) . '</em> ' .
+				'<a class="whatsappme-show-help" href="#" title="' . __( 'Show Help', 'creame-whatsapp-me' ) . '">?</a>' .
 				'</p>';
 
 		}
@@ -206,4 +208,22 @@ class WhatsAppMe_WooAdmin {
 		return $inheritance;
 	}
 
+	/**
+	 * Add WooCommerce variables info for help tab.
+	 *
+	 * @since    3.0.0
+	 * @param    string     $text       current help tab content.
+	 * @return   string
+	 */
+	public function help_vars($text) {
+
+		return $text .
+			'<p> ' . __( '<strong>WooCommerce</strong>, in product pages you can also use:', 'creame-whatsapp-me' ) . '</p>' .
+			'<p>' .
+				'<span><code>{PRODUCT}</code>  ➜ ' . __( 'Product Name', 'creame-whatsapp-me' ) . '</span>, ' .
+				'<span><code>{PRICE}</code>  ➜ ' . strip_tags( wc_price( 9.95 ) ) . '</span>, ' .
+				'<span><code>{SKU}</code>  ➜ ABC98798</span>' .
+			'</p>';
+
+		}
 }

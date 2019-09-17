@@ -59,6 +59,7 @@
     }
 
     if ($('#whatsappme_form').length === 1) {
+      // Tabs
       $('.nav-tab').click(function (e) {
         var $tab = $(this);
         e.preventDefault();
@@ -69,10 +70,26 @@
         $($tab.attr('href')).addClass('tab-active');
       });
 
+      // Toggle WhatsApp web option
       $('#whatsappme_mobile_only').change(function () {
         $('#whatsappme_whatsapp_web').closest('tr').toggleClass('hide-if-js', this.checked);
       }).change();
 
+      // Show help
+      $('.whatsappme-show-help').click(function (e) {
+        e.preventDefault();
+        if ($('#contextual-help-wrap').is(':visible')) {
+          $("html, body").animate({ scrollTop: 0 });
+        } else {
+          $('#contextual-help-link').click();
+        }
+        $('#tab-link-styles-and-vars a').click();
+      });
+
+      // Texarea auto height
+      $('textarea', '#whatsappme_form').on('input', textarea_autoheight).each(textarea_autoheight);
+
+      // Advanced view inheritance
       var $tab_advanced = $('#whatsappme_tab_advanced');
       var inheritance = $('.whatsappme_view_all').data('inheritance') || {
         'all': ['front_page', 'blog_page', '404_page', 'search', 'archive', 'singular', 'cpts'],
@@ -92,8 +109,6 @@
       });
 
       propagate_inheritance();
-
-      $('textarea', '#whatsappme_form').on('input', textarea_autoheight).each(textarea_autoheight);
     }
   });
 })(jQuery);
