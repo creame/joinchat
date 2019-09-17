@@ -5,7 +5,7 @@ Tags: whatsapp business, whatsapp, click to chat, button, whatsapp support chat,
 Requires at least: 3.0.1
 Tested up to: 5.2
 Requires PHP: 5.3
-Stable tag: 2.3.2
+Stable tag: 2.3.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -117,8 +117,11 @@ WhatsApp me send an event (if GTM detected) when user click to launch WhatsApp:
 
 == Changelog ==
 
+= 2.3.3 =
+* FIX javascript error when "ga" global object is defined but isn't Google Analytics.
+
 = 2.3.2 =
-* FIX PHP notice on some archive pages
+* FIX PHP notice on some archive pages.
 
 = 2.3.1 =
 * Readme texts and description.
