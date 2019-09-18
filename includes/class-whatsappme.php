@@ -54,7 +54,7 @@ class WhatsAppMe {
 	 * @since    1.0.0
 	 */
 	public function __construct() {
-		$this->version = defined( 'WHATSAPPME_VERSION' ) ? WHATSAPPME_VERSION : '1.0.0';
+		$this->version     = defined( 'WHATSAPPME_VERSION' ) ? WHATSAPPME_VERSION : '1.0.0';
 		$this->plugin_name = 'whatsappme';
 
 		$this->load_dependencies();
@@ -138,13 +138,13 @@ class WhatsAppMe {
 
 		$plugin_admin = new WhatsAppMe_Admin( $this->get_plugin_name(), $this->get_version() );
 
-		$this->loader->add_action( 'admin_init',                    $plugin_admin, 'get_settings', 5 );
-		$this->loader->add_action( 'admin_init',                    $plugin_admin, 'settings_init' );
-		$this->loader->add_action( 'admin_enqueue_scripts',         $plugin_admin, 'register_styles' );
-		$this->loader->add_action( 'admin_enqueue_scripts',         $plugin_admin, 'register_scripts' );
-		$this->loader->add_action( 'admin_menu',                    $plugin_admin, 'add_menu' );
-		$this->loader->add_action( 'add_meta_boxes',                $plugin_admin, 'add_meta_boxes' );
-		$this->loader->add_action( 'save_post',                     $plugin_admin, 'save_post' );
+		$this->loader->add_action( 'admin_init', $plugin_admin, 'get_settings', 5 );
+		$this->loader->add_action( 'admin_init', $plugin_admin, 'settings_init' );
+		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'register_styles' );
+		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'register_scripts' );
+		$this->loader->add_action( 'admin_menu', $plugin_admin, 'add_menu' );
+		$this->loader->add_action( 'add_meta_boxes', $plugin_admin, 'add_meta_boxes' );
+		$this->loader->add_action( 'save_post', $plugin_admin, 'save_post' );
 		$this->loader->add_action( 'load-settings_page_whatsappme', $plugin_admin, 'help_tab' );
 
 		$this->loader->add_filter( "plugin_action_links_creame-whatsapp-me/{$this->plugin_name}.php", $plugin_admin, 'settings_link' );
@@ -162,10 +162,10 @@ class WhatsAppMe {
 
 		$plugin_public = new WhatsAppMe_Public( $this->get_plugin_name(), $this->get_version() );
 
-		$this->loader->add_action( 'wp',                     $plugin_public, 'get_settings' );
-		$this->loader->add_action( 'wp_enqueue_scripts',     $plugin_public, 'enqueue_styles' );
-		$this->loader->add_action( 'wp_enqueue_scripts',     $plugin_public, 'enqueue_scripts' );
-		$this->loader->add_action( 'wp_footer',              $plugin_public, 'footer_html' );
+		$this->loader->add_action( 'wp', $plugin_public, 'get_settings' );
+		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
+		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
+		$this->loader->add_action( 'wp_footer', $plugin_public, 'footer_html' );
 		$this->loader->add_action( 'elementor/preview/init', $plugin_public, 'elementor_preview_disable' );
 
 	}

@@ -48,11 +48,11 @@ class WhatsAppMe_Loader {
 	 * Add a new action to the collection to be registered with WordPress.
 	 *
 	 * @since    1.0.0
-	 * @param    string               $hook             The name of the WordPress action that is being registered.
-	 * @param    object               $component        A reference to the instance of the object on which the action is defined.
-	 * @param    string               $callback         The name of the function definition on the $component.
-	 * @param    int                  $priority         Optional. The priority at which the function should be fired. Default is 10.
-	 * @param    int                  $accepted_args    Optional. The number of arguments that should be passed to the $callback. Default is 1.
+	 * @param    string $hook             The name of the WordPress action that is being registered.
+	 * @param    object $component        A reference to the instance of the object on which the action is defined.
+	 * @param    string $callback         The name of the function definition on the $component.
+	 * @param    int    $priority         Optional. The priority at which the function should be fired. Default is 10.
+	 * @param    int    $accepted_args    Optional. The number of arguments that should be passed to the $callback. Default is 1.
 	 */
 	public function add_action( $hook, $component, $callback, $priority = 10, $accepted_args = 1 ) {
 		$this->actions = $this->add( $this->actions, $hook, $component, $callback, $priority, $accepted_args );
@@ -62,11 +62,11 @@ class WhatsAppMe_Loader {
 	 * Add a new filter to the collection to be registered with WordPress.
 	 *
 	 * @since    1.0.0
-	 * @param    string               $hook             The name of the WordPress filter that is being registered.
-	 * @param    object               $component        A reference to the instance of the object on which the filter is defined.
-	 * @param    string               $callback         The name of the function definition on the $component.
-	 * @param    int                  $priority         Optional. The priority at which the function should be fired. Default is 10.
-	 * @param    int                  $accepted_args    Optional. The number of arguments that should be passed to the $callback. Default is 1
+	 * @param    string $hook             The name of the WordPress filter that is being registered.
+	 * @param    object $component        A reference to the instance of the object on which the filter is defined.
+	 * @param    string $callback         The name of the function definition on the $component.
+	 * @param    int    $priority         Optional. The priority at which the function should be fired. Default is 10.
+	 * @param    int    $accepted_args    Optional. The number of arguments that should be passed to the $callback. Default is 1
 	 */
 	public function add_filter( $hook, $component, $callback, $priority = 10, $accepted_args = 1 ) {
 		$this->filters = $this->add( $this->filters, $hook, $component, $callback, $priority, $accepted_args );
@@ -78,12 +78,12 @@ class WhatsAppMe_Loader {
 	 *
 	 * @since    1.0.0
 	 * @access   private
-	 * @param    array                $hooks            The collection of hooks that is being registered (that is, actions or filters).
-	 * @param    string               $hook             The name of the WordPress filter that is being registered.
-	 * @param    object               $component        A reference to the instance of the object on which the filter is defined.
-	 * @param    string               $callback         The name of the function definition on the $component.
-	 * @param    int                  $priority         The priority at which the function should be fired.
-	 * @param    int                  $accepted_args    The number of arguments that should be passed to the $callback.
+	 * @param    array  $hooks            The collection of hooks that is being registered (that is, actions or filters).
+	 * @param    string $hook             The name of the WordPress filter that is being registered.
+	 * @param    object $component        A reference to the instance of the object on which the filter is defined.
+	 * @param    string $callback         The name of the function definition on the $component.
+	 * @param    int    $priority         The priority at which the function should be fired.
+	 * @param    int    $accepted_args    The number of arguments that should be passed to the $callback.
 	 * @return   array                                  The collection of actions and filters registered with WordPress.
 	 */
 	private function add( $hooks, $hook, $component, $callback, $priority, $accepted_args ) {
@@ -93,7 +93,7 @@ class WhatsAppMe_Loader {
 			'component'     => $component,
 			'callback'      => $callback,
 			'priority'      => $priority,
-			'accepted_args' => $accepted_args
+			'accepted_args' => $accepted_args,
 		);
 
 		return $hooks;
@@ -105,10 +105,10 @@ class WhatsAppMe_Loader {
 	 * It can be very specific or remove several hooks. Empty call remove all action hooks.
 	 *
 	 * @since    3.0.0
-	 * @param    string               $hook             Optional. The name of the WordPress action that is being removed.
-	 * @param    object               $component        Optional. A reference to the instance or name of the object on which the action is defined.
-	 * @param    string               $callback         Optional. The name of the function definition on the $component.
-	 * @param    int                  $priority         Optional. The priority at which the function should be fired. Default is 10.
+	 * @param    string $hook             Optional. The name of the WordPress action that is being removed.
+	 * @param    object $component        Optional. A reference to the instance or name of the object on which the action is defined.
+	 * @param    string $callback         Optional. The name of the function definition on the $component.
+	 * @param    int    $priority         Optional. The priority at which the function should be fired. Default is 10.
 	 */
 	public function remove_action( $hook = null, $component = null, $callback = null, $priority = 10 ) {
 		$this->actions = $this->remove( $this->actions, $hook, $component, $callback, $priority );
@@ -119,10 +119,10 @@ class WhatsAppMe_Loader {
 	 * It can be very specific or remove several hooks. Empty call remove all filter hooks.
 	 *
 	 * @since    3.0.0
-	 * @param    string               $hook             Optional. The name of the WordPress filter that is being removed.
-	 * @param    object               $component        Optional. A reference to the instance or name of the object on which the filter is defined.
-	 * @param    string               $callback         Optional. The name of the function definition on the $component.
-	 * @param    int                  $priority         Optional. The priority at which the function should be fired. Default is 10.
+	 * @param    string $hook             Optional. The name of the WordPress filter that is being removed.
+	 * @param    object $component        Optional. A reference to the instance or name of the object on which the filter is defined.
+	 * @param    string $callback         Optional. The name of the function definition on the $component.
+	 * @param    int    $priority         Optional. The priority at which the function should be fired. Default is 10.
 	 */
 	public function remove_filter( $hook = null, $component = null, $callback = null, $priority = 10 ) {
 		$this->filters = $this->remove( $this->filters, $hook, $component, $callback, $priority );
@@ -134,21 +134,21 @@ class WhatsAppMe_Loader {
 	 *
 	 * @since    3.0.0
 	 * @access   private
-	 * @param    array                $hooks            The collection of hooks that is being removed (that is, actions or filters).
-	 * @param    string               $hook             The name of the WordPress filter that is being removed.
-	 * @param    object               $component        A reference to the instance or name of the object on which the filter is defined.
-	 * @param    string               $callback         The name of the function definition on the $component.
-	 * @param    int                  $priority         The priority at which the function should be fired.
+	 * @param    array  $hooks            The collection of hooks that is being removed (that is, actions or filters).
+	 * @param    string $hook             The name of the WordPress filter that is being removed.
+	 * @param    object $component        A reference to the instance or name of the object on which the filter is defined.
+	 * @param    string $callback         The name of the function definition on the $component.
+	 * @param    int    $priority         The priority at which the function should be fired.
 	 * @return   array                                  The collection of actions and filters registered with WordPress.
 	 */
 	private function remove( $hooks, $hook, $component, $callback, $priority ) {
 
 		foreach ( $hooks as $key => $value ) {
 			if (
-					( is_null($hook) || $value['hook'] == $hook ) &&
-					( is_null($component) || $value['component'] == $component || $value['component'] instanceof $component ) &&
-					( is_null($callback) || $value['callback'] == $callback ) &&
-					( is_null($priority) || $value['priority'] == $priority )
+					( is_null( $hook ) || $value['hook'] == $hook ) &&
+					( is_null( $component ) || $value['component'] == $component || $value['component'] instanceof $component ) &&
+					( is_null( $callback ) || $value['callback'] == $callback ) &&
+					( is_null( $priority ) || $value['priority'] == $priority )
 				) {
 				unset( $hooks[ $key ] );
 			}

@@ -14,34 +14,34 @@ class WhatsAppMe_WooAdmin {
 	 * Initialize all hooks
 	 *
 	 * @since    3.0.0
-	 * @param    array     $whatsappme       WhatsAppMe object.
+	 * @param    array $whatsappme       WhatsAppMe object.
 	 * @return   void
 	 */
-	public function init($whatsappme){
+	public function init( $whatsappme ) {
 
 		$loader = $whatsappme->get_loader();
 
-		$loader->add_filter( 'whatsappme_extra_settings',           $this, 'extra_settings' );
-		$loader->add_filter( 'whatsappme_settings_validate',        $this, 'settings_validate' );
-		$loader->add_filter( 'whatsappme_admin_tabs',               $this, 'admin_tab' );
-		$loader->add_filter( 'whatsappme_custom_post_types',        $this, 'custom_post_types' );
-		$loader->add_filter( 'whatsappme_tab_advanced_sections',    $this, 'advanced_tab_section' );
+		$loader->add_filter( 'whatsappme_extra_settings', $this, 'extra_settings' );
+		$loader->add_filter( 'whatsappme_settings_validate', $this, 'settings_validate' );
+		$loader->add_filter( 'whatsappme_admin_tabs', $this, 'admin_tab' );
+		$loader->add_filter( 'whatsappme_custom_post_types', $this, 'custom_post_types' );
+		$loader->add_filter( 'whatsappme_tab_advanced_sections', $this, 'advanced_tab_section' );
 		$loader->add_filter( 'whatsappme_tab_woocommerce_sections', $this, 'woo_tab_sections' );
-		$loader->add_filter( 'whatsappme_section_output',           $this, 'section_ouput', 10, 2 );
-		$loader->add_filter( 'whatsappme_field_output',             $this, 'field_ouput', 10, 3 );
-		$loader->add_filter( 'whatsappme_advanced_inheritance',     $this, 'advanced_inheritance' );
-		$loader->add_filter( 'whatsappme_styles_and_vars_help',     $this, 'help_vars' );
-		$loader->add_filter( 'whatsappme_metabox_vars',             $this, 'metabox_vars' );
+		$loader->add_filter( 'whatsappme_section_output', $this, 'section_ouput', 10, 2 );
+		$loader->add_filter( 'whatsappme_field_output', $this, 'field_ouput', 10, 3 );
+		$loader->add_filter( 'whatsappme_advanced_inheritance', $this, 'advanced_inheritance' );
+		$loader->add_filter( 'whatsappme_styles_and_vars_help', $this, 'help_vars' );
+		$loader->add_filter( 'whatsappme_metabox_vars', $this, 'metabox_vars' );
 	}
 
 	/**
 	 * Add WooCommerce extra settings defaults
 	 *
 	 * @since    3.0.0
-	 * @param    array     $settings       current settings.
+	 * @param    array $settings       current settings.
 	 * @return   array
 	 */
-	public function extra_settings($settings) {
+	public function extra_settings( $settings ) {
 
 		$woo_settings = array(
 			'message_text_product' => '',
@@ -55,10 +55,10 @@ class WhatsAppMe_WooAdmin {
 	 * WooCommerce settings validation
 	 *
 	 * @since    3.0.0
-	 * @param    array     $input       form input.
+	 * @param    array $input       form input.
 	 * @return   array
 	 */
-	public function settings_validate($input) {
+	public function settings_validate( $input ) {
 
 		$input['message_text_product'] = WhatsAppMe_Admin::clean_input( $input['message_text_product'] );
 		$input['message_send_product'] = WhatsAppMe_Admin::clean_input( $input['message_send_product'] );
@@ -71,10 +71,10 @@ class WhatsAppMe_WooAdmin {
 	 * Add WooCommerce admin tab
 	 *
 	 * @since    3.0.0
-	 * @param    array     $tabs       current admin tabs.
+	 * @param    array $tabs       current admin tabs.
 	 * @return   array
 	 */
-	public function admin_tab($tabs) {
+	public function admin_tab( $tabs ) {
 
 		$tabs['woocommerce'] = 'WooCommerce';
 
@@ -85,10 +85,10 @@ class WhatsAppMe_WooAdmin {
 	 * Remove WooCommerce product custom post type
 	 *
 	 * @since    3.0.0
-	 * @param    array     $custom_post_types       current tab sections and fields.
+	 * @param    array $custom_post_types       current tab sections and fields.
 	 * @return   array
 	 */
-	public function custom_post_types($custom_post_types) {
+	public function custom_post_types( $custom_post_types ) {
 
 		$custom_post_types = array_diff( $custom_post_types, array( 'product' ) );
 
@@ -99,10 +99,10 @@ class WhatsAppMe_WooAdmin {
 	 * Woocommerce sections and fields for 'whatsappme_tab_advanced'
 	 *
 	 * @since    3.0.0
-	 * @param    array     $sections       current tab sections and fields.
+	 * @param    array $sections       current tab sections and fields.
 	 * @return   array
 	 */
-	public function advanced_tab_section($sections) {
+	public function advanced_tab_section( $sections ) {
 
 		$sections['woo'] = array(
 			'view__woocommerce'  => __( 'Shop', 'creame-whatsapp-me' ),
@@ -119,10 +119,10 @@ class WhatsAppMe_WooAdmin {
 	 * Woocommerce sections and fields for 'whatsappme_tab_woocommerce'
 	 *
 	 * @since    3.0.0
-	 * @param    array     $sections       current tab sections and fields.
+	 * @param    array $sections       current tab sections and fields.
 	 * @return   array
 	 */
-	public function woo_tab_sections($sections) {
+	public function woo_tab_sections( $sections ) {
 
 		$sections['chat'] = array(
 			'message_text_product' => '<label for="whatsappme_message_text_product">' . __( 'Call To Action', 'creame-whatsapp-me' ) . '</label>',
@@ -136,17 +136,17 @@ class WhatsAppMe_WooAdmin {
 	 * Woocommerce sections HTML output
 	 *
 	 * @since    3.0.0
-	 * @param    string    $output       current section output.
-	 * @param    string    $section_id   current section id.
+	 * @param    string $output       current section output.
+	 * @param    string $section_id   current section id.
 	 * @return   string
 	 */
-	public function section_ouput($output, $section_id) {
+	public function section_ouput( $output, $section_id ) {
 
 		if ( 'whatsappme_tab_advanced__woo' == $section_id ) {
 
 			$output = '<h2 class="title">' . __( 'WooCommerce', 'creame-whatsapp-me' ) . '</h2>';
 
-		} else if ( 'whatsappme_tab_woocommerce__chat' == $section_id ) {
+		} elseif ( 'whatsappme_tab_woocommerce__chat' == $section_id ) {
 
 			$output = '<h2 class="title">' . __( 'Product Chat Window', 'creame-whatsapp-me' ) . '</h2>' .
 				'<p>' .
@@ -164,12 +164,12 @@ class WhatsAppMe_WooAdmin {
 	 * Woocommerce fields HTML output
 	 *
 	 * @since    3.0.0
-	 * @param    string    $output       current field output.
-	 * @param    string    $field_id     current field id.
-	 * @param    array     $settings     current whatsappme settings.
+	 * @param    string $output       current field output.
+	 * @param    string $field_id     current field id.
+	 * @param    array  $settings     current whatsappme settings.
 	 * @return   string
 	 */
-	public function field_ouput($output, $field_id, $settings) {
+	public function field_ouput( $output, $field_id, $settings ) {
 
 		$value = isset( $settings[ $field_id ] ) ? $settings[ $field_id ] : '';
 
@@ -196,10 +196,10 @@ class WhatsAppMe_WooAdmin {
 	 * WooCommerce fields on advanced visibily admin tab.
 	 *
 	 * @since    3.0.0
-	 * @param    array     $inheritance       current section output.
+	 * @param    array $inheritance       current section output.
 	 * @return   array
 	 */
-	public function advanced_inheritance($inheritance) {
+	public function advanced_inheritance( $inheritance ) {
 
 		// 'woocommerce' inherit from 'all' (Global)
 		$inheritance['all'][] = 'woocommerce';
@@ -213,10 +213,10 @@ class WhatsAppMe_WooAdmin {
 	 * Add WooCommerce variables info for help tab.
 	 *
 	 * @since    3.0.0
-	 * @param    string     $text       current help tab content.
+	 * @param    string $text       current help tab content.
 	 * @return   string
 	 */
-	public function help_vars($text) {
+	public function help_vars( $text ) {
 
 		return $text .
 			'<p> ' . __( '<strong>WooCommerce</strong>, in product pages you can also use:', 'creame-whatsapp-me' ) . '</p>' .
@@ -232,10 +232,10 @@ class WhatsAppMe_WooAdmin {
 	 * Add Product metabox variables info.
 	 *
 	 * @since    3.0.0
-	 * @param    array     $vars       current default vars.
+	 * @param    array $vars       current default vars.
 	 * @return   array
 	 */
-	public function metabox_vars($vars) {
+	public function metabox_vars( $vars ) {
 		global $post;
 
 		if ( 'product' == $post->post_type ) {

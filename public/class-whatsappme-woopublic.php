@@ -14,10 +14,10 @@ class WhatsAppMe_WooPublic {
 	 * Initialize all hooks
 	 *
 	 * @since    3.0.0
-	 * @param    array     $whatsappme       WhatsAppMe object.
+	 * @param    array $whatsappme       WhatsAppMe object.
 	 * @return   void
 	 */
-	public function init($whatsappme){
+	public function init( $whatsappme ) {
 
 		$loader = $whatsappme->get_loader();
 
@@ -33,14 +33,14 @@ class WhatsAppMe_WooPublic {
 	 * Add WooCommerce settings defaults
 	 *
 	 * @since    3.0.0
-	 * @param    array     $settings       current settings.
+	 * @param    array $settings       current settings.
 	 * @return   array
 	 */
-	public function woo_settings($settings) {
+	public function woo_settings( $settings ) {
 
 		$woo_settings = array(
-			'message_text_product'   => '',
-			'message_send_product'   => '',
+			'message_text_product' => '',
+			'message_send_product' => '',
 		);
 
 		return array_merge( $settings, $woo_settings );
@@ -50,22 +50,24 @@ class WhatsAppMe_WooPublic {
 	 * Replace general site CTA and send messages with the product ones
 	 *
 	 * @since    3.0.0
-	 * @param    array     $settings       current site settings.
+	 * @param    array $settings       current site settings.
 	 * @return   array
 	 */
-	public function product_settings($settings) {
+	public function product_settings( $settings ) {
 
 		// Only applies to product pages
 		if ( is_product() ) {
 			if ( '' != $settings['message_text_product'] ) {
 				$settings['message_text'] = apply_filters(
 					'wpml_translate_single_string', $settings['message_text_product'],
-					'WhatsApp me', 'Call To Action for Products' );
+					'WhatsApp me', 'Call To Action for Products'
+				);
 			}
 			if ( '' != $settings['message_send_product'] ) {
 				$settings['message_send'] = apply_filters(
 					'wpml_translate_single_string', $settings['message_send_product'],
-					'WhatsApp me', 'Message for Products' );
+					'WhatsApp me', 'Message for Products'
+				);
 			}
 		}
 
@@ -76,10 +78,10 @@ class WhatsAppMe_WooPublic {
 	 * Return visibility for Woocommerce pages
 	 *
 	 * @since    3.0.0
-	 * @param    null     $visibility       by default $visibility is null.
+	 * @param    null $visibility       by default $visibility is null.
 	 * @return   mixed    true or false if WooCommerce page apply else return $visibility.
 	 */
-	public function visibility($visibility, $options) {
+	public function visibility( $visibility, $options ) {
 
 		$global = isset( $options['all'] ) ? 'yes' == $options['all'] : true;
 		$woo    = isset( $options['woocommerce'] ) ? 'yes' == $options['woocommerce'] : $global;
@@ -115,20 +117,22 @@ class WhatsAppMe_WooPublic {
 	 * Woocommerce product replacement for messages
 	 *
 	 * @since    3.0.0
-	 * @param    array     $replacements       current replacements.
+	 * @param    array $replacements       current replacements.
 	 * @return   array
 	 */
-	public function replacements($replacements) {
+	public function replacements( $replacements ) {
 
 		// Only applies to product pages
 		if ( is_product() ) {
 			$product = wc_get_product();
 
-			$replacements = array_merge($replacements, array(
-				'/\{PRODUCT\}/i' => $product->get_name(),
-				'/\{SKU\}/i'     => $product->get_sku(),
-				'/\{PRICE\}/i'   => strip_tags( wc_price( $product->get_price() ) ),
-			) );
+			$replacements = array_merge(
+				$replacements, array(
+					'/\{PRODUCT\}/i' => $product->get_name(),
+					'/\{SKU\}/i'     => $product->get_sku(),
+					'/\{PRICE\}/i'   => strip_tags( wc_price( $product->get_price() ) ),
+				)
+			);
 		}
 
 		return $replacements;
@@ -138,10 +142,10 @@ class WhatsAppMe_WooPublic {
 	 * Exclude unnecessary Woocommerce settings in front
 	 *
 	 * @since    3.0.0
-	 * @param    array     $fields       current excluded fields.
+	 * @param    array $fields       current excluded fields.
 	 * @return   array
 	 */
-	public function excluded_fields($fields) {
+	public function excluded_fields( $fields ) {
 
 		$excluded = array(
 			'message_text_product',
