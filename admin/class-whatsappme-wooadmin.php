@@ -21,16 +21,17 @@ class WhatsAppMe_WooAdmin {
 
 		$loader = $whatsappme->get_loader();
 
-		$loader->add_filter( 'whatsappme_extra_settings', $this, 'extra_settings' );
-		$loader->add_filter( 'whatsappme_settings_validate', $this, 'settings_validate' );
-		$loader->add_filter( 'whatsappme_admin_tabs', $this, 'admin_tab' );
-		$loader->add_filter( 'whatsappme_custom_post_types', $this, 'custom_post_types' );
-		$loader->add_filter( 'whatsappme_tab_advanced_sections', $this, 'advanced_tab_section' );
+		$loader->add_filter( 'whatsappme_extra_settings',           $this, 'extra_settings' );
+		$loader->add_filter( 'whatsappme_settings_validate',        $this, 'settings_validate' );
+		$loader->add_filter( 'whatsappme_admin_tabs',               $this, 'admin_tab' );
+		$loader->add_filter( 'whatsappme_custom_post_types',        $this, 'custom_post_types' );
+		$loader->add_filter( 'whatsappme_tab_advanced_sections',    $this, 'advanced_tab_section' );
 		$loader->add_filter( 'whatsappme_tab_woocommerce_sections', $this, 'woo_tab_sections' );
-		$loader->add_filter( 'whatsappme_section_output', $this, 'section_ouput', 10, 2 );
-		$loader->add_filter( 'whatsappme_field_output', $this, 'field_ouput', 10, 3 );
-		$loader->add_filter( 'whatsappme_advanced_inheritance', $this, 'advanced_inheritance' );
-		$loader->add_filter( 'whatsappme_styles_and_vars_help', $this, 'help_vars' );
+		$loader->add_filter( 'whatsappme_section_output',           $this, 'section_ouput', 10, 2 );
+		$loader->add_filter( 'whatsappme_field_output',             $this, 'field_ouput', 10, 3 );
+		$loader->add_filter( 'whatsappme_advanced_inheritance',     $this, 'advanced_inheritance' );
+		$loader->add_filter( 'whatsappme_styles_and_vars_help',     $this, 'help_vars' );
+		$loader->add_filter( 'whatsappme_metabox_vars',             $this, 'metabox_vars' );
 	}
 
 	/**
@@ -225,5 +226,23 @@ class WhatsAppMe_WooAdmin {
 				'<span><code>{SKU}</code>  ➜ ABC98798</span>' .
 			'</p>';
 
+	}
+
+	/**
+	 * Add Product metabox variables info.
+	 *
+	 * @since    3.0.0
+	 * @param    array     $vars       current default vars.
+	 * @return   array
+	 */
+	public function metabox_vars($vars) {
+		global $post;
+
+		if ( 'product' == $post->post_type ) {
+			$vars = array_merge( $vars, array( 'PRODUCT', 'PRICE', 'SKU' ) );
 		}
+
+		return $vars;
+
+	}
 }

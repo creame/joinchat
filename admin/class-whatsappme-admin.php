@@ -592,7 +592,7 @@ class WhatsAppMe_Admin {
 					) . '</li>' .
 					'<li>' . sprintf(
 						__( 'Or rate us on %s.', 'creame-whatsapp-me' ),
-						'<a href="https://wordpress.org/support/plugin/creame-whatsapp-me/reviews/#new-post" rel="external" target="_blank">wordpress.org</a>'
+						'<a href="https://wordpress.org/support/plugin/creame-whatsapp-me/reviews/#new-post" rel="external" target="_blank">WordPress.org</a>'
 					) . '</li>' .
 				'</ul>'
 		) );
@@ -689,6 +689,7 @@ class WhatsAppMe_Admin {
 	 * @return   void
 	 */
 	public function meta_box( $post ) {
+		// TODO: add hooks for more extendable metabox
 
 		// Enqueue assets
 		wp_enqueue_script( 'whatsappme-admin' );
@@ -712,6 +713,8 @@ class WhatsAppMe_Admin {
 		}
 		unset( $metadata['hide'] );
 
+		$metabox_vars = apply_filters( 'whatsappme_metabox_vars', array( 'SITE', 'URL', 'TITLE' ) );
+
 		wp_nonce_field( 'whatsappme_data', 'whatsappme_nonce' );
 		?>
 			<div class="whatsappme-metabox">
@@ -726,7 +729,9 @@ class WhatsAppMe_Admin {
 				<p>
 					<label for="whatsappme_message_send"><?php _e( 'Message', 'creame-whatsapp-me' ); ?></label><br>
 					<textarea name="whatsappme_message_send" rows="2" class="large-text"><?php echo $metadata['message_send']; ?></textarea>
-					<small><?php _e( 'You can use vars <code>{SITE} {URL} {TITLE}</code>', 'creame-whatsapp-me' ); ?></small>
+					<?php if ( count( $metabox_vars ) ): ?>
+						<small><?php _e( 'You can use vars:', 'creame-whatsapp-me' ); ?> <code>{<?php echo join( '}</code> <code>{', $metabox_vars ) ?>}</code></small>
+					<?php endif; ?>
 				</p>
 				<p>
 					<label><input type="radio" name="whatsappme_view" value="yes" <?php checked( 'yes', $metadata['view'] ); ?>>
@@ -738,7 +743,7 @@ class WhatsAppMe_Admin {
 				</p>
 			</div>
 			<style>
-				.whatsappme-metabox code { font-size:smaller; vertical-align:text-bottom; }
+				.whatsappme-metabox code { -webkit-user-select:all; -moz-user-select:all; -ms-user-select:all; user-select:all; padding:2px 1px; font-size:smaller; vertical-align:text-bottom; }
 				.whatsappme-metabox .dashicons { opacity:.5; }
 				.whatsappme-metabox input::placeholder { color:#dedfe0; }
 				.whatsappme-metabox input::-ms-input-placeholder { color:#dedfe0; }
