@@ -243,6 +243,5 @@ class WhatsAppMe_WooAdmin {
 		}
 
 		return $vars;
-
 	}
 }
