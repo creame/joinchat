@@ -21,7 +21,7 @@
             });
           }
         },
-        utilsScript: 'https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/15.0.1/js/utils.js'
+        utilsScript: 'https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/' + intl_tel_input_version + '/js/utils.js'
       });
 
       $phone.on('keyup change', function () {

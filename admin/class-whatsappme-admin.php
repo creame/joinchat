@@ -74,7 +74,7 @@ class WhatsAppMe_Admin {
 		$this->version     = $version;
 
 		// Updated in get_settings() at 'admin_init' hook
-		$this->enhanced_phone = true;
+		$this->enhanced_phone = '16.0.3'; // intl-tel-input version
 		$this->tabs           = array();
 		$this->settings       = array();
 
@@ -91,7 +91,7 @@ class WhatsAppMe_Admin {
 	 */
 	public function get_settings() {
 
-		// Use International Telephone Input library
+		// Use International Telephone Input library version or false to disable
 		$this->enhanced_phone = apply_filters( 'whatsappme_enhanced_phone', $this->enhanced_phone );
 
 		// Admin tabs
@@ -149,7 +149,7 @@ class WhatsAppMe_Admin {
 		wp_register_style( 'whatsappme-admin', plugin_dir_url( __FILE__ ) . 'css/' . $styles, array(), $this->version, 'all' );
 
 		if ( $this->enhanced_phone ) {
-			wp_register_style( 'intl-tel-input', 'https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/16.0.2/css/intlTelInput.css', array(), null, 'all' );
+			wp_register_style( 'intl-tel-input', 'https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/' . $this->enhanced_phone . '/css/intlTelInput.css', array(), null, 'all' );
 		}
 
 	}
@@ -166,8 +166,9 @@ class WhatsAppMe_Admin {
 		$script = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? 'whatsappme.js' : 'whatsappme.min.js';
 
 		if ( $this->enhanced_phone ) {
-			wp_register_script( 'intl-tel-input', 'https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/16.0.2/js/intlTelInput.min.js', array(), null, true );
+			wp_register_script( 'intl-tel-input', 'https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/' . $this->enhanced_phone . '/js/intlTelInput.min.js', array(), null, true );
 			wp_register_script( 'whatsappme-admin', plugin_dir_url( __FILE__ ) . 'js/' . $script, array( 'jquery', 'intl-tel-input' ), $this->version, true );
+			wp_localize_script( 'intl-tel-input', 'intl_tel_input_version', $this->enhanced_phone );
 		} else {
 			wp_register_script( 'whatsappme-admin', plugin_dir_url( __FILE__ ) . 'js/' . $script, array( 'jquery' ), $this->version, true );
 		}
