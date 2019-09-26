@@ -1,11 +1,11 @@
-=== WhatsApp me ===
+=== WAme chat ===
 Contributors: creapuntome, pacotole, davidlillo, monillo
 Donate link: https://www.paypal.me/creapuntome/
 Tags: whatsapp business, whatsapp, click to chat, button, whatsapp support chat, support, contact, directly message whatsapp, floating whatsapp, whatsapp chat
 Requires at least: 3.0.1
 Tested up to: 5.2
 Requires PHP: 5.3
-Stable tag: 2.3.3
+Stable tag: 3.0.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -13,9 +13,13 @@ Connect a WordPress chat with WhatsApp. The best solution for marketing and supp
 
 == Description ==
 
-[wame.chat](https://wame.chat) | [Chatbot demo (es)](https://wame.chat/es/wame-chatbot/) | [Plugin support](https://wordpress.org/support/plugin/creame-whatsapp-me/)
+[wame.chat](https://wame.chat) | [Add-Ons](https://wame.chat/addons/) | [Plugin support](https://wordpress.org/support/plugin/creame-whatsapp-me/)
 
 ### Connect a WordPress chat with WhatsApp. The best solution for marketing and support. Stop losing customers and increase your sales.
+
+### New in WAme 3.0 📍
+
+🛒 **Better Integration with WooCommerce**. Define CTAs and Custom Messages for product pages, you can use dynamic variables such as {SKU}, {PRICE} or {PRODUCT}.
 
 ### ⌁ What you can do with WAme ✅
 
@@ -59,6 +63,9 @@ Having many options is not an advantage, the configuration of WAme is so easy th
 2. Learn from our tutorials on [Youtube Channel](https://www.youtube.com/channel/UCqHiSNPBaQ918fpVnCU1wog/).
 3. Or rate us [on WordPress](https://wordpress.org/support/plugin/creame-whatsapp-me/reviews/?filter=5/#new-post).
 
+*WhatsApp and WhatsApp Logo are brand assets and trademark of Facebook, Inc.*
+*WAme is not in partnership, sponsored or endorsed by Facebook, Inc.*
+
 == Installation ==
 
 1. Upload the entire `creame-whatsapp-me` folder to the `/wp-content/plugins/` directory.
@@ -68,7 +75,7 @@ Having many options is not an advantage, the configuration of WAme is so easy th
 
 = Open WhatsApp Web on desktop =
 
-By default, WhatsApp me always opens api.whatsapp.com and try to launch the native application or if it doesn't exist redirects to WhatsApp Web. Depending on the browser and the operating system, sometimes it doesn't work.
+By default, WAme always opens api.whatsapp.com and try to launch the native application or if it doesn't exist redirects to WhatsApp Web. Depending on the browser and the operating system, sometimes it doesn't work.
 
 If you prefer always open WhatsApp Web on desktop you can add this code in your functions.php:
 
@@ -86,11 +93,11 @@ Greater values of z-index are left over, the default value is 400.
 
 = What about GDPR? =
 
-WhatsApp me don't save any personal data and don't use cookies.
+WAme don't save any personal data and don't use cookies.
 
 = Google Analytics integration =
 
-WhatsApp me send an event when user click to launch WhatsApp.
+WAme send an event when user click to launch WhatsApp.
 
 If Global Site Tag (gtag.js) detected:
 
@@ -102,20 +109,28 @@ If Universal Analtics (analytics.js) detected:
 
 = Google Tag Manager integration =
 
-WhatsApp me send an event (if GTM detected) when user click to launch WhatsApp:
+WAme send an event (if GTM detected) when user click to launch WhatsApp:
 
 `dataLayer.push({ 'event': 'WhatsAppMe', 'eventAction': 'click', 'eventLabel': out_url });`
 
 == Screenshots ==
 
-1. WhatsApp me general settings.
-2. WhatsApp me advanced visibility settings.
-3. WhatsApp me on post/page edition.
-4. Button on desktop.
-5. Call to action on desktop.
-6. Button and call to action on mobile.
+1. WAme general settings.
+2. WAme advanced visibility settings.
+3. WAme on post/page edition.
 
 == Changelog ==
+
+= 3.0.0 =
+* **NEW:** Better Integration with WooCommerce: CTA and Custom Message for product pages and new dynamic variables {SKU}, {PRICE} {PRODUCT}.
+* **NEW:** Admin help tab with styles and dynamic varibles info.
+* **NEW:** For developers: a lot of new hooks to change or extend WAme functions.
+* **NEW:** Custom javascript document event 'whatsappme:open' that allow trigger other actions and/or change the link url.
+* CHANGED Rebrand "WhatsApp me" to "WAme chat".
+* CHANGED Code linted following WordPress standar.
+* FIX when post visibility was set as "hidden", it used default global visibility.
+* FIX javascript error when "ga" global object is defined but isn't Google Analytics.
+* FIX rtl styles for chat.
 
 = 2.3.3 =
 * FIX javascript error when "ga" global object is defined but isn't Google Analytics.
@@ -169,7 +184,7 @@ WhatsApp me send an event (if GTM detected) when user click to launch WhatsApp:
 * FIX removed array_filter function that requires PHP 5.6 min version.
 
 = 2.0.0 =
-* **NEW: Advanced visibility settings to define where to show *WhatsApp me* button.**
+* **NEW: Advanced visibility settings to define where to show WAme button.**
 * **NEW:** WooCommerce integration.
 * UPDATED International Telephone Input library to v.13.
 * Minor fixes on fields cleanup and other improvements.
@@ -183,7 +198,7 @@ WhatsApp me send an event (if GTM detected) when user click to launch WhatsApp:
 * FIX JavaScript error introduced on v1.4.1.
 
 = 1.4.1 =
-* Fix JS frontend sometimes can't load WhatsApp me settings.
+* Fix JS frontend sometimes can't load WAme settings.
 * Fix better Google Analytics event tracking when leave page.
 
 = 1.4.0 =

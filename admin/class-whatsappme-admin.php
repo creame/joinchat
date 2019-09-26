@@ -556,7 +556,7 @@ class WhatsAppMe_Admin {
 	 */
 	public function add_menu() {
 
-		add_options_page( 'WhatsApp me', 'WhatsApp me', 'manage_options', 'whatsappme', array( $this, 'options_page' ) );
+		add_options_page( 'WAme chat', 'WAme chat', 'manage_options', 'whatsappme', array( $this, 'options_page' ) );
 
 	}
 
@@ -650,7 +650,7 @@ class WhatsAppMe_Admin {
 
 		?>
 			<div class="wrap">
-				<h1>WhatsApp me</h1>
+				<h1>WAme chat</h1>
 
 				<form method="post" id="whatsappme_form" action="options.php">
 					<?php settings_fields( 'whatsappme' ); ?>
@@ -681,13 +681,13 @@ class WhatsAppMe_Admin {
 		// Custom post types with public url
 		$custom_post_types = array_keys( get_post_types( array( 'has_archive' => true ), 'names' ) );
 
-		// Add/remove posts types for "WhatsApp me" meta box
+		// Add/remove posts types for "WAme chat" meta box
 		$post_types = apply_filters( 'whatsappme_post_types_meta_box', array_merge( $builtin_post_types, $custom_post_types ) );
 
 		foreach ( $post_types as $post_type ) {
 			add_meta_box(
 				'whatsappme',
-				__( 'WhatsApp me', 'creame-whatsapp-me' ),
+				__( 'WAme chat', 'creame-whatsapp-me' ),
 				array( $this, 'meta_box' ),
 				$post_type,
 				'side',
@@ -774,7 +774,7 @@ class WhatsAppMe_Admin {
 	}
 
 	/**
-	 * Save meta data from "WhatsApp me" Meta Box on post save
+	 * Save meta data from "WAme chat" Meta Box on post save
 	 *
 	 * @since    1.1.0
 	 * @since    2.0.0     Change 'hide' key to 'view' now values can be [yes, no]

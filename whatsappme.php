@@ -6,7 +6,7 @@
  * @package           WhatsAppMe
  *
  * @wordpress-plugin
- * Plugin Name:       WhatsApp me
+ * Plugin Name:       WAme chat
  * Plugin URI:        https://wame.chat
  * Description:       Connect a WordPress chat with WhatsApp. The best solution for marketing and support. Stop losing customers and increase your sales.
  * Version:           3.0.0
@@ -40,7 +40,7 @@ require plugin_dir_path( __FILE__ ) . 'includes/class-whatsappme.php';
  *
  * Everything within the plugin is registered via hooks,
  * but initiation is delayed to 'init' hook to allow extensions
- * or third party plugins to change WhatsApp me behavior.
+ * or third party plugins to change WAme behavior.
  *
  * @since    1.0.0
  * @since    3.0.0     Replaced direct run() to launch via 'init' hook

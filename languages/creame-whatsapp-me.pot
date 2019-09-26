@@ -1,7 +1,7 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: WhatsApp Me\n"
+"Project-Id-Version: WAme chat\n"
 "POT-Creation-Date: 2019-09-18 14:00+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Your Name <you@example.com>\n"
@@ -298,7 +298,7 @@ msgid "Settings"
 msgstr ""
 
 #: admin/class-whatsappme-admin.php:689
-msgid "WhatsApp me"
+msgid "WAme chat"
 msgstr ""
 
 #: admin/class-whatsappme-admin.php:750

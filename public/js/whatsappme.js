@@ -98,7 +98,7 @@
             // Open WhatsApp link
             window.open(args.link, 'whatsappme');
           } else {
-            console.error("WhatsApp me: the link doesn't seem safe, it must point to the current domain or whatsapp.com")
+            console.error("WAme: the link doesn't seem safe, it must point to the current domain or whatsapp.com")
           }
         }
       });
