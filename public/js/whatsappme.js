@@ -80,16 +80,26 @@
       }
 
       $('.whatsappme__button', $whatsappme).click(function () {
-        var link = whatsapp_link(wa_web, wame_settings.telephone, wame_settings.message_send);
-
         if (has_cta && !$whatsappme.hasClass('whatsappme--dialog')) {
           show_dialog();
         } else {
+          var args = { link: whatsapp_link(wa_web, wame_settings.telephone, wame_settings.message_send) };
+          var secure_link = new RegExp("^https?:\/\/(wa\.me|(api|web|chat)\.whatsapp\.com|" + location.hostname.replace('.', '\.') + ")\/.*", 'i');
+
           $whatsappme.removeClass('whatsappme--dialog');
           save_message_viewed();
-          send_event(link);
-          // Open WhatsApp link
-          window.open(link, 'whatsappme');
+          // Trigger custom event (args obj allow edit link by third party scripts)
+          $(document).trigger('whatsappme:open', [args, wame_settings]);
+
+          // Ensure the link is safe
+          if (secure_link.test(args.link)) {
+            // Send analytics events
+            send_event(args.link);
+            // Open WhatsApp link
+            window.open(args.link, 'whatsappme');
+          } else {
+            console.error("WAme: the link doesn't seem safe, it must point to the current domain or whatsapp.com")
+          }
         }
       });
 

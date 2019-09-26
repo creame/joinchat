@@ -54,15 +54,12 @@ class WhatsAppMe {
 	 * @since    1.0.0
 	 */
 	public function __construct() {
-		if ( defined( 'WHATSAPPME_VERSION' ) ) {
-			$this->version = WHATSAPPME_VERSION;
-		} else {
-			$this->version = '1.0.0';
-		}
+		$this->version     = defined( 'WHATSAPPME_VERSION' ) ? WHATSAPPME_VERSION : '1.0.0';
 		$this->plugin_name = 'whatsappme';
 
 		$this->load_dependencies();
 		$this->set_locale();
+		$this->load_integrations();
 		is_admin() ? $this->define_admin_hooks() : $this->define_public_hooks();
 
 	}
@@ -87,6 +84,7 @@ class WhatsAppMe {
 
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-whatsappme-loader.php';
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-whatsappme-i18n.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-whatsappme-integrations.php';
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-whatsappme-admin.php';
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-whatsappme-public.php';
 
@@ -107,9 +105,27 @@ class WhatsAppMe {
 
 		$plugin_i18n = new WhatsAppMe_i18n();
 
-		$this->loader->add_action( 'plugins_loaded', $plugin_i18n, 'load_plugin_textdomain' );
+		// No delegate to $this->loader, use WordPress add_action
+		add_action( 'plugins_loaded', array( $plugin_i18n, 'load_plugin_textdomain' ) );
 
 	}
+
+	/**
+	 * Load third party plugins integrations
+	 *
+	 * @since    3.0.0
+	 * @access   private
+	 */
+	private function load_integrations() {
+
+		$plugin_integrations = new WhatsAppMe_Integrations();
+
+		// No delegate to $this->loader, use WordPress add_action.
+		// At 'plugins_loaded' hook can determine if other plugins are present.
+		add_action( 'plugins_loaded', array( $plugin_integrations, 'load_integrations' ) );
+
+	}
+
 
 	/**
 	 * Register all of the hooks related to the admin area functionality
@@ -122,12 +138,14 @@ class WhatsAppMe {
 
 		$plugin_admin = new WhatsAppMe_Admin( $this->get_plugin_name(), $this->get_version() );
 
-		$this->loader->add_action( 'admin_init',            $plugin_admin, 'settings_init' );
-		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
-		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
-		$this->loader->add_action( 'admin_menu',            $plugin_admin, 'add_menu' );
-		$this->loader->add_action( 'add_meta_boxes',        $plugin_admin, 'add_meta_boxes' );
-		$this->loader->add_action( 'save_post',             $plugin_admin, 'save_post' );
+		$this->loader->add_action( 'admin_init', $plugin_admin, 'get_settings', 5 );
+		$this->loader->add_action( 'admin_init', $plugin_admin, 'settings_init' );
+		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'register_styles' );
+		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'register_scripts' );
+		$this->loader->add_action( 'admin_menu', $plugin_admin, 'add_menu' );
+		$this->loader->add_action( 'add_meta_boxes', $plugin_admin, 'add_meta_boxes' );
+		$this->loader->add_action( 'save_post', $plugin_admin, 'save_post' );
+		$this->loader->add_action( 'load-settings_page_whatsappme', $plugin_admin, 'help_tab' );
 
 		$this->loader->add_filter( "plugin_action_links_creame-whatsapp-me/{$this->plugin_name}.php", $plugin_admin, 'settings_link' );
 
@@ -144,10 +162,10 @@ class WhatsAppMe {
 
 		$plugin_public = new WhatsAppMe_Public( $this->get_plugin_name(), $this->get_version() );
 
-		$this->loader->add_action( 'wp',                     $plugin_public, 'get_settings' );
-		$this->loader->add_action( 'wp_enqueue_scripts',     $plugin_public, 'enqueue_styles' );
-		$this->loader->add_action( 'wp_enqueue_scripts',     $plugin_public, 'enqueue_scripts' );
-		$this->loader->add_action( 'wp_footer',              $plugin_public, 'footer_html' );
+		$this->loader->add_action( 'wp', $plugin_public, 'get_settings' );
+		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
+		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
+		$this->loader->add_action( 'wp_footer', $plugin_public, 'footer_html' );
 		$this->loader->add_action( 'elementor/preview/init', $plugin_public, 'elementor_preview_disable' );
 
 	}
@@ -156,9 +174,16 @@ class WhatsAppMe {
 	 * Run the loader to execute all of the hooks with WordPress.
 	 *
 	 * @since    1.0.0
+	 * @since    3.0.0     Added actions
 	 */
 	public function run() {
+
+		do_action( 'whatsappme_run_pre', $this );
+
 		$this->loader->run();
+
+		do_action( 'whatsappme_run_pos', $this );
+
 	}
 
 	/**
