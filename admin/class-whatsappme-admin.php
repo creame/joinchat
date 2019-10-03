@@ -652,7 +652,7 @@ class WhatsAppMe_Admin {
 			<div class="wrap">
 				<h1>WAme chat</h1>
 
-				<form method="post" id="whatsappme_form" action="options.php">
+				<form method="post" id="whatsappme_form" action="options.php" autocomplete="off">
 					<?php settings_fields( 'whatsappme' ); ?>
 					<h2 class="nav-tab-wrapper wp-clearfix">
 						<?php foreach ( $this->tabs as $tab => $name ) : ?>

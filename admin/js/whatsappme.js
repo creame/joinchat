@@ -2,7 +2,7 @@
   'use strict';
 
   $(function () {
-    if (typeof (intlTelInput) === 'function') {
+    if (typeof (intlTelInput) === 'function' && $('#whatsappme_phone').length) {
       var country_request = JSON.parse(localStorage.whatsappme_country_code || '{}');
       var country_code = (country_request.code && country_request.date == new Date().toDateString()) ? country_request.code : false;
       var $phone = $('#whatsappme_phone');
@@ -23,14 +23,19 @@
         },
         utilsScript: 'https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/' + intl_tel_input_version + '/js/utils.js'
       });
+      // Ensures store current value
+      iti.hiddenInput.value = $phone.val();
 
-      $phone.on('keyup change', function () {
-        $phone.css('border-color', '');
+      $phone.on('input', function () {
+        var $this = $(this);
+        var iti = intlTelInputGlobals.getInstance(this);
+
+        $this.css('color', $this.val().trim() && !iti.isValidNumber() ? '#ca4a1f' : '');
         // Ensures number it's updated on AJAX save (Gutemberg)
         iti.hiddenInput.value = iti.getNumber();
-      });
-      $phone.on('blur', function () {
-        $phone.css('border-color', $phone.val().trim() && !iti.isValidNumber() ? '#ff0000' : '');
+      }).on('blur', function () {
+        var iti = intlTelInputGlobals.getInstance(this);
+        iti.setNumber(iti.getNumber());
       });
     }
 
