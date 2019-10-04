@@ -97,7 +97,7 @@ WAme don't save any personal data and don't use cookies.
 
 = Google Analytics integration =
 
-WAme send an event when user click to launch WhatsApp.
+WAme send a custom event when user click to launch WhatsApp.
 
 If Global Site Tag (gtag.js) detected:
 
@@ -112,6 +112,12 @@ If Universal Analtics (analytics.js) detected:
 WAme send an event (if GTM detected) when user click to launch WhatsApp:
 
 `dataLayer.push({ 'event': 'WhatsAppMe', 'eventAction': 'click', 'eventLabel': out_url });`
+
+= Facebook Pixel integration =
+
+WAme send a custom event if Facebook Pixel is detected when user click to launch WhatsApp:
+
+`fbq('trackCustom', 'WhatsAppMe', { eventAction: 'click', eventLabel: out_url });`
 
 == Screenshots ==
 
