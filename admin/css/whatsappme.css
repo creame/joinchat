@@ -3,12 +3,12 @@
   min-height: 100px;
 }
 
-.tab {
+.wametab {
   display: none;
 }
 
-.tab-active {
-  display: block;
+.wametab-active {
+  display: block !important;
 }
 
 #whatsappme_tab_advanced tr:hover {
