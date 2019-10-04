@@ -146,7 +146,7 @@
   // Trigger Google Analytics event
   function send_event(link) {
     if (typeof dataLayer == 'object') {
-      // Send Google Tag Manager Event
+      // Send Google Tag Manager custom event
       dataLayer.push({
         'event': 'WhatsAppMe',
         'eventAction': 'click',
@@ -154,19 +154,23 @@
       });
     }
     if (typeof gtag == 'function') {
-      // Send event (Global Site Tag - gtag.js)
+      // Send custom event (Global Site Tag - gtag.js)
       gtag('event', 'click', {
         'event_category': 'WhatsAppMe',
         'event_label': link,
         'transport_type': 'beacon'
       });
     } else if (typeof ga == 'function' && typeof ga.getAll == 'function') {
-      // Send event (Universal Analtics - analytics.js)
+      // Send custom event (Universal Analtics - analytics.js)
       ga('set', 'transport', 'beacon');
       var trackers = ga.getAll();
       trackers.forEach(function (tracker) {
         tracker.send("event", 'WhatsAppMe', 'click', link);
       });
+    }
+    if (typeof fbq == 'function') {
+      // Send Facebook Pixel custom event
+      fbq('trackCustom', 'WhatsAppMe', { eventAction: 'click', eventLabel: link });
     }
   }
 

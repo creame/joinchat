@@ -66,13 +66,13 @@
     if ($('#whatsappme_form').length === 1) {
       // Tabs
       $('.nav-tab').click(function (e) {
-        var $tab = $(this);
         e.preventDefault();
+        var $navtab = $(this);
 
-        $('.nav-tab').removeClass('nav-tab-active');
-        $tab.addClass('nav-tab-active').blur();
-        $('.tab').removeClass('tab-active');
-        $($tab.attr('href')).addClass('tab-active');
+        $('.nav-tab').removeClass('nav-tab-active').attr('aria-selected', 'false');
+        $navtab.addClass('nav-tab-active').attr('aria-selected', 'true').get(0).blur();
+        $('.wametab').removeClass('wametab-active');
+        $($navtab.attr('href')).addClass('wametab-active').find('textarea').each(textarea_autoheight);
       });
 
       // Toggle WhatsApp web option

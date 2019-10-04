@@ -365,9 +365,10 @@ class WhatsAppMe_Admin {
 	 */
 	public function settings_tab_open( $args ) {
 
-		$tab_id = str_replace( '_open', '', $args['id'] );
+		$tab_id = str_replace( array( 'whatsappme_tab_', '_open' ), '', $args['id'] );
+		$active = 'general' == $tab_id ? 'wametab-active' : '';
 
-		echo '<div id="' . $tab_id . '" class="tab' . ( 'whatsappme_tab_general' == $tab_id ? ' tab-active' : '' ) . '">';
+		echo "<div id=\"whatsappme_tab_$tab_id\" class=\"wametab $active\" role=\"tabpanel\" aria-labelledby=\"navtab_$tab_id\" >";
 
 	}
 
@@ -654,12 +655,16 @@ class WhatsAppMe_Admin {
 
 				<form method="post" id="whatsappme_form" action="options.php" autocomplete="off">
 					<?php settings_fields( 'whatsappme' ); ?>
-					<h2 class="nav-tab-wrapper wp-clearfix">
+					<h2 class="nav-tab-wrapper wp-clearfix" role="tablist">
 						<?php foreach ( $this->tabs as $tab => $name ) : ?>
-							<a href="#whatsappme_tab_<?php echo $tab; ?>" class="nav-tab <?php echo 'general' == $tab ? 'nav-tab-active' : ''; ?>"><?php echo $name; ?></a>
+							<?php if ( 'general' === $tab ) : ?>
+								<a id="navtab_<?php echo $tab; ?>" href="#whatsappme_tab_<?php echo $tab; ?>" class="nav-tab nav-tab-active" role="tab" aria-controls="whatsappme_tab_<?php echo $tab; ?>" aria-selected="true"><?php echo $name; ?></a>
+							<?php else : ?>
+								<a id="navtab_<?php echo $tab; ?>" href="#whatsappme_tab_<?php echo $tab; ?>" class="nav-tab" role="tab" aria-controls="whatsappme_tab_<?php echo $tab; ?>" aria-selected="false"><?php echo $name; ?></a>
+							<?php endif; ?>
 						<?php endforeach; ?>
 					</h2>
-					<div class="tabs">
+					<div class="wametabs">
 						<?php do_settings_sections( 'whatsappme' ); ?>
 					</div><!-- end tabs -->
 					<?php submit_button(); ?>
