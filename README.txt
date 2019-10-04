@@ -5,7 +5,7 @@ Tags: whatsapp business, whatsapp, click to chat, button, whatsapp support chat,
 Requires at least: 3.0.1
 Tested up to: 5.2
 Requires PHP: 5.3
-Stable tag: 3.0.0
+Stable tag: 3.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -120,6 +120,10 @@ WAme send an event (if GTM detected) when user click to launch WhatsApp:
 3. WAme on post/page edition.
 
 == Changelog ==
+
+= 3.0.1 =
+* FIX sometimes the phone number is lost in WAme settings on save.
+* CHANGED Wame button z-index to 1000.
 
 = 3.0.0 =
 * **NEW:** Better Integration with WooCommerce: CTA and Custom Message for product pages and new dynamic variables {SKU}, {PRICE} {PRODUCT}.
