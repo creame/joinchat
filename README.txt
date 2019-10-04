@@ -5,7 +5,7 @@ Tags: whatsapp business, whatsapp, click to chat, button, whatsapp support chat,
 Requires at least: 3.0.1
 Tested up to: 5.2
 Requires PHP: 5.3
-Stable tag: 3.0.1
+Stable tag: 3.0.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -20,6 +20,8 @@ Connect a WordPress chat with WhatsApp. The best solution for marketing and supp
 ### New in WAme 3.0 📍
 
 🛒 **Better Integration with WooCommerce**. Define CTAs and Custom Messages for product pages, you can use dynamic variables such as {SKU}, {PRICE} or {PRODUCT}.
+
+📈 **Facebook Pixel integration**. Sends a custom event when user launch WhatsApp.
 
 ### ⌁ What you can do with WAme ✅
 
@@ -38,7 +40,7 @@ For users to click on the button, use custom CTAs on each page, product or secti
 #### 💬 Customize conversation start messages.
 So that the user does not waste time in writing. This way you will be able to know from which page it comes or what product is being consulted when you start the first conversation.
 
-#### 🏁 Analyze the conversion data in Google Analytics.
+#### 🏁 Analyze the conversion data in Google Analytics and Facebook Pixel.
 Remember, you do not have to do anything, the plugin already creates and computes the events by itself. [You can read more about this topic here](https://wame.chat/es/wame-mide-los-eventos-de-whatsapp-en-google-analytics/).
 
 #### 💱 Customize different languages.
@@ -126,6 +128,10 @@ WAme send a custom event if Facebook Pixel is detected when user click to launch
 3. WAme on post/page edition.
 
 == Changelog ==
+
+= 3.0.2 =
+* **NEW:** Send Facebook Pixel custom event when user launch WhatsApp.
+* FIX empty tabs on settings page due to conflicts with other themes or plugins.
 
 = 3.0.1 =
 * FIX sometimes the phone number is lost in WAme settings on save.
