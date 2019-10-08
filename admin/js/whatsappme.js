@@ -115,5 +115,10 @@
 
       propagate_inheritance();
     }
+
+    if ($('.whatsappme-metabox').length === 1) {
+      // Texarea auto height
+      $('textarea', '.whatsappme-metabox').on('focus input', textarea_autoheight).each(textarea_autoheight);
+    }
   });
 })(jQuery);
