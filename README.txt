@@ -119,6 +119,18 @@ WAme send a custom event if Facebook Pixel is detected when user click to launch
 
 `fbq('trackCustom', 'WhatsAppMe', { eventAction: 'click', eventLabel: out_url });`
 
+= Other integrations =
+
+There is a Javascript event that WAme triggers automatically before launch WhatsApp, which can be used to add your custom tracking code (or other needs).
+
+`jQuery(document).ready(function($){
+  $(document).on('whatsappme:open', function (event, args, settings) {
+    // Your staff
+    // Note: args.link is the link to open, you can change it
+    // but only wa.me, whastapp.com or current domain are allowed.
+  });
+});`
+
 == Screenshots ==
 
 1. WAme general settings.
