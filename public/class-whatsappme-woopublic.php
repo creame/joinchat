@@ -24,7 +24,7 @@ class WhatsAppMe_WooPublic {
 		$loader->add_filter( 'whatsappme_extra_settings', $this, 'woo_settings' );
 		$loader->add_filter( 'whatsappme_get_settings_site', $this, 'product_settings' );
 		$loader->add_filter( 'whatsappme_visibility', $this, 'visibility', 10, 2 );
-		$loader->add_filter( 'whatsappme_message_send_replacements', $this, 'replacements' );
+		$loader->add_filter( 'whatsappme_variable_replacements', $this, 'replacements' );
 		$loader->add_filter( 'whatsappme_excluded_fields', $this, 'excluded_fields' );
 
 	}
@@ -128,9 +128,9 @@ class WhatsAppMe_WooPublic {
 
 			$replacements = array_merge(
 				$replacements, array(
-					'/\{PRODUCT\}/i' => $product->get_name(),
-					'/\{SKU\}/i'     => $product->get_sku(),
-					'/\{PRICE\}/i'   => strip_tags( wc_price( $product->get_price() ) ),
+					'PRODUCT' => $product->get_name(),
+					'SKU'     => $product->get_sku(),
+					'PRICE'   => strip_tags( wc_price( $product->get_price() ) ),
 				)
 			);
 		}

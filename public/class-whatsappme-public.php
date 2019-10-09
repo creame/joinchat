@@ -59,6 +59,7 @@ class WhatsAppMe_Public {
 	 * @since    2.3.0     Added button_delay and whatsapp_web settings, message_delay in seconds
 	 * @param    string $plugin_name       The name of the plugin.
 	 * @param    string $version    The version of this plugin.
+	 * @return   void
 	 */
 	public function __construct( $plugin_name, $version ) {
 
@@ -141,7 +142,7 @@ class WhatsAppMe_Public {
 			$settings['whatsapp_web']  = 'yes' == $settings['whatsapp_web'];
 			$settings['message_badge'] = 'yes' == $settings['message_badge'] && '' != $settings['message_text'];
 			$settings['position']      = 'right' == $settings['position'] ? 'right' : 'left';
-			$settings['message_send']  = $this->replace_message_variables( $settings['message_send'] );
+			$settings['message_send']  = self::replace_variables( $settings['message_send'] );
 			// Set true to link http://web.whatsapp.com instead http://api.whatsapp.com
 			$settings['whatsapp_web'] = apply_filters( 'whatsappme_whatsapp_web', 'yes' == $settings['whatsapp_web'] );
 
@@ -177,6 +178,7 @@ class WhatsAppMe_Public {
 	 *
 	 * @since    1.0.0
 	 * @since    2.2.2     minified
+	 * @return   void
 	 */
 	public function enqueue_styles() {
 
@@ -192,6 +194,7 @@ class WhatsAppMe_Public {
 	 *
 	 * @since    1.0.0
 	 * @since    2.2.2     minified
+	 * @return   void
 	 */
 	public function enqueue_scripts() {
 
@@ -206,6 +209,7 @@ class WhatsAppMe_Public {
 	 * Outputs WhatsApp button html and his settings on footer
 	 *
 	 * @since    1.0.0
+	 * @return   void
 	 */
 	public function footer_html() {
 		global $wp;
@@ -240,7 +244,7 @@ class WhatsAppMe_Public {
 							<svg viewBox="0 0 120 28"><path fill="#fff" fill-rule="evenodd" d="M117.2 17c0 .4-.2.7-.4 1-.1.3-.4.5-.7.7l-1 .2c-.5 0-.9 0-1.2-.2l-.7-.7a3 3 0 0 1-.4-1 5.4 5.4 0 0 1 0-2.3c0-.4.2-.7.4-1l.7-.7a2 2 0 0 1 1.1-.3 2 2 0 0 1 1.8 1l.4 1a5.3 5.3 0 0 1 0 2.3zm2.5-3c-.1-.7-.4-1.3-.8-1.7a4 4 0 0 0-1.3-1.2c-.6-.3-1.3-.4-2-.4-.6 0-1.2.1-1.7.4a3 3 0 0 0-1.2 1.1V11H110v13h2.7v-4.5c.4.4.8.8 1.3 1 .5.3 1 .4 1.6.4a4 4 0 0 0 3.2-1.5c.4-.5.7-1 .8-1.6.2-.6.3-1.2.3-1.9s0-1.3-.3-2zm-13.1 3c0 .4-.2.7-.4 1l-.7.7-1.1.2c-.4 0-.8 0-1-.2-.4-.2-.6-.4-.8-.7a3 3 0 0 1-.4-1 5.4 5.4 0 0 1 0-2.3c0-.4.2-.7.4-1 .1-.3.4-.5.7-.7a2 2 0 0 1 1-.3 2 2 0 0 1 1.9 1l.4 1a5.4 5.4 0 0 1 0 2.3zm1.7-4.7a4 4 0 0 0-3.3-1.6c-.6 0-1.2.1-1.7.4a3 3 0 0 0-1.2 1.1V11h-2.6v13h2.7v-4.5c.3.4.7.8 1.2 1 .6.3 1.1.4 1.7.4a4 4 0 0 0 3.2-1.5c.4-.5.6-1 .8-1.6.2-.6.3-1.2.3-1.9s-.1-1.3-.3-2c-.2-.6-.4-1.2-.8-1.6zm-17.5 3.2l1.7-5 1.7 5h-3.4zm.2-8.2l-5 13.4h3l1-3h5l1 3h3L94 7.3h-3zm-5.3 9.1l-.6-.8-1-.5a11.6 11.6 0 0 0-2.3-.5l-1-.3a2 2 0 0 1-.6-.3.7.7 0 0 1-.3-.6c0-.2 0-.4.2-.5l.3-.3h.5l.5-.1c.5 0 .9 0 1.2.3.4.1.6.5.6 1h2.5c0-.6-.2-1.1-.4-1.5a3 3 0 0 0-1-1 4 4 0 0 0-1.3-.5 7.7 7.7 0 0 0-3 0c-.6.1-1 .3-1.4.5l-1 1a3 3 0 0 0-.4 1.5 2 2 0 0 0 1 1.8l1 .5 1.1.3 2.2.6c.6.2.8.5.8 1l-.1.5-.4.4a2 2 0 0 1-.6.2 2.8 2.8 0 0 1-1.4 0 2 2 0 0 1-.6-.3l-.5-.5-.2-.8H77c0 .7.2 1.2.5 1.6.2.5.6.8 1 1 .4.3.9.5 1.4.6a8 8 0 0 0 3.3 0c.5 0 1-.2 1.4-.5a3 3 0 0 0 1-1c.3-.5.4-1 .4-1.6 0-.5 0-.9-.3-1.2zM74.7 8h-2.6v3h-1.7v1.7h1.7v5.8c0 .5 0 .9.2 1.2l.7.7 1 .3a7.8 7.8 0 0 0 2 0h.7v-2.1a3.4 3.4 0 0 1-.8 0l-1-.1-.2-1v-4.8h2V11h-2V8zm-7.6 9v.5l-.3.8-.7.6c-.2.2-.7.2-1.2.2h-.6l-.5-.2a1 1 0 0 1-.4-.4l-.1-.6.1-.6.4-.4.5-.3a4.8 4.8 0 0 1 1.2-.2 8.3 8.3 0 0 0 1.2-.2l.4-.3v1zm2.6 1.5v-5c0-.6 0-1.1-.3-1.5l-1-.8-1.4-.4a10.9 10.9 0 0 0-3.1 0l-1.5.6c-.4.2-.7.6-1 1a3 3 0 0 0-.5 1.5h2.7c0-.5.2-.9.5-1a2 2 0 0 1 1.3-.4h.6l.6.2.3.4.2.7c0 .3 0 .5-.3.6-.1.2-.4.3-.7.4l-1 .1a21.9 21.9 0 0 0-2.4.4l-1 .5c-.3.2-.6.5-.8.9-.2.3-.3.8-.3 1.3s.1 1 .3 1.3c.1.4.4.7.7 1l1 .4c.4.2.9.2 1.3.2a6 6 0 0 0 1.8-.2c.6-.2 1-.5 1.5-1a4 4 0 0 0 .2 1H70l-.3-1v-1.2zm-11-6.7c-.2-.4-.6-.6-1-.8-.5-.2-1-.3-1.8-.3-.5 0-1 .1-1.5.4a3 3 0 0 0-1.3 1.2v-5h-2.7v13.4H53v-5.1c0-1 .2-1.7.5-2.2.3-.4.9-.6 1.6-.6.6 0 1 .2 1.3.6.3.4.4 1 .4 1.8v5.5h2.7v-6c0-.6 0-1.2-.2-1.6 0-.5-.3-1-.5-1.3zm-14 4.7l-2.3-9.2h-2.8l-2.3 9-2.2-9h-3l3.6 13.4h3l2.2-9.2 2.3 9.2h3l3.6-13.4h-3l-2.1 9.2zm-24.5.2L18 15.6c-.3-.1-.6-.2-.8.2A20 20 0 0 1 16 17c-.2.2-.4.3-.7.1-.4-.2-1.5-.5-2.8-1.7-1-1-1.7-2-2-2.4-.1-.4 0-.5.2-.7l.5-.6.4-.6v-.6L10.4 8c-.3-.6-.6-.5-.8-.6H9c-.2 0-.6.1-.9.5C7.8 8.2 7 9 7 10.7c0 1.7 1.3 3.4 1.4 3.6.2.3 2.5 3.7 6 5.2l1.9.8c.8.2 1.6.2 2.2.1.6-.1 2-.8 2.3-1.6.3-.9.3-1.5.2-1.7l-.7-.4zM14 25.3c-2 0-4-.5-5.8-1.6l-.4-.2-4.4 1.1 1.2-4.2-.3-.5A11.5 11.5 0 0 1 22.1 5.7 11.5 11.5 0 0 1 14 25.3zM14 0A13.8 13.8 0 0 0 2 20.7L0 28l7.3-2A13.8 13.8 0 1 0 14 0z"/></svg>
 							<div class="whatsappme__close"><svg viewBox="0 0 24 24"><path fill="#fff" d="M24 2.4L21.6 0 12 9.6 2.4 0 0 2.4 9.6 12 0 21.6 2.4 24l9.6-9.6 9.6 9.6 2.4-2.4-9.6-9.6L24 2.4z"/></svg></div>
 						</div>
-						<div class="whatsappme__message"><?php echo $this->formated_message(); ?></div>
+						<div class="whatsappme__message"><?php echo self::formated_message( $this->settings['message_text'] ); ?></div>
 						<?php if ( $copy ) : ?>
 							<div class="whatsappme__copy"><?php echo $copy; ?> <a href="<?php echo $powered_link; ?>" rel="nofollow noopener" target="_blank"><svg viewBox="0 0 72 17"><path fill="#fff" fill-rule="evenodd" d="M25.371 10.429l2.122-6.239h.045l2.054 6.239h-4.22zm32.2 2.397c-.439.495-.88.953-1.325 1.375-.797.755-1.332 1.232-1.604 1.43-.622.438-1.156.706-1.604.805-.447.1-.787.13-1.02.09a3.561 3.561 0 0 1-.7-.239c-.66-.318-1.02-.864-1.079-1.64-.058-.774.03-1.619.263-2.533.35-1.987 1.108-4.133 2.274-6.438a73.481 73.481 0 0 0-2.8 3.04c-.816.954-1.7 2.096-2.653 3.428a44.068 44.068 0 0 0-2.77 4.441c-.738 0-1.341-.159-1.808-.477-.427-.278-.748-.695-.962-1.252-.214-.556-.165-1.41.146-2.563l.204-.626c.097-.298.204-.606.32-.924.117-.318.234-.626.35-.924.117-.298.195-.507.234-.626v.06c.272-.756.603-1.56.991-2.415a56.92 56.92 0 0 1 1.4-2.832 62.832 62.832 0 0 0-3.266 3.875 61.101 61.101 0 0 0-2.945 3.995 57.072 57.072 0 0 0-2.886 4.71c-.387 0-.736-.044-1.048-.131l.195.545h-3.72l-1.23-3.786h-6.093L23.158 17h-3.605l6.16-17h3.674l4.357 12.16c.389-1.35.97-2.736 1.74-4.16a41.336 41.336 0 0 0 2.013-4.232.465.465 0 0 0 .058-.18c0-.039.02-.098.058-.178.04-.08.078-.199.117-.358.039-.159.097-.337.175-.536.039-.12.078-.219.117-.298a.465.465 0 0 0 .058-.18c.078-.277.175-.575.292-.893.116-.318.194-.597.233-.835V.25c-.039-.04-.039-.08 0-.119l.233-.12c.117-.039.292.02.525.18.156.08.292.179.408.298.272.199.564.427.875.685.311.259.583.557.816.895a2.9 2.9 0 0 1 .467 1.043c.078.358.039.735-.117 1.133a8.127 8.127 0 0 1-.35.775c0 .08-.038.159-.116.238a2.93 2.93 0 0 1-.175.298 7.05 7.05 0 0 0-.35.656c-.039.04-.058.07-.058.09 0 .02-.02.05-.059.089a61.988 61.988 0 0 1-1.633 2.385c-.544.755-.913 1.35-1.108 1.788a79.39 79.39 0 0 1 3.5-4.233 101.59 101.59 0 0 1 3.12-3.398C45.651 1.82 46.612.986 47.468.43c.739.278 1.341.596 1.808.954.428.318.768.676 1.02 1.073.253.398.244.835-.029 1.312l-1.4 2.325a36.928 36.928 0 0 0-1.749 3.279 53.748 53.748 0 0 1 1.633-1.848 46.815 46.815 0 0 1 4.024-3.875c.7-.597 1.38-1.113 2.041-1.55.739.278 1.341.596 1.808.953.428.318.768.676 1.02 1.073.253.398.243.835-.029 1.312-.155.318-.408.795-.758 1.43a152.853 152.853 0 0 0-2.04 3.846 97.87 97.87 0 0 0-.467.924c-.35.835-.632 1.55-.846 2.146-.214.597-.282.934-.204 1.014a.63.63 0 0 0 .291-.06c.234-.119.564-.348.992-.685.428-.338.875-.736 1.341-1.193.467-.457.914-.914 1.341-1.37.217-.232.409-.45.575-.657a15.4 15.4 0 0 1 .957-2.514c.34-.696.708-1.333 1.108-1.91.399-.576.778-1.044 1.137-1.402a19.553 19.553 0 0 1 1.796-1.7 32.727 32.727 0 0 1 1.497-1.164 8.821 8.821 0 0 1 1.317-.835C66.292.989 66.83.83 67.269.83c.32 0 .649.11.988.328.34.22.649.478.928.776.28.299.519.607.718.925.2.318.3.557.3.716.04.597-.06 1.253-.3 1.97a7.14 7.14 0 0 1-1.107 2.058 8.534 8.534 0 0 1-1.826 1.76 6.522 6.522 0 0 1-2.395 1.074c-.2.08-.36.06-.48-.06a.644.644 0 0 1-.179-.477c0-.358.14-.616.42-.776.837-.318 1.536-.735 2.095-1.253.559-.517.998-1.034 1.317-1.551.4-.597.699-1.213.898-1.85 0-.199-.09-.308-.27-.328a4.173 4.173 0 0 0-.448-.03 4.83 4.83 0 0 0-1.318.597c-.399.239-.848.577-1.347 1.014-.499.438-1.028 1.015-1.586 1.73-.918 1.154-1.587 2.298-2.006 3.432-.42 1.134-.629 1.979-.629 2.536 0 .915.19 1.482.569 1.7.38.22.728.329 1.048.329.638 0 1.347-.15 2.125-.448a16.248 16.248 0 0 0 2.305-1.104 30.05 30.05 0 0 0 2.126-1.342 27.256 27.256 0 0 0 1.646-1.224c.08-.04.18-.1.3-.179l.24-.12a.54.54 0 0 1 .239-.059c.08 0 .16.02.24.06.08.04.119.16.119.358 0 .239-.08.457-.24.656a19.115 19.115 0 0 1-2.245 1.82 35.445 35.445 0 0 1-2.185 1.403c-.759.437-1.497.855-2.215 1.253a8.461 8.461 0 0 1-1.647.387c-.499.06-.968.09-1.407.09-.998 0-1.796-.16-2.395-.477-.599-.319-1.048-.706-1.347-1.164a4.113 4.113 0 0 1-.599-1.372c-.1-.457-.15-.843-.15-1.161zm-42.354-1.111L17.887 0h3.514L17.02 17h-3.56L10.7 5.428h-.046L7.94 17H4.312L0 0h3.582L6.16 11.571h.045L9.035 0h3.354l2.783 11.715h.045z"/></svg></a></div>
 						<?php endif; ?>
@@ -259,27 +263,31 @@ class WhatsAppMe_Public {
 	 *
 	 * @since    1.3.0
 	 * @since    2.3.0      apply replace_message_variables
-	 * @return   string     message formated string
+	 * @since    3.0.3      make static and take $string param
+	 * @param    string $string    string to apply format replacements
+	 * @return   string     string formated
 	 */
-	public function formated_message() {
+	public static function formated_message( $string ) {
 
 		$replacements = apply_filters(
-			'whatsappme_message_replacements', array(
+			'whatsappme_format_replacements', array(
 				'/_(\S[^_]*\S)_/mu'    => '<em>$1</em>',
 				'/\*(\S[^\*]*\S)\*/mu' => '<strong>$1</strong>',
 				'/~(\S[^~]*\S)~/mu'    => '<del>$1</del>',
 			)
 		);
 
-		$replacements_keys = array_keys( $replacements );
+		$replacements = apply_filters_deprecated( 'whatsappme_message_replacements', array( $replacements ), '3.0.3', 'whatsappme_format_replacements' );
+
+		$patterns = array_keys( $replacements );
 
 		// Split text into lines and apply replacements line by line
-		$lines = explode( "\n", $this->settings['message_text'] );
+		$lines = explode( "\n", $string );
 		foreach ( $lines as $key => $line ) {
-			$lines[ $key ] = preg_replace( $replacements_keys, $replacements, esc_html( $line ) );
+			$lines[ $key ] = preg_replace( $patterns, $replacements, esc_html( $line ) );
 		}
 
-		return $this->replace_message_variables( implode( '<br>', $lines ) );
+		return self::replace_variables( implode( '<br>', $lines ) );
 
 	}
 
@@ -288,18 +296,29 @@ class WhatsAppMe_Public {
 	 *
 	 * @since    1.4.0
 	 * @since    2.3.0      renamed from formated_message_send to replace_message_variables
-	 * @return   string     message formated string
+	 * @since    3.0.3      renamed to replace_variables and make static
+	 * @param    string $string    string to apply variable replacements
+	 * @return   string     string with replaced variables
 	 */
-	public function replace_message_variables( $string ) {
+	public static function replace_variables( $string ) {
 		global $wp;
 
 		$replacements = apply_filters(
-			'whatsappme_message_send_replacements', array(
-				'/\{SITE\}/i'  => get_bloginfo( 'name' ),
-				'/\{URL\}/i'   => home_url( $wp->request ),
-				'/\{TITLE\}/i' => $this->get_title(),
+			'whatsappme_variable_replacements', array(
+				'SITE'  => get_bloginfo( 'name' ),
+				'URL'   => home_url( $wp->request ),
+				'TITLE' => self::get_title(),
 			)
 		);
+
+		// Convert VAR to regex {VAR}
+		$patterns = array_map(
+			function ( $var ) {
+				return "/\{$var\}/i";
+			}, array_keys( $replacements )
+		);
+
+		$replacements = apply_filters_deprecated( 'whatsappme_message_send_replacements', array( array_combine( $patterns, $replacements ) ), '3.0.3', 'whatsappme_variable_replacements' );
 
 		return preg_replace( array_keys( $replacements ), $replacements, $string );
 
@@ -309,9 +328,10 @@ class WhatsAppMe_Public {
 	 * Get current page title
 	 *
 	 * @since    1.4.0
+	 * @since    3.0.3      make static
 	 * @return   string     message formated string
 	 */
-	public function get_title() {
+	public static function get_title() {
 
 		if ( is_home() || is_singular() ) {
 			$title = single_post_title( '', false );

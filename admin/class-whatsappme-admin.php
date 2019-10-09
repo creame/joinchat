@@ -818,7 +818,7 @@ class WhatsAppMe_Admin {
 	 * @since    2.0.0
 	 * @access   public
 	 * @param    mixed $value to clean
-	 * @return   mixed     $value cleaned
+	 * @return   mixed      $value cleaned
 	 */
 	public static function clean_input( $value ) {
 		if ( is_array( $value ) ) {
