@@ -1,3 +1,5 @@
+/* WAme chat settings page */
+
 .js #whatsappme_form textarea {
   overflow: hidden;
   min-height: 100px;
@@ -78,4 +80,51 @@
 
 .iti--allow-dropdown input {
   padding-left: 52px !important;
+}
+
+/* WAme chat metabox */
+
+.whatsappme-metabox code {
+  -webkit-user-select: all;
+  -moz-user-select: all;
+  -ms-user-select: all;
+  user-select: all;
+  padding: 2px 1px;
+  font-size: smaller;
+  vertical-align: text-bottom;
+}
+
+.whatsappme-metabox .dashicons {
+  opacity: .5;
+}
+
+.whatsappme-metabox input::placeholder {
+  color: #dedfe0;
+}
+
+.whatsappme-metabox input::-ms-input-placeholder {
+  color: #dedfe0;
+}
+
+.whatsappme-metabox input[type=radio] {
+  margin-right: 1px;
+}
+
+.whatsappme-metabox input[type=radio]+span {
+  margin-right: 5px;
+  transition: all 200ms;
+}
+
+.whatsappme-metabox input[type=radio]:checked+span {
+  color: #79ba49;
+  opacity: 1;
+}
+
+.whatsappme-metabox input[type=radio]:checked+.dashicons-hidden {
+  color: #ca4a1f;
+}
+
+.js .whatsappme-metabox textarea {
+  overflow: hidden;
+  min-height: 3em;
 }

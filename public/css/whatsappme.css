@@ -214,7 +214,7 @@
 .whatsappme__message {
   position: relative;
   min-height: 80px;
-  padding: 20px 22px;
+  padding: 20px 2px 20px 0;
   margin: 34px 26px;
   border-radius: 32px;
   background-color: #fff;
@@ -238,6 +238,26 @@
   left: auto;
   right: -18px;
   transform: rotateY(180deg);
+}
+
+.whatsappme__message__wrap {
+  max-height: calc(100vh - 270px);
+  padding: 0 20px 0 22px;
+  overflow: auto;
+}
+
+.whatsappme__message__wrap::-webkit-scrollbar {
+  width: 5px;
+  background: rgba(0, 0, 0, 0);
+}
+
+.whatsappme__message__wrap::-webkit-scrollbar-thumb {
+  border-radius: 3px;
+  background: rgba(0, 0, 0, 0);
+}
+
+.whatsappme__message__wrap:hover::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2);
 }
 
 .whatsappme__copy {
@@ -291,7 +311,8 @@
   left: 0;
 }
 
-@media (max-width: 480px) {
+@media (max-width: 480px),
+(orientation: landscape) and (max-width: 767px) {
   .whatsappme {
     bottom: 6px;
     right: 6px;
@@ -318,9 +339,14 @@
   }
 
   .whatsappme__message {
-    padding: 14px 20px;
+    padding: 16px 0;
     margin: 15px 21px 20px;
     line-height: 24px;
+  }
+
+  .whatsappme__message__wrap {
+    max-height: calc(100vh - 194px);
+    padding: 0 14px;
   }
 }
 

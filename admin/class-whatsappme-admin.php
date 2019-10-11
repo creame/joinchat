@@ -707,13 +707,15 @@ class WhatsAppMe_Admin {
 	 * @since    1.1.0     (previously named "add_meta_box")
 	 * @since    2.0.0     Now can set as [show, hide, default]
 	 * @since    2.2.0     Enqueue scripts/styles. Added "telephone"
+	 * @since    3.0.3     Capture and filter output
 	 * @access   public
 	 * @return   void
 	 */
 	public function meta_box( $post ) {
-		// TODO: add hooks for more extendable metabox
+
 		// Enqueue assets
 		wp_enqueue_script( 'whatsappme-admin' );
+		wp_enqueue_style( 'whatsappme-admin' );
 
 		if ( $this->enhanced_phone ) {
 			wp_enqueue_style( 'intl-tel-input' );
@@ -738,20 +740,21 @@ class WhatsAppMe_Admin {
 
 		$metabox_vars = apply_filters( 'whatsappme_metabox_vars', array( 'SITE', 'URL', 'TITLE' ) );
 
-		wp_nonce_field( 'whatsappme_data', 'whatsappme_nonce' );
+		ob_start();
 		?>
 			<div class="whatsappme-metabox">
+				<?php wp_nonce_field( 'whatsappme_data', 'whatsappme_nonce' ); ?>
 				<p>
 					<label for="whatsappme_phone"><?php _e( 'Telephone', 'creame-whatsapp-me' ); ?></label><br>
 					<input id="whatsappme_phone" <?php echo $this->enhanced_phone ? 'data-' : ''; ?>name="whatsappme_telephone" value="<?php echo $metadata['telephone']; ?>" type="text">
 				</p>
 				<p>
 					<label for="whatsappme_message"><?php _e( 'Call To Action', 'creame-whatsapp-me' ); ?></label><br>
-					<textarea name="whatsappme_message" rows="2" class="large-text"><?php echo $metadata['message_text']; ?></textarea>
+					<textarea id="whatsappme_message" name="whatsappme_message" rows="2" class="large-text"><?php echo $metadata['message_text']; ?></textarea>
 				</p>
 				<p>
 					<label for="whatsappme_message_send"><?php _e( 'Message', 'creame-whatsapp-me' ); ?></label><br>
-					<textarea name="whatsappme_message_send" rows="2" class="large-text"><?php echo $metadata['message_send']; ?></textarea>
+					<textarea id="whatsappme_message_send" name="whatsappme_message_send" rows="2" class="large-text"><?php echo $metadata['message_send']; ?></textarea>
 					<?php if ( count( $metabox_vars ) ) : ?>
 						<small><?php _e( 'You can use vars:', 'creame-whatsapp-me' ); ?> <code>{<?php echo join( '}</code> <code>{', $metabox_vars ); ?>}</code></small>
 					<?php endif; ?>
@@ -765,17 +768,10 @@ class WhatsAppMe_Admin {
 						<?php echo __( 'Default visibility', 'creame-whatsapp-me' ); ?></label>
 				</p>
 			</div>
-			<style>
-				.whatsappme-metabox code { -webkit-user-select:all; -moz-user-select:all; -ms-user-select:all; user-select:all; padding:2px 1px; font-size:smaller; vertical-align:text-bottom; }
-				.whatsappme-metabox .dashicons { opacity:.5; }
-				.whatsappme-metabox input::placeholder { color:#dedfe0; }
-				.whatsappme-metabox input::-ms-input-placeholder { color:#dedfe0; }
-				.whatsappme-metabox input[type=radio] { margin-right:1px; }
-				.whatsappme-metabox input[type=radio]+span { margin-right:5px; transition:all 200ms; }
-				.whatsappme-metabox input[type=radio]:checked+span { color:#79ba49; opacity:1; }
-				.whatsappme-metabox input[type=radio]:checked+.dashicons-hidden { color:#ca4a1f; }
-			</style>
 		<?php
+		$metabox_output = ob_get_clean();
+
+		echo apply_filters( 'whatsappme_metabox_output', $metabox_output, $post, $metadata );
 	}
 
 	/**
@@ -784,6 +780,7 @@ class WhatsAppMe_Admin {
 	 * @since    1.1.0
 	 * @since    2.0.0     Change 'hide' key to 'view' now values can be [yes, no]
 	 * @since    2.2.0     Added "telephone"
+	 * @since    3.0.3     Filter metadata before save
 	 * @access   public
 	 * @return   void
 	 */
@@ -806,6 +803,8 @@ class WhatsAppMe_Admin {
 			)
 		);
 
+		$metadata = apply_filters( 'whatsappme_metabox_save', $metadata, $post_id );
+
 		if ( count( $metadata ) ) {
 			update_post_meta( $post_id, '_whatsappme', $metadata );
 		} else {
@@ -819,7 +818,7 @@ class WhatsAppMe_Admin {
 	 * @since    2.0.0
 	 * @access   public
 	 * @param    mixed $value to clean
-	 * @return   mixed     $value cleaned
+	 * @return   mixed      $value cleaned
 	 */
 	public static function clean_input( $value ) {
 		if ( is_array( $value ) ) {
