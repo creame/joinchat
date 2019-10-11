@@ -5,7 +5,7 @@ Tags: whatsapp business, whatsapp, click to chat, button, whatsapp support chat,
 Requires at least: 3.0.1
 Tested up to: 5.2
 Requires PHP: 5.3
-Stable tag: 3.0.2
+Stable tag: 3.0.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -140,6 +140,13 @@ There is a Javascript event that WAme triggers automatically before launch Whats
 3. WAme on post/page edition.
 
 == Changelog ==
+
+= 3.0.3 =
+* FIX in landscape or with long CTAs the chat window could be higher than view and can't be closed.
+* For developers:
+  * New metabox filters 'whatsappme_metabox_output' and 'whatsappme_metabox_save'.
+  * Change filter 'whatsappme_message_replacements' to 'whatsappme_format_replacements'.
+  * Change filter 'whatsappme_message_send_replacements' to 'whatsappme_variable_replacements'.
 
 = 3.0.2 =
 * **NEW:** Send Facebook Pixel custom event when user launch WhatsApp.
