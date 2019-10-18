@@ -60,8 +60,8 @@ class WhatsAppMe_WooAdmin {
 	 */
 	public function settings_validate( $input ) {
 
-		$input['message_text_product'] = WhatsAppMe_Admin::clean_input( $input['message_text_product'] );
-		$input['message_send_product'] = WhatsAppMe_Admin::clean_input( $input['message_send_product'] );
+		$input['message_text_product'] = WhatsAppMe_Util::clean_input( $input['message_text_product'] );
+		$input['message_send_product'] = WhatsAppMe_Util::clean_input( $input['message_send_product'] );
 
 		return $input;
 	}
@@ -178,13 +178,13 @@ class WhatsAppMe_WooAdmin {
 				$output = '<textarea id="whatsappme_message_text_product" name="whatsappme[message_text_product]" rows="4" class="regular-text" ' .
 					'placeholder="' . esc_attr__( "This *{PRODUCT}* can be yours for only *{PRICE}*!\nIf you have any questions, ask us.", 'creame-whatsapp-me' ) . '">' .
 					$value . '</textarea>' .
-					'<p class="description">' . __( 'Define a text to encourage clients to contact by WhatsApp <strong>(optional)</strong>', 'creame-whatsapp-me' ) . '</p>';
+					'<p class="description">' . __( 'Define a text to encourage clients to contact by WhatsApp', 'creame-whatsapp-me' ) . '</p>';
 				break;
 
 			case 'message_send_product':
 				$output = '<textarea id="whatsappme_message_send_product" name="whatsappme[message_send_product]" rows="3" class="regular-text" ' .
 					'placeholder="' . esc_attr__( "*Hi {SITE}!*\nI have a question about *{PRODUCT} ({SKU})*", 'creame-whatsapp-me' ) . '">' . $value . '</textarea>' .
-					'<p class="description">' . __( 'Predefined text with which client can start the conversation <strong>(optional)</strong>', 'creame-whatsapp-me' ) . '</p>';
+					'<p class="description">' . __( 'Predefined text for the first message the client will send you', 'creame-whatsapp-me' ) . '</p>';
 				break;
 		}
 
