@@ -3,9 +3,6 @@
 /**
  * The admin-specific functionality of the plugin.
  *
- * Defines the plugin name, version, and two examples hooks for how to
- * enqueue the admin-specific stylesheet and JavaScript.
- *
  * @since      1.0.0
  * @since      2.0.0      Added advanced visibility settings
  * @since      3.0.0      More extendable admin via hooks
@@ -88,6 +85,7 @@ class WhatsAppMe_Admin {
 	 * @since    2.1.0     Added message_badge
 	 * @since    2.3.0     Added button_delay and whatsapp_web settings, message_delay in seconds
 	 * @since    3.0.0     Is public and added plugin enhanced_phone and tabs
+	 * @since    3.1.0     Added tooltip and image
 	 */
 	public function get_settings() {
 
@@ -107,12 +105,15 @@ class WhatsAppMe_Admin {
 			array(
 				'telephone'     => '',
 				'mobile_only'   => 'no',
+				'button_image'  => '',
+				'button_tip'    => '',
 				'button_delay'  => 3,
 				'whatsapp_web'  => 'no',
 				'message_text'  => '',
 				'message_delay' => 10,
 				'message_badge' => 'no',
 				'message_send'  => '',
+				'message_start' => '',
 				'position'      => 'right',
 				'visibility'    => array( 'all' => 'yes' ),
 			),
@@ -224,6 +225,7 @@ class WhatsAppMe_Admin {
 	 * Return an array of sections and fields for the admin tab
 	 *
 	 * @since    3.0.0
+	 * @since    3.1.0     Added tooltip and image
 	 * @param    string $tab       The id of the admin tab.
 	 * @return   array
 	 */
@@ -234,16 +236,19 @@ class WhatsAppMe_Admin {
 			$sections = array(
 				'button' => array(
 					'telephone'    => '<label for="whatsappme_phone">' . __( 'Telephone', 'creame-whatsapp-me' ) . '</label>',
+					'message_send' => '<label for="whatsappme_message_send">' . __( 'Message', 'creame-whatsapp-me' ) . '</label>',
 					'mobile_only'  => __( 'Mobile Only', 'creame-whatsapp-me' ),
 					'position'     => __( 'Position On Screen', 'creame-whatsapp-me' ),
+					'button_image' => __( 'Image', 'creame-whatsapp-me' ),
+					'button_tip'   => __( 'Tooltip', 'creame-whatsapp-me' ),
 					'button_delay' => '<label for="whatsappme_button_delay">' . __( 'Button Delay', 'creame-whatsapp-me' ) . '</label>',
 					'whatsapp_web' => __( 'WhatsApp Web', 'creame-whatsapp-me' ),
 				),
 				'chat'   => array(
 					'message_text'  => '<label for="whatsappme_message_text">' . __( 'Call To Action', 'creame-whatsapp-me' ) . '</label>',
-					'message_send'  => '<label for="whatsappme_message_send">' . __( 'Message', 'creame-whatsapp-me' ) . '</label>',
+					'message_start' => '<label for="whatsappme_message_start">' . __( 'Start WhatsApp Button', 'creame-whatsapp-me' ) . '</label>',
 					'message_delay' => '<label for="whatsappme_message_delay">' . __( 'Chat Delay', 'creame-whatsapp-me' ) . '</label>',
-					'message_badge' => __( 'Hide Chat', 'creame-whatsapp-me' ),
+					'message_badge' => __( 'Notification Balloon', 'creame-whatsapp-me' ),
 				),
 			);
 
@@ -312,19 +317,25 @@ class WhatsAppMe_Admin {
 	 * @since    2.1.0    Added message_badge
 	 * @since    2.3.0    Added button_delay and whatsapp_web settings, WPML integration
 	 * @since    3.0.0    Added filter for extra settings and action for extra tasks
+	 * @since    3.1.0    Added tooltip and image
 	 * @param    array $input       contain keys 'id', 'title' and 'callback'.
 	 * @return   array
 	 */
 	public function settings_validate( $input ) {
 
-		$input['telephone']     = self::clean_input( $input['telephone'] );
+		$util = new WhatsAppMe_Util(); // Shortcut
+
+		$input['telephone']     = $util::clean_input( $input['telephone'] );
 		$input['mobile_only']   = isset( $input['mobile_only'] ) ? 'yes' : 'no';
+		$input['button_image']  = intval( $input['button_image'] );
+		$input['button_tip']    = $util::substr( $util::clean_input( $input['button_tip'] ), 0, 40 );
 		$input['button_delay']  = intval( $input['button_delay'] );
 		$input['whatsapp_web']  = isset( $input['whatsapp_web'] ) ? 'yes' : 'no';
-		$input['message_text']  = self::clean_input( $input['message_text'] );
-		$input['message_delay'] = intval( $input['message_delay'] );
+		$input['message_text']  = $util::clean_input( $input['message_text'] );
 		$input['message_badge'] = isset( $input['message_badge'] ) ? 'yes' : 'no';
-		$input['message_send']  = self::clean_input( $input['message_send'] );
+		$input['message_send']  = $util::clean_input( $input['message_send'] );
+		$input['message_start'] = $util::substr( $util::clean_input( $input['message_start'] ), 0, 20 );
+		$input['message_delay'] = intval( $input['message_delay'] );
 		$input['position']      = $input['position'] != 'left' ? 'right' : 'left';
 		if ( isset( $input['view'] ) ) {
 			$input['visibility'] = array_filter(
@@ -345,8 +356,10 @@ class WhatsAppMe_Admin {
 		 * Note: don't translate string $name to prevent missing translations if
 		 * public front lang is different of admin lang
 		 */
+		do_action( 'wpml_register_single_string', 'WhatsApp me', 'Tooltip', $input['button_tip'] );
 		do_action( 'wpml_register_single_string', 'WhatsApp me', 'Call To Action', $input['message_text'] );
 		do_action( 'wpml_register_single_string', 'WhatsApp me', 'Message', $input['message_send'] );
+		do_action( 'wpml_register_single_string', 'WhatsApp me', 'Start WhatsApp Button', $input['message_start'] );
 
 		// Action to register more WPML strings or other tasks
 		do_action( 'whatsappme_settings_validate', $input );
@@ -402,7 +415,7 @@ class WhatsAppMe_Admin {
 				break;
 
 			case 'whatsappme_tab_general__chat':
-				$output = '<h2 class="title">' . __( 'Chat Window', 'creame-whatsapp-me' ) . '</h2>' .
+				$output = '<hr><h2 class="title">' . __( 'Chat Window', 'creame-whatsapp-me' ) . '</h2>' .
 					'<p>' .
 						__( 'Set the behavior of the chat window.', 'creame-whatsapp-me' ) . ' ' .
 						' <em>' . __( 'You can use styles and dynamic variables', 'creame-whatsapp-me' ) . '</em> ' .
@@ -437,6 +450,7 @@ class WhatsAppMe_Admin {
 	 * Field HTML output
 	 *
 	 * @since    3.0.0
+	 * @since    3.1.0     Added tooltip and image
 	 * @return   void
 	 */
 	public function field_output( $field_id ) {
@@ -480,6 +494,23 @@ class WhatsAppMe_Admin {
 						__( 'Right', 'creame-whatsapp-me' ) . '</label></fieldset>';
 					break;
 
+				case 'button_image':
+					$image = intval( $value ) > 0 ? WhatsAppMe_Util::thumb( $value, 116, 116 )['url'] : false;
+
+					$output = '<div id="whatsappme_button_image_wrapper">' .
+						'<div id="whatsappme_button_image_holder" ' . ( $image ? "style=\"background-size:cover; background-image:url('$image');\"" : '' ) . '></div>' .
+						'<input id="whatsappme_button_image" name="whatsappme[button_image]" type="hidden" value="' . $value . '">' .
+						'<input id="whatsappme_button_image_add" type="button" value="' . esc_attr__( 'Select an image', 'creame-whatsapp-me' ) . '" class="button-primary" ' .
+						'data-title="' . esc_attr__( 'Select button image', 'creame-whatsapp-me' ) . '" data-button="' . esc_attr__( 'Use image', 'creame-whatsapp-me' ) . '"> ' .
+						'<input id="whatsappme_button_image_remove" type="button" value="' . esc_attr__( 'Remove', 'creame-whatsapp-me' ) . '" class="button-secondary' . ( $image ? '' : ' wame-hidden' ) . '">' .
+						'<p class="description">' . __( 'The image will alternate with WhatsApp logo', 'creame-whatsapp-me' ) . '</p></div>';
+					break;
+
+				case 'button_tip':
+					$output = '<input id="whatsappme_button_tip" name="whatsappme[button_tip]" value="' . $value . '" type="text" maxlength="40" class="regular-text" placeholder="' . esc_attr__( '💬 Need help?', 'creame-whatsapp-me' ) . '"> ' .
+						'<p class="description">' . __( 'Short text shown next to WhatsApp button', 'creame-whatsapp-me' ) . '</p>';
+					break;
+
 				case 'button_delay':
 					$output = '<input id="whatsappme_button_delay" name="whatsappme[button_delay]" value="' . $value . '" type="number" min="0" max="120" style="width:5em"> ' . __( 'seconds', 'creame-whatsapp-me' ) .
 						'<p class="description">' . __( 'Time since the page is opened until the WhatsApp button is displayed', 'creame-whatsapp-me' ) . '</p>';
@@ -493,22 +524,27 @@ class WhatsAppMe_Admin {
 
 				case 'message_text':
 					$output = '<textarea id="whatsappme_message_text" name="whatsappme[message_text]" rows="4" class="regular-text" placeholder="' . esc_attr__( "Hello 👋\nCan we help you?", 'creame-whatsapp-me' ) . '">' . $value . '</textarea>' .
-						'<p class="description">' . __( 'Define a text to encourage users to contact by WhatsApp <strong>(optional)</strong>', 'creame-whatsapp-me' ) . '</p>';
+						'<p class="description">' . __( 'Define a text to encourage users to contact by WhatsApp', 'creame-whatsapp-me' ) . '</p>';
 					break;
 
 				case 'message_send':
-					$output = '<textarea id="whatsappme_message_send" name="whatsappme[message_send]" rows="3" class="regular-text" placeholder="' . esc_attr__( 'Hi *{SITE}*! I need more info about {TITLE}', 'creame-whatsapp-me' ) . '">' . $value . '</textarea>' .
-						'<p class="description">' . __( 'Predefined text with which user can start the conversation <strong>(optional)</strong>', 'creame-whatsapp-me' ) . '</p>';
+					$output = '<textarea id="whatsappme_message_send" name="whatsappme[message_send]" rows="3" class="regular-text" placeholder="' . esc_attr__( 'Hi *{SITE}*! I need more info about {TITLE} {URL}', 'creame-whatsapp-me' ) . '">' . $value . '</textarea>' .
+						'<p class="description">' . __( 'Predefined text for the first message the user will send you', 'creame-whatsapp-me' ) . '</p>';
+					break;
+
+				case 'message_start':
+					$output = '<input id="whatsappme_message_start" name="whatsappme[message_start]" value="' . $value . '" type="text" maxlength="20" class="regular-text" placeholder="' . esc_attr__( 'Open chat', 'creame-whatsapp-me' ) . '"> ' .
+						'<p class="description">' . __( 'Text of the start WhatsApp button on Chat Window', 'creame-whatsapp-me' ) . '</p>';
 					break;
 
 				case 'message_delay':
-					$output = '<input id="whatsappme_message_delay" name="whatsappme[message_delay]" value="' . $value . '" type="number" min="0" max="120" style="width:5em"> ' . __( 'seconds', 'creame-whatsapp-me' ) .
-						'<p class="description">' . __( 'Time since the WhatsApp button is displayed until the Chat Window opens', 'creame-whatsapp-me' ) . '</p>';
+					$output = '<input id="whatsappme_message_delay" name="whatsappme[message_delay]" value="' . $value . '" type="number" min="0" max="120" style="width:5em"> ' . __( 'seconds (0 disabled)', 'creame-whatsapp-me' ) .
+						'<p class="description">' . __( 'Chat Window is automatically displayed after delay', 'creame-whatsapp-me' ) . '</p>';
 					break;
 
 				case 'message_badge':
-					$output = '<fieldset><legend class="screen-reader-text"><span>' . __( 'Hide Chat', 'creame-whatsapp-me' ) . '</span></legend>' .
-						'<label><input name="whatsappme[message_badge]" value="yes" type="checkbox"' . checked( 'yes', $value, false ) . '> ' .
+					$output = '<fieldset><legend class="screen-reader-text"><span>' . __( 'Notification Balloon', 'creame-whatsapp-me' ) . '</span></legend>' .
+						'<label><input id="whatsappme_message_badge" name="whatsappme[message_badge]" value="yes" type="checkbox"' . checked( 'yes', $value, false ) . '> ' .
 						__( 'Display a notification balloon instead of opening the Chat Window for a "less intrusive" mode', 'creame-whatsapp-me' ) . '</label></fieldset>';
 					break;
 
@@ -537,7 +573,6 @@ class WhatsAppMe_Admin {
 				'all'      => array( 'front_page', 'blog_page', '404_page', 'search', 'archive', 'singular', 'cpts' ),
 				'archive'  => array( 'date', 'author' ),
 				'singular' => array( 'page', 'post' ),
-			// 'woocommerce': ['product', 'cart', 'checkout', 'account_page']
 			)
 		);
 
@@ -641,6 +676,8 @@ class WhatsAppMe_Admin {
 	 */
 	function options_page() {
 
+		// Enqueue WordPress media scripts
+		wp_enqueue_media();
 		// Enqueue assets
 		wp_enqueue_script( 'whatsappme-admin' );
 		wp_enqueue_style( 'whatsappme-admin' );
@@ -793,7 +830,7 @@ class WhatsAppMe_Admin {
 
 		// Clean and delete empty/false fields
 		$metadata = array_filter(
-			self::clean_input(
+			WhatsAppMe_Util::clean_input(
 				array(
 					'telephone'    => $_POST['whatsappme_telephone'],
 					'message_text' => $_POST['whatsappme_message'],
@@ -809,25 +846,6 @@ class WhatsAppMe_Admin {
 			update_post_meta( $post_id, '_whatsappme', $metadata );
 		} else {
 			delete_post_meta( $post_id, '_whatsappme' );
-		}
-	}
-
-	/**
-	 * Clean user input fields
-	 *
-	 * @since    2.0.0
-	 * @access   public
-	 * @param    mixed $value to clean
-	 * @return   mixed      $value cleaned
-	 */
-	public static function clean_input( $value ) {
-		if ( is_array( $value ) ) {
-			return array_map( 'self::clean_input', $value );
-		} elseif ( is_string( $value ) ) {
-			// Split lines, clean and re-join lines
-			return implode( "\n", array_map( 'sanitize_text_field', explode( "\n", trim( $value ) ) ) );
-		} else {
-			return $value;
 		}
 	}
 }

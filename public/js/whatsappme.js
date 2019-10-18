@@ -30,7 +30,7 @@
       }
     }
 
-    // only works if whatsappme is defined
+    // Only works if whatsappme is defined
     if ($whatsappme.length && !!wame_settings && !!wame_settings.telephone) {
       whatsappme_magic();
     }
@@ -38,37 +38,40 @@
     function whatsappme_magic() {
       var is_mobile = !!navigator.userAgent.match(/Android|iPhone|BlackBerry|IEMobile|Opera Mini/i);
       var button_delay = wame_settings.button_delay * 1000;
+      var chat_delay = wame_settings.message_delay * 1000;
       var has_cta = wame_settings.message_text !== '';
       var wa_web = wame_settings.whatsapp_web && !is_mobile;
-      var message_hash, is_viewed, timeoutID, timeoutCTA;
+      var timeoutID, timeoutCTA;
 
-      // check WebP support
+      // Check WebP support
       var webP = new Image();
       webP.src = 'data:image/webp;base64,UklGRi4AAABXRUJQVlA4TCEAAAAvAUAAEB8wAiMwAgSSNtse/cXjxyCCmrYNWPwmHRH9jwMA';
-      webP.onload = webP.onerror = function () {
-        if (webP.height !== 2) $whatsappme.addClass('nowebp');
-      }
+      webP.onload = webP.onerror = function () { if (webP.height !== 2) $whatsappme.addClass('nowebp'); }
 
-      // stored values
+      // Stored values
       var messages_viewed = (store.getItem('whatsappme_hashes') || '').split(',').filter(Boolean);
       var is_second_visit = store.getItem('whatsappme_visited') == 'yes';
 
-      if (has_cta) {
-        message_hash = hash(wame_settings.message_text).toString();
-        is_viewed = messages_viewed.indexOf(message_hash) > -1;
-      }
+      var message_hash = has_cta ? hash(wame_settings.message_text).toString() : 'no_cta';
+      var is_viewed = messages_viewed.indexOf(message_hash) > -1;
 
       store.setItem('whatsappme_visited', 'yes');
 
       if (!wame_settings.mobile_only || is_mobile) {
-        // show button
-        setTimeout(function () { $whatsappme.addClass('whatsappme--show'); }, button_delay);
+        var classes = 'whatsappme--show';
+        if (!is_viewed && (!has_cta || !chat_delay || wame_settings.message_badge || !is_second_visit)) {
+          classes += ' whatsappme--tooltip';
+        }
+        // Show button (and tooltip)
+        setTimeout(function () { $whatsappme.addClass(classes); }, button_delay);
 
-        if (has_cta && !is_viewed) {
-          if (wame_settings.message_badge) { // show badge
-            timeoutCTA = setTimeout(function () { $badge.addClass('whatsappme__badge--in'); }, button_delay + (wame_settings.message_delay * 1000));
-          } else if (is_second_visit) { // show dialog
-            timeoutCTA = setTimeout(function () { $whatsappme.addClass('whatsappme--dialog'); }, button_delay + (wame_settings.message_delay * 1000));
+        if (has_cta && !is_viewed && chat_delay) {
+          if (wame_settings.message_badge) {
+            // Show badge
+            timeoutCTA = setTimeout(function () { $badge.addClass('whatsappme__badge--in'); }, button_delay + chat_delay);
+          } else if (is_second_visit) {
+            // Show dialog
+            timeoutCTA = setTimeout(show_dialog, button_delay + chat_delay);
           }
         }
       }
@@ -86,7 +89,7 @@
           var args = { link: whatsapp_link(wa_web, wame_settings.telephone, wame_settings.message_send) };
           var secure_link = new RegExp("^https?:\/\/(wa\.me|(api|web|chat)\.whatsapp\.com|" + location.hostname.replace('.', '\.') + ")\/.*", 'i');
 
-          $whatsappme.removeClass('whatsappme--dialog');
+          $whatsappme.removeClass('whatsappme--dialog whatsappme--tooltip');
           save_message_viewed();
           // Trigger custom event (args obj allow edit link by third party scripts)
           $(document).trigger('whatsappme:open', [args, wame_settings]);
@@ -98,13 +101,13 @@
             // Open WhatsApp link
             window.open(args.link, 'whatsappme');
           } else {
-            console.error("WAme: the link doesn't seem safe, it must point to the current domain or whatsapp.com")
+            console.error("WAme: the link doesn't seem safe, it must point to the current domain or whatsapp.com");
           }
         }
       });
 
       $('.whatsappme__close', $whatsappme).click(function () {
-        $whatsappme.removeClass('whatsappme--dialog');
+        $whatsappme.removeClass('whatsappme--dialog whatsappme--tooltip');
         save_message_viewed();
       });
 
@@ -119,8 +122,8 @@
       }
 
       function save_message_viewed() {
-        if (has_cta && !is_viewed) {
-          messages_viewed.push(message_hash)
+        if (!is_viewed) {
+          messages_viewed.push(message_hash);
           store.setItem('whatsappme_hashes', messages_viewed.join(','));
           is_viewed = true;
         }

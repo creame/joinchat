@@ -1,3 +1,8 @@
+@font-face {
+  font-family: 'WAmeIcons';
+  src: url('data:font/woff;base64,d09GRgABAAAAAARgAAsAAAAABBQAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAABPUy8yAAABCAAAAGAAAABgDxIFgGNtYXAAAAFoAAAAVAAAAFQXVtKIZ2FzcAAAAbwAAAAIAAAACAAAABBnbHlmAAABxAAAAHQAAAB0gkciwGhlYWQAAAI4AAAANgAAADYVuuUSaGhlYQAAAnAAAAAkAAAAJAbCA8dobXR4AAAClAAAABgAAAAYDgACM2xvY2EAAAKsAAAADgAAAA4AYgBAbWF4cAAAArwAAAAgAAAAIAAIAAVuYW1lAAAC3AAAAWIAAAFicC7V7nBvc3QAAARAAAAAIAAAACAAAwAAAAMDVQGQAAUAAAKZAswAAACPApkCzAAAAesAMwEJAAAAAAAAAAAAAAAAAAAAARAAAAAAAAAAAAAAAAAAAAAAQAAA6QEDwP/AAEADwABAAAAAAQAAAAAAAAAAAAAAIAAAAAAAAwAAAAMAAAAcAAEAAwAAABwAAwABAAAAHAAEADgAAAAKAAgAAgACAAEAIOkB//3//wAAAAAAIOkA//3//wAB/+MXBAADAAEAAAAAAAAAAAAAAAEAAf//AA8AAQAAAAAAAAAAAAIAADc5AQAAAAABAAAAAAAAAAAAAgAANzkBAAAAAAEAAAAAAAAAAAACAAA3OQEAAAAAAQEzAM0DAALNAAIAAAkBEQMA/jMBzf8AAgAAAAEBAADNAs0CzQACAAABEQECzf4zAs3+AAEAAAABAAAAAQAAtqSnv18PPPUACwQAAAAAANnOUKQAAAAA2c5QpAAAAAADAALNAAAACAACAAAAAAAAAAEAAAPA/8AAAAQAAAAAAAMAAAEAAAAAAAAAAAAAAAAAAAAGBAAAAAAAAAAAAAAAAgAAAAQAATMEAAEAAAAAAAAKABQAHgAsADoAAAABAAAABgADAAEAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAADgCuAAEAAAAAAAEABAAAAAEAAAAAAAIABwBFAAEAAAAAAAMABAAtAAEAAAAAAAQABABaAAEAAAAAAAUACwAMAAEAAAAAAAYABAA5AAEAAAAAAAoAGgBmAAMAAQQJAAEACAAEAAMAAQQJAAIADgBMAAMAAQQJAAMACAAxAAMAAQQJAAQACABeAAMAAQQJAAUAFgAXAAMAAQQJAAYACAA9AAMAAQQJAAoANACAd2FtZQB3AGEAbQBlVmVyc2lvbiAxLjAAVgBlAHIAcwBpAG8AbgAgADEALgAwd2FtZQB3AGEAbQBld2FtZQB3AGEAbQBlUmVndWxhcgBSAGUAZwB1AGwAYQByd2FtZQB3AGEAbQBlRm9udCBnZW5lcmF0ZWQgYnkgSWNvTW9vbi4ARgBvAG4AdAAgAGcAZQBuAGUAcgBhAHQAZQBkACAAYgB5ACAASQBjAG8ATQBvAG8AbgAuAAAAAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==') format('woff');
+}
+
 .whatsappme {
   position: fixed;
   z-index: 1000;
@@ -19,12 +24,15 @@
   fill: currentColor !important;
 }
 
-.whatsappme--show {
+.whatsappme.whatsappme--show {
   transform: scale3d(1, 1, 1);
   transition: transform .5s cubic-bezier(0.18, 0.89, 0.32, 1.28);
 }
 
 .whatsappme__button {
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
   position: absolute;
   z-index: 2;
   bottom: 8px;
@@ -78,6 +86,55 @@
   margin: 12px 12px;
 }
 
+.whatsappme__button .whatsappme__button__send {
+  margin: 12px 11px 12px 13px;
+}
+
+.whatsappme__button__image {
+  position: absolute;
+  top: 1px;
+  right: 1px;
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  overflow: hidden;
+  opacity: 0;
+}
+
+.whatsappme__button__image img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.whatsappme--show .whatsappme__button__image {
+  animation: wame_image_loop 20s linear 5s infinite normal both;
+}
+
+.whatsappme--image .whatsappme__button__image {
+  opacity: 1;
+  animation: none;
+}
+
+.whatsappme__button__sendtext {
+  padding: 0;
+  max-width: 0;
+  font-weight: 600;
+  line-height: 60px;
+  white-space: nowrap;
+  opacity: 0;
+  overflow: hidden;
+  transition: none;
+}
+
+.whatsappme--dialog .whatsappme__button__sendtext {
+  padding: 0 4px 0 24px;
+  max-width: 200px;
+  opacity: 1;
+  transition: max-width 0.2s linear, opacity 0.4s ease-out 0.2s;
+}
+
 .whatsappme__badge {
   position: absolute;
   top: -4px;
@@ -97,19 +154,15 @@
 }
 
 .whatsappme__badge.whatsappme__badge--in {
-  animation: badge--in 500ms cubic-bezier(0.27, 0.9, 0.41, 1.28) 1 both;
+  animation: wame_badge_in 500ms cubic-bezier(0.27, 0.9, 0.41, 1.28) 1 both;
 }
 
 .whatsappme__badge.whatsappme__badge--out {
-  animation: badge--out 400ms cubic-bezier(0.215, 0.61, 0.355, 1) 1 both;
+  animation: wame_badge_out 400ms cubic-bezier(0.215, 0.61, 0.355, 1) 1 both;
 }
 
 .whatsappme--dialog .whatsappme__button {
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
-}
-
-.whatsappme--dialog .whatsappme__button svg {
-  margin: 12px 11px 12px 13px;
 }
 
 .whatsappme .whatsappme__button__send path {
@@ -122,13 +175,52 @@
   animation-name: wame_chat;
 }
 
+.whatsappme__tooltip {
+  position: absolute;
+  top: 14px;
+  right: 76px;
+  max-width: calc(100vw - 105px);
+  height: 32px;
+  padding: 0 14px;
+  border: none;
+  border-radius: 16px;
+  background: #fff;
+  color: #075E54;
+  line-height: 31px;
+  white-space: nowrap;
+  box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.4);
+  opacity: 0;
+}
+
+.whatsappme__tooltip::after {
+  font: normal normal 400 20px/1em WAmeIcons;
+  content: '\e900';
+  position: absolute;
+  top: 6px;
+  right: -12px;
+  color: #fff;
+  text-align: right;
+  text-shadow: 2px 1px 3px rgba(0, 0, 0, .4);
+}
+
+.whatsappme__tooltip div {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.whatsappme--tooltip .whatsappme__tooltip {
+  animation: wame_tootlip 20s linear 5s 1 normal both;
+}
+
 .whatsappme__button__open,
 .whatsappme--dialog .whatsappme__button__send {
   display: block;
 }
 
 .whatsappme__button__send,
-.whatsappme--dialog .whatsappme__button__open {
+.whatsappme--dialog .whatsappme__button__open,
+.whatsappme--dialog .whatsappme__button__image,
+.whatsappme--dialog .whatsappme__tooltip {
   display: none;
 }
 
@@ -179,6 +271,8 @@
 }
 
 .whatsappme__close {
+  display: -ms-flexbox;
+  display: -webkit-flex;
   display: flex;
   position: absolute;
   top: 18px;
@@ -193,11 +287,6 @@
   cursor: pointer;
   transition: opacity 300ms ease-out;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-}
-
-[dir=rtl] .whatsappme__close {
-  right: auto;
-  left: 24px;
 }
 
 .whatsappme__close:hover {
@@ -234,12 +323,6 @@
   background-size: 100%;
 }
 
-[dir=rtl] .whatsappme__message:before {
-  left: auto;
-  right: -18px;
-  transform: rotateY(180deg);
-}
-
 .whatsappme__message__wrap {
   max-height: calc(100vh - 270px);
   padding: 0 20px 0 22px;
@@ -260,20 +343,21 @@
   background: rgba(0, 0, 0, 0.2);
 }
 
+.whatsappme__message a {
+  text-decoration: underline;
+  color: #2e8c7d;
+}
+
 .whatsappme__copy {
   position: absolute;
-  bottom: 4px;
-  left: 40px;
+  bottom: 9px;
+  left: 28px;
   color: #2e8c7d;
   font-size: 11px;
   letter-spacing: 0.2px;
+  line-height: 16px;
   opacity: 0.4;
   transition: opacity 0.25s;
-}
-
-.whatsappme--left .whatsappme__copy {
-  left: auto;
-  right: 40px;
 }
 
 .whatsappme__copy:hover {
@@ -304,11 +388,56 @@
 .whatsappme--left .whatsappme__button {
   right: auto;
   left: 8px;
+  -ms-flex-direction: row-reverse;
+  -webkit-flex-direction: row-reverse;
+  flex-direction: row-reverse;
+}
+
+.whatsappme--left.whatsappme--dialog .whatsappme__button__sendtext {
+  padding: 0 24px 0 4px;
+}
+
+.whatsappme--left .whatsappme__tooltip {
+  right: auto;
+  left: 76px;
+}
+
+.whatsappme--left .whatsappme__tooltip::after {
+  content: '\e901';
+  left: -12px;
+  right: auto;
+  text-align: left;
+  text-shadow: -2px 1px 3px rgba(0, 0, 0, .4);
 }
 
 .whatsappme--left .whatsappme__box {
   right: auto;
   left: 0;
+}
+
+.whatsappme--left .whatsappme__copy {
+  left: auto;
+  right: 28px;
+  text-align: right;
+}
+
+/* rtl */
+
+[dir=rtl] .whatsappme__close {
+  right: auto;
+  left: 24px;
+}
+
+[dir=rtl] .whatsappme__message:before {
+  left: auto;
+  right: -18px;
+  transform: rotateY(180deg);
+}
+
+[dir=rtl] .whatsappme--left .whatsappme__button {
+  -ms-flex-direction: row;
+  -webkit-flex-direction: row;
+  flex-direction: row;
 }
 
 @media (max-width: 480px),
@@ -350,7 +479,13 @@
   }
 }
 
-@keyframes badge--in {
+@media (max-width: 360px) {
+  .whatsappme__copy {
+    width: 70px;
+  }
+}
+
+@keyframes wame_badge_in {
   from {
     opacity: 0;
     transform: translateY(50px);
@@ -362,7 +497,7 @@
   }
 }
 
-@keyframes badge--out {
+@keyframes wame_badge_out {
   from {
     opacity: 1;
     transform: translateY(0);
@@ -375,18 +510,12 @@
 }
 
 @keyframes wame_plain {
-  5% {
-    stroke-dashoffset: 0;
-  }
-
+  5%,
   45% {
     stroke-dashoffset: 0;
   }
 
-  50% {
-    stroke-dashoffset: 1096.67;
-  }
-
+  50%,
   100% {
     stroke-dashoffset: 1096.67;
   }
@@ -397,11 +526,43 @@
     stroke-dashoffset: 1019.22;
   }
 
-  55% {
-    stroke-dashoffset: 0;
-  }
-
+  55%,
   95% {
     stroke-dashoffset: 0;
+  }
+}
+
+@keyframes wame_image_loop {
+  0% {
+    opacity: 0;
+  }
+
+  3%,
+  20% {
+    opacity: 1;
+  }
+
+  23%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes wame_tootlip {
+  0% {
+    opacity: 0;
+    transform: scaleY(0);
+  }
+
+  1%,
+  20% {
+    opacity: 1;
+    transform: scaleY(1);
+  }
+
+  23%,
+  100% {
+    opacity: 0;
+    transform: scaleY(1);
   }
 }

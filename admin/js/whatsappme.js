@@ -1,7 +1,13 @@
 (function ($) {
   'use strict';
 
+  function textarea_autoheight() {
+    $(this).height(0).height(this.scrollHeight);
+  }
+
   $(function () {
+    var media_frame;
+
     if (typeof (intlTelInput) === 'function' && $('#whatsappme_phone').length) {
       var country_request = JSON.parse(localStorage.whatsappme_country_code || '{}');
       var country_code = (country_request.code && country_request.date == new Date().toDateString()) ? country_request.code : false;
@@ -39,30 +45,6 @@
       });
     }
 
-    function propagate_inheritance(field, show) {
-      field = field || 'all';
-      show = show || $('input[name="whatsappme[view][' + field + ']"]:checked').val();
-
-      $('.view_inheritance_' + field)
-        .toggleClass('dashicons-visibility', show == 'yes')
-        .toggleClass('dashicons-hidden', show == 'no');
-
-      if (field == 'cpts') {
-        $('[class*=view_inheritance_cpt_]')
-          .toggleClass('dashicons-visibility', show == 'yes')
-          .toggleClass('dashicons-hidden', show == 'no');
-      } else if (field in inheritance) {
-        var value = $('input[name="whatsappme[view][' + field + ']"]:checked').val();
-        value = value === '' ? show : value;
-
-        $.each(inheritance[field], function () { propagate_inheritance(this, value); });
-      }
-    }
-
-    function textarea_autoheight() {
-      $(this).height(0).height(this.scrollHeight);
-    }
-
     if ($('#whatsappme_form').length === 1) {
       // Tabs
       $('.nav-tab').click(function (e) {
@@ -77,7 +59,12 @@
 
       // Toggle WhatsApp web option
       $('#whatsappme_mobile_only').change(function () {
-        $('#whatsappme_whatsapp_web').closest('tr').toggleClass('hide-if-js', this.checked);
+        $('#whatsappme_whatsapp_web').closest('tr').toggleClass('wame-hidden', this.checked);
+      }).change();
+
+      // Toggle WhatsApp badge option
+      $('#whatsappme_message_delay').on('change input', function () {
+        $('#whatsappme_message_badge').closest('tr').toggleClass('wame-hidden', this.value == '0');
       }).change();
 
       // Show help
@@ -102,6 +89,26 @@
         'singular': ['page', 'post'],
       };
 
+      function propagate_inheritance(field, show) {
+        field = field || 'all';
+        show = show || $('input[name="whatsappme[view][' + field + ']"]:checked').val();
+
+        $('.view_inheritance_' + field)
+          .toggleClass('dashicons-visibility', show == 'yes')
+          .toggleClass('dashicons-hidden', show == 'no');
+
+        if (field == 'cpts') {
+          $('[class*=view_inheritance_cpt_]')
+            .toggleClass('dashicons-visibility', show == 'yes')
+            .toggleClass('dashicons-hidden', show == 'no');
+        } else if (field in inheritance) {
+          var value = $('input[name="whatsappme[view][' + field + ']"]:checked').val();
+          value = value === '' ? show : value;
+
+          $.each(inheritance[field], function () { propagate_inheritance(this, value); });
+        }
+      }
+
       $('input', $tab_advanced).change(function () {
         propagate_inheritance();
       });
@@ -114,6 +121,47 @@
       });
 
       propagate_inheritance();
+
+      $('#whatsappme_button_image_add').click(function (e) {
+        e.preventDefault();
+
+        if (!media_frame) {
+          // Define media_frame as wp.media object
+          media_frame = wp.media({
+            title: $(this).data('title') || 'Select button image',
+            button: { text: $(this).data('button') || 'Use Image' },
+            library: { type: 'image' },
+            multiple: false,
+          });
+
+          // When an image is selected in the media library...
+          media_frame.on('select', function () {
+            // Get media attachment details from the frame state
+            var attachment = media_frame.state().get('selection').first().toJSON();
+            var url = attachment.sizes && attachment.sizes.thumbnail && attachment.sizes.thumbnail.url || attachment.url;
+
+            $('#whatsappme_button_image_holder').css({ 'background-size': 'cover', 'background-image': 'url(' + url + ')' });
+            $('#whatsappme_button_image').val(attachment.id);
+            $('#whatsappme_button_image_remove').removeClass('wame-hidden');
+          });
+
+          media_frame.on('open', function () {
+            // Pre-selected attachment
+            var attachment = wp.media.attachment($('#whatsappme_button_image').val());
+            media_frame.state().get('selection').add(attachment ? [attachment] : []);
+          });
+        }
+
+        media_frame.open();
+      });
+
+      $('#whatsappme_button_image_remove').click(function (e) {
+        e.preventDefault();
+
+        $('#whatsappme_button_image_holder').removeAttr('style');
+        $('#whatsappme_button_image').val('');
+        $(this).addClass('wame-hidden');
+      });
     }
 
     if ($('.whatsappme-metabox').length === 1) {

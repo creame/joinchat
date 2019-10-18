@@ -85,6 +85,7 @@ class WhatsAppMe {
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-whatsappme-loader.php';
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-whatsappme-i18n.php';
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-whatsappme-integrations.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-whatsappme-util.php';
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-whatsappme-admin.php';
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-whatsappme-public.php';
 
