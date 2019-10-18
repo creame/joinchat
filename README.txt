@@ -5,7 +5,7 @@ Tags: whatsapp business, whatsapp, click to chat, button, whatsapp support chat,
 Requires at least: 3.0.1
 Tested up to: 5.2
 Requires PHP: 5.3
-Stable tag: 3.0.3
+Stable tag: 3.1.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -18,6 +18,8 @@ Connect a WordPress chat with WhatsApp. The best solution for marketing and supp
 ### Connect a WordPress chat with WhatsApp. The best solution for marketing and support. Stop losing customers and increase your sales.
 
 ### New in WAme 3.0 📍
+
+🔮 **Magic WhatsApp button**. Add your logo, profile picture or even an animated gif. You can define a tooltip to capture the user's attention, the limit is set by your creativity.
 
 🛒 **Better Integration with WooCommerce**. Define CTAs and Custom Messages for product pages, you can use dynamic variables such as {SKU}, {PRICE} or {PRODUCT}.
 
@@ -135,18 +137,30 @@ There is a Javascript event that WAme triggers automatically before launch Whats
 
 == Screenshots ==
 
-1. WAme general settings.
-2. WAme advanced visibility settings.
-3. WAme on post/page edition.
+1. Button on desktop.
+2. Button with tooltip and custom image.
+3. Call to action on desktop.
+4. Button and call to action on mobile.
+5. WAme general settings.
+6. WAme advanced visibility settings.
+7. WAme WooCommerce settings.
+8. WAme on post/page edition.
 
 == Changelog ==
+
+= 3.1.0 =
+* **NEW:** WhatsApp button image.
+* **NEW:** WhatsApp button tooltip.
+* **NEW:** Start WhatsApp button text on Chat Window.
+* **NEW:** Option to disable automatic open of Chat Window.
+* For devs: static functions moved to a WhatsAppMe_Util class.
 
 = 3.0.3 =
 * FIX in landscape or with long CTAs the chat window could be higher than view and can't be closed.
 * For developers:
-  * New metabox filters 'whatsappme_metabox_output' and 'whatsappme_metabox_save'.
-  * Change filter 'whatsappme_message_replacements' to 'whatsappme_format_replacements'.
-  * Change filter 'whatsappme_message_send_replacements' to 'whatsappme_variable_replacements'.
+* New metabox filters 'whatsappme_metabox_output' and 'whatsappme_metabox_save'.
+* Change filter 'whatsappme_message_replacements' to 'whatsappme_format_replacements'.
+* Change filter 'whatsappme_message_send_replacements' to 'whatsappme_variable_replacements'.
 
 = 3.0.2 =
 * **NEW:** Send Facebook Pixel custom event when user launch WhatsApp.
