@@ -434,6 +434,12 @@
   transform: rotateY(180deg);
 }
 
+[dir=rtl] .whatsappme__button {
+  -ms-flex-direction: row-reverse;
+  -webkit-flex-direction: row-reverse;
+  flex-direction: row-reverse;
+}
+
 [dir=rtl] .whatsappme--left .whatsappme__button {
   -ms-flex-direction: row;
   -webkit-flex-direction: row;

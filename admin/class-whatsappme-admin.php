@@ -323,6 +323,12 @@ class WhatsAppMe_Admin {
 	 */
 	public function settings_validate( $input ) {
 
+		// Prevent bad behavior when validate twice on first save
+		// bug https://core.trac.wordpress.org/ticket/21989
+		if ( count( get_settings_errors( 'whatsappme' ) ) ) {
+			return $input;
+		}
+
 		$util = new WhatsAppMe_Util(); // Shortcut
 
 		$input['telephone']     = $util::clean_input( $input['telephone'] );
