@@ -60,8 +60,13 @@ class WhatsAppMe_Util {
 	 */
 	public static function thumb( $img, $width, $height, $crop = true ) {
 
+		$img_path = intval( $img ) > 0 ? get_attached_file( $img ) : $img;
+
+		if ( ! file_exists( $img_path ) ) {
+			return false;
+		}
+
 		$uploads      = wp_get_upload_dir();
-		$img_path     = intval( $img ) > 0 ? get_attached_file( $img ) : $img;
 		$img_info     = pathinfo( $img_path );
 		$new_img_path = "{$img_info['dirname']}/{$img_info['filename']}-{$width}x{$height}.{$img_info['extension']}";
 
@@ -100,7 +105,7 @@ class WhatsAppMe_Util {
 	public static function is_animated_gif( $img ) {
 		$img_path = intval( $img ) > 0 ? get_attached_file( $img ) : $img;
 
-		return (bool) preg_match( '#(\x00\x21\xF9\x04.{4}\x00\x2C.*){2,}#s', file_get_contents( $img_path ) );
+		return file_exists( $img_path ) ? (bool) preg_match( '#(\x00\x21\xF9\x04.{4}\x00\x2C.*){2,}#s', file_get_contents( $img_path ) ) : false;
 	}
 
 	/**
