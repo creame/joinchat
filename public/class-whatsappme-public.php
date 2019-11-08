@@ -106,6 +106,9 @@ class WhatsAppMe_Public {
 			apply_filters( 'whatsappme_extra_settings', array() )
 		);
 
+		$settings = $default_settings;
+		$show     = false;
+
 		$site_settings = get_option( 'whatsappme' );
 
 		if ( is_array( $site_settings ) ) {
@@ -163,9 +166,6 @@ class WhatsAppMe_Public {
 			}
 			// Unset post 'view' setting
 			unset( $settings['view'] );
-		} else {
-			$settings = $default_settings;
-			$show     = false;
 		}
 
 		// Apply filters to final settings after site and post settings
