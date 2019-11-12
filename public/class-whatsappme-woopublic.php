@@ -22,6 +22,7 @@ class WhatsAppMe_WooPublic {
 		$loader = $whatsappme->get_loader();
 
 		$loader->add_filter( 'whatsappme_extra_settings', $this, 'woo_settings' );
+		$loader->add_filter( 'whatsappme_settings_i18n', $this, 'settings_i18n' );
 		$loader->add_filter( 'whatsappme_get_settings_site', $this, 'product_settings' );
 		$loader->add_filter( 'whatsappme_visibility', $this, 'visibility', 10, 2 );
 		$loader->add_filter( 'whatsappme_variable_replacements', $this, 'replacements' );
@@ -44,6 +45,21 @@ class WhatsAppMe_WooPublic {
 		);
 
 		return array_merge( $settings, $woo_settings );
+	}
+
+	/**
+	 * WooCommerce settings translations
+	 *
+	 * @since    3.1.2
+	 * @param    array $settings       translatable settings.
+	 * @return   array
+	 */
+	public function settings_i18n( $settings ) {
+
+		$settings['message_text_product'] = 'Call to Action for Products';
+		$settings['message_send_product'] = 'Message for Products';
+
+		return $settings;
 	}
 
 	/**

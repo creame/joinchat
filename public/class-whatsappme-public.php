@@ -122,13 +122,13 @@ class WhatsAppMe_Public {
 			}
 
 			// Load WPML/Polylang translated strings
-			$settings['button_tip']    = apply_filters( 'wpml_translate_single_string', $settings['button_tip'], 'WhatsApp me', 'Tooltip' );
-			$settings['message_text']  = apply_filters( 'wpml_translate_single_string', $settings['message_text'], 'WhatsApp me', 'Call To Action' );
-			$settings['message_send']  = apply_filters( 'wpml_translate_single_string', $settings['message_send'], 'WhatsApp me', 'Message' );
-			$settings['message_start'] = apply_filters( 'wpml_translate_single_string', $settings['message_start'], 'WhatsApp me', 'Start WhatsApp Button' );
+			$settings_i18n = WhatsAppMe_Util::settings_i18n();
+
+			foreach ( $settings_i18n as $key => $label ) {
+				$settings[ $key ] = $settings[ $key ] ? apply_filters( 'wpml_translate_single_string', $settings[ $key ], 'WhatsApp me', $label ) : '';
+			}
 
 			// Filter for site settings (can be overriden by post settings)
-			// You can translate more WPML strings or add/change other settings
 			$settings = apply_filters( 'whatsappme_get_settings_site', $settings, $obj );
 
 			// Post custom settings override site settings

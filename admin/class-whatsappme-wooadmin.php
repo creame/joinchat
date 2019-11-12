@@ -23,6 +23,7 @@ class WhatsAppMe_WooAdmin {
 
 		$loader->add_filter( 'whatsappme_extra_settings', $this, 'extra_settings' );
 		$loader->add_filter( 'whatsappme_settings_validate', $this, 'settings_validate' );
+		$loader->add_filter( 'whatsappme_settings_i18n', $this, 'settings_i18n' );
 		$loader->add_filter( 'whatsappme_admin_tabs', $this, 'admin_tab' );
 		$loader->add_filter( 'whatsappme_custom_post_types', $this, 'custom_post_types' );
 		$loader->add_filter( 'whatsappme_tab_advanced_sections', $this, 'advanced_tab_section' );
@@ -66,6 +67,20 @@ class WhatsAppMe_WooAdmin {
 		return $input;
 	}
 
+	/**
+	 * WooCommerce settings translations
+	 *
+	 * @since    3.1.2
+	 * @param    array $settings       translatable settings.
+	 * @return   array
+	 */
+	public function settings_i18n( $settings ) {
+
+		$settings['message_text_product'] = 'Call to Action for Products';
+		$settings['message_send_product'] = 'Message for Products';
+
+		return $settings;
+	}
 
 	/**
 	 * Add WooCommerce admin tab

@@ -358,16 +358,14 @@ class WhatsAppMe_Admin {
 		/**
 		 * Register WPML/Polylang strings for translation
 		 * https://wpml.org/wpml-hook/wpml_register_single_string/
-		 *
-		 * Note: don't translate string $name to prevent missing translations if
-		 * public front lang is different of admin lang
 		 */
-		do_action( 'wpml_register_single_string', 'WhatsApp me', 'Tooltip', $input['button_tip'] );
-		do_action( 'wpml_register_single_string', 'WhatsApp me', 'Call To Action', $input['message_text'] );
-		do_action( 'wpml_register_single_string', 'WhatsApp me', 'Message', $input['message_send'] );
-		do_action( 'wpml_register_single_string', 'WhatsApp me', 'Start WhatsApp Button', $input['message_start'] );
+		$settings_i18n = WhatsAppMe_Util::settings_i18n();
 
-		// Action to register more WPML strings or other tasks
+		foreach ( $settings_i18n as $setting_key => $setting_name ) {
+			do_action( 'wpml_register_single_string', 'WhatsApp me', $setting_name, $input[ $setting_key ] );
+		}
+
+		// Extra actions on save
 		do_action( 'whatsappme_settings_validate', $input );
 
 		add_settings_error( 'whatsappme', 'settings_updated', __( 'Settings saved', 'creame-whatsapp-me' ), 'updated' );

@@ -13,6 +13,29 @@
 class WhatsAppMe_Util {
 
 	/**
+	 * Return list of settings that can be translated
+	 *
+	 * Note: don't translate string $name to prevent missing translations if
+	 * public front lang is different of admin lang
+	 *
+	 * @since    3.1.2
+	 * @access   public
+	 * @return   array setting keys and string names
+	 */
+	public static function settings_i18n() {
+
+		return apply_filters(
+			'whatsappme_settings_i18n', array(
+				'button_tip'    => 'Tooltip',
+				'message_text'  => 'Call to Action',
+				'message_send'  => 'Message',
+				'message_start' => 'Start WhatsApp Button',
+			)
+		);
+
+	}
+
+	/**
 	 * Clean user input fields
 	 *
 	 * @since    3.1.0
