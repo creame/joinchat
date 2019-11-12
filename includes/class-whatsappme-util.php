@@ -136,6 +136,7 @@ class WhatsAppMe_Util {
 	 * Also apply styles transformations like WhatsApp app.
 	 *
 	 * @since    3.1.0
+	 * @since    3.1.2      Allowed callback replecements
 	 * @param    string $string    string to apply format replacements
 	 * @return   string     string formated
 	 */
@@ -143,20 +144,28 @@ class WhatsAppMe_Util {
 
 		$replacements = apply_filters(
 			'whatsappme_format_replacements', array(
-				'/_(\S[^_]*\S)_/mu'    => '<em>$1</em>',
-				'/\*(\S[^\*]*\S)\*/mu' => '<strong>$1</strong>',
-				'/~(\S[^~]*\S)~/mu'    => '<del>$1</del>',
+				'/_(\S[^_]*\S)_/u'    => '<em>$1</em>',
+				'/\*(\S[^\*]*\S)\*/u' => '<strong>$1</strong>',
+				'/~(\S[^~]*\S)~/u'    => '<del>$1</del>',
 			)
 		);
 
 		$replacements = apply_filters_deprecated( 'whatsappme_message_replacements', array( $replacements ), '3.0.3', 'whatsappme_format_replacements' );
 
-		$patterns = array_keys( $replacements );
-
 		// Split text into lines and apply replacements line by line
 		$lines = explode( "\n", $string );
 		foreach ( $lines as $key => $line ) {
-			$lines[ $key ] = preg_replace( $patterns, $replacements, esc_html( $line ) );
+			$escaped_line = esc_html( $line );
+
+			foreach ( $replacements as $pattern => $replacement ) {
+				if ( is_callable( $replacement ) ) {
+					$escaped_line = preg_replace_callback( $pattern, $replacement, $escaped_line );
+				} else {
+					$escaped_line = preg_replace( $pattern, $replacement, $escaped_line );
+				}
+			}
+
+			$lines[ $key ] = $escaped_line;
 		}
 
 		return self::replace_variables( implode( '<br>', $lines ) );
@@ -184,7 +193,7 @@ class WhatsAppMe_Util {
 		// Convert VAR to regex {VAR}
 		$patterns = array_map(
 			function ( $var ) {
-				return "/\{$var\}/i";
+				return "/\{$var\}/u";
 			}, array_keys( $replacements )
 		);
 
