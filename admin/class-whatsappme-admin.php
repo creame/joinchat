@@ -238,14 +238,14 @@ class WhatsAppMe_Admin {
 					'telephone'    => '<label for="whatsappme_phone">' . __( 'Telephone', 'creame-whatsapp-me' ) . '</label>',
 					'message_send' => '<label for="whatsappme_message_send">' . __( 'Message', 'creame-whatsapp-me' ) . '</label>',
 					'mobile_only'  => __( 'Mobile Only', 'creame-whatsapp-me' ),
-					'position'     => __( 'Position On Screen', 'creame-whatsapp-me' ),
+					'position'     => __( 'Position on Screen', 'creame-whatsapp-me' ),
 					'button_image' => __( 'Image', 'creame-whatsapp-me' ),
 					'button_tip'   => __( 'Tooltip', 'creame-whatsapp-me' ),
 					'button_delay' => '<label for="whatsappme_button_delay">' . __( 'Button Delay', 'creame-whatsapp-me' ) . '</label>',
 					'whatsapp_web' => __( 'WhatsApp Web', 'creame-whatsapp-me' ),
 				),
 				'chat'   => array(
-					'message_text'  => '<label for="whatsappme_message_text">' . __( 'Call To Action', 'creame-whatsapp-me' ) . '</label>',
+					'message_text'  => '<label for="whatsappme_message_text">' . __( 'Call to Action', 'creame-whatsapp-me' ) . '</label>',
 					'message_start' => '<label for="whatsappme_message_start">' . __( 'Start WhatsApp Button', 'creame-whatsapp-me' ) . '</label>',
 					'message_delay' => '<label for="whatsappme_message_delay">' . __( 'Chat Delay', 'creame-whatsapp-me' ) . '</label>',
 					'message_badge' => __( 'Notification Balloon', 'creame-whatsapp-me' ),
@@ -493,7 +493,7 @@ class WhatsAppMe_Admin {
 					break;
 
 				case 'position':
-					$output = '<fieldset><legend class="screen-reader-text"><span>' . __( 'Position On Screen', 'creame-whatsapp-me' ) . '</span></legend>' .
+					$output = '<fieldset><legend class="screen-reader-text"><span>' . __( 'Position on Screen', 'creame-whatsapp-me' ) . '</span></legend>' .
 						'<label><input name="whatsappme[position]" value="left" type="radio"' . checked( 'left', $value, false ) . '> ' .
 						__( 'Left', 'creame-whatsapp-me' ) . '</label><br>' .
 						'<label><input name="whatsappme[position]" value="right" type="radio"' . checked( 'right', $value, false ) . '> ' .
@@ -792,14 +792,14 @@ class WhatsAppMe_Admin {
 					<input id="whatsappme_phone" <?php echo $this->enhanced_phone ? 'data-' : ''; ?>name="whatsappme_telephone" value="<?php echo $metadata['telephone']; ?>" type="text">
 				</p>
 				<p>
-					<label for="whatsappme_message"><?php _e( 'Call To Action', 'creame-whatsapp-me' ); ?></label><br>
+					<label for="whatsappme_message"><?php _e( 'Call to Action', 'creame-whatsapp-me' ); ?></label><br>
 					<textarea id="whatsappme_message" name="whatsappme_message" rows="2" class="large-text"><?php echo $metadata['message_text']; ?></textarea>
 				</p>
 				<p>
 					<label for="whatsappme_message_send"><?php _e( 'Message', 'creame-whatsapp-me' ); ?></label><br>
 					<textarea id="whatsappme_message_send" name="whatsappme_message_send" rows="2" class="large-text"><?php echo $metadata['message_send']; ?></textarea>
 					<?php if ( count( $metabox_vars ) ) : ?>
-						<small><?php _e( 'You can use vars:', 'creame-whatsapp-me' ); ?> <code>{<?php echo join( '}</code> <code>{', $metabox_vars ); ?>}</code></small>
+						<small><?php _e( 'You can use vars', 'creame-whatsapp-me' ); ?> <code>{<?php echo join( '}</code> <code>{', $metabox_vars ); ?>}</code></small>
 					<?php endif; ?>
 				</p>
 				<p>
