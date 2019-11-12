@@ -99,7 +99,7 @@ class WhatsAppMe_Public {
 				'message_delay' => 10,
 				'message_badge' => 'no',
 				'message_send'  => '',
-				'message_start' => '',
+				'message_start' => __( 'Open chat', 'creame-whatsapp-me' ),
 				'position'      => 'right',
 				'visibility'    => array( 'all' => 'yes' ),
 			),
