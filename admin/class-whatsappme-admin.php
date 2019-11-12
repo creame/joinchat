@@ -236,7 +236,7 @@ class WhatsAppMe_Admin {
 			$sections = array(
 				'button' => array(
 					'telephone'    => '<label for="whatsappme_phone">' . __( 'Telephone', 'creame-whatsapp-me' ) . '</label>',
-					'message_send' => '<label for="whatsappme_message_send">' . __( 'Message', 'creame-whatsapp-me' ) . '</label>',
+					'message_send' => '<label for="whatsappme_message_send">' . __( 'Message', 'creame-whatsapp-me' ) . '</label>' . self::vars_help( 'message_send' ),
 					'mobile_only'  => __( 'Mobile Only', 'creame-whatsapp-me' ),
 					'position'     => __( 'Position on Screen', 'creame-whatsapp-me' ),
 					'button_image' => __( 'Image', 'creame-whatsapp-me' ),
@@ -245,7 +245,7 @@ class WhatsAppMe_Admin {
 					'whatsapp_web' => __( 'WhatsApp Web', 'creame-whatsapp-me' ),
 				),
 				'chat'   => array(
-					'message_text'  => '<label for="whatsappme_message_text">' . __( 'Call to Action', 'creame-whatsapp-me' ) . '</label>',
+					'message_text'  => '<label for="whatsappme_message_text">' . __( 'Call to Action', 'creame-whatsapp-me' ) . '</label>' . self::vars_help( 'message_text' ),
 					'message_start' => '<label for="whatsappme_message_start">' . __( 'Start WhatsApp Button', 'creame-whatsapp-me' ) . '</label>',
 					'message_delay' => '<label for="whatsappme_message_delay">' . __( 'Chat Delay', 'creame-whatsapp-me' ) . '</label>',
 					'message_badge' => __( 'Notification Balloon', 'creame-whatsapp-me' ),
@@ -421,9 +421,8 @@ class WhatsAppMe_Admin {
 			case 'whatsappme_tab_general__chat':
 				$output = '<hr><h2 class="title">' . __( 'Chat Window', 'creame-whatsapp-me' ) . '</h2>' .
 					'<p>' .
-						__( 'Set the behavior of the chat window.', 'creame-whatsapp-me' ) . ' ' .
-						' <em>' . __( 'You can use styles and dynamic variables', 'creame-whatsapp-me' ) . '</em> ' .
-						'<a class="whatsappme-show-help" href="#" title="' . __( 'Show Help', 'creame-whatsapp-me' ) . '">?</a>' .
+						__( 'If you define a "Call to Action" a window will be displayed simulating a chat before launching WhatsApp.', 'creame-whatsapp-me' ) . ' ' .
+						__( 'You can introduce yourself, offer help or even make promotions to your users.', 'creame-whatsapp-me' ) .
 					'</p>';
 				break;
 
@@ -852,4 +851,24 @@ class WhatsAppMe_Admin {
 			delete_post_meta( $post_id, '_whatsappme' );
 		}
 	}
+
+	/**
+	 * Return html for dynamic variables help next to field label
+	 *
+	 * @since    3.1.2
+	 * @access   public
+	 * @param    string $field       field name.
+	 * @return   string
+	 */
+	public static function vars_help( $field ) {
+
+		$vars = apply_filters( 'whatsappme_vars_help', array( 'SITE', 'URL', 'TITLE' ), $field );
+
+		return count( $vars ) ? '<div class="whatsappme_vars_help">' . __( 'You can use vars', 'creame-whatsapp-me' ) . ' ' .
+			'<a class="whatsappme-show-help" href="#" title="' . __( 'Show Help', 'creame-whatsapp-me' ) . '">?</a><br> ' .
+			'<code>{' . join( '}</code> <code>{', $vars ) . '}</code></div>' : '';
+
+	}
+
+
 }
