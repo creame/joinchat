@@ -5,7 +5,7 @@ Tags: whatsapp business, whatsapp, click to chat, button, whatsapp support chat,
 Requires at least: 3.0.1
 Tested up to: 5.3
 Requires PHP: 5.3
-Stable tag: 3.1.3
+Stable tag: 3.1.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -147,6 +147,9 @@ There is a Javascript event that WAme triggers automatically before launch Whats
 8. WAme on post/page edition.
 
 == Changelog ==
+
+= 3.1.4 =
+* FIX php warning with new var {DISCOUNT} when price is zero.
 
 = 3.1.3 =
 * Minor improvements and link to Wame CTA Extras.
