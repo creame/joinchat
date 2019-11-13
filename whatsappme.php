@@ -9,7 +9,7 @@
  * Plugin Name:       WAme chat
  * Plugin URI:        https://wame.chat
  * Description:       Connect a WordPress chat with WhatsApp. The best solution for marketing and support. Stop losing customers and increase your sales.
- * Version:           3.1.2
+ * Version:           3.1.3
  * Author:            Creame
  * Author URI:        https://crea.me
  * License:           GPL-2.0+
@@ -27,7 +27,7 @@ if ( ! defined( 'WPINC' ) ) {
  * Currently plugin version.
  * Start at version 1.0.0 and use SemVer - https://semver.org
  */
-define( 'WHATSAPPME_VERSION', '3.1.2' );
+define( 'WHATSAPPME_VERSION', '3.1.3' );
 
 /**
  * The core plugin class that is used to define internationalization,
