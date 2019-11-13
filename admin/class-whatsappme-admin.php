@@ -479,7 +479,7 @@ class WhatsAppMe_Admin {
 						'<p class="description">' . __( "Contact phone number <strong>(the button will not be shown if it's empty)</strong>", 'creame-whatsapp-me' ) . '</p>' .
 						'<p class="whatsappme-addon">' . sprintf(
 							__( 'Add unlimited numbers with %s', 'creame-whatsapp-me' ),
-							'<a href="https://wame.chat/en/addons/random-phone-addon/" target="_blank">\'WAme Random Phone\'</a>'
+							'<a href="https://wame.chat/en/addons/wame-random-phone/" target="_blank">\'WAme Random Phone\'</a>'
 						) . '</p>';
 					break;
 
@@ -527,7 +527,11 @@ class WhatsAppMe_Admin {
 
 				case 'message_text':
 					$output = '<textarea id="whatsappme_message_text" name="whatsappme[message_text]" rows="4" class="regular-text" placeholder="' . esc_attr__( "Hello 👋\nCan we help you?", 'creame-whatsapp-me' ) . '">' . $value . '</textarea>' .
-						'<p class="description">' . __( 'Define a text to encourage users to contact by WhatsApp', 'creame-whatsapp-me' ) . '</p>';
+						'<p class="description">' . __( 'Define a text to encourage users to contact by WhatsApp', 'creame-whatsapp-me' ) . '</p>' .
+						'<p class="whatsappme-addon">' . sprintf(
+							__( 'Add links, images, videos and more with %s', 'creame-whatsapp-me' ),
+							'<a href="https://wame.chat/en/addons/wame-cta-extras/" target="_blank">\'WAme CTA Extras\'</a>'
+						) . '</p>';
 					break;
 
 				case 'message_send':
