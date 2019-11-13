@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WAme chat\n"
 "Report-Msgid-Bugs-To: Translator Name <translations@example.com>\n"
-"POT-Creation-Date: 2019-11-13 11:11+0100\n"
-"PO-Revision-Date: 2019-11-13 11:11+0100\n"
+"POT-Creation-Date: 2019-11-13 16:55+0100\n"
+"PO-Revision-Date: 2019-11-13 16:55+0100\n"
 "Last-Translator: Pacotole <pacotole@crea.me>\n"
 "Language-Team: Creame <hola@crea.me>\n"
 "Language: es\n"
@@ -24,16 +24,16 @@ msgstr "General"
 msgid "Advanced"
 msgstr "Avanzado"
 
-#: admin/class-whatsappme-admin.php:116 admin/class-whatsappme-admin.php:539
+#: admin/class-whatsappme-admin.php:116 admin/class-whatsappme-admin.php:543
 #: public/class-whatsappme-public.php:102
 msgid "Open chat"
 msgstr "Abrir chat"
 
-#: admin/class-whatsappme-admin.php:238 admin/class-whatsappme-admin.php:788
+#: admin/class-whatsappme-admin.php:238 admin/class-whatsappme-admin.php:792
 msgid "Telephone"
 msgstr "Teléfono"
 
-#: admin/class-whatsappme-admin.php:239 admin/class-whatsappme-admin.php:796
+#: admin/class-whatsappme-admin.php:239 admin/class-whatsappme-admin.php:800
 msgid "Message"
 msgstr "Mensaje"
 
@@ -61,7 +61,7 @@ msgstr "Retardo del botón"
 msgid "WhatsApp Web"
 msgstr "WhatsApp Web"
 
-#: admin/class-whatsappme-admin.php:248 admin/class-whatsappme-admin.php:792
+#: admin/class-whatsappme-admin.php:248 admin/class-whatsappme-admin.php:796
 msgid "Call to Action"
 msgstr "Llamada a la acción"
 
@@ -73,7 +73,7 @@ msgstr "Botón de inicio de WhatsApp"
 msgid "Chat Delay"
 msgstr "Retardo del chat"
 
-#: admin/class-whatsappme-admin.php:251 admin/class-whatsappme-admin.php:549
+#: admin/class-whatsappme-admin.php:251 admin/class-whatsappme-admin.php:553
 msgid "Notification Balloon"
 msgstr "Globo de aviso"
 
@@ -174,13 +174,13 @@ msgstr "Restaurar visibilidad por defecto"
 msgid "Custom Post Types"
 msgstr "Tipos de contenido personalizados"
 
-#: admin/class-whatsappme-admin.php:466 admin/class-whatsappme-admin.php:584
-#: admin/class-whatsappme-admin.php:804
+#: admin/class-whatsappme-admin.php:466 admin/class-whatsappme-admin.php:588
+#: admin/class-whatsappme-admin.php:808
 msgid "Show"
 msgstr "Mostrar"
 
-#: admin/class-whatsappme-admin.php:468 admin/class-whatsappme-admin.php:586
-#: admin/class-whatsappme-admin.php:806
+#: admin/class-whatsappme-admin.php:468 admin/class-whatsappme-admin.php:590
+#: admin/class-whatsappme-admin.php:810
 msgid "Hide"
 msgstr "Ocultar"
 
@@ -266,27 +266,32 @@ msgstr ""
 msgid "Define a text to encourage users to contact by WhatsApp"
 msgstr "Define un texto para animar a los usuarios a contactar por WhatsApp"
 
-#: admin/class-whatsappme-admin.php:534
+#: admin/class-whatsappme-admin.php:532
+#, php-format
+msgid "Add links, images, videos and more with %s"
+msgstr "Añade enlaces, imágenes, vídeos y más con %s"
+
+#: admin/class-whatsappme-admin.php:538
 msgid "Hi *{SITE}*! I need more info about {TITLE} {URL}"
 msgstr "Hola *{SITE}*. Necesito más información sobre {TITLE} {URL}"
 
-#: admin/class-whatsappme-admin.php:535
+#: admin/class-whatsappme-admin.php:539
 msgid "Predefined text for the first message the user will send you"
 msgstr "Texto predefinido para el primer mensaje que te enviará el usuario"
 
-#: admin/class-whatsappme-admin.php:540
+#: admin/class-whatsappme-admin.php:544
 msgid "Text of the start WhatsApp button on Chat Window"
 msgstr "Texto del botón de inicio de WhatsApp en la ventana de chat"
 
-#: admin/class-whatsappme-admin.php:544
+#: admin/class-whatsappme-admin.php:548
 msgid "seconds (0 disabled)"
 msgstr "segundos (0 desactivado)"
 
-#: admin/class-whatsappme-admin.php:545
+#: admin/class-whatsappme-admin.php:549
 msgid "Chat Window is automatically displayed after delay"
 msgstr "La ventana de chat se muestra automáticamente tras el retardo"
 
-#: admin/class-whatsappme-admin.php:551
+#: admin/class-whatsappme-admin.php:555
 msgid ""
 "Display a notification balloon instead of opening the Chat Window for a "
 "\"less intrusive\" mode"
@@ -294,11 +299,11 @@ msgstr ""
 "Mostrar un globo de aviso en lugar de abrir la ventana de chat para un modo "
 "\"menos intrusivo\""
 
-#: admin/class-whatsappme-admin.php:615
+#: admin/class-whatsappme-admin.php:619
 msgid "Styles and Variables"
 msgstr "Estilos y variables"
 
-#: admin/class-whatsappme-admin.php:618
+#: admin/class-whatsappme-admin.php:622
 msgid ""
 "You can use formatting styles like in WhatsApp: _<em>italic</em>_ "
 "*<strong>bold</strong>* ~<del>strikethrough</del>~."
@@ -306,7 +311,7 @@ msgstr ""
 "Puedes usar estilos de formato como en WhatsApp: _<em>cursiva</em>_ "
 "*<strong>negrita</strong>* ~<del>tachado</del>~."
 
-#: admin/class-whatsappme-admin.php:619
+#: admin/class-whatsappme-admin.php:623
 msgid ""
 "You can use dynamic variables that will be replaced by the values of the "
 "page the user visits:"
@@ -314,15 +319,15 @@ msgstr ""
 "Puedes usar variables dinámicas que serán reemplazadas por los valores de la "
 "página que visita el usuario:"
 
-#: admin/class-whatsappme-admin.php:623
+#: admin/class-whatsappme-admin.php:627
 msgid "Page Title"
 msgstr "Título de página"
 
-#: admin/class-whatsappme-admin.php:632
+#: admin/class-whatsappme-admin.php:636
 msgid "Support and Help"
 msgstr "Ayuda y soporte"
 
-#: admin/class-whatsappme-admin.php:635
+#: admin/class-whatsappme-admin.php:639
 #, php-format
 msgid ""
 "If you need help, please check the <a href=\"%s\" rel=\"external\" target="
@@ -331,42 +336,42 @@ msgstr ""
 "Si necesitas ayuda consulta el <a href=\"%s\" rel=\"external\" target="
 "\"_blank\">foro de soporte del plugin</a>."
 
-#: admin/class-whatsappme-admin.php:638
+#: admin/class-whatsappme-admin.php:642
 msgid "If you like WAme 😍"
 msgstr "Si te gusta WAme 😍"
 
-#: admin/class-whatsappme-admin.php:641
+#: admin/class-whatsappme-admin.php:645
 #, php-format
 msgid "Subscribe to our newsletter and our blog at %s."
 msgstr "Suscríbete a nuestra newsletter y nuestro blog en %s."
 
-#: admin/class-whatsappme-admin.php:645
+#: admin/class-whatsappme-admin.php:649
 #, php-format
 msgid "Learn from our tutorials on %s."
 msgstr "Aprende de nuestros tutoriales en %s."
 
-#: admin/class-whatsappme-admin.php:649
+#: admin/class-whatsappme-admin.php:653
 #, php-format
 msgid "Or rate us on %s."
 msgstr "O pon una valoración en %s."
 
-#: admin/class-whatsappme-admin.php:666
+#: admin/class-whatsappme-admin.php:670
 msgid "Settings"
 msgstr "Ajustes"
 
-#: admin/class-whatsappme-admin.php:735
+#: admin/class-whatsappme-admin.php:739
 msgid "WAme chat"
 msgstr "WAme chat"
 
-#: admin/class-whatsappme-admin.php:799 admin/class-whatsappme-admin.php:867
+#: admin/class-whatsappme-admin.php:803 admin/class-whatsappme-admin.php:871
 msgid "You can use vars"
 msgstr "Puedes usar las variables"
 
-#: admin/class-whatsappme-admin.php:808
+#: admin/class-whatsappme-admin.php:812
 msgid "Default visibility"
 msgstr "Visibilidad por defecto"
 
-#: admin/class-whatsappme-admin.php:868
+#: admin/class-whatsappme-admin.php:872
 msgid "Show Help"
 msgstr "Ver ayuda"
 
