@@ -70,12 +70,13 @@
       // Show help
       $('.whatsappme-show-help').click(function (e) {
         e.preventDefault();
+        var help_tab = $(this).attr('href');
         if ($('#contextual-help-wrap').is(':visible')) {
           $("html, body").animate({ scrollTop: 0 });
         } else {
           $('#contextual-help-link').click();
         }
-        $('#tab-link-styles-and-vars a').click();
+        $( help_tab != '#' ? help_tab : '#tab-link-styles-and-vars').find('a').click();
       });
 
       // Texarea focus and auto height
