@@ -5,7 +5,7 @@ Tags: whatsapp business, whatsapp, click to chat, button, whatsapp support chat,
 Requires at least: 3.0.1
 Tested up to: 5.3
 Requires PHP: 5.3
-Stable tag: 3.1.1
+Stable tag: 3.1.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -147,6 +147,13 @@ There is a Javascript event that WAme triggers automatically before launch Whats
 8. WAme on post/page edition.
 
 == Changelog ==
+
+= 3.1.2 =
+* **NEW:** WooCommerce Call to Action for Products on Sale, also added dynamic vars {DISCOUNT} {REGULAR}.
+* FIX Fatal error when selected button image is deleted from media library.
+* FIX WooCommerce settings not registered for translation.
+* For devs: format replacements now also accepts callbacks.
+* For devs: new javascript events for chat window 'whatsappme:show' 'whatsappme:hide'.
 
 = 3.1.1 =
 * CHANGED Tested up to WordPress 5.3
