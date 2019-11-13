@@ -13,6 +13,29 @@
 class WhatsAppMe_Util {
 
 	/**
+	 * Return list of settings that can be translated
+	 *
+	 * Note: don't translate string $name to prevent missing translations if
+	 * public front lang is different of admin lang
+	 *
+	 * @since    3.1.2
+	 * @access   public
+	 * @return   array setting keys and string names
+	 */
+	public static function settings_i18n() {
+
+		return apply_filters(
+			'whatsappme_settings_i18n', array(
+				'button_tip'    => 'Tooltip',
+				'message_text'  => 'Call to Action',
+				'message_send'  => 'Message',
+				'message_start' => 'Start WhatsApp Button',
+			)
+		);
+
+	}
+
+	/**
 	 * Clean user input fields
 	 *
 	 * @since    3.1.0
@@ -60,8 +83,13 @@ class WhatsAppMe_Util {
 	 */
 	public static function thumb( $img, $width, $height, $crop = true ) {
 
+		$img_path = intval( $img ) > 0 ? get_attached_file( $img ) : $img;
+
+		if ( ! file_exists( $img_path ) ) {
+			return false;
+		}
+
 		$uploads      = wp_get_upload_dir();
-		$img_path     = intval( $img ) > 0 ? get_attached_file( $img ) : $img;
 		$img_info     = pathinfo( $img_path );
 		$new_img_path = "{$img_info['dirname']}/{$img_info['filename']}-{$width}x{$height}.{$img_info['extension']}";
 
@@ -100,7 +128,7 @@ class WhatsAppMe_Util {
 	public static function is_animated_gif( $img ) {
 		$img_path = intval( $img ) > 0 ? get_attached_file( $img ) : $img;
 
-		return (bool) preg_match( '#(\x00\x21\xF9\x04.{4}\x00\x2C.*){2,}#s', file_get_contents( $img_path ) );
+		return file_exists( $img_path ) ? (bool) preg_match( '#(\x00\x21\xF9\x04.{4}\x00\x2C.*){2,}#s', file_get_contents( $img_path ) ) : false;
 	}
 
 	/**
@@ -108,6 +136,7 @@ class WhatsAppMe_Util {
 	 * Also apply styles transformations like WhatsApp app.
 	 *
 	 * @since    3.1.0
+	 * @since    3.1.2      Allowed callback replecements
 	 * @param    string $string    string to apply format replacements
 	 * @return   string     string formated
 	 */
@@ -115,20 +144,28 @@ class WhatsAppMe_Util {
 
 		$replacements = apply_filters(
 			'whatsappme_format_replacements', array(
-				'/_(\S[^_]*\S)_/mu'    => '<em>$1</em>',
-				'/\*(\S[^\*]*\S)\*/mu' => '<strong>$1</strong>',
-				'/~(\S[^~]*\S)~/mu'    => '<del>$1</del>',
+				'/_(\S[^_]*\S)_/u'    => '<em>$1</em>',
+				'/\*(\S[^\*]*\S)\*/u' => '<strong>$1</strong>',
+				'/~(\S[^~]*\S)~/u'    => '<del>$1</del>',
 			)
 		);
 
 		$replacements = apply_filters_deprecated( 'whatsappme_message_replacements', array( $replacements ), '3.0.3', 'whatsappme_format_replacements' );
 
-		$patterns = array_keys( $replacements );
-
 		// Split text into lines and apply replacements line by line
 		$lines = explode( "\n", $string );
 		foreach ( $lines as $key => $line ) {
-			$lines[ $key ] = preg_replace( $patterns, $replacements, esc_html( $line ) );
+			$escaped_line = esc_html( $line );
+
+			foreach ( $replacements as $pattern => $replacement ) {
+				if ( is_callable( $replacement ) ) {
+					$escaped_line = preg_replace_callback( $pattern, $replacement, $escaped_line );
+				} else {
+					$escaped_line = preg_replace( $pattern, $replacement, $escaped_line );
+				}
+			}
+
+			$lines[ $key ] = $escaped_line;
 		}
 
 		return self::replace_variables( implode( '<br>', $lines ) );
@@ -156,7 +193,7 @@ class WhatsAppMe_Util {
 		// Convert VAR to regex {VAR}
 		$patterns = array_map(
 			function ( $var ) {
-				return "/\{$var\}/i";
+				return "/\{$var\}/u";
 			}, array_keys( $replacements )
 		);
 

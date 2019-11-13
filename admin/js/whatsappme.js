@@ -78,8 +78,13 @@
         $('#tab-link-styles-and-vars a').click();
       });
 
-      // Texarea auto height
-      $('textarea', '#whatsappme_form').on('input', textarea_autoheight).each(textarea_autoheight);
+      // Texarea focus and auto height
+      $('textarea', '#whatsappme_form')
+        .on('focus', function () { $(this).closest('tr').addClass('whatsappme--focus'); })
+        .on('blur', function () { $(this).closest('tr').removeClass('whatsappme--focus'); })
+        .on('input', textarea_autoheight)
+        .each(textarea_autoheight);
+
 
       // Advanced view inheritance
       var $tab_advanced = $('#whatsappme_tab_advanced');

@@ -39,8 +39,9 @@
       var is_mobile = !!navigator.userAgent.match(/Android|iPhone|BlackBerry|IEMobile|Opera Mini/i);
       var button_delay = wame_settings.button_delay * 1000;
       var chat_delay = wame_settings.message_delay * 1000;
-      var has_cta = wame_settings.message_text !== '';
+      var has_cta = !!wame_settings.message_text;
       var wa_web = wame_settings.whatsapp_web && !is_mobile;
+      var dialog_visible = false;
       var timeoutID, timeoutCTA;
 
       // Check WebP support
@@ -71,26 +72,27 @@
             timeoutCTA = setTimeout(function () { $badge.addClass('whatsappme__badge--in'); }, button_delay + chat_delay);
           } else if (is_second_visit) {
             // Show dialog
-            timeoutCTA = setTimeout(show_dialog, button_delay + chat_delay);
+            timeoutCTA = setTimeout(dialog_show, button_delay + chat_delay);
           }
         }
       }
 
       if (has_cta && !is_mobile) {
         $('.whatsappme__button', $whatsappme)
-          .mouseenter(function () { timeoutID = setTimeout(show_dialog, 1500); })
+          .mouseenter(function () { if (!dialog_visible) timeoutID = setTimeout(dialog_show, 1500); })
           .mouseleave(function () { clearTimeout(timeoutID); });
       }
 
       $('.whatsappme__button', $whatsappme).click(function () {
-        if (has_cta && !$whatsappme.hasClass('whatsappme--dialog')) {
-          show_dialog();
+        if (has_cta && !dialog_visible) {
+          dialog_show();
         } else {
           var args = { link: whatsapp_link(wa_web, wame_settings.telephone, wame_settings.message_send) };
           var secure_link = new RegExp("^https?:\/\/(wa\.me|(api|web|chat)\.whatsapp\.com|" + location.hostname.replace('.', '\.') + ")\/.*", 'i');
 
-          $whatsappme.removeClass('whatsappme--dialog whatsappme--tooltip');
-          save_message_viewed();
+          if (dialog_visible) {
+            dialog_hide();
+          }
           // Trigger custom event (args obj allow edit link by third party scripts)
           $(document).trigger('whatsappme:open', [args, wame_settings]);
 
@@ -106,19 +108,26 @@
         }
       });
 
-      $('.whatsappme__close', $whatsappme).click(function () {
-        $whatsappme.removeClass('whatsappme--dialog whatsappme--tooltip');
-        save_message_viewed();
-      });
+      $('.whatsappme__close', $whatsappme).click(dialog_hide);
 
-      function show_dialog() {
+      function dialog_show() {
         $whatsappme.addClass('whatsappme--dialog');
+        dialog_visible = true;
         clearTimeout(timeoutCTA);
 
         if (wame_settings.message_badge && $badge.hasClass('whatsappme__badge--in')) {
-          $badge.removeClass('whatsappme__badge--in').addClass('whatsappme__badge--out');
-          save_message_viewed();
+          $badge.toggleClass('whatsappme__badge--in whatsappme__badge--out');
         }
+        // Trigger custom event
+        $(document).trigger('whatsappme:show');
+      }
+
+      function dialog_hide() {
+        $whatsappme.removeClass('whatsappme--dialog whatsappme--tooltip');
+        dialog_visible = false;
+        save_message_viewed();
+        // Trigger custom event
+        $(document).trigger('whatsappme:hide');
       }
 
       function save_message_viewed() {

@@ -22,6 +22,7 @@ class WhatsAppMe_WooPublic {
 		$loader = $whatsappme->get_loader();
 
 		$loader->add_filter( 'whatsappme_extra_settings', $this, 'woo_settings' );
+		$loader->add_filter( 'whatsappme_settings_i18n', $this, 'settings_i18n' );
 		$loader->add_filter( 'whatsappme_get_settings_site', $this, 'product_settings' );
 		$loader->add_filter( 'whatsappme_visibility', $this, 'visibility', 10, 2 );
 		$loader->add_filter( 'whatsappme_variable_replacements', $this, 'replacements' );
@@ -40,10 +41,27 @@ class WhatsAppMe_WooPublic {
 
 		$woo_settings = array(
 			'message_text_product' => '',
+			'message_text_on_sale' => '',
 			'message_send_product' => '',
 		);
 
 		return array_merge( $settings, $woo_settings );
+	}
+
+	/**
+	 * WooCommerce settings translations
+	 *
+	 * @since    3.1.2
+	 * @param    array $settings       translatable settings.
+	 * @return   array
+	 */
+	public function settings_i18n( $settings ) {
+
+		$settings['message_text_product'] = 'Call to Action for Products';
+		$settings['message_text_on_sale'] = 'Call to Action for Products on sale';
+		$settings['message_send_product'] = 'Message for Products';
+
+		return $settings;
 	}
 
 	/**
@@ -57,18 +75,14 @@ class WhatsAppMe_WooPublic {
 
 		// Only applies to product pages
 		if ( is_product() ) {
-			if ( '' != $settings['message_text_product'] ) {
-				$settings['message_text'] = apply_filters(
-					'wpml_translate_single_string', $settings['message_text_product'],
-					'WhatsApp me', 'Call To Action for Products'
-				);
+			$product = wc_get_product();
+
+			if ( $product->is_on_sale() && $settings['message_text_on_sale'] ) {
+				$settings['message_text'] = $settings['message_text_on_sale'];
+			} else {
+				$settings['message_text'] = $settings['message_text_product'] ?: $settings['message_text'];
 			}
-			if ( '' != $settings['message_send_product'] ) {
-				$settings['message_send'] = apply_filters(
-					'wpml_translate_single_string', $settings['message_send_product'],
-					'WhatsApp me', 'Message for Products'
-				);
-			}
+			$settings['message_send'] = $settings['message_send_product'] ?: $settings['message_send'];
 		}
 
 		return $settings;
@@ -128,9 +142,11 @@ class WhatsAppMe_WooPublic {
 
 			$replacements = array_merge(
 				$replacements, array(
-					'PRODUCT' => $product->get_name(),
-					'SKU'     => $product->get_sku(),
-					'PRICE'   => strip_tags( wc_price( $product->get_price() ) ),
+					'PRODUCT'  => $product->get_name(),
+					'SKU'      => $product->get_sku(),
+					'REGULAR'  => $this->get_regular_price( $product ),
+					'PRICE'    => $this->get_price( $product ),
+					'DISCOUNT' => $this->get_discount( $product ),
 				)
 			);
 		}
@@ -153,6 +169,68 @@ class WhatsAppMe_WooPublic {
 		);
 
 		return array_merge( $fields, $excluded );
+	}
+
+	/**
+	 * Return text formated price.
+	 * Follow WooCommerce settings for show included/excluded taxes
+	 *
+	 * @since    3.1.2
+	 * @param    WC_Product $product   current product.
+	 * @param    float      $price     price to format.
+	 * @return   string formated price
+	 */
+	public function format_price( $product, $price ) {
+
+		return strip_tags( wc_price( wc_get_price_to_display( $product, array( 'price' => $price ) ) ) );
+
+	}
+
+	/**
+	 * Return regular price of product (if is variable return min price)
+	 *
+	 * @since    3.1.2
+	 * @param    WC_Product $product   current product.
+	 * @return   float price
+	 */
+	public function get_regular_price( $product ) {
+
+		$price = 'variable' === $product->get_type() ? $product->get_variation_regular_price( 'min' ) : $product->get_regular_price();
+
+		return $this->format_price( $product, $price );
+
+	}
+
+	/**
+	 * Return price of product (if is variable return min price)
+	 *
+	 * @since    3.1.2
+	 * @param    WC_Product $product   current product.
+	 * @return   float price
+	 */
+	public function get_price( $product ) {
+
+		$price = 'variable' === $product->get_type() ? $product->get_variation_price( 'min' ) : $product->get_price();
+
+		return $this->format_price( $product, $price );
+
+	}
+
+	/**
+	 * Return percent discount of product on sale
+	 *
+	 * @since    3.1.2
+	 * @param    WC_Product $product   current product.
+	 * @return   string discount
+	 */
+	public function get_discount( $product ) {
+
+		$regular_price = 'variable' === $product->get_type() ? $product->get_variation_regular_price( 'min' ) : $product->get_regular_price();
+		$sale_price    = 'variable' === $product->get_type() ? $product->get_variation_price( 'min' ) : $product->get_price();
+		$percentage    = round( ( ( $regular_price - $sale_price ) / $regular_price ) * 100 );
+
+		return $percentage ? "-$percentage%" : '';
+
 	}
 
 }

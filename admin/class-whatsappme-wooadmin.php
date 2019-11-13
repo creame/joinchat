@@ -23,10 +23,12 @@ class WhatsAppMe_WooAdmin {
 
 		$loader->add_filter( 'whatsappme_extra_settings', $this, 'extra_settings' );
 		$loader->add_filter( 'whatsappme_settings_validate', $this, 'settings_validate' );
+		$loader->add_filter( 'whatsappme_settings_i18n', $this, 'settings_i18n' );
 		$loader->add_filter( 'whatsappme_admin_tabs', $this, 'admin_tab' );
 		$loader->add_filter( 'whatsappme_custom_post_types', $this, 'custom_post_types' );
 		$loader->add_filter( 'whatsappme_tab_advanced_sections', $this, 'advanced_tab_section' );
 		$loader->add_filter( 'whatsappme_tab_woocommerce_sections', $this, 'woo_tab_sections' );
+		$loader->add_filter( 'whatsappme_vars_help', $this, 'vars_help', 10, 2 );
 		$loader->add_filter( 'whatsappme_section_output', $this, 'section_ouput', 10, 2 );
 		$loader->add_filter( 'whatsappme_field_output', $this, 'field_ouput', 10, 3 );
 		$loader->add_filter( 'whatsappme_advanced_inheritance', $this, 'advanced_inheritance' );
@@ -45,6 +47,7 @@ class WhatsAppMe_WooAdmin {
 
 		$woo_settings = array(
 			'message_text_product' => '',
+			'message_text_on_sale' => '',
 			'message_send_product' => '',
 		);
 
@@ -61,11 +64,27 @@ class WhatsAppMe_WooAdmin {
 	public function settings_validate( $input ) {
 
 		$input['message_text_product'] = WhatsAppMe_Util::clean_input( $input['message_text_product'] );
+		$input['message_text_on_sale'] = WhatsAppMe_Util::clean_input( $input['message_text_on_sale'] );
 		$input['message_send_product'] = WhatsAppMe_Util::clean_input( $input['message_send_product'] );
 
 		return $input;
 	}
 
+	/**
+	 * WooCommerce settings translations
+	 *
+	 * @since    3.1.2
+	 * @param    array $settings       translatable settings.
+	 * @return   array
+	 */
+	public function settings_i18n( $settings ) {
+
+		$settings['message_text_product'] = 'Call to Action for Products';
+		$settings['message_text_on_sale'] = 'Call to Action for Products on Sale';
+		$settings['message_send_product'] = 'Message for Products';
+
+		return $settings;
+	}
 
 	/**
 	 * Add WooCommerce admin tab
@@ -124,12 +143,37 @@ class WhatsAppMe_WooAdmin {
 	 */
 	public function woo_tab_sections( $sections ) {
 
-		$sections['chat'] = array(
-			'message_text_product' => '<label for="whatsappme_message_text_product">' . __( 'Call To Action', 'creame-whatsapp-me' ) . '</label>',
-			'message_send_product' => '<label for="whatsappme_message_send_product">' . __( 'Message', 'creame-whatsapp-me' ) . '</label>',
+		$woo_sections = array(
+			'message_text_product' => __( 'Call to Action for Products', 'creame-whatsapp-me' ),
+			'message_text_on_sale' => __( 'Call to Action for Products on Sale', 'creame-whatsapp-me' ),
+			'message_send_product' => __( 'Message for Products', 'creame-whatsapp-me' ),
 		);
 
+		foreach ( $woo_sections as $key => $label ) {
+			$woo_sections[ $key ] = "<label for=\"whatsappme_$key\">$label</label>" . WhatsAppMe_Admin::vars_help( $key );
+		}
+
+		$sections['chat'] = $woo_sections;
+
 		return $sections;
+	}
+
+	/**
+	 * Woocommerce sections and fields for 'whatsappme_tab_woocommerce'
+	 *
+	 * @since    3.0.0
+	 * @param    array $sections       current tab sections and fields.
+	 * @return   array
+	 */
+	public function vars_help( $vars, $field ) {
+
+		if ( 'message_text_product' === $field || 'message_send_product' === $field ) {
+			$vars = array_merge( $vars, array( 'PRODUCT', 'SKU', 'PRICE' ) );
+		} elseif ( 'message_text_on_sale' === $field ) {
+			$vars = array_merge( $vars, array( 'PRODUCT', 'SKU', 'REGULAR', 'PRICE', 'DISCOUNT' ) );
+		}
+
+		return $vars;
 	}
 
 	/**
@@ -151,8 +195,6 @@ class WhatsAppMe_WooAdmin {
 			$output = '<h2 class="title">' . __( 'Product Chat Window', 'creame-whatsapp-me' ) . '</h2>' .
 				'<p>' .
 				__( 'You can define other different texts for the Chat Window on the product pages.', 'creame-whatsapp-me' ) .
-				' <em>' . __( 'You can use styles and dynamic variables', 'creame-whatsapp-me' ) . '</em> ' .
-				'<a class="whatsappme-show-help" href="#" title="' . __( 'Show Help', 'creame-whatsapp-me' ) . '">?</a>' .
 				'</p>';
 
 		}
@@ -178,7 +220,14 @@ class WhatsAppMe_WooAdmin {
 				$output = '<textarea id="whatsappme_message_text_product" name="whatsappme[message_text_product]" rows="4" class="regular-text" ' .
 					'placeholder="' . esc_attr__( "This *{PRODUCT}* can be yours for only *{PRICE}*!\nIf you have any questions, ask us.", 'creame-whatsapp-me' ) . '">' .
 					$value . '</textarea>' .
-					'<p class="description">' . __( 'Define a text to encourage clients to contact by WhatsApp', 'creame-whatsapp-me' ) . '</p>';
+					'<p class="description">' . __( 'Define a text for your products to encourage customers to contact', 'creame-whatsapp-me' ) . '</p>';
+				break;
+
+			case 'message_text_on_sale':
+				$output = '<textarea id="whatsappme_message_text_on_sale" name="whatsappme[message_text_on_sale]" rows="4" class="regular-text" ' .
+					'placeholder="' . esc_attr__( "Save {DISCOUNT}! This *{PRODUCT}* can be yours for only ~{REGULAR}~ *{PRICE}*.\nIf you have any questions, ask us.", 'creame-whatsapp-me' ) . '">' .
+					$value . '</textarea>' .
+					'<p class="description">' . __( 'Define a text for your products on sale to encourage customers to contact', 'creame-whatsapp-me' ) . '</p>';
 				break;
 
 			case 'message_send_product':
@@ -222,8 +271,13 @@ class WhatsAppMe_WooAdmin {
 			'<p> ' . __( '<strong>WooCommerce</strong>, in product pages you can also use:', 'creame-whatsapp-me' ) . '</p>' .
 			'<p>' .
 				'<span><code>{PRODUCT}</code>  ➜ ' . __( 'Product Name', 'creame-whatsapp-me' ) . '</span>, ' .
-				'<span><code>{PRICE}</code>  ➜ ' . strip_tags( wc_price( 9.95 ) ) . '</span>, ' .
-				'<span><code>{SKU}</code>  ➜ ABC98798</span>' .
+				'<span><code>{SKU}</code>  ➜ ABC98798</span>, ' .
+				'<span><code>{PRICE}</code>  ➜ ' . strip_tags( wc_price( 7.95 ) ) . '</span> ' .
+			'</p>' .
+			'<p> ' . __( 'For the <strong>Call to Action for Products on Sale</strong>, you can also use:', 'creame-whatsapp-me' ) . '</p>' .
+			'<p>' .
+				'<span><code>{REGULAR}</code>  ➜ ' . strip_tags( wc_price( 9.95 ) ) . '</span>, ' .
+				'<span><code>{DISCOUNT}</code>  ➜ -20%</span>' .
 			'</p>';
 
 	}

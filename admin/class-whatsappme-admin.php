@@ -113,7 +113,7 @@ class WhatsAppMe_Admin {
 				'message_delay' => 10,
 				'message_badge' => 'no',
 				'message_send'  => '',
-				'message_start' => '',
+				'message_start' => __( 'Open chat', 'creame-whatsapp-me' ),
 				'position'      => 'right',
 				'visibility'    => array( 'all' => 'yes' ),
 			),
@@ -236,16 +236,16 @@ class WhatsAppMe_Admin {
 			$sections = array(
 				'button' => array(
 					'telephone'    => '<label for="whatsappme_phone">' . __( 'Telephone', 'creame-whatsapp-me' ) . '</label>',
-					'message_send' => '<label for="whatsappme_message_send">' . __( 'Message', 'creame-whatsapp-me' ) . '</label>',
+					'message_send' => '<label for="whatsappme_message_send">' . __( 'Message', 'creame-whatsapp-me' ) . '</label>' . self::vars_help( 'message_send' ),
 					'mobile_only'  => __( 'Mobile Only', 'creame-whatsapp-me' ),
-					'position'     => __( 'Position On Screen', 'creame-whatsapp-me' ),
+					'position'     => __( 'Position on Screen', 'creame-whatsapp-me' ),
 					'button_image' => __( 'Image', 'creame-whatsapp-me' ),
 					'button_tip'   => __( 'Tooltip', 'creame-whatsapp-me' ),
 					'button_delay' => '<label for="whatsappme_button_delay">' . __( 'Button Delay', 'creame-whatsapp-me' ) . '</label>',
 					'whatsapp_web' => __( 'WhatsApp Web', 'creame-whatsapp-me' ),
 				),
 				'chat'   => array(
-					'message_text'  => '<label for="whatsappme_message_text">' . __( 'Call To Action', 'creame-whatsapp-me' ) . '</label>',
+					'message_text'  => '<label for="whatsappme_message_text">' . __( 'Call to Action', 'creame-whatsapp-me' ) . '</label>' . self::vars_help( 'message_text' ),
 					'message_start' => '<label for="whatsappme_message_start">' . __( 'Start WhatsApp Button', 'creame-whatsapp-me' ) . '</label>',
 					'message_delay' => '<label for="whatsappme_message_delay">' . __( 'Chat Delay', 'creame-whatsapp-me' ) . '</label>',
 					'message_badge' => __( 'Notification Balloon', 'creame-whatsapp-me' ),
@@ -358,16 +358,14 @@ class WhatsAppMe_Admin {
 		/**
 		 * Register WPML/Polylang strings for translation
 		 * https://wpml.org/wpml-hook/wpml_register_single_string/
-		 *
-		 * Note: don't translate string $name to prevent missing translations if
-		 * public front lang is different of admin lang
 		 */
-		do_action( 'wpml_register_single_string', 'WhatsApp me', 'Tooltip', $input['button_tip'] );
-		do_action( 'wpml_register_single_string', 'WhatsApp me', 'Call To Action', $input['message_text'] );
-		do_action( 'wpml_register_single_string', 'WhatsApp me', 'Message', $input['message_send'] );
-		do_action( 'wpml_register_single_string', 'WhatsApp me', 'Start WhatsApp Button', $input['message_start'] );
+		$settings_i18n = WhatsAppMe_Util::settings_i18n();
 
-		// Action to register more WPML strings or other tasks
+		foreach ( $settings_i18n as $setting_key => $setting_name ) {
+			do_action( 'wpml_register_single_string', 'WhatsApp me', $setting_name, $input[ $setting_key ] );
+		}
+
+		// Extra actions on save
 		do_action( 'whatsappme_settings_validate', $input );
 
 		add_settings_error( 'whatsappme', 'settings_updated', __( 'Settings saved', 'creame-whatsapp-me' ), 'updated' );
@@ -423,9 +421,8 @@ class WhatsAppMe_Admin {
 			case 'whatsappme_tab_general__chat':
 				$output = '<hr><h2 class="title">' . __( 'Chat Window', 'creame-whatsapp-me' ) . '</h2>' .
 					'<p>' .
-						__( 'Set the behavior of the chat window.', 'creame-whatsapp-me' ) . ' ' .
-						' <em>' . __( 'You can use styles and dynamic variables', 'creame-whatsapp-me' ) . '</em> ' .
-						'<a class="whatsappme-show-help" href="#" title="' . __( 'Show Help', 'creame-whatsapp-me' ) . '">?</a>' .
+						__( 'If you define a "Call to Action" a window will be displayed simulating a chat before launching WhatsApp.', 'creame-whatsapp-me' ) . ' ' .
+						__( 'You can introduce yourself, offer help or even make promotions to your users.', 'creame-whatsapp-me' ) .
 					'</p>';
 				break;
 
@@ -493,7 +490,7 @@ class WhatsAppMe_Admin {
 					break;
 
 				case 'position':
-					$output = '<fieldset><legend class="screen-reader-text"><span>' . __( 'Position On Screen', 'creame-whatsapp-me' ) . '</span></legend>' .
+					$output = '<fieldset><legend class="screen-reader-text"><span>' . __( 'Position on Screen', 'creame-whatsapp-me' ) . '</span></legend>' .
 						'<label><input name="whatsappme[position]" value="left" type="radio"' . checked( 'left', $value, false ) . '> ' .
 						__( 'Left', 'creame-whatsapp-me' ) . '</label><br>' .
 						'<label><input name="whatsappme[position]" value="right" type="radio"' . checked( 'right', $value, false ) . '> ' .
@@ -501,7 +498,7 @@ class WhatsAppMe_Admin {
 					break;
 
 				case 'button_image':
-					$image = intval( $value ) > 0 ? WhatsAppMe_Util::thumb( $value, 116, 116 )['url'] : false;
+					$image = intval( $value ) > 0 && is_array( WhatsAppMe_Util::thumb( $value, 116, 116 ) ) ? WhatsAppMe_Util::thumb( $value, 116, 116 )['url'] : false;
 
 					$output = '<div id="whatsappme_button_image_wrapper">' .
 						'<div id="whatsappme_button_image_holder" ' . ( $image ? "style=\"background-size:cover; background-image:url('$image');\"" : '' ) . '></div>' .
@@ -792,14 +789,14 @@ class WhatsAppMe_Admin {
 					<input id="whatsappme_phone" <?php echo $this->enhanced_phone ? 'data-' : ''; ?>name="whatsappme_telephone" value="<?php echo $metadata['telephone']; ?>" type="text">
 				</p>
 				<p>
-					<label for="whatsappme_message"><?php _e( 'Call To Action', 'creame-whatsapp-me' ); ?></label><br>
+					<label for="whatsappme_message"><?php _e( 'Call to Action', 'creame-whatsapp-me' ); ?></label><br>
 					<textarea id="whatsappme_message" name="whatsappme_message" rows="2" class="large-text"><?php echo $metadata['message_text']; ?></textarea>
 				</p>
 				<p>
 					<label for="whatsappme_message_send"><?php _e( 'Message', 'creame-whatsapp-me' ); ?></label><br>
 					<textarea id="whatsappme_message_send" name="whatsappme_message_send" rows="2" class="large-text"><?php echo $metadata['message_send']; ?></textarea>
 					<?php if ( count( $metabox_vars ) ) : ?>
-						<small><?php _e( 'You can use vars:', 'creame-whatsapp-me' ); ?> <code>{<?php echo join( '}</code> <code>{', $metabox_vars ); ?>}</code></small>
+						<small><?php _e( 'You can use vars', 'creame-whatsapp-me' ); ?> <code>{<?php echo join( '}</code> <code>{', $metabox_vars ); ?>}</code></small>
 					<?php endif; ?>
 				</p>
 				<p>
@@ -854,4 +851,24 @@ class WhatsAppMe_Admin {
 			delete_post_meta( $post_id, '_whatsappme' );
 		}
 	}
+
+	/**
+	 * Return html for dynamic variables help next to field label
+	 *
+	 * @since    3.1.2
+	 * @access   public
+	 * @param    string $field       field name.
+	 * @return   string
+	 */
+	public static function vars_help( $field ) {
+
+		$vars = apply_filters( 'whatsappme_vars_help', array( 'SITE', 'URL', 'TITLE' ), $field );
+
+		return count( $vars ) ? '<div class="whatsappme_vars_help">' . __( 'You can use vars', 'creame-whatsapp-me' ) . ' ' .
+			'<a class="whatsappme-show-help" href="#" title="' . __( 'Show Help', 'creame-whatsapp-me' ) . '">?</a><br> ' .
+			'<code>{' . join( '}</code> <code>{', $vars ) . '}</code></div>' : '';
+
+	}
+
+
 }

@@ -99,7 +99,7 @@ class WhatsAppMe_Public {
 				'message_delay' => 10,
 				'message_badge' => 'no',
 				'message_send'  => '',
-				'message_start' => '',
+				'message_start' => __( 'Open chat', 'creame-whatsapp-me' ),
 				'position'      => 'right',
 				'visibility'    => array( 'all' => 'yes' ),
 			),
@@ -122,13 +122,13 @@ class WhatsAppMe_Public {
 			}
 
 			// Load WPML/Polylang translated strings
-			$settings['button_tip']    = apply_filters( 'wpml_translate_single_string', $settings['button_tip'], 'WhatsApp me', 'Tooltip' );
-			$settings['message_text']  = apply_filters( 'wpml_translate_single_string', $settings['message_text'], 'WhatsApp me', 'Call To Action' );
-			$settings['message_send']  = apply_filters( 'wpml_translate_single_string', $settings['message_send'], 'WhatsApp me', 'Message' );
-			$settings['message_start'] = apply_filters( 'wpml_translate_single_string', $settings['message_start'], 'WhatsApp me', 'Start WhatsApp Button' );
+			$settings_i18n = WhatsAppMe_Util::settings_i18n();
+
+			foreach ( $settings_i18n as $key => $label ) {
+				$settings[ $key ] = $settings[ $key ] ? apply_filters( 'wpml_translate_single_string', $settings[ $key ], 'WhatsApp me', $label ) : '';
+			}
 
 			// Filter for site settings (can be overriden by post settings)
-			// You can translate more WPML strings or add/change other settings
 			$settings = apply_filters( 'whatsappme_get_settings_site', $settings, $obj );
 
 			// Post custom settings override site settings
@@ -241,13 +241,15 @@ class WhatsAppMe_Public {
 			$powered_site = urlencode( get_bloginfo( 'name' ) );
 			$powered_link = "https://wame.chat/powered/?site={$powered_site}&url={$powered_url}";
 
-			$image = false;
-			if ( $this->settings['button_image'] ) {
+			// Set custom img tag and bypass default image logic
+			$image = apply_filters( 'whatsappme_image', null );
+
+			if ( is_null( $image ) && $this->settings['button_image'] ) {
 				$img_path = get_attached_file( $this->settings['button_image'] );
 
 				if ( apply_filters( 'whatsappme_image_original', WhatsAppMe_Util::is_animated_gif( $img_path ) ) ) {
 					$image = '<img src="' . wp_get_attachment_url( $this->settings['button_image'] ) . '" alt="">';
-				} else {
+				} elseif ( is_array( WhatsAppMe_Util::thumb( $img_path, 58, 58 ) ) ) {
 					$image = '<img src="' . WhatsAppMe_Util::thumb( $img_path, 58, 58 )['url'] . '" srcset="' .
 						WhatsAppMe_Util::thumb( $img_path, 116, 116 )['url'] . ' 2x, ' .
 						WhatsAppMe_Util::thumb( $img_path, 174, 174 )['url'] . ' 3x" alt="">';
