@@ -1,4 +1,4 @@
-=== WAme chat ===
+=== VVAme chat ===
 Contributors: creapuntome, pacotole, davidlillo, monillo
 Donate link: https://www.paypal.me/creapuntome/
 Tags: whatsapp business, whatsapp, click to chat, button, whatsapp support chat, support, contact, directly message whatsapp, floating whatsapp, whatsapp chat
@@ -9,11 +9,11 @@ Stable tag: 3.1.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Connect a WordPress chat with WhatsApp. The best solution for marketing and support. Stop losing customers and increase your sales.
+Connects a WordPress chat with WhatsApp. The best solution for marketing and support. Stop losing customers and increase your sales.
 
 == Description ==
 
-[wame.chat](https://wame.chat) | [Add-Ons](https://wame.chat/addons/) | [Plugin support](https://wordpress.org/support/plugin/creame-whatsapp-me/)
+[wame.chat](https://wame.chat) | [Add-Ons](https://wame.chat/addons/) | [Plugin support](https://wame.chat/en/support/)
 
 ### Connect a WordPress chat with WhatsApp. The best solution for marketing and support. Stop losing customers and increase your sales.
 
@@ -65,7 +65,7 @@ Having many options is not an advantage, the configuration of WAme is so easy th
 ### ⌁ If you like WAme 😍
 1. Subscribe to [our newsletter and our blog](https://wame.chat/blog/).
 2. Learn from our tutorials on [Youtube Channel](https://www.youtube.com/channel/UCqHiSNPBaQ918fpVnCU1wog/).
-3. Or rate us [on WordPress](https://wordpress.org/support/plugin/creame-whatsapp-me/reviews/?filter=5/#new-post).
+3. Or rate us [on WordPress](https://wordpress.org/support/plugin/creame-whatsapp-me/reviews/#new-post).
 
 *WhatsApp and WhatsApp Logo are brand assets and trademark of Facebook, Inc.*
 *WAme is not in partnership, sponsored or endorsed by Facebook, Inc.*

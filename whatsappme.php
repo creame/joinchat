@@ -6,9 +6,9 @@
  * @package           WhatsAppMe
  *
  * @wordpress-plugin
- * Plugin Name:       WAme chat
+ * Plugin Name:       VVAme chat
  * Plugin URI:        https://wame.chat
- * Description:       Connect a WordPress chat with WhatsApp. The best solution for marketing and support. Stop losing customers and increase your sales.
+ * Description:       Connects a WordPress chat with WhatsApp. The best solution for marketing and support. Stop losing customers and increase your sales.
  * Version:           3.1.4
  * Author:            Creame
  * Author URI:        https://crea.me
