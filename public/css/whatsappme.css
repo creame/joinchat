@@ -234,7 +234,7 @@
   min-height: 280px;
   padding-bottom: 60px;
   border-radius: 32px;
-  background: #ede4dd url(../images/background.webp) center repeat-y;
+  background: #ede4dd url(../images/background.png) center repeat-y;
   background-size: 100% auto;
   box-shadow: 0 2px 6px 0 rgba(0, 0, 0, .5);
   overflow: hidden;
@@ -243,8 +243,8 @@
   transition: opacity 400ms ease-out, transform 0ms linear 300ms;
 }
 
-.nowebp .whatsappme__box {
-  background-image: url(../images/background.png);
+.whatsappme--webp .whatsappme__box {
+  background-image: url(../images/background.webp);
 }
 
 .whatsappme--dialog .whatsappme__box {

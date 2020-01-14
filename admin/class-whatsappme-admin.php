@@ -584,7 +584,7 @@ class WhatsAppMe_Admin {
 		);
 
 		echo '<div class="whatsappme_view_all" data-inheritance="' . esc_attr( json_encode( $inheritance ) ) . '">' .
-		  '<label><input type="radio" name="whatsappme[view][all]" value="yes"' . checked( 'yes', $value, false ) . '> ' .
+			'<label><input type="radio" name="whatsappme[view][all]" value="yes"' . checked( 'yes', $value, false ) . '> ' .
 			'<span class="dashicons dashicons-visibility" title="' . __( 'Show', 'creame-whatsapp-me' ) . '"></span></label>' .
 			'<label><input type="radio" name="whatsappme[view][all]" value="no"' . checked( 'no', $value, false ) . '> ' .
 			'<span class="dashicons dashicons-hidden" title="' . __( 'Hide', 'creame-whatsapp-me' ) . '"></span></label></div>';

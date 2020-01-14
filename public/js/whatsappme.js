@@ -44,11 +44,6 @@
       var dialog_visible = false;
       var timeoutID, timeoutCTA;
 
-      // Check WebP support
-      var webP = new Image();
-      webP.src = 'data:image/webp;base64,UklGRi4AAABXRUJQVlA4TCEAAAAvAUAAEB8wAiMwAgSSNtse/cXjxyCCmrYNWPwmHRH9jwMA';
-      webP.onload = webP.onerror = function () { if (webP.height !== 2) $whatsappme.addClass('nowebp'); }
-
       // Stored values
       var messages_viewed = (store.getItem('whatsappme_hashes') || '').split(',').filter(Boolean);
       var is_second_visit = store.getItem('whatsappme_visited') == 'yes';
