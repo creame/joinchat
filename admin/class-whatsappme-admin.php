@@ -94,7 +94,8 @@ class WhatsAppMe_Admin {
 
 		// Admin tabs
 		$this->tabs = apply_filters(
-			'whatsappme_admin_tabs', array(
+			'whatsappme_admin_tabs',
+			array(
 				'general'  => __( 'General', 'creame-whatsapp-me' ),
 				'advanced' => __( 'Advanced', 'creame-whatsapp-me' ),
 			)
@@ -348,7 +349,8 @@ class WhatsAppMe_Admin {
 		$input['dark_mode']     = in_array( $input['dark_mode'], array( 'no', 'yes', 'auto' ) ) ? $input['dark_mode'] : 'no';
 		if ( isset( $input['view'] ) ) {
 			$input['visibility'] = array_filter(
-				$input['view'], function( $v ) {
+				$input['view'],
+				function( $v ) {
 					return 'yes' == $v || 'no' == $v;
 				}
 			);
@@ -589,7 +591,8 @@ class WhatsAppMe_Admin {
 		$value = ( isset( $this->settings['visibility']['all'] ) && 'no' == $this->settings['visibility']['all'] ) ? 'no' : 'yes';
 
 		$inheritance = apply_filters(
-			'whatsappme_advanced_inheritance', array(
+			'whatsappme_advanced_inheritance',
+			array(
 				'all'      => array( 'front_page', 'blog_page', '404_page', 'search', 'archive', 'singular', 'cpts' ),
 				'archive'  => array( 'date', 'author' ),
 				'singular' => array( 'page', 'post' ),
@@ -786,7 +789,8 @@ class WhatsAppMe_Admin {
 				'message_send' => '',
 				'hide'         => false,
 				'view'         => '',
-			), $metadata
+			),
+			$metadata
 		);
 
 		// Move old 'hide' to new 'view' field

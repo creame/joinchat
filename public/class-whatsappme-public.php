@@ -182,7 +182,7 @@ class WhatsAppMe_Public {
 	}
 
 	/**
-	 * Register the stylesheets for the public-facing side of the site.
+	 * Enqueue the stylesheets for the public-facing side of the site.
 	 *
 	 * @since    1.0.0
 	 * @since    2.2.2     minified
@@ -191,14 +191,14 @@ class WhatsAppMe_Public {
 	public function enqueue_styles() {
 
 		if ( $this->show ) {
-			$styles = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? 'whatsappme.css' : 'whatsappme.min.css';
-			wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/' . $styles, array(), $this->version, 'all' );
+			$min = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
+			wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . "css/{$this->plugin_name}{$min}.css", array(), $this->version, 'all' );
 		}
 
 	}
 
 	/**
-	 * Register the JavaScript for the public-facing side of the site.
+	 * Enqueue the JavaScript for the public-facing side of the site.
 	 *
 	 * @since    1.0.0
 	 * @since    2.2.2     minified
@@ -207,8 +207,8 @@ class WhatsAppMe_Public {
 	public function enqueue_scripts() {
 
 		if ( $this->show ) {
-			$script = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? 'whatsappme.js' : 'whatsappme.min.js';
-			wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/' . $script, array( 'jquery' ), $this->version, true );
+			$min = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
+			wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . "js/{$this->plugin_name}{$min}.js", array( 'jquery' ), $this->version, true );
 		}
 
 	}
@@ -226,7 +226,8 @@ class WhatsAppMe_Public {
 
 			// Clean unnecessary settings on front
 			$excluded_fields = apply_filters(
-				'whatsappme_excluded_fields', array(
+				'whatsappme_excluded_fields',
+				array(
 					'visibility',
 					'position',
 					'button_tip',

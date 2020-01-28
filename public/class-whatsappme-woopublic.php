@@ -141,7 +141,8 @@ class WhatsAppMe_WooPublic {
 			$product = wc_get_product();
 
 			$replacements = array_merge(
-				$replacements, array(
+				$replacements,
+				array(
 					'PRODUCT'  => $product->get_name(),
 					'SKU'      => $product->get_sku(),
 					'REGULAR'  => $this->get_regular_price( $product ),

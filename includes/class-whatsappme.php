@@ -60,6 +60,7 @@ class WhatsAppMe {
 		$this->load_dependencies();
 		$this->set_locale();
 		$this->load_integrations();
+
 		is_admin() ? $this->define_admin_hooks() : $this->define_public_hooks();
 
 	}
