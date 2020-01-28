@@ -33,7 +33,8 @@ class WhatsAppMe_WooAdmin {
 		$loader->add_filter( 'whatsappme_field_output', $this, 'field_ouput', 10, 3 );
 		$loader->add_filter( 'whatsappme_advanced_inheritance', $this, 'advanced_inheritance' );
 		$loader->add_filter( 'whatsappme_styles_and_vars_help', $this, 'help_vars' );
-		$loader->add_filter( 'whatsappme_metabox_vars', $this, 'metabox_vars' );
+		$loader->add_filter( 'whatsappme_metabox_vars', $this, 'metabox_vars', 10, 2 );
+		$loader->add_filter( 'whatsappme_metabox_placeholders', $this, 'metabox_placeholders', 10, 3 );
 	}
 
 	/**
@@ -287,16 +288,51 @@ class WhatsAppMe_WooAdmin {
 	 * Add Product metabox variables info.
 	 *
 	 * @since    3.0.0
-	 * @param    array $vars       current default vars.
+	 * @param    array  $vars       current default vars.
+	 * @param    object $post       current post.
 	 * @return   array
 	 */
-	public function metabox_vars( $vars ) {
-		global $post;
+	public function metabox_vars( $vars, $post ) {
 
 		if ( 'product' == $post->post_type ) {
-			$vars = array_merge( $vars, array( 'PRODUCT', 'PRICE', 'SKU' ) );
+			$product  = wc_get_product( $post->ID );
+			$woo_vars = array( 'PRODUCT', 'SKU', 'PRICE' );
+
+			if ( $product->is_on_sale() ) {
+				$woo_vars[] = 'REGULAR';
+				$woo_vars[] = 'DISCOUNT';
+			}
+
+			$vars = array_merge( $vars, $woo_vars );
 		}
 
 		return $vars;
+	}
+
+
+	/**
+	 * Add Product metabox placeholders info.
+	 *
+	 * @since    3.2.0
+	 * @param    array $placeholders   current placeholders.
+	 * @param    object $post          current post.
+	 * @param    array $settings       current settings.
+	 * @return   array
+	 */
+	public function metabox_placeholders( $placeholders, $post, $settings ) {
+
+		if ( 'product' == $post->post_type ) {
+			$product = wc_get_product( $post->ID );
+
+			$placeholders['message_send'] = $settings['message_send_product'] ?: $settings['message_send'];
+
+			if ( $product->is_on_sale() && $settings['message_text_on_sale'] ) {
+				$placeholders['message_text'] = $settings['message_text_on_sale'];
+			} else {
+				$placeholders['message_text'] = $settings['message_text_product'] ?: $settings['message_text'];
+			}
+		}
+
+		return $placeholders;
 	}
 }

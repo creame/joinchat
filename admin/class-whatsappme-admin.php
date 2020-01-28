@@ -795,7 +795,18 @@ class WhatsAppMe_Admin {
 		}
 		unset( $metadata['hide'] );
 
-		$metabox_vars = apply_filters( 'whatsappme_metabox_vars', array( 'SITE', 'URL', 'TITLE' ) );
+		$placeholders = apply_filters(
+			'whatsappme_metabox_placeholders',
+			array(
+				'telephone'    => $this->settings['telephone'],
+				'message_text' => $this->settings['message_text'],
+				'message_send' => $this->settings['message_send'],
+			),
+			$post,
+			$this->settings
+		);
+
+		$metabox_vars = apply_filters( 'whatsappme_metabox_vars', array( 'SITE', 'URL', 'TITLE' ), $post );
 
 		ob_start();
 		?>
@@ -803,15 +814,15 @@ class WhatsAppMe_Admin {
 				<?php wp_nonce_field( 'whatsappme_data', 'whatsappme_nonce' ); ?>
 				<p>
 					<label for="whatsappme_phone"><?php _e( 'Telephone', 'creame-whatsapp-me' ); ?></label><br>
-					<input id="whatsappme_phone" <?php echo $this->enhanced_phone ? 'data-' : ''; ?>name="whatsappme_telephone" value="<?php echo $metadata['telephone']; ?>" type="text">
+					<input id="whatsappme_phone" <?php echo $this->enhanced_phone ? 'data-' : ''; ?>name="whatsappme_telephone" value="<?php echo $metadata['telephone']; ?>" type="text" placeholder="<?php echo $placeholders['telephone']; ?>">
 				</p>
 				<p>
 					<label for="whatsappme_message"><?php _e( 'Call to Action', 'creame-whatsapp-me' ); ?></label><br>
-					<textarea id="whatsappme_message" name="whatsappme_message" rows="2" class="large-text"><?php echo $metadata['message_text']; ?></textarea>
+					<textarea id="whatsappme_message" name="whatsappme_message" rows="2" placeholder="<?php echo $placeholders['message_text']; ?>" class="large-text"><?php echo $metadata['message_text']; ?></textarea>
 				</p>
 				<p>
 					<label for="whatsappme_message_send"><?php _e( 'Message', 'creame-whatsapp-me' ); ?></label><br>
-					<textarea id="whatsappme_message_send" name="whatsappme_message_send" rows="2" class="large-text"><?php echo $metadata['message_send']; ?></textarea>
+					<textarea id="whatsappme_message_send" name="whatsappme_message_send" rows="2" placeholder="<?php echo $placeholders['message_send']; ?>" class="large-text"><?php echo $metadata['message_send']; ?></textarea>
 					<?php if ( count( $metabox_vars ) ) : ?>
 						<small><?php _e( 'You can use vars', 'creame-whatsapp-me' ); ?> <code>{<?php echo join( '}</code> <code>{', $metabox_vars ); ?>}</code></small>
 					<?php endif; ?>
