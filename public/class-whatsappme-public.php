@@ -102,6 +102,7 @@ class WhatsAppMe_Public {
 				'message_start' => __( 'Open chat', 'creame-whatsapp-me' ),
 				'position'      => 'right',
 				'visibility'    => array( 'all' => 'yes' ),
+				'dark_mode'     => 'no',
 			),
 			apply_filters( 'whatsappme_extra_settings', array() )
 		);
@@ -150,6 +151,7 @@ class WhatsAppMe_Public {
 			$settings['whatsapp_web']  = 'yes' == $settings['whatsapp_web'];
 			$settings['message_badge'] = 'yes' == $settings['message_badge'] && '' != $settings['message_text'];
 			$settings['position']      = 'right' == $settings['position'] ? 'right' : 'left';
+			$settings['dark_mode']     = in_array( $settings['dark_mode'], array( 'no', 'yes', 'auto' ) ) ? $settings['dark_mode'] : 'no';
 			$settings['message_send']  = WhatsAppMe_Util::replace_variables( $settings['message_send'] );
 			// Set true to link http://web.whatsapp.com instead http://api.whatsapp.com
 			$settings['whatsapp_web'] = apply_filters( 'whatsappme_whatsapp_web', 'yes' == $settings['whatsapp_web'] );
@@ -230,6 +232,7 @@ class WhatsAppMe_Public {
 					'button_tip',
 					'button_image',
 					'message_start',
+					'dark_mode',
 				)
 			);
 
@@ -256,8 +259,11 @@ class WhatsAppMe_Public {
 				}
 			}
 
-			$whatsappme_classes = 'whatsappme--' . $this->settings['position'];
-			$whatsappme_classes .= isset ( $_SERVER['HTTP_ACCEPT'] ) && strpos( $_SERVER['HTTP_ACCEPT'], 'image/webp' ) !== false ? ' whatsappme--webp' : '';
+			$whatsappme_classes  = 'whatsappme--' . $this->settings['position'];
+			$whatsappme_classes .= isset( $_SERVER['HTTP_ACCEPT'] ) && strpos( $_SERVER['HTTP_ACCEPT'], 'image/webp' ) !== false ? ' whatsappme--webp' : '';
+			if ( 'no' !== $this->settings['dark_mode'] ) {
+				$whatsappme_classes .= 'auto' === $this->settings['dark_mode'] ? ' whatsappme--dark-auto' : ' whatsappme--dark';
+			}
 
 			?>
 			<div class="whatsappme <?php echo apply_filters( 'whatsappme_classes', $whatsappme_classes ); ?>" data-settings="<?php echo esc_attr( json_encode( $data ) ); ?>">

@@ -116,6 +116,7 @@ class WhatsAppMe_Admin {
 				'message_start' => __( 'Open chat', 'creame-whatsapp-me' ),
 				'position'      => 'right',
 				'visibility'    => array( 'all' => 'yes' ),
+				'dark_mode'     => 'no',
 			),
 			apply_filters( 'whatsappme_extra_settings', array() )
 		);
@@ -249,6 +250,7 @@ class WhatsAppMe_Admin {
 					'message_start' => '<label for="whatsappme_message_start">' . __( 'Start WhatsApp Button', 'creame-whatsapp-me' ) . '</label>',
 					'message_delay' => '<label for="whatsappme_message_delay">' . __( 'Chat Delay', 'creame-whatsapp-me' ) . '</label>',
 					'message_badge' => __( 'Notification Balloon', 'creame-whatsapp-me' ),
+					'dark_mode'     => __( 'Dark Mode', 'creame-whatsapp-me' ),
 				),
 			);
 
@@ -343,6 +345,7 @@ class WhatsAppMe_Admin {
 		$input['message_start'] = $util::substr( $util::clean_input( $input['message_start'] ), 0, 20 );
 		$input['message_delay'] = intval( $input['message_delay'] );
 		$input['position']      = $input['position'] != 'left' ? 'right' : 'left';
+		$input['dark_mode']     = in_array( $input['dark_mode'], array( 'no', 'yes', 'auto' ) ) ? $input['dark_mode'] : 'no';
 		if ( isset( $input['view'] ) ) {
 			$input['visibility'] = array_filter(
 				$input['view'], function( $v ) {
@@ -553,6 +556,16 @@ class WhatsAppMe_Admin {
 					$output = '<fieldset><legend class="screen-reader-text"><span>' . __( 'Notification Balloon', 'creame-whatsapp-me' ) . '</span></legend>' .
 						'<label><input id="whatsappme_message_badge" name="whatsappme[message_badge]" value="yes" type="checkbox"' . checked( 'yes', $value, false ) . '> ' .
 						__( 'Display a notification balloon instead of opening the Chat Window for a "less intrusive" mode', 'creame-whatsapp-me' ) . '</label></fieldset>';
+					break;
+
+				case 'dark_mode':
+					$output = '<fieldset><legend class="screen-reader-text"><span>' . __( 'Dark Mode', 'creame-whatsapp-me' ) . '</span></legend>' .
+						'<label><input name="whatsappme[dark_mode]" value="no" type="radio"' . checked( 'no', $value, false ) . '> ' .
+						__( 'No', 'creame-whatsapp-me' ) . '</label><br>' .
+						'<label><input name="whatsappme[dark_mode]" value="yes" type="radio"' . checked( 'yes', $value, false ) . '> ' .
+						__( 'Yes', 'creame-whatsapp-me' ) . '</label><br>' .
+						'<label><input name="whatsappme[dark_mode]" value="auto" type="radio"' . checked( 'auto', $value, false ) . '> ' .
+						__( 'Auto (detects device dark mode)', 'creame-whatsapp-me' ) . '</label></fieldset>';
 					break;
 
 				default:
