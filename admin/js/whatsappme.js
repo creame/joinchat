@@ -12,6 +12,11 @@
       var country_request = JSON.parse(localStorage.whatsappme_country_code || '{}');
       var country_code = (country_request.code && country_request.date == new Date().toDateString()) ? country_request.code : false;
       var $phone = $('#whatsappme_phone');
+
+      // If empty value capture placeholdre and remove
+      var placeholder = $phone.val() === '' ? $phone.attr('placeholder') : null;
+      $phone.removeAttr('placeholder');
+
       var iti = intlTelInput($phone.get(0), {
         hiddenInput: $phone.data('name') || 'whatsappme[telephone]',
         initialCountry: 'auto',
@@ -31,6 +36,14 @@
       });
       // Ensures store current value
       iti.hiddenInput.value = $phone.val();
+
+      // Post metabox if empty value set placeholder from general settings
+      if (typeof placeholder == 'string' && placeholder != '') {
+        iti.promise.then(function() {
+          iti.setNumber(placeholder);
+          $phone.attr('placeholder', iti.getNumber(intlTelInputUtils.numberFormat.NATIONAL)).val('');
+        });
+      }
 
       $phone.on('input', function () {
         var $this = $(this);
