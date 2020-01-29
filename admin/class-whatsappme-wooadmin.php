@@ -314,9 +314,9 @@ class WhatsAppMe_WooAdmin {
 	 * Add Product metabox placeholders info.
 	 *
 	 * @since    3.2.0
-	 * @param    array $placeholders   current placeholders.
-	 * @param    object $post          current post.
-	 * @param    array $settings       current settings.
+	 * @param    array  $placeholders   current placeholders.
+	 * @param    object $post           current post.
+	 * @param    array  $settings       current settings.
 	 * @return   array
 	 */
 	public function metabox_placeholders( $placeholders, $post, $settings ) {

@@ -634,28 +634,17 @@ class WhatsAppMe_Admin {
 
 		$screen->add_help_tab(
 			array(
-				'id'      => 'styles-and-vars',
-				'title'   => __( 'Styles and Variables', 'creame-whatsapp-me' ),
-				'content' => apply_filters(
-					'whatsappme_styles_and_vars_help',
-					'<p>' . __( 'You can use formatting styles like in WhatsApp: _<em>italic</em>_ *<strong>bold</strong>* ~<del>strikethrough</del>~.', 'creame-whatsapp-me' ) . '</p>' .
-					 '<p>' . __( 'You can use dynamic variables that will be replaced by the values of the page the user visits:', 'creame-whatsapp-me' ) .
-					 '<p>' .
-					 '<span><code>{SITE}</code> ➜ ' . get_bloginfo( 'name', 'display' ) . '</span>, ' .
-					 '<span><code>{URL}</code>  ➜ ' . home_url( 'example' ) . '</span>, ' .
-					 '<span><code>{TITLE}</code>  ➜ ' . __( 'Page Title', 'creame-whatsapp-me' ) . '</span>' .
-					 '</p>'
-				),
-			)
-		);
-
-		$screen->add_help_tab(
-			array(
 				'id'      => 'support',
 				'title'   => __( 'Support and Help', 'creame-whatsapp-me' ),
 				'content' =>
 					'<p>' . sprintf(
-						__( 'If you need help, please check the <a href="%1$s" rel="external" target="_blank">free plugin support forum</a> or buy our <a href="%2$s" rel="external" target="_blank">premium support</a>.', 'creame-whatsapp-me' ),
+						__(
+							'If you need help, first review our <a href="%1$s" rel="external" target="_blank">documentation</a> ' .
+							'and if you don\'t find a solution check the <a href="%2$s" rel="external" target="_blank">free plugin support forum</a> ' .
+							'or buy our <a href="%3$s" rel="external" target="_blank">premium support</a>.',
+							'creame-whatsapp-me'
+						),
+						esc_url( 'https://wame.chat/en/docs/' . $utm ),
 						esc_url( 'https://wordpress.org/support/plugin/creame-whatsapp-me/' ),
 						esc_url( 'https://my.wame.chat/' . $utm )
 					) . '</p>' .
@@ -676,6 +665,24 @@ class WhatsAppMe_Admin {
 					'</ul>',
 			)
 		);
+
+		$screen->add_help_tab(
+			array(
+				'id'      => 'styles-and-vars',
+				'title'   => __( 'Styles and Variables', 'creame-whatsapp-me' ),
+				'content' => apply_filters(
+					'whatsappme_styles_and_vars_help',
+					'<p>' . __( 'You can use formatting styles like in WhatsApp: _<em>italic</em>_ *<strong>bold</strong>* ~<del>strikethrough</del>~.', 'creame-whatsapp-me' ) . '</p>' .
+					 '<p>' . __( 'You can use dynamic variables that will be replaced by the values of the page the user visits:', 'creame-whatsapp-me' ) .
+					 '<p>' .
+					 '<span><code>{SITE}</code> ➜ ' . get_bloginfo( 'name', 'display' ) . '</span>, ' .
+					 '<span><code>{URL}</code>  ➜ ' . home_url( 'example' ) . '</span>, ' .
+					 '<span><code>{TITLE}</code>  ➜ ' . __( 'Page Title', 'creame-whatsapp-me' ) . '</span>' .
+					 '</p>'
+				),
+			)
+		);
+
 	}
 
 	/**
