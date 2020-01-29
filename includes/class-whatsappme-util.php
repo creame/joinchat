@@ -152,7 +152,10 @@ class WhatsAppMe_Util {
 			)
 		);
 
-		$replacements = apply_filters_deprecated( 'whatsappme_message_replacements', array( $replacements ), '3.0.3', 'whatsappme_format_replacements' );
+		// Since WP 4.6
+		if ( function_exists( 'apply_filters_deprecated' ) ) {
+			$replacements = apply_filters_deprecated( 'whatsappme_message_replacements', array( $replacements ), '3.0.3', 'whatsappme_format_replacements' );
+		}
 
 		// Split text into lines and apply replacements line by line
 		$lines = explode( "\n", $string );
@@ -201,7 +204,10 @@ class WhatsAppMe_Util {
 			array_keys( $replacements )
 		);
 
-		$replacements = apply_filters_deprecated( 'whatsappme_message_send_replacements', array( array_combine( $patterns, $replacements ) ), '3.0.3', 'whatsappme_variable_replacements' );
+		// Since WP 4.6
+		if ( function_exists( 'apply_filters_deprecated' ) ) {
+			$replacements = apply_filters_deprecated( 'whatsappme_message_send_replacements', array( array_combine( $patterns, $replacements ) ), '3.0.3', 'whatsappme_variable_replacements' );
+		}
 
 		return preg_replace( array_keys( $replacements ), $replacements, $string );
 
