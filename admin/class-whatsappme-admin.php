@@ -477,14 +477,16 @@ class WhatsAppMe_Admin {
 		} else {
 
 			$value = isset( $this->settings[ $field_id ] ) ? $this->settings[ $field_id ] : '';
+			$utm   = '?utm_source=wpadmin&utm_medium=settings&utm_campaign=v' . str_replace( '.', '_', $this->version );
 
 			switch ( $field_id ) {
 				case 'telephone':
 					$output = '<input id="whatsappme_phone" ' . ( $this->enhanced_phone ? 'data-' : '' ) . 'name="whatsappme[telephone]" value="' . $value . '" type="text" style="width:15em">' .
 						'<p class="description">' . __( "Contact phone number <strong>(the button will not be shown if it's empty)</strong>", 'creame-whatsapp-me' ) . '</p>' .
 						'<p class="whatsappme-addon">' . sprintf(
-							__( 'Add unlimited numbers with %s', 'creame-whatsapp-me' ),
-							'<a href="https://wame.chat/en/addons/wame-random-phone/" target="_blank">\'WAme Random Phone\'</a>'
+							__( 'Add unlimited numbers with %1$s or multiple contacts with %2$s', 'creame-whatsapp-me' ),
+							'<a href="https://wame.chat/en/addons/wame-random-phone/' . $utm . '" target="_blank">\'WAme Random Phone\'</a>',
+							'<a href="https://wame.chat/en/addons/support-agents/' . $utm . '" target="_blank">\'WAme Agents\'</a>'
 						) . '</p>';
 					break;
 
@@ -535,7 +537,7 @@ class WhatsAppMe_Admin {
 						'<p class="description">' . __( 'Define a text to encourage users to contact by WhatsApp', 'creame-whatsapp-me' ) . '</p>' .
 						'<p class="whatsappme-addon">' . sprintf(
 							__( 'Add links, images, videos and more with %s', 'creame-whatsapp-me' ),
-							'<a href="https://wame.chat/en/addons/wame-cta-extras/" target="_blank">\'WAme CTA Extras\'</a>'
+							'<a href="https://wame.chat/en/addons/cta-extras/' . $utm . '" target="_blank">\'WAme CTA Extras\'</a>'
 						) . '</p>';
 					break;
 
@@ -628,6 +630,7 @@ class WhatsAppMe_Admin {
 	 */
 	function help_tab() {
 		$screen = get_current_screen();
+		$utm    = '?utm_source=wpadmin&utm_medium=helptab&utm_campaign=v' . str_replace( '.', '_', $this->version );
 
 		$screen->add_help_tab(
 			array(
@@ -652,23 +655,24 @@ class WhatsAppMe_Admin {
 				'title'   => __( 'Support and Help', 'creame-whatsapp-me' ),
 				'content' =>
 					'<p>' . sprintf(
-						__( 'If you need help, please check the <a href="%s" rel="external" target="_blank">plugin support forum</a>.', 'creame-whatsapp-me' ),
-						esc_url( 'https://wordpress.org/support/plugin/creame-whatsapp-me/' )
+						__( 'If you need help, please check the <a href="%1$s" rel="external" target="_blank">free plugin support forum</a> or buy our <a href="%2$s" rel="external" target="_blank">premium support</a>.', 'creame-whatsapp-me' ),
+						esc_url( 'https://wordpress.org/support/plugin/creame-whatsapp-me/' ),
+						esc_url( 'https://my.wame.chat/' . $utm )
 					) . '</p>' .
 					'<p>' . __( 'If you like WAme 😍', 'creame-whatsapp-me' ) . '</p>' .
 					'<ul>' .
-						'<li>' . sprintf(
-							__( 'Subscribe to our newsletter and our blog at %s.', 'creame-whatsapp-me' ),
-							'<a href="https://wame.chat/blog/" rel="external" target="_blank">wame.chat</a>'
-						) . '</li>' .
-						'<li>' . sprintf(
-							__( 'Learn from our tutorials on %s.', 'creame-whatsapp-me' ),
-							'<a href="https://www.youtube.com/channel/UCqHiSNPBaQ918fpVnCU1wog/" rel="external" target="_blank">Youtube</a>'
-						) . '</li>' .
-						'<li>' . sprintf(
-							__( 'Or rate us on %s.', 'creame-whatsapp-me' ),
-							'<a href="https://wordpress.org/support/plugin/creame-whatsapp-me/reviews/#new-post" rel="external" target="_blank">WordPress.org</a>'
-						) . '</li>' .
+					'<li>' . sprintf(
+						__( "Please leave us a %s rating. We'll thank you.", 'creame-whatsapp-me' ),
+						'<a href="https://wordpress.org/support/plugin/creame-whatsapp-me/reviews/#new-post" rel="external" target="_blank">★★★★★</a>'
+					) . '</li>' .
+					'<li>' . sprintf(
+						__( 'Subscribe to our newsletter and visit our blog at %s.', 'creame-whatsapp-me' ),
+						'<a href="https://wame.chat/' . $utm . '" rel="external" target="_blank">wame.chat</a>'
+					) . '</li>' .
+					'<li>' . sprintf(
+						__( 'Follow %s on twitter.', 'creame-whatsapp-me' ),
+						'<a href="https://twitter.com/wamechat" rel="external" target="_blank">@wamechat</a>'
+					) . '</li>' .
 					'</ul>',
 			)
 		);
@@ -901,6 +905,5 @@ class WhatsAppMe_Admin {
 			'<code>{' . join( '}</code> <code>{', $vars ) . '}</code></div>' : '';
 
 	}
-
 
 }
