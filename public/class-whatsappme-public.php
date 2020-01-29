@@ -217,6 +217,7 @@ class WhatsAppMe_Public {
 	 * Outputs WhatsApp button html and his settings on footer
 	 *
 	 * @since    1.0.0
+	 * @since    3.2.0  Capture and filter output
 	 * @return   void
 	 */
 	public function footer_html() {

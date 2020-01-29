@@ -779,6 +779,7 @@ class WhatsAppMe_Admin {
 	 * @since    2.0.0     Now can set as [show, hide, default]
 	 * @since    2.2.0     Enqueue scripts/styles. Added "telephone"
 	 * @since    3.0.3     Capture and filter output
+	 * @since    3.2.0     Added filter 'whatsappme_metabox_placeholders'
 	 * @access   public
 	 * @return   void
 	 */
