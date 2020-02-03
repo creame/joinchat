@@ -224,7 +224,7 @@
           clearTimeout(timeoutKB);
           timeoutKB = setTimeout(function () {
             wame_public.$wame.toggleClass('whatsappme--show', initial_height * 0.7 < window.innerHeight);
-          }, 500);
+          }, 800);
         });
       }
 

@@ -20,6 +20,12 @@
   -webkit-user-select: none;
 }
 
+.whatsappme *,
+.whatsappme *:before,
+.whatsappme *:after {
+  box-sizing: border-box;
+}
+
 .whatsappme svg,
 .whatsappme svg path {
   fill: currentColor !important;
@@ -292,7 +298,7 @@
 }
 
 .whatsappme__box__scroll {
-  max-height: calc(100vh - 250px);
+  max-height: calc(100vh - 100px);
   padding: 20px 0 80px 0;
   overflow: hidden auto;
 }

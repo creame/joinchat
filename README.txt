@@ -5,7 +5,7 @@ Tags: whatsapp business, whatsapp, click to chat, button, whatsapp support chat,
 Requires at least: 3.0.1
 Tested up to: 5.3
 Requires PHP: 5.3
-Stable tag: 3.1.4
+Stable tag: 3.2.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -19,7 +19,7 @@ Connects a WordPress chat with WhatsApp. The best solution for marketing and sup
 
 ### New in WAme 3.2 📍
 
-🌚 **Descubre el nuevo Modo Oscuro.** Una gran noticia para todos los que prefieren el texto blanco sobre un fondo negro. Ahora encontrarás una opción para activarlo en tus ajustes.
+🌚 **Discover the new Dark Mode.** Great news for all those who prefer white text on a black background.  Now you will find an option to activate it in your settings.
 
 ### ⌁ What you can do with WAme ✅
 
