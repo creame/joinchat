@@ -173,6 +173,23 @@
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
 }
 
+.whatsappme .whatsappme__button__send path {
+  fill: none !important;
+  stroke: #fff !important;
+}
+
+.whatsappme .whatsappme__button__send .wame_svg__plain {
+  stroke-dasharray: 1097;
+  stroke-dashoffset: 1097;
+  animation: wame_plain 6s 0.2s ease-in-out infinite;
+}
+
+.whatsappme .whatsappme__button__send .wame_svg__chat {
+  stroke-dasharray: 1020;
+  stroke-dashoffset: 1020;
+  animation: wame_chat 6s 3.2s ease-in-out infinite;
+}
+
 .whatsappme__tooltip {
   position: absolute;
   top: 14px;
@@ -556,6 +573,32 @@
   to {
     opacity: 0;
     transform: translateY(-20px);
+  }
+}
+
+@keyframes wame_plain {
+  0%,
+  50%,
+  100% {
+    stroke-dashoffset: 1097;
+  }
+
+  5%,
+  45% {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes wame_chat {
+  0%,
+  50%,
+  100% {
+    stroke-dashoffset: 1020;
+  }
+
+  5%,
+  45% {
+    stroke-dashoffset: 0;
   }
 }
 

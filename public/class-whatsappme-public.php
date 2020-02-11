@@ -280,7 +280,7 @@ class WhatsAppMe_Public {
 			?>
 			<div class="whatsappme <?php echo apply_filters( 'whatsappme_classes', $whatsappme_classes ); ?>" data-settings="<?php echo esc_attr( json_encode( $data ) ); ?>">
 				<div class="whatsappme__button">
-					<svg class="whatsappme__button__open"><use xlink:href="#wame_svg__logo"></use></svg>
+					<svg class="whatsappme__button__open"><use href="#wame_svg__logo"></use></svg>
 					<?php if ( $image ) : ?>
 						<div class="whatsappme__button__image"><?php echo $image; ?></div>
 					<?php endif; ?>
@@ -288,7 +288,10 @@ class WhatsAppMe_Public {
 						<div class="whatsappme__button__sendtext"><?php echo $this->settings['message_start']; ?></div>
 					<?php endif; ?>
 					<?php if ( $this->settings['message_text'] ) : ?>
-						<svg class="whatsappme__button__send"><use xlink:href="#wame_svg__send"></use></svg>
+						<svg class="whatsappme__button__send" viewbox="0 0 400 400" stroke-linecap="round" stroke-width="33">
+							<path class="wame_svg__plain" d="M168.83 200.504H79.218L33.04 44.284a1 1 0 0 1 1.386-1.188L365.083 199.04a1 1 0 0 1 .003 1.808L34.432 357.903a1 1 0 0 1-1.388-1.187l29.42-99.427"/>
+							<path class="wame_svg__chat" d="M318.087 318.087c-52.982 52.982-132.708 62.922-195.725 29.82l-80.449 10.18 10.358-80.112C18.956 214.905 28.836 134.99 81.913 81.913c65.218-65.217 170.956-65.217 236.174 0 42.661 42.661 57.416 102.661 44.265 157.316"/>
+						</svg>
 					<?php endif; ?>
 					<?php if ( $this->settings['message_badge'] ) : ?>
 						<div class="whatsappme__badge">1</div>
@@ -299,8 +302,8 @@ class WhatsAppMe_Public {
 				</div>
 				<div class="whatsappme__box">
 					<div class="whatsappme__header">
-						<svg><use xlink:href="#wame_svg__whatsapp"></use></svg>
-						<div class="whatsappme__close"><svg><use xlink:href="#wame_svg__close"></use></svg></div>
+						<svg><use href="#wame_svg__whatsapp"></use></svg>
+						<div class="whatsappme__close"><svg><use href="#wame_svg__close"></use></svg></div>
 					</div>
 					<div class="whatsappme__box__scroll">
 						<div class="whatsappme__box__content">
@@ -308,7 +311,7 @@ class WhatsAppMe_Public {
 						</div>
 					</div>
 					<?php if ( $copy ) : ?>
-						<div class="whatsappme__copy"><?php echo $copy; ?> <a href="<?php echo $powered_link; ?>" rel="nofollow noopener" target="_blank"><svg><use xlink:href="#wame_svg__wame"></use></svg></a></div>
+						<div class="whatsappme__copy"><?php echo $copy; ?> <a href="<?php echo $powered_link; ?>" rel="nofollow noopener" target="_blank"><svg><use href="#wame_svg__wame"></use></svg></a></div>
 					<?php endif; ?>
 				</div>
 			</div>
