@@ -31,19 +31,19 @@
         'eventLabel': link
       });
     }
-    if (typeof gtag == 'function') {
-      // Send custom event (Global Site Tag - gtag.js)
-      gtag('event', 'click', {
-        'event_category': 'WhatsAppMe',
-        'event_label': link,
-        'transport_type': 'beacon'
-      });
-    } else if (typeof ga == 'function' && typeof ga.getAll == 'function') {
+    if (typeof ga == 'function' && typeof ga.getAll == 'function') {
       // Send custom event (Universal Analtics - analytics.js)
       ga('set', 'transport', 'beacon');
       var trackers = ga.getAll();
       trackers.forEach(function (tracker) {
         tracker.send("event", 'WhatsAppMe', 'click', link);
+      });
+    } else if (typeof gtag == 'function') {
+      // Send custom event (Global Site Tag - gtag.js)
+      gtag('event', 'click', {
+        'event_category': 'WhatsAppMe',
+        'event_label': link,
+        'transport_type': 'beacon'
       });
     }
     if (typeof fbq == 'function') {
