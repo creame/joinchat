@@ -5,7 +5,7 @@ Tags: whatsapp business, whatsapp, click to chat, button, whatsapp support chat,
 Requires at least: 3.0.1
 Tested up to: 5.3
 Requires PHP: 5.3
-Stable tag: 3.2.0
+Stable tag: 3.2.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -136,6 +136,11 @@ There is a Javascript event that WAme triggers automatically before launch Whats
   });
 });`
 
+= Emojis are not saved =
+
+To save emojis the site database must use utf8mb4 encoding.
+If your database enconding is utf8 you can use emojis converting them to html entities with a tool [like this](https://mothereff.in/html-entities).
+
 == Screenshots ==
 
 1. Button on desktop.
@@ -148,6 +153,11 @@ There is a Javascript event that WAme triggers automatically before launch Whats
 8. WAme on post/page edition.
 
 == Changelog ==
+
+= 3.2.1 =
+* FIX svg animations on firefox.
+* FIX empty messages on WP < 4.6.
+* FIX Google Analytics 'ga' event not sent if gtag for GAds or GTM is present.
 
 = 3.2.0 =
 * **NEW:** Dark mode.
