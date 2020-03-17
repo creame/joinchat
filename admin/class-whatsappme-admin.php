@@ -505,7 +505,8 @@ class WhatsAppMe_Admin {
 					break;
 
 				case 'button_image':
-					$image = intval( $value ) > 0 && is_array( WhatsAppMe_Util::thumb( $value, 116, 116 ) ) ? WhatsAppMe_Util::thumb( $value, 116, 116 )['url'] : false;
+					$thumb = intval( $value ) > 0 ? WhatsAppMe_Util::thumb( $value, 116, 116 ) : false;
+					$image = is_array( $thumb ) ? $thumb['url'] : false;
 
 					$output = '<div id="whatsappme_button_image_wrapper">' .
 						'<div id="whatsappme_button_image_holder" ' . ( $image ? "style=\"background-size:cover; background-image:url('$image');\"" : '' ) . '></div>' .
