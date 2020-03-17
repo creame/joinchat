@@ -25,7 +25,8 @@ class WhatsAppMe_Util {
 	public static function settings_i18n() {
 
 		return apply_filters(
-			'whatsappme_settings_i18n', array(
+			'whatsappme_settings_i18n',
+			array(
 				'button_tip'    => 'Tooltip',
 				'message_text'  => 'Call to Action',
 				'message_send'  => 'Message',
@@ -143,14 +144,18 @@ class WhatsAppMe_Util {
 	public static function formated_message( $string ) {
 
 		$replacements = apply_filters(
-			'whatsappme_format_replacements', array(
+			'whatsappme_format_replacements',
+			array(
 				'/_(\S[^_]*\S)_/u'    => '<em>$1</em>',
 				'/\*(\S[^\*]*\S)\*/u' => '<strong>$1</strong>',
 				'/~(\S[^~]*\S)~/u'    => '<del>$1</del>',
 			)
 		);
 
-		$replacements = apply_filters_deprecated( 'whatsappme_message_replacements', array( $replacements ), '3.0.3', 'whatsappme_format_replacements' );
+		// Since WP 4.6
+		if ( function_exists( 'apply_filters_deprecated' ) ) {
+			$replacements = apply_filters_deprecated( 'whatsappme_message_replacements', array( $replacements ), '3.0.3', 'whatsappme_format_replacements' );
+		}
 
 		// Split text into lines and apply replacements line by line
 		$lines = explode( "\n", $string );
@@ -183,7 +188,8 @@ class WhatsAppMe_Util {
 		global $wp;
 
 		$replacements = apply_filters(
-			'whatsappme_variable_replacements', array(
+			'whatsappme_variable_replacements',
+			array(
 				'SITE'  => get_bloginfo( 'name' ),
 				'URL'   => home_url( $wp->request ),
 				'TITLE' => self::get_title(),
@@ -194,12 +200,11 @@ class WhatsAppMe_Util {
 		$patterns = array_map(
 			function ( $var ) {
 				return "/\{$var\}/u";
-			}, array_keys( $replacements )
+			},
+			array_keys( $replacements )
 		);
 
-		$replacements = apply_filters_deprecated( 'whatsappme_message_send_replacements', array( array_combine( $patterns, $replacements ) ), '3.0.3', 'whatsappme_variable_replacements' );
-
-		return preg_replace( array_keys( $replacements ), $replacements, $string );
+		return preg_replace( $patterns, $replacements, $string );
 
 	}
 

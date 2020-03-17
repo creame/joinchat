@@ -71,7 +71,7 @@ class WhatsAppMe_Admin {
 		$this->version     = $version;
 
 		// Updated in get_settings() at 'admin_init' hook
-		$this->enhanced_phone = '16.0.3'; // intl-tel-input version
+		$this->enhanced_phone = '16.0.8'; // intl-tel-input version
 		$this->tabs           = array();
 		$this->settings       = array();
 
@@ -94,7 +94,8 @@ class WhatsAppMe_Admin {
 
 		// Admin tabs
 		$this->tabs = apply_filters(
-			'whatsappme_admin_tabs', array(
+			'whatsappme_admin_tabs',
+			array(
 				'general'  => __( 'General', 'creame-whatsapp-me' ),
 				'advanced' => __( 'Advanced', 'creame-whatsapp-me' ),
 			)
@@ -116,6 +117,7 @@ class WhatsAppMe_Admin {
 				'message_start' => __( 'Open chat', 'creame-whatsapp-me' ),
 				'position'      => 'right',
 				'visibility'    => array( 'all' => 'yes' ),
+				'dark_mode'     => 'no',
 			),
 			apply_filters( 'whatsappme_extra_settings', array() )
 		);
@@ -249,6 +251,7 @@ class WhatsAppMe_Admin {
 					'message_start' => '<label for="whatsappme_message_start">' . __( 'Start WhatsApp Button', 'creame-whatsapp-me' ) . '</label>',
 					'message_delay' => '<label for="whatsappme_message_delay">' . __( 'Chat Delay', 'creame-whatsapp-me' ) . '</label>',
 					'message_badge' => __( 'Notification Balloon', 'creame-whatsapp-me' ),
+					'dark_mode'     => __( 'Dark Mode', 'creame-whatsapp-me' ),
 				),
 			);
 
@@ -343,9 +346,11 @@ class WhatsAppMe_Admin {
 		$input['message_start'] = $util::substr( $util::clean_input( $input['message_start'] ), 0, 20 );
 		$input['message_delay'] = intval( $input['message_delay'] );
 		$input['position']      = $input['position'] != 'left' ? 'right' : 'left';
+		$input['dark_mode']     = in_array( $input['dark_mode'], array( 'no', 'yes', 'auto' ) ) ? $input['dark_mode'] : 'no';
 		if ( isset( $input['view'] ) ) {
 			$input['visibility'] = array_filter(
-				$input['view'], function( $v ) {
+				$input['view'],
+				function( $v ) {
 					return 'yes' == $v || 'no' == $v;
 				}
 			);
@@ -472,14 +477,16 @@ class WhatsAppMe_Admin {
 		} else {
 
 			$value = isset( $this->settings[ $field_id ] ) ? $this->settings[ $field_id ] : '';
+			$utm   = '?utm_source=wpadmin&utm_medium=settings&utm_campaign=v' . str_replace( '.', '_', $this->version );
 
 			switch ( $field_id ) {
 				case 'telephone':
 					$output = '<input id="whatsappme_phone" ' . ( $this->enhanced_phone ? 'data-' : '' ) . 'name="whatsappme[telephone]" value="' . $value . '" type="text" style="width:15em">' .
 						'<p class="description">' . __( "Contact phone number <strong>(the button will not be shown if it's empty)</strong>", 'creame-whatsapp-me' ) . '</p>' .
 						'<p class="whatsappme-addon">' . sprintf(
-							__( 'Add unlimited numbers with %s', 'creame-whatsapp-me' ),
-							'<a href="https://wame.chat/en/addons/wame-random-phone/" target="_blank">\'WAme Random Phone\'</a>'
+							__( 'Add unlimited numbers with %1$s or multiple contacts with %2$s', 'creame-whatsapp-me' ),
+							'<a href="https://wame.chat/en/addons/wame-random-phone/' . $utm . '" target="_blank">\'WAme Random Phone\'</a>',
+							'<a href="https://wame.chat/en/addons/support-agents/' . $utm . '" target="_blank">\'WAme Agents\'</a>'
 						) . '</p>';
 					break;
 
@@ -530,7 +537,7 @@ class WhatsAppMe_Admin {
 						'<p class="description">' . __( 'Define a text to encourage users to contact by WhatsApp', 'creame-whatsapp-me' ) . '</p>' .
 						'<p class="whatsappme-addon">' . sprintf(
 							__( 'Add links, images, videos and more with %s', 'creame-whatsapp-me' ),
-							'<a href="https://wame.chat/en/addons/wame-cta-extras/" target="_blank">\'WAme CTA Extras\'</a>'
+							'<a href="https://wame.chat/en/addons/cta-extras/' . $utm . '" target="_blank">\'WAme CTA Extras\'</a>'
 						) . '</p>';
 					break;
 
@@ -555,6 +562,16 @@ class WhatsAppMe_Admin {
 						__( 'Display a notification balloon instead of opening the Chat Window for a "less intrusive" mode', 'creame-whatsapp-me' ) . '</label></fieldset>';
 					break;
 
+				case 'dark_mode':
+					$output = '<fieldset><legend class="screen-reader-text"><span>' . __( 'Dark Mode', 'creame-whatsapp-me' ) . '</span></legend>' .
+						'<label><input name="whatsappme[dark_mode]" value="no" type="radio"' . checked( 'no', $value, false ) . '> ' .
+						__( 'No', 'creame-whatsapp-me' ) . '</label><br>' .
+						'<label><input name="whatsappme[dark_mode]" value="yes" type="radio"' . checked( 'yes', $value, false ) . '> ' .
+						__( 'Yes', 'creame-whatsapp-me' ) . '</label><br>' .
+						'<label><input name="whatsappme[dark_mode]" value="auto" type="radio"' . checked( 'auto', $value, false ) . '> ' .
+						__( 'Auto (detects device dark mode)', 'creame-whatsapp-me' ) . '</label></fieldset>';
+					break;
+
 				default:
 					$output = '';
 					break;
@@ -576,7 +593,8 @@ class WhatsAppMe_Admin {
 		$value = ( isset( $this->settings['visibility']['all'] ) && 'no' == $this->settings['visibility']['all'] ) ? 'no' : 'yes';
 
 		$inheritance = apply_filters(
-			'whatsappme_advanced_inheritance', array(
+			'whatsappme_advanced_inheritance',
+			array(
 				'all'      => array( 'front_page', 'blog_page', '404_page', 'search', 'archive', 'singular', 'cpts' ),
 				'archive'  => array( 'date', 'author' ),
 				'singular' => array( 'page', 'post' ),
@@ -584,7 +602,7 @@ class WhatsAppMe_Admin {
 		);
 
 		echo '<div class="whatsappme_view_all" data-inheritance="' . esc_attr( json_encode( $inheritance ) ) . '">' .
-		  '<label><input type="radio" name="whatsappme[view][all]" value="yes"' . checked( 'yes', $value, false ) . '> ' .
+			'<label><input type="radio" name="whatsappme[view][all]" value="yes"' . checked( 'yes', $value, false ) . '> ' .
 			'<span class="dashicons dashicons-visibility" title="' . __( 'Show', 'creame-whatsapp-me' ) . '"></span></label>' .
 			'<label><input type="radio" name="whatsappme[view][all]" value="no"' . checked( 'no', $value, false ) . '> ' .
 			'<span class="dashicons dashicons-hidden" title="' . __( 'Hide', 'creame-whatsapp-me' ) . '"></span></label></div>';
@@ -612,6 +630,41 @@ class WhatsAppMe_Admin {
 	 */
 	function help_tab() {
 		$screen = get_current_screen();
+		$utm    = '?utm_source=wpadmin&utm_medium=helptab&utm_campaign=v' . str_replace( '.', '_', $this->version );
+
+		$screen->add_help_tab(
+			array(
+				'id'      => 'support',
+				'title'   => __( 'Support and Help', 'creame-whatsapp-me' ),
+				'content' =>
+					'<p>' . sprintf(
+						__(
+							'If you need help, first review our <a href="%1$s" rel="external" target="_blank">documentation</a> ' .
+							'and if you don\'t find a solution check the <a href="%2$s" rel="external" target="_blank">free plugin support forum</a> ' .
+							'or buy our <a href="%3$s" rel="external" target="_blank">premium support</a>.',
+							'creame-whatsapp-me'
+						),
+						esc_url( 'https://wame.chat/en/docs/' . $utm ),
+						esc_url( 'https://wordpress.org/support/plugin/creame-whatsapp-me/' ),
+						esc_url( 'https://my.wame.chat/' . $utm )
+					) . '</p>' .
+					'<p>' . __( 'If you like WAme 😍', 'creame-whatsapp-me' ) . '</p>' .
+					'<ul>' .
+					'<li>' . sprintf(
+						__( "Please leave us a %s rating. We'll thank you.", 'creame-whatsapp-me' ),
+						'<a href="https://wordpress.org/support/plugin/creame-whatsapp-me/reviews/#new-post" rel="external" target="_blank">★★★★★</a>'
+					) . '</li>' .
+					'<li>' . sprintf(
+						__( 'Subscribe to our newsletter and visit our blog at %s.', 'creame-whatsapp-me' ),
+						'<a href="https://wame.chat/' . $utm . '" rel="external" target="_blank">wame.chat</a>'
+					) . '</li>' .
+					'<li>' . sprintf(
+						__( 'Follow %s on twitter.', 'creame-whatsapp-me' ),
+						'<a href="https://twitter.com/wamechat" rel="external" target="_blank">@wamechat</a>'
+					) . '</li>' .
+					'</ul>',
+			)
+		);
 
 		$screen->add_help_tab(
 			array(
@@ -630,32 +683,6 @@ class WhatsAppMe_Admin {
 			)
 		);
 
-		$screen->add_help_tab(
-			array(
-				'id'      => 'support',
-				'title'   => __( 'Support and Help', 'creame-whatsapp-me' ),
-				'content' =>
-					'<p>' . sprintf(
-						__( 'If you need help, please check the <a href="%s" rel="external" target="_blank">plugin support forum</a>.', 'creame-whatsapp-me' ),
-						esc_url( 'https://wordpress.org/support/plugin/creame-whatsapp-me/' )
-					) . '</p>' .
-					'<p>' . __( 'If you like WAme 😍', 'creame-whatsapp-me' ) . '</p>' .
-					'<ul>' .
-						'<li>' . sprintf(
-							__( 'Subscribe to our newsletter and our blog at %s.', 'creame-whatsapp-me' ),
-							'<a href="https://wame.chat/blog/" rel="external" target="_blank">wame.chat</a>'
-						) . '</li>' .
-						'<li>' . sprintf(
-							__( 'Learn from our tutorials on %s.', 'creame-whatsapp-me' ),
-							'<a href="https://www.youtube.com/channel/UCqHiSNPBaQ918fpVnCU1wog/" rel="external" target="_blank">Youtube</a>'
-						) . '</li>' .
-						'<li>' . sprintf(
-							__( 'Or rate us on %s.', 'creame-whatsapp-me' ),
-							'<a href="https://wordpress.org/support/plugin/creame-whatsapp-me/reviews/#new-post" rel="external" target="_blank">WordPress.org</a>'
-						) . '</li>' .
-					'</ul>',
-			)
-		);
 	}
 
 	/**
@@ -752,6 +779,7 @@ class WhatsAppMe_Admin {
 	 * @since    2.0.0     Now can set as [show, hide, default]
 	 * @since    2.2.0     Enqueue scripts/styles. Added "telephone"
 	 * @since    3.0.3     Capture and filter output
+	 * @since    3.2.0     Added filter 'whatsappme_metabox_placeholders'
 	 * @access   public
 	 * @return   void
 	 */
@@ -773,7 +801,8 @@ class WhatsAppMe_Admin {
 				'message_send' => '',
 				'hide'         => false,
 				'view'         => '',
-			), $metadata
+			),
+			$metadata
 		);
 
 		// Move old 'hide' to new 'view' field
@@ -782,7 +811,18 @@ class WhatsAppMe_Admin {
 		}
 		unset( $metadata['hide'] );
 
-		$metabox_vars = apply_filters( 'whatsappme_metabox_vars', array( 'SITE', 'URL', 'TITLE' ) );
+		$placeholders = apply_filters(
+			'whatsappme_metabox_placeholders',
+			array(
+				'telephone'    => $this->settings['telephone'],
+				'message_text' => $this->settings['message_text'],
+				'message_send' => $this->settings['message_send'],
+			),
+			$post,
+			$this->settings
+		);
+
+		$metabox_vars = apply_filters( 'whatsappme_metabox_vars', array( 'SITE', 'URL', 'TITLE' ), $post );
 
 		ob_start();
 		?>
@@ -790,15 +830,15 @@ class WhatsAppMe_Admin {
 				<?php wp_nonce_field( 'whatsappme_data', 'whatsappme_nonce' ); ?>
 				<p>
 					<label for="whatsappme_phone"><?php _e( 'Telephone', 'creame-whatsapp-me' ); ?></label><br>
-					<input id="whatsappme_phone" <?php echo $this->enhanced_phone ? 'data-' : ''; ?>name="whatsappme_telephone" value="<?php echo $metadata['telephone']; ?>" type="text">
+					<input id="whatsappme_phone" <?php echo $this->enhanced_phone ? 'data-' : ''; ?>name="whatsappme_telephone" value="<?php echo $metadata['telephone']; ?>" type="text" placeholder="<?php echo $placeholders['telephone']; ?>">
 				</p>
 				<p>
 					<label for="whatsappme_message"><?php _e( 'Call to Action', 'creame-whatsapp-me' ); ?></label><br>
-					<textarea id="whatsappme_message" name="whatsappme_message" rows="2" class="large-text"><?php echo $metadata['message_text']; ?></textarea>
+					<textarea id="whatsappme_message" name="whatsappme_message" rows="2" placeholder="<?php echo $placeholders['message_text']; ?>" class="large-text"><?php echo $metadata['message_text']; ?></textarea>
 				</p>
 				<p>
 					<label for="whatsappme_message_send"><?php _e( 'Message', 'creame-whatsapp-me' ); ?></label><br>
-					<textarea id="whatsappme_message_send" name="whatsappme_message_send" rows="2" class="large-text"><?php echo $metadata['message_send']; ?></textarea>
+					<textarea id="whatsappme_message_send" name="whatsappme_message_send" rows="2" placeholder="<?php echo $placeholders['message_send']; ?>" class="large-text"><?php echo $metadata['message_send']; ?></textarea>
 					<?php if ( count( $metabox_vars ) ) : ?>
 						<small><?php _e( 'You can use vars', 'creame-whatsapp-me' ); ?> <code>{<?php echo join( '}</code> <code>{', $metabox_vars ); ?>}</code></small>
 					<?php endif; ?>
@@ -873,6 +913,5 @@ class WhatsAppMe_Admin {
 			'<code>{' . join( '}</code> <code>{', $vars ) . '}</code></div>' : '';
 
 	}
-
 
 }

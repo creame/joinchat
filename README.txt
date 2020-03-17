@@ -1,34 +1,33 @@
-=== WAme chat ===
+=== VVAme chat ===
 Contributors: creapuntome, pacotole, davidlillo, monillo
 Donate link: https://www.paypal.me/creapuntome/
 Tags: whatsapp business, whatsapp, click to chat, button, whatsapp support chat, support, contact, directly message whatsapp, floating whatsapp, whatsapp chat
 Requires at least: 3.0.1
 Tested up to: 5.3
 Requires PHP: 5.3
-Stable tag: 3.1.2
+Stable tag: 3.2.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Connect a WordPress chat with WhatsApp. The best solution for marketing and support. Stop losing customers and increase your sales.
+Connects a WordPress chat with WhatsApp. The best solution for marketing and support. Stop losing customers and increase your sales.
 
 == Description ==
 
-[wame.chat](https://wame.chat) | [Add-Ons](https://wame.chat/addons/) | [Plugin support](https://wordpress.org/support/plugin/creame-whatsapp-me/)
+[wame.chat](https://wame.chat?utm_source=wporg&utm_medium=web&utm_campaign=v3_2) | [Add-Ons](https://wame.chat/en/addons/?utm_source=wporg&utm_medium=web&utm_campaign=v3_2) | [Docs](https://wame.chat/en/docs/?utm_source=wporg&utm_medium=web&utm_campaign=v3_2) | [Support](https://wame.chat/en/support/?utm_source=wporg&utm_medium=web&utm_campaign=v3_2)
 
 ### Connect a WordPress chat with WhatsApp. The best solution for marketing and support. Stop losing customers and increase your sales.
 
-### New in WAme 3.0 📍
+### New in WAme 3.2 📍
 
-🔮 **Magic WhatsApp button**. Add your logo, profile picture or even an animated gif. You can define a tooltip to capture the user's attention, the limit is set by your creativity.
-
-🛒 **Better Integration with WooCommerce**. Define CTAs and Custom Messages for product pages, you can use dynamic variables such as {SKU}, {PRICE} or {PRODUCT}.
-
-📈 **Facebook Pixel integration**. Sends a custom event when user launch WhatsApp.
+🌚 **Discover the new Dark Mode.** Great news for all those who prefer white text on a black background.  Now you will find an option to activate it in your settings.
 
 ### ⌁ What you can do with WAme ✅
 
 #### 🛎 Insert a WhatsApp button on your website.
 Define in which pages or zones it should appear, the delay time, if you want it to the right or to the left, only on mobile phones or also on the desktop.
+
+#### 🔮 Magic WhatsApp button.
+Add your logo, profile picture or even an animated gif. You can define a tooltip to capture the user's attention, the limit is set by your creativity.
 
 #### 📱 Add multiple phone numbers.
 You can serve users in different terminals, you can insert a different one in each page, product or section.
@@ -41,6 +40,9 @@ For users to click on the button, use custom CTAs on each page, product or secti
 
 #### 💬 Customize conversation start messages.
 So that the user does not waste time in writing. This way you will be able to know from which page it comes or what product is being consulted when you start the first conversation.
+
+#### 🛒 Integration with WooCommerce.
+Define CTAs and Custom Messages for product pages, you can use dynamic variables such as {SKU}, {PRICE} or {PRODUCT}.
 
 #### 🏁 Analyze the conversion data in Google Analytics and Facebook Pixel.
 Remember, you do not have to do anything, the plugin already creates and computes the events by itself. [You can read more about this topic here](https://wame.chat/es/wame-mide-los-eventos-de-whatsapp-en-google-analytics/).
@@ -63,12 +65,11 @@ Having many options is not an advantage, the configuration of WAme is so easy th
 -[Translate into your language](https://translate.wordpress.org/projects/wp-plugins/creame-whatsapp-me)
 
 ### ⌁ If you like WAme 😍
-1. Subscribe to [our newsletter and our blog](https://wame.chat/blog/).
-2. Learn from our tutorials on [Youtube Channel](https://www.youtube.com/channel/UCqHiSNPBaQ918fpVnCU1wog/).
-3. Or rate us [on WordPress](https://wordpress.org/support/plugin/creame-whatsapp-me/reviews/?filter=5/#new-post).
+1. Please leave us a [★★★★★](https://wordpress.org/support/plugin/creame-whatsapp-me/reviews/#new-post) rating. We'll thank you.
+2. Subscribe to our newsletter and visit our blog at [wame.chat](https://wame.chat/?utm_source=wporg&utm_medium=web&utm_campaign=v3_2).
+3. Follow [@wamechat](https://twitter.com/wamechat) on twitter.
 
-*WhatsApp and WhatsApp Logo are brand assets and trademark of Facebook, Inc.*
-*WAme is not in partnership, sponsored or endorsed by Facebook, Inc.*
+*WhatsApp and WhatsApp Logo are brand assets and trademark of Facebook, Inc. WAme is not in partnership, sponsored or endorsed by Facebook, Inc.*
 
 == Installation ==
 
@@ -135,6 +136,11 @@ There is a Javascript event that WAme triggers automatically before launch Whats
   });
 });`
 
+= Emojis are not saved =
+
+To save emojis the site database must use utf8mb4 encoding.
+If your database enconding is utf8 you can use emojis converting them to html entities with a tool [like this](https://mothereff.in/html-entities).
+
 == Screenshots ==
 
 1. Button on desktop.
@@ -147,6 +153,25 @@ There is a Javascript event that WAme triggers automatically before launch Whats
 8. WAme on post/page edition.
 
 == Changelog ==
+
+= 3.2.1 =
+* FIX svg animations on firefox.
+* FIX empty messages on WP < 4.6.
+* FIX Google Analytics 'ga' event not sent if gtag for GAds or GTM is present.
+
+= 3.2.0 =
+* **NEW:** Dark mode.
+* **NEW:** Hide on mobile when keyboard is open.
+* **NEW:** Post metabox show main WAme settings as placeholders.
+* CHANGED webp support is now on server side.
+* CHANGED rewrite of chatbox output, SVGs separated, full chatbox scroll and new filters.
+* FIX 'apply_filters_deprecated' fatal error on WP < 4.6
+
+= 3.1.4 =
+* FIX php warning with new var {DISCOUNT} when price is zero.
+
+= 3.1.3 =
+* Minor improvements and link to Wame CTA Extras.
 
 = 3.1.2 =
 * **NEW:** WooCommerce Call to Action for Products on Sale, also added dynamic vars {DISCOUNT} {REGULAR}.

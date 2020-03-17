@@ -141,7 +141,8 @@ class WhatsAppMe_WooPublic {
 			$product = wc_get_product();
 
 			$replacements = array_merge(
-				$replacements, array(
+				$replacements,
+				array(
 					'PRODUCT'  => $product->get_name(),
 					'SKU'      => $product->get_sku(),
 					'REGULAR'  => $this->get_regular_price( $product ),
@@ -227,7 +228,11 @@ class WhatsAppMe_WooPublic {
 
 		$regular_price = 'variable' === $product->get_type() ? $product->get_variation_regular_price( 'min' ) : $product->get_regular_price();
 		$sale_price    = 'variable' === $product->get_type() ? $product->get_variation_price( 'min' ) : $product->get_price();
-		$percentage    = round( ( ( $regular_price - $sale_price ) / $regular_price ) * 100 );
+
+		$percentage = '';
+		if ( is_numeric( $regular_price ) && is_numeric( $sale_price ) && $regular_price > 0 ) {
+			$percentage = round( ( ( $regular_price - $sale_price ) / $regular_price ) * 100 );
+		}
 
 		return $percentage ? "-$percentage%" : '';
 
