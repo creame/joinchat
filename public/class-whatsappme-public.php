@@ -143,6 +143,10 @@ class WhatsAppMe_Public {
 				}
 
 				$settings = array_merge( $settings, $post_settings );
+
+				// Allow override general settings with empty string with "{}"
+				$settings['message_text'] = preg_match( '/^\{\s*\}$/', $settings['message_text'] ) ? '' : $settings['message_text'];
+				$settings['message_send'] = preg_match( '/^\{\s*\}$/', $settings['message_send'] ) ? '' : $settings['message_send'];
 			}
 
 			// Prepare settings
