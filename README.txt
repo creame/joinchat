@@ -3,7 +3,7 @@ Contributors: creapuntome, pacotole, davidlillo, monillo
 Donate link: https://www.paypal.me/creapuntome/
 Tags: whatsapp business, whatsapp, click to chat, button, whatsapp support chat, support, contact, directly message whatsapp, floating whatsapp, whatsapp chat
 Requires at least: 3.0.1
-Tested up to: 5.3
+Tested up to: 5.4
 Requires PHP: 5.3
 Stable tag: 3.2.1
 License: GPLv2 or later
