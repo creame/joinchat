@@ -5,7 +5,7 @@ Tags: whatsapp business, whatsapp, click to chat, button, whatsapp support chat,
 Requires at least: 3.0.1
 Tested up to: 5.4
 Requires PHP: 5.3
-Stable tag: 3.2.1
+Stable tag: 3.2.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -78,16 +78,6 @@ Having many options is not an advantage, the configuration of WAme is so easy th
 
 == Frequently Asked Questions ==
 
-= Open WhatsApp Web on desktop =
-
-By default, WAme always opens api.whatsapp.com and try to launch the native application or if it doesn't exist redirects to WhatsApp Web. Depending on the browser and the operating system, sometimes it doesn't work.
-
-If you prefer always open WhatsApp Web on desktop you can add this code in your functions.php:
-
-`add_filter( 'whatsappme_whatsapp_web', '__return_true' );`
-
-**Note:** From version 2.3.0 you can mark an option to open WhatsApp Web.
-
 = I can't see the button or it's over / under another thing =
 
 You can change the position of the button so that nothing covers it by adding this CSS in *Appearance > Customize > Custom CSS*:
@@ -98,7 +88,11 @@ Greater values of z-index are left over, the default value is 400.
 
 = What about GDPR? =
 
-WAme don't save any personal data and don't use cookies.
+WAme don't use cookies.
+
+WAme save two localStorage variables for proper operation:
+* `whatsappme_visited` to know if is the first time on site or is a returning user.
+* `whatsappme_hashes` if you set a Call To Action (CTA), when user launch WhatsApp or close Chat Window the CTA hashed is saved to prevent show automatically that CTA again.
 
 = Google Analytics integration =
 
@@ -111,6 +105,13 @@ If Global Site Tag (gtag.js) detected:
 If Universal Analtics (analytics.js) detected:
 
 `ga('send', 'event', 'WhatsAppMe', 'click', out_url })`
+
+If your tracker doesn't have the standard name 'ga' you can set your custom name with 'ga_tracker' setting:
+
+`add_filter( 'whatsappme_get_settings', function( $settings ){
+    $settings['ga_tracker'] = 'my_custom_GA_name';
+    return $settings;
+} );`
 
 = Google Tag Manager integration =
 
@@ -136,6 +137,15 @@ There is a Javascript event that WAme triggers automatically before launch Whats
   });
 });`
 
+= WPML/Polylang change Telephone by language =
+
+WAme general text settings can be translated with the strings translation of WPML/Polylang. You only need to save WAme settings to register strings and make them ready for translation. But "Telephone" is not translateable by default. If you need different phone numbers for every language add the following php code in your theme functions.php and save WAme settings.
+
+`add_filter( 'whatsappme_settings_i18n', function( $settings ) {
+    $settings['telephone'] = 'Telephone';
+    return $settings;
+} );`
+
 = Emojis are not saved =
 
 To save emojis the site database must use utf8mb4 encoding.
@@ -153,6 +163,13 @@ If your database enconding is utf8 you can use emojis converting them to html en
 8. WAme on post/page edition.
 
 == Changelog ==
+
+= 3.2.2 =
+* **NEW:** Metabox can override global settings and leave it blank with `{}`.
+* **NEW:** Can use `wame_open` class on any element to open WAme or launch WhatsApp.
+* **NEW:** Added 'whatsappme_delete_all' filter, set true to clear all WAme data on plugin uninstall.
+* CHANGED Tested up to WordPress 5.4.
+* CHANGED updated FAQs GDPR info to include localStorage vars.
 
 = 3.2.1 =
 * FIX svg animations on firefox.
