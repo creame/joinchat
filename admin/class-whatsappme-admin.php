@@ -633,7 +633,7 @@ class WhatsAppMe_Admin {
 		$screen = get_current_screen();
 		$utm    = '?utm_source=wpadmin&utm_medium=helptab&utm_campaign=v' . str_replace( '.', '_', $this->version );
 
-		$screen->add_help_tab(
+		$help_tabs = array(
 			array(
 				'id'      => 'support',
 				'title'   => __( 'Support and Help', 'creame-whatsapp-me' ),
@@ -664,25 +664,24 @@ class WhatsAppMe_Admin {
 						'<a href="https://twitter.com/wamechat" rel="external" target="_blank">@wamechat</a>'
 					) . '</li>' .
 					'</ul>',
-			)
-		);
-
-		$screen->add_help_tab(
+			),
 			array(
 				'id'      => 'styles-and-vars',
 				'title'   => __( 'Styles and Variables', 'creame-whatsapp-me' ),
-				'content' => apply_filters(
-					'whatsappme_styles_and_vars_help',
+				'content' =>
 					'<p>' . __( 'You can use formatting styles like in WhatsApp: _<em>italic</em>_ *<strong>bold</strong>* ~<del>strikethrough</del>~.', 'creame-whatsapp-me' ) . '</p>' .
-					 '<p>' . __( 'You can use dynamic variables that will be replaced by the values of the page the user visits:', 'creame-whatsapp-me' ) .
-					 '<p>' .
-					 '<span><code>{SITE}</code> ➜ ' . get_bloginfo( 'name', 'display' ) . '</span>, ' .
-					 '<span><code>{URL}</code>  ➜ ' . home_url( 'example' ) . '</span>, ' .
-					 '<span><code>{TITLE}</code>  ➜ ' . __( 'Page Title', 'creame-whatsapp-me' ) . '</span>' .
-					 '</p>'
-				),
-			)
+					'<p>' . __( 'You can use dynamic variables that will be replaced by the values of the page the user visits:', 'creame-whatsapp-me' ) .
+					'<p>' .
+					'<span><code>{SITE}</code> ➜ ' . get_bloginfo( 'name', 'display' ) . '</span>, ' .
+					'<span><code>{URL}</code> ➜ ' . home_url( 'example' ) . '</span>, ' .
+					'<span><code>{TITLE}</code> ➜ ' . __( 'Page Title', 'creame-whatsapp-me' ) . '</span>' .
+					'</p>',
+			),
 		);
+
+		foreach ( $help_tabs as $tab_data ) {
+			$screen->add_help_tab( apply_filters( 'whatsappme_help_tab_' . str_replace( '-', '_', $tab_data['id'] ), $tab_data ) );
+		}
 
 	}
 
