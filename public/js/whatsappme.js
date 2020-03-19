@@ -23,31 +23,34 @@
 
   // Trigger Google Analytics event
   wame_public.send_event = function (link) {
-    if (typeof dataLayer == 'object') {
-      // Send Google Tag Manager custom event
-      dataLayer.push({
-        'event': 'WhatsAppMe',
-        'eventAction': 'click',
-        'eventLabel': link
-      });
-    }
-    if (typeof ga == 'function' && typeof ga.getAll == 'function') {
-      // Send custom event (Universal Analtics - analytics.js)
-      ga('set', 'transport', 'beacon');
-      var trackers = ga.getAll();
+    var ga_tracker = window[wame_public.settings.ga_tracker || 'ga'];
+
+    // Send Google Analtics custom event (Universal Analtics - analytics.js) or (Global Site Tag - gtag.js)
+    if (typeof ga_tracker == 'function' && typeof ga_tracker.getAll == 'function') {
+      ga_tracker('set', 'transport', 'beacon');
+      var trackers = ga_tracker.getAll();
       trackers.forEach(function (tracker) {
         tracker.send("event", 'WhatsAppMe', 'click', link);
       });
     } else if (typeof gtag == 'function') {
-      // Send custom event (Global Site Tag - gtag.js)
       gtag('event', 'click', {
         'event_category': 'WhatsAppMe',
         'event_label': link,
         'transport_type': 'beacon'
       });
     }
+
+    // Send Google Tag Manager custom event
+    if (typeof dataLayer == 'object') {
+      dataLayer.push({
+        'event': 'WhatsAppMe',
+        'eventAction': 'click',
+        'eventLabel': link
+      });
+    }
+
+    // Send Facebook Pixel custom event
     if (typeof fbq == 'function') {
-      // Send Facebook Pixel custom event
       fbq('trackCustom', 'WhatsAppMe', { eventAction: 'click', eventLabel: link });
     }
   }
@@ -134,7 +137,7 @@
       var button_delay = wame_public.settings.button_delay * 1000;
       var chat_delay = wame_public.settings.message_delay * 1000;
       var has_cta = !!wame_public.settings.message_text;
-      var timeoutID, timeoutCTA;
+      var timeoutHover, timeoutCTA;
 
       // Stored values
       var messages_viewed = (wame_public.store.getItem('whatsappme_hashes') || '').split(',').filter(Boolean);
@@ -153,6 +156,31 @@
       function chatbox_hide() {
         wame_public.save_hash(message_hash);
         wame_public.chatbox_hide();
+      }
+
+      function wame_click() {
+        if (has_cta && !wame_public.chatbox) {
+          chatbox_show();
+        } else {
+          var args = { link: wame_public.whatsapp_link(wame_public.settings.telephone, wame_public.settings.message_send) };
+          var secure_link = new RegExp("^https?:\/\/(wa\.me|(api|web|chat)\.whatsapp\.com|" + location.hostname.replace('.', '\.') + ")\/.*", 'i');
+
+          if (wame_public.chatbox) {
+            chatbox_hide();
+          }
+          // Trigger custom event (args obj allow edit link by third party scripts)
+          $(document).trigger('whatsappme:open', [args, wame_public.settings]);
+
+          // Ensure the link is safe
+          if (secure_link.test(args.link)) {
+            // Send analytics events
+            wame_public.send_event(args.link);
+            // Open WhatsApp link
+            window.open(args.link, 'whatsappme');
+          } else {
+            console.error("WAme: the link doesn't seem safe, it must point to the current domain or whatsapp.com");
+          }
+        }
       }
 
       if (!wame_public.settings.mobile_only || wame_public.is_mobile) {
@@ -176,35 +204,11 @@
 
       if (has_cta && !wame_public.is_mobile) {
         $('.whatsappme__button', wame_public.$wame)
-          .mouseenter(function () { if (!wame_public.chatbox) timeoutID = setTimeout(chatbox_show, 1500); })
-          .mouseleave(function () { clearTimeout(timeoutID); });
+          .mouseenter(function () { if (!wame_public.chatbox) timeoutHover = setTimeout(chatbox_show, 1500); })
+          .mouseleave(function () { clearTimeout(timeoutHover); });
       }
 
-      $('.whatsappme__button', wame_public.$wame).click(function () {
-        if (has_cta && !wame_public.chatbox) {
-          chatbox_show();
-        } else {
-          var args = { link: wame_public.whatsapp_link(wame_public.settings.telephone, wame_public.settings.message_send) };
-          var secure_link = new RegExp("^https?:\/\/(wa\.me|(api|web|chat)\.whatsapp\.com|" + location.hostname.replace('.', '\.') + ")\/.*", 'i');
-
-          if (wame_public.chatbox) {
-            chatbox_hide();
-          }
-          // Trigger custom event (args obj allow edit link by third party scripts)
-          $(document).trigger('whatsappme:open', [args, wame_public.settings]);
-
-          // Ensure the link is safe
-          if (secure_link.test(args.link)) {
-            // Send analytics events
-            wame_public.send_event(args.link);
-            // Open WhatsApp link
-            window.open(args.link, 'whatsappme');
-          } else {
-            console.error("WAme: the link doesn't seem safe, it must point to the current domain or whatsapp.com");
-          }
-        }
-      });
-
+      $('.whatsappme__button', wame_public.$wame).click(wame_click);
       $('.whatsappme__close', wame_public.$wame).click(chatbox_hide);
 
       // Only scroll WAme message box (no all body)
@@ -227,6 +231,12 @@
           }, 800);
         });
       }
+
+      // Open WAme when click on nodes with class "wame_open"
+      $(document).on('click', '.wame_open', function (e) {
+        e.preventDefault();
+        if (!wame_public.chatbox) wame_click();
+      });
 
       $(document).trigger('whatsappme:start');
     }

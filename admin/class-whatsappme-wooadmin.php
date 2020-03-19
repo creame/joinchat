@@ -32,7 +32,7 @@ class WhatsAppMe_WooAdmin {
 		$loader->add_filter( 'whatsappme_section_output', $this, 'section_ouput', 10, 2 );
 		$loader->add_filter( 'whatsappme_field_output', $this, 'field_ouput', 10, 3 );
 		$loader->add_filter( 'whatsappme_advanced_inheritance', $this, 'advanced_inheritance' );
-		$loader->add_filter( 'whatsappme_styles_and_vars_help', $this, 'help_vars' );
+		$loader->add_filter( 'whatsappme_help_tab_styles_and_vars', $this, 'help_vars' );
 		$loader->add_filter( 'whatsappme_metabox_vars', $this, 'metabox_vars', 10, 2 );
 		$loader->add_filter( 'whatsappme_metabox_placeholders', $this, 'metabox_placeholders', 10, 3 );
 	}
@@ -263,24 +263,26 @@ class WhatsAppMe_WooAdmin {
 	 * Add WooCommerce variables info for help tab.
 	 *
 	 * @since    3.0.0
-	 * @param    string $text       current help tab content.
+	 * @param    array $tab       current help tab content.
 	 * @return   string
 	 */
-	public function help_vars( $text ) {
+	public function help_vars( $tab ) {
 
-		return $text .
+		$tab['content'] .=
 			'<p> ' . __( '<strong>WooCommerce</strong>, in product pages you can also use:', 'creame-whatsapp-me' ) . '</p>' .
 			'<p>' .
-				'<span><code>{PRODUCT}</code>  ➜ ' . __( 'Product Name', 'creame-whatsapp-me' ) . '</span>, ' .
-				'<span><code>{SKU}</code>  ➜ ABC98798</span>, ' .
-				'<span><code>{PRICE}</code>  ➜ ' . strip_tags( wc_price( 7.95 ) ) . '</span> ' .
+				'<span><code>{PRODUCT}</code> ➜ ' . __( 'Product Name', 'creame-whatsapp-me' ) . '</span>, ' .
+				'<span><code>{SKU}</code> ➜ ABC98798</span>, ' .
+				'<span><code>{PRICE}</code> ➜ ' . strip_tags( wc_price( 7.95 ) ) . '</span> ' .
 			'</p>' .
 			'<p> ' . __( 'For the <strong>Call to Action for Products on Sale</strong>, you can also use:', 'creame-whatsapp-me' ) . '</p>' .
 			'<p>' .
-				'<span><code>{REGULAR}</code>  ➜ ' . strip_tags( wc_price( 9.95 ) ) . '</span>, ' .
-				'<span><code>{PRICE}</code>  ➜ ' . strip_tags( wc_price( 7.95 ) ) . '</span>, ' .
-				'<span><code>{DISCOUNT}</code>  ➜ -20%</span>' .
+				'<span><code>{REGULAR}</code> ➜ ' . strip_tags( wc_price( 9.95 ) ) . '</span>, ' .
+				'<span><code>{PRICE}</code> ➜ ' . strip_tags( wc_price( 7.95 ) ) . '</span>, ' .
+				'<span><code>{DISCOUNT}</code> ➜ -20%</span>' .
 			'</p>';
+
+		return $tab;
 
 	}
 
