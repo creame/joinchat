@@ -23,31 +23,34 @@
 
   // Trigger Google Analytics event
   wame_public.send_event = function (link) {
-    if (typeof dataLayer == 'object') {
-      // Send Google Tag Manager custom event
-      dataLayer.push({
-        'event': 'WhatsAppMe',
-        'eventAction': 'click',
-        'eventLabel': link
-      });
-    }
-    if (typeof ga == 'function' && typeof ga.getAll == 'function') {
-      // Send custom event (Universal Analtics - analytics.js)
-      ga('set', 'transport', 'beacon');
-      var trackers = ga.getAll();
+    var ga_tracker = window[wame_public.settings.ga_tracker || 'ga'];
+
+    // Send Google Analtics custom event (Universal Analtics - analytics.js) or (Global Site Tag - gtag.js)
+    if (typeof ga_tracker == 'function' && typeof ga_tracker.getAll == 'function') {
+      ga_tracker('set', 'transport', 'beacon');
+      var trackers = ga_tracker.getAll();
       trackers.forEach(function (tracker) {
         tracker.send("event", 'WhatsAppMe', 'click', link);
       });
     } else if (typeof gtag == 'function') {
-      // Send custom event (Global Site Tag - gtag.js)
       gtag('event', 'click', {
         'event_category': 'WhatsAppMe',
         'event_label': link,
         'transport_type': 'beacon'
       });
     }
+
+    // Send Google Tag Manager custom event
+    if (typeof dataLayer == 'object') {
+      dataLayer.push({
+        'event': 'WhatsAppMe',
+        'eventAction': 'click',
+        'eventLabel': link
+      });
+    }
+
+    // Send Facebook Pixel custom event
     if (typeof fbq == 'function') {
-      // Send Facebook Pixel custom event
       fbq('trackCustom', 'WhatsAppMe', { eventAction: 'click', eventLabel: link });
     }
   }
