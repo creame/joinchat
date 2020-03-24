@@ -1,9 +1,9 @@
 @font-face {
-  font-family: 'WAmeIcons';
+  font-family: 'JoinChatIcons';
   src: url('data:font/woff;base64,d09GRgABAAAAAARgAAsAAAAABBQAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAABPUy8yAAABCAAAAGAAAABgDxIFgGNtYXAAAAFoAAAAVAAAAFQXVtKIZ2FzcAAAAbwAAAAIAAAACAAAABBnbHlmAAABxAAAAHQAAAB0gkciwGhlYWQAAAI4AAAANgAAADYVuuUSaGhlYQAAAnAAAAAkAAAAJAbCA8dobXR4AAAClAAAABgAAAAYDgACM2xvY2EAAAKsAAAADgAAAA4AYgBAbWF4cAAAArwAAAAgAAAAIAAIAAVuYW1lAAAC3AAAAWIAAAFicC7V7nBvc3QAAARAAAAAIAAAACAAAwAAAAMDVQGQAAUAAAKZAswAAACPApkCzAAAAesAMwEJAAAAAAAAAAAAAAAAAAAAARAAAAAAAAAAAAAAAAAAAAAAQAAA6QEDwP/AAEADwABAAAAAAQAAAAAAAAAAAAAAIAAAAAAAAwAAAAMAAAAcAAEAAwAAABwAAwABAAAAHAAEADgAAAAKAAgAAgACAAEAIOkB//3//wAAAAAAIOkA//3//wAB/+MXBAADAAEAAAAAAAAAAAAAAAEAAf//AA8AAQAAAAAAAAAAAAIAADc5AQAAAAABAAAAAAAAAAAAAgAANzkBAAAAAAEAAAAAAAAAAAACAAA3OQEAAAAAAQEzAM0DAALNAAIAAAkBEQMA/jMBzf8AAgAAAAEBAADNAs0CzQACAAABEQECzf4zAs3+AAEAAAABAAAAAQAAtqSnv18PPPUACwQAAAAAANnOUKQAAAAA2c5QpAAAAAADAALNAAAACAACAAAAAAAAAAEAAAPA/8AAAAQAAAAAAAMAAAEAAAAAAAAAAAAAAAAAAAAGBAAAAAAAAAAAAAAAAgAAAAQAATMEAAEAAAAAAAAKABQAHgAsADoAAAABAAAABgADAAEAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAADgCuAAEAAAAAAAEABAAAAAEAAAAAAAIABwBFAAEAAAAAAAMABAAtAAEAAAAAAAQABABaAAEAAAAAAAUACwAMAAEAAAAAAAYABAA5AAEAAAAAAAoAGgBmAAMAAQQJAAEACAAEAAMAAQQJAAIADgBMAAMAAQQJAAMACAAxAAMAAQQJAAQACABeAAMAAQQJAAUAFgAXAAMAAQQJAAYACAA9AAMAAQQJAAoANACAd2FtZQB3AGEAbQBlVmVyc2lvbiAxLjAAVgBlAHIAcwBpAG8AbgAgADEALgAwd2FtZQB3AGEAbQBld2FtZQB3AGEAbQBlUmVndWxhcgBSAGUAZwB1AGwAYQByd2FtZQB3AGEAbQBlRm9udCBnZW5lcmF0ZWQgYnkgSWNvTW9vbi4ARgBvAG4AdAAgAGcAZQBuAGUAcgBhAHQAZQBkACAAYgB5ACAASQBjAG8ATQBvAG8AbgAuAAAAAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==') format('woff');
 }
 
-.whatsappme {
+.joinchat {
   position: fixed;
   z-index: 1000;
   right: 20px;
@@ -20,23 +20,23 @@
   -webkit-user-select: none;
 }
 
-.whatsappme *,
-.whatsappme *:before,
-.whatsappme *:after {
+.joinchat *,
+.joinchat *:before,
+.joinchat *:after {
   box-sizing: border-box;
 }
 
-.whatsappme svg,
-.whatsappme svg path {
+.joinchat svg,
+.joinchat svg path {
   fill: currentColor !important;
 }
 
-.whatsappme.whatsappme--show {
+.joinchat.joinchat--show {
   transform: scale3d(1, 1, 1);
   transition: transform .5s cubic-bezier(0.18, 0.89, 0.32, 1.28);
 }
 
-.whatsappme__button {
+.joinchat__button {
   display: -ms-flexbox;
   display: -webkit-flex;
   display: flex;
@@ -56,21 +56,21 @@
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
-.whatsappme__button:hover {
+.joinchat__button:hover {
   background-color: #128C7E;
   transition: background-color 1.5s linear;
 }
 
-.whatsappme--chatbox .whatsappme__button {
+.joinchat--chatbox .joinchat__button {
   background-color: #128C7E;
   transition: background-color 0.2s linear;
 }
 
-.whatsappme--chatbox .whatsappme__button:hover {
+.joinchat--chatbox .joinchat__button:hover {
   background-color: #075E54;
 }
 
-.whatsappme__button:active {
+.joinchat__button:active {
   background-color: #075E54;
   transition: none;
 }
@@ -78,27 +78,27 @@
 
 /* iOS styles */
 @supports (-webkit-overflow-scrolling: touch) {
-  .whatsappme--chatbox .whatsappme__button {
+  .joinchat--chatbox .joinchat__button {
     background-color: #34B7F1;
   }
 
-  .whatsappme--chatbox .whatsappme__button:hover,
-  .whatsappme__button:active {
+  .joinchat--chatbox .joinchat__button:hover,
+  .joinchat__button:active {
     background-color: #228bb9;
   }
 }
 
-.whatsappme__button svg {
+.joinchat__button svg {
   width: 36px;
   height: 36px;
   margin: 12px 12px;
 }
 
-.whatsappme__button .whatsappme__button__send {
+.joinchat__button .joinchat__button__send {
   margin: 12px 11px 12px 13px;
 }
 
-.whatsappme__button__image {
+.joinchat__button__image {
   position: absolute;
   top: 1px;
   right: 1px;
@@ -109,23 +109,23 @@
   opacity: 0;
 }
 
-.whatsappme__button__image img {
+.joinchat__button__image img {
   display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
-.whatsappme--show .whatsappme__button__image {
-  animation: wame_image_loop 20s linear 5s infinite normal both;
+.joinchat--show .joinchat__button__image {
+  animation: joinchat_image_loop 20s linear 5s infinite normal both;
 }
 
-.whatsappme--image .whatsappme__button__image {
+.joinchat--image .joinchat__button__image {
   opacity: 1;
   animation: none;
 }
 
-.whatsappme__button__sendtext {
+.joinchat__button__sendtext {
   padding: 0;
   max-width: 0;
   font-weight: 600;
@@ -136,14 +136,14 @@
   transition: none;
 }
 
-.whatsappme--chatbox .whatsappme__button__sendtext {
+.joinchat--chatbox .joinchat__button__sendtext {
   padding: 0 4px 0 24px;
   max-width: 200px;
   opacity: 1;
   transition: max-width 0.2s linear, opacity 0.4s ease-out 0.2s;
 }
 
-.whatsappme__badge {
+.joinchat__badge {
   position: absolute;
   top: -4px;
   right: -4px;
@@ -161,36 +161,36 @@
   pointer-events: none;
 }
 
-.whatsappme__badge.whatsappme__badge--in {
-  animation: wame_badge_in 500ms cubic-bezier(0.27, 0.9, 0.41, 1.28) 1 both;
+.joinchat__badge.joinchat__badge--in {
+  animation: joinchat_badge_in 500ms cubic-bezier(0.27, 0.9, 0.41, 1.28) 1 both;
 }
 
-.whatsappme__badge.whatsappme__badge--out {
-  animation: wame_badge_out 400ms cubic-bezier(0.215, 0.61, 0.355, 1) 1 both;
+.joinchat__badge.joinchat__badge--out {
+  animation: joinchat_badge_out 400ms cubic-bezier(0.215, 0.61, 0.355, 1) 1 both;
 }
 
-.whatsappme--chatbox .whatsappme__button {
+.joinchat--chatbox .joinchat__button {
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
 }
 
-.whatsappme .whatsappme__button__send path {
+.joinchat .joinchat__button__send path {
   fill: none !important;
   stroke: #fff !important;
 }
 
-.whatsappme .whatsappme__button__send .wame_svg__plain {
+.joinchat .joinchat__button__send .joinchat_svg__plain {
   stroke-dasharray: 1097;
   stroke-dashoffset: 1097;
-  animation: wame_plain 6s 0.2s ease-in-out infinite;
+  animation: joinchat_plain 6s 0.2s ease-in-out infinite;
 }
 
-.whatsappme .whatsappme__button__send .wame_svg__chat {
+.joinchat .joinchat__button__send .joinchat_svg__chat {
   stroke-dasharray: 1020;
   stroke-dashoffset: 1020;
-  animation: wame_chat 6s 3.2s ease-in-out infinite;
+  animation: joinchat_chat 6s 3.2s ease-in-out infinite;
 }
 
-.whatsappme__tooltip {
+.joinchat__tooltip {
   position: absolute;
   top: 14px;
   right: 76px;
@@ -207,8 +207,8 @@
   opacity: 0;
 }
 
-.whatsappme__tooltip::after {
-  font: normal normal 400 20px/1em WAmeIcons;
+.joinchat__tooltip::after {
+  font: normal normal 400 20px/1em JoinChatIcons;
   content: '\e900';
   position: absolute;
   top: 6px;
@@ -218,28 +218,28 @@
   text-shadow: 2px 1px 3px rgba(0, 0, 0, .4);
 }
 
-.whatsappme__tooltip div {
+.joinchat__tooltip div {
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-.whatsappme--tooltip .whatsappme__tooltip {
-  animation: wame_tootlip 20s linear 5s 1 normal both;
+.joinchat--tooltip .joinchat__tooltip {
+  animation: joinchat_tootlip 20s linear 5s 1 normal both;
 }
 
-.whatsappme__button__open,
-.whatsappme--chatbox .whatsappme__button__send {
+.joinchat__button__open,
+.joinchat--chatbox .joinchat__button__send {
   display: block;
 }
 
-.whatsappme__button__send,
-.whatsappme--chatbox .whatsappme__button__open,
-.whatsappme--chatbox .whatsappme__button__image,
-.whatsappme--chatbox .whatsappme__tooltip {
+.joinchat__button__send,
+.joinchat--chatbox .joinchat__button__open,
+.joinchat--chatbox .joinchat__button__image,
+.joinchat--chatbox .joinchat__tooltip {
   display: none;
 }
 
-.whatsappme__box {
+.joinchat__box {
   position: absolute;
   bottom: 0;
   right: 0;
@@ -257,17 +257,17 @@
   transition: opacity 400ms ease-out, transform 0ms linear 300ms;
 }
 
-.whatsappme--webp .whatsappme__box {
+.joinchat--webp .joinchat__box {
   background-image: url(../images/background.webp);
 }
 
-.whatsappme--chatbox .whatsappme__box {
+.joinchat--chatbox .joinchat__box {
   opacity: 1;
   transform: scale3d(1, 1, 1);
   transition: opacity 200ms ease-out, transform 0ms linear;
 }
 
-.whatsappme__header {
+.joinchat__header {
   float: none;
   display: block;
   position: static;
@@ -279,12 +279,12 @@
   color: rgba(255, 255, 255, .5);
 }
 
-.whatsappme__header svg {
+.joinchat__header svg {
   width: 120px;
   height: 100%;
 }
 
-.whatsappme__close {
+.joinchat__close {
   display: -ms-flexbox;
   display: -webkit-flex;
   display: flex;
@@ -303,39 +303,39 @@
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
-.whatsappme__close:hover {
+.joinchat__close:hover {
   opacity: .6;
 }
 
-.whatsappme__close svg {
+.joinchat__close svg {
   display: block;
   width: 12px;
   height: 12px;
   margin: auto;
 }
 
-.whatsappme__box__scroll {
+.joinchat__box__scroll {
   max-height: calc(100vh - 100px);
   padding: 20px 0 80px 0;
   overflow: hidden auto;
 }
 
-.whatsappme__box__scroll::-webkit-scrollbar {
+.joinchat__box__scroll::-webkit-scrollbar {
   width: 5px;
   background: rgba(0, 0, 0, 0);
 }
 
-.whatsappme__box__scroll::-webkit-scrollbar-thumb {
+.joinchat__box__scroll::-webkit-scrollbar-thumb {
   border-radius: 3px;
   background: rgba(0, 0, 0, 0);
 }
 
-.whatsappme__box__scroll:hover::-webkit-scrollbar-thumb {
+.joinchat__box__scroll:hover::-webkit-scrollbar-thumb {
   background: rgba(0, 0, 0, 0.2);
 }
 
 
-.whatsappme__message {
+.joinchat__message {
   position: relative;
   min-height: 80px;
   padding: 20px;
@@ -346,7 +346,7 @@
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
 }
 
-.whatsappme__message:before {
+.joinchat__message:before {
   content: '';
   display: block;
   position: absolute;
@@ -358,12 +358,12 @@
   background-size: 100%;
 }
 
-.whatsappme__message a {
+.joinchat__message a {
   text-decoration: underline;
   color: #2e8c7d;
 }
 
-.whatsappme__copy {
+.joinchat__copy {
   position: absolute;
   bottom: 9px;
   left: 28px;
@@ -375,19 +375,19 @@
   transition: opacity 0.25s;
 }
 
-.whatsappme__copy:hover {
+.joinchat__copy:hover {
   opacity: 0.8;
   transition: opacity 0.5s ease-out 0.5s;
 }
 
-.whatsappme__copy a,
-.whatsappme__copy a:hover,
-.whatsappme__copy a:active {
+.joinchat__copy a,
+.joinchat__copy a:hover,
+.joinchat__copy a:active {
   color: inherit;
   text-decoration: none;
 }
 
-.whatsappme__copy svg {
+.joinchat__copy svg {
   width: 40px;
   height: 10px;
   vertical-align: inherit;
@@ -395,12 +395,12 @@
 
 
 /* Align left */
-.whatsappme--left {
+.joinchat--left {
   right: auto;
   left: 20px;
 }
 
-.whatsappme--left .whatsappme__button {
+.joinchat--left .joinchat__button {
   right: auto;
   left: 8px;
   -ms-flex-direction: row-reverse;
@@ -408,16 +408,16 @@
   flex-direction: row-reverse;
 }
 
-.whatsappme--left.whatsappme--chatbox .whatsappme__button__sendtext {
+.joinchat--left.joinchat--chatbox .joinchat__button__sendtext {
   padding: 0 24px 0 4px;
 }
 
-.whatsappme--left .whatsappme__tooltip {
+.joinchat--left .joinchat__tooltip {
   right: auto;
   left: 76px;
 }
 
-.whatsappme--left .whatsappme__tooltip::after {
+.joinchat--left .joinchat__tooltip::after {
   content: '\e901';
   left: -12px;
   right: auto;
@@ -425,12 +425,12 @@
   text-shadow: -2px 1px 3px rgba(0, 0, 0, .4);
 }
 
-.whatsappme--left .whatsappme__box {
+.joinchat--left .joinchat__box {
   right: auto;
   left: 0;
 }
 
-.whatsappme--left .whatsappme__copy {
+.joinchat--left .joinchat__copy {
   left: auto;
   right: 28px;
   text-align: right;
@@ -438,70 +438,70 @@
 
 
 /* Dark mode */
-.whatsappme--dark .whatsappme__header {
+.joinchat--dark .joinchat__header {
   background: #075e54;
 }
 
-.whatsappme--dark .whatsappme__box {
+.joinchat--dark .joinchat__box {
   background: #000;
 }
 
-.whatsappme--dark .whatsappme__message {
+.joinchat--dark .joinchat__message {
   background: #505050;
   color: #d8d8d8;
 }
 
-.whatsappme--dark .whatsappme__message:before {
+.joinchat--dark .joinchat__message:before {
   background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADcAAAA1CAYAAADlE3NNAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAABVpJREFUeNrcmktv41QYhn2OHSdxkiZNkzZp0ia9UGibdBqSJqACYjGAhBgoArGhIMFixAJGbFkggTRiwRKJxYxGaH4B/4JlV/yArrpslzOZXHm/yCc6NbaTtGnHjqUjO871yftd3nNs1u/3FcaYMgMbt4wmV2ZjY9J+cMw5j8wKnAxGTJ14PF6aRTganUwm8wGfMajBQEjGlpeXj/gMhmQ7mUw2EonEHT5jhYR4esVi8ZjTNkOqqRjdSCTyKoVkt9tV+Iyp1lpbW/smGAzGe72ewmdJNcMwtgiOVBNd3e+qCUfS3traehAKhZKkmp/hZDBSrTU/P/8mqdbpdC75Mb+qJhSjvhbc29t7qKpqkLyyX+FkMJFrzzY3N79fXFx8R1bNz8oJsOdLS0sf7u7u/mwF8xMcs5R8Amujp23VarXHCEtDDkc/Knep7AcCgUSj0XgaDodzovT7Dc5OsR6U0g8ODp4sLCy8YReOfoCz9Y2MMV6tVh/l8/mjdrvt+gGaT8BIsQ5KfQhgjwuFwpetVmvkh2geBxO9rKXreqper/8FU3xvHDCvwTEb9zEAoyUD5NhTuJDquGBegrPNLwJDbn1WqVT+hNNfGpVjXoNjDs6jjVIfL5VKv2xsbPxIRtitKnoNjjktEdCJbDb7frlc/h3heIeg7Bq0F+GcoKgLt6PR6Pr29vZPq6ur39L5ScPwZcExh8ZMUF3MwRZhfu9jyvIDHV9HrduEc4IaJBCsU7ZYLH4NqO/gE4sEdV21bhqOOVTAnqmUglzaBdRXKysrx8IbThNqmnDMpaQPgTRNi2LO9Rby6TiTyXyKamjcFNR14ZgL2NCiwy4ZyWSyQq4CQPdisdjO4AU3DDUJHBsBReoMsx8FIQO3XoVKd9Pp9F1UwBIgB0BX6VXThmMO0w7FhOjJT8I5pJFDr9H0A+PtRCJxQIB0zY+AqAGL1ajb3rQxioEcZmHDMFYAs00+j0Dm5ubKgMnR4jWV75eh0Dhwdv6ujTxZz+VynwCmjuMSqtsaikGElBGqEJDTbNgrcLIbH/g7QH1cq9WeUOgJEFLHK8qMC2dVrY9Qy+7v7z9CCU9PMs3w0sYdvF4HJbyOEMx4MdyuAqdYFmI0xecbd/B+4YuLi3+bzeY5wtK3cMy8D0VWLIChUz+D9/sCefcQBWVx4g+2ubdFdvrimPZi3CZciACRd6+gOb9O93XgtVwK3aHatNwmh7S5aXhPAM8FaJ0R7SNEfRKRYOi6HiOvSS0Fg44jGGFyMvRTZODrGAArHJfggiag+OEBMw9VB0v2P6EszoZblupUujpDy3WAjSI65vFHpjH1WYZlW0FPLeA4h6qdImhhECZRWIYbfqkJEjQhdfNxwHyOuwC5+VEnb9q38aj0HUFAJwC5isq9nUqlKtiTiUgK8z0K1AonV0pNghKPucVrKiMUdJsOWYsYtzkWswyiCNAsHWa8ks/n34MxbwA+6DZrl+EU5fKNYTKkKp1nI5RjEwAyB0Bu81u4CUmwGvwtXf8+KhQKHyFvw3auiUl37Vm/xPrB7AohOQ1AVdqr0p9NYdwjE7+zs3MfVvFd6wzECucWKmzMQjKukqPCU756KsOpUspoJqS6vr7+eblcfkBVV7gqZrnf0mlBxw2GuVTJSYvMKAVVl5rwAvl42Gg0fkPlTRIgc7iZdNyCoUzpdcwF1ElBAaVLo4meXD88PPwDCsa4S4+yjt6Yo+sy7F5n956ONNrmoKnJC2k8Jxhz/8zcB87Pz/85OTn5FYL1b9s49kecG0fNrqSg+AO6kgD62dnZ36enpzXm8XucndZzrHmoW0YPPTH9nwADAK1QyP/ohXd8AAAAAElFTkSuQmCC');
 }
 
-.whatsappme--dark .whatsappme__copy {
+.joinchat--dark .joinchat__copy {
   color: #25d366;
 }
 
 @media (prefers-color-scheme: dark) {
-  .whatsappme--dark-auto .whatsappme__header {
+  .joinchat--dark-auto .joinchat__header {
     background: #075e54;
   }
 
-  .whatsappme--dark-auto .whatsappme__box {
+  .joinchat--dark-auto .joinchat__box {
     background: #000;
   }
 
-  .whatsappme--dark-auto .whatsappme__message {
+  .joinchat--dark-auto .joinchat__message {
     background: #505050;
     color: #d8d8d8;
   }
 
-  .whatsappme--dark-auto .whatsappme__message:before {
+  .joinchat--dark-auto .joinchat__message:before {
     background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADcAAAA1CAYAAADlE3NNAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAABVpJREFUeNrcmktv41QYhn2OHSdxkiZNkzZp0ia9UGibdBqSJqACYjGAhBgoArGhIMFixAJGbFkggTRiwRKJxYxGaH4B/4JlV/yArrpslzOZXHm/yCc6NbaTtGnHjqUjO871yftd3nNs1u/3FcaYMgMbt4wmV2ZjY9J+cMw5j8wKnAxGTJ14PF6aRTganUwm8wGfMajBQEjGlpeXj/gMhmQ7mUw2EonEHT5jhYR4esVi8ZjTNkOqqRjdSCTyKoVkt9tV+Iyp1lpbW/smGAzGe72ewmdJNcMwtgiOVBNd3e+qCUfS3traehAKhZKkmp/hZDBSrTU/P/8mqdbpdC75Mb+qJhSjvhbc29t7qKpqkLyyX+FkMJFrzzY3N79fXFx8R1bNz8oJsOdLS0sf7u7u/mwF8xMcs5R8Amujp23VarXHCEtDDkc/Knep7AcCgUSj0XgaDodzovT7Dc5OsR6U0g8ODp4sLCy8YReOfoCz9Y2MMV6tVh/l8/mjdrvt+gGaT8BIsQ5KfQhgjwuFwpetVmvkh2geBxO9rKXreqper/8FU3xvHDCvwTEb9zEAoyUD5NhTuJDquGBegrPNLwJDbn1WqVT+hNNfGpVjXoNjDs6jjVIfL5VKv2xsbPxIRtitKnoNjjktEdCJbDb7frlc/h3heIeg7Bq0F+GcoKgLt6PR6Pr29vZPq6ur39L5ScPwZcExh8ZMUF3MwRZhfu9jyvIDHV9HrduEc4IaJBCsU7ZYLH4NqO/gE4sEdV21bhqOOVTAnqmUglzaBdRXKysrx8IbThNqmnDMpaQPgTRNi2LO9Rby6TiTyXyKamjcFNR14ZgL2NCiwy4ZyWSyQq4CQPdisdjO4AU3DDUJHBsBReoMsx8FIQO3XoVKd9Pp9F1UwBIgB0BX6VXThmMO0w7FhOjJT8I5pJFDr9H0A+PtRCJxQIB0zY+AqAGL1ajb3rQxioEcZmHDMFYAs00+j0Dm5ubKgMnR4jWV75eh0Dhwdv6ujTxZz+VynwCmjuMSqtsaikGElBGqEJDTbNgrcLIbH/g7QH1cq9WeUOgJEFLHK8qMC2dVrY9Qy+7v7z9CCU9PMs3w0sYdvF4HJbyOEMx4MdyuAqdYFmI0xecbd/B+4YuLi3+bzeY5wtK3cMy8D0VWLIChUz+D9/sCefcQBWVx4g+2ubdFdvrimPZi3CZciACRd6+gOb9O93XgtVwK3aHatNwmh7S5aXhPAM8FaJ0R7SNEfRKRYOi6HiOvSS0Fg44jGGFyMvRTZODrGAArHJfggiag+OEBMw9VB0v2P6EszoZblupUujpDy3WAjSI65vFHpjH1WYZlW0FPLeA4h6qdImhhECZRWIYbfqkJEjQhdfNxwHyOuwC5+VEnb9q38aj0HUFAJwC5isq9nUqlKtiTiUgK8z0K1AonV0pNghKPucVrKiMUdJsOWYsYtzkWswyiCNAsHWa8ks/n34MxbwA+6DZrl+EU5fKNYTKkKp1nI5RjEwAyB0Bu81u4CUmwGvwtXf8+KhQKHyFvw3auiUl37Vm/xPrB7AohOQ1AVdqr0p9NYdwjE7+zs3MfVvFd6wzECucWKmzMQjKukqPCU756KsOpUspoJqS6vr7+eblcfkBVV7gqZrnf0mlBxw2GuVTJSYvMKAVVl5rwAvl42Gg0fkPlTRIgc7iZdNyCoUzpdcwF1ElBAaVLo4meXD88PPwDCsa4S4+yjt6Yo+sy7F5n956ONNrmoKnJC2k8Jxhz/8zcB87Pz/85OTn5FYL1b9s49kecG0fNrqSg+AO6kgD62dnZ36enpzXm8XucndZzrHmoW0YPPTH9nwADAK1QyP/ohXd8AAAAAElFTkSuQmCC');
   }
 
-  .whatsappme--dark-auto .whatsappme__copy {
+  .joinchat--dark-auto .joinchat__copy {
     color: #25d366;
   }
 }
 
 
 /* rtl */
-[dir=rtl] .whatsappme__close {
+[dir=rtl] .joinchat__close {
   right: auto;
   left: 24px;
 }
 
-[dir=rtl] .whatsappme__message:before {
+[dir=rtl] .joinchat__message:before {
   left: auto;
   right: -18px;
   transform: rotateY(180deg);
 }
 
-[dir=rtl] .whatsappme__button {
+[dir=rtl] .joinchat__button {
   -ms-flex-direction: row-reverse;
   -webkit-flex-direction: row-reverse;
   flex-direction: row-reverse;
 }
 
-[dir=rtl] .whatsappme--left .whatsappme__button {
+[dir=rtl] .joinchat--left .joinchat__button {
   -ms-flex-direction: row;
   -webkit-flex-direction: row;
   flex-direction: row;
@@ -509,37 +509,37 @@
 
 @media (max-width: 480px),
 (orientation: landscape) and (max-width: 767px) {
-  .whatsappme {
+  .joinchat {
     bottom: 6px;
     right: 6px;
   }
 
-  .whatsappme--left {
+  .joinchat--left {
     right: auto;
     left: 6px;
   }
 
-  .whatsappme__box {
+  .joinchat__box {
     width: calc(100vw - 12px);
     min-height: 0;
   }
 
-  .whatsappme__header {
+  .joinchat__header {
     height: 55px;
   }
 
-  .whatsappme__close {
+  .joinchat__close {
     top: 13px;
     width: 28px;
     height: 28px;
   }
 
-  .whatsappme__box__scroll {
+  .joinchat__box__scroll {
     max-height: calc(100vh - 67px);
     padding: 15px 0 70px 0;
   }
 
-  .whatsappme__message {
+  .joinchat__message {
     padding: 16px;
     margin: 0 20px 20px;
     line-height: 24px;
@@ -547,12 +547,12 @@
 }
 
 @media (max-width: 360px) {
-  .whatsappme__copy {
+  .joinchat__copy {
     width: 70px;
   }
 }
 
-@keyframes wame_badge_in {
+@keyframes joinchat_badge_in {
   from {
     opacity: 0;
     transform: translateY(50px);
@@ -564,7 +564,7 @@
   }
 }
 
-@keyframes wame_badge_out {
+@keyframes joinchat_badge_out {
   from {
     opacity: 1;
     transform: translateY(0);
@@ -576,7 +576,7 @@
   }
 }
 
-@keyframes wame_plain {
+@keyframes joinchat_plain {
   0%,
   50%,
   100% {
@@ -589,7 +589,7 @@
   }
 }
 
-@keyframes wame_chat {
+@keyframes joinchat_chat {
   0%,
   50%,
   100% {
@@ -602,7 +602,7 @@
   }
 }
 
-@keyframes wame_image_loop {
+@keyframes joinchat_image_loop {
   0% {
     opacity: 0;
   }
@@ -618,7 +618,7 @@
   }
 }
 
-@keyframes wame_tootlip {
+@keyframes joinchat_tootlip {
   0% {
     opacity: 0;
     transform: scaleY(0);

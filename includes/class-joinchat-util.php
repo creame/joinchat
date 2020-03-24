@@ -6,11 +6,11 @@
  * Include static methods.
  *
  * @since      3.1.0
- * @package    WhatsAppMe
- * @subpackage WhatsAppMe/includes
+ * @package    JoinChat
+ * @subpackage JoinChat/includes
  * @author     Creame <hola@crea.me>
  */
-class WhatsAppMe_Util {
+class JoinChatUtil {
 
 	/**
 	 * Return list of settings that can be translated
@@ -25,7 +25,7 @@ class WhatsAppMe_Util {
 	public static function settings_i18n() {
 
 		return apply_filters(
-			'whatsappme_settings_i18n',
+			'joinchat_settings_i18n',
 			array(
 				'button_tip'    => 'Tooltip',
 				'message_text'  => 'Call to Action',
@@ -144,7 +144,7 @@ class WhatsAppMe_Util {
 	public static function formated_message( $string ) {
 
 		$replacements = apply_filters(
-			'whatsappme_format_replacements',
+			'joinchat_format_replacements',
 			array(
 				'/_(\S[^_]*\S)_/u'    => '<em>$1</em>',
 				'/\*(\S[^\*]*\S)\*/u' => '<strong>$1</strong>',
@@ -154,7 +154,7 @@ class WhatsAppMe_Util {
 
 		// Since WP 4.6
 		if ( function_exists( 'apply_filters_deprecated' ) ) {
-			$replacements = apply_filters_deprecated( 'whatsappme_message_replacements', array( $replacements ), '3.0.3', 'whatsappme_format_replacements' );
+			$replacements = apply_filters_deprecated( 'joinchat_message_replacements', array( $replacements ), '3.0.3', 'joinchat_format_replacements' );
 		}
 
 		// Split text into lines and apply replacements line by line
@@ -188,7 +188,7 @@ class WhatsAppMe_Util {
 		global $wp;
 
 		$replacements = apply_filters(
-			'whatsappme_variable_replacements',
+			'joinchat_variable_replacements',
 			array(
 				'SITE'  => get_bloginfo( 'name' ),
 				'URL'   => home_url( $wp->request ),
@@ -231,7 +231,7 @@ class WhatsAppMe_Util {
 			$title = get_bloginfo( 'name' );
 		}
 
-		return apply_filters( 'whatsappme_get_title', $title );
+		return apply_filters( 'joinchat_get_title', $title );
 
 	}
 

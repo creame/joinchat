@@ -6,11 +6,11 @@
  * @since      1.0.0
  * @since      2.0.0      Added advanced visibility settings
  * @since      3.0.0      More extendable admin via hooks
- * @package    WhatsAppMe
- * @subpackage WhatsAppMe/admin
+ * @package    JoinChat
+ * @subpackage JoinChat/admin
  * @author     Creame <hola@crea.me>
  */
-class WhatsAppMe_Admin {
+class JoinChatAdmin {
 
 	/**
 	 * The ID of this plugin.
@@ -71,7 +71,7 @@ class WhatsAppMe_Admin {
 		$this->version     = $version;
 
 		// Updated in get_settings() at 'admin_init' hook
-		$this->enhanced_phone = '16.0.8'; // intl-tel-input version
+		$this->enhanced_phone = '16.0.11'; // intl-tel-input version
 		$this->tabs           = array();
 		$this->settings       = array();
 
@@ -90,11 +90,11 @@ class WhatsAppMe_Admin {
 	public function get_settings() {
 
 		// Use International Telephone Input library version or false to disable
-		$this->enhanced_phone = apply_filters( 'whatsappme_enhanced_phone', $this->enhanced_phone );
+		$this->enhanced_phone = apply_filters( 'joinchat_enhanced_phone', $this->enhanced_phone );
 
 		// Admin tabs
 		$this->tabs = apply_filters(
-			'whatsappme_admin_tabs',
+			'joinchat_admin_tabs',
 			array(
 				'general'  => __( 'General', 'creame-whatsapp-me' ),
 				'advanced' => __( 'Advanced', 'creame-whatsapp-me' ),
@@ -119,10 +119,10 @@ class WhatsAppMe_Admin {
 				'visibility'    => array( 'all' => 'yes' ),
 				'dark_mode'     => 'no',
 			),
-			apply_filters( 'whatsappme_extra_settings', array() )
+			apply_filters( 'joinchat_extra_settings', array() )
 		);
 
-		$saved_settings = get_option( 'whatsappme' );
+		$saved_settings = get_option( 'joinchat' );
 
 		if ( is_array( $saved_settings ) ) {
 			// clean unused saved settings
@@ -148,8 +148,8 @@ class WhatsAppMe_Admin {
 	 */
 	public function register_styles( $hook ) {
 
-		$styles = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? 'whatsappme.css' : 'whatsappme.min.css';
-		wp_register_style( 'whatsappme-admin', plugin_dir_url( __FILE__ ) . 'css/' . $styles, array(), $this->version, 'all' );
+		$styles = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? 'joinchat.css' : 'joinchat.min.css';
+		wp_register_style( 'joinchat-admin', plugin_dir_url( __FILE__ ) . 'css/' . $styles, array(), $this->version, 'all' );
 
 		if ( $this->enhanced_phone ) {
 			wp_register_style( 'intl-tel-input', 'https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/' . $this->enhanced_phone . '/css/intlTelInput.css', array(), null, 'all' );
@@ -166,14 +166,14 @@ class WhatsAppMe_Admin {
 	 */
 	public function register_scripts( $hook ) {
 
-		$script = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? 'whatsappme.js' : 'whatsappme.min.js';
+		$script = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? 'joinchat.js' : 'joinchat.min.js';
 
 		if ( $this->enhanced_phone ) {
 			wp_register_script( 'intl-tel-input', 'https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/' . $this->enhanced_phone . '/js/intlTelInput.min.js', array(), null, true );
-			wp_register_script( 'whatsappme-admin', plugin_dir_url( __FILE__ ) . 'js/' . $script, array( 'jquery', 'intl-tel-input' ), $this->version, true );
+			wp_register_script( 'joinchat-admin', plugin_dir_url( __FILE__ ) . 'js/' . $script, array( 'jquery', 'intl-tel-input' ), $this->version, true );
 			wp_localize_script( 'intl-tel-input', 'intl_tel_input_version', $this->enhanced_phone );
 		} else {
-			wp_register_script( 'whatsappme-admin', plugin_dir_url( __FILE__ ) . 'js/' . $script, array( 'jquery' ), $this->version, true );
+			wp_register_script( 'joinchat-admin', plugin_dir_url( __FILE__ ) . 'js/' . $script, array( 'jquery' ), $this->version, true );
 		}
 
 	}
@@ -191,19 +191,19 @@ class WhatsAppMe_Admin {
 	 */
 	public function settings_init() {
 
-		// Register WordPress 'whatsappme' settings
-		register_setting( 'whatsappme', 'whatsappme', array( $this, 'settings_validate' ) );
+		// Register WordPress 'joinchat' settings
+		register_setting( 'joinchat', 'joinchat', array( $this, 'settings_validate' ) );
 
 		foreach ( $this->tabs as $tab => $tab_name ) {
 
-			add_settings_section( "whatsappme_tab_{$tab}_open", null, array( $this, 'settings_tab_open' ), 'whatsappme' );
+			add_settings_section( "joinchat_tab_{$tab}_open", null, array( $this, 'settings_tab_open' ), 'joinchat' );
 
 			$sections = $this->get_tab_sections( $tab );
 
 			foreach ( $sections as $section => $fields ) {
-				$section_id = "whatsappme_tab_{$tab}__{$section}";
+				$section_id = "joinchat_tab_{$tab}__{$section}";
 
-				add_settings_section( $section_id, null, array( $this, 'section_output' ), 'whatsappme' );
+				add_settings_section( $section_id, null, array( $this, 'section_output' ), 'joinchat' );
 
 				foreach ( $fields as $field => $field_args ) {
 					if ( is_array( $field_args ) ) {
@@ -214,11 +214,11 @@ class WhatsAppMe_Admin {
 						$field_callback = array( $this, 'field_output' );
 					}
 
-					add_settings_field( "whatsappme_$field", $field_name, $field_callback, 'whatsappme', $section_id, $field );
+					add_settings_field( "joinchat_$field", $field_name, $field_callback, 'joinchat', $section_id, $field );
 				}
 			}
 
-			add_settings_section( "whatsappme_tab_{$tab}_close", null, array( $this, 'settings_tab_close' ), 'whatsappme' );
+			add_settings_section( "joinchat_tab_{$tab}_close", null, array( $this, 'settings_tab_close' ), 'joinchat' );
 		}
 
 	}
@@ -237,19 +237,19 @@ class WhatsAppMe_Admin {
 
 			$sections = array(
 				'button' => array(
-					'telephone'    => '<label for="whatsappme_phone">' . __( 'Telephone', 'creame-whatsapp-me' ) . '</label>',
-					'message_send' => '<label for="whatsappme_message_send">' . __( 'Message', 'creame-whatsapp-me' ) . '</label>' . self::vars_help( 'message_send' ),
+					'telephone'    => '<label for="joinchat_phone">' . __( 'Telephone', 'creame-whatsapp-me' ) . '</label>',
+					'message_send' => '<label for="joinchat_message_send">' . __( 'Message', 'creame-whatsapp-me' ) . '</label>' . self::vars_help( 'message_send' ),
 					'mobile_only'  => __( 'Mobile Only', 'creame-whatsapp-me' ),
 					'position'     => __( 'Position on Screen', 'creame-whatsapp-me' ),
 					'button_image' => __( 'Image', 'creame-whatsapp-me' ),
 					'button_tip'   => __( 'Tooltip', 'creame-whatsapp-me' ),
-					'button_delay' => '<label for="whatsappme_button_delay">' . __( 'Button Delay', 'creame-whatsapp-me' ) . '</label>',
+					'button_delay' => '<label for="joinchat_button_delay">' . __( 'Button Delay', 'creame-whatsapp-me' ) . '</label>',
 					'whatsapp_web' => __( 'WhatsApp Web', 'creame-whatsapp-me' ),
 				),
 				'chat'   => array(
-					'message_text'  => '<label for="whatsappme_message_text">' . __( 'Call to Action', 'creame-whatsapp-me' ) . '</label>' . self::vars_help( 'message_text' ),
-					'message_start' => '<label for="whatsappme_message_start">' . __( 'Start WhatsApp Button', 'creame-whatsapp-me' ) . '</label>',
-					'message_delay' => '<label for="whatsappme_message_delay">' . __( 'Chat Delay', 'creame-whatsapp-me' ) . '</label>',
+					'message_text'  => '<label for="joinchat_message_text">' . __( 'Call to Action', 'creame-whatsapp-me' ) . '</label>' . self::vars_help( 'message_text' ),
+					'message_start' => '<label for="joinchat_message_start">' . __( 'Start WhatsApp Button', 'creame-whatsapp-me' ) . '</label>',
+					'message_delay' => '<label for="joinchat_message_delay">' . __( 'Chat Delay', 'creame-whatsapp-me' ) . '</label>',
 					'message_badge' => __( 'Notification Balloon', 'creame-whatsapp-me' ),
 					'dark_mode'     => __( 'Dark Mode', 'creame-whatsapp-me' ),
 				),
@@ -285,7 +285,7 @@ class WhatsAppMe_Admin {
 
 			// Custom Post Types
 			$custom_post_types = apply_filters(
-				'whatsappme_custom_post_types',
+				'joinchat_custom_post_types',
 				array_keys( get_post_types( array( 'has_archive' => true ), 'names' ) )
 			);
 
@@ -308,7 +308,7 @@ class WhatsAppMe_Admin {
 		}
 
 		// Filter tab sections to add, remove or edit sections or fields
-		return apply_filters( "whatsappme_tab_{$tab}_sections", $sections );
+		return apply_filters( "joinchat_tab_{$tab}_sections", $sections );
 
 	}
 
@@ -328,11 +328,11 @@ class WhatsAppMe_Admin {
 
 		// Prevent bad behavior when validate twice on first save
 		// bug https://core.trac.wordpress.org/ticket/21989
-		if ( count( get_settings_errors( 'whatsappme' ) ) ) {
+		if ( count( get_settings_errors( 'joinchat' ) ) ) {
 			return $input;
 		}
 
-		$util = new WhatsAppMe_Util(); // Shortcut
+		$util = new JoinChatUtil(); // Shortcut
 
 		$input['telephone']     = $util::clean_input( $input['telephone'] );
 		$input['mobile_only']   = isset( $input['mobile_only'] ) ? 'yes' : 'no';
@@ -358,22 +358,22 @@ class WhatsAppMe_Admin {
 		}
 
 		// Filter for other validations or extra settings
-		$input = apply_filters( 'whatsappme_settings_validate', $input );
+		$input = apply_filters( 'joinchat_settings_validate', $input );
 
 		/**
 		 * Register WPML/Polylang strings for translation
 		 * https://wpml.org/wpml-hook/wpml_register_single_string/
 		 */
-		$settings_i18n = WhatsAppMe_Util::settings_i18n();
+		$settings_i18n = JoinChatUtil::settings_i18n();
 
 		foreach ( $settings_i18n as $setting_key => $setting_name ) {
-			do_action( 'wpml_register_single_string', 'WhatsApp me', $setting_name, $input[ $setting_key ] );
+			do_action( 'wpml_register_single_string', 'Join.chat', $setting_name, $input[ $setting_key ] );
 		}
 
 		// Extra actions on save
-		do_action( 'whatsappme_settings_validate', $input );
+		do_action( 'joinchat_settings_validate', $input );
 
-		add_settings_error( 'whatsappme', 'settings_updated', __( 'Settings saved', 'creame-whatsapp-me' ), 'updated' );
+		add_settings_error( 'joinchat', 'settings_updated', __( 'Settings saved', 'creame-whatsapp-me' ), 'updated' );
 
 		return $input;
 	}
@@ -387,10 +387,10 @@ class WhatsAppMe_Admin {
 	 */
 	public function settings_tab_open( $args ) {
 
-		$tab_id = str_replace( array( 'whatsappme_tab_', '_open' ), '', $args['id'] );
-		$active = 'general' == $tab_id ? 'wametab-active' : '';
+		$tab_id = str_replace( array( 'joinchat_tab_', '_open' ), '', $args['id'] );
+		$active = 'general' == $tab_id ? 'joinchat-tab-active' : '';
 
-		echo "<div id=\"whatsappme_tab_$tab_id\" class=\"wametab $active\" role=\"tabpanel\" aria-labelledby=\"navtab_$tab_id\" >";
+		echo "<div id=\"joinchat_tab_$tab_id\" class=\"joinchat-tab $active\" role=\"tabpanel\" aria-labelledby=\"navtab_$tab_id\" >";
 
 	}
 
@@ -418,12 +418,12 @@ class WhatsAppMe_Admin {
 		$section_id = $args['id'];
 
 		switch ( $section_id ) {
-			case 'whatsappme_tab_general__button':
+			case 'joinchat_tab_general__button':
 				$output = '<h2 class="title">' . __( 'Button', 'creame-whatsapp-me' ) . '</h2>' .
 					'<p>' . __( 'Set the contact number and where you want the WhatsApp button to be displayed.', 'creame-whatsapp-me' ) . '</p>';
 				break;
 
-			case 'whatsappme_tab_general__chat':
+			case 'joinchat_tab_general__chat':
 				$output = '<hr><h2 class="title">' . __( 'Chat Window', 'creame-whatsapp-me' ) . '</h2>' .
 					'<p>' .
 						__( 'If you define a "Call to Action" a window will be displayed simulating a chat before launching WhatsApp.', 'creame-whatsapp-me' ) . ' ' .
@@ -431,17 +431,17 @@ class WhatsAppMe_Admin {
 					'</p>';
 				break;
 
-			case 'whatsappme_tab_advanced__global':
+			case 'joinchat_tab_advanced__global':
 				$output = '<h2 class="title">' . __( 'Advanced Visibility Settings', 'creame-whatsapp-me' ) . '</h2>' .
 					'<p>' . __( 'From here you can configure on which pages the WhatsApp button will be visible.', 'creame-whatsapp-me' ) .
-					' <a href="#" class="whatsappme_view_reset">' . __( 'Restore default visibility', 'creame-whatsapp-me' ) . '</a></p>';
+					' <a href="#" class="joinchat_view_reset">' . __( 'Restore default visibility', 'creame-whatsapp-me' ) . '</a></p>';
 				break;
 
-			case 'whatsappme_tab_advanced__wp':
+			case 'joinchat_tab_advanced__wp':
 				$output = '<hr>';
 				break;
 
-			case 'whatsappme_tab_advanced__cpt':
+			case 'joinchat_tab_advanced__cpt':
 				$output = '<h2 class="title">' . __( 'Custom Post Types', 'creame-whatsapp-me' ) . '</h2>';
 				break;
 
@@ -451,7 +451,7 @@ class WhatsAppMe_Admin {
 		}
 
 		// Filter section opening ouput
-		echo apply_filters( 'whatsappme_section_output', $output, $section_id );
+		echo apply_filters( 'joinchat_section_output', $output, $section_id );
 	}
 
 	/**
@@ -467,109 +467,110 @@ class WhatsAppMe_Admin {
 			$field = substr( $field_id, 6 );
 			$value = isset( $this->settings['visibility'][ $field ] ) ? $this->settings['visibility'][ $field ] : '';
 
-			$output = '<label><input type="radio" name="whatsappme[view][' . $field . ']" value="yes"' . checked( 'yes', $value, false ) . '> ' .
+			$output = '<label><input type="radio" name="joinchat[view][' . $field . ']" value="yes"' . checked( 'yes', $value, false ) . '> ' .
 				'<span class="dashicons dashicons-visibility" title="' . __( 'Show', 'creame-whatsapp-me' ) . '"></span></label>' .
-				'<label><input type="radio" name="whatsappme[view][' . $field . ']" value="no"' . checked( 'no', $value, false ) . '> ' .
+				'<label><input type="radio" name="joinchat[view][' . $field . ']" value="no"' . checked( 'no', $value, false ) . '> ' .
 				'<span class="dashicons dashicons-hidden" title="' . __( 'Hide', 'creame-whatsapp-me' ) . '"></span></label>' .
-				'<label><input type="radio" name="whatsappme[view][' . $field . ']" value=""' . checked( '', $value, false ) . '> ' .
+				'<label><input type="radio" name="joinchat[view][' . $field . ']" value=""' . checked( '', $value, false ) . '> ' .
 				__( 'Inherit', 'creame-whatsapp-me' ) . ' <span class="dashicons dashicons-visibility view_inheritance_' . $field . '"></span></label>';
 
 		} else {
 
 			$value = isset( $this->settings[ $field_id ] ) ? $this->settings[ $field_id ] : '';
 			$utm   = '?utm_source=wpadmin&utm_medium=settings&utm_campaign=v' . str_replace( '.', '_', $this->version );
+			$lang  = _x( 'en', 'url lang slug (only avaible for spanish "es")', 'creame-whatsapp-me' );
 
 			switch ( $field_id ) {
 				case 'telephone':
-					$output = '<input id="whatsappme_phone" ' . ( $this->enhanced_phone ? 'data-' : '' ) . 'name="whatsappme[telephone]" value="' . $value . '" type="text" style="width:15em">' .
+					$output = '<input id="joinchat_phone" ' . ( $this->enhanced_phone ? 'data-' : '' ) . 'name="joinchat[telephone]" value="' . $value . '" type="text" style="width:15em">' .
 						'<p class="description">' . __( "Contact phone number <strong>(the button will not be shown if it's empty)</strong>", 'creame-whatsapp-me' ) . '</p>' .
-						'<p class="whatsappme-addon">' . sprintf(
+						'<p class="joinchat-addon">' . sprintf(
 							__( 'Add unlimited numbers with %1$s or multiple contacts with %2$s', 'creame-whatsapp-me' ),
-							'<a href="https://wame.chat/en/addons/wame-random-phone/' . $utm . '" target="_blank">\'WAme Random Phone\'</a>',
-							'<a href="https://wame.chat/en/addons/support-agents/' . $utm . '" target="_blank">\'WAme Agents\'</a>'
+							'<a href="https://join.chat/' . $lang . '/addons/random-phone/' . $utm . '" target="_blank">\'Random Phone\'</a>',
+							'<a href="https://join.chat/' . $lang . '/addons/support-agents/' . $utm . '" target="_blank">\'Support Agents\'</a>'
 						) . '</p>';
 					break;
 
 				case 'mobile_only':
 					$output = '<fieldset><legend class="screen-reader-text"><span>' . __( 'Mobile Only', 'creame-whatsapp-me' ) . '</span></legend>' .
-						'<label><input id="whatsappme_mobile_only" name="whatsappme[mobile_only]" value="yes" type="checkbox"' . checked( 'yes', $value, false ) . '> ' .
+						'<label><input id="joinchat_mobile_only" name="joinchat[mobile_only]" value="yes" type="checkbox"' . checked( 'yes', $value, false ) . '> ' .
 						__( 'Only display the button on mobile devices', 'creame-whatsapp-me' ) . '</label></fieldset>';
 					break;
 
 				case 'position':
 					$output = '<fieldset><legend class="screen-reader-text"><span>' . __( 'Position on Screen', 'creame-whatsapp-me' ) . '</span></legend>' .
-						'<label><input name="whatsappme[position]" value="left" type="radio"' . checked( 'left', $value, false ) . '> ' .
+						'<label><input name="joinchat[position]" value="left" type="radio"' . checked( 'left', $value, false ) . '> ' .
 						__( 'Left', 'creame-whatsapp-me' ) . '</label><br>' .
-						'<label><input name="whatsappme[position]" value="right" type="radio"' . checked( 'right', $value, false ) . '> ' .
+						'<label><input name="joinchat[position]" value="right" type="radio"' . checked( 'right', $value, false ) . '> ' .
 						__( 'Right', 'creame-whatsapp-me' ) . '</label></fieldset>';
 					break;
 
 				case 'button_image':
-					$thumb = intval( $value ) > 0 ? WhatsAppMe_Util::thumb( $value, 116, 116 ) : false;
+					$thumb = intval( $value ) > 0 ? JoinChatUtil::thumb( $value, 116, 116 ) : false;
 					$image = is_array( $thumb ) ? $thumb['url'] : false;
 
-					$output = '<div id="whatsappme_button_image_wrapper">' .
-						'<div id="whatsappme_button_image_holder" ' . ( $image ? "style=\"background-size:cover; background-image:url('$image');\"" : '' ) . '></div>' .
-						'<input id="whatsappme_button_image" name="whatsappme[button_image]" type="hidden" value="' . $value . '">' .
-						'<input id="whatsappme_button_image_add" type="button" value="' . esc_attr__( 'Select an image', 'creame-whatsapp-me' ) . '" class="button-primary" ' .
+					$output = '<div id="joinchat_button_image_wrapper">' .
+						'<div id="joinchat_button_image_holder" ' . ( $image ? "style=\"background-size:cover; background-image:url('$image');\"" : '' ) . '></div>' .
+						'<input id="joinchat_button_image" name="joinchat[button_image]" type="hidden" value="' . $value . '">' .
+						'<input id="joinchat_button_image_add" type="button" value="' . esc_attr__( 'Select an image', 'creame-whatsapp-me' ) . '" class="button-primary" ' .
 						'data-title="' . esc_attr__( 'Select button image', 'creame-whatsapp-me' ) . '" data-button="' . esc_attr__( 'Use image', 'creame-whatsapp-me' ) . '"> ' .
-						'<input id="whatsappme_button_image_remove" type="button" value="' . esc_attr__( 'Remove', 'creame-whatsapp-me' ) . '" class="button-secondary' . ( $image ? '' : ' wame-hidden' ) . '">' .
+						'<input id="joinchat_button_image_remove" type="button" value="' . esc_attr__( 'Remove', 'creame-whatsapp-me' ) . '" class="button-secondary' . ( $image ? '' : ' joinchat-hidden' ) . '">' .
 						'<p class="description">' . __( 'The image will alternate with WhatsApp logo', 'creame-whatsapp-me' ) . '</p></div>';
 					break;
 
 				case 'button_tip':
-					$output = '<input id="whatsappme_button_tip" name="whatsappme[button_tip]" value="' . $value . '" type="text" maxlength="40" class="regular-text" placeholder="' . esc_attr__( '💬 Need help?', 'creame-whatsapp-me' ) . '"> ' .
+					$output = '<input id="joinchat_button_tip" name="joinchat[button_tip]" value="' . $value . '" type="text" maxlength="40" class="regular-text" placeholder="' . esc_attr__( '💬 Need help?', 'creame-whatsapp-me' ) . '"> ' .
 						'<p class="description">' . __( 'Short text shown next to WhatsApp button', 'creame-whatsapp-me' ) . '</p>';
 					break;
 
 				case 'button_delay':
-					$output = '<input id="whatsappme_button_delay" name="whatsappme[button_delay]" value="' . $value . '" type="number" min="0" max="120" style="width:5em"> ' . __( 'seconds', 'creame-whatsapp-me' ) .
+					$output = '<input id="joinchat_button_delay" name="joinchat[button_delay]" value="' . $value . '" type="number" min="0" max="120" style="width:5em"> ' . __( 'seconds', 'creame-whatsapp-me' ) .
 						'<p class="description">' . __( 'Time since the page is opened until the WhatsApp button is displayed', 'creame-whatsapp-me' ) . '</p>';
 					break;
 
 				case 'whatsapp_web':
 					$output = '<fieldset><legend class="screen-reader-text"><span>' . __( 'WhatsApp Web', 'creame-whatsapp-me' ) . '</span></legend>' .
-						'<label><input id="whatsappme_whatsapp_web" name="whatsappme[whatsapp_web]" value="yes" type="checkbox"' . checked( 'yes', $value, false ) . '> ' .
+						'<label><input id="joinchat_whatsapp_web" name="joinchat[whatsapp_web]" value="yes" type="checkbox"' . checked( 'yes', $value, false ) . '> ' .
 						__( 'Open <em>WhatsApp Web</em> directly on desktop', 'creame-whatsapp-me' ) . '</label></fieldset>';
 					break;
 
 				case 'message_text':
-					$output = '<textarea id="whatsappme_message_text" name="whatsappme[message_text]" rows="4" class="regular-text" placeholder="' . esc_attr__( "Hello 👋\nCan we help you?", 'creame-whatsapp-me' ) . '">' . $value . '</textarea>' .
+					$output = '<textarea id="joinchat_message_text" name="joinchat[message_text]" rows="4" class="regular-text" placeholder="' . esc_attr__( "Hello 👋\nCan we help you?", 'creame-whatsapp-me' ) . '">' . $value . '</textarea>' .
 						'<p class="description">' . __( 'Define a text to encourage users to contact by WhatsApp', 'creame-whatsapp-me' ) . '</p>' .
-						'<p class="whatsappme-addon">' . sprintf(
+						'<p class="joinchat-addon">' . sprintf(
 							__( 'Add links, images, videos and more with %s', 'creame-whatsapp-me' ),
-							'<a href="https://wame.chat/en/addons/cta-extras/' . $utm . '" target="_blank">\'WAme CTA Extras\'</a>'
+							'<a href="https://join.chat/' . $lang . '/addons/cta-extras/' . $utm . '" target="_blank">\'CTA Extras\'</a>'
 						) . '</p>';
 					break;
 
 				case 'message_send':
-					$output = '<textarea id="whatsappme_message_send" name="whatsappme[message_send]" rows="3" class="regular-text" placeholder="' . esc_attr__( 'Hi *{SITE}*! I need more info about {TITLE} {URL}', 'creame-whatsapp-me' ) . '">' . $value . '</textarea>' .
+					$output = '<textarea id="joinchat_message_send" name="joinchat[message_send]" rows="3" class="regular-text" placeholder="' . esc_attr__( 'Hi *{SITE}*! I need more info about {TITLE} {URL}', 'creame-whatsapp-me' ) . '">' . $value . '</textarea>' .
 						'<p class="description">' . __( 'Predefined text for the first message the user will send you', 'creame-whatsapp-me' ) . '</p>';
 					break;
 
 				case 'message_start':
-					$output = '<input id="whatsappme_message_start" name="whatsappme[message_start]" value="' . $value . '" type="text" maxlength="20" class="regular-text" placeholder="' . esc_attr__( 'Open chat', 'creame-whatsapp-me' ) . '"> ' .
+					$output = '<input id="joinchat_message_start" name="joinchat[message_start]" value="' . $value . '" type="text" maxlength="20" class="regular-text" placeholder="' . esc_attr__( 'Open chat', 'creame-whatsapp-me' ) . '"> ' .
 						'<p class="description">' . __( 'Text of the start WhatsApp button on Chat Window', 'creame-whatsapp-me' ) . '</p>';
 					break;
 
 				case 'message_delay':
-					$output = '<input id="whatsappme_message_delay" name="whatsappme[message_delay]" value="' . $value . '" type="number" min="0" max="120" style="width:5em"> ' . __( 'seconds (0 disabled)', 'creame-whatsapp-me' ) .
+					$output = '<input id="joinchat_message_delay" name="joinchat[message_delay]" value="' . $value . '" type="number" min="0" max="120" style="width:5em"> ' . __( 'seconds (0 disabled)', 'creame-whatsapp-me' ) .
 						'<p class="description">' . __( 'Chat Window is automatically displayed after delay', 'creame-whatsapp-me' ) . '</p>';
 					break;
 
 				case 'message_badge':
 					$output = '<fieldset><legend class="screen-reader-text"><span>' . __( 'Notification Balloon', 'creame-whatsapp-me' ) . '</span></legend>' .
-						'<label><input id="whatsappme_message_badge" name="whatsappme[message_badge]" value="yes" type="checkbox"' . checked( 'yes', $value, false ) . '> ' .
+						'<label><input id="joinchat_message_badge" name="joinchat[message_badge]" value="yes" type="checkbox"' . checked( 'yes', $value, false ) . '> ' .
 						__( 'Display a notification balloon instead of opening the Chat Window for a "less intrusive" mode', 'creame-whatsapp-me' ) . '</label></fieldset>';
 					break;
 
 				case 'dark_mode':
 					$output = '<fieldset><legend class="screen-reader-text"><span>' . __( 'Dark Mode', 'creame-whatsapp-me' ) . '</span></legend>' .
-						'<label><input name="whatsappme[dark_mode]" value="no" type="radio"' . checked( 'no', $value, false ) . '> ' .
+						'<label><input name="joinchat[dark_mode]" value="no" type="radio"' . checked( 'no', $value, false ) . '> ' .
 						__( 'No', 'creame-whatsapp-me' ) . '</label><br>' .
-						'<label><input name="whatsappme[dark_mode]" value="yes" type="radio"' . checked( 'yes', $value, false ) . '> ' .
+						'<label><input name="joinchat[dark_mode]" value="yes" type="radio"' . checked( 'yes', $value, false ) . '> ' .
 						__( 'Yes', 'creame-whatsapp-me' ) . '</label><br>' .
-						'<label><input name="whatsappme[dark_mode]" value="auto" type="radio"' . checked( 'auto', $value, false ) . '> ' .
+						'<label><input name="joinchat[dark_mode]" value="auto" type="radio"' . checked( 'auto', $value, false ) . '> ' .
 						__( 'Auto (detects device dark mode)', 'creame-whatsapp-me' ) . '</label></fieldset>';
 					break;
 
@@ -580,7 +581,7 @@ class WhatsAppMe_Admin {
 		}
 
 		// Filter field ouput
-		echo apply_filters( 'whatsappme_field_output', $output, $field_id, $this->settings );
+		echo apply_filters( 'joinchat_field_output', $output, $field_id, $this->settings );
 	}
 
 	/**
@@ -594,7 +595,7 @@ class WhatsAppMe_Admin {
 		$value = ( isset( $this->settings['visibility']['all'] ) && 'no' == $this->settings['visibility']['all'] ) ? 'no' : 'yes';
 
 		$inheritance = apply_filters(
-			'whatsappme_advanced_inheritance',
+			'joinchat_advanced_inheritance',
 			array(
 				'all'      => array( 'front_page', 'blog_page', '404_page', 'search', 'archive', 'singular', 'cpts' ),
 				'archive'  => array( 'date', 'author' ),
@@ -602,10 +603,10 @@ class WhatsAppMe_Admin {
 			)
 		);
 
-		echo '<div class="whatsappme_view_all" data-inheritance="' . esc_attr( json_encode( $inheritance ) ) . '">' .
-			'<label><input type="radio" name="whatsappme[view][all]" value="yes"' . checked( 'yes', $value, false ) . '> ' .
+		echo '<div class="joinchat_view_all" data-inheritance="' . esc_attr( json_encode( $inheritance ) ) . '">' .
+			'<label><input type="radio" name="joinchat[view][all]" value="yes"' . checked( 'yes', $value, false ) . '> ' .
 			'<span class="dashicons dashicons-visibility" title="' . __( 'Show', 'creame-whatsapp-me' ) . '"></span></label>' .
-			'<label><input type="radio" name="whatsappme[view][all]" value="no"' . checked( 'no', $value, false ) . '> ' .
+			'<label><input type="radio" name="joinchat[view][all]" value="no"' . checked( 'no', $value, false ) . '> ' .
 			'<span class="dashicons dashicons-hidden" title="' . __( 'Hide', 'creame-whatsapp-me' ) . '"></span></label></div>';
 	}
 
@@ -618,7 +619,7 @@ class WhatsAppMe_Admin {
 	 */
 	public function add_menu() {
 
-		add_options_page( 'WAme chat', 'WAme chat', 'manage_options', 'whatsappme', array( $this, 'options_page' ) );
+		add_options_page( 'Join.chat', 'Join.chat', 'manage_options', 'joinchat', array( $this, 'options_page' ) );
 
 	}
 
@@ -632,6 +633,7 @@ class WhatsAppMe_Admin {
 	function help_tab() {
 		$screen = get_current_screen();
 		$utm    = '?utm_source=wpadmin&utm_medium=helptab&utm_campaign=v' . str_replace( '.', '_', $this->version );
+		$lang   = _x( 'en', 'url lang slug (only avaible for spanish "es")', 'creame-whatsapp-me' );
 
 		$help_tabs = array(
 			array(
@@ -645,11 +647,11 @@ class WhatsAppMe_Admin {
 							'or buy our <a href="%3$s" rel="external" target="_blank">premium support</a>.',
 							'creame-whatsapp-me'
 						),
-						esc_url( 'https://wame.chat/en/docs/' . $utm ),
+						esc_url( 'https://join.chat/' . $lang . '/docs/' . $utm ),
 						esc_url( 'https://wordpress.org/support/plugin/creame-whatsapp-me/' ),
-						esc_url( 'https://my.wame.chat/' . $utm )
+						esc_url( 'https://my.join.chat/' . $utm )
 					) . '</p>' .
-					'<p>' . __( 'If you like WAme 😍', 'creame-whatsapp-me' ) . '</p>' .
+					'<p>' . __( 'If you like Join.chat 😍', 'creame-whatsapp-me' ) . '</p>' .
 					'<ul>' .
 					'<li>' . sprintf(
 						__( "Please leave us a %s rating. We'll thank you.", 'creame-whatsapp-me' ),
@@ -657,11 +659,11 @@ class WhatsAppMe_Admin {
 					) . '</li>' .
 					'<li>' . sprintf(
 						__( 'Subscribe to our newsletter and visit our blog at %s.', 'creame-whatsapp-me' ),
-						'<a href="https://wame.chat/' . $utm . '" rel="external" target="_blank">wame.chat</a>'
+						'<a href="https://join.chat/' . $utm . '" rel="external" target="_blank">join.chat</a>'
 					) . '</li>' .
 					'<li>' . sprintf(
 						__( 'Follow %s on twitter.', 'creame-whatsapp-me' ),
-						'<a href="https://twitter.com/wamechat" rel="external" target="_blank">@wamechat</a>'
+						'<a href="https://twitter.com/joinchatnow" rel="external" target="_blank">@joinchatnow</a>'
 					) . '</li>' .
 					'</ul>',
 			),
@@ -680,7 +682,7 @@ class WhatsAppMe_Admin {
 		);
 
 		foreach ( $help_tabs as $tab_data ) {
-			$screen->add_help_tab( apply_filters( 'whatsappme_help_tab_' . str_replace( '-', '_', $tab_data['id'] ), $tab_data ) );
+			$screen->add_help_tab( apply_filters( 'joinchat_help_tab_' . str_replace( '-', '_', $tab_data['id'] ), $tab_data ) );
 		}
 
 	}
@@ -713,8 +715,8 @@ class WhatsAppMe_Admin {
 		// Enqueue WordPress media scripts
 		wp_enqueue_media();
 		// Enqueue assets
-		wp_enqueue_script( 'whatsappme-admin' );
-		wp_enqueue_style( 'whatsappme-admin' );
+		wp_enqueue_script( 'joinchat-admin' );
+		wp_enqueue_style( 'joinchat-admin' );
 
 		if ( $this->enhanced_phone ) {
 			wp_enqueue_style( 'intl-tel-input' );
@@ -722,21 +724,21 @@ class WhatsAppMe_Admin {
 
 		?>
 			<div class="wrap">
-				<h1>WAme chat</h1>
+				<h1><?php _e( 'Join.chat Settings', 'creame-whatsapp-me' ); ?></h1>
 
-				<form method="post" id="whatsappme_form" action="options.php" autocomplete="off">
-					<?php settings_fields( 'whatsappme' ); ?>
+				<form method="post" id="joinchat_form" action="options.php" autocomplete="off">
+					<?php settings_fields( 'joinchat' ); ?>
 					<h2 class="nav-tab-wrapper wp-clearfix" role="tablist">
 						<?php foreach ( $this->tabs as $tab => $name ) : ?>
 							<?php if ( 'general' === $tab ) : ?>
-								<a id="navtab_<?php echo $tab; ?>" href="#whatsappme_tab_<?php echo $tab; ?>" class="nav-tab nav-tab-active" role="tab" aria-controls="whatsappme_tab_<?php echo $tab; ?>" aria-selected="true"><?php echo $name; ?></a>
+								<a id="navtab_<?php echo $tab; ?>" href="#joinchat_tab_<?php echo $tab; ?>" class="nav-tab nav-tab-active" role="tab" aria-controls="joinchat_tab_<?php echo $tab; ?>" aria-selected="true"><?php echo $name; ?></a>
 							<?php else : ?>
-								<a id="navtab_<?php echo $tab; ?>" href="#whatsappme_tab_<?php echo $tab; ?>" class="nav-tab" role="tab" aria-controls="whatsappme_tab_<?php echo $tab; ?>" aria-selected="false"><?php echo $name; ?></a>
+								<a id="navtab_<?php echo $tab; ?>" href="#joinchat_tab_<?php echo $tab; ?>" class="nav-tab" role="tab" aria-controls="joinchat_tab_<?php echo $tab; ?>" aria-selected="false"><?php echo $name; ?></a>
 							<?php endif; ?>
 						<?php endforeach; ?>
 					</h2>
-					<div class="wametabs">
-						<?php do_settings_sections( 'whatsappme' ); ?>
+					<div class="joinchat-tabs">
+						<?php do_settings_sections( 'joinchat' ); ?>
 					</div><!-- end tabs -->
 					<?php submit_button(); ?>
 				</form>
@@ -757,13 +759,13 @@ class WhatsAppMe_Admin {
 		// Custom post types with public url
 		$custom_post_types = array_keys( get_post_types( array( 'has_archive' => true ), 'names' ) );
 
-		// Add/remove posts types for "WAme chat" meta box
-		$post_types = apply_filters( 'whatsappme_post_types_meta_box', array_merge( $builtin_post_types, $custom_post_types ) );
+		// Add/remove posts types for "Join.chat" meta box
+		$post_types = apply_filters( 'joinchat_post_types_meta_box', array_merge( $builtin_post_types, $custom_post_types ) );
 
 		foreach ( $post_types as $post_type ) {
 			add_meta_box(
-				'whatsappme',
-				__( 'WAme chat', 'creame-whatsapp-me' ),
+				'joinchat',
+				__( 'Join.chat', 'creame-whatsapp-me' ),
 				array( $this, 'meta_box' ),
 				$post_type,
 				'side',
@@ -779,21 +781,21 @@ class WhatsAppMe_Admin {
 	 * @since    2.0.0     Now can set as [show, hide, default]
 	 * @since    2.2.0     Enqueue scripts/styles. Added "telephone"
 	 * @since    3.0.3     Capture and filter output
-	 * @since    3.2.0     Added filter 'whatsappme_metabox_placeholders'
+	 * @since    3.2.0     Added filter 'joinchat_metabox_placeholders'
 	 * @access   public
 	 * @return   void
 	 */
 	public function meta_box( $post ) {
 
 		// Enqueue assets
-		wp_enqueue_script( 'whatsappme-admin' );
-		wp_enqueue_style( 'whatsappme-admin' );
+		wp_enqueue_script( 'joinchat-admin' );
+		wp_enqueue_style( 'joinchat-admin' );
 
 		if ( $this->enhanced_phone ) {
 			wp_enqueue_style( 'intl-tel-input' );
 		}
 
-		$metadata = get_post_meta( $post->ID, '_whatsappme', true ) ?: array();
+		$metadata = get_post_meta( $post->ID, '_joinchat', true ) ?: array();
 		$metadata = array_merge(
 			array(
 				'telephone'    => '',
@@ -812,7 +814,7 @@ class WhatsAppMe_Admin {
 		unset( $metadata['hide'] );
 
 		$placeholders = apply_filters(
-			'whatsappme_metabox_placeholders',
+			'joinchat_metabox_placeholders',
 			array(
 				'telephone'    => $this->settings['telephone'],
 				'message_text' => $this->settings['message_text'],
@@ -822,45 +824,45 @@ class WhatsAppMe_Admin {
 			$this->settings
 		);
 
-		$metabox_vars = apply_filters( 'whatsappme_metabox_vars', array( 'SITE', 'URL', 'TITLE' ), $post );
+		$metabox_vars = apply_filters( 'joinchat_metabox_vars', array( 'SITE', 'URL', 'TITLE' ), $post );
 
 		ob_start();
 		?>
-			<div class="whatsappme-metabox">
-				<?php wp_nonce_field( 'whatsappme_data', 'whatsappme_nonce' ); ?>
+			<div class="joinchat-metabox">
+				<?php wp_nonce_field( 'joinchat_data', 'joinchat_nonce' ); ?>
 				<p>
-					<label for="whatsappme_phone"><?php _e( 'Telephone', 'creame-whatsapp-me' ); ?></label><br>
-					<input id="whatsappme_phone" <?php echo $this->enhanced_phone ? 'data-' : ''; ?>name="whatsappme_telephone" value="<?php echo $metadata['telephone']; ?>" type="text" placeholder="<?php echo $placeholders['telephone']; ?>">
+					<label for="joinchat_phone"><?php _e( 'Telephone', 'creame-whatsapp-me' ); ?></label><br>
+					<input id="joinchat_phone" <?php echo $this->enhanced_phone ? 'data-' : ''; ?>name="joinchat_telephone" value="<?php echo $metadata['telephone']; ?>" type="text" placeholder="<?php echo $placeholders['telephone']; ?>">
 				</p>
 				<p>
-					<label for="whatsappme_message"><?php _e( 'Call to Action', 'creame-whatsapp-me' ); ?></label><br>
-					<textarea id="whatsappme_message" name="whatsappme_message" rows="2" placeholder="<?php echo $placeholders['message_text']; ?>" class="large-text"><?php echo $metadata['message_text']; ?></textarea>
+					<label for="joinchat_message"><?php _e( 'Call to Action', 'creame-whatsapp-me' ); ?></label><br>
+					<textarea id="joinchat_message" name="joinchat_message" rows="2" placeholder="<?php echo $placeholders['message_text']; ?>" class="large-text"><?php echo $metadata['message_text']; ?></textarea>
 				</p>
 				<p>
-					<label for="whatsappme_message_send"><?php _e( 'Message', 'creame-whatsapp-me' ); ?></label><br>
-					<textarea id="whatsappme_message_send" name="whatsappme_message_send" rows="2" placeholder="<?php echo $placeholders['message_send']; ?>" class="large-text"><?php echo $metadata['message_send']; ?></textarea>
+					<label for="joinchat_message_send"><?php _e( 'Message', 'creame-whatsapp-me' ); ?></label><br>
+					<textarea id="joinchat_message_send" name="joinchat_message_send" rows="2" placeholder="<?php echo $placeholders['message_send']; ?>" class="large-text"><?php echo $metadata['message_send']; ?></textarea>
 					<?php if ( count( $metabox_vars ) ) : ?>
 						<small><?php _e( 'Can use vars', 'creame-whatsapp-me' ); ?> <code>{<?php echo join( '}</code> <code>{', $metabox_vars ); ?>}</code></small>
 					<?php endif; ?>
 					<small><?php _e( 'to leave it blank use', 'creame-whatsapp-me' ); ?> <code>{}</code></small>
 				</p>
 				<p>
-					<label><input type="radio" name="whatsappme_view" value="yes" <?php checked( 'yes', $metadata['view'] ); ?>>
+					<label><input type="radio" name="joinchat_view" value="yes" <?php checked( 'yes', $metadata['view'] ); ?>>
 						<span class="dashicons dashicons-visibility" title="<?php echo __( 'Show', 'creame-whatsapp-me' ); ?>"></span></label>
-					<label><input type="radio" name="whatsappme_view" value="no" <?php checked( 'no', $metadata['view'] ); ?>>
+					<label><input type="radio" name="joinchat_view" value="no" <?php checked( 'no', $metadata['view'] ); ?>>
 						<span class="dashicons dashicons-hidden" title="<?php echo __( 'Hide', 'creame-whatsapp-me' ); ?>"></span></label>
-					<label><input type="radio" name="whatsappme_view" value="" <?php checked( '', $metadata['view'] ); ?>>
+					<label><input type="radio" name="joinchat_view" value="" <?php checked( '', $metadata['view'] ); ?>>
 						<?php echo __( 'Default visibility', 'creame-whatsapp-me' ); ?></label>
 				</p>
 			</div>
 		<?php
 		$metabox_output = ob_get_clean();
 
-		echo apply_filters( 'whatsappme_metabox_output', $metabox_output, $post, $metadata );
+		echo apply_filters( 'joinchat_metabox_output', $metabox_output, $post, $metadata );
 	}
 
 	/**
-	 * Save meta data from "WAme chat" Meta Box on post save
+	 * Save meta data from "Join.chat" Meta Box on post save
 	 *
 	 * @since    1.1.0
 	 * @since    2.0.0     Change 'hide' key to 'view' now values can be [yes, no]
@@ -871,29 +873,29 @@ class WhatsAppMe_Admin {
 	 */
 	public function save_post( $post_id ) {
 		if ( wp_is_post_autosave( $post_id ) ||
-			 ! isset( $_POST['whatsappme_nonce'] ) ||
-			 ! wp_verify_nonce( $_POST['whatsappme_nonce'], 'whatsappme_data' ) ) {
+			 ! isset( $_POST['joinchat_nonce'] ) ||
+			 ! wp_verify_nonce( $_POST['joinchat_nonce'], 'joinchat_data' ) ) {
 			return;
 		}
 
 		// Clean and delete empty/false fields
 		$metadata = array_filter(
-			WhatsAppMe_Util::clean_input(
+			JoinChatUtil::clean_input(
 				array(
-					'telephone'    => $_POST['whatsappme_telephone'],
-					'message_text' => $_POST['whatsappme_message'],
-					'message_send' => $_POST['whatsappme_message_send'],
-					'view'         => $_POST['whatsappme_view'],
+					'telephone'    => $_POST['joinchat_telephone'],
+					'message_text' => $_POST['joinchat_message'],
+					'message_send' => $_POST['joinchat_message_send'],
+					'view'         => $_POST['joinchat_view'],
 				)
 			)
 		);
 
-		$metadata = apply_filters( 'whatsappme_metabox_save', $metadata, $post_id );
+		$metadata = apply_filters( 'joinchat_metabox_save', $metadata, $post_id );
 
 		if ( count( $metadata ) ) {
-			update_post_meta( $post_id, '_whatsappme', $metadata );
+			update_post_meta( $post_id, '_joinchat', $metadata );
 		} else {
-			delete_post_meta( $post_id, '_whatsappme' );
+			delete_post_meta( $post_id, '_joinchat' );
 		}
 	}
 
@@ -907,10 +909,10 @@ class WhatsAppMe_Admin {
 	 */
 	public static function vars_help( $field ) {
 
-		$vars = apply_filters( 'whatsappme_vars_help', array( 'SITE', 'URL', 'TITLE' ), $field );
+		$vars = apply_filters( 'joinchat_vars_help', array( 'SITE', 'URL', 'TITLE' ), $field );
 
-		return count( $vars ) ? '<div class="whatsappme_vars_help">' . __( 'You can use vars', 'creame-whatsapp-me' ) . ' ' .
-			'<a class="whatsappme-show-help" href="#" title="' . __( 'Show Help', 'creame-whatsapp-me' ) . '">?</a><br> ' .
+		return count( $vars ) ? '<div class="joinchat_vars_help">' . __( 'You can use vars', 'creame-whatsapp-me' ) . ' ' .
+			'<a class="joinchat-show-help" href="#" title="' . __( 'Show Help', 'creame-whatsapp-me' ) . '">?</a><br> ' .
 			'<code>{' . join( '}</code> <code>{', $vars ) . '}</code></div>' : '';
 
 	}

@@ -1,5 +1,5 @@
 
-# WhatsApp Me
+# Join.chat
 Wordpress plugin
 
 ## Description [EN]
@@ -27,7 +27,7 @@ Si dispones de Google Analytics se dispara un evento cuando el usuario lanza Wha
 
 ## Installation
 
-1. Upload the entire `whatsappme` folder to the `/wp-content/plugins/` directory.
+1. Upload the entire `joinchat` folder to the `/wp-content/plugins/` directory.
 2. Activate the plugin through the 'Plugins' menu in WordPress.
 
 ## Changelog

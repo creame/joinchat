@@ -1,53 +1,53 @@
-/* WAme chat settings page */
+/* Join.chat settings page */
 
-.wame-hidden {
+.joinchat-hidden {
   display: none !important;
 }
 
-.js #whatsappme_form textarea {
+.js #joinchat_form textarea {
   overflow: hidden;
   min-height: 100px;
 }
 
-.wametab {
+.joinchat-tab {
   display: none;
 }
 
-.wametab-active {
+.joinchat-tab-active {
   display: block !important;
 }
 
-#whatsappme_tab_advanced tr:hover {
+#joinchat_tab_advanced tr:hover {
   background: rgba(0, 0, 0, .05);
 }
 
-#whatsappme_tab_advanced th,
-#whatsappme_tab_advanced td {
+#joinchat_tab_advanced th,
+#joinchat_tab_advanced td {
   padding: 7px 15px;
 }
 
-#whatsappme_tab_advanced label {
+#joinchat_tab_advanced label {
   margin-right: 15px;
 }
 
-#whatsappme_tab_advanced .dashicons {
+#joinchat_tab_advanced .dashicons {
   opacity: .5;
 }
 
-#whatsappme_tab_advanced input[type=radio]+span {
+#joinchat_tab_advanced input[type=radio]+span {
   transition: all 200ms;
 }
 
-#whatsappme_tab_advanced input[type=radio]:checked+span {
+#joinchat_tab_advanced input[type=radio]:checked+span {
   color: #79ba49;
   opacity: 1;
 }
 
-#whatsappme_tab_advanced input[type=radio]:checked+.dashicons-hidden {
+#joinchat_tab_advanced input[type=radio]:checked+.dashicons-hidden {
   color: #ca4a1f;
 }
 
-.whatsappme-show-help {
+.joinchat-show-help {
   display: inline-block;
   width: 1.1em;
   height: 1.1em;
@@ -60,9 +60,9 @@
   text-align: center;
 }
 
-.whatsappme-show-help:hover,
-.whatsappme-show-help:active,
-.whatsappme-show-help:focus {
+.joinchat-show-help:hover,
+.joinchat-show-help:active,
+.joinchat-show-help:focus {
   background: #444;
   color: #fff;
 }
@@ -78,7 +78,7 @@
   user-select: all;
 }
 
-.form-table td p.whatsappme-addon {
+.form-table td p.joinchat-addon {
   display: inline-block;
   padding: 0 6px;
   border-radius: 3px;
@@ -90,12 +90,12 @@
   padding-left: 52px !important;
 }
 
-#whatsappme_button_image_wrapper {
+#joinchat_button_image_wrapper {
   position: relative;
   padding: 8px 0 0 80px;
 }
 
-#whatsappme_button_image_holder {
+#joinchat_button_image_holder {
   position: absolute;
   top: 0;
   left: 0;
@@ -109,16 +109,16 @@
   overflow: hidden;
 }
 
-[dir=rtl] #whatsappme_button_image_wrapper {
+[dir=rtl] #joinchat_button_image_wrapper {
   padding: 8px 80px 0 0;
 }
 
-[dir=rtl] #whatsappme_button_image_holder {
+[dir=rtl] #joinchat_button_image_holder {
   right: 0;
   left: auto;
 }
 
-.whatsappme_vars_help {
+.joinchat_vars_help {
   margin-top: 5px;
   font-size: 11px;
   font-weight: normal;
@@ -127,13 +127,13 @@
   transition: opacity 0.2s ease-out 0.2s;
 }
 
-tr:hover .whatsappme_vars_help,
-tr.whatsappme--focus .whatsappme_vars_help {
+tr:hover .joinchat_vars_help,
+tr.joinchat--focus .joinchat_vars_help {
   opacity: 1;
   transition-delay: 0.5s;
 }
 
-.whatsappme_vars_help code {
+.joinchat_vars_help code {
   -webkit-user-select: all;
   -moz-user-select: all;
   -ms-user-select: all;
@@ -143,24 +143,24 @@ tr.whatsappme--focus .whatsappme_vars_help {
   vertical-align: bottom;
 }
 
-.whatsappme_vars_help code:hover {
+.joinchat_vars_help code:hover {
   background: rgba(0, 0, 0, 0.2);
 }
 
 @media screen and (max-width: 782px) {
-  .whatsappme_vars_help {
+  .joinchat_vars_help {
     margin-top: 2px;
     opacity: 1;
   }
 
-  .whatsappme_vars_help br {
+  .joinchat_vars_help br {
     display: none;
   }
 }
 
-/* WAme chat metabox */
+/* Join.chat metabox */
 
-.whatsappme-metabox code {
+.joinchat-metabox code {
   -webkit-user-select: all;
   -moz-user-select: all;
   -ms-user-select: all;
@@ -170,37 +170,37 @@ tr.whatsappme--focus .whatsappme_vars_help {
   vertical-align: text-bottom;
 }
 
-.whatsappme-metabox .dashicons {
+.joinchat-metabox .dashicons {
   opacity: .5;
 }
 
-.whatsappme-metabox input::placeholder {
+.joinchat-metabox input::placeholder {
   color: #dedfe0;
 }
 
-.whatsappme-metabox input::-ms-input-placeholder {
+.joinchat-metabox input::-ms-input-placeholder {
   color: #dedfe0;
 }
 
-.whatsappme-metabox input[type=radio] {
+.joinchat-metabox input[type=radio] {
   margin-right: 1px;
 }
 
-.whatsappme-metabox input[type=radio]+span {
+.joinchat-metabox input[type=radio]+span {
   margin-right: 5px;
   transition: all 200ms;
 }
 
-.whatsappme-metabox input[type=radio]:checked+span {
+.joinchat-metabox input[type=radio]:checked+span {
   color: #79ba49;
   opacity: 1;
 }
 
-.whatsappme-metabox input[type=radio]:checked+.dashicons-hidden {
+.joinchat-metabox input[type=radio]:checked+.dashicons-hidden {
   color: #ca4a1f;
 }
 
-.js .whatsappme-metabox textarea {
+.js .joinchat-metabox textarea {
   overflow: hidden;
   min-height: 3em;
 }

@@ -10,11 +10,11 @@
  * version of the plugin.
  *
  * @since      1.0.0
- * @package    WhatsAppMe
- * @subpackage WhatsAppMe/includes
+ * @package    JoinChat
+ * @subpackage JoinChat/includes
  * @author     Creame <hola@crea.me>
  */
-class WhatsAppMe {
+class JoinChat {
 
 	/**
 	 * The loader that's responsible for maintaining and registering all hooks that power
@@ -22,7 +22,7 @@ class WhatsAppMe {
 	 *
 	 * @since    1.0.0
 	 * @access   protected
-	 * @var      WhatsAppMe_Loader    $loader    Maintains and registers all hooks for the plugin.
+	 * @var      JoinChatLoader    $loader    Maintains and registers all hooks for the plugin.
 	 */
 	protected $loader;
 
@@ -54,8 +54,8 @@ class WhatsAppMe {
 	 * @since    1.0.0
 	 */
 	public function __construct() {
-		$this->version     = defined( 'WHATSAPPME_VERSION' ) ? WHATSAPPME_VERSION : '1.0.0';
-		$this->plugin_name = 'whatsappme';
+		$this->version     = defined( 'JOINCHAT_VERSION' ) ? JOINCHAT_VERSION : '1.0.0';
+		$this->plugin_name = 'joinchat';
 
 		$this->load_dependencies();
 		$this->set_locale();
@@ -70,10 +70,10 @@ class WhatsAppMe {
 	 *
 	 * Include the following files that make up the plugin:
 	 *
-	 * - WhatsAppMe_Loader. Orchestrates the hooks of the plugin.
-	 * - WhatsAppMe_i18n. Defines internationalization functionality.
-	 * - WhatsAppMe_Admin. Defines all hooks for the admin area.
-	 * - WhatsAppMe_Public. Defines all hooks for the public side of the site.
+	 * - JoinChatLoader. Orchestrates the hooks of the plugin.
+	 * - JoinChat_i18n. Defines internationalization functionality.
+	 * - JoinChatAdmin. Defines all hooks for the admin area.
+	 * - JoinChatPublic. Defines all hooks for the public side of the site.
 	 *
 	 * Create an instance of the loader which will be used to register the hooks
 	 * with WordPress.
@@ -83,21 +83,21 @@ class WhatsAppMe {
 	 */
 	private function load_dependencies() {
 
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-whatsappme-loader.php';
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-whatsappme-i18n.php';
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-whatsappme-integrations.php';
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-whatsappme-util.php';
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-whatsappme-admin.php';
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-whatsappme-public.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-joinchat-loader.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-joinchat-i18n.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-joinchat-integrations.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-joinchat-util.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-joinchat-admin.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-joinchat-public.php';
 
-		$this->loader = new WhatsAppMe_Loader();
+		$this->loader = new JoinChatLoader();
 
 	}
 
 	/**
 	 * Define the locale for this plugin for internationalization.
 	 *
-	 * Uses the WhatsAppMe_i18n class in order to set the domain and to register the hook
+	 * Uses the JoinChat_i18n class in order to set the domain and to register the hook
 	 * with WordPress.
 	 *
 	 * @since    1.0.0
@@ -105,7 +105,7 @@ class WhatsAppMe {
 	 */
 	private function set_locale() {
 
-		$plugin_i18n = new WhatsAppMe_i18n();
+		$plugin_i18n = new JoinChat_i18n();
 
 		// No delegate to $this->loader, use WordPress add_action
 		add_action( 'plugins_loaded', array( $plugin_i18n, 'load_plugin_textdomain' ) );
@@ -120,7 +120,7 @@ class WhatsAppMe {
 	 */
 	private function load_integrations() {
 
-		$plugin_integrations = new WhatsAppMe_Integrations();
+		$plugin_integrations = new JoinChatIntegrations();
 
 		// No delegate to $this->loader, use WordPress add_action.
 		// At 'plugins_loaded' hook can determine if other plugins are present.
@@ -138,7 +138,7 @@ class WhatsAppMe {
 	 */
 	private function define_admin_hooks() {
 
-		$plugin_admin = new WhatsAppMe_Admin( $this->get_plugin_name(), $this->get_version() );
+		$plugin_admin = new JoinChatAdmin( $this->get_plugin_name(), $this->get_version() );
 
 		$this->loader->add_action( 'admin_init', $plugin_admin, 'get_settings', 5 );
 		$this->loader->add_action( 'admin_init', $plugin_admin, 'settings_init' );
@@ -147,7 +147,7 @@ class WhatsAppMe {
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'add_menu' );
 		$this->loader->add_action( 'add_meta_boxes', $plugin_admin, 'add_meta_boxes' );
 		$this->loader->add_action( 'save_post', $plugin_admin, 'save_post' );
-		$this->loader->add_action( 'load-settings_page_whatsappme', $plugin_admin, 'help_tab' );
+		$this->loader->add_action( 'load-settings_page_joinchat', $plugin_admin, 'help_tab' );
 
 		$this->loader->add_filter( "plugin_action_links_creame-whatsapp-me/{$this->plugin_name}.php", $plugin_admin, 'settings_link' );
 
@@ -162,7 +162,7 @@ class WhatsAppMe {
 	 */
 	private function define_public_hooks() {
 
-		$plugin_public = new WhatsAppMe_Public( $this->get_plugin_name(), $this->get_version() );
+		$plugin_public = new JoinChatPublic( $this->get_plugin_name(), $this->get_version() );
 
 		$this->loader->add_action( 'wp', $plugin_public, 'get_settings' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
@@ -180,11 +180,11 @@ class WhatsAppMe {
 	 */
 	public function run() {
 
-		do_action( 'whatsappme_run_pre', $this );
+		do_action( 'joinchat_run_pre', $this );
 
 		$this->loader->run();
 
-		do_action( 'whatsappme_run_pos', $this );
+		do_action( 'joinchat_run_pos', $this );
 
 	}
 
@@ -203,7 +203,7 @@ class WhatsAppMe {
 	 * The reference to the class that orchestrates the hooks with the plugin.
 	 *
 	 * @since     1.0.0
-	 * @return    WhatsAppMe_Loader    Orchestrates the hooks of the plugin.
+	 * @return    JoinChatLoader    Orchestrates the hooks of the plugin.
 	 */
 	public function get_loader() {
 		return $this->loader;

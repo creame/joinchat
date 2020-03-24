@@ -8,17 +8,17 @@
   $(function () {
     var media_frame;
 
-    if (typeof (intlTelInput) === 'function' && $('#whatsappme_phone').length) {
-      var country_request = JSON.parse(localStorage.whatsappme_country_code || '{}');
+    if (typeof (intlTelInput) === 'function' && $('#joinchat_phone').length) {
+      var country_request = JSON.parse(localStorage.joinchat_country_code || '{}');
       var country_code = (country_request.code && country_request.date == new Date().toDateString()) ? country_request.code : false;
-      var $phone = $('#whatsappme_phone');
+      var $phone = $('#joinchat_phone');
 
       // If empty value capture placeholdre and remove
       var placeholder = $phone.val() === '' ? $phone.attr('placeholder') : null;
       $phone.removeAttr('placeholder');
 
       var iti = intlTelInput($phone.get(0), {
-        hiddenInput: $phone.data('name') || 'whatsappme[telephone]',
+        hiddenInput: $phone.data('name') || 'joinchat[telephone]',
         initialCountry: 'auto',
         preferredCountries: [country_code || ''],
         geoIpLookup: function (callback) {
@@ -27,7 +27,7 @@
           } else {
             $.getJSON('https://ipinfo.io').always(function (resp) {
               var countryCode = (resp && resp.country) ? resp.country : '';
-              localStorage.whatsappme_country_code = JSON.stringify({ code: countryCode, date: new Date().toDateString() });
+              localStorage.joinchat_country_code = JSON.stringify({ code: countryCode, date: new Date().toDateString() });
               callback(countryCode);
             });
           }
@@ -58,7 +58,7 @@
       });
     }
 
-    if ($('#whatsappme_form').length === 1) {
+    if ($('#joinchat_form').length === 1) {
       // Tabs
       $('.nav-tab').click(function (e) {
         e.preventDefault();
@@ -66,22 +66,22 @@
 
         $('.nav-tab').removeClass('nav-tab-active').attr('aria-selected', 'false');
         $navtab.addClass('nav-tab-active').attr('aria-selected', 'true').get(0).blur();
-        $('.wametab').removeClass('wametab-active');
-        $($navtab.attr('href')).addClass('wametab-active').find('textarea').each(textarea_autoheight);
+        $('.joinchat-tab').removeClass('joinchat-tab-active');
+        $($navtab.attr('href')).addClass('joinchat-tab-active').find('textarea').each(textarea_autoheight);
       });
 
       // Toggle WhatsApp web option
-      $('#whatsappme_mobile_only').change(function () {
-        $('#whatsappme_whatsapp_web').closest('tr').toggleClass('wame-hidden', this.checked);
+      $('#joinchat_mobile_only').change(function () {
+        $('#joinchat_whatsapp_web').closest('tr').toggleClass('joinchat-hidden', this.checked);
       }).change();
 
-      // Toggle WhatsApp badge option
-      $('#whatsappme_message_delay').on('change input', function () {
-        $('#whatsappme_message_badge').closest('tr').toggleClass('wame-hidden', this.value == '0');
+      // Toggle badge option
+      $('#joinchat_message_delay').on('change input', function () {
+        $('#joinchat_message_badge').closest('tr').toggleClass('joinchat-hidden', this.value == '0');
       }).change();
 
       // Show help
-      $('.whatsappme-show-help').click(function (e) {
+      $('.joinchat-show-help').click(function (e) {
         e.preventDefault();
         var help_tab = $(this).attr('href');
         if ($('#contextual-help-wrap').is(':visible')) {
@@ -93,16 +93,16 @@
       });
 
       // Texarea focus and auto height
-      $('textarea', '#whatsappme_form')
-        .on('focus', function () { $(this).closest('tr').addClass('whatsappme--focus'); })
-        .on('blur', function () { $(this).closest('tr').removeClass('whatsappme--focus'); })
+      $('textarea', '#joinchat_form')
+        .on('focus', function () { $(this).closest('tr').addClass('joinchat--focus'); })
+        .on('blur', function () { $(this).closest('tr').removeClass('joinchat--focus'); })
         .on('input', textarea_autoheight)
         .each(textarea_autoheight);
 
 
       // Advanced view inheritance
-      var $tab_advanced = $('#whatsappme_tab_advanced');
-      var inheritance = $('.whatsappme_view_all').data('inheritance') || {
+      var $tab_advanced = $('#joinchat_tab_advanced');
+      var inheritance = $('.joinchat_view_all').data('inheritance') || {
         'all': ['front_page', 'blog_page', '404_page', 'search', 'archive', 'singular', 'cpts'],
         'archive': ['date', 'author'],
         'singular': ['page', 'post'],
@@ -110,7 +110,7 @@
 
       function propagate_inheritance(field, show) {
         field = field || 'all';
-        show = show || $('input[name="whatsappme[view][' + field + ']"]:checked').val();
+        show = show || $('input[name="joinchat[view][' + field + ']"]:checked').val();
 
         $('.view_inheritance_' + field)
           .toggleClass('dashicons-visibility', show == 'yes')
@@ -121,7 +121,7 @@
             .toggleClass('dashicons-visibility', show == 'yes')
             .toggleClass('dashicons-hidden', show == 'no');
         } else if (field in inheritance) {
-          var value = $('input[name="whatsappme[view][' + field + ']"]:checked').val();
+          var value = $('input[name="joinchat[view][' + field + ']"]:checked').val();
           value = value === '' ? show : value;
 
           $.each(inheritance[field], function () { propagate_inheritance(this, value); });
@@ -132,16 +132,16 @@
         propagate_inheritance();
       });
 
-      $('.whatsappme_view_reset').click(function (e) {
+      $('.joinchat_view_reset').click(function (e) {
         e.preventDefault();
         $('input[value=""]', $tab_advanced).prop('checked', true);
-        $('.whatsappme_view_all input', $tab_advanced).first().prop('checked', true);
+        $('.joinchat_view_all input', $tab_advanced).first().prop('checked', true);
         propagate_inheritance();
       });
 
       propagate_inheritance();
 
-      $('#whatsappme_button_image_add').click(function (e) {
+      $('#joinchat_button_image_add').click(function (e) {
         e.preventDefault();
 
         if (!media_frame) {
@@ -159,14 +159,14 @@
             var attachment = media_frame.state().get('selection').first().toJSON();
             var url = attachment.sizes && attachment.sizes.thumbnail && attachment.sizes.thumbnail.url || attachment.url;
 
-            $('#whatsappme_button_image_holder').css({ 'background-size': 'cover', 'background-image': 'url(' + url + ')' });
-            $('#whatsappme_button_image').val(attachment.id);
-            $('#whatsappme_button_image_remove').removeClass('wame-hidden');
+            $('#joinchat_button_image_holder').css({ 'background-size': 'cover', 'background-image': 'url(' + url + ')' });
+            $('#joinchat_button_image').val(attachment.id);
+            $('#joinchat_button_image_remove').removeClass('joinchat-hidden');
           });
 
           media_frame.on('open', function () {
             // Pre-selected attachment
-            var attachment = wp.media.attachment($('#whatsappme_button_image').val());
+            var attachment = wp.media.attachment($('#joinchat_button_image').val());
             media_frame.state().get('selection').add(attachment ? [attachment] : []);
           });
         }
@@ -174,18 +174,18 @@
         media_frame.open();
       });
 
-      $('#whatsappme_button_image_remove').click(function (e) {
+      $('#joinchat_button_image_remove').click(function (e) {
         e.preventDefault();
 
-        $('#whatsappme_button_image_holder').removeAttr('style');
-        $('#whatsappme_button_image').val('');
-        $(this).addClass('wame-hidden');
+        $('#joinchat_button_image_holder').removeAttr('style');
+        $('#joinchat_button_image').val('');
+        $(this).addClass('joinchat-hidden');
       });
     }
 
-    if ($('.whatsappme-metabox').length === 1) {
+    if ($('.joinchat-metabox').length === 1) {
       // Texarea auto height
-      $('textarea', '.whatsappme-metabox').on('focus input', textarea_autoheight).each(textarea_autoheight);
+      $('textarea', '.joinchat-metabox').on('focus input', textarea_autoheight).each(textarea_autoheight);
     }
   });
 })(jQuery);

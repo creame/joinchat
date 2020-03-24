@@ -4,37 +4,37 @@
  * The admin-specific functionality of the WooCommerce integration.
  *
  * @since      3.0.0
- * @package    WhatsAppMe
- * @subpackage WhatsAppMe/admin
+ * @package    JoinChat
+ * @subpackage JoinChat/admin
  * @author     Creame <hola@crea.me>
  */
-class WhatsAppMe_WooAdmin {
+class JoinChatWooAdmin {
 
 	/**
 	 * Initialize all hooks
 	 *
 	 * @since    3.0.0
-	 * @param    array $whatsappme       WhatsAppMe object.
+	 * @param    array $joinchat       JoinChat object.
 	 * @return   void
 	 */
-	public function init( $whatsappme ) {
+	public function init( $joinchat ) {
 
-		$loader = $whatsappme->get_loader();
+		$loader = $joinchat->get_loader();
 
-		$loader->add_filter( 'whatsappme_extra_settings', $this, 'extra_settings' );
-		$loader->add_filter( 'whatsappme_settings_validate', $this, 'settings_validate' );
-		$loader->add_filter( 'whatsappme_settings_i18n', $this, 'settings_i18n' );
-		$loader->add_filter( 'whatsappme_admin_tabs', $this, 'admin_tab' );
-		$loader->add_filter( 'whatsappme_custom_post_types', $this, 'custom_post_types' );
-		$loader->add_filter( 'whatsappme_tab_advanced_sections', $this, 'advanced_tab_section' );
-		$loader->add_filter( 'whatsappme_tab_woocommerce_sections', $this, 'woo_tab_sections' );
-		$loader->add_filter( 'whatsappme_vars_help', $this, 'vars_help', 10, 2 );
-		$loader->add_filter( 'whatsappme_section_output', $this, 'section_ouput', 10, 2 );
-		$loader->add_filter( 'whatsappme_field_output', $this, 'field_ouput', 10, 3 );
-		$loader->add_filter( 'whatsappme_advanced_inheritance', $this, 'advanced_inheritance' );
-		$loader->add_filter( 'whatsappme_help_tab_styles_and_vars', $this, 'help_vars' );
-		$loader->add_filter( 'whatsappme_metabox_vars', $this, 'metabox_vars', 10, 2 );
-		$loader->add_filter( 'whatsappme_metabox_placeholders', $this, 'metabox_placeholders', 10, 3 );
+		$loader->add_filter( 'joinchat_extra_settings', $this, 'extra_settings' );
+		$loader->add_filter( 'joinchat_settings_validate', $this, 'settings_validate' );
+		$loader->add_filter( 'joinchat_settings_i18n', $this, 'settings_i18n' );
+		$loader->add_filter( 'joinchat_admin_tabs', $this, 'admin_tab' );
+		$loader->add_filter( 'joinchat_custom_post_types', $this, 'custom_post_types' );
+		$loader->add_filter( 'joinchat_tab_advanced_sections', $this, 'advanced_tab_section' );
+		$loader->add_filter( 'joinchat_tab_woocommerce_sections', $this, 'woo_tab_sections' );
+		$loader->add_filter( 'joinchat_vars_help', $this, 'vars_help', 10, 2 );
+		$loader->add_filter( 'joinchat_section_output', $this, 'section_ouput', 10, 2 );
+		$loader->add_filter( 'joinchat_field_output', $this, 'field_ouput', 10, 3 );
+		$loader->add_filter( 'joinchat_advanced_inheritance', $this, 'advanced_inheritance' );
+		$loader->add_filter( 'joinchat_help_tab_styles_and_vars', $this, 'help_vars' );
+		$loader->add_filter( 'joinchat_metabox_vars', $this, 'metabox_vars', 10, 2 );
+		$loader->add_filter( 'joinchat_metabox_placeholders', $this, 'metabox_placeholders', 10, 3 );
 	}
 
 	/**
@@ -64,9 +64,9 @@ class WhatsAppMe_WooAdmin {
 	 */
 	public function settings_validate( $input ) {
 
-		$input['message_text_product'] = WhatsAppMe_Util::clean_input( $input['message_text_product'] );
-		$input['message_text_on_sale'] = WhatsAppMe_Util::clean_input( $input['message_text_on_sale'] );
-		$input['message_send_product'] = WhatsAppMe_Util::clean_input( $input['message_send_product'] );
+		$input['message_text_product'] = JoinChatUtil::clean_input( $input['message_text_product'] );
+		$input['message_text_on_sale'] = JoinChatUtil::clean_input( $input['message_text_on_sale'] );
+		$input['message_send_product'] = JoinChatUtil::clean_input( $input['message_send_product'] );
 
 		return $input;
 	}
@@ -116,7 +116,7 @@ class WhatsAppMe_WooAdmin {
 	}
 
 	/**
-	 * Woocommerce sections and fields for 'whatsappme_tab_advanced'
+	 * Woocommerce sections and fields for 'joinchat_tab_advanced'
 	 *
 	 * @since    3.0.0
 	 * @param    array $sections       current tab sections and fields.
@@ -136,7 +136,7 @@ class WhatsAppMe_WooAdmin {
 	}
 
 	/**
-	 * Woocommerce sections and fields for 'whatsappme_tab_woocommerce'
+	 * Woocommerce sections and fields for 'joinchat_tab_woocommerce'
 	 *
 	 * @since    3.0.0
 	 * @param    array $sections       current tab sections and fields.
@@ -151,7 +151,7 @@ class WhatsAppMe_WooAdmin {
 		);
 
 		foreach ( $woo_sections as $key => $label ) {
-			$woo_sections[ $key ] = "<label for=\"whatsappme_$key\">$label</label>" . WhatsAppMe_Admin::vars_help( $key );
+			$woo_sections[ $key ] = "<label for=\"joinchat_$key\">$label</label>" . JoinChatAdmin::vars_help( $key );
 		}
 
 		$sections['chat'] = $woo_sections;
@@ -160,7 +160,7 @@ class WhatsAppMe_WooAdmin {
 	}
 
 	/**
-	 * Woocommerce sections and fields for 'whatsappme_tab_woocommerce'
+	 * Woocommerce sections and fields for 'joinchat_tab_woocommerce'
 	 *
 	 * @since    3.0.0
 	 * @param    array $sections       current tab sections and fields.
@@ -187,11 +187,11 @@ class WhatsAppMe_WooAdmin {
 	 */
 	public function section_ouput( $output, $section_id ) {
 
-		if ( 'whatsappme_tab_advanced__woo' == $section_id ) {
+		if ( 'joinchat_tab_advanced__woo' == $section_id ) {
 
 			$output = '<h2 class="title">' . __( 'WooCommerce', 'creame-whatsapp-me' ) . '</h2>';
 
-		} elseif ( 'whatsappme_tab_woocommerce__chat' == $section_id ) {
+		} elseif ( 'joinchat_tab_woocommerce__chat' == $section_id ) {
 
 			$output = '<h2 class="title">' . __( 'Product Chat Window', 'creame-whatsapp-me' ) . '</h2>' .
 				'<p>' .
@@ -209,7 +209,7 @@ class WhatsAppMe_WooAdmin {
 	 * @since    3.0.0
 	 * @param    string $output       current field output.
 	 * @param    string $field_id     current field id.
-	 * @param    array  $settings     current whatsappme settings.
+	 * @param    array  $settings     current joinchat settings.
 	 * @return   string
 	 */
 	public function field_ouput( $output, $field_id, $settings ) {
@@ -218,21 +218,21 @@ class WhatsAppMe_WooAdmin {
 
 		switch ( $field_id ) {
 			case 'message_text_product':
-				$output = '<textarea id="whatsappme_message_text_product" name="whatsappme[message_text_product]" rows="4" class="regular-text" ' .
+				$output = '<textarea id="joinchat_message_text_product" name="joinchat[message_text_product]" rows="4" class="regular-text" ' .
 					'placeholder="' . esc_attr__( "This *{PRODUCT}* can be yours for only *{PRICE}*!\nIf you have any questions, ask us.", 'creame-whatsapp-me' ) . '">' .
 					$value . '</textarea>' .
 					'<p class="description">' . __( 'Define a text for your products to encourage customers to contact', 'creame-whatsapp-me' ) . '</p>';
 				break;
 
 			case 'message_text_on_sale':
-				$output = '<textarea id="whatsappme_message_text_on_sale" name="whatsappme[message_text_on_sale]" rows="4" class="regular-text" ' .
+				$output = '<textarea id="joinchat_message_text_on_sale" name="joinchat[message_text_on_sale]" rows="4" class="regular-text" ' .
 					'placeholder="' . esc_attr__( "Save {DISCOUNT}! This *{PRODUCT}* can be yours for only ~{REGULAR}~ *{PRICE}*.\nIf you have any questions, ask us.", 'creame-whatsapp-me' ) . '">' .
 					$value . '</textarea>' .
 					'<p class="description">' . __( 'Define a text for your products on sale to encourage customers to contact', 'creame-whatsapp-me' ) . '</p>';
 				break;
 
 			case 'message_send_product':
-				$output = '<textarea id="whatsappme_message_send_product" name="whatsappme[message_send_product]" rows="3" class="regular-text" ' .
+				$output = '<textarea id="joinchat_message_send_product" name="joinchat[message_send_product]" rows="3" class="regular-text" ' .
 					'placeholder="' . esc_attr__( "*Hi {SITE}!*\nI have a question about *{PRODUCT} ({SKU})*", 'creame-whatsapp-me' ) . '">' . $value . '</textarea>' .
 					'<p class="description">' . __( 'Predefined text for the first message the client will send you', 'creame-whatsapp-me' ) . '</p>';
 				break;

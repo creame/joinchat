@@ -8,11 +8,11 @@
  *
  * @since      1.0.0
  * @since      3.0.0      Added $show property and more hooks
- * @package    WhatsAppMe
- * @subpackage WhatsAppMe/public
+ * @package    JoinChat
+ * @subpackage JoinChat/public
  * @author     Creame <hola@crea.me>
  */
-class WhatsAppMe_Public {
+class JoinChatPublic {
 
 	/**
 	 * The ID of this plugin.
@@ -104,13 +104,13 @@ class WhatsAppMe_Public {
 				'visibility'    => array( 'all' => 'yes' ),
 				'dark_mode'     => 'no',
 			),
-			apply_filters( 'whatsappme_extra_settings', array() )
+			apply_filters( 'joinchat_extra_settings', array() )
 		);
 
 		$settings = $default_settings;
 		$show     = false;
 
-		$site_settings = get_option( 'whatsappme' );
+		$site_settings = get_option( 'joinchat' );
 
 		if ( is_array( $site_settings ) ) {
 			// Clean unused saved settings
@@ -123,17 +123,17 @@ class WhatsAppMe_Public {
 			}
 
 			// Load WPML/Polylang translated strings
-			$settings_i18n = WhatsAppMe_Util::settings_i18n();
+			$settings_i18n = JoinChatUtil::settings_i18n();
 
 			foreach ( $settings_i18n as $key => $label ) {
-				$settings[ $key ] = $settings[ $key ] ? apply_filters( 'wpml_translate_single_string', $settings[ $key ], 'WhatsApp me', $label ) : '';
+				$settings[ $key ] = $settings[ $key ] ? apply_filters( 'wpml_translate_single_string', $settings[ $key ], 'Join.chat', $label ) : '';
 			}
 
 			// Filter for site settings (can be overriden by post settings)
-			$settings = apply_filters( 'whatsappme_get_settings_site', $settings, $obj );
+			$settings = apply_filters( 'joinchat_get_settings_site', $settings, $obj );
 
 			// Post custom settings override site settings
-			$post_settings = is_a( $obj, 'WP_Post' ) ? get_post_meta( $obj->ID, '_whatsappme', true ) : '';
+			$post_settings = is_a( $obj, 'WP_Post' ) ? get_post_meta( $obj->ID, '_joinchat', true ) : '';
 
 			if ( is_array( $post_settings ) ) {
 				// Move old 'hide' to new 'view' field
@@ -156,9 +156,9 @@ class WhatsAppMe_Public {
 			$settings['message_badge'] = 'yes' == $settings['message_badge'] && '' != $settings['message_text'];
 			$settings['position']      = 'right' == $settings['position'] ? 'right' : 'left';
 			$settings['dark_mode']     = in_array( $settings['dark_mode'], array( 'no', 'yes', 'auto' ) ) ? $settings['dark_mode'] : 'no';
-			$settings['message_send']  = WhatsAppMe_Util::replace_variables( $settings['message_send'] );
+			$settings['message_send']  = JoinChatUtil::replace_variables( $settings['message_send'] );
 			// Set true to link http://web.whatsapp.com instead http://api.whatsapp.com
-			$settings['whatsapp_web'] = apply_filters( 'whatsappme_whatsapp_web', 'yes' == $settings['whatsapp_web'] );
+			$settings['whatsapp_web'] = apply_filters( 'joinchat_whatsapp_web', 'yes' == $settings['whatsapp_web'] );
 
 			// Only show if there is a phone number
 			if ( '' != $settings['telephone'] ) {
@@ -175,9 +175,9 @@ class WhatsAppMe_Public {
 		}
 
 		// Apply filters to final settings after site and post settings
-		$this->settings = apply_filters( 'whatsappme_get_settings', $settings, $obj );
+		$this->settings = apply_filters( 'joinchat_get_settings', $settings, $obj );
 		// Apply filters to alter 'show' value
-		$this->show = apply_filters( 'whatsappme_show', $show, $this->settings, $obj );
+		$this->show = apply_filters( 'joinchat_show', $show, $this->settings, $obj );
 
 		// Ensure not show if not phone
 		if ( '' == $this->settings['telephone'] ) {
@@ -231,7 +231,7 @@ class WhatsAppMe_Public {
 
 			// Clean unnecessary settings on front
 			$excluded_fields = apply_filters(
-				'whatsappme_excluded_fields',
+				'joinchat_excluded_fields',
 				array(
 					'visibility',
 					'position',
@@ -244,36 +244,36 @@ class WhatsAppMe_Public {
 
 			$data = array_diff_key( $this->settings, array_flip( $excluded_fields ) );
 
-			$copy = apply_filters( 'whatsappme_copy', 'Powered by' );
+			$copy = apply_filters( 'joinchat_copy', 'Powered by' );
 
 			$powered_url  = urlencode( home_url( $wp->request ) );
 			$powered_site = urlencode( get_bloginfo( 'name' ) );
-			$powered_link = "https://wame.chat/powered/?site={$powered_site}&url={$powered_url}";
+			$powered_link = "https://join.chat/powered/?site={$powered_site}&url={$powered_url}";
 
 			// Set custom img tag and bypass default image logic
-			$image = apply_filters( 'whatsappme_image', null );
+			$image = apply_filters( 'joinchat_image', null );
 
 			if ( is_null( $image ) && $this->settings['button_image'] ) {
 				$img_path = get_attached_file( $this->settings['button_image'] );
 
-				if ( apply_filters( 'whatsappme_image_original', WhatsAppMe_Util::is_animated_gif( $img_path ) ) ) {
+				if ( apply_filters( 'joinchat_image_original', JoinChatUtil::is_animated_gif( $img_path ) ) ) {
 					$image = '<img src="' . wp_get_attachment_url( $this->settings['button_image'] ) . '" alt="">';
-				} elseif ( is_array( WhatsAppMe_Util::thumb( $img_path, 58, 58 ) ) ) {
-					$thumb  = WhatsAppMe_Util::thumb( $img_path, 58, 58 );
-					$thumb2 = WhatsAppMe_Util::thumb( $img_path, 116, 116 );
-					$thumb3 = WhatsAppMe_Util::thumb( $img_path, 174, 174 );
+				} elseif ( is_array( JoinChatUtil::thumb( $img_path, 58, 58 ) ) ) {
+					$thumb  = JoinChatUtil::thumb( $img_path, 58, 58 );
+					$thumb2 = JoinChatUtil::thumb( $img_path, 116, 116 );
+					$thumb3 = JoinChatUtil::thumb( $img_path, 174, 174 );
 					$image  = "<img src=\"{$thumb['url']}\" srcset=\"{$thumb2['url']} 2x, {$thumb3['url']} 3x\" alt=\"\">";
 				}
 			}
 
-			$whatsappme_classes  = 'whatsappme--' . $this->settings['position'];
-			$whatsappme_classes .= isset( $_SERVER['HTTP_ACCEPT'] ) && strpos( $_SERVER['HTTP_ACCEPT'], 'image/webp' ) !== false ? ' whatsappme--webp' : '';
+			$joinchat_classes  = 'joinchat--' . $this->settings['position'];
+			$joinchat_classes .= isset( $_SERVER['HTTP_ACCEPT'] ) && strpos( $_SERVER['HTTP_ACCEPT'], 'image/webp' ) !== false ? ' joinchat--webp' : '';
 			if ( 'no' !== $this->settings['dark_mode'] ) {
-				$whatsappme_classes .= 'auto' === $this->settings['dark_mode'] ? ' whatsappme--dark-auto' : ' whatsappme--dark';
+				$joinchat_classes .= 'auto' === $this->settings['dark_mode'] ? ' joinchat--dark-auto' : ' joinchat--dark';
 			}
 
 			if ( $this->settings['message_text'] ) {
-				$box_content = '<div class="whatsappme__message">' . WhatsAppMe_Util::formated_message( $this->settings['message_text'] ) . '</div>';
+				$box_content = '<div class="joinchat__message">' . JoinChatUtil::formated_message( $this->settings['message_text'] ) . '</div>';
 			} else {
 				$box_content = '';
 			}
@@ -283,47 +283,47 @@ class WhatsAppMe_Public {
 			// load SVGs
 			echo file_get_contents( __DIR__ . '/images/svgs.php' );
 			?>
-			<div class="whatsappme <?php echo apply_filters( 'whatsappme_classes', $whatsappme_classes ); ?>" data-settings="<?php echo esc_attr( json_encode( $data ) ); ?>">
-				<div class="whatsappme__button">
-					<svg class="whatsappme__button__open"><use href="#wame_svg__logo"></use></svg>
+			<div class="joinchat <?php echo apply_filters( 'joinchat_classes', $joinchat_classes ); ?>" data-settings="<?php echo esc_attr( json_encode( $data ) ); ?>">
+				<div class="joinchat__button">
+					<svg class="joinchat__button__open"><use href="#joinchat_svg__logo"></use></svg>
 					<?php if ( $image ) : ?>
-						<div class="whatsappme__button__image"><?php echo $image; ?></div>
+						<div class="joinchat__button__image"><?php echo $image; ?></div>
 					<?php endif; ?>
 					<?php if ( $this->settings['message_start'] ) : ?>
-						<div class="whatsappme__button__sendtext"><?php echo $this->settings['message_start']; ?></div>
+						<div class="joinchat__button__sendtext"><?php echo $this->settings['message_start']; ?></div>
 					<?php endif; ?>
 					<?php if ( $this->settings['message_text'] ) : ?>
-						<svg class="whatsappme__button__send" viewbox="0 0 400 400" stroke-linecap="round" stroke-width="33">
-							<path class="wame_svg__plain" d="M168.83 200.504H79.218L33.04 44.284a1 1 0 0 1 1.386-1.188L365.083 199.04a1 1 0 0 1 .003 1.808L34.432 357.903a1 1 0 0 1-1.388-1.187l29.42-99.427"/>
-							<path class="wame_svg__chat" d="M318.087 318.087c-52.982 52.982-132.708 62.922-195.725 29.82l-80.449 10.18 10.358-80.112C18.956 214.905 28.836 134.99 81.913 81.913c65.218-65.217 170.956-65.217 236.174 0 42.661 42.661 57.416 102.661 44.265 157.316"/>
+						<svg class="joinchat__button__send" viewbox="0 0 400 400" stroke-linecap="round" stroke-width="33">
+							<path class="joinchat_svg__plain" d="M168.83 200.504H79.218L33.04 44.284a1 1 0 0 1 1.386-1.188L365.083 199.04a1 1 0 0 1 .003 1.808L34.432 357.903a1 1 0 0 1-1.388-1.187l29.42-99.427"/>
+							<path class="joinchat_svg__chat" d="M318.087 318.087c-52.982 52.982-132.708 62.922-195.725 29.82l-80.449 10.18 10.358-80.112C18.956 214.905 28.836 134.99 81.913 81.913c65.218-65.217 170.956-65.217 236.174 0 42.661 42.661 57.416 102.661 44.265 157.316"/>
 						</svg>
 					<?php endif; ?>
 					<?php if ( $this->settings['message_badge'] ) : ?>
-						<div class="whatsappme__badge">1</div>
+						<div class="joinchat__badge">1</div>
 					<?php endif; ?>
 					<?php if ( $this->settings['button_tip'] ) : ?>
-						<div class="whatsappme__tooltip"><div><?php echo $this->settings['button_tip']; ?></div></div>
+						<div class="joinchat__tooltip"><div><?php echo $this->settings['button_tip']; ?></div></div>
 					<?php endif; ?>
 				</div>
-				<div class="whatsappme__box">
-					<div class="whatsappme__header">
-						<svg><use href="#wame_svg__whatsapp"></use></svg>
-						<div class="whatsappme__close"><svg><use href="#wame_svg__close"></use></svg></div>
+				<div class="joinchat__box">
+					<div class="joinchat__header">
+						<svg><use href="#joinchat_svg__whatsapp"></use></svg>
+						<div class="joinchat__close"><svg><use href="#joinchat_svg__close"></use></svg></div>
 					</div>
-					<div class="whatsappme__box__scroll">
-						<div class="whatsappme__box__content">
-							<?php echo apply_filters( 'whatsappme_content', $box_content, $this->settings ); ?>
+					<div class="joinchat__box__scroll">
+						<div class="joinchat__box__content">
+							<?php echo apply_filters( 'joinchat_content', $box_content, $this->settings ); ?>
 						</div>
 					</div>
 					<?php if ( $copy ) : ?>
-						<div class="whatsappme__copy"><?php echo $copy; ?> <a href="<?php echo $powered_link; ?>" rel="nofollow noopener" target="_blank"><svg><use href="#wame_svg__wame"></use></svg></a></div>
+						<div class="joinchat__copy"><?php echo $copy; ?> <a href="<?php echo $powered_link; ?>" rel="nofollow noopener" target="_blank"><svg><use href="#joinchat_svg__joinchat"></use></svg></a></div>
 					<?php endif; ?>
 				</div>
 			</div>
 			<?php
 			$html_output = ob_get_clean();
 
-			echo apply_filters( 'whatsappme_html_output', $html_output, $this->settings );
+			echo apply_filters( 'joinchat_html_output', $html_output, $this->settings );
 		}
 	}
 
@@ -331,14 +331,14 @@ class WhatsAppMe_Public {
 	 * Check visibility on current page
 	 *
 	 * @since    2.0.0
-	 * @since    3.0.0       Added filter to 'whatsappme_visibility'
+	 * @since    3.0.0       Added filter to 'joinchat_visibility'
 	 * @param    array $options    array of visibility settings
 	 * @return   boolean     is visible or not on current page
 	 */
 	public function check_visibility( $options ) {
 
 		// Custom visibility, bypass all checks if not null
-		$visibility = apply_filters( 'whatsappme_visibility', null, $options );
+		$visibility = apply_filters( 'joinchat_visibility', null, $options );
 		if ( ! is_null( $visibility ) ) {
 			return $visibility;
 		}
@@ -421,7 +421,7 @@ class WhatsAppMe_Public {
 	 */
 	public function elementor_preview_disable( $elementor_preview ) {
 
-		$this->show = apply_filters( 'whatsappme_elementor_preview_show', false );
+		$this->show = apply_filters( 'joinchat_elementor_preview_show', false );
 
 	}
 

@@ -8,11 +8,11 @@
  * run function to execute the list of actions and filters.
  *
  * @since      1.0.0
- * @package    WhatsAppMe
- * @subpackage WhatsAppMe/includes
+ * @package    JoinChat
+ * @subpackage JoinChat/includes
  * @author     Creame <hola@crea.me>
  */
-class WhatsAppMe_Loader {
+class JoinChatLoader {
 
 	/**
 	 * The array of actions registered with WordPress.

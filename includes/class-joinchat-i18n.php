@@ -7,11 +7,11 @@
  * so that it is ready for translation.
  *
  * @since      1.0.0
- * @package    WhatsAppMe
- * @subpackage WhatsAppMe/includes
+ * @package    JoinChat
+ * @subpackage JoinChat/includes
  * @author     Creame <hola@crea.me>
  */
-class WhatsAppMe_i18n {
+class JoinChat_i18n {
 
 
 	/**

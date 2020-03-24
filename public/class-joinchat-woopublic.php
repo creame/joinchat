@@ -4,29 +4,29 @@
  * The public-facing functionality of the WooCommerce integration.
  *
  * @since      3.0.0
- * @package    WhatsAppMe
- * @subpackage WhatsAppMe/admin
+ * @package    JoinChat
+ * @subpackage JoinChat/admin
  * @author     Creame <hola@crea.me>
  */
-class WhatsAppMe_WooPublic {
+class JoinChatWooPublic {
 
 	/**
 	 * Initialize all hooks
 	 *
 	 * @since    3.0.0
-	 * @param    array $whatsappme       WhatsAppMe object.
+	 * @param    array $joinchat       JoinChat object.
 	 * @return   void
 	 */
-	public function init( $whatsappme ) {
+	public function init( $joinchat ) {
 
-		$loader = $whatsappme->get_loader();
+		$loader = $joinchat->get_loader();
 
-		$loader->add_filter( 'whatsappme_extra_settings', $this, 'woo_settings' );
-		$loader->add_filter( 'whatsappme_settings_i18n', $this, 'settings_i18n' );
-		$loader->add_filter( 'whatsappme_get_settings_site', $this, 'product_settings' );
-		$loader->add_filter( 'whatsappme_visibility', $this, 'visibility', 10, 2 );
-		$loader->add_filter( 'whatsappme_variable_replacements', $this, 'replacements' );
-		$loader->add_filter( 'whatsappme_excluded_fields', $this, 'excluded_fields' );
+		$loader->add_filter( 'joinchat_extra_settings', $this, 'woo_settings' );
+		$loader->add_filter( 'joinchat_settings_i18n', $this, 'settings_i18n' );
+		$loader->add_filter( 'joinchat_get_settings_site', $this, 'product_settings' );
+		$loader->add_filter( 'joinchat_visibility', $this, 'visibility', 10, 2 );
+		$loader->add_filter( 'joinchat_variable_replacements', $this, 'replacements' );
+		$loader->add_filter( 'joinchat_excluded_fields', $this, 'excluded_fields' );
 
 	}
 
