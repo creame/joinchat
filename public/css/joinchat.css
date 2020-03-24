@@ -75,19 +75,6 @@
   transition: none;
 }
 
-
-/* iOS styles */
-@supports (-webkit-overflow-scrolling: touch) {
-  .joinchat--chatbox .joinchat__button {
-    background-color: #34B7F1;
-  }
-
-  .joinchat--chatbox .joinchat__button:hover,
-  .joinchat__button:active {
-    background-color: #228bb9;
-  }
-}
-
 .joinchat__button svg {
   width: 36px;
   height: 36px;
@@ -317,7 +304,8 @@
 .joinchat__box__scroll {
   max-height: calc(100vh - 100px);
   padding: 20px 0 80px 0;
-  overflow: hidden auto;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 .joinchat__box__scroll::-webkit-scrollbar {
@@ -434,6 +422,24 @@
   left: auto;
   right: 28px;
   text-align: right;
+}
+
+
+/* iOS styles */
+@supports (-webkit-overflow-scrolling: touch) {
+  .joinchat__box__scroll {
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .joinchat--chatbox .joinchat__button {
+    background-color: #34B7F1;
+  }
+
+  .joinchat--chatbox .joinchat__button:hover,
+  .joinchat__button:active {
+    background-color: #228bb9;
+  }
 }
 
 
