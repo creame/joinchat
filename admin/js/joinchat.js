@@ -39,7 +39,7 @@
 
       // Post metabox if empty value set placeholder from general settings
       if (typeof placeholder == 'string' && placeholder != '') {
-        iti.promise.then(function() {
+        iti.promise.then(function () {
           iti.setNumber(placeholder);
           $phone.attr('placeholder', iti.getNumber(intlTelInputUtils.numberFormat.NATIONAL)).val('');
         });
@@ -63,11 +63,17 @@
       $('.nav-tab').click(function (e) {
         e.preventDefault();
         var $navtab = $(this);
+        var href = $navtab.attr('href');
+        var $referer = $('input[name=_wp_http_referer]');
+        var ref_val = $referer.val();
+
+        // Update form referer to open same tab on submit
+        $referer.val(ref_val.substr(0, ref_val.indexOf('page=joinchat')) + 'page=joinchat&tab=' + href.substr(14));
 
         $('.nav-tab').removeClass('nav-tab-active').attr('aria-selected', 'false');
         $navtab.addClass('nav-tab-active').attr('aria-selected', 'true').get(0).blur();
         $('.joinchat-tab').removeClass('joinchat-tab-active');
-        $($navtab.attr('href')).addClass('joinchat-tab-active').find('textarea').each(textarea_autoheight);
+        $(href).addClass('joinchat-tab-active').find('textarea').each(textarea_autoheight);
       });
 
       // Toggle WhatsApp web option
@@ -89,7 +95,7 @@
         } else {
           $('#contextual-help-link').click();
         }
-        $( help_tab != '#' ? help_tab : '#tab-link-styles-and-vars').find('a').click();
+        $(help_tab != '#' ? help_tab : '#tab-link-styles-and-vars').find('a').click();
       });
 
       // Texarea focus and auto height

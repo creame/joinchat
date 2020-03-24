@@ -96,7 +96,7 @@ class JoinChatAdmin {
 		$this->tabs = apply_filters(
 			'joinchat_admin_tabs',
 			array(
-				'general'  => __( 'General', 'creame-whatsapp-me' ),
+				'general'    => __( 'General', 'creame-whatsapp-me' ),
 				'visibility' => __( 'Visibility', 'creame-whatsapp-me' ),
 			)
 		);
@@ -387,8 +387,9 @@ class JoinChatAdmin {
 	 */
 	public function settings_tab_open( $args ) {
 
-		$tab_id = str_replace( array( 'joinchat_tab_', '_open' ), '', $args['id'] );
-		$active = 'general' == $tab_id ? 'joinchat-tab-active' : '';
+		$tab_id     = str_replace( array( 'joinchat_tab_', '_open' ), '', $args['id'] );
+		$active_tab = isset( $_GET['tab'] ) && in_array( $_GET['tab'], array_keys( $this->tabs ) ) ? $_GET['tab'] : 'general';
+		$active     = $active_tab == $tab_id ? 'joinchat-tab-active' : '';
 
 		echo "<div id=\"joinchat_tab_$tab_id\" class=\"joinchat-tab $active\" role=\"tabpanel\" aria-labelledby=\"navtab_$tab_id\" >";
 
@@ -722,6 +723,7 @@ class JoinChatAdmin {
 			wp_enqueue_style( 'intl-tel-input' );
 		}
 
+		$active_tab = isset( $_GET['tab'] ) && in_array( $_GET['tab'], array_keys( $this->tabs ) ) ? $_GET['tab'] : 'general';
 		?>
 			<div class="wrap">
 				<h1><?php _e( 'Join.chat Settings', 'creame-whatsapp-me' ); ?></h1>
@@ -730,7 +732,7 @@ class JoinChatAdmin {
 					<?php settings_fields( 'joinchat' ); ?>
 					<h2 class="nav-tab-wrapper wp-clearfix" role="tablist">
 						<?php foreach ( $this->tabs as $tab => $name ) : ?>
-							<?php if ( 'general' === $tab ) : ?>
+							<?php if ( $active_tab === $tab ) : ?>
 								<a id="navtab_<?php echo $tab; ?>" href="#joinchat_tab_<?php echo $tab; ?>" class="nav-tab nav-tab-active" role="tab" aria-controls="joinchat_tab_<?php echo $tab; ?>" aria-selected="true"><?php echo $name; ?></a>
 							<?php else : ?>
 								<a id="navtab_<?php echo $tab; ?>" href="#joinchat_tab_<?php echo $tab; ?>" class="nav-tab" role="tab" aria-controls="joinchat_tab_<?php echo $tab; ?>" aria-selected="false"><?php echo $name; ?></a>
