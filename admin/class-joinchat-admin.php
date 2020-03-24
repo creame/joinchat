@@ -4,7 +4,7 @@
  * The admin-specific functionality of the plugin.
  *
  * @since      1.0.0
- * @since      2.0.0      Added advanced visibility settings
+ * @since      2.0.0      Added visibility settings
  * @since      3.0.0      More extendable admin via hooks
  * @package    JoinChat
  * @subpackage JoinChat/admin
@@ -97,7 +97,7 @@ class JoinChatAdmin {
 			'joinchat_admin_tabs',
 			array(
 				'general'  => __( 'General', 'creame-whatsapp-me' ),
-				'advanced' => __( 'Advanced', 'creame-whatsapp-me' ),
+				'visibility' => __( 'Visibility', 'creame-whatsapp-me' ),
 			)
 		);
 
@@ -183,7 +183,7 @@ class JoinChatAdmin {
 	 * From v1.2.0 also set filter to disable enhanced phone input
 	 *
 	 * @since    1.0.0
-	 * @since    2.0.0     Added tabs for general and Advanced settings
+	 * @since    2.0.0     Added tabs for general and Visibility settings
 	 * @since    2.3.0     Split general settings in Button and Window Chat
 	 * @since    3.0.0     Admin organized by tabs and sections
 	 * @access   public
@@ -255,7 +255,7 @@ class JoinChatAdmin {
 				),
 			);
 
-		} elseif ( 'advanced' == $tab ) {
+		} elseif ( 'visibility' == $tab ) {
 
 			$sections = array(
 				'global' => array(
@@ -431,17 +431,17 @@ class JoinChatAdmin {
 					'</p>';
 				break;
 
-			case 'joinchat_tab_advanced__global':
-				$output = '<h2 class="title">' . __( 'Advanced Visibility Settings', 'creame-whatsapp-me' ) . '</h2>' .
+			case 'joinchat_tab_visibility__global':
+				$output = '<h2 class="title">' . __( 'Visibility Settings', 'creame-whatsapp-me' ) . '</h2>' .
 					'<p>' . __( 'From here you can configure on which pages the WhatsApp button will be visible.', 'creame-whatsapp-me' ) .
 					' <a href="#" class="joinchat_view_reset">' . __( 'Restore default visibility', 'creame-whatsapp-me' ) . '</a></p>';
 				break;
 
-			case 'joinchat_tab_advanced__wp':
+			case 'joinchat_tab_visibility__wp':
 				$output = '<hr>';
 				break;
 
-			case 'joinchat_tab_advanced__cpt':
+			case 'joinchat_tab_visibility__cpt':
 				$output = '<h2 class="title">' . __( 'Custom Post Types', 'creame-whatsapp-me' ) . '</h2>';
 				break;
 
@@ -595,7 +595,7 @@ class JoinChatAdmin {
 		$value = ( isset( $this->settings['visibility']['all'] ) && 'no' == $this->settings['visibility']['all'] ) ? 'no' : 'yes';
 
 		$inheritance = apply_filters(
-			'joinchat_advanced_inheritance',
+			'joinchat_visibility_inheritance',
 			array(
 				'all'      => array( 'front_page', 'blog_page', '404_page', 'search', 'archive', 'singular', 'cpts' ),
 				'archive'  => array( 'date', 'author' ),

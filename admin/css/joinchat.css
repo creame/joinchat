@@ -17,33 +17,33 @@
   display: block !important;
 }
 
-#joinchat_tab_advanced tr:hover {
+#joinchat_tab_visibility tr:hover {
   background: rgba(0, 0, 0, .05);
 }
 
-#joinchat_tab_advanced th,
-#joinchat_tab_advanced td {
+#joinchat_tab_visibility th,
+#joinchat_tab_visibility td {
   padding: 7px 15px;
 }
 
-#joinchat_tab_advanced label {
+#joinchat_tab_visibility label {
   margin-right: 15px;
 }
 
-#joinchat_tab_advanced .dashicons {
+#joinchat_tab_visibility .dashicons {
   opacity: .5;
 }
 
-#joinchat_tab_advanced input[type=radio]+span {
+#joinchat_tab_visibility input[type=radio]+span {
   transition: all 200ms;
 }
 
-#joinchat_tab_advanced input[type=radio]:checked+span {
+#joinchat_tab_visibility input[type=radio]:checked+span {
   color: #79ba49;
   opacity: 1;
 }
 
-#joinchat_tab_advanced input[type=radio]:checked+.dashicons-hidden {
+#joinchat_tab_visibility input[type=radio]:checked+.dashicons-hidden {
   color: #ca4a1f;
 }
 

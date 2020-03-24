@@ -26,12 +26,12 @@ class JoinChatWooAdmin {
 		$loader->add_filter( 'joinchat_settings_i18n', $this, 'settings_i18n' );
 		$loader->add_filter( 'joinchat_admin_tabs', $this, 'admin_tab' );
 		$loader->add_filter( 'joinchat_custom_post_types', $this, 'custom_post_types' );
-		$loader->add_filter( 'joinchat_tab_advanced_sections', $this, 'advanced_tab_section' );
+		$loader->add_filter( 'joinchat_tab_visibility_sections', $this, 'visibility_tab_section' );
 		$loader->add_filter( 'joinchat_tab_woocommerce_sections', $this, 'woo_tab_sections' );
 		$loader->add_filter( 'joinchat_vars_help', $this, 'vars_help', 10, 2 );
 		$loader->add_filter( 'joinchat_section_output', $this, 'section_ouput', 10, 2 );
 		$loader->add_filter( 'joinchat_field_output', $this, 'field_ouput', 10, 3 );
-		$loader->add_filter( 'joinchat_advanced_inheritance', $this, 'advanced_inheritance' );
+		$loader->add_filter( 'joinchat_visibility_inheritance', $this, 'visibility_inheritance' );
 		$loader->add_filter( 'joinchat_help_tab_styles_and_vars', $this, 'help_vars' );
 		$loader->add_filter( 'joinchat_metabox_vars', $this, 'metabox_vars', 10, 2 );
 		$loader->add_filter( 'joinchat_metabox_placeholders', $this, 'metabox_placeholders', 10, 3 );
@@ -116,13 +116,13 @@ class JoinChatWooAdmin {
 	}
 
 	/**
-	 * Woocommerce sections and fields for 'joinchat_tab_advanced'
+	 * Woocommerce sections and fields for 'joinchat_tab_visibility'
 	 *
 	 * @since    3.0.0
 	 * @param    array $sections       current tab sections and fields.
 	 * @return   array
 	 */
-	public function advanced_tab_section( $sections ) {
+	public function visibility_tab_section( $sections ) {
 
 		$sections['woo'] = array(
 			'view__woocommerce'  => __( 'Shop', 'creame-whatsapp-me' ),
@@ -187,7 +187,7 @@ class JoinChatWooAdmin {
 	 */
 	public function section_ouput( $output, $section_id ) {
 
-		if ( 'joinchat_tab_advanced__woo' == $section_id ) {
+		if ( 'joinchat_tab_visibility__woo' == $section_id ) {
 
 			$output = '<h2 class="title">' . __( 'WooCommerce', 'creame-whatsapp-me' ) . '</h2>';
 
@@ -243,13 +243,13 @@ class JoinChatWooAdmin {
 
 	/**
 	 * Modify $inheritance array to properly inherit
-	 * WooCommerce fields on advanced visibily admin tab.
+	 * WooCommerce fields on visibility visibily admin tab.
 	 *
 	 * @since    3.0.0
 	 * @param    array $inheritance       current section output.
 	 * @return   array
 	 */
-	public function advanced_inheritance( $inheritance ) {
+	public function visibility_inheritance( $inheritance ) {
 
 		// 'woocommerce' inherit from 'all' (Global)
 		$inheritance['all'][] = 'woocommerce';

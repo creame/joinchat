@@ -100,8 +100,8 @@
         .each(textarea_autoheight);
 
 
-      // Advanced view inheritance
-      var $tab_advanced = $('#joinchat_tab_advanced');
+      // Visibility view inheritance
+      var $tab_visibility = $('#joinchat_tab_visibility');
       var inheritance = $('.joinchat_view_all').data('inheritance') || {
         'all': ['front_page', 'blog_page', '404_page', 'search', 'archive', 'singular', 'cpts'],
         'archive': ['date', 'author'],
@@ -128,14 +128,14 @@
         }
       }
 
-      $('input', $tab_advanced).change(function () {
+      $('input', $tab_visibility).change(function () {
         propagate_inheritance();
       });
 
       $('.joinchat_view_reset').click(function (e) {
         e.preventDefault();
-        $('input[value=""]', $tab_advanced).prop('checked', true);
-        $('.joinchat_view_all input', $tab_advanced).first().prop('checked', true);
+        $('input[value=""]', $tab_visibility).prop('checked', true);
+        $('.joinchat_view_all input', $tab_visibility).first().prop('checked', true);
         propagate_inheritance();
       });
 
