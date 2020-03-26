@@ -272,11 +272,11 @@ class JoinChatPublic {
 				$joinchat_classes .= 'auto' === $this->settings['dark_mode'] ? ' joinchat--dark-auto' : ' joinchat--dark';
 			}
 
+			$box_content = '';
 			if ( $this->settings['message_text'] ) {
 				$box_content = '<div class="joinchat__message">' . JoinChatUtil::formated_message( $this->settings['message_text'] ) . '</div>';
-			} else {
-				$box_content = '';
 			}
+			$box_content = apply_filters( 'joinchat_content', $box_content, $this->settings );
 
 			ob_start();
 
@@ -305,20 +305,22 @@ class JoinChatPublic {
 						<div class="joinchat__tooltip"><div><?php echo $this->settings['button_tip']; ?></div></div>
 					<?php endif; ?>
 				</div>
-				<div class="joinchat__box">
-					<div class="joinchat__header">
-						<svg><use href="#joinchat_svg__whatsapp"></use></svg>
-						<div class="joinchat__close"><svg><use href="#joinchat_svg__close"></use></svg></div>
-					</div>
-					<div class="joinchat__box__scroll">
-						<div class="joinchat__box__content">
-							<?php echo apply_filters( 'joinchat_content', $box_content, $this->settings ); ?>
+				<?php if ( $box_content ) : ?>
+					<div class="joinchat__box">
+						<div class="joinchat__header">
+							<svg><use href="#joinchat_svg__whatsapp"></use></svg>
+							<div class="joinchat__close"><svg><use href="#joinchat_svg__close"></use></svg></div>
 						</div>
+						<div class="joinchat__box__scroll">
+							<div class="joinchat__box__content">
+								<?php echo $box_content; ?>
+							</div>
+						</div>
+						<?php if ( $copy ) : ?>
+							<div class="joinchat__copy"><?php echo $copy; ?> <a href="<?php echo $powered_link; ?>" rel="nofollow noopener" target="_blank"><svg><use href="#joinchat_svg__joinchat"></use></svg></a></div>
+						<?php endif; ?>
 					</div>
-					<?php if ( $copy ) : ?>
-						<div class="joinchat__copy"><?php echo $copy; ?> <a href="<?php echo $powered_link; ?>" rel="nofollow noopener" target="_blank"><svg><use href="#joinchat_svg__joinchat"></use></svg></a></div>
-					<?php endif; ?>
-				</div>
+				<?php endif; ?>
 			</div>
 			<?php
 			$html_output = ob_get_clean();
