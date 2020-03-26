@@ -61,7 +61,9 @@ class JoinChat {
 		$this->set_locale();
 		$this->load_integrations();
 
-		is_admin() ? $this->define_admin_hooks() : $this->define_public_hooks();
+		if ( $this->checks() ) {
+			is_admin() ? $this->define_admin_hooks() : $this->define_public_hooks();
+		}
 
 	}
 
@@ -80,6 +82,7 @@ class JoinChat {
 	 *
 	 * @since    1.0.0
 	 * @access   private
+	 * @return   void
 	 */
 	private function load_dependencies() {
 
@@ -102,6 +105,7 @@ class JoinChat {
 	 *
 	 * @since    1.0.0
 	 * @access   private
+	 * @return   void
 	 */
 	private function set_locale() {
 
@@ -117,6 +121,7 @@ class JoinChat {
 	 *
 	 * @since    3.0.0
 	 * @access   private
+	 * @return   void
 	 */
 	private function load_integrations() {
 
@@ -128,6 +133,26 @@ class JoinChat {
 
 	}
 
+	/**
+	 * Run checks.
+	 *
+	 * Check if exists 'whatsappme' settings of previous versions (<4.0)
+	 *
+	 * @since    4.0.0
+	 * @access   private
+	 * @return   boolean    true if pass checks, false otherwise
+	 */
+	private function checks() {
+
+		$whatsappme = false !== get_option( 'whatsappme' );
+
+		if ( $whatsappme ) {
+			add_action( 'admin_notices', array( $this, 'need_reactivate_notice' ) );
+		}
+
+		return ! $whatsappme;
+
+	}
 
 	/**
 	 * Register all of the hooks related to the admin area functionality
@@ -135,6 +160,7 @@ class JoinChat {
 	 *
 	 * @since    1.0.0
 	 * @access   private
+	 * @return   void
 	 */
 	private function define_admin_hooks() {
 
@@ -159,6 +185,7 @@ class JoinChat {
 	 *
 	 * @since    1.0.0
 	 * @access   private
+	 * @return   void
 	 */
 	private function define_public_hooks() {
 
@@ -173,10 +200,50 @@ class JoinChat {
 	}
 
 	/**
+	 * Migrate 'whatsappme' settings on versions <4.0 to new 'joinchat'
+	 *
+	 * @since    4.0.0
+	 * @access   private
+	 * @return   void
+	 */
+	public function activate() {
+		global $wpdb;
+
+		$general_option = get_option( 'whatsappme' );
+		if ( false !== $general_option ) {
+			// General option
+			update_option( 'joinchat', $general_option );
+			delete_option( 'whatsappme' );
+
+			// Post metas
+			$wpdb->update( $wpdb->postmeta, array( 'meta_key' => '_joinchat' ), array( 'meta_key' => '_whatsappme' ) );
+
+			// WPML strings
+			$wpml_strings_table = $wpdb->prefix . 'icl_strings';
+			if ( $wpdb->get_var( "SHOW TABLES LIKE '$wpml_strings_table'" ) === $wpml_strings_table ) {
+				$wpdb->update( $wpml_strings_table, array( 'context' => 'Join.chat' ), array( 'context' => 'WhatsApp me' ) );
+			}
+
+			// Polylang strings
+			$polylang_strings = get_option( 'polylang_wpml_strings' );
+			if ( false !== $polylang_strings ) {
+				foreach ( $polylang_strings as $key => $data ) {
+					if ( 'WhatsApp me' == $data['context'] ) {
+						$polylang_strings[ $key ]['context'] = 'Join.chat';
+					}
+				}
+				update_option( 'polylang_wpml_strings', $polylang_strings );
+			}
+		}
+
+	}
+
+	/**
 	 * Run the loader to execute all of the hooks with WordPress.
 	 *
 	 * @since    1.0.0
 	 * @since    3.0.0     Added actions
+	 * @return   void
 	 */
 	public function run() {
 
@@ -217,6 +284,21 @@ class JoinChat {
 	 */
 	public function get_version() {
 		return $this->version;
+	}
+
+	/**
+	 * Output notice message for plugin re-activation
+	 *
+	 * @since    4.0.0
+	 * @access   public
+	 * @return   void
+	 */
+	public function need_reactivate_notice() {
+
+		echo '<div class="error"><p>' .
+			__( '<strong>WAme</strong> now is <strong>Join.chat</strong>. Please, deactivate and re-activate plugin to migrate settings.', 'creame-whatsapp-me' ) .
+			'</p></div>';
+
 	}
 
 }
