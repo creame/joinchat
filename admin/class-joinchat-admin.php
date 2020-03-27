@@ -112,6 +112,7 @@ class JoinChatAdmin {
 				'whatsapp_web'  => 'no',
 				'message_text'  => '',
 				'message_delay' => 10,
+				'message_views' => 2,
 				'message_badge' => 'no',
 				'message_send'  => '',
 				'message_start' => __( 'Open chat', 'creame-whatsapp-me' ),
@@ -236,7 +237,7 @@ class JoinChatAdmin {
 		if ( 'general' == $tab ) {
 
 			$sections = array(
-				'button' => array(
+				'button'    => array(
 					'telephone'    => '<label for="joinchat_phone">' . __( 'Telephone', 'creame-whatsapp-me' ) . '</label>',
 					'message_send' => '<label for="joinchat_message_send">' . __( 'Message', 'creame-whatsapp-me' ) . '</label>' . self::vars_help( 'message_send' ),
 					'mobile_only'  => __( 'Mobile Only', 'creame-whatsapp-me' ),
@@ -246,12 +247,15 @@ class JoinChatAdmin {
 					'button_delay' => '<label for="joinchat_button_delay">' . __( 'Button Delay', 'creame-whatsapp-me' ) . '</label>',
 					'whatsapp_web' => __( 'WhatsApp Web', 'creame-whatsapp-me' ),
 				),
-				'chat'   => array(
+				'chat'      => array(
 					'message_text'  => '<label for="joinchat_message_text">' . __( 'Call to Action', 'creame-whatsapp-me' ) . '</label>' . self::vars_help( 'message_text' ),
 					'message_start' => '<label for="joinchat_message_start">' . __( 'Start WhatsApp Button', 'creame-whatsapp-me' ) . '</label>',
-					'message_delay' => '<label for="joinchat_message_delay">' . __( 'Chat Delay', 'creame-whatsapp-me' ) . '</label>',
-					'message_badge' => __( 'Notification Balloon', 'creame-whatsapp-me' ),
 					'dark_mode'     => __( 'Dark Mode', 'creame-whatsapp-me' ),
+				),
+				'chat_open' => array(
+					'message_delay' => '<label for="joinchat_message_delay">' . __( 'Chat Delay', 'creame-whatsapp-me' ) . '</label>',
+					'message_views' => '<label for="joinchat_message_views">' . __( 'Page Views', 'creame-whatsapp-me' ) . '</label>',
+					'message_badge' => __( 'Notification Balloon', 'creame-whatsapp-me' ),
 				),
 			);
 
@@ -345,6 +349,7 @@ class JoinChatAdmin {
 		$input['message_send']  = $util::clean_input( $input['message_send'] );
 		$input['message_start'] = $util::substr( $util::clean_input( $input['message_start'] ), 0, 20 );
 		$input['message_delay'] = intval( $input['message_delay'] );
+		$input['message_views'] = intval( $input['message_views'] ) ?: 1;
 		$input['position']      = $input['position'] != 'left' ? 'right' : 'left';
 		$input['dark_mode']     = in_array( $input['dark_mode'], array( 'no', 'yes', 'auto' ) ) ? $input['dark_mode'] : 'no';
 		if ( isset( $input['view'] ) ) {
@@ -429,6 +434,13 @@ class JoinChatAdmin {
 					'<p>' .
 						__( 'If you define a "Call to Action" a window will be displayed simulating a chat before launching WhatsApp.', 'creame-whatsapp-me' ) . ' ' .
 						__( 'You can introduce yourself, offer help or even make promotions to your users.', 'creame-whatsapp-me' ) .
+					'</p>';
+				break;
+
+			case 'joinchat_tab_general__chat_open':
+				$output = '<p>' .
+						__( 'If it\'s defined a "Call to Action", the Chat Window can be displayed automatically if conditions are met.', 'creame-whatsapp-me' ) .
+						' <a class="joinchat-show-help" href="#tab-link-triggers" title="' . __( 'Show Help', 'creame-whatsapp-me' ) . '">?</a>' .
 					'</p>';
 				break;
 
@@ -556,7 +568,12 @@ class JoinChatAdmin {
 
 				case 'message_delay':
 					$output = '<input id="joinchat_message_delay" name="joinchat[message_delay]" value="' . $value . '" type="number" min="0" max="120" style="width:5em"> ' . __( 'seconds (0 disabled)', 'creame-whatsapp-me' ) .
-						'<p class="description">' . __( 'Chat Window is automatically displayed after delay', 'creame-whatsapp-me' ) . '</p>';
+					'<p class="description">' . __( 'Chat Window auto displays after delay', 'creame-whatsapp-me' ) . '</p>';
+					break;
+
+				case 'message_views':
+					$output = '<input id="joinchat_message_views" name="joinchat[message_views]" value="' . $value . '" type="number" min="1" max="120" style="width:5em"> ' . // __( 'page views', 'creame-whatsapp-me' ) .
+						'<p class="description">' . __( 'Chat Window auto displays from this number of page views', 'creame-whatsapp-me' ) . '</p>';
 					break;
 
 				case 'message_badge':
@@ -679,6 +696,23 @@ class JoinChatAdmin {
 					'<span><code>{URL}</code> ➜ ' . home_url( 'example' ) . '</span>, ' .
 					'<span><code>{TITLE}</code> ➜ ' . __( 'Page Title', 'creame-whatsapp-me' ) . '</span>' .
 					'</p>',
+			),
+			array(
+				'id'      => 'triggers',
+				'title'   => __( 'Triggers', 'creame-whatsapp-me' ),
+				'content' =>
+					'<p>' . __( 'Chat Window with a Call to Action (CTA) can be displayed automatically after a delay time and from a number of page views of your website.', 'creame-whatsapp-me' ) . ' ' .
+						__( 'When the user close Chat Window or open WhatsApp, that CTA will not automatically show again.', 'creame-whatsapp-me' ) . '</p>' .
+					'<p>' . __( 'You can also interact with Join.chat in your pages adding some CSS classes to your HTML elements:', 'creame-whatsapp-me' ) . '</p>' .
+					'<ul>' .
+						'<li><code>joinchat_open</code> ' . __( 'to show Chat Window or open WhatsApp on click.', 'creame-whatsapp-me' ) . '</li>' .
+						'<li><code>joinchat_close</code> ' . __( 'to hide Chat Window on click.', 'creame-whatsapp-me' ) . '</li>' .
+						'<li>' . __( 'To show Chat Window when an HTML element appears on screen when user scrolls:', 'creame-whatsapp-me' ) .
+						'<ul>' .
+							'<li><code>joinchat_show</code> ' . __( 'only show if it\'s an unseet CTA.', 'creame-whatsapp-me' ) . '</li>' .
+							'<li><code>joinchat_force_show</code> ' . __( 'to show allways.', 'creame-whatsapp-me' ) . '</li>' .
+						'</ul></li>' .
+					'</ul>',
 			),
 		);
 

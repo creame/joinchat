@@ -71,13 +71,6 @@
   white-space: nowrap;
 }
 
-#tab-panel-styles-and-vars code {
-  -webkit-user-select: all;
-  -moz-user-select: all;
-  -ms-user-select: all;
-  user-select: all;
-}
-
 .form-table td p.joinchat-addon {
   display: inline-block;
   padding: 0 6px;
@@ -156,6 +149,23 @@ tr.joinchat--focus .joinchat_vars_help {
   .joinchat_vars_help br {
     display: none;
   }
+}
+
+/* Help */
+
+.settings_page_joinchat .help-tab-content li ul {
+  margin-top: 6px;
+}
+
+.settings_page_joinchat .help-tab-content li li {
+  list-style-type: circle;
+}
+
+.settings_page_joinchat .help-tab-content code {
+  -webkit-user-select: all;
+  -moz-user-select: all;
+  -ms-user-select: all;
+  user-select: all;
 }
 
 /* Join.chat metabox */

@@ -83,7 +83,7 @@
 
       // Toggle badge option
       $('#joinchat_message_delay').on('change input', function () {
-        $('#joinchat_message_badge').closest('tr').toggleClass('joinchat-hidden', this.value == '0');
+        $('#joinchat_message_badge, #joinchat_message_views').closest('tr').toggleClass('joinchat-hidden', this.value == '0');
       }).change();
 
       // Show help

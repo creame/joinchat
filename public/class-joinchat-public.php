@@ -96,6 +96,7 @@ class JoinChatPublic {
 				'button_delay'  => 3,
 				'whatsapp_web'  => 'no',
 				'message_text'  => '',
+				'message_views' => 2,
 				'message_delay' => 10,
 				'message_badge' => 'no',
 				'message_send'  => '',
@@ -154,8 +155,6 @@ class JoinChatPublic {
 			$settings['mobile_only']   = 'yes' == $settings['mobile_only'];
 			$settings['whatsapp_web']  = 'yes' == $settings['whatsapp_web'];
 			$settings['message_badge'] = 'yes' == $settings['message_badge'] && '' != $settings['message_text'];
-			$settings['position']      = 'right' == $settings['position'] ? 'right' : 'left';
-			$settings['dark_mode']     = in_array( $settings['dark_mode'], array( 'no', 'yes', 'auto' ) ) ? $settings['dark_mode'] : 'no';
 			$settings['message_send']  = JoinChatUtil::replace_variables( $settings['message_send'] );
 			// Set true to link http://web.whatsapp.com instead http://api.whatsapp.com
 			$settings['whatsapp_web'] = apply_filters( 'joinchat_whatsapp_web', 'yes' == $settings['whatsapp_web'] );
