@@ -843,12 +843,6 @@ class JoinChatAdmin {
 			$metadata
 		);
 
-		// Move old 'hide' to new 'view' field
-		if ( $metadata['hide'] ) {
-			$metadata['view'] = 'no';
-		}
-		unset( $metadata['hide'] );
-
 		$placeholders = apply_filters(
 			'joinchat_metabox_placeholders',
 			array(

@@ -152,11 +152,6 @@ class JoinChatUtil {
 			)
 		);
 
-		// Since WP 4.6
-		if ( function_exists( 'apply_filters_deprecated' ) ) {
-			$replacements = apply_filters_deprecated( 'joinchat_message_replacements', array( $replacements ), '3.0.3', 'joinchat_format_replacements' );
-		}
-
 		// Split text into lines and apply replacements line by line
 		$lines = explode( "\n", $string );
 		foreach ( $lines as $key => $line ) {

@@ -137,12 +137,6 @@ class JoinChatPublic {
 			$post_settings = is_a( $obj, 'WP_Post' ) ? get_post_meta( $obj->ID, '_joinchat', true ) : '';
 
 			if ( is_array( $post_settings ) ) {
-				// Move old 'hide' to new 'view' field
-				if ( isset( $post_settings['hide'] ) ) {
-					$post_settings['view'] = 'no';
-					unset( $post_settings['hide'] );
-				}
-
 				$settings = array_merge( $settings, $post_settings );
 
 				// Allow override general settings with empty string with "{}"
