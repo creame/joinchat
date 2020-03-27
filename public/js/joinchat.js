@@ -72,21 +72,25 @@
   };
 
   joinchat_public.chatbox_show = function () {
-    joinchat_public.$div.addClass('joinchat--chatbox');
-    joinchat_public.chatbox = true;
+    if (!joinchat_public.chatbox) {
+      joinchat_public.chatbox = true;
+      joinchat_public.$div.addClass('joinchat--chatbox');
 
-    if (joinchat_public.settings.message_badge && joinchat_public.$badge.hasClass('joinchat__badge--in')) {
-      joinchat_public.$badge.toggleClass('joinchat__badge--in joinchat__badge--out');
+      if (joinchat_public.settings.message_badge && joinchat_public.$badge.hasClass('joinchat__badge--in')) {
+        joinchat_public.$badge.toggleClass('joinchat__badge--in joinchat__badge--out');
+      }
+      // Trigger custom event
+      $(document).trigger('joinchat:show');
     }
-    // Trigger custom event
-    $(document).trigger('joinchat:show');
   };
 
   joinchat_public.chatbox_hide = function () {
-    joinchat_public.$div.removeClass('joinchat--chatbox joinchat--tooltip');
-    joinchat_public.chatbox = false;
-    // Trigger custom event
-    $(document).trigger('joinchat:hide');
+    if (joinchat_public.chatbox) {
+      joinchat_public.chatbox = false;
+      joinchat_public.$div.removeClass('joinchat--chatbox joinchat--tooltip');
+      // Trigger custom event
+      $(document).trigger('joinchat:hide');
+    }
   };
 
   joinchat_public.save_hash = function (message_hash) {
@@ -129,7 +133,10 @@
     }
 
     // Only works if joinchat is defined
-    if (joinchat_public.$div.length && !!joinchat_public.settings && !!joinchat_public.settings.telephone) {
+    if (joinchat_public.$div.length &&
+      !!joinchat_public.settings &&
+      !!joinchat_public.settings.telephone &&
+      (joinchat_public.is_mobile || !joinchat_public.settings.mobile_only)) {
       joinchat_magic();
     }
 
@@ -145,8 +152,6 @@
 
       var message_hash = has_cta ? joinchat_public.hash(joinchat_public.settings.message_text).toString() : 'no_cta';
       var is_viewed = messages_viewed.indexOf(message_hash) > -1;
-
-      joinchat_public.store.setItem('joinchat_visited', 'yes');
 
       function chatbox_show() {
         clearTimeout(timeoutCTA);
@@ -165,9 +170,8 @@
           var args = { link: joinchat_public.whatsapp_link(joinchat_public.settings.telephone, joinchat_public.settings.message_send) };
           var secure_link = new RegExp("^https?:\/\/(wa\.me|(api|web|chat)\.whatsapp\.com|" + location.hostname.replace('.', '\.') + ")\/.*", 'i');
 
-          if (joinchat_public.chatbox) {
-            chatbox_hide();
-          }
+          chatbox_hide();
+
           // Trigger custom event (args obj allow edit link by third party scripts)
           $(document).trigger('joinchat:open', [args, joinchat_public.settings]);
 
@@ -183,28 +187,26 @@
         }
       }
 
-      if (!joinchat_public.settings.mobile_only || joinchat_public.is_mobile) {
-        var classes = 'joinchat--show';
-        if (!is_viewed && (!has_cta || !chat_delay || joinchat_public.settings.message_badge || !is_second_visit)) {
-          classes += ' joinchat--tooltip';
-        }
-        // Show button (and tooltip)
-        setTimeout(function () { joinchat_public.$div.addClass(classes); }, button_delay);
+      // Show button (and tooltip)
+      var classes = 'joinchat--show';
+      if (!is_viewed && (!has_cta || !chat_delay || joinchat_public.settings.message_badge || !is_second_visit)) {
+        classes += ' joinchat--tooltip';
+      }
+      setTimeout(function () { joinchat_public.$div.addClass(classes); }, button_delay);
 
-        if (has_cta && !is_viewed && chat_delay) {
-          if (joinchat_public.settings.message_badge) {
-            // Show badge
-            timeoutCTA = setTimeout(function () { joinchat_public.$badge.addClass('joinchat__badge--in'); }, button_delay + chat_delay);
-          } else if (is_second_visit) {
-            // Show chatbox
-            timeoutCTA = setTimeout(chatbox_show, button_delay + chat_delay);
-          }
+      // Show badge or chatbox
+      if (has_cta && !is_viewed && chat_delay) {
+        if (joinchat_public.settings.message_badge) {
+          timeoutCTA = setTimeout(function () { joinchat_public.$badge.addClass('joinchat__badge--in'); }, button_delay + chat_delay);
+        } else if (is_second_visit) {
+          timeoutCTA = setTimeout(chatbox_show, button_delay + chat_delay);
         }
       }
 
+      // Open Join.chat on mouse over
       if (has_cta && !joinchat_public.is_mobile) {
         $('.joinchat__button', joinchat_public.$div)
-          .mouseenter(function () { if (!joinchat_public.chatbox) timeoutHover = setTimeout(chatbox_show, 1500); })
+          .mouseenter(function () { timeoutHover = setTimeout(chatbox_show, 1500); })
           .mouseleave(function () { clearTimeout(timeoutHover); });
       }
 
@@ -232,14 +234,43 @@
         });
       }
 
-      // Open Join.chat when click on nodes with class "joinchat_open"
+      // Open Join.chat or launch WhatsApp when click on nodes with class "joinchat_open"
+      // TODO: allow also when btn is not visible
       $(document).on('click', '.joinchat_open', function (e) {
         e.preventDefault();
         if (!joinchat_public.chatbox) joinchat_click();
       });
 
+      // Close Join.chat when click on nodes with class "joinchat_close"
+      $(document).on('click', '.joinchat_close', function (e) {
+        e.preventDefault();
+        chatbox_hide();
+      });
+
+      // Open Join.chat when "joinchat_open" or "joinchat_force_show" on viewport
+      if (has_cta && 'IntersectionObserver' in window) {
+        var $show_on_scroll = $('.joinchat_show,.joinchat_force_show');
+
+        function joinchat_observed(objs) {
+          $.each(objs, function () {
+            if (this.intersectionRatio > 0 && (!is_viewed || $(this.target).hasClass('joinchat_force_show'))) {
+              chatbox_show();
+              observer.disconnect(); // Only one show for visit
+              return false;
+            }
+          });
+        }
+
+        if ($show_on_scroll.length > 0) {
+          var observer = new IntersectionObserver(joinchat_observed);
+          $show_on_scroll.each(function () { observer.observe(this); });
+        }
+      }
+
       $(document).trigger('joinchat:start');
     }
+
+    joinchat_public.store.setItem('joinchat_visited', 'yes');
 
   });
 
