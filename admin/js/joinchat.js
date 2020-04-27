@@ -187,6 +187,8 @@
         $('#joinchat_button_image').val('');
         $(this).addClass('joinchat-hidden');
       });
+
+      $('#joinchat_color').wpColorPicker();
     }
 
     if ($('.joinchat-metabox').length === 1) {

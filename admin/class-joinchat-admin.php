@@ -86,6 +86,7 @@ class JoinChatAdmin {
 	 * @since    2.3.0     Added button_delay and whatsapp_web settings, message_delay in seconds
 	 * @since    3.0.0     Is public and added plugin enhanced_phone and tabs
 	 * @since    3.1.0     Added tooltip and image
+	 * @since    4.0.0     Added message_views and color
 	 */
 	public function get_settings() {
 
@@ -118,6 +119,7 @@ class JoinChatAdmin {
 				'message_start' => __( 'Open chat', 'creame-whatsapp-me' ),
 				'position'      => 'right',
 				'visibility'    => array( 'all' => 'yes' ),
+				'color'         => '#25d366',
 				'dark_mode'     => 'no',
 			),
 			apply_filters( 'joinchat_extra_settings', array() )
@@ -171,10 +173,10 @@ class JoinChatAdmin {
 
 		if ( $this->enhanced_phone ) {
 			wp_register_script( 'intl-tel-input', 'https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/' . $this->enhanced_phone . '/js/intlTelInput.min.js', array(), null, true );
-			wp_register_script( 'joinchat-admin', plugin_dir_url( __FILE__ ) . 'js/' . $script, array( 'jquery', 'intl-tel-input' ), $this->version, true );
+			wp_register_script( 'joinchat-admin', plugin_dir_url( __FILE__ ) . 'js/' . $script, array( 'jquery', 'wp-color-picker', 'intl-tel-input' ), $this->version, true );
 			wp_localize_script( 'intl-tel-input', 'intl_tel_input_version', $this->enhanced_phone );
 		} else {
-			wp_register_script( 'joinchat-admin', plugin_dir_url( __FILE__ ) . 'js/' . $script, array( 'jquery' ), $this->version, true );
+			wp_register_script( 'joinchat-admin', plugin_dir_url( __FILE__ ) . 'js/' . $script, array( 'jquery', 'wp-color-picker' ), $this->version, true );
 		}
 
 	}
@@ -250,6 +252,7 @@ class JoinChatAdmin {
 				'chat'      => array(
 					'message_text'  => '<label for="joinchat_message_text">' . __( 'Call to Action', 'creame-whatsapp-me' ) . '</label>' . self::vars_help( 'message_text' ),
 					'message_start' => '<label for="joinchat_message_start">' . __( 'Start WhatsApp Button', 'creame-whatsapp-me' ) . '</label>',
+					'color'         => __( 'Color', 'creame-whatsapp-me' ),
 					'dark_mode'     => __( 'Dark Mode', 'creame-whatsapp-me' ),
 				),
 				'chat_open' => array(
@@ -351,6 +354,7 @@ class JoinChatAdmin {
 		$input['message_delay'] = intval( $input['message_delay'] );
 		$input['message_views'] = intval( $input['message_views'] ) ?: 1;
 		$input['position']      = $input['position'] != 'left' ? 'right' : 'left';
+		$input['color']         = preg_match( '/^#[a-f0-9]{6}$/i', $input['color'] ) ? $input['color'] : '#25d366';
 		$input['dark_mode']     = in_array( $input['dark_mode'], array( 'no', 'yes', 'auto' ) ) ? $input['dark_mode'] : 'no';
 		if ( isset( $input['view'] ) ) {
 			$input['visibility'] = array_filter(
@@ -572,7 +576,7 @@ class JoinChatAdmin {
 					break;
 
 				case 'message_views':
-					$output = '<input id="joinchat_message_views" name="joinchat[message_views]" value="' . $value . '" type="number" min="1" max="120" style="width:5em"> ' . // __( 'page views', 'creame-whatsapp-me' ) .
+					$output = '<input id="joinchat_message_views" name="joinchat[message_views]" value="' . $value . '" type="number" min="1" max="120" style="width:5em"> ' .
 						'<p class="description">' . __( 'Chat Window auto displays from this number of page views', 'creame-whatsapp-me' ) . '</p>';
 					break;
 
@@ -580,6 +584,10 @@ class JoinChatAdmin {
 					$output = '<fieldset><legend class="screen-reader-text"><span>' . __( 'Notification Balloon', 'creame-whatsapp-me' ) . '</span></legend>' .
 						'<label><input id="joinchat_message_badge" name="joinchat[message_badge]" value="yes" type="checkbox"' . checked( 'yes', $value, false ) . '> ' .
 						__( 'Display a notification balloon instead of opening the Chat Window for a "less intrusive" mode', 'creame-whatsapp-me' ) . '</label></fieldset>';
+					break;
+
+				case 'color':
+					$output = '<input id="joinchat_color" name="joinchat[color]" value="' . $value . '" type="text" data-default-color="#25d366"> ';
 					break;
 
 				case 'dark_mode':
@@ -751,6 +759,7 @@ class JoinChatAdmin {
 		wp_enqueue_media();
 		// Enqueue assets
 		wp_enqueue_script( 'joinchat-admin' );
+		wp_enqueue_style( 'wp-color-picker' );
 		wp_enqueue_style( 'joinchat-admin' );
 
 		if ( $this->enhanced_phone ) {
@@ -837,7 +846,6 @@ class JoinChatAdmin {
 				'telephone'    => '',
 				'message_text' => '',
 				'message_send' => '',
-				'hide'         => false,
 				'view'         => '',
 			),
 			$metadata
