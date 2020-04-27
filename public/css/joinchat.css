@@ -1,49 +1,80 @@
-@font-face {
-  font-family: 'JoinChatIcons';
-  src: url('data:font/woff;base64,d09GRgABAAAAAARgAAsAAAAABBQAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAABPUy8yAAABCAAAAGAAAABgDxIFgGNtYXAAAAFoAAAAVAAAAFQXVtKIZ2FzcAAAAbwAAAAIAAAACAAAABBnbHlmAAABxAAAAHQAAAB0gkciwGhlYWQAAAI4AAAANgAAADYVuuUSaGhlYQAAAnAAAAAkAAAAJAbCA8dobXR4AAAClAAAABgAAAAYDgACM2xvY2EAAAKsAAAADgAAAA4AYgBAbWF4cAAAArwAAAAgAAAAIAAIAAVuYW1lAAAC3AAAAWIAAAFicC7V7nBvc3QAAARAAAAAIAAAACAAAwAAAAMDVQGQAAUAAAKZAswAAACPApkCzAAAAesAMwEJAAAAAAAAAAAAAAAAAAAAARAAAAAAAAAAAAAAAAAAAAAAQAAA6QEDwP/AAEADwABAAAAAAQAAAAAAAAAAAAAAIAAAAAAAAwAAAAMAAAAcAAEAAwAAABwAAwABAAAAHAAEADgAAAAKAAgAAgACAAEAIOkB//3//wAAAAAAIOkA//3//wAB/+MXBAADAAEAAAAAAAAAAAAAAAEAAf//AA8AAQAAAAAAAAAAAAIAADc5AQAAAAABAAAAAAAAAAAAAgAANzkBAAAAAAEAAAAAAAAAAAACAAA3OQEAAAAAAQEzAM0DAALNAAIAAAkBEQMA/jMBzf8AAgAAAAEBAADNAs0CzQACAAABEQECzf4zAs3+AAEAAAABAAAAAQAAtqSnv18PPPUACwQAAAAAANnOUKQAAAAA2c5QpAAAAAADAALNAAAACAACAAAAAAAAAAEAAAPA/8AAAAQAAAAAAAMAAAEAAAAAAAAAAAAAAAAAAAAGBAAAAAAAAAAAAAAAAgAAAAQAATMEAAEAAAAAAAAKABQAHgAsADoAAAABAAAABgADAAEAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAADgCuAAEAAAAAAAEABAAAAAEAAAAAAAIABwBFAAEAAAAAAAMABAAtAAEAAAAAAAQABABaAAEAAAAAAAUACwAMAAEAAAAAAAYABAA5AAEAAAAAAAoAGgBmAAMAAQQJAAEACAAEAAMAAQQJAAIADgBMAAMAAQQJAAMACAAxAAMAAQQJAAQACABeAAMAAQQJAAUAFgAXAAMAAQQJAAYACAA9AAMAAQQJAAoANACAd2FtZQB3AGEAbQBlVmVyc2lvbiAxLjAAVgBlAHIAcwBpAG8AbgAgADEALgAwd2FtZQB3AGEAbQBld2FtZQB3AGEAbQBlUmVndWxhcgBSAGUAZwB1AGwAYQByd2FtZQB3AGEAbQBlRm9udCBnZW5lcmF0ZWQgYnkgSWNvTW9vbi4ARgBvAG4AdAAgAGcAZQBuAGUAcgBhAHQAZQBkACAAYgB5ACAASQBjAG8ATQBvAG8AbgAuAAAAAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==') format('woff');
-}
-
-.joinchat_open {
-  cursor: pointer;
-}
-
 .joinchat {
+  --bottom: 20px;
+  --sep: 20px;
+  --header: 70px;
+  --red: 37;
+  --green: 211;
+  --blue: 102;
+  --rgb: var(--red), var(--green), var(--blue);
+  --color: rgb(var(--rgb));
+  --dark: rgb(calc(var(--red) - 75), calc(var(--green) - 75), calc(var(--blue) - 75));
+  --hover: rgb(calc(var(--red) + 50), calc(var(--green) + 50), calc(var(--blue) + 50));
+  --bg: rgba(var(--rgb), 0.04);
+  --tolerance: 210;
+  --bw: calc((var(--red) * 0.2126 + var(--green) * 0.7152 + var(--blue) * 0.0722 - var(--tolerance)) * -100000);
+  --text: rgba(var(--bw), var(--bw), var(--bw), min(0.9, max(0.7, var(--bw))));
+  --msg: var(--color);
+
   position: fixed;
   z-index: 1000;
-  right: 20px;
-  bottom: 20px;
+  right: var(--sep);
+  bottom: var(--bottom);
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   font-size: 16px;
+  letter-spacing: 0;
   line-height: 1.625em;
-  color: #262626;
+  color: var(--text);
   transform: scale3d(0, 0, 0);
-  transition: transform .3s ease-in-out;
-  user-select: none;
-  -ms-user-select: none;
-  -moz-user-select: none;
+  transition: transform 0.3s ease-in-out;
   -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-font-smoothing: antialiased;
 }
 
 .joinchat *,
-.joinchat *:before,
-.joinchat *:after {
+.joinchat *::before,
+.joinchat *::after {
   box-sizing: border-box;
 }
 
-.joinchat svg,
-.joinchat svg path {
-  fill: currentColor !important;
+.joinchat--show {
+  transform: scale3d(1, 1, 1);
+  transition: transform 0.5s cubic-bezier(0.18, 0.89, 0.32, 1.28);
 }
 
-.joinchat.joinchat--show {
-  transform: scale3d(1, 1, 1);
-  transition: transform .5s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+.joinchat.joinchat--left {
+  right: auto;
+  left: var(--sep);
+}
+
+@media (max-width: 480px), (orientation: landscape) and (max-width: 767px) {
+  .joinchat {
+    --bottom: 6px;
+    --sep: 6px;
+    --header: 55px;
+  }
+}
+
+.joinchat.joinchat--dark {
+  --msg: var(--dark);
+}
+
+@media (color-index: 48) {
+  .joinchat.joinchat--dark-auto {
+    --msg: var(--dark);
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .joinchat.joinchat--dark-auto {
+    --msg: var(--dark);
+  }
 }
 
 .joinchat__button {
-  display: -ms-flexbox;
-  display: -webkit-flex;
   display: flex;
+  flex-direction: row;
   position: absolute;
   z-index: 2;
   bottom: 8px;
@@ -51,42 +82,60 @@
   height: 60px;
   min-width: 60px;
   max-width: 95vw;
-  background-color: #25D366;
-  color: #fff;
+  background: #25d366;
+  color: inherit;
   border-radius: 30px;
-  box-shadow: 1px 6px 24px 0 rgba(7, 94, 84, .24);
+  box-shadow: 1px 6px 24px 0 rgba(7, 94, 84, 0.24);
   cursor: pointer;
-  transition: background-color 0.2s linear;
+  transition: background 0.2s linear;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  will-change: background-color, width;
 }
 
 .joinchat__button:hover {
-  background-color: #128C7E;
-  transition: background-color 1.5s linear;
-}
-
-.joinchat--chatbox .joinchat__button {
-  background-color: #128C7E;
-  transition: background-color 0.2s linear;
-}
-
-.joinchat--chatbox .joinchat__button:hover {
-  background-color: #075E54;
+  background: #128c7e;
+  transition: background 1.5s linear;
 }
 
 .joinchat__button:active {
-  background-color: #075E54;
+  background: #128c7e;
   transition: none;
 }
 
-.joinchat__button svg {
-  width: 36px;
-  height: 36px;
-  margin: 12px 12px;
+.joinchat--chatbox .joinchat__button {
+  background: var(--color);
+  transition: background 0.2s linear;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
 }
 
-.joinchat__button .joinchat__button__send {
-  margin: 12px 11px 12px 13px;
+.joinchat--chatbox .joinchat__button:hover,
+.joinchat--chatbox .joinchat__button:active {
+  background: var(--hover);
+}
+
+[dir=rtl] .joinchat__button {
+  flex-direction: row-reverse;
+}
+
+.joinchat--left .joinchat__button {
+  right: auto;
+  left: 8px;
+  flex-direction: row-reverse;
+}
+
+[dir=rtl] .joinchat--left .joinchat__button {
+  flex-direction: row;
+}
+
+.joinchat__button__open {
+  width: 60px;
+  height: 60px;
+  background: rgba(0, 0, 0, 0) url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23fff' d='M3.516 3.516c4.686-4.686 12.284-4.686 16.97 0 4.686 4.686 4.686 12.283 0 16.97a12.004 12.004 0 01-13.754 2.299l-5.814.735a.392.392 0 01-.438-.44l.748-5.788A12.002 12.002 0 013.517 3.517zm3.61 17.043l.3.158a9.846 9.846 0 0011.534-1.758c3.843-3.843 3.843-10.074 0-13.918-3.843-3.843-10.075-3.843-13.918 0a9.846 9.846 0 00-1.747 11.554l.16.303-.51 3.942a.196.196 0 00.219.22l3.961-.501zm6.534-7.003l-.933 1.164a9.843 9.843 0 01-3.497-3.495l1.166-.933a.792.792 0 00.23-.94L9.561 6.96a.793.793 0 00-.924-.445 1291.6 1291.6 0 00-2.023.524.797.797 0 00-.588.88 11.754 11.754 0 0010.005 10.005.797.797 0 00.88-.587l.525-2.023a.793.793 0 00-.445-.923L14.6 13.327a.792.792 0 00-.94.23z'/%3E%3C/svg%3E") center no-repeat;
+  background-size: 36px;
+}
+
+.joinchat--chatbox .joinchat__button__open {
+  display: none;
 }
 
 .joinchat__button__image {
@@ -116,6 +165,41 @@
   animation: none;
 }
 
+.joinchat--chatbox .joinchat__button__image {
+  display: none;
+}
+
+.joinchat__button__send {
+  display: none;
+  width: 60px;
+  height: 60px;
+  max-width: 60px;
+  padding: 12px 11px 12px 13px;
+  margin: 0;
+  flex-shrink: 0;
+}
+
+.joinchat--chatbox .joinchat__button__send {
+  display: block;
+}
+
+.joinchat__button__send path {
+  fill: none !important;
+  stroke: var(--text) !important;
+}
+
+.joinchat__button__send .joinchat_svg__plain {
+  stroke-dasharray: 1097;
+  stroke-dashoffset: 1097;
+  animation: joinchat_plain 6s 0.2s ease-in-out infinite;
+}
+
+.joinchat__button__send .joinchat_svg__chat {
+  stroke-dasharray: 1020;
+  stroke-dashoffset: 1020;
+  animation: joinchat_chat 6s 3.2s ease-in-out infinite;
+}
+
 .joinchat__button__sendtext {
   padding: 0;
   max-width: 0;
@@ -132,6 +216,10 @@
   max-width: 200px;
   opacity: 1;
   transition: max-width 0.2s linear, opacity 0.4s ease-out 0.2s;
+}
+
+.joinchat--chatbox.joinchat--left .joinchat__button__sendtext {
+  padding: 0 24px 0 4px;
 }
 
 .joinchat__badge {
@@ -160,27 +248,6 @@
   animation: joinchat_badge_out 400ms cubic-bezier(0.215, 0.61, 0.355, 1) 1 both;
 }
 
-.joinchat--chatbox .joinchat__button {
-  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
-}
-
-.joinchat .joinchat__button__send path {
-  fill: none !important;
-  stroke: #fff !important;
-}
-
-.joinchat .joinchat__button__send .joinchat_svg__plain {
-  stroke-dasharray: 1097;
-  stroke-dashoffset: 1097;
-  animation: joinchat_plain 6s 0.2s ease-in-out infinite;
-}
-
-.joinchat .joinchat__button__send .joinchat_svg__chat {
-  stroke-dasharray: 1020;
-  stroke-dashoffset: 1020;
-  animation: joinchat_chat 6s 3.2s ease-in-out infinite;
-}
-
 .joinchat__tooltip {
   position: absolute;
   top: 14px;
@@ -191,22 +258,24 @@
   border: none;
   border-radius: 16px;
   background: #fff;
-  color: #075E54;
+  color: rgba(0, 0, 0, 0.8);
   line-height: 31px;
   white-space: nowrap;
-  box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.4);
   opacity: 0;
+  filter: drop-shadow(0 1px 4px rgba(0, 0, 0, 0.4));
+  transform: translateZ(0);
+  pointer-events: none;
 }
 
 .joinchat__tooltip::after {
-  font: normal normal 400 20px/1em JoinChatIcons;
-  content: '\e900';
+  content: '';
+  display: block;
   position: absolute;
-  top: 6px;
-  right: -12px;
-  color: #fff;
-  text-align: right;
-  text-shadow: 2px 1px 3px rgba(0, 0, 0, .4);
+  top: 10px;
+  right: -6px;
+  border: 8px solid transparent;
+  border-width: 6px 0 6px 8px;
+  border-left-color: white;
 }
 
 .joinchat__tooltip div {
@@ -218,38 +287,41 @@
   animation: joinchat_tootlip 20s linear 5s 1 normal both;
 }
 
-.joinchat__button__open,
-.joinchat--chatbox .joinchat__button__send {
-  display: block;
-}
-
-.joinchat__button__send,
-.joinchat--chatbox .joinchat__button__open,
-.joinchat--chatbox .joinchat__button__image,
 .joinchat--chatbox .joinchat__tooltip {
   display: none;
 }
 
+.joinchat--left .joinchat__tooltip {
+  right: auto;
+  left: 76px;
+}
+
+.joinchat--left .joinchat__tooltip::after {
+  left: -6px;
+  right: auto;
+  border-color: transparent;
+  border-width: 6px 8px 6px 0;
+  border-right-color: white;
+}
+
 .joinchat__box {
+  display: flex;
+  flex-direction: column;
   position: absolute;
   bottom: 0;
   right: 0;
   z-index: 1;
-  width: calc(100vw - 40px);
+  width: calc(100vw - var(--sep) *2);
   max-width: 400px;
-  min-height: 270px;
+  min-height: 170px;
+  max-height: calc(100vh - var(--bottom) - var(--sep));
   border-radius: 32px;
-  background: #ede4dd url(../images/background.png) center repeat-y;
-  background-size: 100% auto;
-  box-shadow: 0 2px 6px 0 rgba(0, 0, 0, .5);
+  background: transparent;
+  box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.5);
   overflow: hidden;
   transform: scale3d(0, 0, 0);
   opacity: 0;
   transition: opacity 400ms ease-out, transform 0ms linear 300ms;
-}
-
-.joinchat--webp .joinchat__box {
-  background-image: url(../images/background.webp);
 }
 
 .joinchat--chatbox .joinchat__box {
@@ -258,58 +330,76 @@
   transition: opacity 200ms ease-out, transform 0ms linear;
 }
 
-.joinchat__header {
-  float: none;
-  display: block;
-  position: static;
-  width: 100%;
-  height: 70px;
-  padding: 0 26px;
-  margin: 0;
-  background-color: #2e8c7d;
-  color: rgba(255, 255, 255, .5);
+.joinchat--left .joinchat__box {
+  right: auto;
+  left: 0;
 }
 
-.joinchat__header svg {
-  width: 120px;
-  height: 100%;
+.joinchat__header {
+  flex-shrink: 0;
+  height: var(--header);
+  line-height: var(--header);
+  padding: 0 26px;
+  margin: 0;
+  background: var(--color);
+}
+
+.joinchat--dark .joinchat__header {
+  background: var(--dark);
+}
+
+.joinchat__copy {
+  font-size: 11px;
+  line-height: 18px;
+  color: inherit !important;
+  text-decoration: none !important;
+  fill: currentColor;
+  opacity: 0.7;
+}
+
+.joinchat__copy svg {
+  display: inline-block;
+  width: auto;
+  height: 18px;
+  vertical-align: -26%;
+}
+
+.joinchat__copy:hover,
+.joinchat__copy:active {
+  color: inherit !important;
+  text-decoration: none !important;
+  opacity: 0.9;
 }
 
 .joinchat__close {
-  display: -ms-flexbox;
-  display: -webkit-flex;
-  display: flex;
   position: absolute;
   top: 18px;
   right: 24px;
   width: 34px;
   height: 34px;
   border-radius: 50%;
-  background: #000;
-  color: #fff;
-  text-align: center;
-  opacity: .4;
+  background: rgba(0, 0, 0, 0.4) url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23fff'%3E%3Cpath d='M24 2.4L21.6 0 12 9.6 2.4 0 0 2.4 9.6 12 0 21.6 2.4 24l9.6-9.6 9.6 9.6 2.4-2.4-9.6-9.6L24 2.4z'/%3E%3C/svg%3E") center no-repeat;
+  background-size: 12px;
   cursor: pointer;
-  transition: opacity 300ms ease-out;
+  transition: background-color 300ms ease-out;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
 .joinchat__close:hover {
-  opacity: .6;
+  background-color: rgba(0, 0, 0, 0.6);
 }
 
-.joinchat__close svg {
-  display: block;
-  width: 12px;
-  height: 12px;
-  margin: auto;
+[dir=rtl] .joinchat__close {
+  right: auto;
+  left: 24px;
 }
 
 .joinchat__box__scroll {
-  max-height: calc(100vh - 100px);
   padding: 20px 0 80px 0;
+  background: #fff linear-gradient(0deg, var(--bg), var(--bg));
   overflow-x: hidden;
   overflow-y: auto;
+  will-change: scroll-position;
 }
 
 .joinchat__box__scroll::-webkit-scrollbar {
@@ -326,218 +416,24 @@
   background: rgba(0, 0, 0, 0.2);
 }
 
-
-.joinchat__message {
-  position: relative;
-  min-height: 80px;
-  padding: 20px;
-  margin: 0 26px 26px;
-  border-radius: 32px;
-  background-color: #fff;
-  color: #4A4A4A;
-  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+.joinchat--blur .joinchat__box__scroll {
+  background: rgba(var(--rgb), 0.2);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
 }
 
-.joinchat__message:before {
-  content: '';
-  display: block;
-  position: absolute;
-  bottom: 30px;
-  left: -18px;
-  width: 18px;
-  height: 18px;
-  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADcAAAA1CAYAAADlE3NNAAAEr0lEQVRo3t2aT0gjVxzHf++9mcn8zWhW6bpELWzcogFNaRar7a4tBNy2WATbHpacpdZ6redeZE+9CL02B1ktXsRD/xwsilhoSwsqag/xYK09hCQlmCiTf28vGRnGmZhE183MFx5vmGQy7zO/P/P7PYLAHUIAQCqDAwDPxMREG3IpHL+zs/MZcgkYAgAMAIwOl8lkYm6xGgYAFgAEAGgZHx9/vVwun7nJJTkAEAGgdW9v73NKKXWLSzIA4AEAGQDazs/P/3ALnNEl1a2trY9oRW6wmu6SEgC0ZrPZn9wCp2dIHgCU1dXVtymlZafDIatEksvlfqYGueG9xgOAcnBw8JSa5GR3vIi1aDTaUSwWj5wOZ3RHPUN6U6nUN9RCTnZHDwDI+/v745TSkpPhrOpHcWlpqbdcLieojZwGpseZMDo66svn87/RKnIaGAsAfCAQ8J6dnX1Pr5DjwABAzmazMVqDHAd2enr6La1RjgGLRCJqLpeL0TrUjFDGrMgCAD8/P38vn8//QutUs1pLT/fC5ubmQKFQOKANqNmspbuhBwDEZDL5BaX0lDaoZoK62NxZXFzs1DRthV5TrxrKGFue/v5+KZ1Of1kul5P0BtQUUAAgxOPx9wuFwl/0BvWq3O8C6vDw8F1N036gL0G3ZaVLUEdHRxFN036kL1E3DWMHxAEAPzc3dyedTk+XSqUdegu6CRijy5mBPLOzs2oikfhU07RFSmmG3qKuaxkdxuhy/MzMjDeRSHyiadrz2wYyClUBMh9bzRfAu7u7PX6//z1RFB9zHBcBALUZKoRqUMgEgyvHeHt7+353d/cjQRBGWJZ9jBDqaMYKHKpYBAEAXltbawsGg2FFUd7iOO4hIeQhQuiOEzpdOzCSTCaftLS0fEUIGXbiHiBjU5njVCr1sc/nW6wkDcduS1u1HKRUKv2KMR4ABwvbAWKMA+BwYbsasFgs/uMWuEtxd3x8/J3b4C4Ag8Hg83g8/iyfz//n5IRi1eZzla00HgA8oijyDMNwlFJCCGH0axiGQQAAXq+XyLLMeL1eRlEURpZlRpIkhud5oigK297eLvl8Prm1tVVSFEWSJEkWRVESBMGrqupriqLcFQThLsaYu612n6vUip4KMFv5HJssjhooEi5laoZh0NjYWNvw8PC9np6ejkAg8MDv9w+oqnrfxsNqhgNTh2wE1MGYChyyWGA9RYJVFWTM3MhwjMPhsDw9PT0QDocHOjs731RV9Y1rv+cMlb4Oiy3garWW1b2sPMfceZgHmZqa6pycnPywr6/vA47jfPXAWbU0xOCOqE44u2K8Wl9oBUfMa+rq6hIWFhbGBwcHn9pBohogcRWwRiCRTUiACQ6ZYpxY9JAkFAopy8vLM4FAYKyRrgA1GGf1JperLGgEM4cNG4vF3olGo18TQkT9JsRmAdQw66NsGlbn7Ibdd0um2XzOblz6/ZWVlX8JIb8PDQ090gFJDU+e2sBeZ1hBU9NcqvIQzDMFALq+vp7GGP85MjLyBCHE1tPO1LP4eq4FG/hqnlGyeSiwsbHxfygUOu7t7Y00059JUY3ZHFm8k1lT0cGfnJw8c0ojepWFzd6CMpnM3y8AJPEkZ9khO4IAAAAASUVORK5CYII=');
-  background-size: 100%;
+.joinchat--dark .joinchat__box__scroll {
+  background: #1a1a1a;
 }
 
-.joinchat__message a {
-  text-decoration: underline;
-  color: #2e8c7d;
-}
-
-.joinchat__copy {
-  position: absolute;
-  bottom: 9px;
-  left: 28px;
-  color: #2e8c7d;
-  font-size: 11px;
-  letter-spacing: 0.2px;
-  line-height: 16px;
-  opacity: 0.4;
-  transition: opacity 0.25s;
-}
-
-.joinchat__copy:hover {
-  opacity: 0.8;
-  transition: opacity 0.5s ease-out 0.5s;
-}
-
-.joinchat__copy a,
-.joinchat__copy a:hover,
-.joinchat__copy a:active {
-  color: inherit;
-  text-decoration: none;
-}
-
-.joinchat__copy svg {
-  width: 40px;
-  height: 10px;
-  vertical-align: inherit;
-}
-
-
-/* Align left */
-.joinchat--left {
-  right: auto;
-  left: 20px;
-}
-
-.joinchat--left .joinchat__button {
-  right: auto;
-  left: 8px;
-  -ms-flex-direction: row-reverse;
-  -webkit-flex-direction: row-reverse;
-  flex-direction: row-reverse;
-}
-
-.joinchat--left.joinchat--chatbox .joinchat__button__sendtext {
-  padding: 0 24px 0 4px;
-}
-
-.joinchat--left .joinchat__tooltip {
-  right: auto;
-  left: 76px;
-}
-
-.joinchat--left .joinchat__tooltip::after {
-  content: '\e901';
-  left: -12px;
-  right: auto;
-  text-align: left;
-  text-shadow: -2px 1px 3px rgba(0, 0, 0, .4);
-}
-
-.joinchat--left .joinchat__box {
-  right: auto;
-  left: 0;
-}
-
-.joinchat--left .joinchat__copy {
-  left: auto;
-  right: 28px;
-  text-align: right;
-}
-
-
-/* iOS styles */
 @supports (-webkit-overflow-scrolling: touch) {
   .joinchat__box__scroll {
     overflow-y: scroll;
     -webkit-overflow-scrolling: touch;
   }
-
-  .joinchat--chatbox .joinchat__button {
-    background-color: #34B7F1;
-  }
-
-  .joinchat--chatbox .joinchat__button:hover,
-  .joinchat__button:active {
-    background-color: #228bb9;
-  }
 }
 
-
-/* Dark mode */
-.joinchat--dark .joinchat__header {
-  background: #075e54;
-}
-
-.joinchat--dark .joinchat__box {
-  background: #000;
-}
-
-.joinchat--dark .joinchat__message {
-  background: #505050;
-  color: #d8d8d8;
-}
-
-.joinchat--dark .joinchat__message:before {
-  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADcAAAA1CAYAAADlE3NNAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAABVpJREFUeNrcmktv41QYhn2OHSdxkiZNkzZp0ia9UGibdBqSJqACYjGAhBgoArGhIMFixAJGbFkggTRiwRKJxYxGaH4B/4JlV/yArrpslzOZXHm/yCc6NbaTtGnHjqUjO871yftd3nNs1u/3FcaYMgMbt4wmV2ZjY9J+cMw5j8wKnAxGTJ14PF6aRTganUwm8wGfMajBQEjGlpeXj/gMhmQ7mUw2EonEHT5jhYR4esVi8ZjTNkOqqRjdSCTyKoVkt9tV+Iyp1lpbW/smGAzGe72ewmdJNcMwtgiOVBNd3e+qCUfS3traehAKhZKkmp/hZDBSrTU/P/8mqdbpdC75Mb+qJhSjvhbc29t7qKpqkLyyX+FkMJFrzzY3N79fXFx8R1bNz8oJsOdLS0sf7u7u/mwF8xMcs5R8Amujp23VarXHCEtDDkc/Knep7AcCgUSj0XgaDodzovT7Dc5OsR6U0g8ODp4sLCy8YReOfoCz9Y2MMV6tVh/l8/mjdrvt+gGaT8BIsQ5KfQhgjwuFwpetVmvkh2geBxO9rKXreqper/8FU3xvHDCvwTEb9zEAoyUD5NhTuJDquGBegrPNLwJDbn1WqVT+hNNfGpVjXoNjDs6jjVIfL5VKv2xsbPxIRtitKnoNjjktEdCJbDb7frlc/h3heIeg7Bq0F+GcoKgLt6PR6Pr29vZPq6ur39L5ScPwZcExh8ZMUF3MwRZhfu9jyvIDHV9HrduEc4IaJBCsU7ZYLH4NqO/gE4sEdV21bhqOOVTAnqmUglzaBdRXKysrx8IbThNqmnDMpaQPgTRNi2LO9Rby6TiTyXyKamjcFNR14ZgL2NCiwy4ZyWSyQq4CQPdisdjO4AU3DDUJHBsBReoMsx8FIQO3XoVKd9Pp9F1UwBIgB0BX6VXThmMO0w7FhOjJT8I5pJFDr9H0A+PtRCJxQIB0zY+AqAGL1ajb3rQxioEcZmHDMFYAs00+j0Dm5ubKgMnR4jWV75eh0Dhwdv6ujTxZz+VynwCmjuMSqtsaikGElBGqEJDTbNgrcLIbH/g7QH1cq9WeUOgJEFLHK8qMC2dVrY9Qy+7v7z9CCU9PMs3w0sYdvF4HJbyOEMx4MdyuAqdYFmI0xecbd/B+4YuLi3+bzeY5wtK3cMy8D0VWLIChUz+D9/sCefcQBWVx4g+2ubdFdvrimPZi3CZciACRd6+gOb9O93XgtVwK3aHatNwmh7S5aXhPAM8FaJ0R7SNEfRKRYOi6HiOvSS0Fg44jGGFyMvRTZODrGAArHJfggiag+OEBMw9VB0v2P6EszoZblupUujpDy3WAjSI65vFHpjH1WYZlW0FPLeA4h6qdImhhECZRWIYbfqkJEjQhdfNxwHyOuwC5+VEnb9q38aj0HUFAJwC5isq9nUqlKtiTiUgK8z0K1AonV0pNghKPucVrKiMUdJsOWYsYtzkWswyiCNAsHWa8ks/n34MxbwA+6DZrl+EU5fKNYTKkKp1nI5RjEwAyB0Bu81u4CUmwGvwtXf8+KhQKHyFvw3auiUl37Vm/xPrB7AohOQ1AVdqr0p9NYdwjE7+zs3MfVvFd6wzECucWKmzMQjKukqPCU756KsOpUspoJqS6vr7+eblcfkBVV7gqZrnf0mlBxw2GuVTJSYvMKAVVl5rwAvl42Gg0fkPlTRIgc7iZdNyCoUzpdcwF1ElBAaVLo4meXD88PPwDCsa4S4+yjt6Yo+sy7F5n956ONNrmoKnJC2k8Jxhz/8zcB87Pz/85OTn5FYL1b9s49kecG0fNrqSg+AO6kgD62dnZ36enpzXm8XucndZzrHmoW0YPPTH9nwADAK1QyP/ohXd8AAAAAElFTkSuQmCC');
-}
-
-.joinchat--dark .joinchat__copy {
-  color: #25d366;
-}
-
-@media (prefers-color-scheme: dark) {
-  .joinchat--dark-auto .joinchat__header {
-    background: #075e54;
-  }
-
-  .joinchat--dark-auto .joinchat__box {
-    background: #000;
-  }
-
-  .joinchat--dark-auto .joinchat__message {
-    background: #505050;
-    color: #d8d8d8;
-  }
-
-  .joinchat--dark-auto .joinchat__message:before {
-    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADcAAAA1CAYAAADlE3NNAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAABVpJREFUeNrcmktv41QYhn2OHSdxkiZNkzZp0ia9UGibdBqSJqACYjGAhBgoArGhIMFixAJGbFkggTRiwRKJxYxGaH4B/4JlV/yArrpslzOZXHm/yCc6NbaTtGnHjqUjO871yftd3nNs1u/3FcaYMgMbt4wmV2ZjY9J+cMw5j8wKnAxGTJ14PF6aRTganUwm8wGfMajBQEjGlpeXj/gMhmQ7mUw2EonEHT5jhYR4esVi8ZjTNkOqqRjdSCTyKoVkt9tV+Iyp1lpbW/smGAzGe72ewmdJNcMwtgiOVBNd3e+qCUfS3traehAKhZKkmp/hZDBSrTU/P/8mqdbpdC75Mb+qJhSjvhbc29t7qKpqkLyyX+FkMJFrzzY3N79fXFx8R1bNz8oJsOdLS0sf7u7u/mwF8xMcs5R8Amujp23VarXHCEtDDkc/Knep7AcCgUSj0XgaDodzovT7Dc5OsR6U0g8ODp4sLCy8YReOfoCz9Y2MMV6tVh/l8/mjdrvt+gGaT8BIsQ5KfQhgjwuFwpetVmvkh2geBxO9rKXreqper/8FU3xvHDCvwTEb9zEAoyUD5NhTuJDquGBegrPNLwJDbn1WqVT+hNNfGpVjXoNjDs6jjVIfL5VKv2xsbPxIRtitKnoNjjktEdCJbDb7frlc/h3heIeg7Bq0F+GcoKgLt6PR6Pr29vZPq6ur39L5ScPwZcExh8ZMUF3MwRZhfu9jyvIDHV9HrduEc4IaJBCsU7ZYLH4NqO/gE4sEdV21bhqOOVTAnqmUglzaBdRXKysrx8IbThNqmnDMpaQPgTRNi2LO9Rby6TiTyXyKamjcFNR14ZgL2NCiwy4ZyWSyQq4CQPdisdjO4AU3DDUJHBsBReoMsx8FIQO3XoVKd9Pp9F1UwBIgB0BX6VXThmMO0w7FhOjJT8I5pJFDr9H0A+PtRCJxQIB0zY+AqAGL1ajb3rQxioEcZmHDMFYAs00+j0Dm5ubKgMnR4jWV75eh0Dhwdv6ujTxZz+VynwCmjuMSqtsaikGElBGqEJDTbNgrcLIbH/g7QH1cq9WeUOgJEFLHK8qMC2dVrY9Qy+7v7z9CCU9PMs3w0sYdvF4HJbyOEMx4MdyuAqdYFmI0xecbd/B+4YuLi3+bzeY5wtK3cMy8D0VWLIChUz+D9/sCefcQBWVx4g+2ubdFdvrimPZi3CZciACRd6+gOb9O93XgtVwK3aHatNwmh7S5aXhPAM8FaJ0R7SNEfRKRYOi6HiOvSS0Fg44jGGFyMvRTZODrGAArHJfggiag+OEBMw9VB0v2P6EszoZblupUujpDy3WAjSI65vFHpjH1WYZlW0FPLeA4h6qdImhhECZRWIYbfqkJEjQhdfNxwHyOuwC5+VEnb9q38aj0HUFAJwC5isq9nUqlKtiTiUgK8z0K1AonV0pNghKPucVrKiMUdJsOWYsYtzkWswyiCNAsHWa8ks/n34MxbwA+6DZrl+EU5fKNYTKkKp1nI5RjEwAyB0Bu81u4CUmwGvwtXf8+KhQKHyFvw3auiUl37Vm/xPrB7AohOQ1AVdqr0p9NYdwjE7+zs3MfVvFd6wzECucWKmzMQjKukqPCU756KsOpUspoJqS6vr7+eblcfkBVV7gqZrnf0mlBxw2GuVTJSYvMKAVVl5rwAvl42Gg0fkPlTRIgc7iZdNyCoUzpdcwF1ElBAaVLo4meXD88PPwDCsa4S4+yjt6Yo+sy7F5n956ONNrmoKnJC2k8Jxhz/8zcB87Pz/85OTn5FYL1b9s49kecG0fNrqSg+AO6kgD62dnZ36enpzXm8XucndZzrHmoW0YPPTH9nwADAK1QyP/ohXd8AAAAAElFTkSuQmCC');
-  }
-
-  .joinchat--dark-auto .joinchat__copy {
-    color: #25d366;
-  }
-}
-
-
-/* rtl */
-[dir=rtl] .joinchat__close {
-  right: auto;
-  left: 24px;
-}
-
-[dir=rtl] .joinchat__message:before {
-  left: auto;
-  right: -18px;
-  transform: rotateY(180deg);
-}
-
-[dir=rtl] .joinchat__button {
-  -ms-flex-direction: row-reverse;
-  -webkit-flex-direction: row-reverse;
-  flex-direction: row-reverse;
-}
-
-[dir=rtl] .joinchat--left .joinchat__button {
-  -ms-flex-direction: row;
-  -webkit-flex-direction: row;
-  flex-direction: row;
-}
-
-@media (max-width: 480px),
-(orientation: landscape) and (max-width: 767px) {
-  .joinchat {
-    bottom: 6px;
-    right: 6px;
-  }
-
-  .joinchat--left {
-    right: auto;
-    left: 6px;
-  }
-
-  .joinchat__box {
-    width: calc(100vw - 12px);
-    min-height: 0;
-  }
-
-  .joinchat__header {
-    height: 55px;
-  }
-
+@media (max-width: 480px), (orientation: landscape) and (max-width: 767px) {
   .joinchat__close {
     top: 13px;
     width: 28px;
@@ -545,20 +441,79 @@
   }
 
   .joinchat__box__scroll {
-    max-height: calc(100vh - 67px);
     padding: 15px 0 70px 0;
-  }
-
-  .joinchat__message {
-    padding: 16px;
-    margin: 0 20px 20px;
-    line-height: 24px;
   }
 }
 
-@media (max-width: 360px) {
-  .joinchat__copy {
-    width: 70px;
+@media (color-index: 48) {
+  .joinchat--dark-auto .joinchat__box__scroll {
+    background: #1a1a1a;
+  }
+
+  .joinchat--dark-auto .joinchat__header {
+    background: var(--dark);
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .joinchat--dark-auto .joinchat__box__scroll {
+    background: #1a1a1a;
+  }
+
+  .joinchat--dark-auto .joinchat__header {
+    background: var(--dark);
+  }
+}
+
+.joinchat__message {
+  position: relative;
+  min-height: 60px;
+  padding: 17px 20px;
+  margin: 0 26px 26px;
+  border-radius: 32px;
+  background: #fff;
+  color: #4a4a4a;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3));
+  transform: translateZ(0);
+}
+
+.joinchat__message::before {
+  content: '';
+  display: block;
+  position: absolute;
+  bottom: 20px;
+  left: -15px;
+  width: 17px;
+  height: 25px;
+  background: inherit;
+  -webkit-clip-path: url(#joinchat__message__peak);
+  clip-path: url(#joinchat__message__peak);
+}
+
+.joinchat--dark .joinchat__message {
+  background: #505050;
+  color: #d8d8d8;
+}
+
+@media (color-index: 48) {
+  .joinchat--dark-auto .joinchat__message {
+    background: #505050;
+    color: #d8d8d8;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .joinchat--dark-auto .joinchat__message {
+    background: #505050;
+    color: #d8d8d8;
+  }
+}
+
+@media (max-width: 480px), (orientation: landscape) and (max-width: 767px) {
+  .joinchat__message {
+    padding: 18px 16px;
+    line-height: 24px;
+    margin: 0 20px 20px;
   }
 }
 
@@ -622,7 +577,7 @@
     opacity: 1;
   }
 
-  23%,
+  25%,
   100% {
     opacity: 0;
   }
@@ -640,7 +595,7 @@
     transform: scaleY(1);
   }
 
-  23%,
+  25%,
   100% {
     opacity: 0;
     transform: scaleY(1);

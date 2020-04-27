@@ -151,6 +151,10 @@ tr.joinchat--focus .joinchat_vars_help {
   }
 }
 
+#joinchat_form .iris-picker {
+  visibility: visible;
+}
+
 /* Help */
 
 .settings_page_joinchat .help-tab-content li ul {

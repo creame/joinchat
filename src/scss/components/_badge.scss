@@ -1,0 +1,25 @@
+#{$class}__badge {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  width: 20px;
+  height: 20px;
+  border: none;
+  border-radius: 50%;
+  background: #e82c0c;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 20px;
+  text-align: center;
+  box-shadow: none;
+  opacity: 0;
+  pointer-events: none;
+
+  &#{$class}__badge--in {
+    animation: #{$name}_badge_in 500ms cubic-bezier(0.27, 0.9, 0.41, 1.28) 1 both;
+  }
+
+  &#{$class}__badge--out {
+    animation: #{$name}_badge_out 400ms cubic-bezier(0.215, 0.61, 0.355, 1) 1 both;
+  }
+}
