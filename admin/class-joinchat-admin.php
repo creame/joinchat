@@ -254,6 +254,7 @@ class JoinChatAdmin {
 					'message_start' => '<label for="joinchat_message_start">' . __( 'Start WhatsApp Button', 'creame-whatsapp-me' ) . '</label>',
 					'color'         => __( 'Color', 'creame-whatsapp-me' ),
 					'dark_mode'     => __( 'Dark Mode', 'creame-whatsapp-me' ),
+					'remove_brand'  => __( 'Logo', 'creame-whatsapp-me' ),
 				),
 				'chat_open' => array(
 					'message_delay' => '<label for="joinchat_message_delay">' . __( 'Chat Delay', 'creame-whatsapp-me' ) . '</label>',
@@ -495,7 +496,6 @@ class JoinChatAdmin {
 
 			$value = isset( $this->settings[ $field_id ] ) ? $this->settings[ $field_id ] : '';
 			$utm   = '?utm_source=wpadmin&utm_medium=settings&utm_campaign=v' . str_replace( '.', '_', $this->version );
-			$lang  = _x( 'en', 'url lang slug (only avaible for spanish "es")', 'creame-whatsapp-me' );
 
 			switch ( $field_id ) {
 				case 'telephone':
@@ -503,8 +503,8 @@ class JoinChatAdmin {
 						'<p class="description">' . __( "Contact phone number <strong>(the button will not be shown if it's empty)</strong>", 'creame-whatsapp-me' ) . '</p>' .
 						'<p class="joinchat-addon">' . sprintf(
 							__( 'Add unlimited numbers with %1$s or multiple contacts with %2$s', 'creame-whatsapp-me' ),
-							'<a href="https://join.chat/' . $lang . '/addons/random-phone/' . $utm . '" target="_blank">\'Random Phone\'</a>',
-							'<a href="https://join.chat/' . $lang . '/addons/support-agents/' . $utm . '" target="_blank">\'Support Agents\'</a>'
+							'<a href="https://join.chat/en/addons/random-phone/' . $utm . '" target="_blank">\'Random Phone\'</a>',
+							'<a href="https://join.chat/en/addons/support-agents/' . $utm . '" target="_blank">\'Support Agents\'</a>'
 						) . '</p>';
 					break;
 
@@ -556,7 +556,7 @@ class JoinChatAdmin {
 						'<p class="description">' . __( 'Define a text to encourage users to contact by WhatsApp', 'creame-whatsapp-me' ) . '</p>' .
 						'<p class="joinchat-addon">' . sprintf(
 							__( 'Add links, images, videos and more with %s', 'creame-whatsapp-me' ),
-							'<a href="https://join.chat/' . $lang . '/addons/cta-extras/' . $utm . '" target="_blank">\'CTA Extras\'</a>'
+							'<a href="https://join.chat/en/addons/cta-extras/' . $utm . '" target="_blank">\'CTA Extras\'</a>'
 						) . '</p>';
 					break;
 
@@ -598,6 +598,17 @@ class JoinChatAdmin {
 						__( 'Yes', 'creame-whatsapp-me' ) . '</label><br>' .
 						'<label><input name="joinchat[dark_mode]" value="auto" type="radio"' . checked( 'auto', $value, false ) . '> ' .
 						__( 'Auto (detects device dark mode)', 'creame-whatsapp-me' ) . '</label></fieldset>';
+					break;
+
+				case 'remove_brand':
+					$output = '<fieldset><legend class="screen-reader-text"><span>' . __( 'Logo', 'creame-whatsapp-me' ) . '</span></legend>' .
+						'<label><input id="joinchat_remove_brand" type="checkbox" disabled> ' .
+						__( 'Remove "Powered by Join.chat" link', 'creame-whatsapp-me' ) . '</label></fieldset>' .
+						'<p class="joinchat-addon">' . sprintf(
+							__( 'Included with all our %1$sadd-ons%2$s', 'creame-whatsapp-me' ),
+							'<a target="_blank" href="https://join.chat/en/addons/' . $utm . '">',
+							'</a>'
+						) . '</p>';
 					break;
 
 				default:
@@ -667,12 +678,7 @@ class JoinChatAdmin {
 				'title'   => __( 'Support and Help', 'creame-whatsapp-me' ),
 				'content' =>
 					'<p>' . sprintf(
-						__(
-							'If you need help, first review our <a href="%1$s" rel="external" target="_blank">documentation</a> ' .
-							'and if you don\'t find a solution check the <a href="%2$s" rel="external" target="_blank">free plugin support forum</a> ' .
-							'or buy our <a href="%3$s" rel="external" target="_blank">premium support</a>.',
-							'creame-whatsapp-me'
-						),
+						__( 'If you need help, first review our <a href="%1$s" target="_blank">documentation</a> and if you don\'t find a solution check the <a href="%2$s" target="_blank">free plugin support forum</a> or buy our <a href="%3$s" target="_blank">premium support</a>.', 'creame-whatsapp-me' ),
 						esc_url( 'https://join.chat/' . $lang . '/docs/' . $utm ),
 						esc_url( 'https://wordpress.org/support/plugin/creame-whatsapp-me/' ),
 						esc_url( 'https://my.join.chat/' . $utm )
@@ -681,15 +687,15 @@ class JoinChatAdmin {
 					'<ul>' .
 					'<li>' . sprintf(
 						__( "Please leave us a %s rating. We'll thank you.", 'creame-whatsapp-me' ),
-						'<a href="https://wordpress.org/support/plugin/creame-whatsapp-me/reviews/#new-post" rel="external" target="_blank">★★★★★</a>'
+						'<a href="https://wordpress.org/support/plugin/creame-whatsapp-me/reviews/#new-post" target="_blank">★★★★★</a>'
 					) . '</li>' .
 					'<li>' . sprintf(
 						__( 'Subscribe to our newsletter and visit our blog at %s.', 'creame-whatsapp-me' ),
-						'<a href="https://join.chat/' . $utm . '" rel="external" target="_blank">join.chat</a>'
+						'<a href="https://join.chat/' . $utm . '" target="_blank">join.chat</a>'
 					) . '</li>' .
 					'<li>' . sprintf(
 						__( 'Follow %s on twitter.', 'creame-whatsapp-me' ),
-						'<a href="https://twitter.com/joinchatnow" rel="external" target="_blank">@joinchatnow</a>'
+						'<a href="https://twitter.com/joinchatnow" target="_blank">@joinchatnow</a>'
 					) . '</li>' .
 					'</ul>',
 			),
@@ -709,15 +715,15 @@ class JoinChatAdmin {
 				'id'      => 'triggers',
 				'title'   => __( 'Triggers', 'creame-whatsapp-me' ),
 				'content' =>
-					'<p>' . __( 'Chat Window with a Call to Action (CTA) can be displayed automatically after a delay time and from a number of page views of your website.', 'creame-whatsapp-me' ) . ' ' .
+					'<p>' . __( 'Chat Window with a Call to Action (CTA) can be displayed automatically after a defined delay time and from a number of page views.', 'creame-whatsapp-me' ) . ' ' .
 						__( 'When the user close Chat Window or open WhatsApp, that CTA will not automatically show again.', 'creame-whatsapp-me' ) . '</p>' .
-					'<p>' . __( 'You can also interact with Join.chat in your pages adding some CSS classes to your HTML elements:', 'creame-whatsapp-me' ) . '</p>' .
+					'<p>' . __( 'You can also interact with Join.chat in your pages adding some CSS classes to your HTML:', 'creame-whatsapp-me' ) . '</p>' .
 					'<ul>' .
 						'<li><code>joinchat_open</code> ' . __( 'to show Chat Window or open WhatsApp on click.', 'creame-whatsapp-me' ) . '</li>' .
 						'<li><code>joinchat_close</code> ' . __( 'to hide Chat Window on click.', 'creame-whatsapp-me' ) . '</li>' .
 						'<li>' . __( 'To show Chat Window when an HTML element appears on screen when user scrolls:', 'creame-whatsapp-me' ) .
 						'<ul>' .
-							'<li><code>joinchat_show</code> ' . __( 'only show if it\'s an unseet CTA.', 'creame-whatsapp-me' ) . '</li>' .
+							'<li><code>joinchat_show</code> ' . __( 'only show if it\'s an not seen CTA.', 'creame-whatsapp-me' ) . '</li>' .
 							'<li><code>joinchat_force_show</code> ' . __( 'to show allways.', 'creame-whatsapp-me' ) . '</li>' .
 						'</ul></li>' .
 					'</ul>',
