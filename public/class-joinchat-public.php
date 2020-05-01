@@ -173,6 +173,9 @@ class JoinChatPublic {
 		// Apply filters to alter 'show' value
 		$this->show = apply_filters( 'joinchat_show', $show, $this->settings, $obj );
 
+		// Set a simple CTA hash, empty '' if no CTA (for javascript store viewed CTAs)
+		$this->settings['message_hash'] = ltrim( hash( 'crc32', $this->settings['message_text'] ), '0' );
+
 		// Ensure not show if not phone
 		if ( '' == $this->settings['telephone'] ) {
 			$this->show = false;
@@ -236,6 +239,7 @@ class JoinChatPublic {
 					'button_tip',
 					'button_image',
 					'message_start',
+					'message_text',
 					'color',
 					'dark_mode',
 				)

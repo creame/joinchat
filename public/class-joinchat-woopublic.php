@@ -166,6 +166,7 @@ class JoinChatWooPublic {
 
 		$excluded = array(
 			'message_text_product',
+			'message_text_on_sale',
 			'message_send_product',
 		);
 

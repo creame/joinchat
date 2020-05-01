@@ -1,15 +1,6 @@
 (function ($, window) {
   'use strict';
 
-  // Math.imul polyfill (source https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/imul#Polyfill)
-  Math.imul = Math.imul || function (a, b) {
-    var ah = (a >>> 16) & 0xffff;
-    var al = a & 0xffff;
-    var bh = (b >>> 16) & 0xffff;
-    var bl = b & 0xffff;
-    return ((al * bl) + (((ah * bl + al * bh) << 16) >>> 0) | 0);
-  };
-
   window.joinchat_obj = window.joinchat_obj || {};
 
   joinchat_obj = $.extend({
@@ -58,14 +49,6 @@
     }
   };
 
-  // Return a simple hash (source https://gist.github.com/iperelivskiy/4110988#gistcomment-2697447)
-  joinchat_obj.hash = function (s) {
-    for (var i = 0, h = 1; i < s.length; i++) {
-      h = Math.imul(h + s.charCodeAt(i) | 0, 2654435761);
-    }
-    return ((h ^ h >>> 17) >>> 0).toString();
-  };
-
   // Return WhatsApp link with optional message
   joinchat_obj.whatsapp_link = function (phone, message, wa_web) {
     wa_web = typeof wa_web != 'undefined' ? wa_web : this.settings.whatsapp_web && !this.is_mobile;
@@ -96,14 +79,8 @@
     }
   };
 
-  joinchat_obj.message_viewed = function (message) {
-    var hash = this.hash(message || this.settings.message_text || 'none');
-    var saved_hashes = (this.store.getItem('joinchat_hashes') || '').split(',').filter(Boolean);
-    return saved_hashes.indexOf(hash) !== -1;
-  };
-
-  joinchat_obj.save_hash = function (message) {
-    var hash = this.hash(message || this.settings.message_text || 'none');
+  joinchat_obj.save_hash = function () {
+    var hash = this.settings.message_hash || 'none';
     var saved_hashes = (this.store.getItem('joinchat_hashes') || '').split(',').filter(Boolean);
 
     if (saved_hashes.indexOf(hash) === -1) {
@@ -174,12 +151,14 @@
     function joinchat_magic() {
       var button_delay = joinchat_obj.settings.button_delay * 1000;
       var chat_delay = joinchat_obj.settings.message_delay * 1000;
-      var has_cta = !!joinchat_obj.settings.message_text;
+      var has_cta = !!joinchat_obj.settings.message_hash;
+      var has_chatbox = !!joinchat_obj.$('.joinchat__box').length;
       var timeoutHover, timeoutCTA;
 
       // Stored values
       var has_pageviews = parseInt(joinchat_obj.store.getItem('joinchat_views') || 1) >= joinchat_obj.settings.message_views;
-      var is_viewed = joinchat_obj.message_viewed();
+      var saved_hashes = (joinchat_obj.store.getItem('joinchat_hashes') || '').split(',').filter(Boolean);
+      var is_viewed = saved_hashes.indexOf(joinchat_obj.settings.message_hash || 'none') !== -1;
 
       function chatbox_show() {
         clearTimeout(timeoutCTA);
@@ -192,7 +171,7 @@
       }
 
       function joinchat_click() {
-        if (has_cta && !joinchat_obj.chatbox) {
+        if (has_chatbox && !joinchat_obj.chatbox) {
           chatbox_show();
         } else {
           chatbox_hide();
@@ -217,7 +196,7 @@
       }
 
       // Open Join.chat on mouse over
-      if (has_cta && !joinchat_obj.is_mobile) {
+      if (has_chatbox && !joinchat_obj.is_mobile) {
         $('.joinchat__button', joinchat_obj.$div)
           .mouseenter(function () { timeoutHover = setTimeout(chatbox_show, 1500); })
           .mouseleave(function () { clearTimeout(timeoutHover); });
@@ -262,7 +241,7 @@
       });
 
       // Open Join.chat when "joinchat_open" or "joinchat_force_show" on viewport
-      if (has_cta && 'IntersectionObserver' in window) {
+      if (has_chatbox && 'IntersectionObserver' in window) {
         var $show_on_scroll = $('.joinchat_show,.joinchat_force_show');
 
         function joinchat_observed(objs) {

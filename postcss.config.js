@@ -4,10 +4,10 @@ module.exports = {
     require('precss'),
     require('postcss-strip-inline-comments'),
     require('postcss-hexrgba'),
+    require('autoprefixer'),
+    require('stylelint')({ fix: true }),
     require('postcss-calc'),
     require('postcss-inline-svg'),
     require('postcss-svgo'),
-    require('autoprefixer'),
-    require('stylelint')({ fix: true }),
   ]
 }

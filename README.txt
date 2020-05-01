@@ -146,10 +146,12 @@ Join.chat general text settings can be translated with the strings translation o
     return $settings;
 } );`
 
-= Emojis are not saved =
+= Settings are not saved when using emojis =
 
-To save emojis the site database must use utf8mb4 encoding.
-If your database enconding is utf8 you can use emojis converting them to html entities with a tool [like this](https://mothereff.in/html-entities).
+To save emojis site database must use utf8mb4 encoding.
+If settings are not saved when using emojis, add this code in yout theme functions.php:
+
+`add_filter( 'sanitize_text_field', 'wp_encode_emoji' );`
 
 == Screenshots ==
 

@@ -243,11 +243,11 @@ class JoinChatAdmin {
 					'telephone'    => '<label for="joinchat_phone">' . __( 'Telephone', 'creame-whatsapp-me' ) . '</label>',
 					'message_send' => '<label for="joinchat_message_send">' . __( 'Message', 'creame-whatsapp-me' ) . '</label>' . self::vars_help( 'message_send' ),
 					'mobile_only'  => __( 'Mobile Only', 'creame-whatsapp-me' ),
+					'whatsapp_web' => __( 'WhatsApp Web', 'creame-whatsapp-me' ),
 					'position'     => __( 'Position on Screen', 'creame-whatsapp-me' ),
 					'button_image' => __( 'Image', 'creame-whatsapp-me' ),
 					'button_tip'   => __( 'Tooltip', 'creame-whatsapp-me' ),
 					'button_delay' => '<label for="joinchat_button_delay">' . __( 'Button Delay', 'creame-whatsapp-me' ) . '</label>',
-					'whatsapp_web' => __( 'WhatsApp Web', 'creame-whatsapp-me' ),
 				),
 				'chat'      => array(
 					'message_text'  => '<label for="joinchat_message_text">' . __( 'Call to Action', 'creame-whatsapp-me' ) . '</label>' . self::vars_help( 'message_text' ),
