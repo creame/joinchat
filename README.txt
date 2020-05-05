@@ -5,7 +5,7 @@ Tags: whatsapp business, whatsapp, click to chat, button, whatsapp support chat,
 Requires at least: 3.0.1
 Tested up to: 5.4
 Requires PHP: 5.3
-Stable tag: 3.2.2
+Stable tag: 3.2.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -149,7 +149,7 @@ Join.chat general text settings can be translated with the strings translation o
 = Settings are not saved when using emojis =
 
 To save emojis site database must use utf8mb4 encoding.
-If settings are not saved when using emojis, add this code in yout theme functions.php:
+If settings are not saved when using emojis, add this code in your theme functions.php:
 
 `add_filter( 'sanitize_text_field', 'wp_encode_emoji' );`
 
@@ -166,10 +166,13 @@ If settings are not saved when using emojis, add this code in yout theme functio
 
 == Changelog ==
 
+= 3.2.3 =
+* FIX svg in safari < 13.
+
 = 3.2.2 =
 * **NEW:** Metabox can override global settings and leave it blank with `{}`.
-* **NEW:** Can use `wame_open` class on any element to open Join.chat or launch WhatsApp.
-* **NEW:** Added 'joinchat_delete_all' filter, set true to clear all Join.chat data on plugin uninstall.
+* **NEW:** Can use `wame_open` class on any element to open WAme or launch WhatsApp.
+* **NEW:** Added 'whatsappme_delete_all' filter, set true to clear all WAme data on plugin uninstall.
 * CHANGED Tested up to WordPress 5.4.
 * CHANGED updated FAQs GDPR info to include localStorage vars.
 
@@ -181,7 +184,7 @@ If settings are not saved when using emojis, add this code in yout theme functio
 = 3.2.0 =
 * **NEW:** Dark mode.
 * **NEW:** Hide on mobile when keyboard is open.
-* **NEW:** Post metabox show main Join.chat settings as placeholders.
+* **NEW:** Post metabox show main WAme settings as placeholders.
 * CHANGED webp support is now on server side.
 * CHANGED rewrite of chatbox output, SVGs separated, full chatbox scroll and new filters.
 * FIX 'apply_filters_deprecated' fatal error on WP < 4.6
@@ -197,7 +200,7 @@ If settings are not saved when using emojis, add this code in yout theme functio
 * FIX Fatal error when selected button image is deleted from media library.
 * FIX WooCommerce settings not registered for translation.
 * For devs: format replacements now also accepts callbacks.
-* For devs: new javascript events for chat window 'joinchat:show' 'joinchat:hide'.
+* For devs: new javascript events for chat window 'whatsappme:show' 'whatsappme:hide'.
 
 = 3.1.1 =
 * CHANGED Tested up to WordPress 5.3
@@ -209,29 +212,29 @@ If settings are not saved when using emojis, add this code in yout theme functio
 * **NEW:** WhatsApp button tooltip.
 * **NEW:** Start WhatsApp button text on Chat Window.
 * **NEW:** Option to disable automatic open of Chat Window.
-* For devs: static functions moved to a JoinChatUtil class.
+* For devs: static functions moved to a WhatsAppMe_Util class.
 
 = 3.0.3 =
 * FIX in landscape or with long CTAs the chat window could be higher than view and can't be closed.
 * For developers:
-* New metabox filters 'joinchat_metabox_output' and 'joinchat_metabox_save'.
-* Change filter 'joinchat_message_replacements' to 'joinchat_format_replacements'.
-* Change filter 'joinchat_message_send_replacements' to 'joinchat_variable_replacements'.
+* New metabox filters 'whatsappme_metabox_output' and 'whatsappme_metabox_save'.
+* Change filter 'whatsappme_message_replacements' to 'whatsappme_format_replacements'.
+* Change filter 'whatsappme_message_send_replacements' to 'whatsappme_variable_replacements'.
 
 = 3.0.2 =
 * **NEW:** Send Facebook Pixel custom event when user launch WhatsApp.
 * FIX empty tabs on settings page due to conflicts with other themes or plugins.
 
 = 3.0.1 =
-* FIX sometimes the phone number is lost in Join.chat settings on save.
+* FIX sometimes the phone number is lost in WAme settings on save.
 * CHANGED Wame button z-index to 1000.
 
 = 3.0.0 =
 * **NEW:** Better Integration with WooCommerce: CTA and Custom Message for product pages and new dynamic variables {SKU}, {PRICE} {PRODUCT}.
 * **NEW:** Admin help tab with styles and dynamic varibles info.
-* **NEW:** For developers: a lot of new hooks to change or extend Join.chat functions.
-* **NEW:** Custom javascript document event 'joinchat:open' that allow trigger other actions and/or change the link url.
-* CHANGED Rebrand "WhatsApp me" to "Join.chat".
+* **NEW:** For developers: a lot of new hooks to change or extend WAme functions.
+* **NEW:** Custom javascript document event 'whatsappme:open' that allow trigger other actions and/or change the link url.
+* CHANGED Rebrand "WhatsApp me" to "WAme chat".
 * CHANGED Code linted following WordPress standar.
 * FIX when post visibility was set as "hidden", it used default global visibility.
 * FIX javascript error when "ga" global object is defined but isn't Google Analytics.
@@ -253,7 +256,7 @@ If settings are not saved when using emojis, add this code in yout theme functio
 * **NEW:** dynamic variables {SITE}, {URL} and {TITLE} now also works on Call To Action.
 * CHANGED Better ordered settings panel.
 * FIX incorrect post id on loops can return post config instead main config.
-* FIX typo error on filter "joinchat_whastapp_web"
+* FIX typo error on filter "whatsappme_whastapp_web"
 
 = 2.2.3 =
 * **NEW:** Hide in front if editing with Elementor.
@@ -266,7 +269,7 @@ If settings are not saved when using emojis, add this code in yout theme functio
 = 2.2.0 =
 * **NEW:** Now can change telephone number on every post/page.
 * **NEW:** Send Google Tag Manager event on click.
-* **NEW:** New filter 'joinchat_whastapp_web'. Set true if you prefer to open WhatsApp Web on desktop.
+* **NEW:** New filter 'whatsappme_whastapp_web'. Set true if you prefer to open WhatsApp Web on desktop.
 * **NEW:** "Send button" change when dialog is opened.
 * UPDATED Tested up to Wordpress v.5.1.
 * UPDATED International Telephone Input library to v.15.
@@ -289,7 +292,7 @@ If settings are not saved when using emojis, add this code in yout theme functio
 * FIX removed array_filter function that requires PHP 5.6 min version.
 
 = 2.0.0 =
-* **NEW: Advanced visibility settings to define where to show Join.chat button.**
+* **NEW: Advanced visibility settings to define where to show WAme button.**
 * **NEW:** WooCommerce integration.
 * UPDATED International Telephone Input library to v.13.
 * Minor fixes on fields cleanup and other improvements.
@@ -303,7 +306,7 @@ If settings are not saved when using emojis, add this code in yout theme functio
 * FIX JavaScript error introduced on v1.4.1.
 
 = 1.4.1 =
-* Fix JS frontend sometimes can't load Join.chat settings.
+* Fix JS frontend sometimes can't load WAme settings.
 * Fix better Google Analytics event tracking when leave page.
 
 = 1.4.0 =
@@ -347,4 +350,4 @@ If settings are not saved when using emojis, add this code in yout theme functio
 WPML and Polylang integration.
 Added new settings to control delay and launch WhatsApp Web on desktop.
 Dynamic variables {SITE}, {URL} and {TITLE} now also works on Call To Action.
-Fixed incorrect Join.chat post settings on loops.
+Fixed incorrect WAme post settings on loops.

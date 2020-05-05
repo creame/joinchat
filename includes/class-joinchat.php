@@ -200,7 +200,7 @@ class JoinChat {
 	}
 
 	/**
-	 * Migrate 'whatsappme' settings on versions <4.0 to new 'joinchat'
+	 * Migrate 'whatsappme' settings on versions < 4.0 to new 'joinchat'
 	 *
 	 * @since    4.0.0
 	 * @access   private

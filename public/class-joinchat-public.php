@@ -270,7 +270,6 @@ class JoinChatPublic {
 			}
 
 			$joinchat_classes  = 'joinchat--' . $this->settings['position'];
-			$joinchat_classes .= isset( $_SERVER['HTTP_ACCEPT'] ) && strpos( $_SERVER['HTTP_ACCEPT'], 'image/webp' ) !== false ? ' joinchat--webp' : '';
 			if ( 'no' !== $this->settings['dark_mode'] ) {
 				$joinchat_classes .= 'auto' === $this->settings['dark_mode'] ? ' joinchat--dark-auto' : ' joinchat--dark';
 			}

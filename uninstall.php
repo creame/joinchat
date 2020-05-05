@@ -28,6 +28,8 @@ if ( apply_filters( 'joinchat_delete_all', false ) ) {
 	// Delete post meta '_joinchat' added by plugin
 	$wpdb->delete( $wpdb->prefix . 'postmeta', array( 'meta_key' => '_joinchat' ) );
 
+	// TODO: delete WPML/Polylang translations
+
 	// Clear any cached data that has been removed
 	wp_cache_flush();
 }
