@@ -79,7 +79,7 @@ msgid "Start WhatsApp Button"
 msgstr ""
 
 #: admin/class-joinchat-admin.php:255
-msgid "Color"
+msgid "Theme Color"
 msgstr ""
 
 #: admin/class-joinchat-admin.php:256 admin/class-joinchat-admin.php:594

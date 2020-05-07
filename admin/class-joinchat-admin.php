@@ -252,7 +252,7 @@ class JoinChatAdmin {
 				'chat'      => array(
 					'message_text'  => '<label for="joinchat_message_text">' . __( 'Call to Action', 'creame-whatsapp-me' ) . '</label>' . self::vars_help( 'message_text' ),
 					'message_start' => '<label for="joinchat_message_start">' . __( 'Start WhatsApp Button', 'creame-whatsapp-me' ) . '</label>',
-					'color'         => __( 'Color', 'creame-whatsapp-me' ),
+					'color'         => __( 'Theme Color', 'creame-whatsapp-me' ),
 					'dark_mode'     => __( 'Dark Mode', 'creame-whatsapp-me' ),
 					'remove_brand'  => __( 'Logo', 'creame-whatsapp-me' ),
 				),

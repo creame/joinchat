@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: Join.chat\n"
 "Report-Msgid-Bugs-To: Translator Name <translations@example.com>\n"
 "POT-Creation-Date: 2020-05-07 11:32+0200\n"
-"PO-Revision-Date: 2020-05-07 11:33+0200\n"
+"PO-Revision-Date: 2020-05-07 16:22+0200\n"
 "Last-Translator: Pacotole <pacotole@crea.me>\n"
 "Language-Team: Español\n"
 "Language: es_ES\n"
@@ -75,8 +75,8 @@ msgid "Start WhatsApp Button"
 msgstr "Botón de inicio de WhatsApp"
 
 #: admin/class-joinchat-admin.php:255
-msgid "Color"
-msgstr "Color"
+msgid "Theme Color"
+msgstr "Color del tema"
 
 #: admin/class-joinchat-admin.php:256 admin/class-joinchat-admin.php:594
 msgid "Dark Mode"
