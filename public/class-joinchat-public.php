@@ -269,7 +269,7 @@ class JoinChatPublic {
 				}
 			}
 
-			$joinchat_classes  = 'joinchat--' . $this->settings['position'];
+			$joinchat_classes = 'joinchat--' . $this->settings['position'];
 			if ( 'no' !== $this->settings['dark_mode'] ) {
 				$joinchat_classes .= 'auto' === $this->settings['dark_mode'] ? ' joinchat--dark-auto' : ' joinchat--dark';
 			}

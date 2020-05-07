@@ -495,7 +495,8 @@ class JoinChatAdmin {
 		} else {
 
 			$value = isset( $this->settings[ $field_id ] ) ? $this->settings[ $field_id ] : '';
-			$utm   = '?utm_source=wpadmin&utm_medium=settings&utm_campaign=v' . str_replace( '.', '_', $this->version );
+			$utm   = '?utm_source=settings&utm_medium=wpadmin&utm_campaign=v' . str_replace( '.', '_', $this->version );
+			$lang  = _x( 'en', 'url lang slug (only avaible for spanish "es")', 'creame-whatsapp-me' );
 
 			switch ( $field_id ) {
 				case 'telephone':
@@ -503,8 +504,8 @@ class JoinChatAdmin {
 						'<p class="description">' . __( "Contact phone number <strong>(the button will not be shown if it's empty)</strong>", 'creame-whatsapp-me' ) . '</p>' .
 						'<p class="joinchat-addon">' . sprintf(
 							__( 'Add unlimited numbers with %1$s or multiple contacts with %2$s', 'creame-whatsapp-me' ),
-							'<a href="https://join.chat/en/addons/random-phone/' . $utm . '" target="_blank">\'Random Phone\'</a>',
-							'<a href="https://join.chat/en/addons/support-agents/' . $utm . '" target="_blank">\'Support Agents\'</a>'
+							'<a href="https://join.chat/' . $lang . '/addons/random-phone/' . $utm . '" target="_blank">\'Random Phone\'</a>',
+							'<a href="https://join.chat/' . $lang . '/addons/support-agents/' . $utm . '" target="_blank">\'Support Agents\'</a>'
 						) . '</p>';
 					break;
 
@@ -556,7 +557,7 @@ class JoinChatAdmin {
 						'<p class="description">' . __( 'Define a text to encourage users to contact by WhatsApp', 'creame-whatsapp-me' ) . '</p>' .
 						'<p class="joinchat-addon">' . sprintf(
 							__( 'Add links, images, videos and more with %s', 'creame-whatsapp-me' ),
-							'<a href="https://join.chat/en/addons/cta-extras/' . $utm . '" target="_blank">\'CTA Extras\'</a>'
+							'<a href="https://join.chat/' . $lang . '/addons/cta-extras/' . $utm . '" target="_blank">\'CTA Extras\'</a>'
 						) . '</p>';
 					break;
 
@@ -606,7 +607,7 @@ class JoinChatAdmin {
 						__( 'Remove "Powered by Join.chat" link', 'creame-whatsapp-me' ) . '</label></fieldset>' .
 						'<p class="joinchat-addon">' . sprintf(
 							__( 'Included with all our %1$sadd-ons%2$s', 'creame-whatsapp-me' ),
-							'<a target="_blank" href="https://join.chat/en/addons/' . $utm . '">',
+							'<a target="_blank" href="https://join.chat/' . $lang . '/addons/' . $utm . '">',
 							'</a>'
 						) . '</p>';
 					break;
@@ -669,7 +670,7 @@ class JoinChatAdmin {
 	 */
 	function help_tab() {
 		$screen = get_current_screen();
-		$utm    = '?utm_source=wpadmin&utm_medium=helptab&utm_campaign=v' . str_replace( '.', '_', $this->version );
+		$utm    = '?utm_source=helptab&utm_medium=wpadmin&utm_campaign=v' . str_replace( '.', '_', $this->version );
 		$lang   = _x( 'en', 'url lang slug (only avaible for spanish "es")', 'creame-whatsapp-me' );
 
 		$help_tabs = array(
@@ -741,13 +742,39 @@ class JoinChatAdmin {
 	 *
 	 * @since    1.0.0
 	 * @access   public
-	 * @return   void
+	 * @param    array $links       current plugin links.
+	 * @return   array
 	 */
 	public function settings_link( $links ) {
 
 		$settings_link = '<a href="options-general.php?page=' . $this->plugin_name . '">' . __( 'Settings', 'creame-whatsapp-me' ) . '</a>';
 		array_unshift( $links, $settings_link );
+
 		return $links;
+
+	}
+
+	/**
+	 * Add plugin meta links
+	 *
+	 * @since    4.0.0
+	 * @access   public
+	 * @param    array  $plugin_meta       current plugin row meta.
+	 * @param    string $plugin_file       plugin file.
+	 * @return   array
+	 */
+	public function plugin_links( $plugin_meta, $plugin_file ) {
+
+		if ( 'creame-whatsapp-me/joinchat.php' == $plugin_file ) {
+			$utm  = '?utm_source=plugins&utm_medium=wpadmin&utm_campaign=v' . str_replace( '.', '_', $this->version );
+			$lang = _x( 'en', 'url lang slug (only avaible for spanish "es")', 'creame-whatsapp-me' );
+
+			$plugin_meta[] = '<a target="_blank" href="https://join.chat/' . $lang . '/docs/' . $utm . '">' . __( 'Documentation', 'creame-whatsapp-me' ) . '</a>';
+			$plugin_meta[] = '<a target="_blank" href="https://join.chat/' . $lang . '/addons/' . $utm . '">' . __( 'Add-ons', 'creame-whatsapp-me' ) . '</a>';
+			$plugin_meta[] = '<a target="_blank" href="https://join.chat/' . $lang . '/support/' . $utm . '">' . __( 'Support', 'creame-whatsapp-me' ) . '</a>';
+		}
+
+		return $plugin_meta;
 
 	}
 
