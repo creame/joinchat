@@ -5,21 +5,24 @@ Tags: whatsapp business, whatsapp, click to chat, button, whatsapp support chat,
 Requires at least: 3.0.1
 Tested up to: 5.4
 Requires PHP: 5.3
-Stable tag: 3.2.3
+Stable tag: 4.0.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Connects a WordPress chat with WhatsApp. The best solution for marketing and support. Stop losing customers and increase your sales.
+(formerly WAme) We help you capture users with WhatsApp and turn them into clients.
 
 == Description ==
 
-[join.chat](https://join.chat?utm_source=wporg&utm_medium=web&utm_campaign=v3_2) | [Add-Ons](https://join.chat/en/addons/?utm_source=wporg&utm_medium=web&utm_campaign=v3_2) | [Docs](https://join.chat/en/docs/?utm_source=wporg&utm_medium=web&utm_campaign=v3_2) | [Support](https://join.chat/en/support/?utm_source=wporg&utm_medium=web&utm_campaign=v3_2)
+[join.chat](https://join.chat?utm_source=wporg&utm_medium=web&utm_campaign=v4_0) | [Add-ons](https://join.chat/en/addons/?utm_source=wporg&utm_medium=web&utm_campaign=v4_0) | [Documentation](https://join.chat/en/docs/?utm_source=wporg&utm_medium=web&utm_campaign=v4_0) | [Support](https://join.chat/en/support/?utm_source=wporg&utm_medium=web&utm_campaign=v4_0)
 
-### Connect a WordPress chat with WhatsApp. The best solution for marketing and support. Stop losing customers and increase your sales.
+### The best WhatsApp plugin for WordPress.
+> We help more than 200,000 businesses worldwide to attract users and convert them into clients.
 
-### New in Join.chat 3.2 📍
+### New in Join.chat 4.0 📍
 
-🌚 **Discover the new Dark Mode.** Great news for all those who prefer white text on a black background.  Now you will find an option to activate it in your settings.
+🌈 **Say hello to the colors.** We've redesigned the entire interface of the chat window, now you choose a color, and we customize all the visual theme of the Widget.
+
+🍾 **Triggers.** Your pages can interact with Join.chat and show the chat window or launch WhatsApp when user clicks or an item appears when scrolling. You just need to add a few css classes.
 
 ### ⌁ What you can do with Join.chat ✅
 
@@ -50,6 +53,11 @@ Remember, you do not have to do anything, the plugin already creates and compute
 #### 💱 Customize different languages.
 To be able to support all your users, wherever they are. Our plugin is compatible with WPML and Polylang.
 
+### 🌚 Dark Mode.
+Display the chat window with dark colors and white text. From settings you can activate it or leave it automatic so that it detects the configuration of devices in dark mode.
+
+https://www.youtube.com/watch?v=1Gma1Wvt6gU
+
 ### ⌁ What you can´t do with Join.chat ⛔️
 
 #### 👨‍🎨 Modify the appearance of the button.
@@ -58,16 +66,13 @@ Users recognize it instantly because it is in thousands of web pages and they kn
 #### 😡 Wasting time configuring other similar plugins.
 Having many options is not an advantage, the configuration of Join.chat is so easy that in less than 2 minutes you will be ‘wasapeando’ with your clients.
 
-### ⌁ Translations 🇦🇶
--[English (US)](https://wordpress.org/plugins/creame-whatsapp-me/)
--[Portuguese (Brazil)](https://br.wordpress.org/plugins/creame-whatsapp-me/)
--[Spanish (Spain)](https://es.wordpress.org/plugins/creame-whatsapp-me/)
--[Translate into your language](https://translate.wordpress.org/projects/wp-plugins/creame-whatsapp-me)
-
 ### ⌁ If you like Join.chat 😍
 1. Please leave us a [★★★★★](https://wordpress.org/support/plugin/creame-whatsapp-me/reviews/#new-post) rating. We'll thank you.
-2. Subscribe to our newsletter and visit our blog at [join.chat](https://join.chat/?utm_source=wporg&utm_medium=web&utm_campaign=v3_2).
-3. Follow [@joinchat](https://twitter.com/wamechat) on twitter.
+2. Help us with the [translation in your language](https://translate.wordpress.org/projects/wp-plugins/creame-whatsapp-me)
+3. Subscribe to our newsletter and visit our blog at [join.chat](https://join.chat/?utm_source=wporg&utm_medium=web&utm_campaign=v4_0).
+4. Follow [@joinchat](https://twitter.com/wamechat) on twitter.
+
+Name history: *WhatsApp me > WAme > VVAme > **Join.chat***
 
 *WhatsApp and WhatsApp Logo are brand assets and trademark of Facebook, Inc. Join.chat is not in partnership, sponsored or endorsed by Facebook, Inc.*
 
@@ -77,6 +82,15 @@ Having many options is not an advantage, the configuration of Join.chat is so ea
 2. Activate the plugin through the 'Plugins' menu in WordPress.
 
 == Frequently Asked Questions ==
+
+= WAme now is Join.chat =
+
+From version 4.0 we change our name to Join.chat.
+To avoid using several prefixes from old and new versions we have decided to rename all them to the new `joinchat`.
+
+* All analytics events change from `WhatsAppMe` to `JoinChat`
+* All css styles change from `wame` or `whatsappme`to `joinchat`.
+* All actions and filters change from `wame_` or `whatsappme_`to `joinchat_`.
 
 = I can't see the button or it's over / under another thing =
 
@@ -165,6 +179,14 @@ If settings are not saved when using emojis, add this code in your theme functio
 8. Join.chat on post/page edition.
 
 == Changelog ==
+
+= 4.0.0 =
+* **NEW:** Join.chat brand.
+* **NEW:** Widget theme color.
+* **NEW:** CSS class triggers to open chat window.
+* **CHANGED for SEO:** All analytics events change from `WhatsAppMe` to `JoinChat`
+* **CHANGED for devs:** All css styles change from `wame` or `whatsappme`to `joinchat` and all actions and filters change from `wame_` or `whatsappme_`to `joinchat_`.
+* Lighter, reduced assets size and deleted images.
 
 = 3.2.3 =
 * FIX svg in safari < 13.
@@ -345,6 +367,15 @@ If settings are not saved when using emojis, add this code in your theme functio
 * First version
 
 == Upgrade Notice ==
+
+= 4.0.0 =
+**Join.chat rebrand.**
+To avoid using several prefixes from old and new versions we have decided to rename all them to the new `joinchat`.
+
+**WARNING**
+* **For SEO:** All analytics events change from `WhatsAppMe` to `JoinChat`
+* **For Devs:** All css styles change from `wame` or `whatsappme`to `joinchat`.
+* **For Devs:** All actions and filters change from `wame_` or `whatsappme_`to `joinchat_`.
 
 = 2.3.0 =
 WPML and Polylang integration.
