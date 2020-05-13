@@ -347,7 +347,7 @@ msgid "Included with all our %1$sadd-ons%2$s"
 msgstr ""
 
 #: admin/class-joinchat-admin.php:673 admin/class-joinchat-admin.php:766
-msgctxt "url lang slug (only avaible for spanish \"es\")"
+msgctxt "url lang slug (only available for spanish \"es\")"
 msgid "en"
 msgstr ""
 

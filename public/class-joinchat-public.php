@@ -251,7 +251,8 @@ class JoinChatPublic {
 
 			$powered_url  = urlencode( home_url( $wp->request ) );
 			$powered_site = urlencode( get_bloginfo( 'name' ) );
-			$powered_link = "https://join.chat/powered/?site={$powered_site}&url={$powered_url}";
+			$powered_lang = _x( 'en', 'url lang slug (only available for spanish "es")', 'creame-whatsapp-me' );
+			$powered_link = "https://join.chat/{$powered_lang}/powered/?site={$powered_site}&url={$powered_url}";
 
 			// Set custom img tag and bypass default image logic
 			$image = apply_filters( 'joinchat_image', null );

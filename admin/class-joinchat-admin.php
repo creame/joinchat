@@ -496,7 +496,7 @@ class JoinChatAdmin {
 
 			$value = isset( $this->settings[ $field_id ] ) ? $this->settings[ $field_id ] : '';
 			$utm   = '?utm_source=settings&utm_medium=wpadmin&utm_campaign=v' . str_replace( '.', '_', $this->version );
-			$lang  = _x( 'en', 'url lang slug (only avaible for spanish "es")', 'creame-whatsapp-me' );
+			$lang  = _x( 'en', 'url lang slug (only available for spanish "es")', 'creame-whatsapp-me' );
 
 			switch ( $field_id ) {
 				case 'telephone':
@@ -671,7 +671,7 @@ class JoinChatAdmin {
 	function help_tab() {
 		$screen = get_current_screen();
 		$utm    = '?utm_source=helptab&utm_medium=wpadmin&utm_campaign=v' . str_replace( '.', '_', $this->version );
-		$lang   = _x( 'en', 'url lang slug (only avaible for spanish "es")', 'creame-whatsapp-me' );
+		$lang   = _x( 'en', 'url lang slug (only available for spanish "es")', 'creame-whatsapp-me' );
 
 		$help_tabs = array(
 			array(
@@ -767,7 +767,7 @@ class JoinChatAdmin {
 
 		if ( 'creame-whatsapp-me/joinchat.php' == $plugin_file ) {
 			$utm  = '?utm_source=plugins&utm_medium=wpadmin&utm_campaign=v' . str_replace( '.', '_', $this->version );
-			$lang = _x( 'en', 'url lang slug (only avaible for spanish "es")', 'creame-whatsapp-me' );
+			$lang = _x( 'en', 'url lang slug (only available for spanish "es")', 'creame-whatsapp-me' );
 
 			$plugin_meta[] = '<a target="_blank" href="https://join.chat/' . $lang . '/docs/' . $utm . '">' . __( 'Documentation', 'creame-whatsapp-me' ) . '</a>';
 			$plugin_meta[] = '<a target="_blank" href="https://join.chat/' . $lang . '/addons/' . $utm . '">' . __( 'Add-ons', 'creame-whatsapp-me' ) . '</a>';

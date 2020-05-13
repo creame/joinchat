@@ -74,6 +74,10 @@
     if (this.chatbox) {
       this.chatbox = false;
       this.$div.removeClass('joinchat--chatbox joinchat--tooltip');
+
+      if (this.settings.message_badge) {
+        this.$('.joinchat__badge').removeClass('joinchat__badge--out');
+      }
       // Trigger custom event
       $(document).trigger('joinchat:hide');
     }
