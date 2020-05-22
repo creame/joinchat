@@ -5,7 +5,7 @@ Tags: whatsapp business, whatsapp, click to chat, button, whatsapp support chat,
 Requires at least: 3.0.1
 Tested up to: 5.4
 Requires PHP: 5.3
-Stable tag: 4.0.1
+Stable tag: 4.0.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -32,8 +32,8 @@ Define in which pages or zones it should appear, the delay time, if you want it 
 #### 🔮 Magic WhatsApp button.
 Add your logo, profile picture or even an animated gif. You can define a tooltip to capture the user's attention, the limit is set by your creativity.
 
-#### 📱 Add multiple phone numbers.
-You can serve users in different terminals, you can insert a different one in each page, product or section.
+#### 📝 Edit at publication level.
+You can change general settings on every Post, Page, Product or CPT. In the right side you will find Join.chat metabox where you can modify Phone, CTA, Message and display options.
 
 #### 🔴 Show a notification.
 Use a balloon on the button to get the user's attention. In this way, you ensure that you do not miss any important message you want to give them, surprise them in a less intrusive way.
@@ -55,6 +55,9 @@ To be able to support all your users, wherever they are. Our plugin is compatibl
 
 #### 🌚 Dark Mode.
 Display the chat window with dark colors and white text. From settings you can activate it or leave it automatic so that it detects the configuration of devices in dark mode.
+
+#### 👨‍💻 Developer friendly.
+Fully extensible, with lots of filters and actions to extend its functionality or change behavior.
 
 ### ⌁ What you can´t do with Join.chat ⛔️
 
@@ -95,6 +98,18 @@ To avoid using several prefixes from old and new versions we have decided to ren
 You can change the position of the button so that nothing covers it by adding this CSS in *Appearance > Customize > Custom CSS*:
 
 `.joinchat { z-index:9999; }`
+
+If you need to move up:
+
+```
+/* always */
+.joinchat { --bottom: 60px; }
+
+/* mobile only */
+@media (max-width: 480px), (max-width: 767px) and (orientation: landscape) {
+  .joinchat { --bottom: 60px; }
+}
+```
 
 Greater values of z-index are left over, the default value is 400.
 
@@ -142,22 +157,26 @@ Join.chat send a custom event if Facebook Pixel is detected when user click to l
 
 There is a Javascript event that Join.chat triggers automatically before launch WhatsApp, which can be used to add your custom tracking code (or other needs).
 
-`jQuery(document).ready(function($){
+```
+jQuery(document).ready(function($){
   $(document).on('joinchat:open', function (event, args, settings) {
     // Your staff
     // Note: args.link is the link to open, you can change it
     // but only wa.me, whastapp.com or current domain are allowed.
   });
-});`
+});
+```
 
 = WPML/Polylang change Telephone by language =
 
 Join.chat general text settings can be translated with the strings translation of WPML/Polylang. You only need to save Join.chat settings to register strings and make them ready for translation. But "Telephone" is not translateable by default. If you need different phone numbers for every language add the following php code in your theme functions.php and save Join.chat settings.
 
-`add_filter( 'joinchat_settings_i18n', function( $settings ) {
+```
+add_filter( 'joinchat_settings_i18n', function( $settings ) {
     $settings['telephone'] = 'Telephone';
     return $settings;
-} );`
+} );
+```
 
 = Settings are not saved when using emojis =
 
@@ -175,6 +194,10 @@ If settings are not saved when using emojis, add this code in your theme functio
 
 == Changelog ==
 
+= 4.0.2 =
+* Encode emojis if DB not support utf8mb4.
+* Better update from WAme (no manual activation required).
+
 = 4.0.1 =
 * minor fixes.
 
@@ -182,9 +205,11 @@ If settings are not saved when using emojis, add this code in your theme functio
 * **NEW:** Join.chat brand.
 * **NEW:** Widget theme color.
 * **NEW:** CSS class triggers to open chat window.
-* **CHANGED for SEO:** All analytics events change from `WhatsAppMe` to `JoinChat`
-* **CHANGED for devs:** All css styles change from `wame` or `whatsappme`to `joinchat` and all actions and filters change from `wame_` or `whatsappme_`to `joinchat_`.
 * Lighter, reduced assets size and deleted images.
+
+**CHANGED for SEO:** All analytics events change from `WhatsAppMe` to `JoinChat`.
+
+**CHANGED for devs:** All css classes, actions and filters change from `wame` or `whatsappme` to `joinchat`.
 
 = 3.2.3 =
 * FIX svg in safari < 13.
@@ -366,8 +391,8 @@ If settings are not saved when using emojis, add this code in your theme functio
 
 == Upgrade Notice ==
 
-= 4.0.0 =
-**Join.chat rebrand!!** All Analytics events change from `WhatsAppMe` to `JoinChat` and classes, actions and filters change from `wame` or `whatsappme` to `joinchat`.
+= 4.0.2 =
+**Join.chat rebrand!!** Analytics events change from `WhatsAppMe` to `JoinChat` and classes, actions and filters change from `wame` or `whatsappme` to `joinchat`.
 
 = 2.3.0 =
 WPML and Polylang integration.
