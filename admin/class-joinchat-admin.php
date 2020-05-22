@@ -334,10 +334,17 @@ class JoinChatAdmin {
 	 */
 	public function settings_validate( $input ) {
 
+		global $wpdb;
+
 		// Prevent bad behavior when validate twice on first save
 		// bug https://core.trac.wordpress.org/ticket/21989
 		if ( count( get_settings_errors( 'joinchat' ) ) ) {
 			return $input;
+		}
+
+		// Encode emojis if utf8mb4 not supported by DB
+		if ( 'utf8mb4' !== $wpdb->charset && function_exists( 'wp_encode_emoji' ) && ! has_filter( 'sanitize_text_field', 'wp_encode_emoji' ) ) {
+			add_filter( 'sanitize_text_field', 'wp_encode_emoji' );
 		}
 
 		$util = new JoinChatUtil(); // Shortcut
@@ -943,10 +950,18 @@ class JoinChatAdmin {
 	 * @return   void
 	 */
 	public function save_post( $post_id ) {
+
+		global $wpdb;
+
 		if ( wp_is_post_autosave( $post_id ) ||
 			 ! isset( $_POST['joinchat_nonce'] ) ||
 			 ! wp_verify_nonce( $_POST['joinchat_nonce'], 'joinchat_data' ) ) {
 			return;
+		}
+
+		// Encode emojis if utf8mb4 not supported by DB
+		if ( 'utf8mb4' !== $wpdb->charset && function_exists( 'wp_encode_emoji' ) && ! has_filter( 'sanitize_text_field', 'wp_encode_emoji' ) ) {
+			add_filter( 'sanitize_text_field', 'wp_encode_emoji' );
 		}
 
 		// Clean and delete empty/false fields
