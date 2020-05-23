@@ -5,7 +5,7 @@ Tags: whatsapp business, whatsapp, click to chat, button, whatsapp support chat,
 Requires at least: 3.0.1
 Tested up to: 5.4
 Requires PHP: 5.3
-Stable tag: 4.0.2
+Stable tag: 4.0.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -178,13 +178,6 @@ add_filter( 'joinchat_settings_i18n', function( $settings ) {
 } );
 ```
 
-= Settings are not saved when using emojis =
-
-To save emojis site database must use utf8mb4 encoding.
-If settings are not saved when using emojis, add this code in your theme functions.php:
-
-`add_filter( 'sanitize_text_field', 'wp_encode_emoji' );`
-
 == Screenshots ==
 
 1. Set phone, button text and call to action.
@@ -193,6 +186,9 @@ If settings are not saved when using emojis, add this code in your theme functio
 4. Set chat window color theme.
 
 == Changelog ==
+
+= 4.0.3 =
+* Fix WAme deactivate
 
 = 4.0.2 =
 * Encode emojis if DB not support utf8mb4.
@@ -215,7 +211,7 @@ See [changelog.txt](https://plugins.svn.wordpress.org/creame-whatsapp-me/trunk/c
 
 == Upgrade Notice ==
 
-= 4.0.2 =
+= 4.0.3 =
 **Join.chat rebrand!!** Analytics events change from `WhatsAppMe` to `JoinChat` and classes, actions and filters change from `wame` or `whatsappme` to `joinchat`.
 
 = 2.3.0 =
