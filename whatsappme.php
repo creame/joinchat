@@ -9,8 +9,13 @@ if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
-// Deactivate old 'creame-whatsapp-me/whatsappme.php'
-deactivate_plugins( plugin_basename( __FILE__ ) );
+function deactivate_wame_activate_joinchat() {
 
-// Activate new 'creame-whatsapp-me/joinchat.php'
-activate_plugins( plugin_dir_path( __FILE__ ) . 'joinchat.php' );
+	// Deactivate old 'creame-whatsapp-me/whatsappme.php'
+	deactivate_plugins( plugin_basename( __FILE__ ) );
+
+	// Activate new 'creame-whatsapp-me/joinchat.php'
+	activate_plugins( plugin_dir_path( __FILE__ ) . 'joinchat.php' );
+}
+
+add_action( 'plugins_loaded', 'deactivate_wame_activate_joinchat', 1 );

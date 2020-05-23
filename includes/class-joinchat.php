@@ -60,10 +60,8 @@ class JoinChat {
 		$this->load_dependencies();
 		$this->set_locale();
 		$this->load_integrations();
-
-		if ( $this->checks() ) {
-			is_admin() ? $this->define_admin_hooks() : $this->define_public_hooks();
-		}
+		$this->update_wame();
+		is_admin() ? $this->define_admin_hooks() : $this->define_public_hooks();
 
 	}
 
@@ -207,10 +205,11 @@ class JoinChat {
 	 * @access   private
 	 * @return   void
 	 */
-	public function activate() {
+	public function update_wame() {
 		global $wpdb;
 
 		$general_option = get_option( 'whatsappme' );
+
 		if ( false !== $general_option ) {
 			// General option
 			update_option( 'joinchat', $general_option );
@@ -285,21 +284,6 @@ class JoinChat {
 	 */
 	public function get_version() {
 		return $this->version;
-	}
-
-	/**
-	 * Output notice message for plugin re-activation
-	 *
-	 * @since    4.0.0
-	 * @access   public
-	 * @return   void
-	 */
-	public function need_reactivate_notice() {
-
-		echo '<div class="error"><p>' .
-			__( '<strong>WAme</strong> now is <strong>Join.chat</strong>. Please, deactivate and re-activate plugin to migrate settings.', 'creame-whatsapp-me' ) .
-			'</p></div>';
-
 	}
 
 }

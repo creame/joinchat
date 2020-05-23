@@ -49,7 +49,6 @@ function run_joinchat() {
 
 	$plugin = new JoinChat();
 
-	register_activation_hook( __FILE__, array( $plugin, 'activate' ) );
 	add_action( 'init', array( $plugin, 'run' ) );
 
 }
