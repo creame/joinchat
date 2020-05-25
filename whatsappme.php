@@ -10,9 +10,11 @@ if ( ! defined( 'WPINC' ) ) {
 }
 
 function deactivate_wame_activate_joinchat() {
+	// WordPress Plugin Administration API
+	require_once ABSPATH . 'wp-admin/includes/plugin.php';
 
 	// Deactivate old 'creame-whatsapp-me/whatsappme.php'
-	deactivate_plugins( plugin_basename( __FILE__ ) );
+	deactivate_plugins( plugin_basename( __FILE__ ), true );
 
 	// Activate new 'creame-whatsapp-me/joinchat.php'
 	activate_plugins( plugin_dir_path( __FILE__ ) . 'joinchat.php' );
