@@ -247,6 +247,13 @@ class JoinChatPublic {
 
 			$data = array_diff_key( $this->settings, array_flip( $excluded_fields ) );
 
+			$json_options = apply_filters(
+				'joinchat_json_options',
+				defined( 'JSON_UNESCAPED_UNICODE' ) ?
+				JSON_HEX_APOS | JSON_HEX_QUOT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES :
+				JSON_HEX_APOS | JSON_HEX_QUOT
+			);
+
 			$copy = apply_filters( 'joinchat_copy', 'Powered by' );
 
 			$powered_url  = urlencode( home_url( $wp->request ) );
@@ -283,7 +290,7 @@ class JoinChatPublic {
 
 			ob_start();
 			?>
-			<div class="joinchat <?php echo apply_filters( 'joinchat_classes', $joinchat_classes ); ?>" data-settings="<?php echo esc_attr( json_encode( $data ) ); ?>">
+			<div class="joinchat <?php echo apply_filters( 'joinchat_classes', $joinchat_classes ); ?>" data-settings='<?php echo json_encode( $data, $json_options ); ?>'>
 				<div class="joinchat__button">
 					<div class="joinchat__button__open"></div>
 					<?php if ( $image ) : ?>
