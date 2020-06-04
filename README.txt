@@ -101,15 +101,13 @@ You can change the position of the button so that nothing covers it by adding th
 
 If you need to move up:
 
-```
-/* always */
+`/* always */
 .joinchat { --bottom: 60px; }
 
 /* mobile only */
 @media (max-width: 480px), (max-width: 767px) and (orientation: landscape) {
   .joinchat { --bottom: 60px; }
-}
-```
+}`
 
 Greater values of z-index are left over, the default value is 400.
 
@@ -157,26 +155,22 @@ Join.chat send a custom event if Facebook Pixel is detected when user click to l
 
 There is a Javascript event that Join.chat triggers automatically before launch WhatsApp, which can be used to add your custom tracking code (or other needs).
 
-```
-jQuery(document).ready(function($){
+`jQuery(document).ready(function($){
   $(document).on('joinchat:open', function (event, args, settings) {
     // Your staff
     // Note: args.link is the link to open, you can change it
     // but only wa.me, whastapp.com or current domain are allowed.
   });
-});
-```
+});`
 
 = WPML/Polylang change Telephone by language =
 
 Join.chat general text settings can be translated with the strings translation of WPML/Polylang. You only need to save Join.chat settings to register strings and make them ready for translation. But "Telephone" is not translateable by default. If you need different phone numbers for every language add the following php code in your theme functions.php and save Join.chat settings.
 
-```
-add_filter( 'joinchat_settings_i18n', function( $settings ) {
+`add_filter( 'joinchat_settings_i18n', function( $settings ) {
     $settings['telephone'] = 'Telephone';
     return $settings;
-} );
-```
+} );`
 
 == Screenshots ==
 
