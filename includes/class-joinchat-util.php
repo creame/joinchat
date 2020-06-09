@@ -96,14 +96,26 @@ class JoinChatUtil {
 
 		if ( ! file_exists( $new_img_path ) ) {
 			$new_img = wp_get_image_editor( $img_path );
-			$new_img->resize( $width, $height, $crop );
-			$new_img = $new_img->save( $new_img_path );
 
-			$thumb = array(
-				'url'    => str_replace( $uploads['basedir'], $uploads['baseurl'], $new_img_path ),
-				'width'  => $new_img['width'],
-				'height' => $new_img['height'],
-			);
+			if ( ! is_wp_error( $new_img ) ) {
+				$new_img->resize( $width, $height, $crop );
+				$new_img = $new_img->save( $new_img_path );
+
+				$thumb = array(
+					'url'    => str_replace( $uploads['basedir'], $uploads['baseurl'], $new_img_path ),
+					'width'  => $new_img['width'],
+					'height' => $new_img['height'],
+				);
+			} else {
+				// Fallback to original image
+				@list($w, $h) = getimagesize( $img_path );
+
+				$thumb = array(
+					'url'    => str_replace( $uploads['basedir'], $uploads['baseurl'], $img_path ),
+					'width'  => $w,
+					'height' => $h,
+				);
+			}
 		} else {
 			@list($w, $h) = getimagesize( $new_img_path );
 
