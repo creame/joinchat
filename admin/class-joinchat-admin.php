@@ -1003,4 +1003,49 @@ class JoinChatAdmin {
 
 	}
 
+	/**
+	 * Clear third party cache plugins if joinchat option changed
+	 *
+	 * @since    4.0.5
+	 * @access   public
+	 * @param    mixed $old_value  joinchat previous settings.
+	 * @param    mixed $value      joinchat new settings.
+	 * @return   void
+	 */
+	public static function clear_cache() {
+
+		// TODO: Prevent Autoptimize clear many times
+
+		/**
+		 * List of callable functions or actions by third party plugins.
+		 * format: string callable or array( string callable or hook, [, mixed $parameter [, mixed $... ]] )
+		 */
+		$cache_plugins = apply_filters(
+			'joinchat_cache_plugins',
+			array(
+				'autoptimizeCache::clearall_actionless', // Autoptimize https://wordpress.org/plugins/autoptimize/
+				'ce_clear_cache',                        // Cache Enabler https://wordpress.org/plugins/cache-enabler/
+				'cachify_flush_cache',                   // Cachify https://wordpress.org/plugins/cachify/
+				'LiteSpeed_Cache_API::purge_all',        // LiteSpeed Cache https://wordpress.org/plugins/litespeed-cache/
+				'sg_cachepress_purge_cache',             // SG Optimizer https://es.wordpress.org/plugins/sg-cachepress/
+				array( 'wpfc_clear_all_cache', true ),   // WP Fastest Cache https://es.wordpress.org/plugins/wp-fastest-cache/
+				'rocket_clean_minify',                   // WP Rocket https://wp-rocket.me
+				'rocket_clean_domain',
+				'wp_cache_clean_cache',                  // WP Super Cache https://wordpress.org/plugins/wp-super-cache/
+				'w3tc_flush_all',                        // W3 Total Cache https://wordpress.org/plugins/w3-total-cache/
+			)
+		);
+
+		foreach ( $cache_plugins as $callable ) {
+			$callable = (array) $callable;
+
+			if ( is_callable( $callable[0] ) ) {
+				call_user_func_array( array_shift( $callable ), $callable );
+			} elseif ( has_action( $callable[0] ) ) {
+				call_user_func_array( 'do_action', $callable );
+			}
+		}
+
+	}
+
 }

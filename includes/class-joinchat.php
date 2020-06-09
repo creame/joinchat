@@ -172,6 +172,7 @@ class JoinChat {
 		$this->loader->add_action( 'add_meta_boxes', $plugin_admin, 'add_meta_boxes' );
 		$this->loader->add_action( 'save_post', $plugin_admin, 'save_post' );
 		$this->loader->add_action( 'load-settings_page_joinchat', $plugin_admin, 'help_tab' );
+		$this->loader->add_action( 'update_option_joinchat', $plugin_admin, 'clear_cache', 100 );
 
 		$this->loader->add_filter( "plugin_action_links_creame-whatsapp-me/{$this->plugin_name}.php", $plugin_admin, 'settings_link' );
 		$this->loader->add_filter( 'plugin_row_meta', $plugin_admin, 'plugin_links', 10, 2 );
