@@ -18,7 +18,7 @@ class JoinChatIntegrations {
 	public function load_integrations() {
 
 		// Integration with WooCommerce
-		if ( class_exists( 'WooCommerce' ) ) {
+		if ( class_exists( 'WooCommerce' ) && version_compare( WC_VERSION, '3.0', '>=' ) ) {
 			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-joinchat-wooadmin.php';
 			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-joinchat-woopublic.php';
 
