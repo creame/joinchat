@@ -176,10 +176,6 @@ class JoinChatPublic {
 		// Set a simple CTA hash, empty '' if no CTA (for javascript store viewed CTAs)
 		$this->settings['message_hash'] = ltrim( hash( 'crc32', $this->settings['message_text'] ), '0' );
 
-		// Ensure not show if not phone
-		if ( '' == $this->settings['telephone'] ) {
-			$this->show = false;
-		}
 	}
 
 	/**
@@ -197,7 +193,7 @@ class JoinChatPublic {
 			list($r, $g, $b) = sscanf( $color, '#%02x%02x%02x' );
 
 			wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . "css/{$this->plugin_name}{$min}.css", array(), $this->version, 'all' );
-			wp_add_inline_style( $this->plugin_name, apply_filters( 'joinchat_inline_style', ".joinchat{ --red:$r; --green:$g; --blue:$b; }", $color ) );
+			wp_add_inline_style( $this->plugin_name, apply_filters( 'joinchat_inline_style', ".joinchat{ --red:$r; --green:$g; --blue:$b; }", $this->settings ) );
 		}
 
 	}

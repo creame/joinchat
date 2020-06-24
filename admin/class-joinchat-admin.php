@@ -125,7 +125,8 @@ class JoinChatAdmin {
 			apply_filters( 'joinchat_extra_settings', array() )
 		);
 
-		$saved_settings = get_option( 'joinchat' );
+		$this->settings = $default_settings;
+		$saved_settings = get_option( 'joinchat', $default_settings );
 
 		if ( is_array( $saved_settings ) ) {
 			// clean unused saved settings
@@ -136,8 +137,6 @@ class JoinChatAdmin {
 			if ( $this->settings['message_delay'] > 120 ) {
 				$this->settings['message_delay'] = round( $this->settings['message_delay'] / 1000 );
 			}
-		} else {
-			$this->settings = $default_settings;
 		}
 
 	}
@@ -242,16 +241,16 @@ class JoinChatAdmin {
 				'button'    => array(
 					'telephone'    => '<label for="joinchat_phone">' . __( 'Telephone', 'creame-whatsapp-me' ) . '</label>',
 					'message_send' => '<label for="joinchat_message_send">' . __( 'Message', 'creame-whatsapp-me' ) . '</label>' . self::vars_help( 'message_send' ),
-					'position'     => __( 'Position on Screen', 'creame-whatsapp-me' ),
 					'button_image' => __( 'Image', 'creame-whatsapp-me' ),
 					'button_tip'   => '<label for="joinchat_button_tip">' . __( 'Tooltip', 'creame-whatsapp-me' ) . '</label>',
+					'position'     => __( 'Position on Screen', 'creame-whatsapp-me' ),
 					'button_delay' => '<label for="joinchat_button_delay">' . __( 'Button Delay', 'creame-whatsapp-me' ) . '</label>',
 					'mobile_only'  => __( 'Mobile Only', 'creame-whatsapp-me' ),
 					'whatsapp_web' => __( 'WhatsApp Web', 'creame-whatsapp-me' ),
 				),
 				'chat'      => array(
 					'message_text'  => '<label for="joinchat_message_text">' . __( 'Call to Action', 'creame-whatsapp-me' ) . '</label>' . self::vars_help( 'message_text' ),
-					'message_start' => '<label for="joinchat_message_start">' . __( 'Start WhatsApp Button', 'creame-whatsapp-me' ) . '</label>',
+					'message_start' => '<label for="joinchat_message_start">' . __( 'Open Chat', 'creame-whatsapp-me' ) . '</label>',
 					'color'         => __( 'Theme Color', 'creame-whatsapp-me' ),
 					'dark_mode'     => __( 'Dark Mode', 'creame-whatsapp-me' ),
 					'remove_brand'  => __( 'Logo', 'creame-whatsapp-me' ),
@@ -542,17 +541,17 @@ class JoinChatAdmin {
 						'<input id="joinchat_button_image_add" type="button" value="' . esc_attr__( 'Select an image', 'creame-whatsapp-me' ) . '" class="button-primary" ' .
 						'data-title="' . esc_attr__( 'Select button image', 'creame-whatsapp-me' ) . '" data-button="' . esc_attr__( 'Use image', 'creame-whatsapp-me' ) . '"> ' .
 						'<input id="joinchat_button_image_remove" type="button" value="' . esc_attr__( 'Remove', 'creame-whatsapp-me' ) . '" class="button-secondary' . ( $image ? '' : ' joinchat-hidden' ) . '">' .
-						'<p class="description">' . __( 'The image will alternate with WhatsApp logo', 'creame-whatsapp-me' ) . '</p></div>';
+						'<p class="description">' . __( 'The image will alternate with button icon', 'creame-whatsapp-me' ) . '</p></div>';
 					break;
 
 				case 'button_tip':
 					$output = '<input id="joinchat_button_tip" name="joinchat[button_tip]" value="' . $value . '" type="text" maxlength="40" class="regular-text" placeholder="' . esc_attr__( '💬 Need help?', 'creame-whatsapp-me' ) . '"> ' .
-						'<p class="description">' . __( 'Short text shown next to WhatsApp button', 'creame-whatsapp-me' ) . '</p>';
+						'<p class="description">' . __( 'Short text shown next to button', 'creame-whatsapp-me' ) . '</p>';
 					break;
 
 				case 'button_delay':
 					$output = '<input id="joinchat_button_delay" name="joinchat[button_delay]" value="' . $value . '" type="number" min="0" max="120" style="width:5em"> ' . __( 'seconds', 'creame-whatsapp-me' ) .
-						'<p class="description">' . __( 'Time since the page is opened until the WhatsApp button is displayed', 'creame-whatsapp-me' ) . '</p>';
+						'<p class="description">' . __( 'Time since the page is opened until the button is displayed', 'creame-whatsapp-me' ) . '</p>';
 					break;
 
 				case 'whatsapp_web':
@@ -577,7 +576,7 @@ class JoinChatAdmin {
 
 				case 'message_start':
 					$output = '<input id="joinchat_message_start" name="joinchat[message_start]" value="' . $value . '" type="text" maxlength="20" class="regular-text" placeholder="' . esc_attr__( 'Open chat', 'creame-whatsapp-me' ) . '"> ' .
-						'<p class="description">' . __( 'Text of the start WhatsApp button on Chat Window', 'creame-whatsapp-me' ) . '</p>';
+						'<p class="description">' . __( 'Text to open chat on Chat Window button', 'creame-whatsapp-me' ) . '</p>';
 					break;
 
 				case 'message_delay':
