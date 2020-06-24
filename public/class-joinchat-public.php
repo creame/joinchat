@@ -265,14 +265,14 @@ class JoinChatPublic {
 			$image = apply_filters( 'joinchat_image', null );
 
 			if ( is_null( $image ) && $this->settings['button_image'] ) {
-				$img_path = get_attached_file( $this->settings['button_image'] );
+				$img_id = $this->settings['button_image'];
 
-				if ( apply_filters( 'joinchat_image_original', JoinChatUtil::is_animated_gif( $img_path ) ) ) {
-					$image = '<img src="' . wp_get_attachment_url( $this->settings['button_image'] ) . '" alt="">';
-				} elseif ( is_array( JoinChatUtil::thumb( $img_path, 58, 58 ) ) ) {
-					$thumb  = JoinChatUtil::thumb( $img_path, 58, 58 );
-					$thumb2 = JoinChatUtil::thumb( $img_path, 116, 116 );
-					$thumb3 = JoinChatUtil::thumb( $img_path, 174, 174 );
+				if ( apply_filters( 'joinchat_image_original', JoinChatUtil::is_animated_gif( $img_id ) ) ) {
+					$image = '<img src="' . wp_get_attachment_url( $img_id ) . '" alt="">';
+				} elseif ( is_array( JoinChatUtil::thumb( $img_id, 58, 58 ) ) ) {
+					$thumb  = JoinChatUtil::thumb( $img_id, 58, 58 );
+					$thumb2 = JoinChatUtil::thumb( $img_id, 116, 116 );
+					$thumb3 = JoinChatUtil::thumb( $img_id, 174, 174 );
 					$image  = "<img src=\"{$thumb['url']}\" srcset=\"{$thumb2['url']} 2x, {$thumb3['url']} 3x\" alt=\"\">";
 				}
 			}

@@ -86,7 +86,7 @@ class JoinChatUtil {
 
 		$img_path = intval( $img ) > 0 ? get_attached_file( $img ) : $img;
 
-		if ( ! file_exists( $img_path ) ) {
+		if ( ! $img_path || ! file_exists( $img_path ) ) {
 			return false;
 		}
 
@@ -141,7 +141,7 @@ class JoinChatUtil {
 	public static function is_animated_gif( $img ) {
 		$img_path = intval( $img ) > 0 ? get_attached_file( $img ) : $img;
 
-		return file_exists( $img_path ) ? (bool) preg_match( '#(\x00\x21\xF9\x04.{4}\x00\x2C.*){2,}#s', file_get_contents( $img_path ) ) : false;
+		return $img_path && file_exists( $img_path ) ? (bool) preg_match( '#(\x00\x21\xF9\x04.{4}\x00\x2C.*){2,}#s', file_get_contents( $img_path ) ) : false;
 	}
 
 	/**

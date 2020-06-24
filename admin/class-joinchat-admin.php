@@ -533,7 +533,7 @@ class JoinChatAdmin {
 					break;
 
 				case 'button_image':
-					$thumb = intval( $value ) > 0 ? JoinChatUtil::thumb( $value, 116, 116 ) : false;
+					$thumb = JoinChatUtil::thumb( $value, 116, 116 );
 					$image = is_array( $thumb ) ? $thumb['url'] : false;
 
 					$output = '<div id="joinchat_button_image_wrapper">' .
