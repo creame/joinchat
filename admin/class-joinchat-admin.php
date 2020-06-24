@@ -343,7 +343,9 @@ class JoinChatAdmin {
 		}
 
 		// Encode emojis if utf8mb4 not supported by DB
-		if ( 'utf8mb4' !== $wpdb->charset && function_exists( 'wp_encode_emoji' ) && ! has_filter( 'sanitize_text_field', 'wp_encode_emoji' ) ) {
+		if ( 'utf8mb4' !== $wpdb->get_col_charset( $wpdb->options, 'option_value' )
+				&& function_exists( 'wp_encode_emoji' )
+				&& ! has_filter( 'sanitize_text_field', 'wp_encode_emoji' ) ) {
 			add_filter( 'sanitize_text_field', 'wp_encode_emoji' );
 		}
 
@@ -960,7 +962,9 @@ class JoinChatAdmin {
 		}
 
 		// Encode emojis if utf8mb4 not supported by DB
-		if ( 'utf8mb4' !== $wpdb->charset && function_exists( 'wp_encode_emoji' ) && ! has_filter( 'sanitize_text_field', 'wp_encode_emoji' ) ) {
+		if ( 'utf8mb4' !== $wpdb->get_col_charset( $wpdb->postmeta, 'meta_value' )
+				&& function_exists( 'wp_encode_emoji' )
+				&& ! has_filter( 'sanitize_text_field', 'wp_encode_emoji' ) ) {
 			add_filter( 'sanitize_text_field', 'wp_encode_emoji' );
 		}
 
