@@ -31,6 +31,7 @@
 }
 
 #{$class}__header {
+  position: relative;
   flex-shrink: 0;
   height: var(--header);
   line-height: var(--header);
@@ -49,7 +50,7 @@
   color: inherit !important;
   text-decoration: none !important;
   fill: currentColor;
-  opacity: 0.7;
+  opacity: 0.8;
 
   svg {
     display: inline-block;
@@ -58,8 +59,8 @@
     vertical-align: -26%;
   }
 
-  &:hover,
-  &:active {
+  a&:hover,
+  a&:active {
     color: inherit !important;
     text-decoration: none !important;
     opacity: 0.9;
@@ -68,10 +69,11 @@
 
 #{$class}__close {
   position: absolute;
-  top: 18px;
+  top: 50%;
   right: 24px;
   width: 34px;
   height: 34px;
+  margin-top: -16px;
   border-radius: 50%;
   background: rgba($black, 0.4) svg-load("../../img/close.svg", fill=$white) center no-repeat;
   background-size: 12px;
@@ -90,7 +92,8 @@
 }
 
 #{$class}__box__scroll {
-  padding: 20px 0 80px 0;
+  padding: 20px 0 70px 0;
+  padding-bottom: calc(var(--btn) + 10px);
   background: $white linear-gradient(0deg, var(--bg), var(--bg));
   overflow-x: hidden;
   overflow-y: auto;
@@ -127,13 +130,13 @@
 
 @include mobile {
   #{$class}__close {
-    top: 13px;
+    margin-top: -14px;
     width: 28px;
     height: 28px;
   }
 
   #{$class}__box__scroll {
-    padding: 15px 0 70px 0;
+    padding-top: 15px;
   }
 }
 

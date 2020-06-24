@@ -2,6 +2,7 @@
   --bottom: 20px;
   --sep: 20px;
   --header: 70px;
+  --btn: 60px;
   --red: 37;
   --green: 211;
   --blue: 102;
@@ -12,7 +13,7 @@
   --bg: rgba(var(--rgb), 0.04);
   --tolerance: 210;
   --bw: calc((var(--red)*0.2126 + var(--green)*0.7152 + var(--blue)*0.0722 - var(--tolerance))*-100000);
-  --text: rgba(var(--bw), var(--bw), var(--bw), min(0.9, max(0.7, var(--bw))));
+  --text: rgba(var(--bw), var(--bw), var(--bw), min(1, max(0.7, var(--bw))));
   --msg: var(--color);
 
   position: fixed;
@@ -77,12 +78,12 @@
   z-index: 2;
   bottom: 8px;
   right: 8px;
-  height: 60px;
-  min-width: 60px;
+  height: var(--btn);
+  min-width: var(--btn);
   max-width: 95vw;
   background: #25d366;
   color: inherit;
-  border-radius: 30px;
+  border-radius: calc(var(--btn)/2);
   box-shadow: 1px 6px 24px 0 rgba(7, 94, 84, 0.24);
   cursor: pointer;
   transition: background 0.2s linear;
@@ -126,10 +127,10 @@
 }
 
 .joinchat__button__open {
-  width: 60px;
-  height: 60px;
+  width: var(--btn);
+  height: var(--btn);
   background: rgba(0, 0, 0, 0) url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23fff' d='M3.516 3.516c4.686-4.686 12.284-4.686 16.97 0 4.686 4.686 4.686 12.283 0 16.97a12.004 12.004 0 01-13.754 2.299l-5.814.735a.392.392 0 01-.438-.44l.748-5.788A12.002 12.002 0 013.517 3.517zm3.61 17.043l.3.158a9.846 9.846 0 0011.534-1.758c3.843-3.843 3.843-10.074 0-13.918-3.843-3.843-10.075-3.843-13.918 0a9.846 9.846 0 00-1.747 11.554l.16.303-.51 3.942a.196.196 0 00.219.22l3.961-.501zm6.534-7.003l-.933 1.164a9.843 9.843 0 01-3.497-3.495l1.166-.933a.792.792 0 00.23-.94L9.561 6.96a.793.793 0 00-.924-.445 1291.6 1291.6 0 00-2.023.524.797.797 0 00-.588.88 11.754 11.754 0 0010.005 10.005.797.797 0 00.88-.587l.525-2.023a.793.793 0 00-.445-.923L14.6 13.327a.792.792 0 00-.94.23z'/%3E%3C/svg%3E") center no-repeat;
-  background-size: 36px;
+  background-size: 60%;
 }
 
 .joinchat--chatbox .joinchat__button__open {
@@ -140,8 +141,8 @@
   position: absolute;
   top: 1px;
   right: 1px;
-  width: 58px;
-  height: 58px;
+  width: calc(var(--btn) - 2px);
+  height: calc(var(--btn) - 2px);
   border-radius: 50%;
   overflow: hidden;
   opacity: 0;
@@ -169,9 +170,9 @@
 
 .joinchat__button__send {
   display: none;
-  width: 60px;
-  height: 60px;
-  max-width: 60px;
+  width: var(--btn);
+  height: var(--btn);
+  max-width: var(--btn);
   padding: 12px 11px 12px 13px;
   margin: 0;
   flex-shrink: 0;
@@ -202,7 +203,7 @@
   padding: 0;
   max-width: 0;
   font-weight: 600;
-  line-height: 60px;
+  line-height: var(--btn);
   white-space: nowrap;
   opacity: 0;
   overflow: hidden;
@@ -335,6 +336,7 @@
 }
 
 .joinchat__header {
+  position: relative;
   flex-shrink: 0;
   height: var(--header);
   line-height: var(--header);
@@ -353,7 +355,7 @@
   color: inherit !important;
   text-decoration: none !important;
   fill: currentColor;
-  opacity: 0.7;
+  opacity: 0.8;
 }
 
 .joinchat__copy svg {
@@ -363,8 +365,8 @@
   vertical-align: -26%;
 }
 
-.joinchat__copy:hover,
-.joinchat__copy:active {
+a.joinchat__copy:hover,
+a.joinchat__copy:active {
   color: inherit !important;
   text-decoration: none !important;
   opacity: 0.9;
@@ -372,10 +374,11 @@
 
 .joinchat__close {
   position: absolute;
-  top: 18px;
+  top: 50%;
   right: 24px;
   width: 34px;
   height: 34px;
+  margin-top: -16px;
   border-radius: 50%;
   background: rgba(0, 0, 0, 0.4) url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23fff'%3E%3Cpath d='M24 2.4L21.6 0 12 9.6 2.4 0 0 2.4 9.6 12 0 21.6 2.4 24l9.6-9.6 9.6 9.6 2.4-2.4-9.6-9.6L24 2.4z'/%3E%3C/svg%3E") center no-repeat;
   background-size: 12px;
@@ -394,7 +397,8 @@
 }
 
 .joinchat__box__scroll {
-  padding: 20px 0 80px 0;
+  padding: 20px 0 70px 0;
+  padding-bottom: calc(var(--btn) + 10px);
   background: #fff linear-gradient(0deg, var(--bg), var(--bg));
   overflow-x: hidden;
   overflow-y: auto;
@@ -434,13 +438,13 @@
 
 @media (max-width: 480px), (orientation: landscape) and (max-width: 767px) {
   .joinchat__close {
-    top: 13px;
+    margin-top: -14px;
     width: 28px;
     height: 28px;
   }
 
   .joinchat__box__scroll {
-    padding: 15px 0 70px 0;
+    padding-top: 15px;
   }
 }
 

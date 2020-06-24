@@ -5,12 +5,12 @@
   z-index: 2;
   bottom: 8px;
   right: 8px;
-  height: $btn_size;
-  min-width: $btn_size;
+  height: var(--btn);
+  min-width: var(--btn);
   max-width: 95vw;
   background: $WA;
   color: inherit;
-  border-radius: calc($btn_size / 2);
+  border-radius: calc(var(--btn) / 2);
   box-shadow: 1px 6px 24px 0 rgba($WAdarken, 0.24);
   cursor: pointer;
   transition: background 0.2s linear;
@@ -54,10 +54,10 @@
 }
 
 #{$class}__button__open {
-  width: $btn_size;
-  height: $btn_size;
+  width: var(--btn);
+  height: var(--btn);
   background: $transparent svg-load("../../img/btn.svg") center no-repeat;
-  background-size: 36px;
+  background-size: 60%;
 
   #{$class}--chatbox & {
     display: none;
@@ -68,8 +68,8 @@
   position: absolute;
   top: 1px;
   right: 1px;
-  width: calc($btn_size - 2px);
-  height: calc($btn_size - 2px);
+  width: calc(var(--btn) - 2px);
+  height: calc(var(--btn) - 2px);
   border-radius: 50%;
   overflow: hidden;
   opacity: 0;
@@ -98,9 +98,9 @@
 
 #{$class}__button__send {
   display: none;
-  width: 60px;
-  height: 60px;
-  max-width: 60px; // fix theme Twenty Twenty max-width: 100%;
+  width: var(--btn);
+  height: var(--btn);
+  max-width: var(--btn); // fix theme Twenty Twenty max-width: 100%;
   padding: 12px 11px 12px 13px;
   margin: 0;
   flex-shrink: 0;
@@ -131,7 +131,7 @@
   padding: 0;
   max-width: 0;
   font-weight: 600;
-  line-height: $btn_size;
+  line-height: var(--btn);
   white-space: nowrap;
   opacity: 0;
   overflow: hidden;

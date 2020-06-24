@@ -3,6 +3,7 @@
   --bottom: 20px;
   --sep: 20px;
   --header: 70px;
+  --btn: 60px;
   // Colors
   --red: 37;
   --green: 211;
@@ -15,7 +16,7 @@
   // Black or white color based on https://css-tricks.com/css-variables-calc-rgb-enforcing-high-contrast-colors/
   --tolerance: 210; // [0-255] Greater tolerance allow lighter colors with white text
   --bw: calc(((var(--red) * 0.2126) + (var(--green) * 0.7152) + (var(--blue) * 0.0722) - var(--tolerance)) * -100000);
-  --text: rgba(var(--bw), var(--bw), var(--bw), min(0.9, max(0.7, var(--bw)))); // White rgba(255, 255, 255, 0.8) / Black rgba(0, 0, 0, 0.6)
+  --text: rgba(var(--bw), var(--bw), var(--bw), min(1, max(0.7, var(--bw)))); // White rgba(255, 255, 255, 0.8) / Black rgba(0, 0, 0, 0.6)
   --msg: var(--color);
 
   position: fixed;
