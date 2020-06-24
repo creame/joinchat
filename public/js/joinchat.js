@@ -16,20 +16,22 @@
   };
 
   // Trigger Google Analytics event
-  joinchat_obj.send_event = function (link) {
+  joinchat_obj.send_event = function (label, action) {
     var ga_tracker = window[this.settings.ga_tracker || 'ga'];
+    label = label || '';
+    action = action || 'click';
 
     // Send Google Analtics custom event (Universal Analtics - analytics.js) or (Global Site Tag - gtag.js)
     if (typeof ga_tracker == 'function' && typeof ga_tracker.getAll == 'function') {
       ga_tracker('set', 'transport', 'beacon');
       var trackers = ga_tracker.getAll();
       trackers.forEach(function (tracker) {
-        tracker.send("event", 'JoinChat', 'click', link);
+        tracker.send("event", 'JoinChat', action, label);
       });
     } else if (typeof gtag == 'function') {
-      gtag('event', 'click', {
+      gtag('event', action, {
         'event_category': 'JoinChat',
-        'event_label': link,
+        'event_label': label,
         'transport_type': 'beacon'
       });
     }
@@ -38,14 +40,14 @@
     if (typeof dataLayer == 'object') {
       dataLayer.push({
         'event': 'JoinChat',
-        'eventAction': 'click',
-        'eventLabel': link
+        'eventAction': action,
+        'eventLabel': label
       });
     }
 
     // Send Facebook Pixel custom event
     if (typeof fbq == 'function') {
-      fbq('trackCustom', 'JoinChat', { eventAction: 'click', eventLabel: link });
+      fbq('trackCustom', 'JoinChat', { eventAction: action, eventLabel: label });
     }
   };
 
