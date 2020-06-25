@@ -38,6 +38,11 @@
   padding: 0 26px;
   margin: 0;
   background: var(--color);
+  text-align: left;
+
+  #{$rtl} & {
+    text-align: right;
+  }
 
   #{$class}--dark & {
     background: var(--dark);
