@@ -87,22 +87,33 @@ class JoinChatUtil {
 		$img_path = intval( $img ) > 0 ? get_attached_file( $img ) : $img;
 
 		if ( ! $img_path || ! file_exists( $img_path ) ) {
+			// Try fallback if file_exists() fails
+			$src = wp_get_attachment_image_src( $img, array( $width, $height ) );
+
+			if ( is_array( $src ) ) {
+				return array(
+					'url'    => $src[0],
+					'width'  => $src[1],
+					'height' => $src[2],
+				);
+			}
+
 			return false;
 		}
 
-		$uploads      = wp_get_upload_dir();
-		$img_info     = pathinfo( $img_path );
-		$new_img_path = "{$img_info['dirname']}/{$img_info['filename']}-{$width}x{$height}.{$img_info['extension']}";
+		$uploads  = wp_get_upload_dir();
+		$img_info = pathinfo( $img_path );
+		$new_path = "{$img_info['dirname']}/{$img_info['filename']}-{$width}x{$height}.{$img_info['extension']}";
 
-		if ( ! file_exists( $new_img_path ) ) {
+		if ( ! file_exists( $new_path ) ) {
 			$new_img = wp_get_image_editor( $img_path );
 
 			if ( ! is_wp_error( $new_img ) ) {
 				$new_img->resize( $width, $height, $crop );
-				$new_img = $new_img->save( $new_img_path );
+				$new_img = $new_img->save( $new_path );
 
 				$thumb = array(
-					'url'    => str_replace( $uploads['basedir'], $uploads['baseurl'], $new_img_path ),
+					'url'    => str_replace( $uploads['basedir'], $uploads['baseurl'], $new_path ),
 					'width'  => $new_img['width'],
 					'height' => $new_img['height'],
 				);
@@ -117,10 +128,10 @@ class JoinChatUtil {
 				);
 			}
 		} else {
-			@list($w, $h) = getimagesize( $new_img_path );
+			@list($w, $h) = getimagesize( $new_path );
 
 			$thumb = array(
-				'url'    => str_replace( $uploads['basedir'], $uploads['baseurl'], $new_img_path ),
+				'url'    => str_replace( $uploads['basedir'], $uploads['baseurl'], $new_path ),
 				'width'  => $w,
 				'height' => $h,
 			);
