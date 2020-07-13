@@ -5,7 +5,7 @@ Tags: whatsapp business, whatsapp, click to chat, button, whatsapp support chat,
 Requires at least: 3.0.1
 Tested up to: 5.4
 Requires PHP: 5.3
-Stable tag: 4.0.6
+Stable tag: 4.0.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -181,6 +181,9 @@ Join.chat general text settings can be translated with the strings translation o
 
 == Changelog ==
 
+= 4.0.7  =
+* FIX WP Super Cache clear cache error on save
+
 = 4.0.6  =
 * Minor changes: better encode emoji detection, check WooCommerce version, css fixes and improvements
 
@@ -217,7 +220,7 @@ See [changelog.txt](https://plugins.svn.wordpress.org/creame-whatsapp-me/trunk/c
 
 == Upgrade Notice ==
 
-= 4.0.6 =
+= 4.0.0 =
 **Join.chat rebrand!!** Analytics events change from `WhatsAppMe` to `JoinChat` and classes, actions and filters change from `wame` or `whatsappme` to `joinchat`.
 
 = 2.3.0 =
