@@ -1038,7 +1038,7 @@ class JoinChatAdmin {
 				array( 'wpfc_clear_all_cache', true ),   // WP Fastest Cache https://es.wordpress.org/plugins/wp-fastest-cache/
 				'rocket_clean_minify',                   // WP Rocket https://wp-rocket.me
 				'rocket_clean_domain',
-				array( 'wp_cache_clean_cache', 'wp-cache-' ), // WP Super Cache https://wordpress.org/plugins/wp-super-cache/
+				'wp_cache_clear_cache',                  // WP Super Cache https://wordpress.org/plugins/wp-super-cache/
 				'w3tc_flush_all',                        // W3 Total Cache https://wordpress.org/plugins/w3-total-cache/
 			)
 		);
