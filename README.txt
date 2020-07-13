@@ -5,7 +5,7 @@ Tags: whatsapp business, whatsapp, click to chat, button, whatsapp support chat,
 Requires at least: 3.0.1
 Tested up to: 5.4
 Requires PHP: 5.3
-Stable tag: 4.0.7
+Stable tag: 4.0.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -181,18 +181,22 @@ Join.chat general text settings can be translated with the strings translation o
 
 == Changelog ==
 
-= 4.0.7  =
+= 4.0.8 =
+* FIX WP Super Cache clear cache error on save
+* Image thumbnail fallback if possible
+
+= 4.0.7 =
 * FIX WP Super Cache clear cache error on save
 
-= 4.0.6  =
+= 4.0.6 =
 * Minor changes: better encode emoji detection, check WooCommerce version, css fixes and improvements
 
-= 4.0.5  =
+= 4.0.5 =
 * **NEW:** Clear third party cache plugins on settings save.
 * FIX php error on image resize.
 * UPDATED International Telephone Input library to v.17.
 
-= 4.0.4  =
+= 4.0.4 =
 * Better public settings JSON output
 * Re-fix WAme deactivate
 
