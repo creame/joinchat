@@ -253,4 +253,19 @@ class JoinChatUtil {
 
 	}
 
+	/**
+	 * Get current page title
+	 *
+	 * @since    4.0.9
+	 * @return   string     message formated string
+	 */
+	public static function to_json($data) {
+
+		$json_options = defined( 'JSON_UNESCAPED_UNICODE' ) ?
+			JSON_HEX_APOS | JSON_HEX_QUOT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES :
+			JSON_HEX_APOS | JSON_HEX_QUOT;
+
+		return json_encode( $data, apply_filters( 'joinchat_json_options', $json_options ) );
+
+	}
 }
