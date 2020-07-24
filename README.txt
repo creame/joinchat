@@ -5,7 +5,7 @@ Tags: whatsapp business, whatsapp, click to chat, button, whatsapp support chat,
 Requires at least: 3.0.1
 Tested up to: 5.4
 Requires PHP: 5.3
-Stable tag: 4.0.8
+Stable tag: 4.0.9
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -178,6 +178,10 @@ Join.chat general text settings can be translated with the strings translation o
 4. Set chat window color theme.
 
 == Changelog ==
+
+= 4.0.9 =
+* FIX notification balloon text color white
+* New js event 'joinchat:starting'
 
 = 4.0.8 =
 * FIX WP Super Cache clear cache error on save
