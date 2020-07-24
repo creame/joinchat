@@ -155,6 +155,8 @@
     joinchat_obj.store.setItem('joinchat_views', parseInt(joinchat_obj.store.getItem('joinchat_views') || 0) + 1);
 
     function joinchat_magic() {
+      $(document).trigger('joinchat:starting');
+
       var button_delay = joinchat_obj.settings.button_delay * 1000;
       var chat_delay = joinchat_obj.settings.message_delay * 1000;
       var has_cta = !!joinchat_obj.settings.message_hash;
@@ -203,17 +205,17 @@
 
       // Open Join.chat on mouse over
       if (has_chatbox && !joinchat_obj.is_mobile) {
-        $('.joinchat__button', joinchat_obj.$div)
+        joinchat_obj.$('.joinchat__button')
           .mouseenter(function () { timeoutHover = setTimeout(chatbox_show, 1500); })
           .mouseleave(function () { clearTimeout(timeoutHover); });
       }
 
-      $('.joinchat__button', joinchat_obj.$div).click(joinchat_click);
-      $('.joinchat__close', joinchat_obj.$div).click(chatbox_hide);
+      joinchat_obj.$('.joinchat__button').click(joinchat_click);
+      joinchat_obj.$('.joinchat__close').click(chatbox_hide);
 
       // Only scroll Join.chat message box (no all body)
       // TODO: disable also on touch
-      $('.joinchat__box__scroll').on('mousewheel DOMMouseScroll', function (e) {
+      joinchat_obj.$('.joinchat__box__scroll').on('mousewheel DOMMouseScroll', function (e) {
         e.preventDefault();
         var delta = e.originalEvent.wheelDelta || -e.originalEvent.detail;
         this.scrollTop += (delta < 0 ? 1 : -1) * 30;
@@ -248,7 +250,7 @@
 
       // Open Join.chat when "joinchat_open" or "joinchat_force_show" on viewport
       if (has_chatbox && 'IntersectionObserver' in window) {
-        var $show_on_scroll = $('.joinchat_show,.joinchat_force_show');
+        var $show_on_scroll = $('.joinchat_show, .joinchat_force_show');
 
         function joinchat_observed(objs) {
           $.each(objs, function () {
