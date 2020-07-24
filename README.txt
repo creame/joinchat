@@ -15,7 +15,7 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 [Join.chat](https://join.chat?utm_source=wporg&utm_medium=web&utm_campaign=v4_0) | [Add-ons](https://join.chat/en/addons/?utm_source=wporg&utm_medium=web&utm_campaign=v4_0) | [Documentation](https://join.chat/en/docs/?utm_source=wporg&utm_medium=web&utm_campaign=v4_0) | [Support](https://join.chat/en/support/?utm_source=wporg&utm_medium=web&utm_campaign=v4_0)
 
-### The best WhatsApp plugin for WordPress.
+### The best WordPress plugin for WhatsApp.
 > We help more than 200,000 businesses worldwide to attract users and convert them into clients.
 
 ### New in Join.chat 4.0 (formerly WAme) 📍
@@ -26,10 +26,10 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 ### ⌁ What you can do with Join.chat ✅
 
-#### 🛎 Insert a WhatsApp button on your website.
+#### 🛎 Insert a contact button on your website.
 Define in which pages or zones it should appear, the delay time, if you want it to the right or to the left, only on mobile phones or also on the desktop.
 
-#### 🔮 Magic WhatsApp button.
+#### 🔮 Magic contact button for WhatsApp.
 Add your logo, profile picture or even an animated gif. You can define a tooltip to capture the user's attention, the limit is set by your creativity.
 
 #### 📝 Edit at publication level.
@@ -73,8 +73,6 @@ Having many options is not an advantage, the configuration of Join.chat is so ea
 3. Subscribe to our newsletter and visit our blog at [join.chat](https://join.chat/?utm_source=wporg&utm_medium=web&utm_campaign=v4_0).
 4. Follow [@joinchat](https://twitter.com/wamechat) on twitter.
 
-Name history: *WhatsApp me > WAme > VVAme > **Join.chat***
-
 *WhatsApp and WhatsApp Logo are brand assets and trademark of Facebook, Inc. Join.chat is not in partnership, sponsored or endorsed by Facebook, Inc.*
 
 == Installation ==
@@ -99,6 +97,8 @@ You can change the position of the button so that nothing covers it by adding th
 
 `.joinchat { z-index:9999; }`
 
+Higher values ​​of z-index are above, the default value is 1000.
+
 If you need to move up:
 
 `/* always */
@@ -108,8 +108,6 @@ If you need to move up:
 @media (max-width: 480px), (max-width: 767px) and (orientation: landscape) {
   .joinchat { --bottom: 60px; }
 }`
-
-Greater values of z-index are left over, the default value is 400.
 
 = What about GDPR? =
 
