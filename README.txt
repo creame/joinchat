@@ -3,7 +3,7 @@ Contributors: creapuntome, pacotole, davidlillo, monillo
 Donate link: https://www.paypal.me/creapuntome/
 Tags: whatsapp business, whatsapp, click to chat, button, whatsapp support chat, support, contact, directly message whatsapp, floating whatsapp, whatsapp chat
 Requires at least: 3.0.1
-Tested up to: 5.4
+Tested up to: 5.5
 Requires PHP: 5.3
 Stable tag: 4.0.9
 License: GPLv2 or later
@@ -39,7 +39,7 @@ You can change general settings on every Post, Page, Product or CPT. In the righ
 Use a balloon on the button to get the user's attention. In this way, you ensure that you do not miss any important message you want to give them, surprise them in a less intrusive way.
 
 #### 📯 Create call-to-action messages.
-For users to click on the button, use custom CTAs on each page, product or section. Welcome them, help them and offer them offers or promotions. [You can read more about this topic here](https://join.chat/es/whatsapp-me-mucho-mas-que-un-click-to-chat/).
+For users to click on the button, use custom CTAs on each page, product or section. Welcome them, help them and offer them offers or promotions. [You can read more about this topic here](https://join.chat/es/joinchat-mucho-mas-que-un-click-to-chat/).
 
 #### 💬 Customize conversation start messages.
 So that the user does not waste time in writing. This way you will be able to know from which page it comes or what product is being consulted when you start the first conversation.
@@ -48,7 +48,7 @@ So that the user does not waste time in writing. This way you will be able to kn
 Define CTAs and Custom Messages for product pages, you can use dynamic variables such as {SKU}, {PRICE} or {PRODUCT}.
 
 #### 🏁 Analyze the conversion data in Google Analytics and Facebook Pixel.
-Remember, you do not have to do anything, the plugin already creates and computes the events by itself. [You can read more about this topic here](https://join.chat/es/wame-mide-los-eventos-de-whatsapp-en-google-analytics/).
+Remember, you do not have to do anything, the plugin already creates and computes the events by itself. [You can read more about this topic here](https://join.chat/en/joinchat-measures-whatsapp-events-in-google-analytics/).
 
 #### 💱 Customize different languages.
 To be able to support all your users, wherever they are. Our plugin is compatible with WPML and Polylang.
@@ -59,19 +59,11 @@ Display the chat window with dark colors and white text. From settings you can a
 #### 👨‍💻 Developer friendly.
 Fully extensible, with lots of filters and actions to extend its functionality or change behavior.
 
-### ⌁ What you can´t do with Join.chat ⛔️
-
-#### 👨‍🎨 Modify the appearance of the button.
-Users recognize it instantly because it is in thousands of web pages and they know what it is for, it generates trust. If you modify it, you lose these important values.
-
-#### 😡 Wasting time configuring other similar plugins.
-Having many options is not an advantage, the configuration of Join.chat is so easy that in less than 2 minutes you will be ‘wasapeando’ with your clients.
-
 ### ⌁ If you like Join.chat 😍
 1. Please leave us a [★★★★★](https://wordpress.org/support/plugin/creame-whatsapp-me/reviews/#new-post) rating. We'll thank you.
 2. Help us with the [translation in your language](https://translate.wordpress.org/projects/wp-plugins/creame-whatsapp-me)
 3. Subscribe to our newsletter and visit our blog at [join.chat](https://join.chat/?utm_source=wporg&utm_medium=web&utm_campaign=v4_0).
-4. Follow [@joinchat](https://twitter.com/wamechat) on twitter.
+4. Follow [@joinchatnow](https://twitter.com/joinchatnow) on twitter.
 
 *WhatsApp and WhatsApp Logo are brand assets and trademark of Facebook, Inc. Join.chat is not in partnership, sponsored or endorsed by Facebook, Inc.*
 
@@ -173,9 +165,8 @@ Join.chat general text settings can be translated with the strings translation o
 == Screenshots ==
 
 1. Set phone, button text and call to action.
-2. Chat window.
-3. Set button image and tooltip.
-4. Set chat window color theme.
+2. Set button image and tooltip.
+3. Set chat window color theme.
 
 == Changelog ==
 
