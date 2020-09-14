@@ -1,0 +1,84 @@
+@keyframes joinchat_badge_in {
+  from {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes joinchat_badge_out {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  to {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+}
+
+@keyframes joinchat_plain {
+  0%,
+  50%,
+  100% {
+    stroke-dashoffset: 1097;
+  }
+
+  5%,
+  45% {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes joinchat_chat {
+  0%,
+  50%,
+  100% {
+    stroke-dashoffset: 1020;
+  }
+
+  5%,
+  45% {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes joinchat_image_loop {
+  0% {
+    opacity: 0;
+  }
+
+  3%,
+  20% {
+    opacity: 1;
+  }
+
+  25%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes joinchat_tootlip {
+  0% {
+    opacity: 0;
+    transform: scaleY(0);
+  }
+
+  1%,
+  20% {
+    opacity: 1;
+    transform: scaleY(1);
+  }
+
+  25%,
+  100% {
+    opacity: 0;
+    transform: scaleY(1);
+  }
+}

@@ -1,0 +1,182 @@
+
+== Changelog ==
+
+This file contains only old changelog. See README.txt for newer versions.
+
+= 3.2.3 =
+* FIX svg in safari < 13.
+
+= 3.2.2 =
+* **NEW:** Metabox can override global settings and leave it blank with `{}`.
+* **NEW:** Can use `wame_open` class on any element to open WAme or launch WhatsApp.
+* **NEW:** Added 'whatsappme_delete_all' filter, set true to clear all WAme data on plugin uninstall.
+* CHANGED Tested up to WordPress 5.4.
+* CHANGED updated FAQs GDPR info to include localStorage vars.
+
+= 3.2.1 =
+* FIX svg animations on firefox.
+* FIX empty messages on WP < 4.6.
+* FIX Google Analytics 'ga' event not sent if gtag for GAds or GTM is present.
+
+= 3.2.0 =
+* **NEW:** Dark mode.
+* **NEW:** Hide on mobile when keyboard is open.
+* **NEW:** Post metabox show main WAme settings as placeholders.
+* CHANGED webp support is now on server side.
+* CHANGED rewrite of chatbox output, SVGs separated, full chatbox scroll and new filters.
+* FIX 'apply_filters_deprecated' fatal error on WP < 4.6
+
+= 3.1.4 =
+* FIX php warning with new var {DISCOUNT} when price is zero.
+
+= 3.1.3 =
+* Minor improvements and link to Wame CTA Extras.
+
+= 3.1.2 =
+* **NEW:** WooCommerce Call to Action for Products on Sale, also added dynamic vars {DISCOUNT} {REGULAR}.
+* FIX Fatal error when selected button image is deleted from media library.
+* FIX WooCommerce settings not registered for translation.
+* For devs: format replacements now also accepts callbacks.
+* For devs: new javascript events for chat window 'whatsappme:show' 'whatsappme:hide'.
+
+= 3.1.1 =
+* CHANGED Tested up to WordPress 5.3
+* FIX Save on the first time can store some settings incorrectly.
+* FIX rtl styles for new button text.
+
+= 3.1.0 =
+* **NEW:** WhatsApp button image.
+* **NEW:** WhatsApp button tooltip.
+* **NEW:** Start WhatsApp button text on Chat Window.
+* **NEW:** Option to disable automatic open of Chat Window.
+* For devs: static functions moved to a WhatsAppMe_Util class.
+
+= 3.0.3 =
+* FIX in landscape or with long CTAs the chat window could be higher than view and can't be closed.
+* For developers:
+* New metabox filters 'whatsappme_metabox_output' and 'whatsappme_metabox_save'.
+* Change filter 'whatsappme_message_replacements' to 'whatsappme_format_replacements'.
+* Change filter 'whatsappme_message_send_replacements' to 'whatsappme_variable_replacements'.
+
+= 3.0.2 =
+* **NEW:** Send Facebook Pixel custom event when user launch WhatsApp.
+* FIX empty tabs on settings page due to conflicts with other themes or plugins.
+
+= 3.0.1 =
+* FIX sometimes the phone number is lost in WAme settings on save.
+* CHANGED Wame button z-index to 1000.
+
+= 3.0.0 =
+* **NEW:** Better Integration with WooCommerce: CTA and Custom Message for product pages and new dynamic variables {SKU}, {PRICE} {PRODUCT}.
+* **NEW:** Admin help tab with styles and dynamic varibles info.
+* **NEW:** For developers: a lot of new hooks to change or extend WAme functions.
+* **NEW:** Custom javascript document event 'whatsappme:open' that allow trigger other actions and/or change the link url.
+* CHANGED Rebrand "WhatsApp me" to "WAme chat".
+* CHANGED Code linted following WordPress standar.
+* FIX when post visibility was set as "hidden", it used default global visibility.
+* FIX javascript error when "ga" global object is defined but isn't Google Analytics.
+* FIX rtl styles for chat.
+
+= 2.3.3 =
+* FIX javascript error when "ga" global object is defined but isn't Google Analytics.
+
+= 2.3.2 =
+* FIX PHP notice on some archive pages.
+
+= 2.3.1 =
+* Readme texts and description.
+
+= 2.3.0 =
+* **NEW:** WPML/Polylang integration.
+* **NEW:** Added setting to launch WhatsApp Web on desktop.
+* **NEW:** Separated button delay and chat delay settings.
+* **NEW:** dynamic variables {SITE}, {URL} and {TITLE} now also works on Call To Action.
+* CHANGED Better ordered settings panel.
+* FIX incorrect post id on loops can return post config instead main config.
+* FIX typo error on filter "whatsappme_whastapp_web"
+
+= 2.2.3 =
+* **NEW:** Hide in front if editing with Elementor.
+* CHANGED improvements in public styles.
+
+= 2.2.2 =
+* **NEW:** styles/scripts minified.
+* FIX UX issues.
+
+= 2.2.0 =
+* **NEW:** Now can change telephone number on every post/page.
+* **NEW:** Send Google Tag Manager event on click.
+* **NEW:** New filter 'whatsappme_whastapp_web'. Set true if you prefer to open WhatsApp Web on desktop.
+* **NEW:** "Send button" change when dialog is opened.
+* UPDATED Tested up to Wordpress v.5.1.
+* UPDATED International Telephone Input library to v.15.
+
+= 2.1.3 =
+* FIX PHP warning on some rare cases.
+
+= 2.1.2 =
+* FIX javascript error on iOS Safari private browsing.
+
+= 2.1.1 =
+* FIX javascript error on IE11.
+
+= 2.1.0 =
+* **NEW:** Button bagde option for a less intrusive mode.
+* CHANGED now each different Call to Action is marked as read separately.
+* CHANGED now first show Call to Action (if defined) before launch WhatsApp link.
+
+= 2.0.1 =
+* FIX removed array_filter function that requires PHP 5.6 min version.
+
+= 2.0.0 =
+* **NEW: Advanced visibility settings to define where to show WAme button.**
+* **NEW:** WooCommerce integration.
+* UPDATED International Telephone Input library to v.13.
+* Minor fixes on fields cleanup and other improvements.
+
+= 1.4.3 =
+* NEW support for Google Analytics Global Site Tag (gtag.js).
+* CHANGE events label now is the destination URL to match general behavior.
+* UPDATED International Telephone Input library
+
+= 1.4.2 =
+* FIX JavaScript error introduced on v1.4.1.
+
+= 1.4.1 =
+* Fix JS frontend sometimes can't load WAme settings.
+* Fix better Google Analytics event tracking when leave page.
+
+= 1.4.0 =
+* **NEW:** Added the option to define the first message to send. You can include variables such as {SITE}, {URL} or {TITLE}.
+* Fix PHP notice when global $post is null (e.g. search results or login page).
+
+= 1.3.2 =
+* Only set admin/public hooks when it corresponds to improve performance and fix a notice on admin.
+
+= 1.3.1 =
+* Fix fatal error when the PHP mbstring extension is not active
+
+= 1.3.0 =
+* Added option to change position of button to left
+* Added formatting styles for Call to action text like in WhatsApp: *italic* **bold** strikethrough
+
+= 1.2.0 =
+* Added International Telephone Input for enhanced phone input
+* Phone number is cleared to generate correct WhatsApp links
+
+= 1.1.0 =
+* Added posts/pages option to override CTA or hide button
+* Don't enqueue assets if not show button
+* Added filters for developers
+
+= 1.0.3 =
+* Readme texts
+
+= 1.0.2 =
+* Fix plugin version
+
+= 1.0.1 =
+* Fix text domain
+
+= 1.0.0 =
+* First version
