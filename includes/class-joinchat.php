@@ -60,7 +60,7 @@ class JoinChat {
 		$this->load_dependencies();
 		$this->set_locale();
 		$this->load_integrations();
-		$this->update_wame();
+
 		is_admin() ? $this->define_admin_hooks() : $this->define_public_hooks();
 
 	}
@@ -132,27 +132,6 @@ class JoinChat {
 	}
 
 	/**
-	 * Run checks.
-	 *
-	 * Check if exists 'whatsappme' settings of previous versions (<4.0)
-	 *
-	 * @since    4.0.0
-	 * @access   private
-	 * @return   boolean    true if pass checks, false otherwise
-	 */
-	private function checks() {
-
-		$whatsappme = false !== get_option( 'whatsappme' );
-
-		if ( $whatsappme ) {
-			add_action( 'admin_notices', array( $this, 'need_reactivate_notice' ) );
-		}
-
-		return ! $whatsappme;
-
-	}
-
-	/**
 	 * Register all of the hooks related to the admin area functionality
 	 * of the plugin.
 	 *
@@ -206,14 +185,15 @@ class JoinChat {
 	 * @access   private
 	 * @return   void
 	 */
-	public function update_wame() {
+	public function update_wame( $option = false ) {
 		global $wpdb;
 
-		$general_option = get_option( 'whatsappme' );
+		$wame_option = get_option( 'whatsappme' );
 
-		if ( false !== $general_option ) {
+		if ( false !== $wame_option ) {
 			// General option
-			update_option( 'joinchat', $general_option );
+			$option = $wame_option;
+			update_option( 'joinchat', $option );
 			delete_option( 'whatsappme' );
 
 			// Post metas
@@ -236,6 +216,8 @@ class JoinChat {
 				update_option( 'polylang_wpml_strings', $polylang_strings );
 			}
 		}
+
+		return $option;
 
 	}
 
