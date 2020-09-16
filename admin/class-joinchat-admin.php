@@ -1055,4 +1055,25 @@ class JoinChatAdmin {
 
 	}
 
+	/**
+	 * Modifies the "Thank you" text displayed in the admin footer.
+	 *
+	 * @since 4.0.10
+	 * @access public
+	 * @param string $footer_text The content that will be printed.
+	 * @return string The content that will be printed.
+	 */
+	public function admin_footer_text( $footer_text ) {
+		$current_screen = get_current_screen();
+
+		if ( $current_screen && 'settings_page_joinchat' === $current_screen->id ) {
+			$footer_text = sprintf(
+				__( 'Do you like %1$s? Please leave us a %2$s rating.', 'creame-whatsapp-me' ),
+				'<strong>Join.chat</strong>',
+				'<a href="https://wordpress.org/support/plugin/creame-whatsapp-me/reviews/#new-post" target="_blank">★★★★★</a>'
+			);
+		}
+
+		return $footer_text;
+	}
 }

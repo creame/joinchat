@@ -155,6 +155,7 @@ class JoinChat {
 
 		$this->loader->add_filter( "plugin_action_links_creame-whatsapp-me/{$this->plugin_name}.php", $plugin_admin, 'settings_link' );
 		$this->loader->add_filter( 'plugin_row_meta', $plugin_admin, 'plugin_links', 10, 2 );
+		$this->loader->add_filter( 'admin_footer_text', $plugin_admin, 'admin_footer_text', PHP_INT_MAX );
 
 	}
 
