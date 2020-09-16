@@ -262,6 +262,7 @@
   line-height: 31px;
   white-space: nowrap;
   opacity: 0;
+  transition: opacity 0.3s ease-out 0.4s;
   filter: drop-shadow(0 1px 4px rgba(0, 0, 0, 0.4));
   transform: translateZ(0);
   pointer-events: none;
@@ -285,6 +286,14 @@
 
 .joinchat--tooltip .joinchat__tooltip {
   animation: joinchat_tootlip 20s linear 5s 1 normal both;
+}
+
+@media (hover: hover) {
+  .joinchat__button:hover .joinchat__tooltip {
+    opacity: 1;
+    animation: none;
+    transition: opacity 0.2s;
+  }
 }
 
 .joinchat--chatbox .joinchat__tooltip {

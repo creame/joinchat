@@ -1,4 +1,4 @@
-@keyframes joinchat_badge_in {
+@keyframes #{$name}_badge_in {
   from {
     opacity: 0;
     transform: translateY(50px);
@@ -10,7 +10,7 @@
   }
 }
 
-@keyframes joinchat_badge_out {
+@keyframes #{$name}_badge_out {
   from {
     opacity: 1;
     transform: translateY(0);
@@ -22,7 +22,7 @@
   }
 }
 
-@keyframes joinchat_plain {
+@keyframes #{$name}_plain {
   0%,
   50%,
   100% {
@@ -35,7 +35,7 @@
   }
 }
 
-@keyframes joinchat_chat {
+@keyframes #{$name}_chat {
   0%,
   50%,
   100% {
@@ -48,7 +48,7 @@
   }
 }
 
-@keyframes joinchat_image_loop {
+@keyframes #{$name}_image_loop {
   0% {
     opacity: 0;
   }
@@ -64,7 +64,7 @@
   }
 }
 
-@keyframes joinchat_tootlip {
+@keyframes #{$name}_tootlip {
   0% {
     opacity: 0;
     transform: scaleY(0);

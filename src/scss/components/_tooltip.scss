@@ -12,6 +12,7 @@
   line-height: 31px;
   white-space: nowrap;
   opacity: 0;
+  transition: opacity 0.3s ease-out 0.4s;
   filter: drop-shadow(0 1px 4px rgba($black, 0.4));
   transform: translateZ(0);
   pointer-events: none;
@@ -33,6 +34,14 @@
 
   #{$class}--tooltip & {
     animation: #{$name}_tootlip 20s linear 5s 1 normal both;
+  }
+
+  @include hover {
+    #{$class}__button:hover & {
+      opacity: 1;
+      animation: none;
+      transition: opacity 0.2s;
+    }
   }
 
   #{$class}--chatbox & {

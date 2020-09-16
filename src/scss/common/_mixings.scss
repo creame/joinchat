@@ -19,6 +19,13 @@
   }
 }
 
+// Devices with hover state (mouse/cursor)
+@mixin hover {
+  @media (hover: hover) {
+    @content;
+  }
+}
+
 // Use for pseudo code
 @mixin pseudo($display: block, $pos: absolute, $content: '') {
   content: $content;
