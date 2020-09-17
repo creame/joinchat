@@ -15,12 +15,12 @@ if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 }
 
 /**
- * By default don't delete plugin data.
+ * By default delete all plugin data.
  *
- * Use "add_filter( 'joinchat_delete_all', '__return_true' );"
- * before uninstall Join.chat to completely clear all plugin data.
+ * Use "add_filter( 'joinchat_delete_all', '__return_false' );"
+ * before uninstall Join.chat to prevent clear all plugin data.
  */
-if ( apply_filters( 'joinchat_delete_all', false ) ) {
+if ( apply_filters( 'joinchat_delete_all', true ) ) {
 	global $wpdb;
 
 	// Delete general option 'joinchat' added by plugin
