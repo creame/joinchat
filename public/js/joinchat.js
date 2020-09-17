@@ -1,7 +1,7 @@
-(function ($, window) {
+(function ($, win, doc) {
   'use strict';
 
-  window.joinchat_obj = window.joinchat_obj || {};
+  win.joinchat_obj = win.joinchat_obj || {};
 
   joinchat_obj = $.extend({
     $div: null,
@@ -17,7 +17,7 @@
 
   // Trigger Google Analytics event
   joinchat_obj.send_event = function (label, action) {
-    var ga_tracker = window[this.settings.ga_tracker || 'ga'];
+    var ga_tracker = win[this.settings.ga_tracker || 'ga'];
     label = label || '';
     action = action || 'click';
 
@@ -68,7 +68,7 @@
         this.$('.joinchat__badge').toggleClass('joinchat__badge--in joinchat__badge--out');
       }
       // Trigger custom event
-      $(document).trigger('joinchat:show');
+      $(doc).trigger('joinchat:show');
     }
   };
 
@@ -81,7 +81,7 @@
         this.$('.joinchat__badge').removeClass('joinchat__badge--out');
       }
       // Trigger custom event
-      $(document).trigger('joinchat:hide');
+      $(doc).trigger('joinchat:hide');
     }
   };
 
@@ -100,14 +100,14 @@
     var secure_link = new RegExp("^https?:\/\/(wa\.me|(api|web|chat)\.whatsapp\.com|" + location.hostname.replace('.', '\.') + ")\/.*", 'i');
 
     // Trigger custom event (args obj allow edit link by third party scripts)
-    $(document).trigger('joinchat:open', [args, this.settings]);
+    $(doc).trigger('joinchat:open', [args, this.settings]);
 
     // Ensure the link is safe
     if (secure_link.test(args.link)) {
       // Send analytics events
       this.send_event(args.link);
       // Open WhatsApp link
-      window.open(args.link, 'joinchat');
+      win.open(args.link, 'joinchat');
     } else {
       console.error("Join.chat: the link doesn't seem safe, it must point to the current domain or whatsapp.com");
     }
@@ -145,7 +145,7 @@
         joinchat_magic();
       } else {
         // Launch WhatsApp when click on nodes with class "joinchat_open"
-        $(document).on('click', '.joinchat_open', function (e) {
+        $(doc).on('click', '.joinchat_open', function (e) {
           e.preventDefault();
           joinchat_obj.open_whatsapp();
         });
@@ -155,7 +155,7 @@
     joinchat_obj.store.setItem('joinchat_views', parseInt(joinchat_obj.store.getItem('joinchat_views') || 0) + 1);
 
     function joinchat_magic() {
-      $(document).trigger('joinchat:starting');
+      $(doc).trigger('joinchat:starting');
 
       var button_delay = joinchat_obj.settings.button_delay * 1000;
       var chat_delay = joinchat_obj.settings.message_delay * 1000;
@@ -221,35 +221,45 @@
         this.scrollTop += (delta < 0 ? 1 : -1) * 30;
       });
 
-      // Hide on mobile when virtual keyboard is open
+      // Hide on mobile when virtual keyboard is open (on fill forms)
       if (joinchat_obj.is_mobile) {
-        var initial_height = window.innerHeight;
         var timeoutKB;
 
-        $(document).on('focus blur', 'input, textarea', function (e) {
-          if (!$(e.target).closest(joinchat_obj.$div)) {
+        function form_focus_toggle() {
+          if (['input', 'textarea', 'select'].indexOf(doc.activeElement.tagName.toLowerCase()) >= 0) {
+            if (joinchat_obj.chatbox) {
+              joinchat_obj.chatbox_hide();
+              setTimeout(function () { joinchat_obj.$div.removeClass('joinchat--show'); }, 400);
+            } else {
+              joinchat_obj.$div.removeClass('joinchat--show');
+            }
+          } else {
+            joinchat_obj.$div.addClass('joinchat--show');
+          }
+        }
+
+        $(doc).on('focus blur', 'input, textarea, select', function (e) {
+          if (!$(e.target).closest(joinchat_obj.$div).length) {
             clearTimeout(timeoutKB);
-            timeoutKB = setTimeout(function () {
-              joinchat_obj.$div.toggleClass('joinchat--show', window.innerHeight > initial_height * 0.7);
-            }, 800);
+            timeoutKB = setTimeout(form_focus_toggle, 200);
           }
         });
       }
 
       // Open Join.chat or launch WhatsApp when click on nodes with class "joinchat_open"
-      $(document).on('click', '.joinchat_open', function (e) {
+      $(doc).on('click', '.joinchat_open', function (e) {
         e.preventDefault();
         if (!joinchat_obj.chatbox) joinchat_click();
       });
 
       // Close Join.chat when click on nodes with class "joinchat_close"
-      $(document).on('click', '.joinchat_close', function (e) {
+      $(doc).on('click', '.joinchat_close', function (e) {
         e.preventDefault();
         chatbox_hide();
       });
 
       // Open Join.chat when "joinchat_open" or "joinchat_force_show" on viewport
-      if (has_chatbox && 'IntersectionObserver' in window) {
+      if (has_chatbox && 'IntersectionObserver' in win) {
         var $show_on_scroll = $('.joinchat_show, .joinchat_force_show');
 
         function joinchat_observed(objs) {
@@ -268,9 +278,9 @@
         }
       }
 
-      $(document).trigger('joinchat:start');
+      $(doc).trigger('joinchat:start');
     }
 
   });
 
-}(jQuery, window));
+}(jQuery, window, document));
