@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Join.chat\n"
 "Report-Msgid-Bugs-To: Translator Name <translations@example.com>\n"
-"POT-Creation-Date: 2020-06-25 13:09+0200\n"
-"PO-Revision-Date: 2020-06-25 13:10+0200\n"
+"POT-Creation-Date: 2020-09-17 13:14+0200\n"
+"PO-Revision-Date: 2020-09-17 13:22+0200\n"
 "Last-Translator: Pacotole <pacotole@crea.me>\n"
 "Language-Team: Español\n"
 "Language: es_ES\n"
@@ -22,13 +22,13 @@ msgstr ""
 msgid "Open chat"
 msgstr "Abrir chat"
 
-#: public/class-joinchat-public.php:257 admin/class-joinchat-admin.php:507
+#: public/class-joinchat-public.php:251 admin/class-joinchat-admin.php:507
 #: admin/class-joinchat-admin.php:686 admin/class-joinchat-admin.php:782
 msgctxt "url lang slug (only available for spanish \"es\")"
 msgid "en"
 msgstr "es"
 
-#: public/class-joinchat-public.php:319
+#: public/class-joinchat-public.php:313
 msgid "Close"
 msgstr "Cerrar"
 
@@ -476,7 +476,7 @@ msgid "only show if it's an not seen CTA."
 msgstr "mostrar solo si es un CTA no visto."
 
 #: admin/class-joinchat-admin.php:740
-msgid "to show allways."
+msgid "to show always."
 msgstr "para mostrar siempre."
 
 #: admin/class-joinchat-admin.php:762
@@ -519,6 +519,11 @@ msgstr "Visibilidad por defecto"
 #: admin/class-joinchat-admin.php:1007
 msgid "You can use vars"
 msgstr "Puedes usar las variables"
+
+#: admin/class-joinchat-admin.php:1071
+#, php-format
+msgid "Do you like %1$s? Please leave us a %2$s rating."
+msgstr "¿Te gusta %1$s? Escríbenos un reseña %2$s."
 
 #: admin/class-joinchat-wooadmin.php:128
 msgid "Shop"
