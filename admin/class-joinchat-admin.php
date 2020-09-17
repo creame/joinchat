@@ -737,7 +737,7 @@ class JoinChatAdmin {
 						'<li>' . __( 'To show Chat Window when an HTML element appears on screen when user scrolls:', 'creame-whatsapp-me' ) .
 						'<ul>' .
 							'<li><code>joinchat_show</code> ' . __( 'only show if it\'s an not seen CTA.', 'creame-whatsapp-me' ) . '</li>' .
-							'<li><code>joinchat_force_show</code> ' . __( 'to show allways.', 'creame-whatsapp-me' ) . '</li>' .
+							'<li><code>joinchat_force_show</code> ' . __( 'to show always.', 'creame-whatsapp-me' ) . '</li>' .
 						'</ul></li>' .
 					'</ul>',
 			),
