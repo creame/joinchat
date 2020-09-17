@@ -5,7 +5,7 @@ Tags: whatsapp business, whatsapp, click to chat, button, whatsapp support chat,
 Requires at least: 3.0.1
 Tested up to: 5.5
 Requires PHP: 5.3
-Stable tag: 4.0.9
+Stable tag: 4.0.10
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -169,6 +169,12 @@ Join.chat general text settings can be translated with the strings translation o
 3. Set chat window color theme.
 
 == Changelog ==
+
+= 4.0.10 =
+* **NEW:** show tooltip on hover button
+* **NEW:** hide on mobile when user fill forms
+* CHANGED by default clear all plugin data on uninstall.
+* FIX remove unnecessary get option 'whatsappme'
 
 = 4.0.9 =
 * FIX notification balloon text color white
