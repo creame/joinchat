@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Join.chat\n"
-"POT-Creation-Date: 2020-06-25 11:09+0000\n"
+"POT-Creation-Date: 2020-09-17 10:40+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Your Name <you@example.com>\n"
 "Language-Team: Creame <hola@crea.me>\n"
@@ -26,13 +26,13 @@ msgstr ""
 msgid "Open chat"
 msgstr ""
 
-#: public/class-joinchat-public.php:257 admin/class-joinchat-admin.php:507
+#: public/class-joinchat-public.php:251 admin/class-joinchat-admin.php:507
 #: admin/class-joinchat-admin.php:686 admin/class-joinchat-admin.php:782
 msgctxt "url lang slug (only available for spanish \"es\")"
 msgid "en"
 msgstr ""
 
-#: public/class-joinchat-public.php:319
+#: public/class-joinchat-public.php:313
 msgid "Close"
 msgstr ""
 
@@ -449,7 +449,7 @@ msgid "only show if it's an not seen CTA."
 msgstr ""
 
 #: admin/class-joinchat-admin.php:740
-msgid "to show allways."
+msgid "to show always."
 msgstr ""
 
 #: admin/class-joinchat-admin.php:762
@@ -491,6 +491,11 @@ msgstr ""
 
 #: admin/class-joinchat-admin.php:1007
 msgid "You can use vars"
+msgstr ""
+
+#: admin/class-joinchat-admin.php:1071
+#, php-format
+msgid "Do you like %1$s? Please leave us a %2$s rating."
 msgstr ""
 
 #: admin/class-joinchat-wooadmin.php:128
