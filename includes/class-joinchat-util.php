@@ -169,9 +169,9 @@ class JoinChatUtil {
 		$replacements = apply_filters(
 			'joinchat_format_replacements',
 			array(
-				'/_(\S[^_]*\S)_/u'    => '<em>$1</em>',
-				'/\*(\S[^\*]*\S)\*/u' => '<strong>$1</strong>',
-				'/~(\S[^~]*\S)~/u'    => '<del>$1</del>',
+				'/(^|\W)_(.+?)_(\W|$)/u'   => '$1<em>$2</em>$3',
+				'/(^|\W)\*(.+?)\*(\W|$)/u' => '$1<strong>$2</strong>$3',
+				'/(^|\W)~(.+?)~(\W|$)/u'   => '$1<del>$2</del>$3',
 			)
 		);
 
