@@ -257,7 +257,7 @@ class JoinChatPublic {
 			if ( is_null( $image ) && $this->settings['button_image'] ) {
 				$img_id = $this->settings['button_image'];
 
-				if ( apply_filters( 'joinchat_image_original', JoinChatUtil::is_animated_gif( $img_id ) ) ) {
+				if ( apply_filters( 'joinchat_image_original', JoinChatUtil::is_animated_gif( $img_id ), $img_id, 'button' ) ) {
 					$image = '<img src="' . wp_get_attachment_url( $img_id ) . '" alt="">';
 				} elseif ( is_array( JoinChatUtil::thumb( $img_id, 58, 58 ) ) ) {
 					$thumb  = JoinChatUtil::thumb( $img_id, 58, 58 );
