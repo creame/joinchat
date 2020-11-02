@@ -86,8 +86,8 @@ class JoinChatUtil {
 
 		$img_path = intval( $img ) > 0 ? get_attached_file( $img ) : $img;
 
-		if ( ! $img_path || ! file_exists( $img_path ) ) {
-			// Try fallback if file_exists() fails
+		// Try fallback if file don't exists (filter to true to skip thumbnail generation)
+		if ( apply_filters('joinchat_disable_thumbs', ! $img_path || ! file_exists( $img_path ) ) ) {
 			$src = wp_get_attachment_image_src( $img, array( $width, $height ) );
 
 			if ( is_array( $src ) ) {
