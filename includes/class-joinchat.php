@@ -63,6 +63,8 @@ class JoinChat {
 
 		is_admin() ? $this->define_admin_hooks() : $this->define_public_hooks();
 
+		add_action( 'joinchat_run_pre', array( $this, 'disable_remove_brand' ), 11 );
+
 	}
 
 	/**
@@ -180,10 +182,23 @@ class JoinChat {
 	}
 
 	/**
+	 * Remove all JoinChatRemoveBrand filters
+	 *
+	 * @since    4.1.0
+	 * @access   public
+	 * @return   void
+	 */
+	public function disable_remove_brand() {
+
+		$this->loader->remove_filter( null, 'JoinChatRemoveBrand' );
+
+	}
+
+	/**
 	 * Migrate 'whatsappme' settings on versions < 4.0 to new 'joinchat'
 	 *
 	 * @since    4.0.0
-	 * @access   private
+	 * @access   public
 	 * @return   void
 	 */
 	public function update_wame( $option = false ) {
