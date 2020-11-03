@@ -133,10 +133,6 @@ class JoinChatAdmin {
 			$saved_settings = array_intersect_key( $saved_settings, $default_settings );
 			// merge defaults with saved settings
 			$this->settings = array_merge( $default_settings, $saved_settings );
-			// miliseconds (<v2.3) to seconds
-			if ( $this->settings['message_delay'] > 120 ) {
-				$this->settings['message_delay'] = round( $this->settings['message_delay'] / 1000 );
-			}
 		}
 
 	}

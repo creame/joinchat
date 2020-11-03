@@ -120,10 +120,6 @@ class JoinChatPublic {
 			$settings = array_intersect_key( $site_settings, $default_settings );
 			// Merge defaults with saved settings
 			$settings = array_merge( $default_settings, $settings );
-			// miliseconds (<v2.3) to seconds
-			if ( $settings['message_delay'] > 120 ) {
-				$settings['message_delay'] = round( $settings['message_delay'] / 1000 );
-			}
 
 			// Load WPML/Polylang translated strings
 			$settings_i18n = JoinChatUtil::settings_i18n();
