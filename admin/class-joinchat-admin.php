@@ -391,7 +391,9 @@ class JoinChatAdmin {
 		$settings_i18n = JoinChatUtil::settings_i18n();
 
 		foreach ( $settings_i18n as $setting_key => $setting_name ) {
-			do_action( 'wpml_register_single_string', 'Join.chat', $setting_name, $input[ $setting_key ] );
+			if ( isset( $input[ $setting_key ] ) ) {
+				do_action( 'wpml_register_single_string', 'Join.chat', $setting_name, $input[ $setting_key ] );
+			}
 		}
 
 		// Extra actions on save

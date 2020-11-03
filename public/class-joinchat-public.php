@@ -132,7 +132,9 @@ class JoinChatPublic {
 			$settings_i18n = JoinChatUtil::settings_i18n();
 
 			foreach ( $settings_i18n as $key => $label ) {
-				$settings[ $key ] = $settings[ $key ] ? apply_filters( 'wpml_translate_single_string', $settings[ $key ], 'Join.chat', $label ) : '';
+				if ( isset( $settings[ $key ] ) ) {
+					$settings[ $key ] = $settings[ $key ] ? apply_filters( 'wpml_translate_single_string', $settings[ $key ], 'Join.chat', $label ) : '';
+				}
 			}
 
 			// Filter for site settings (can be overriden by post settings)
