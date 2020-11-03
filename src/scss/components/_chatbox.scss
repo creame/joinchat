@@ -31,11 +31,13 @@
 }
 
 #{$class}__header {
+  display: flex;
+  flex-flow: row;
+  align-items: center;
   position: relative;
   flex-shrink: 0;
   height: var(--header);
-  line-height: var(--header);
-  padding: 0 26px;
+  padding: 0 70px 0 26px;
   margin: 0;
   background: var(--color);
   text-align: left;
@@ -47,9 +49,19 @@
   #{$class}--dark & {
     background: var(--dark);
   }
+
+  &__text {
+    font-size: 19px;
+    font-weight: 600;
+    max-width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    opacity: 0.8;
+  }
 }
 
-#{$class}__copy {
+#{$class}__powered {
   font-size: 11px;
   line-height: 18px;
   color: inherit !important;
@@ -61,15 +73,22 @@
     display: inline-block;
     width: auto;
     height: 18px;
-    vertical-align: -26%;
+    vertical-align: text-top;
   }
 
-  a&:hover,
-  a&:active {
+  &:hover,
+  &:active {
     color: inherit !important;
     text-decoration: none !important;
     opacity: 0.9;
   }
+}
+
+#{$class}__wa {
+  height: 28px;
+  width: auto;
+  fill: currentColor;
+  opacity: 0.8;
 }
 
 #{$class}__close {
@@ -134,6 +153,10 @@
 }
 
 @include mobile {
+  #{$class}__header__text {
+    font-size: 17px;
+  }
+
   #{$class}__close {
     margin-top: -14px;
     width: 28px;

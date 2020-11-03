@@ -189,6 +189,10 @@
       });
 
       $('#joinchat_color').wpColorPicker();
+
+      $('#joinchat_header_custom').on('click', function(){
+        $(this).prev().find('input').prop('checked', true);
+      });
     }
 
     if ($('.joinchat-metabox').length === 1) {

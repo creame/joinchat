@@ -87,6 +87,7 @@ class JoinChatAdmin {
 	 * @since    3.0.0     Is public and added plugin enhanced_phone and tabs
 	 * @since    3.1.0     Added tooltip and image
 	 * @since    4.0.0     Added message_views and color
+	 * @since    4.1.0     Added header
 	 */
 	public function get_settings() {
 
@@ -121,6 +122,7 @@ class JoinChatAdmin {
 				'visibility'    => array( 'all' => 'yes' ),
 				'color'         => '#25d366',
 				'dark_mode'     => 'no',
+				'header'        => '__jc__', // values: '__jc__', '__wa__' or other custom text
 			),
 			apply_filters( 'joinchat_extra_settings', array() )
 		);
@@ -129,6 +131,12 @@ class JoinChatAdmin {
 		$saved_settings = get_option( 'joinchat', $default_settings );
 
 		if ( is_array( $saved_settings ) ) {
+			// Migrate addons 'remove_brand' setting to 'header' (v. < 4.1)
+			if ( isset( $saved_settings['remove_brand'] ) ) {
+				$remove                   = $saved_settings['remove_brand'];
+				$saved_settings['header'] = 'wa' == $remove ? '__wa__' : ( 'no' == $remove ? '__jc__' : '' );
+			}
+
 			// clean unused saved settings
 			$saved_settings = array_intersect_key( $saved_settings, $default_settings );
 			// merge defaults with saved settings
@@ -249,7 +257,7 @@ class JoinChatAdmin {
 					'message_start' => '<label for="joinchat_message_start">' . __( 'Open Chat', 'creame-whatsapp-me' ) . '</label>',
 					'color'         => __( 'Theme Color', 'creame-whatsapp-me' ),
 					'dark_mode'     => __( 'Dark Mode', 'creame-whatsapp-me' ),
-					'remove_brand'  => __( 'Logo', 'creame-whatsapp-me' ),
+					'header'        => __( 'Header', 'creame-whatsapp-me' ),
 				),
 				'chat_open' => array(
 					'message_delay' => '<label for="joinchat_message_delay">' . __( 'Chat Delay', 'creame-whatsapp-me' ) . '</label>',
@@ -361,6 +369,8 @@ class JoinChatAdmin {
 		$input['position']      = $input['position'] != 'left' ? 'right' : 'left';
 		$input['color']         = preg_match( '/^#[a-f0-9]{6}$/i', $input['color'] ) ? $input['color'] : '#25d366';
 		$input['dark_mode']     = in_array( $input['dark_mode'], array( 'no', 'yes', 'auto' ) ) ? $input['dark_mode'] : 'no';
+		$input['header']        = in_array( $input['header'], array( '__jc__', '__wa__' ) ) ? $input['header'] : $util::clean_input( $input['header_custom'] );
+
 		if ( isset( $input['view'] ) ) {
 			$input['visibility'] = array_filter(
 				$input['view'],
@@ -609,15 +619,19 @@ class JoinChatAdmin {
 						__( 'Auto (detects device dark mode)', 'creame-whatsapp-me' ) . '</label></fieldset>';
 					break;
 
-				case 'remove_brand':
-					$output = '<fieldset><legend class="screen-reader-text"><span>' . __( 'Logo', 'creame-whatsapp-me' ) . '</span></legend>' .
-						'<label><input id="joinchat_remove_brand" type="checkbox" disabled> ' .
-						__( 'Remove "Powered by Join.chat" link', 'creame-whatsapp-me' ) . '</label></fieldset>' .
-						'<p class="joinchat-addon">' . sprintf(
-							__( 'Included with all our %1$sadd-ons%2$s', 'creame-whatsapp-me' ),
-							'<a target="_blank" href="https://join.chat/' . $lang . '/addons/' . $utm . '">',
-							'</a>'
-						) . '</p>';
+				case 'header':
+					$check = in_array( $value, array( '__jc__', '__wa__' ) ) ? $value : '__custom__';
+					$value = '__custom__' == $check ? $value : '';
+
+					$output = '<fieldset><legend class="screen-reader-text"><span>' . __( 'Header', 'creame-whatsapp-me' ) . '</span></legend>' .
+						'<label><input name="joinchat[header]" value="__jc__" type="radio"' . checked( '__jc__', $check, false ) . '> ' .
+						__( 'Powered by Join.chat', 'creame-whatsapp-me' ) . '</label><br>' .
+						'<label><input name="joinchat[header]" value="__wa__" type="radio"' . checked( '__wa__', $check, false ) . '> ' .
+						__( 'WhatsApp Logo', 'creame-whatsapp-me' ) . '</label><br>' .
+						'<label><input name="joinchat[header]" value="__custom__" type="radio"' . checked( '__custom__', $check, false ) . '> ' .
+						__( 'Custom:', 'creame-whatsapp-me' ) . '</label> ' .
+						'<input id="joinchat_header_custom" name="joinchat[header_custom]" value="' . $value . '" type="text" maxlength="40" class="regular-text" placeholder="">' .
+						'</fieldset>';
 					break;
 
 				default:
