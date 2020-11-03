@@ -254,7 +254,7 @@ class JoinChatAdmin {
 				),
 				'chat'      => array(
 					'message_text'  => '<label for="joinchat_message_text">' . __( 'Call to Action', 'creame-whatsapp-me' ) . '</label>' . self::vars_help( 'message_text' ),
-					'message_start' => '<label for="joinchat_message_start">' . __( 'Open Chat', 'creame-whatsapp-me' ) . '</label>',
+					'message_start' => '<label for="joinchat_message_start">' . __( 'Button Text', 'creame-whatsapp-me' ) . '</label>',
 					'color'         => __( 'Theme Color', 'creame-whatsapp-me' ),
 					'dark_mode'     => __( 'Dark Mode', 'creame-whatsapp-me' ),
 					'header'        => __( 'Header', 'creame-whatsapp-me' ),
@@ -699,8 +699,37 @@ class JoinChatAdmin {
 
 		$help_tabs = array(
 			array(
+				'id'      => 'styles-and-vars',
+				'title'   => __( 'Styles and Variables', 'creame-whatsapp-me' ),
+				'content' =>
+					'<p>' . __( 'You can use formatting styles like in WhatsApp: _<em>italic</em>_ *<strong>bold</strong>* ~<del>strikethrough</del>~.', 'creame-whatsapp-me' ) . '</p>' .
+					'<p>' . __( 'You can use dynamic variables that will be replaced by the values of the page the user visits:', 'creame-whatsapp-me' ) .
+					'<p>' .
+					'<span><code>{SITE}</code> ➜ ' . get_bloginfo( 'name', 'display' ) . '</span>, ' .
+					'<span><code>{URL}</code> ➜ ' . home_url( 'example' ) . '</span>, ' .
+					'<span><code>{TITLE}</code> ➜ ' . __( 'Page Title', 'creame-whatsapp-me' ) . '</span>' .
+					'</p>',
+			),
+			array(
+				'id'      => 'triggers',
+				'title'   => __( 'Triggers', 'creame-whatsapp-me' ),
+				'content' =>
+					'<p>' . __( 'Your page elements can interact with Join.chat adding some CSS classes in your HTML:', 'creame-whatsapp-me' ) . '</p>' .
+					'<ul>' .
+						'<li><code>joinchat_open</code> ' . __( 'to show Chat Window or open WhatsApp on click.', 'creame-whatsapp-me' ) . '</li>' .
+						'<li><code>joinchat_open_app</code> ' . __( 'to open WhatsApp directly on click.', 'creame-whatsapp-me' ) . '</li>' .
+						'<li><code>joinchat_close</code> ' . __( 'to hide Chat Window on click.', 'creame-whatsapp-me' ) . '</li>' .
+						'<li>' . __( 'To show Chat Window when an HTML element appears on screen when user scrolls:', 'creame-whatsapp-me' ) .
+						'<ul>' .
+							'<li><code>joinchat_show</code> ' . __( 'only show if it\'s an not seen CTA.', 'creame-whatsapp-me' ) . '</li>' .
+							'<li><code>joinchat_force_show</code> ' . __( 'to show always.', 'creame-whatsapp-me' ) . '</li>' .
+						'</ul></li>' .
+					'</ul>' .
+					'<p>' . __( 'Example:', 'creame-whatsapp-me' ) . '<code>&lt;a href="#" class="joinchat_open"&gt;' . __( 'Contact us', 'creame-whatsapp-me' ) . '&lt;/a&gt;</code></p>',
+			),
+			array(
 				'id'      => 'support',
-				'title'   => __( 'Support and Help', 'creame-whatsapp-me' ),
+				'title'   => __( 'Support', 'creame-whatsapp-me' ),
 				'content' =>
 					'<p>' . sprintf(
 						__( 'If you need help, first review our <a href="%1$s" target="_blank">documentation</a> and if you don\'t find a solution check the <a href="%2$s" target="_blank">free plugin support forum</a> or buy our <a href="%3$s" target="_blank">premium support</a>.', 'creame-whatsapp-me' ),
@@ -722,35 +751,6 @@ class JoinChatAdmin {
 						__( 'Follow %s on twitter.', 'creame-whatsapp-me' ),
 						'<a href="https://twitter.com/joinchatnow" target="_blank">@joinchatnow</a>'
 					) . '</li>' .
-					'</ul>',
-			),
-			array(
-				'id'      => 'styles-and-vars',
-				'title'   => __( 'Styles and Variables', 'creame-whatsapp-me' ),
-				'content' =>
-					'<p>' . __( 'You can use formatting styles like in WhatsApp: _<em>italic</em>_ *<strong>bold</strong>* ~<del>strikethrough</del>~.', 'creame-whatsapp-me' ) . '</p>' .
-					'<p>' . __( 'You can use dynamic variables that will be replaced by the values of the page the user visits:', 'creame-whatsapp-me' ) .
-					'<p>' .
-					'<span><code>{SITE}</code> ➜ ' . get_bloginfo( 'name', 'display' ) . '</span>, ' .
-					'<span><code>{URL}</code> ➜ ' . home_url( 'example' ) . '</span>, ' .
-					'<span><code>{TITLE}</code> ➜ ' . __( 'Page Title', 'creame-whatsapp-me' ) . '</span>' .
-					'</p>',
-			),
-			array(
-				'id'      => 'triggers',
-				'title'   => __( 'Triggers', 'creame-whatsapp-me' ),
-				'content' =>
-					'<p>' . __( 'Chat Window with a Call to Action (CTA) can be displayed automatically after a defined delay time and from a number of page views.', 'creame-whatsapp-me' ) . ' ' .
-						__( 'When the user close Chat Window or open WhatsApp, that CTA will not automatically show again.', 'creame-whatsapp-me' ) . '</p>' .
-					'<p>' . __( 'You can also interact with Join.chat in your pages adding some CSS classes to your HTML:', 'creame-whatsapp-me' ) . '</p>' .
-					'<ul>' .
-						'<li><code>joinchat_open</code> ' . __( 'to show Chat Window or open WhatsApp on click.', 'creame-whatsapp-me' ) . '</li>' .
-						'<li><code>joinchat_close</code> ' . __( 'to hide Chat Window on click.', 'creame-whatsapp-me' ) . '</li>' .
-						'<li>' . __( 'To show Chat Window when an HTML element appears on screen when user scrolls:', 'creame-whatsapp-me' ) .
-						'<ul>' .
-							'<li><code>joinchat_show</code> ' . __( 'only show if it\'s an not seen CTA.', 'creame-whatsapp-me' ) . '</li>' .
-							'<li><code>joinchat_force_show</code> ' . __( 'to show always.', 'creame-whatsapp-me' ) . '</li>' .
-						'</ul></li>' .
 					'</ul>',
 			),
 		);
@@ -1080,7 +1080,7 @@ class JoinChatAdmin {
 
 		if ( $current_screen && 'settings_page_joinchat' === $current_screen->id ) {
 			$footer_text = sprintf(
-				__( 'Do you like %1$s? Please leave us a %2$s rating.', 'creame-whatsapp-me' ),
+				__( 'Do you like %1$s? Please help us with a %2$s rating.', 'creame-whatsapp-me' ),
 				'<strong>Join.chat</strong>',
 				'<a href="https://wordpress.org/support/plugin/creame-whatsapp-me/reviews/#new-post" target="_blank">★★★★★</a>'
 			);

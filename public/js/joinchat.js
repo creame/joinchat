@@ -144,8 +144,8 @@
       if (joinchat_obj.is_mobile || !joinchat_obj.settings.mobile_only) {
         joinchat_magic();
       } else {
-        // Launch WhatsApp when click on nodes with class "joinchat_open"
-        $(doc).on('click', '.joinchat_open', function (e) {
+        // Launch WhatsApp when click on nodes with classes "joinchat_open" "joinchat_open_app"
+        $(doc).on('click', '.joinchat_open, .joinchat_open_app', function (e) {
           e.preventDefault();
           joinchat_obj.open_whatsapp();
         });
@@ -248,19 +248,20 @@
         });
       }
 
-      // Open Join.chat or launch WhatsApp when click on nodes with class "joinchat_open"
-      $(doc).on('click', '.joinchat_open', function (e) {
+      // Open chatbox or launch WhatsApp when click on nodes with classes "joinchat_open" "joinchat_open_app"
+      $(doc).on('click', '.joinchat_open, .joinchat_open_app', function (e) {
         e.preventDefault();
-        if (!joinchat_obj.chatbox) joinchat_click();
+        if ($(this).hasClass('joinchat_open_app') || !has_chatbox) joinchat_obj.open_whatsapp(); // WhatsApp direct
+        else if (!joinchat_obj.chatbox) chatbox_show(); // Open chatbox
       });
 
-      // Close Join.chat when click on nodes with class "joinchat_close"
+      // Close chatbox when click on nodes with class "joinchat_close"
       $(doc).on('click', '.joinchat_close', function (e) {
         e.preventDefault();
-        chatbox_hide();
+        joinchat_obj.chatbox_hide();
       });
 
-      // Open Join.chat when "joinchat_open" or "joinchat_force_show" on viewport
+      // Open Join.chat when "joinchat_show" or "joinchat_force_show" on viewport
       if (has_chatbox && 'IntersectionObserver' in win) {
         var $show_on_scroll = $('.joinchat_show, .joinchat_force_show');
 
