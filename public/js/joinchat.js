@@ -226,7 +226,9 @@
         var timeoutKB;
 
         function form_focus_toggle() {
-          if (['input', 'textarea', 'select'].indexOf(doc.activeElement.tagName.toLowerCase()) >= 0) {
+          var type = (doc.activeElement.type || '').toLowerCase();
+
+          if (['date', 'datetime', 'email', 'month', 'number', 'password', 'search', 'tel', 'text', 'textarea', 'time', 'url', 'week'].indexOf(type) >= 0) {
             if (joinchat_obj.chatbox) {
               joinchat_obj.chatbox_hide();
               setTimeout(function () { joinchat_obj.$div.removeClass('joinchat--show'); }, 400);
@@ -238,7 +240,7 @@
           }
         }
 
-        $(doc).on('focus blur', 'input, textarea, select', function (e) {
+        $(doc).on('focus blur', 'input, textarea', function (e) {
           if (!$(e.target).closest(joinchat_obj.$div).length) {
             clearTimeout(timeoutKB);
             timeoutKB = setTimeout(form_focus_toggle, 200);
