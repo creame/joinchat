@@ -129,7 +129,7 @@ class JoinChatPublic {
 			$settings = array_merge( $default_settings, $settings );
 
 			// Load WPML/Polylang translated strings
-			$settings_i18n = JoinChatUtil::settings_i18n();
+			$settings_i18n = JoinChatUtil::settings_i18n( $settings );
 
 			foreach ( $settings_i18n as $key => $label ) {
 				if ( isset( $settings[ $key ] ) ) {

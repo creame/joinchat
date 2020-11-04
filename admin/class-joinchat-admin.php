@@ -388,7 +388,7 @@ class JoinChatAdmin {
 		 * Register WPML/Polylang strings for translation
 		 * https://wpml.org/wpml-hook/wpml_register_single_string/
 		 */
-		$settings_i18n = JoinChatUtil::settings_i18n();
+		$settings_i18n = JoinChatUtil::settings_i18n( $input );
 
 		foreach ( $settings_i18n as $setting_key => $setting_name ) {
 			if ( isset( $input[ $setting_key ] ) ) {
