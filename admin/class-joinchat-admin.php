@@ -716,9 +716,9 @@ class JoinChatAdmin {
 				'content' =>
 					'<p>' . __( 'Your page elements can interact with Join.chat adding some CSS classes in your HTML:', 'creame-whatsapp-me' ) . '</p>' .
 					'<ul>' .
-						'<li><code>joinchat_open</code> ' . __( 'to show Chat Window or open WhatsApp on click.', 'creame-whatsapp-me' ) . '</li>' .
-						'<li><code>joinchat_open_app</code> ' . __( 'to open WhatsApp directly on click.', 'creame-whatsapp-me' ) . '</li>' .
+						'<li><code>joinchat_open</code> ' . __( 'to show Chat Window (or open WhatsApp if there is no CTA) on click.', 'creame-whatsapp-me' ) . '</li>' .
 						'<li><code>joinchat_close</code> ' . __( 'to hide Chat Window on click.', 'creame-whatsapp-me' ) . '</li>' .
+						'<li><code>joinchat_app</code> ' . __( 'to open WhatsApp directly on click.', 'creame-whatsapp-me' ) . '</li>' .
 						'<li>' . __( 'To show Chat Window when an HTML element appears on screen when user scrolls:', 'creame-whatsapp-me' ) .
 						'<ul>' .
 							'<li><code>joinchat_show</code> ' . __( 'only show if it\'s an not seen CTA.', 'creame-whatsapp-me' ) . '</li>' .
