@@ -185,9 +185,11 @@ There is a Javascript event that Join.chat triggers automatically before launch 
 
 == Screenshots ==
 
-1. Set phone, button text and call to action.
-2. Set button image and tooltip.
-3. Set chat window color theme.
+1. Mobile example
+2. Desktop example (with Dynamic Vars)
+3. General settings
+4. Visibility settings
+5. WooCommerce settings
 
 == Changelog ==
 
