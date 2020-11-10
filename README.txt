@@ -5,7 +5,7 @@ Tags: whatsapp business, whatsapp, click to chat, button, whatsapp support chat,
 Requires at least: 3.0.1
 Tested up to: 5.5
 Requires PHP: 5.3
-Stable tag: 4.1.0
+Stable tag: 4.1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -15,7 +15,7 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 ### 💬 Connect your WordPress to WhatsApp in one click.
 
-> The best WhatsApp plugin for WordPress, with almost 300,000 installations worldwide.
+> The best WordPress plugin for WhatsApp, with more than 300,000 installations worldwide.
 
 [Documentation](https://join.chat/en/docs/?utm_source=wporg&utm_medium=web&utm_campaign=v4_1) | [Add-ons](https://join.chat/en/addons/?utm_source=wporg&utm_medium=web&utm_campaign=v4_1) | [Support](https://join.chat/en/support/?utm_source=wporg&utm_medium=web&utm_campaign=v4_1)
 
@@ -42,20 +42,20 @@ Define CTAs and Custom Messages for product pages and for products on sale.
 #### 🃏 Dynamic Variables.
 Use variables in your CTAs and messages that change dynamically for each page:
 
-`{SITE}` ➡ Website title<br>
-`{TITLE}` ➡ Current page url<br>
-`{URL}` ➡ Current page url<br>
-`{PRODUCT}` ➡ Product name (WooCommerce)<br>
-`{SKU}` ➡ Product SKU (WooCommerce)<br>
-`{REGULAR}` ➡ Product regular price (WooCommerce)<br>
-`{PRICE}` ➡ Product current price (WooCommerce)<br>
-`{DISCOUNT}` ➡ Product percent discount when is on sale (WooCommerce)<br>
+**{SITE}** ➡ Website title
+**{TITLE}** ➡ Current page title
+**{URL}** ➡ Current page url
+**{PRODUCT}** ➡ Product name (WooCommerce)
+**{SKU}** ➡ Product SKU (WooCommerce)
+**{REGULAR}** ➡ Product regular price (WooCommerce)
+**{PRICE}** ➡ Product current price (WooCommerce)
+**{DISCOUNT}** ➡ Product percent discount when is on sale (WooCommerce)
 
 #### 📈 Integration with Google Analytics, Google Tag Manager and Facebook Pixel.
 Join.chat sends the event automatically when the user opens WhatsApp. You can also create your custom events capturing `$(document).on('joinchat:open')`. [Read more](https://join.chat/en/joinchat-measures-whatsapp-events-in-google-analytics/)
 
 #### 💱 Multi-Language Support.
-To be able to support all your users, wherever they are. Our plugin is **compatible with WPML and Polylang**.
+To be able to support all your users, wherever they are. Our plugin is **compatible with WPML and Polylang** and also **RTL languages** are supported.
 
 #### 🌈 Theme Colors & 🌚 Dark Mode.
 You choose a color and we customize the entire visual theme of the widget. With Dark Mode display the chat window with dark colors and white text. From settings you can activate it or leave it automatic and detects devices' configuration.
@@ -190,8 +190,12 @@ There is a Javascript event that Join.chat triggers automatically before launch 
 3. General settings
 4. Visibility settings
 5. WooCommerce settings
+6. Page settings
 
 == Changelog ==
+
+= 4.1.1 =
+* FIX error on prices with '$'
 
 = 4.1 =
 * **NEW:** Use custom text on chat window header
