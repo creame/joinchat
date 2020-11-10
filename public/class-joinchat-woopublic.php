@@ -184,7 +184,10 @@ class JoinChatWooPublic {
 	 */
 	public function format_price( $product, $price ) {
 
-		return strip_tags( wc_price( wc_get_price_to_display( $product, array( 'price' => $price ) ) ) );
+		$string = strip_tags( wc_price( wc_get_price_to_display( $product, array( 'price' => $price ) ) ) );
+
+		// Escape $ for regex replacement
+		return str_replace( '$', '\$', $string );
 
 	}
 
