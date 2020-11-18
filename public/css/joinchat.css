@@ -389,7 +389,7 @@
   display: inline-block;
   width: auto;
   height: 18px;
-  vertical-align: text-top;
+  vertical-align: -30%;
 }
 
 .joinchat__powered:hover,
