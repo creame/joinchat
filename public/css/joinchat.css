@@ -3,6 +3,7 @@
   --sep: 20px;
   --header: 70px;
   --btn: 60px;
+  --vh: 100vh;
   --red: 37;
   --green: 211;
   --blue: 102;
@@ -323,7 +324,7 @@
   width: calc(100vw - var(--sep)*2);
   max-width: 400px;
   min-height: 170px;
-  max-height: calc(100vh - var(--bottom) - var(--sep));
+  max-height: calc(var(--vh) - var(--bottom) - var(--sep));
   border-radius: 32px;
   background: transparent;
   box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.5);
@@ -331,13 +332,13 @@
   overflow: hidden;
   transform: scale3d(0, 0, 0);
   opacity: 0;
-  transition: opacity 400ms ease-out, transform 0ms linear 300ms;
+  transition: max-height 0.2s ease-out, opacity 0.4s ease-out, transform 0s linear 0.3s;
 }
 
 .joinchat--chatbox .joinchat__box {
   opacity: 1;
   transform: scale3d(1, 1, 1);
-  transition: opacity 200ms ease-out, transform 0ms linear;
+  transition: max-height 0.2s ease-out, opacity 0.2s ease-out, transform 0s linear;
 }
 
 .joinchat--left .joinchat__box {
@@ -417,7 +418,7 @@
   background: rgba(0, 0, 0, 0.4) url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23fff'%3E%3Cpath d='M24 2.4L21.6 0 12 9.6 2.4 0 0 2.4 9.6 12 0 21.6 2.4 24l9.6-9.6 9.6 9.6 2.4-2.4-9.6-9.6L24 2.4z'/%3E%3C/svg%3E") center no-repeat;
   background-size: 12px;
   cursor: pointer;
-  transition: background-color 300ms ease-out;
+  transition: background-color 0.3s ease-out;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 

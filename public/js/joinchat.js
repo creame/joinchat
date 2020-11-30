@@ -221,9 +221,9 @@
         this.scrollTop += (delta < 0 ? 1 : -1) * 30;
       });
 
-      // Hide on mobile when virtual keyboard is open (on fill forms)
+      // Mobile enhancements
       if (joinchat_obj.is_mobile) {
-        var timeoutKB;
+        var timeoutKB, timeoutResize;
 
         function form_focus_toggle() {
           var type = (doc.activeElement.type || '').toLowerCase();
@@ -240,12 +240,19 @@
           }
         }
 
+        // Hide on mobile when virtual keyboard is open (on fill forms)
         $(doc).on('focus blur', 'input, textarea', function (e) {
           if (!$(e.target).closest(joinchat_obj.$div).length) {
             clearTimeout(timeoutKB);
             timeoutKB = setTimeout(form_focus_toggle, 200);
           }
         });
+
+        // Ensure header is visible
+        $(win).resize(function () {
+          clearTimeout(timeoutResize);
+          timeoutResize = setTimeout(function () { joinchat_obj.$div[0].style.setProperty('--vh', window.innerHeight + 'px'); }, 200);
+        }).resize();
       }
 
       // Open chatbox or launch WhatsApp when click on nodes with classes "joinchat_open" "joinchat_app"
@@ -283,7 +290,6 @@
 
       $(doc).trigger('joinchat:start');
     }
-
   });
 
 }(jQuery, window, document));
