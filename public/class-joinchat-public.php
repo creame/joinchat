@@ -147,8 +147,8 @@ class JoinChatPublic {
 				$settings = array_merge( $settings, $post_settings );
 
 				// Allow override general settings with empty string with "{}"
-				$settings['message_text'] = preg_match( '/^\{\s*\}$/', $settings['message_text'] ) ? '' : $settings['message_text'];
-				$settings['message_send'] = preg_match( '/^\{\s*\}$/', $settings['message_send'] ) ? '' : $settings['message_send'];
+				$settings['message_text'] = preg_replace( '/^\{\s*\}$/', '', $settings['message_text'] );
+				$settings['message_send'] = preg_replace( '/^\{\s*\}$/', '', $settings['message_send'] );
 			}
 
 			// Prepare settings
@@ -162,13 +162,7 @@ class JoinChatPublic {
 
 			// Only show if there is a phone number
 			if ( '' != $settings['telephone'] ) {
-				if ( isset( $settings['view'] ) && 'yes' == $settings['view'] ) {
-					$show = true;
-				} elseif ( isset( $settings['view'] ) && 'no' == $settings['view'] ) {
-					$show = false;
-				} else {
-					$show = $this->check_visibility( $settings['visibility'] );
-				}
+				$show = isset( $settings['view'] ) ? 'yes' === $settings['view'] : $this->check_visibility( $settings['visibility'] );
 			}
 			// Unset post 'view' setting
 			unset( $settings['view'] );

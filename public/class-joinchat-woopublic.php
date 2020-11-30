@@ -23,7 +23,7 @@ class JoinChatWooPublic {
 
 		$loader->add_filter( 'joinchat_extra_settings', $this, 'woo_settings' );
 		$loader->add_filter( 'joinchat_settings_i18n', $this, 'settings_i18n' );
-		$loader->add_filter( 'joinchat_get_settings_site', $this, 'product_settings' );
+		$loader->add_filter( 'joinchat_get_settings_site', $this, 'shop_settings' );
 		$loader->add_filter( 'joinchat_visibility', $this, 'visibility', 10, 2 );
 		$loader->add_filter( 'joinchat_variable_replacements', $this, 'replacements' );
 		$loader->add_filter( 'joinchat_excluded_fields', $this, 'excluded_fields' );
@@ -68,12 +68,13 @@ class JoinChatWooPublic {
 	 * Replace general site CTA and send messages with the product ones
 	 *
 	 * @since    3.0.0
+	 * @since    4.1.3 renamed from product_settings() to shop_settings()
 	 * @param    array $settings       current site settings.
 	 * @return   array
 	 */
-	public function product_settings( $settings ) {
+	public function shop_settings( $settings ) {
 
-		// Only applies to product pages
+		// Applies to product pages
 		if ( is_product() ) {
 			$product = wc_get_product();
 
@@ -83,6 +84,18 @@ class JoinChatWooPublic {
 				$settings['message_text'] = $settings['message_text_product'] ?: $settings['message_text'];
 			}
 			$settings['message_send'] = $settings['message_send_product'] ?: $settings['message_send'];
+		}
+		// Applies to shop catalog pages
+		elseif ( is_woocommerce() ) {
+			$shop_settings = get_post_meta( wc_get_page_id( 'shop' ), '_joinchat', true );
+
+			if ( is_array( $shop_settings ) ) {
+				$settings = array_merge( $settings, $shop_settings );
+
+				// Allow override general settings with empty string with "{}"
+				$settings['message_text'] = preg_replace( '/^\{\s*\}$/', '', $settings['message_text'] );
+				$settings['message_send'] = preg_replace( '/^\{\s*\}$/', '', $settings['message_send'] );
+			}
 		}
 
 		return $settings;
