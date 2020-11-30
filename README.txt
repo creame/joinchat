@@ -5,7 +5,7 @@ Tags: whatsapp business, whatsapp, click to chat, button, whatsapp support chat,
 Requires at least: 3.0.1
 Tested up to: 5.5
 Requires PHP: 5.3
-Stable tag: 4.1.2
+Stable tag: 4.1.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -175,11 +175,14 @@ Join.chat send a custom event if Facebook Pixel is detected when user click to l
 
 There is a Javascript event that Join.chat triggers automatically before launch WhatsApp, which can be used to add your custom tracking code (or other needs).
 
-`jQuery(document).ready(function($){
+`jQuery(function($){
   $(document).on('joinchat:open', function (event, args, settings) {
     // Your staff
     // Note: args.link is the link to open, you can change it
     // but only wa.me, whastapp.com or current domain are allowed.
+
+    // e.g.: Google Ads conversion
+    gtag_report_conversion();
   });
 });`
 
@@ -193,6 +196,10 @@ There is a Javascript event that Join.chat triggers automatically before launch 
 6. Page settings
 
 == Changelog ==
+
+= 4.1.3 =
+* **NEW:** Ensure chatbox header is allways visible on mobile with better height control
+* **NEW:** WooCommerce, use custom Join.chat settings on shop page for all shop catalog pages
 
 = 4.1.2 =
 * SECURE window.open with 'noopener'
