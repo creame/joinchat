@@ -108,9 +108,9 @@ class JoinChatLoader {
 	 * @param    string $hook             Optional. The name of the WordPress action that is being removed.
 	 * @param    object $component        Optional. A reference to the instance or name of the object on which the action is defined.
 	 * @param    string $callback         Optional. The name of the function definition on the $component.
-	 * @param    int    $priority         Optional. The priority at which the function should be fired. Default is 10.
+	 * @param    int    $priority         Optional. The priority at which the function should be fired.
 	 */
-	public function remove_action( $hook = null, $component = null, $callback = null, $priority = 10 ) {
+	public function remove_action( $hook = null, $component = null, $callback = null, $priority = null ) {
 		$this->actions = $this->remove( $this->actions, $hook, $component, $callback, $priority );
 	}
 
@@ -122,9 +122,9 @@ class JoinChatLoader {
 	 * @param    string $hook             Optional. The name of the WordPress filter that is being removed.
 	 * @param    object $component        Optional. A reference to the instance or name of the object on which the filter is defined.
 	 * @param    string $callback         Optional. The name of the function definition on the $component.
-	 * @param    int    $priority         Optional. The priority at which the function should be fired. Default is 10.
+	 * @param    int    $priority         Optional. The priority at which the function should be fired.
 	 */
-	public function remove_filter( $hook = null, $component = null, $callback = null, $priority = 10 ) {
+	public function remove_filter( $hook = null, $component = null, $callback = null, $priority = null ) {
 		$this->filters = $this->remove( $this->filters, $hook, $component, $callback, $priority );
 	}
 
