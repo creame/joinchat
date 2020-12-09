@@ -1,6 +1,9 @@
 (function ($) {
   'use strict';
 
+  // Compatibility with old addons (to be removed)
+  window.intl_tel_input_version = window.intlTelConf && intlTelConf.version;
+
   function textarea_autoheight() {
     $(this).height(0).height(this.scrollHeight);
   }
@@ -13,7 +16,7 @@
       var country_code = (country_request.code && country_request.date == new Date().toDateString()) ? country_request.code : false;
       var $phone = $('#joinchat_phone');
 
-      // If empty value capture placeholdre and remove
+      // If empty value capture placeholder and remove
       var placeholder = $phone.val() === '' ? $phone.attr('placeholder') : null;
       $phone.removeAttr('placeholder');
 
