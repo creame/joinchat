@@ -32,7 +32,8 @@
             });
           }
         },
-        utilsScript: 'https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/' + intl_tel_input_version + '/js/utils.js'
+        customPlaceholder: function (placeholder) { return intlTelConf.placeholder + ' ' + placeholder; },
+        utilsScript: 'https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/' + intlTelConf.version + '/js/utils.js'
       });
       // Ensures store current value
       iti.hiddenInput.value = $phone.val();
@@ -190,7 +191,7 @@
 
       $('#joinchat_color').wpColorPicker();
 
-      $('#joinchat_header_custom').on('click', function(){
+      $('#joinchat_header_custom').on('click', function () {
         $(this).prev().find('input').prop('checked', true);
       });
     }

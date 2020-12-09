@@ -175,9 +175,14 @@ class JoinChatAdmin {
 		$script = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? 'joinchat.js' : 'joinchat.min.js';
 
 		if ( $this->enhanced_phone ) {
+			$localize = array(
+				'placeholder' => __( 'e.g.', 'creame-whatsapp-me' ),
+				'version'     => $this->enhanced_phone,
+			);
+
 			wp_register_script( 'intl-tel-input', 'https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/' . $this->enhanced_phone . '/js/intlTelInput.min.js', array(), null, true );
+			wp_localize_script( 'intl-tel-input', 'intlTelConf', $localize );
 			wp_register_script( 'joinchat-admin', plugin_dir_url( __FILE__ ) . 'js/' . $script, array( 'jquery', 'wp-color-picker', 'intl-tel-input' ), $this->version, true );
-			wp_localize_script( 'intl-tel-input', 'intl_tel_input_version', $this->enhanced_phone );
 		} else {
 			wp_register_script( 'joinchat-admin', plugin_dir_url( __FILE__ ) . 'js/' . $script, array( 'jquery', 'wp-color-picker' ), $this->version, true );
 		}
