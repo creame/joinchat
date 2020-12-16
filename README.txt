@@ -201,6 +201,9 @@ There is a Javascript event that Join.chat triggers automatically before launch 
 
 == Changelog ==
 
+= 4.1.5 =
+* **NEW:** Analytics event compatible with Google Analytics Dashboard Plugin for WordPress by MonsterInsights custom tracker name
+
 = 4.1.4 =
 * **NEW:** PHP 8 & WordPress 5.6 tested & updated
 * Cleaner placeholder on telephone field

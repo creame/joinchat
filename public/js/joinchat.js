@@ -17,9 +17,12 @@
 
   // Trigger Google Analytics event
   joinchat_obj.send_event = function (label, action) {
-    var ga_tracker = win[this.settings.ga_tracker || 'ga'];
     label = label || '';
     action = action || 'click';
+
+    // Can pass setting 'ga_tracker' for custom GA tracker name
+    // Compatible with GADP for WordPress by MonsterInsights tracker name
+    var ga_tracker = win[this.settings.ga_tracker] || win['ga'] || win['__gaTracker'];
 
     // Send Google Analtics custom event (Universal Analtics - analytics.js) or (Global Site Tag - gtag.js)
     if (typeof ga_tracker == 'function' && typeof ga_tracker.getAll == 'function') {
