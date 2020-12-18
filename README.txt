@@ -203,6 +203,7 @@ There is a Javascript event that Join.chat triggers automatically before launch 
 
 = 4.1.5 =
 * **NEW:** Analytics event compatible with Google Analytics Dashboard Plugin for WordPress by MonsterInsights custom tracker name
+* **NEW:** Load images when show button for better Page speed.
 
 = 4.1.4 =
 * **NEW:** PHP 8 & WordPress 5.6 tested & updated

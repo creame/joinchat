@@ -38,9 +38,17 @@
   box-sizing: border-box;
 }
 
+.joinchat > div {
+  display: none;
+}
+
 .joinchat--show {
   transform: scale3d(1, 1, 1);
   transition: transform 0.5s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+}
+
+.joinchat--show > div {
+  display: block;
 }
 
 .joinchat.joinchat--left {
