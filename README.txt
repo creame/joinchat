@@ -5,7 +5,7 @@ Tags: whatsapp business, whatsapp, click to chat, button, whatsapp support chat,
 Requires at least: 3.0.1
 Tested up to: 5.6
 Requires PHP: 5.3
-Stable tag: 4.1.4
+Stable tag: 4.1.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -215,7 +215,7 @@ There is a Javascript event that Join.chat triggers automatically before launch 
 == Changelog ==
 
 = 4.1.5 =
-* **NEW:** Add links to WhastApp with `#joinchat` or `#whatsapp` in your href. CSS triggers and links works in all pages, **even without Join.chat visible**.
+* **NEW:** Add links to WhastApp with `#joinchat` or `#whatsapp` in your href. CSS triggers and links work on all pages, **even without Join.chat visible**.
 * **NEW:** Analytics event compatible with Google Analytics Dashboard Plugin for WordPress by MonsterInsights custom tracker name
 * Load images when show button for better Page speed.
 
