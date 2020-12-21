@@ -719,7 +719,14 @@ class JoinChatAdmin {
 				'id'      => 'triggers',
 				'title'   => __( 'Triggers', 'creame-whatsapp-me' ),
 				'content' =>
-					'<p>' . __( 'Your page elements can interact with Join.chat adding some CSS classes in your HTML:', 'creame-whatsapp-me' ) . '</p>' .
+					'<p>' . __( 'You can interact on your page with Join.chat in two ways:', 'creame-whatsapp-me' ) . '</p>' .
+					'<p>' . __( 'With anchor links:', 'creame-whatsapp-me' ) . '</p>' .
+					'<ul>' .
+						'<li><code>#joinchat</code> ' . __( 'to show Chat Window (or open WhatsApp if there is no CTA) on click.', 'creame-whatsapp-me' ) . '</li>' .
+						'<li><code>#whatsapp</code> ' . __( 'to open WhatsApp directly on click.', 'creame-whatsapp-me' ) . '</li>' .
+					'</ul>' .
+					'<p>' . __( 'Example:', 'creame-whatsapp-me' ) . '<code>&lt;a href="#whatsapp"&gt;' . __( 'Contact us', 'creame-whatsapp-me' ) . '&lt;/a&gt;</code></p>' .
+					'<p>' . __( 'Adding some CSS classes in your HTML:', 'creame-whatsapp-me' ) . '</p>' .
 					'<ul>' .
 						'<li><code>joinchat_open</code> ' . __( 'to show Chat Window (or open WhatsApp if there is no CTA) on click.', 'creame-whatsapp-me' ) . '</li>' .
 						'<li><code>joinchat_close</code> ' . __( 'to hide Chat Window on click.', 'creame-whatsapp-me' ) . '</li>' .
@@ -730,7 +737,7 @@ class JoinChatAdmin {
 							'<li><code>joinchat_force_show</code> ' . __( 'to show always.', 'creame-whatsapp-me' ) . '</li>' .
 						'</ul></li>' .
 					'</ul>' .
-					'<p>' . __( 'Example:', 'creame-whatsapp-me' ) . '<code>&lt;a href="#" class="joinchat_open"&gt;' . __( 'Contact us', 'creame-whatsapp-me' ) . '&lt;/a&gt;</code></p>',
+					'<p>' . __( 'Example:', 'creame-whatsapp-me' ) . '<code>&lt;img src="contact.jpg" class="joinchat_open" alt="' . __( 'Contact us', 'creame-whatsapp-me' ) . '"&gt;</code></p>',
 			),
 			array(
 				'id'      => 'support',
