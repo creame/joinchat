@@ -147,8 +147,8 @@
       if (joinchat_obj.is_mobile || !joinchat_obj.settings.mobile_only) {
         joinchat_magic();
       } else {
-        // Launch WhatsApp when click on nodes with classes "joinchat_open" "joinchat_app"
-        $(doc).on('click', '.joinchat_open, .joinchat_app', function (e) {
+        // Launch WhatsApp when click on nodes with classes "joinchat_open" "joinchat_app" or links with href
+        $(doc).on('click', '.joinchat_open, .joinchat_app, a[href="#joinchat"], a[href="#whatsapp"]', function (e) {
           e.preventDefault();
           joinchat_obj.open_whatsapp();
         });
@@ -259,10 +259,11 @@
       }
 
       // Open chatbox or launch WhatsApp when click on nodes with classes "joinchat_open" "joinchat_app"
-      $(doc).on('click', '.joinchat_open, .joinchat_app', function (e) {
+      // or links with href "#joinchat" or "#whatsapp"
+      $(doc).on('click', '.joinchat_open, .joinchat_app, a[href="#joinchat"], a[href="#whatsapp"]', function (e) {
         e.preventDefault();
-        if ($(this).hasClass('joinchat_app') || !has_chatbox) joinchat_obj.open_whatsapp(); // WhatsApp direct
-        else if (!joinchat_obj.chatbox) chatbox_show(); // Open chatbox
+        if (!has_chatbox || $(this).is('.joinchat_app, a[href="#whatsapp"]')) joinchat_obj.open_whatsapp(); // WhatsApp direct
+        else chatbox_show(); // Open chatbox
       });
 
       // Close chatbox when click on nodes with class "joinchat_close"
