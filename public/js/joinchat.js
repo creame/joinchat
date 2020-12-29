@@ -209,12 +209,12 @@
       // Open Join.chat on mouse over
       if (has_chatbox && !joinchat_obj.is_mobile) {
         joinchat_obj.$('.joinchat__button')
-          .mouseenter(function () { timeoutHover = setTimeout(chatbox_show, 1500); })
-          .mouseleave(function () { clearTimeout(timeoutHover); });
+          .on('mouseenter', function () { timeoutHover = setTimeout(chatbox_show, 1500); })
+          .on('mouseleave', function () { clearTimeout(timeoutHover); });
       }
 
-      joinchat_obj.$('.joinchat__button').click(joinchat_click);
-      joinchat_obj.$('.joinchat__close').click(chatbox_hide);
+      joinchat_obj.$('.joinchat__button').on('click', joinchat_click);
+      joinchat_obj.$('.joinchat__close').on('click', chatbox_hide);
 
       // Only scroll Join.chat message box (no all body)
       // TODO: disable also on touch
@@ -252,10 +252,10 @@
         });
 
         // Ensure header is visible
-        $(win).resize(function () {
+        $(win).on('resize', function () {
           clearTimeout(timeoutResize);
           timeoutResize = setTimeout(function () { joinchat_obj.$div[0].style.setProperty('--vh', window.innerHeight + 'px'); }, 200);
-        }).resize();
+        }).trigger('resize');
       }
 
       // Open chatbox or launch WhatsApp when click on nodes with classes "joinchat_open" "joinchat_app"

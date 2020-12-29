@@ -64,7 +64,7 @@
 
     if ($('#joinchat_form').length === 1) {
       // Tabs
-      $('.nav-tab').click(function (e) {
+      $('.nav-tab').on('click', function (e) {
         e.preventDefault();
         var $navtab = $(this);
         var href = $navtab.attr('href');
@@ -81,25 +81,25 @@
       });
 
       // Toggle WhatsApp web option
-      $('#joinchat_mobile_only').change(function () {
+      $('#joinchat_mobile_only').on('change', function () {
         $('#joinchat_whatsapp_web').closest('tr').toggleClass('joinchat-hidden', this.checked);
-      }).change();
+      }).trigger('change');
 
       // Toggle badge option
       $('#joinchat_message_delay').on('change input', function () {
         $('#joinchat_message_badge, #joinchat_message_views').closest('tr').toggleClass('joinchat-hidden', this.value == '0');
-      }).change();
+      }).trigger('change');
 
       // Show help
-      $('.joinchat-show-help').click(function (e) {
+      $('.joinchat-show-help').on('click', function (e) {
         e.preventDefault();
         var help_tab = $(this).attr('href');
         if ($('#contextual-help-wrap').is(':visible')) {
           $("html, body").animate({ scrollTop: 0 });
         } else {
-          $('#contextual-help-link').click();
+          $('#contextual-help-link').trigger('click');
         }
-        $(help_tab != '#' ? help_tab : '#tab-link-styles-and-vars').find('a').click();
+        $(help_tab != '#' ? help_tab : '#tab-link-styles-and-vars').find('a').trigger('click');
       });
 
       // Texarea focus and auto height
@@ -138,11 +138,11 @@
         }
       }
 
-      $('input', $tab_visibility).change(function () {
+      $('input', $tab_visibility).on('change', function () {
         propagate_inheritance();
       });
 
-      $('.joinchat_view_reset').click(function (e) {
+      $('.joinchat_view_reset').on('click', function (e) {
         e.preventDefault();
         $('input[value=""]', $tab_visibility).prop('checked', true);
         $('.joinchat_view_all input', $tab_visibility).first().prop('checked', true);
@@ -151,7 +151,7 @@
 
       propagate_inheritance();
 
-      $('#joinchat_button_image_add').click(function (e) {
+      $('#joinchat_button_image_add').on('click', function (e) {
         e.preventDefault();
 
         if (!media_frame) {
@@ -184,7 +184,7 @@
         media_frame.open();
       });
 
-      $('#joinchat_button_image_remove').click(function (e) {
+      $('#joinchat_button_image_remove').on('click', function (e) {
         e.preventDefault();
 
         $('#joinchat_button_image_holder').removeAttr('style');
