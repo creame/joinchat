@@ -217,6 +217,7 @@ There is a Javascript event that Join.chat triggers automatically before launch 
 = 4.1.7 =
 * FIX jQuery 3 deprecation warnings for event shorthands
 * FIX JSON error with "&quot;" on variable replacement
+* FIX Don't load public hooks on wp-login.php page
 
 = 4.1.6 =
 * FIX minor css error introduced in v4.1.5
