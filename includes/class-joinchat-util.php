@@ -205,6 +205,7 @@ class JoinChatUtil {
 	 * Format message send, replace vars.
 	 *
 	 * @since    3.1.0
+	 * @since    4.1.7      Added replacements fixes
 	 * @param    string $string    string to apply variable replacements
 	 * @return   string     string with replaced variables
 	 */
@@ -220,13 +221,20 @@ class JoinChatUtil {
 			)
 		);
 
-		// Convert VAR to regex {VAR}
-		$patterns = array_map(
-			function ( $var ) {
-				return "/\{$var\}/u";
-			},
-			array_keys( $replacements )
+		// Patterns as regex {VAR}
+		$patterns = array();
+		foreach ($replacements as $var => $replacement) {
+			$patterns[] = "/\{$var\}/u";
+		}
+
+		$fixes = array(
+			'&quot;' => '"',   // Prevent malformed json
+			'$'      => '\$',  // Prevent regex reference
 		);
+
+		foreach ($replacements as $var => $replacement) {
+			$replacements[$var] = str_replace( array_keys( $fixes ), $fixes, $replacement );
+		}
 
 		return preg_replace( $patterns, $replacements, $string );
 
