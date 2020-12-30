@@ -223,7 +223,7 @@ class JoinChatUtil {
 
 		// Patterns as regex {VAR}
 		$patterns = array();
-		foreach ($replacements as $var => $replacement) {
+		foreach ( $replacements as $var => $replacement ) {
 			$patterns[] = "/\{$var\}/u";
 		}
 
@@ -232,8 +232,8 @@ class JoinChatUtil {
 			'$'      => '\$',  // Prevent regex reference
 		);
 
-		foreach ($replacements as $var => $replacement) {
-			$replacements[$var] = str_replace( array_keys( $fixes ), $fixes, $replacement );
+		foreach ( $replacements as $var => $replacement ) {
+			$replacements[ $var ] = str_replace( array_keys( $fixes ), $fixes, $replacement );
 		}
 
 		return preg_replace( $patterns, $replacements, $string );

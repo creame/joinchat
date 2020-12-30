@@ -66,7 +66,7 @@ class JoinChat {
 
 		if ( is_admin() ) {
 			$this->define_admin_hooks();
-		} else if ('wp-login.php' !== $pagenow ){
+		} elseif ( 'wp-login.php' !== $pagenow ) {
 			$this->define_public_hooks();
 		}
 
