@@ -107,7 +107,7 @@ class JoinChatUtil {
 			return false;
 		}
 
-		$uploads  = wp_get_upload_dir();
+		$uploads  = wp_upload_dir( null, false );
 		$img_info = pathinfo( $img_path );
 		$new_path = "{$img_info['dirname']}/{$img_info['filename']}-{$width}x{$height}.{$img_info['extension']}";
 
