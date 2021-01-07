@@ -279,7 +279,7 @@
     }
 
     // In some strange cases data settings are empty
-    if (typeof joinchat_obj.settings == 'undefined') {
+    if (typeof joinchat_obj.settings != 'object') {
       try {
         joinchat_obj.settings = JSON.parse(joinchat_obj.$div.attr('data-settings'));
       } catch (error) {
