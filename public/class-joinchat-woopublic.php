@@ -198,6 +198,9 @@ class JoinChatWooPublic {
 
 		$string = strip_tags( wc_price( wc_get_price_to_display( $product, array( 'price' => $price ) ) ) );
 
+		// Escape $ for regex replacement
+		return str_replace( '$', '\$', $string );
+
 	}
 
 	/**

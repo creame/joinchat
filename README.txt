@@ -216,6 +216,7 @@ There is a Javascript event that Join.chat triggers automatically before launch 
 
 = 4.1.8 =
 * Front script better settings validation
+* FIX error with some prices on variable replacement
 
 = 4.1.7 =
 * FIX jQuery 3 deprecation warnings for event shorthands
