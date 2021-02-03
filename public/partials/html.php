@@ -11,6 +11,7 @@
 
 defined( 'WPINC' ) || exit;
 ?>
+
 <div class="joinchat <?php echo apply_filters( 'joinchat_classes', $joinchat_classes ); ?>" data-settings='<?php echo JoinChatUtil::to_json( $data ); ?>'>
 	<div class="joinchat__button">
 		<div class="joinchat__button__open"></div>

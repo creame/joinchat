@@ -167,6 +167,7 @@ class JoinChatAdmin {
 	 * Register the JavaScript for the admin area.
 	 *
 	 * @since    3.0.0
+	 * @since    4.1.4     Added intlTelInput localize.
 	 * @param    string $hook       The id of the page.
 	 * @return   void
 	 */

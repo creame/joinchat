@@ -11,6 +11,7 @@
 
 defined( 'WPINC' ) || exit;
 ?>
+
 <script>
 jQuery(function($){
 	var arg = <?php echo JoinChatUtil::to_json( $args ); ?>;
