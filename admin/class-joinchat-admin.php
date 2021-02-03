@@ -522,7 +522,7 @@ class JoinChatAdmin {
 
 			switch ( $field_id ) {
 				case 'telephone':
-					$output = '<input id="joinchat_phone" ' . ( $this->enhanced_phone ? 'data-' : '' ) . 'name="joinchat[telephone]" value="' . $value . '" type="text" style="width:15em">' .
+					$output = '<input id="joinchat_phone" ' . ( $this->enhanced_phone ? 'data-' : '' ) . 'name="joinchat[telephone]" value="' . esc_attr( $value ) . '" type="text" style="width:15em">' .
 						'<p class="description">' . __( "Contact phone number <strong>(the button will not be shown if it's empty)</strong>", 'creame-whatsapp-me' ) . '</p>' .
 						'<p class="joinchat-addon">' . sprintf(
 							__( 'Add unlimited numbers with %1$s or multiple contacts with %2$s', 'creame-whatsapp-me' ),
@@ -551,7 +551,7 @@ class JoinChatAdmin {
 
 					$output = '<div id="joinchat_button_image_wrapper">' .
 						'<div id="joinchat_button_image_holder" ' . ( $image ? "style=\"background-size:cover; background-image:url('$image');\"" : '' ) . '></div>' .
-						'<input id="joinchat_button_image" name="joinchat[button_image]" type="hidden" value="' . $value . '">' .
+						'<input id="joinchat_button_image" name="joinchat[button_image]" type="hidden" value="' . intval( $value ) . '">' .
 						'<input id="joinchat_button_image_add" type="button" value="' . esc_attr__( 'Select an image', 'creame-whatsapp-me' ) . '" class="button-primary" ' .
 						'data-title="' . esc_attr__( 'Select button image', 'creame-whatsapp-me' ) . '" data-button="' . esc_attr__( 'Use image', 'creame-whatsapp-me' ) . '"> ' .
 						'<input id="joinchat_button_image_remove" type="button" value="' . esc_attr__( 'Remove', 'creame-whatsapp-me' ) . '" class="button-secondary' . ( $image ? '' : ' joinchat-hidden' ) . '">' .
@@ -563,12 +563,12 @@ class JoinChatAdmin {
 					break;
 
 				case 'button_tip':
-					$output = '<input id="joinchat_button_tip" name="joinchat[button_tip]" value="' . $value . '" type="text" maxlength="40" class="regular-text" placeholder="' . esc_attr__( '💬 Need help?', 'creame-whatsapp-me' ) . '"> ' .
+					$output = '<input id="joinchat_button_tip" name="joinchat[button_tip]" value="' . esc_attr( $value ) . '" type="text" maxlength="40" class="regular-text" placeholder="' . esc_attr__( '💬 Need help?', 'creame-whatsapp-me' ) . '"> ' .
 						'<p class="description">' . __( 'Short text shown next to button', 'creame-whatsapp-me' ) . '</p>';
 					break;
 
 				case 'button_delay':
-					$output = '<input id="joinchat_button_delay" name="joinchat[button_delay]" value="' . $value . '" type="number" min="0" max="120" style="width:5em"> ' . __( 'seconds', 'creame-whatsapp-me' ) .
+					$output = '<input id="joinchat_button_delay" name="joinchat[button_delay]" value="' . intval( $value ) . '" type="number" min="0" max="120" style="width:5em"> ' . __( 'seconds', 'creame-whatsapp-me' ) .
 						'<p class="description">' . __( 'Time since the page is opened until the button is displayed', 'creame-whatsapp-me' ) . '</p>';
 					break;
 
@@ -579,7 +579,7 @@ class JoinChatAdmin {
 					break;
 
 				case 'message_text':
-					$output = '<textarea id="joinchat_message_text" name="joinchat[message_text]" rows="4" class="regular-text" placeholder="' . esc_attr__( "Hello 👋\nCan we help you?", 'creame-whatsapp-me' ) . '">' . $value . '</textarea>' .
+					$output = '<textarea id="joinchat_message_text" name="joinchat[message_text]" rows="4" class="regular-text" placeholder="' . esc_attr__( "Hello 👋\nCan we help you?", 'creame-whatsapp-me' ) . '">' . esc_textarea( $value ) . '</textarea>' .
 						'<p class="description">' . __( 'Define a text to encourage users to contact by WhatsApp', 'creame-whatsapp-me' ) . '</p>' .
 						'<p class="joinchat-addon">' . sprintf(
 							__( 'Add links, images, videos and more with %s', 'creame-whatsapp-me' ),
@@ -588,22 +588,22 @@ class JoinChatAdmin {
 					break;
 
 				case 'message_send':
-					$output = '<textarea id="joinchat_message_send" name="joinchat[message_send]" rows="3" class="regular-text" placeholder="' . esc_attr__( 'Hi *{SITE}*! I need more info about {TITLE} {URL}', 'creame-whatsapp-me' ) . '">' . $value . '</textarea>' .
+					$output = '<textarea id="joinchat_message_send" name="joinchat[message_send]" rows="3" class="regular-text" placeholder="' . esc_attr__( 'Hi *{SITE}*! I need more info about {TITLE} {URL}', 'creame-whatsapp-me' ) . '">' . esc_textarea( $value ) . '</textarea>' .
 						'<p class="description">' . __( 'Predefined text for the first message the user will send you', 'creame-whatsapp-me' ) . '</p>';
 					break;
 
 				case 'message_start':
-					$output = '<input id="joinchat_message_start" name="joinchat[message_start]" value="' . $value . '" type="text" maxlength="20" class="regular-text" placeholder="' . esc_attr__( 'Open chat', 'creame-whatsapp-me' ) . '"> ' .
+					$output = '<input id="joinchat_message_start" name="joinchat[message_start]" value="' . esc_attr( $value ) . '" type="text" maxlength="20" class="regular-text" placeholder="' . esc_attr__( 'Open chat', 'creame-whatsapp-me' ) . '"> ' .
 						'<p class="description">' . __( 'Text to open chat on Chat Window button', 'creame-whatsapp-me' ) . '</p>';
 					break;
 
 				case 'message_delay':
-					$output = '<input id="joinchat_message_delay" name="joinchat[message_delay]" value="' . $value . '" type="number" min="0" max="120" style="width:5em"> ' . __( 'seconds (0 disabled)', 'creame-whatsapp-me' ) .
+					$output = '<input id="joinchat_message_delay" name="joinchat[message_delay]" value="' . intval( $value ) . '" type="number" min="0" max="120" style="width:5em"> ' . __( 'seconds (0 disabled)', 'creame-whatsapp-me' ) .
 					'<p class="description">' . __( 'Chat Window auto displays after delay', 'creame-whatsapp-me' ) . '</p>';
 					break;
 
 				case 'message_views':
-					$output = '<input id="joinchat_message_views" name="joinchat[message_views]" value="' . $value . '" type="number" min="1" max="120" style="width:5em"> ' .
+					$output = '<input id="joinchat_message_views" name="joinchat[message_views]" value="' . intval( $value ) . '" type="number" min="1" max="120" style="width:5em"> ' .
 						'<p class="description">' . __( 'Chat Window auto displays from this number of page views', 'creame-whatsapp-me' ) . '</p>';
 					break;
 
@@ -614,7 +614,7 @@ class JoinChatAdmin {
 					break;
 
 				case 'color':
-					$output = '<input id="joinchat_color" name="joinchat[color]" value="' . $value . '" type="text" data-default-color="#25d366"> ';
+					$output = '<input id="joinchat_color" name="joinchat[color]" value="' . esc_attr( $value ) . '" type="text" data-default-color="#25d366"> ';
 					break;
 
 				case 'dark_mode':
@@ -638,7 +638,7 @@ class JoinChatAdmin {
 						__( 'WhatsApp Logo', 'creame-whatsapp-me' ) . '</label><br>' .
 						'<label><input name="joinchat[header]" value="__custom__" type="radio"' . checked( '__custom__', $check, false ) . '> ' .
 						__( 'Custom:', 'creame-whatsapp-me' ) . '</label> ' .
-						'<input id="joinchat_header_custom" name="joinchat[header_custom]" value="' . $value . '" type="text" maxlength="40" class="regular-text" placeholder="">' .
+						'<input id="joinchat_header_custom" name="joinchat[header_custom]" value="' . esc_attr( $value ) . '" type="text" maxlength="40" class="regular-text" placeholder="">' .
 						'</fieldset>';
 					break;
 
@@ -940,15 +940,15 @@ class JoinChatAdmin {
 				<?php wp_nonce_field( 'joinchat_data', 'joinchat_nonce' ); ?>
 				<p>
 					<label for="joinchat_phone"><?php _e( 'Telephone', 'creame-whatsapp-me' ); ?></label><br>
-					<input id="joinchat_phone" <?php echo $this->enhanced_phone ? 'data-' : ''; ?>name="joinchat_telephone" value="<?php echo $metadata['telephone']; ?>" type="text" placeholder="<?php echo $placeholders['telephone']; ?>">
+					<input id="joinchat_phone" <?php echo $this->enhanced_phone ? 'data-' : ''; ?>name="joinchat_telephone" value="<?php echo esc_attr( $metadata['telephone'] ); ?>" type="text" placeholder="<?php echo $placeholders['telephone']; ?>">
 				</p>
 				<p>
 					<label for="joinchat_message"><?php _e( 'Call to Action', 'creame-whatsapp-me' ); ?></label><br>
-					<textarea id="joinchat_message" name="joinchat_message" rows="2" placeholder="<?php echo $placeholders['message_text']; ?>" class="large-text"><?php echo $metadata['message_text']; ?></textarea>
+					<textarea id="joinchat_message" name="joinchat_message" rows="2" placeholder="<?php echo $placeholders['message_text']; ?>" class="large-text"><?php echo esc_textarea( $metadata['message_text'] ); ?></textarea>
 				</p>
 				<p>
 					<label for="joinchat_message_send"><?php _e( 'Message', 'creame-whatsapp-me' ); ?></label><br>
-					<textarea id="joinchat_message_send" name="joinchat_message_send" rows="2" placeholder="<?php echo $placeholders['message_send']; ?>" class="large-text"><?php echo $metadata['message_send']; ?></textarea>
+					<textarea id="joinchat_message_send" name="joinchat_message_send" rows="2" placeholder="<?php echo $placeholders['message_send']; ?>" class="large-text"><?php echo esc_textarea( $metadata['message_send'] ); ?></textarea>
 					<?php if ( count( $metabox_vars ) ) : ?>
 						<small><?php _e( 'Can use vars', 'creame-whatsapp-me' ); ?> <code>{<?php echo join( '}</code> <code>{', $metabox_vars ); ?>}</code></small>
 					<?php endif; ?>

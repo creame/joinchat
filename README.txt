@@ -214,6 +214,9 @@ There is a Javascript event that Join.chat triggers automatically before launch 
 
 == Changelog ==
 
+= 4.1.9 =
+* SECURE escape input values on wp-admin (thanks to Camilo @camilo517)
+
 = 4.1.8 =
 * Front script better settings validation
 * FIX error with some prices on variable replacement
