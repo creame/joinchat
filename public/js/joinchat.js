@@ -15,7 +15,7 @@
     return $(sel || this.$div, this.$div);
   };
 
-  // Trigger Google Analytics event
+  // Trigger Analytics events
   joinchat_obj.send_event = function (label, action) {
     label = label || '';
     action = action || 'click';
@@ -265,8 +265,15 @@
     $(doc).trigger('joinchat:start');
   }
 
-  // Ready!!
-  $(function () {
+  // Simple run only once wrapper
+  function once(fn) {
+    return function () {
+      fn && fn.apply(this, arguments);
+      fn = null;
+    };
+  }
+
+  function on_page_ready() {
     joinchat_obj.$div = $('.joinchat');
 
     // Exit if no joinchat div
@@ -313,6 +320,12 @@
     }
 
     joinchat_obj.store.setItem('joinchat_views', parseInt(joinchat_obj.store.getItem('joinchat_views') || 0) + 1);
-  });
+  }
+
+  // Ready!! (in some scenarios jQuery.ready doesn't fire, this try to ensure Join.chat initialization)
+  var once_page_ready = once(on_page_ready);
+  $(once_page_ready);
+  $(win).on('load', once_page_ready);
+  doc.addEventListener('DOMContentLoaded', once_page_ready);
 
 }(jQuery, window, document));
