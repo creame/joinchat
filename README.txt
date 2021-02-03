@@ -169,10 +169,11 @@ If Universal Analtics (analytics.js) detected:
 
 `ga('send', 'event', 'JoinChat', 'click', out_url })`
 
-If your tracker doesn't have the standard name 'ga' you can set your custom name with 'ga_tracker' setting:
+If your site don't have standard names for UA tracker ('ga') or data layer ('dataLayer') you can set your custom names with this filter:
 
 `add_filter( 'joinchat_get_settings', function( $settings ){
-    $settings['ga_tracker'] = 'my_custom_GA_name';
+    $settings['ga_tracker'] = 'gaCustom';
+    $settings['data_layer'] = 'dataLayerCustom';
     return $settings;
 } );`
 
@@ -215,7 +216,9 @@ There is a Javascript event that Join.chat triggers automatically before launch 
 == Changelog ==
 
 = 4.1.9 =
-* SECURE escape input values on wp-admin (thanks to Camilo @camilo517)
+* **SECURE** escape input values on wp-admin (thanks to Camilo @camilo517)
+* NEW can pass custom data layer name for gtag.js and GTM with filter `joinchat_get_settings`
+* FIX also send Google Analytics 4 event when Universal Analytics and GA4 are present
 
 = 4.1.8 =
 * Front script better settings validation

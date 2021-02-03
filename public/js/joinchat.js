@@ -20,31 +20,42 @@
     label = label || '';
     action = action || 'click';
 
-    // Can pass setting 'ga_tracker' for custom GA tracker name
+    // Can pass setting 'ga_tracker' for custom UA tracker name
     // Compatible with GADP for WordPress by MonsterInsights tracker name
     var ga_tracker = win[this.settings.ga_tracker] || win['ga'] || win['__gaTracker'];
+    // Can pass setting 'data_layer' for custom data layer name
+    var data_layer = win[this.settings.data_layer] || win['dataLayer'];
 
-    // Send Google Analtics custom event (Universal Analtics - analytics.js) or (Global Site Tag - gtag.js)
+    // Send Google Analytics custom event (Universal Analytics - analytics.js)
     if (typeof ga_tracker == 'function' && typeof ga_tracker.getAll == 'function') {
       ga_tracker('set', 'transport', 'beacon');
       var trackers = ga_tracker.getAll();
       trackers.forEach(function (tracker) {
-        tracker.send("event", 'JoinChat', action, label);
-      });
-    } else if (typeof gtag == 'function') {
-      gtag('event', action, {
-        'event_category': 'JoinChat',
-        'event_label': label,
-        'transport_type': 'beacon'
+        tracker.send('event', 'JoinChat', action, label);
       });
     }
 
+    // Send Google Analytics custom event (Google Analytics 4 - gtag.js)
+    if (typeof gtag == 'function' && typeof data_layer == 'object') {
+      var ga4 = false;
+      data_layer.forEach(function (item) { if (item[0] == 'config' && item[1].substring(0, 2) == 'G-') ga4 = item[1]; });
+
+      if (ga4) {
+        gtag('event', action, {
+          'event_category': 'JoinChat',
+          'event_label': label,
+          'send_to': ga4,
+          'transport_type': 'beacon',
+        });
+      }
+    }
+
     // Send Google Tag Manager custom event
-    if (typeof dataLayer == 'object') {
-      dataLayer.push({
+    if (typeof data_layer == 'object') {
+      data_layer.push({
         'event': 'JoinChat',
         'eventAction': action,
-        'eventLabel': label
+        'eventLabel': label,
       });
     }
 
