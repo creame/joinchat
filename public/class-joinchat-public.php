@@ -391,17 +391,4 @@ class JoinChatPublic {
 		return $global;
 	}
 
-	/**
-	 * Hide on Elementor preview mode.
-	 * Set 'show' false when is editing on Elementor
-	 *
-	 * @since    2.2.3
-	 * @param    object      /Elementor/Preview instance
-	 */
-	public function elementor_preview_disable( $elementor_preview ) {
-
-		$this->show = apply_filters( 'joinchat_elementor_preview_show', false );
-
-	}
-
 }

@@ -215,6 +215,9 @@ There is a Javascript event that Join.chat triggers automatically before launch 
 
 == Changelog ==
 
+= 4.1.10 =
+* **NEW:** Add support to new Elementor landing pages.
+
 = 4.1.9 =
 * **SECURE** escape input values on wp-admin (thanks to Camilo @camilo517)
 * NEW can pass custom data layer name for gtag.js and GTM with filter `joinchat_get_settings`
