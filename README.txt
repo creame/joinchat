@@ -217,6 +217,7 @@ There is a Javascript event that Join.chat triggers automatically before launch 
 
 = 4.1.10 =
 * **NEW:** Add support to new Elementor landing pages.
+* FIX fallback for browsers that don't support CSS "clamp()" (i.e Edge for Android)
 
 = 4.1.9 =
 * **SECURE** escape input values on wp-admin (thanks to Camilo @camilo517)

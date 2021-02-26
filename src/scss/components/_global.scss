@@ -17,7 +17,7 @@
   // Black or white color based on https://css-tricks.com/css-variables-calc-rgb-enforcing-high-contrast-colors/
   --tolerance: 210; // [0-255] Greater tolerance allow lighter colors with white text
   --bw: calc(((var(--red) * 0.2126) + (var(--green) * 0.7152) + (var(--blue) * 0.0722) - var(--tolerance)) * -100000);
-  --text: rgba(var(--bw), var(--bw), var(--bw), min(1, max(0.7, var(--bw)))); // White rgba(255, 255, 255, 0.8) / Black rgba(0, 0, 0, 0.6)
+  --text: rgba(var(--bw), var(--bw), var(--bw), clamp(0.7, var(--bw), 1)); // White rgba(255, 255, 255, 1) / Black rgba(0, 0, 0, 0.7)
   --msg: var(--color);
 
   position: fixed;
@@ -60,6 +60,13 @@
 
   &#{$class}--dark {
     --msg: var(--dark);
+  }
+}
+
+// Fallback for Microsoft Edge for Android
+@supports not (width: min(1px, 1%)) {
+  #{$class} {
+    --text: rgba(var(--bw), var(--bw), var(--bw), 0.9);
   }
 }
 
