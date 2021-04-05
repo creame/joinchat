@@ -294,7 +294,7 @@ class JoinChatPublic {
 	 */
 	public function links_script() {
 
-		if ( ! $this->show && $this->settings['telephone'] && wp_script_is( 'jquery', 'enqueued' ) ) {
+		if ( ! $this->show && ! empty( $this->settings['telephone'] ) && wp_script_is( 'jquery', 'enqueued' ) ) {
 			$args = array(
 				'tel' => $this->settings['telephone'],
 				'msg' => $this->settings['message_send'],
