@@ -110,63 +110,60 @@ class JoinChatPublic {
 			apply_filters( 'joinchat_extra_settings', array() )
 		);
 
-		$settings = $default_settings;
-		$show     = false;
-
 		// Can hook 'option_joinchat' and 'default_option_joinchat' filters
-		$site_settings = get_option( 'joinchat', $default_settings );
+		$settings = array_merge( $default_settings, (array) get_option( 'joinchat', $default_settings ) );
 
-		if ( is_array( $site_settings ) ) {
-			// Migrate addons 'remove_brand' setting to 'header' (v. < 4.1)
-			if ( isset( $saved_settings['remove_brand'] ) ) {
-				$remove                   = $saved_settings['remove_brand'];
-				$saved_settings['header'] = 'wa' == $remove ? '__wa__' : ( 'no' == $remove ? '__jc__' : '' );
-			}
-
-			// Clean unused saved settings
-			$settings = array_intersect_key( $site_settings, $default_settings );
-			// Merge defaults with saved settings
-			$settings = array_merge( $default_settings, $settings );
-
-			// Load WPML/Polylang translated strings
-			$settings_i18n = JoinChatUtil::settings_i18n( $settings );
-
-			foreach ( $settings_i18n as $key => $label ) {
-				if ( isset( $settings[ $key ] ) ) {
-					$settings[ $key ] = $settings[ $key ] ? apply_filters( 'wpml_translate_single_string', $settings[ $key ], 'Join.chat', $label ) : '';
-				}
-			}
-
-			// Filter for site settings (can be overriden by post settings)
-			$settings = apply_filters( 'joinchat_get_settings_site', $settings, $obj );
-
-			// Post custom settings override site settings
-			$post_settings = is_a( $obj, 'WP_Post' ) ? get_post_meta( $obj->ID, '_joinchat', true ) : '';
-
-			if ( is_array( $post_settings ) ) {
-				$settings = array_merge( $settings, $post_settings );
-
-				// Allow override general settings with empty string with "{}"
-				$settings['message_text'] = preg_replace( '/^\{\s*\}$/', '', $settings['message_text'] );
-				$settings['message_send'] = preg_replace( '/^\{\s*\}$/', '', $settings['message_send'] );
-			}
-
-			// Prepare settings
-			$settings['telephone']     = preg_replace( '/^0+|\D/', '', $settings['telephone'] );
-			$settings['mobile_only']   = 'yes' == $settings['mobile_only'];
-			$settings['whatsapp_web']  = 'yes' == $settings['whatsapp_web'];
-			$settings['message_badge'] = 'yes' == $settings['message_badge'] && '' != $settings['message_text'];
-			$settings['message_send']  = JoinChatUtil::replace_variables( $settings['message_send'] );
-			// Set true to link http://web.whatsapp.com instead http://api.whatsapp.com
-			$settings['whatsapp_web'] = apply_filters( 'joinchat_whatsapp_web', 'yes' == $settings['whatsapp_web'] );
-
-			// Only show if there is a phone number
-			if ( '' != $settings['telephone'] ) {
-				$show = isset( $settings['view'] ) ? 'yes' == $settings['view'] : $this->check_visibility( $settings['visibility'] );
-			}
-			// Unset post 'view' setting
-			unset( $settings['view'] );
+		// Migrate addons 'remove_brand' setting to 'header' (v. < 4.1)
+		if ( isset( $settings['remove_brand'] ) ) {
+			$remove             = $settings['remove_brand'];
+			$settings['header'] = 'wa' == $remove ? '__wa__' : ( 'no' == $remove ? '__jc__' : '' );
 		}
+
+		// Clean unused saved settings
+		$settings = array_intersect_key( $settings, $default_settings );
+
+		// Load WPML/Polylang translated strings
+		$settings_i18n = JoinChatUtil::settings_i18n( $settings );
+
+		foreach ( $settings_i18n as $key => $label ) {
+			if ( isset( $settings[ $key ] ) ) {
+				$settings[ $key ] = $settings[ $key ] ? apply_filters( 'wpml_translate_single_string', $settings[ $key ], 'Join.chat', $label ) : '';
+			}
+		}
+
+		// Filter for site settings (can be overriden by post settings)
+		$settings = apply_filters( 'joinchat_get_settings_site', $settings, $obj );
+
+		// Post custom settings override site settings
+		$post_settings = is_a( $obj, 'WP_Post' ) ? get_post_meta( $obj->ID, '_joinchat', true ) : '';
+
+		if ( is_array( $post_settings ) ) {
+			$settings = array_merge( $settings, $post_settings );
+
+			// Allow override general settings with empty string with "{}"
+			$settings['message_text'] = preg_replace( '/^\{\s*\}$/', '', $settings['message_text'] );
+			$settings['message_send'] = preg_replace( '/^\{\s*\}$/', '', $settings['message_send'] );
+		}
+
+		// Prepare settings
+		$settings['telephone']     = preg_replace( '/^0+|\D/', '', $settings['telephone'] );
+		$settings['mobile_only']   = 'yes' == $settings['mobile_only'];
+		$settings['whatsapp_web']  = 'yes' == $settings['whatsapp_web'];
+		$settings['message_badge'] = 'yes' == $settings['message_badge'] && '' != $settings['message_text'];
+		$settings['message_send']  = JoinChatUtil::replace_variables( $settings['message_send'] );
+		// Set true to link http://web.whatsapp.com instead http://api.whatsapp.com
+		$settings['whatsapp_web'] = apply_filters( 'joinchat_whatsapp_web', 'yes' == $settings['whatsapp_web'] );
+
+		// Only show if there is a phone number
+		if ( empty( $settings['telephone'] ) ) {
+			$show = false;
+		} elseif ( isset( $settings['view'] ) ) {
+			$show = 'yes' == $settings['view'];
+		} else {
+			$show = $this->check_visibility( $settings['visibility'] );
+		}
+		// Unset post 'view' setting
+		unset( $settings['view'] );
 
 		// Apply filters to final settings after site and post settings
 		$this->settings = apply_filters( 'joinchat_get_settings', $settings, $obj );
