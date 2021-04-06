@@ -3,9 +3,9 @@ Contributors: creapuntome, pacotole, davidlillo, monillo
 Donate link: https://www.paypal.me/creapuntome/
 Tags: whatsapp business, whatsapp, click to chat, button, whatsapp support chat, support, contact, directly message whatsapp, floating whatsapp, whatsapp chat
 Requires at least: 3.5.0
-Tested up to: 5.6
+Tested up to: 5.7
 Requires PHP: 5.3
-Stable tag: 4.1.10
+Stable tag: 4.1.11
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -16,6 +16,8 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 ### 💬 Connect your WordPress to WhatsApp in one click.
 
 > The best WordPress plugin for WhatsApp, with more than 300,000 installations worldwide.
+
+https://www.youtube.com/watch?v=Ad2ZpPnX_3Q
 
 [Documentation](https://join.chat/en/docs/?utm_source=wporg&utm_medium=web&utm_campaign=v4_1) | [Add-ons](https://join.chat/en/addons/?utm_source=wporg&utm_medium=web&utm_campaign=v4_1) | [Support](https://join.chat/en/support/?utm_source=wporg&utm_medium=web&utm_campaign=v4_1)
 
@@ -216,7 +218,8 @@ There is a Javascript event that Join.chat triggers automatically before launch 
 == Changelog ==
 
 = 4.1.11 =
-* FIX some CSS optmizers break message bubble style.
+* FIX some CSS optimizers break message bubble style.
+* FIX PHP notice undefined 'telephone'.
 
 = 4.1.10 =
 * **NEW:** Add support to new Elementor landing pages.
