@@ -162,7 +162,6 @@
   display: block;
   width: 100%;
   height: 100%;
-  -o-object-fit: cover;
   object-fit: cover;
 }
 
@@ -538,8 +537,8 @@
   width: 17px;
   height: 25px;
   background: inherit;
-  -webkit-clip-path: url(#joinchat__message__peak);
-  clip-path: url(#joinchat__message__peak);
+  -webkit-clip-path: var(--peak, url(#joinchat__message__peak));
+  clip-path: var(--peak, url(#joinchat__message__peak));
 }
 
 .joinchat--dark .joinchat__message {

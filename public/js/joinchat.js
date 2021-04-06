@@ -262,6 +262,11 @@
       }
     }
 
+    // Fix message clip-path style broken by some CSS optimizers
+    if (has_chatbox) {
+      joinchat_obj.$div.css('--peak', 'ur' + 'l(#joinchat__message__peak)');
+    }
+
     $(doc).trigger('joinchat:start');
   }
 

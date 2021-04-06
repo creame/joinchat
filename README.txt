@@ -215,6 +215,9 @@ There is a Javascript event that Join.chat triggers automatically before launch 
 
 == Changelog ==
 
+= 4.1.11 =
+* FIX some CSS optmizers break message bubble style.
+
 = 4.1.10 =
 * **NEW:** Add support to new Elementor landing pages.
 * FIX fallback for browsers that don't support CSS "clamp()" (i.e Edge for Android)

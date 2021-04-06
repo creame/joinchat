@@ -18,7 +18,7 @@
     width: 17px;
     height: 25px;
     background: inherit;
-    clip-path: url(##{$name}__message__peak);
+    clip-path: var(--peak, url(##{$name}__message__peak));
   }
 
   #{$class}--dark & {
