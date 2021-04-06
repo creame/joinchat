@@ -32,7 +32,7 @@ class JoinChatWooAdmin {
 		$loader->add_filter( 'joinchat_section_output', $this, 'section_ouput', 10, 2 );
 		$loader->add_filter( 'joinchat_field_output', $this, 'field_ouput', 10, 3 );
 		$loader->add_filter( 'joinchat_visibility_inheritance', $this, 'visibility_inheritance' );
-		$loader->add_filter( 'joinchat_help_tab_styles_and_vars', $this, 'help_vars' );
+		$loader->add_filter( 'joinchat_help_tab_styles_and_vars', $this, 'help_tab_vars' );
 		$loader->add_filter( 'joinchat_metabox_vars', $this, 'metabox_vars', 10, 2 );
 		$loader->add_filter( 'joinchat_metabox_placeholders', $this, 'metabox_placeholders', 10, 3 );
 	}
@@ -160,10 +160,11 @@ class JoinChatWooAdmin {
 	}
 
 	/**
-	 * Woocommerce sections and fields for 'joinchat_tab_woocommerce'
+	 * Woocommerce variables for messages and CTAs
 	 *
 	 * @since    3.0.0
-	 * @param    array $sections       current tab sections and fields.
+	 * @param    array  $sections       current tab sections and fields.
+	 * @param   string $field          field name.
 	 * @return   array
 	 */
 	public function vars_help( $vars, $field ) {
@@ -264,10 +265,10 @@ class JoinChatWooAdmin {
 	 * Add WooCommerce variables info for help tab.
 	 *
 	 * @since    3.0.0
-	 * @param    array $tab       current help tab content.
+	 * @param    string $tab       current help tab content.
 	 * @return   string
 	 */
-	public function help_vars( $tab ) {
+	public function help_tab_vars( $tab ) {
 
 		$tab['content'] .=
 			'<p> ' . __( '<strong>WooCommerce</strong>, in product pages you can also use:', 'creame-whatsapp-me' ) . '</p>' .
