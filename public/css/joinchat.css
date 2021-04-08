@@ -63,7 +63,7 @@
   --msg: var(--dark);
 }
 
-@supports not (width: min(1px, 1%)) {
+@supports not (width: clamp(1px, 1%, 10px)) {
   .joinchat {
     --text: rgba(var(--bw), var(--bw), var(--bw), 0.9);
   }
