@@ -28,6 +28,8 @@ class JoinChatWooPublic {
 		$loader->add_filter( 'joinchat_variable_replacements', $this, 'replacements' );
 		$loader->add_filter( 'joinchat_excluded_fields', $this, 'excluded_fields' );
 
+		$loader->add_filter( 'storefront_handheld_footer_bar_links', $this, 'storefront_footer_bar' );
+
 	}
 
 	/**
@@ -251,6 +253,28 @@ class JoinChatWooPublic {
 		}
 
 		return $percentage ? "-$percentage%" : '';
+
+	}
+
+	/**
+	 * Storefront theme footer bar compatibility
+	 *
+	 * Don't change any link but add a joinchat class to move up on mobile
+	 *
+	 * @since    4.1.12
+	 * @param    array $links  footer bar links.
+	 * @return   array
+	 */
+	public function storefront_footer_bar( $links ) {
+
+		add_filter(
+			'joinchat_classes',
+			function( $classes ) {
+				return $classes . ' joinchat--footer-bar';
+			}
+		);
+
+		return $links;
 
 	}
 

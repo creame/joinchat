@@ -59,6 +59,12 @@
   }
 }
 
+@media (max-width: 767px) {
+  .joinchat.joinchat--footer-bar {
+    --bottom: 76px;
+  }
+}
+
 .joinchat.joinchat--dark {
   --msg: var(--dark);
 }

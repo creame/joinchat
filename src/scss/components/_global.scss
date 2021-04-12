@@ -58,6 +58,12 @@
     --header: 55px;
   }
 
+  @media (max-width: 767px) {
+    &#{$class}--footer-bar {
+      --bottom: 76px;
+    }
+  }
+
   &#{$class}--dark {
     --msg: var(--dark);
   }

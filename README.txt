@@ -217,6 +217,9 @@ There is a Javascript event that Join.chat triggers automatically before launch 
 
 == Changelog ==
 
+= 4.1.12 =
+* **NEW:** Add compatibility with Storefront theme mobile toolbar.
+
 = 4.1.11 =
 * FIX some CSS optimizers break message bubble style.
 * FIX PHP notice undefined 'telephone'.
