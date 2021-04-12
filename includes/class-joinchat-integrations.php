@@ -18,12 +18,16 @@ class JoinChatIntegrations {
 	 */
 	public function load_integrations() {
 
-		// Integration with WooCommerce
+		$plugin_path = plugin_dir_path( __DIR__ );
+
+		/**
+		 * WooCommerce Integration
+		 */
 		if ( class_exists( 'WooCommerce' ) && version_compare( WC_VERSION, '3.0', '>=' ) ) {
-			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-joinchat-woo-admin.php';
-			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-joinchat-woo-public.php';
 
 			if ( is_admin() ) {
+
+				require_once $plugin_path . 'admin/class-joinchat-woo-admin.php';
 
 				$plugin_woo_admin = new JoinChatWooAdmin();
 
@@ -31,19 +35,25 @@ class JoinChatIntegrations {
 
 			} else {
 
+				require_once $plugin_path . 'public/class-joinchat-woo-public.php';
+
 				$plugin_woo_public = new JoinChatWooPublic();
 
 				add_action( 'joinchat_run_pre', array( $plugin_woo_public, 'init' ) );
 
 			}
+
+			add_filter( 'joinchat_elementor_finder_items', array( $this, 'elementor_finder_woocommerce_item' ), 10, 2 );
 		}
 
-		// Integration with Elementor
+		/**
+		 * Elementor Integration
+		 */
 		if ( defined( 'ELEMENTOR_VERSION' ) ) {
-			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-joinchat-elementor-admin.php';
-			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-joinchat-elementor-public.php';
 
 			if ( is_admin() ) {
+
+				require_once $plugin_path . 'admin/class-joinchat-elementor-admin.php';
 
 				$plugin_elementor_admin = new JoinChatElementorAdmin();
 
@@ -51,12 +61,56 @@ class JoinChatIntegrations {
 
 			} else {
 
+				require_once $plugin_path . 'public/class-joinchat-elementor-public.php';
+
 				$plugin_elementor_public = new JoinChatElementorPublic();
 
 				add_action( 'joinchat_run_pre', array( $plugin_elementor_public, 'init' ) );
 
 			}
+
+			// Add Elementor Finder integration (since 4.1.12).
+			add_action( 'elementor/finder/categories/init', array( $this, 'elementor_finder_integration' ) );
 		}
+
+	}
+
+	/**
+	 * Elementor Finder integration.
+	 *
+	 * Add Join.chat category to Elementor Finder.
+	 *
+	 * @since    4.1.12
+	 * @param Categories_Manager $categories_manager
+	 * @return void
+	 */
+	public function elementor_finder_integration( $categories_manager ) {
+
+		require_once plugin_dir_path( __FILE__ ) . 'class-joinchat-elementor-finder.php';
+
+		$categories_manager->add_category( 'joinchat', new JoinChatElementorFinder() );
+
+	}
+
+	/**
+	 * Add WooCommerce item in Join.chat category for Elementor Finder.
+	 *
+	 * @since    4.1.12
+	 * @param  array  $items current Elementor Finder joina.chat items
+	 * @param  string $settings_url Join.chat settings base url
+	 * @return array
+	 */
+	public function elementor_finder_woocommerce_item( $items, $settings_url ) {
+
+		$items['woocommerce'] = array(
+			'title'       => _x( 'WooCommerce Settings', 'Title in Elementor Finder', 'creame-whatsapp-me' ),
+			'url'         => $settings_url . '&tab=woocommerce',
+			'icon'        => 'woocommerce',
+			'keywords'    => explode( ',', 'joinchat,whatsapp,' . _x( 'woocommerce,shop,product', 'Keywords in Elementor Finder', 'creame-whatsapp-me' ) ),
+			'description' => __( 'Join.chat settings page', 'creame-whatsapp-me' ),
+		);
+
+		return $items;
 
 	}
 
