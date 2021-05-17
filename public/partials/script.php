@@ -16,8 +16,7 @@ defined( 'WPINC' ) || exit;
 jQuery(function($){
 	var arg = <?php echo JoinChatUtil::to_json( $args ); ?>;
 	var via = arg.web && !navigator.userAgent.match(/Android|iPhone|BlackBerry|IEMobile|Opera Mini/i) ? 'web' : 'api';
-	$(document).on('click', '.joinchat_open,.joinchat_app,a[href="#whatsapp"],a[href="#joinchat"]', function(e){
-		e.preventDefault();
+	$(document).on('click', '.joinchat_open,.joinchat_app,a[href="#whatsapp"],a[href="#joinchat"]', function(e){ e.preventDefault();
 		window.open('https://' + via + '.whatsapp.com/send?phone=' + encodeURIComponent(arg.tel) + '&text=' + encodeURIComponent(arg.msg), null, 'noopener');
 	});
 });

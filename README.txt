@@ -217,6 +217,9 @@ There is a Javascript event that Join.chat triggers automatically before launch 
 
 == Changelog ==
 
+= 4.1.13 =
+* **SECURE** frontend escape html output.
+
 = 4.1.12 =
 * **NEW:** Add integration with Elementor Finder.
 * **NEW:** Add compatibility with Storefront theme mobile toolbar.
