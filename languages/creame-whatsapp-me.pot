@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Join.chat\n"
-"POT-Creation-Date: 2021-04-12 16:26+0000\n"
+"POT-Creation-Date: 2021-05-17 14:43+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Your Name <you@example.com>\n"
 "Language-Team: Creame <hola@crea.me>\n"
@@ -21,7 +21,7 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 "Language: "
 
-#: admin/class-joinchat-woo-admin.php:237
+#: admin/class-joinchat-woo-admin.php:238
 msgid ""
 "*Hi {SITE}!*\n"
 "I have a question about *{PRODUCT} ({SKU})*"
@@ -31,7 +31,7 @@ msgstr ""
 msgid "404 Page"
 msgstr ""
 
-#: admin/class-joinchat-woo-admin.php:274
+#: admin/class-joinchat-woo-admin.php:275
 msgid "<strong>WooCommerce</strong>, in product pages you can also use:"
 msgstr ""
 
@@ -85,11 +85,11 @@ msgstr ""
 msgid "Call to Action"
 msgstr ""
 
-#: admin/class-joinchat-woo-admin.php:148
+#: admin/class-joinchat-woo-admin.php:149
 msgid "Call to Action for Products"
 msgstr ""
 
-#: admin/class-joinchat-woo-admin.php:149
+#: admin/class-joinchat-woo-admin.php:150
 msgid "Call to Action for Products on Sale"
 msgstr ""
 
@@ -165,12 +165,12 @@ msgstr ""
 msgid "Default visibility"
 msgstr ""
 
-#: admin/class-joinchat-woo-admin.php:232
+#: admin/class-joinchat-woo-admin.php:233
 msgid ""
 "Define a text for your products on sale to encourage customers to contact"
 msgstr ""
 
-#: admin/class-joinchat-woo-admin.php:225
+#: admin/class-joinchat-woo-admin.php:226
 msgid "Define a text for your products to encourage customers to contact"
 msgstr ""
 
@@ -206,7 +206,7 @@ msgstr ""
 msgid "Follow %s on twitter."
 msgstr ""
 
-#: admin/class-joinchat-woo-admin.php:280
+#: admin/class-joinchat-woo-admin.php:281
 msgid ""
 "For the <strong>Call to Action for Products on Sale</strong>, you can also "
 "use:"
@@ -328,7 +328,7 @@ msgstr ""
 msgid "Message"
 msgstr ""
 
-#: admin/class-joinchat-woo-admin.php:150
+#: admin/class-joinchat-woo-admin.php:151
 msgid "Message for Products"
 msgstr ""
 
@@ -336,7 +336,7 @@ msgstr ""
 msgid "Mobile Only"
 msgstr ""
 
-#: admin/class-joinchat-woo-admin.php:132
+#: admin/class-joinchat-woo-admin.php:133
 msgid "My Account"
 msgstr ""
 
@@ -403,7 +403,7 @@ msgstr ""
 msgid "Powered by Join.chat"
 msgstr ""
 
-#: admin/class-joinchat-woo-admin.php:239
+#: admin/class-joinchat-woo-admin.php:240
 msgid "Predefined text for the first message the client will send you"
 msgstr ""
 
@@ -411,11 +411,11 @@ msgstr ""
 msgid "Predefined text for the first message the user will send you"
 msgstr ""
 
-#: admin/class-joinchat-woo-admin.php:197
+#: admin/class-joinchat-woo-admin.php:198
 msgid "Product Chat Window"
 msgstr ""
 
-#: admin/class-joinchat-woo-admin.php:276
+#: admin/class-joinchat-woo-admin.php:277
 msgid "Product Name"
 msgstr ""
 
@@ -435,7 +435,7 @@ msgstr ""
 msgid "Right"
 msgstr ""
 
-#: admin/class-joinchat-woo-admin.php:230
+#: admin/class-joinchat-woo-admin.php:231
 msgid ""
 "Save {DISCOUNT}! This *{PRODUCT}* can be yours for only ~{REGULAR}~ *{PRICE}"
 "*.\n"
@@ -518,6 +518,10 @@ msgstr ""
 msgid "Text to open chat on Chat Window button"
 msgstr ""
 
+#: admin/class-joinchat-woo-admin.php:132
+msgid "Thank you"
+msgstr ""
+
 #: admin/class-joinchat-admin.php:558
 msgid "The image will alternate with button icon"
 msgstr ""
@@ -526,7 +530,7 @@ msgstr ""
 msgid "Theme Color"
 msgstr ""
 
-#: admin/class-joinchat-woo-admin.php:223
+#: admin/class-joinchat-woo-admin.php:224
 msgid ""
 "This *{PRODUCT}* can be yours for only *{PRICE}*!\n"
 "If you have any questions, ask us."
@@ -614,7 +618,7 @@ msgstr ""
 msgid "With anchor links:"
 msgstr ""
 
-#: admin/class-joinchat-woo-admin.php:193
+#: admin/class-joinchat-woo-admin.php:194
 msgid "WooCommerce"
 msgstr ""
 
@@ -622,7 +626,7 @@ msgstr ""
 msgid "Yes"
 msgstr ""
 
-#: admin/class-joinchat-woo-admin.php:199
+#: admin/class-joinchat-woo-admin.php:200
 msgid ""
 "You can define other different texts for the Chat Window on the product "
 "pages."
