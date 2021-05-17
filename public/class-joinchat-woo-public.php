@@ -126,8 +126,13 @@ class JoinChatWooPublic {
 		}
 
 		// Checkout page
-		if ( is_checkout() ) {
+		if ( is_checkout() && ! is_wc_endpoint_url() ) {
 			return isset( $options['checkout'] ) ? 'yes' == $options['checkout'] : $woo;
+		}
+
+		// Thankyou page
+		if ( is_wc_endpoint_url( 'order-received' ) ) {
+			return isset( $options['thankyou'] ) ? 'yes' == $options['thankyou'] : $woo;
 		}
 
 		// Customer account pages

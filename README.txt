@@ -218,6 +218,7 @@ There is a Javascript event that Join.chat triggers automatically before launch 
 == Changelog ==
 
 = 4.1.13 =
+* **NEW:** Add Thank you page in WooCommerce visibility options.
 * **SECURE** frontend escape html output.
 
 = 4.1.12 =

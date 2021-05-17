@@ -129,6 +129,7 @@ class JoinChatWooAdmin {
 			'view__product'      => '— ' . __( 'Product Page', 'creame-whatsapp-me' ),
 			'view__cart'         => '— ' . __( 'Cart', 'creame-whatsapp-me' ),
 			'view__checkout'     => '— ' . __( 'Checkout', 'creame-whatsapp-me' ),
+			'view__thankyou'     => '— ' . __( 'Thank you', 'creame-whatsapp-me' ),
 			'view__account_page' => '— ' . __( 'My Account', 'creame-whatsapp-me' ),
 		);
 
@@ -256,7 +257,7 @@ class JoinChatWooAdmin {
 		// 'woocommerce' inherit from 'all' (Global)
 		$inheritance['all'][] = 'woocommerce';
 		// WooCommerce pages inherit from 'woocommerce'
-		$inheritance['woocommerce'] = array( 'product', 'cart', 'checkout', 'account_page' );
+		$inheritance['woocommerce'] = array( 'product', 'cart', 'checkout', 'thankyou', 'account_page' );
 
 		return $inheritance;
 	}
