@@ -24,15 +24,18 @@ if ( ! defined( 'WPINC' ) ) {
 }
 
 /**
- * Currently plugin version.
+ * Define constants.
  */
 define( 'JOINCHAT_VERSION', '4.1.13' );
+define( 'JOINCHAT_FILE', __FILE__ );
+define( 'JOINCHAT_DIR', plugin_dir_path( JOINCHAT_FILE ) );
+define( 'JOINCHAT_BASENAME', plugin_basename( JOINCHAT_FILE ) );
 
 /**
  * The core plugin class that is used to define internationalization,
  * admin-specific hooks, and public-facing site hooks.
  */
-require plugin_dir_path( __FILE__ ) . 'includes/class-joinchat.php';
+require JOINCHAT_DIR . 'includes/class-joinchat.php';
 
 /**
  * Begins execution of the plugin.

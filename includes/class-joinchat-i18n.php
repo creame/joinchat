@@ -13,7 +13,6 @@
  */
 class JoinChat_i18n {
 
-
 	/**
 	 * Load the plugin text domain for translation.
 	 *
@@ -21,14 +20,8 @@ class JoinChat_i18n {
 	 */
 	public function load_plugin_textdomain() {
 
-		load_plugin_textdomain(
-			'creame-whatsapp-me',
-			false,
-			dirname( dirname( plugin_basename( __FILE__ ) ) ) . '/languages/'
-		);
+		load_plugin_textdomain( 'creame-whatsapp-me', false, dirname( JOINCHAT_BASENAME ) . '/languages' );
 
 	}
-
-
 
 }

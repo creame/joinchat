@@ -18,8 +18,6 @@ class JoinChatIntegrations {
 	 */
 	public function load_integrations() {
 
-		$plugin_path = plugin_dir_path( __DIR__ );
-
 		/**
 		 * WooCommerce Integration
 		 */
@@ -27,7 +25,7 @@ class JoinChatIntegrations {
 
 			if ( is_admin() ) {
 
-				require_once $plugin_path . 'admin/class-joinchat-woo-admin.php';
+				require_once JOINCHAT_DIR . 'admin/class-joinchat-woo-admin.php';
 
 				$plugin_woo_admin = new JoinChatWooAdmin();
 
@@ -35,7 +33,7 @@ class JoinChatIntegrations {
 
 			} else {
 
-				require_once $plugin_path . 'public/class-joinchat-woo-public.php';
+				require_once JOINCHAT_DIR . 'public/class-joinchat-woo-public.php';
 
 				$plugin_woo_public = new JoinChatWooPublic();
 
@@ -53,7 +51,7 @@ class JoinChatIntegrations {
 
 			if ( is_admin() ) {
 
-				require_once $plugin_path . 'admin/class-joinchat-elementor-admin.php';
+				require_once JOINCHAT_DIR . 'admin/class-joinchat-elementor-admin.php';
 
 				$plugin_elementor_admin = new JoinChatElementorAdmin();
 
@@ -61,7 +59,7 @@ class JoinChatIntegrations {
 
 			} else {
 
-				require_once $plugin_path . 'public/class-joinchat-elementor-public.php';
+				require_once JOINCHAT_DIR . 'public/class-joinchat-elementor-public.php';
 
 				$plugin_elementor_public = new JoinChatElementorPublic();
 
@@ -86,7 +84,7 @@ class JoinChatIntegrations {
 	 */
 	public function elementor_finder_integration( $categories_manager ) {
 
-		require_once plugin_dir_path( __FILE__ ) . 'class-joinchat-elementor-finder.php';
+		require_once JOINCHAT_DIR . 'includes/class-joinchat-elementor-finder.php';
 
 		$categories_manager->add_category( 'joinchat', new JoinChatElementorFinder() );
 

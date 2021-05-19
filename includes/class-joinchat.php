@@ -93,12 +93,10 @@ class JoinChat {
 	 */
 	private function load_dependencies() {
 
-		$includes_path = plugin_dir_path( __FILE__ );
-
-		require_once $includes_path . 'class-joinchat-loader.php';
-		require_once $includes_path . 'class-joinchat-i18n.php';
-		require_once $includes_path . 'class-joinchat-integrations.php';
-		require_once $includes_path . 'class-joinchat-util.php';
+		require_once JOINCHAT_DIR . 'includes/class-joinchat-loader.php';
+		require_once JOINCHAT_DIR . 'includes/class-joinchat-i18n.php';
+		require_once JOINCHAT_DIR . 'includes/class-joinchat-integrations.php';
+		require_once JOINCHAT_DIR . 'includes/class-joinchat-util.php';
 
 		$this->loader = new JoinChatLoader();
 
@@ -150,7 +148,7 @@ class JoinChat {
 	 */
 	private function define_admin_hooks() {
 
-		require_once plugin_dir_path( __DIR__ ) . 'admin/class-joinchat-admin.php';
+		require_once JOINCHAT_DIR . 'admin/class-joinchat-admin.php';
 
 		$plugin_admin = new JoinChatAdmin( $this->get_plugin_name(), $this->get_version() );
 
@@ -164,7 +162,7 @@ class JoinChat {
 		$this->loader->add_action( 'load-settings_page_joinchat', $plugin_admin, 'help_tab' );
 		$this->loader->add_action( 'update_option_joinchat', $plugin_admin, 'clear_cache', 100 );
 
-		$this->loader->add_filter( "plugin_action_links_creame-whatsapp-me/{$this->plugin_name}.php", $plugin_admin, 'settings_link' );
+		$this->loader->add_filter( 'plugin_action_links_' . JOINCHAT_BASENAME, $plugin_admin, 'settings_link' );
 		$this->loader->add_filter( 'plugin_row_meta', $plugin_admin, 'plugin_links', 10, 2 );
 		$this->loader->add_filter( 'admin_footer_text', $plugin_admin, 'admin_footer_text', PHP_INT_MAX );
 
@@ -180,7 +178,7 @@ class JoinChat {
 	 */
 	private function define_public_hooks() {
 
-		require_once plugin_dir_path( __DIR__ ) . 'public/class-joinchat-public.php';
+		require_once JOINCHAT_DIR . 'public/class-joinchat-public.php';
 
 		$plugin_public = new JoinChatPublic( $this->get_plugin_name(), $this->get_version() );
 
