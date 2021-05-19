@@ -519,7 +519,7 @@ msgid "Text to open chat on Chat Window button"
 msgstr ""
 
 #: admin/class-joinchat-woo-admin.php:132
-msgid "Thank you"
+msgid "Thank You"
 msgstr ""
 
 #: admin/class-joinchat-admin.php:558

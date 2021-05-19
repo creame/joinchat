@@ -129,7 +129,7 @@ class JoinChatWooAdmin {
 			'view__product'      => '— ' . __( 'Product Page', 'creame-whatsapp-me' ),
 			'view__cart'         => '— ' . __( 'Cart', 'creame-whatsapp-me' ),
 			'view__checkout'     => '— ' . __( 'Checkout', 'creame-whatsapp-me' ),
-			'view__thankyou'     => '— ' . __( 'Thank you', 'creame-whatsapp-me' ),
+			'view__thankyou'     => '— ' . __( 'Thank You', 'creame-whatsapp-me' ),
 			'view__account_page' => '— ' . __( 'My Account', 'creame-whatsapp-me' ),
 		);
 
