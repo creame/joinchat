@@ -189,7 +189,7 @@ class JoinChatPublic {
 			$color           = $this->settings['color'];
 			list($r, $g, $b) = sscanf( $color, '#%02x%02x%02x' );
 
-			wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . "css/{$this->plugin_name}{$min}.css", array(), $this->version, 'all' );
+			wp_enqueue_style( $this->plugin_name, plugins_url( "css/{$this->plugin_name}{$min}.css", __FILE__ ), array(), $this->version, 'all' );
 			wp_add_inline_style( $this->plugin_name, apply_filters( 'joinchat_inline_style', ".joinchat{ --red:$r; --green:$g; --blue:$b; }", $this->settings ) );
 		}
 
@@ -206,7 +206,7 @@ class JoinChatPublic {
 
 		if ( $this->show ) {
 			$min = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
-			wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . "js/{$this->plugin_name}{$min}.js", array( 'jquery' ), $this->version, true );
+			wp_enqueue_script( $this->plugin_name, plugins_url( "js/{$this->plugin_name}{$min}.js", __FILE__ ), array( 'jquery' ), $this->version, true );
 		}
 
 	}

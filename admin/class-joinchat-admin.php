@@ -154,11 +154,12 @@ class JoinChatAdmin {
 	 */
 	public function register_styles( $hook ) {
 
-		$styles = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? 'joinchat.css' : 'joinchat.min.css';
-		wp_register_style( 'joinchat-admin', plugin_dir_url( __FILE__ ) . 'css/' . $styles, array(), $this->version, 'all' );
+		$min = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
+
+		wp_register_style( 'joinchat-admin', plugins_url( "css/joinchat{$min}.css", __FILE__ ), array(), $this->version, 'all' );
 
 		if ( $this->enhanced_phone ) {
-			wp_register_style( 'intl-tel-input', 'https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/' . $this->enhanced_phone . '/css/intlTelInput.css', array(), null, 'all' );
+			wp_register_style( 'intl-tel-input', plugins_url( "css/intlTelInput{$min}.css", __FILE__ ), array(), $this->enhanced_phone, 'all' );
 		}
 
 	}
@@ -173,19 +174,20 @@ class JoinChatAdmin {
 	 */
 	public function register_scripts( $hook ) {
 
-		$script = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? 'joinchat.js' : 'joinchat.min.js';
+		$min = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
 
 		if ( $this->enhanced_phone ) {
 			$localize = array(
 				'placeholder' => __( 'e.g.', 'creame-whatsapp-me' ),
 				'version'     => $this->enhanced_phone,
+				'utils_js'    => plugins_url( 'js/utils.js', __FILE__ ),
 			);
 
-			wp_register_script( 'intl-tel-input', 'https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/' . $this->enhanced_phone . '/js/intlTelInput.min.js', array(), null, true );
+			wp_register_script( 'intl-tel-input', plugins_url( "js/intlTelInput{$min}.js", __FILE__ ), array(), $this->enhanced_phone, true );
 			wp_localize_script( 'intl-tel-input', 'intlTelConf', $localize );
-			wp_register_script( 'joinchat-admin', plugin_dir_url( __FILE__ ) . 'js/' . $script, array( 'jquery', 'wp-color-picker', 'intl-tel-input' ), $this->version, true );
+			wp_register_script( 'joinchat-admin', plugins_url( "js/joinchat{$min}.js", __FILE__ ), array( 'jquery', 'wp-color-picker', 'intl-tel-input' ), $this->version, true );
 		} else {
-			wp_register_script( 'joinchat-admin', plugin_dir_url( __FILE__ ) . 'js/' . $script, array( 'jquery', 'wp-color-picker' ), $this->version, true );
+			wp_register_script( 'joinchat-admin', plugins_url( "js/joinchat{$min}.js", __FILE__ ), array( 'jquery', 'wp-color-picker' ), $this->version, true );
 		}
 
 	}

@@ -36,7 +36,7 @@
           }
         },
         customPlaceholder: function (placeholder) { return intlTelConf.placeholder + ' ' + placeholder; },
-        utilsScript: 'https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/' + intlTelConf.version + '/js/utils.js'
+        utilsScript: intlTelConf.utils_js,
       });
       // Ensures store current value
       iti.hiddenInput.value = $phone.val();
