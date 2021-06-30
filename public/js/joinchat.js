@@ -37,17 +37,16 @@
 
     // Send Google Analytics custom event (Google Analytics 4 - gtag.js)
     if (typeof gtag == 'function' && typeof data_layer == 'object') {
-      var ga4 = false;
-      data_layer.forEach(function (item) { if (item[0] == 'config' && item[1].substring(0, 2) == 'G-') ga4 = item[1]; });
-
-      if (ga4) {
-        gtag('event', action, {
-          'event_category': 'JoinChat',
-          'event_label': label,
-          'send_to': ga4,
-          'transport_type': 'beacon',
-        });
-      }
+      data_layer.forEach(function (item) {
+        if (item[0] == 'config' && item[1].substring(0, 2) == 'G-') {
+          gtag('event', action, {
+            'event_category': 'JoinChat',
+            'event_label': label,
+            'send_to': item[1],
+            'transport_type': 'beacon',
+          });
+        }
+      });
     }
 
     // Send Google Tag Manager custom event
