@@ -117,7 +117,7 @@ class JoinChat {
 		$plugin_i18n = new JoinChat_i18n();
 
 		// No delegate to $this->loader, use WordPress add_action
-		add_action( 'plugins_loaded', array( $plugin_i18n, 'load_plugin_textdomain' ) );
+		add_action( 'init', array( $plugin_i18n, 'load_plugin_textdomain' ) );
 
 	}
 
