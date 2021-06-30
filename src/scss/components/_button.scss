@@ -14,8 +14,11 @@
   box-shadow: 1px 6px 24px 0 rgba($WAdarken, 0.24);
   cursor: pointer;
   transition: background 0.2s linear;
-  -webkit-tap-highlight-color: $transparent;
   will-change: background-color, width;
+
+  #{$rtl} & {
+    flex-direction: row-reverse;
+  }
 
   &:hover {
     background: $WAdark;
@@ -25,6 +28,16 @@
   &:active {
     background: $WAdark;
     transition: none;
+  }
+
+  #{$class}--left & {
+    right: auto;
+    left: 8px;
+    flex-direction: row-reverse;
+
+    #{$rtl} & {
+      flex-direction: row;
+    }
   }
 
   #{$class}--chatbox & {
@@ -38,19 +51,6 @@
     }
   }
 
-  #{$rtl} & {
-    flex-direction: row-reverse;
-  }
-
-  #{$class}--left & {
-    right: auto;
-    left: 8px;
-    flex-direction: row-reverse;
-
-    #{$rtl} & {
-      flex-direction: row;
-    }
-  }
 }
 
 #{$class}__button__open {

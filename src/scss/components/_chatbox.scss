@@ -18,6 +18,10 @@
   opacity: 0;
   transition: max-height 0.2s ease-out, opacity 0.4s ease-out, transform 0s linear 0.3s;
 
+  #{$rtl} & {
+    text-align: right;
+  }
+
   #{$class}--chatbox & {
     opacity: 1;
     transform: scale3d(1, 1, 1);
@@ -40,10 +44,9 @@
   padding: 0 70px 0 26px;
   margin: 0;
   background: var(--color);
-  text-align: left;
 
   #{$rtl} & {
-    text-align: right;
+    padding: 0 26px 0 70px;
   }
 
   #{$class}--dark & {
@@ -81,6 +84,7 @@
     color: inherit !important;
     text-decoration: none !important;
     opacity: 0.9;
+    filter: drop-shadow(0 1px 3px rgba($black, 0.3));
   }
 }
 
@@ -103,10 +107,13 @@
   background-size: 12px;
   cursor: pointer;
   transition: background-color 0.3s ease-out;
-  -webkit-tap-highlight-color: $transparent;
 
   &:hover {
     background-color: rgba($black, 0.6);
+  }
+
+  &:active {
+    background-color: rgba($black, 0.7);
   }
 
   #{$rtl} & {
@@ -133,10 +140,6 @@
     background: $transparent;
   }
 
-  &:hover::-webkit-scrollbar-thumb {
-    background: rgba($black, 0.2);
-  }
-
   #{$class}--blur & {
     background: rgba(var(--rgb), 0.2);
     backdrop-filter: blur(10px);
@@ -144,6 +147,10 @@
 
   #{$class}--dark & {
     background: #1a1a1a;
+  }
+
+  &:hover::-webkit-scrollbar-thumb {
+    background: rgba($black, 0.2);
   }
 
   @include ios {

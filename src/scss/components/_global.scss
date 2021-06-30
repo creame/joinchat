@@ -30,7 +30,9 @@
   transform: scale3d(0, 0, 0);
   transition: transform 0.3s ease-in-out;
   user-select: none;
+  touch-action: manipulation;
   -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: $transparent;
 
   *,
   *::before,
