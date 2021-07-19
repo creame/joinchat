@@ -149,6 +149,7 @@ class JoinChatAdmin {
 	 * Register the stylesheets for the admin area.
 	 *
 	 * @since    3.0.0
+	 * @since    4.1.15     Added color picker dependency.
 	 * @param    string $hook       The id of the page.
 	 * @return   void
 	 */
@@ -156,7 +157,7 @@ class JoinChatAdmin {
 
 		$min = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
 
-		wp_register_style( 'joinchat-admin', plugins_url( "css/joinchat{$min}.css", __FILE__ ), array(), $this->version, 'all' );
+		wp_register_style( 'joinchat-admin', plugins_url( "css/joinchat{$min}.css", __FILE__ ), array( 'wp-color-picker' ), $this->version, 'all' );
 
 		if ( $this->enhanced_phone ) {
 			wp_register_style( 'intl-tel-input', plugins_url( "css/intlTelInput{$min}.css", __FILE__ ), array(), $this->enhanced_phone, 'all' );
@@ -831,7 +832,6 @@ class JoinChatAdmin {
 		wp_enqueue_media();
 		// Enqueue assets
 		wp_enqueue_script( 'joinchat-admin' );
-		wp_enqueue_style( 'wp-color-picker' );
 		wp_enqueue_style( 'joinchat-admin' );
 
 		if ( $this->enhanced_phone ) {
