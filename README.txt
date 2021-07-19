@@ -3,9 +3,9 @@ Contributors: creapuntome, pacotole, davidlillo, monillo
 Donate link: https://www.paypal.me/creapuntome/
 Tags: whatsapp business, whatsapp, click to chat, button, whatsapp support chat, support, contact, directly message whatsapp, floating whatsapp, whatsapp chat
 Requires at least: 3.5.0
-Tested up to: 5.7
+Tested up to: 5.8
 Requires PHP: 5.3
-Stable tag: 4.1.14
+Stable tag: 4.1.15
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -216,6 +216,12 @@ There is a Javascript event that Join.chat triggers automatically before launch 
 6. Page settings
 
 == Changelog ==
+
+= 4.1.15 =
+* **NEW:** WordPress 5.8 tested & updated.
+* FIX RTL text align right.
+* FIX Send event to all GA4 properties.
+* Prevent faux WhatsApp clicks when chat window is showed automatically
 
 = 4.1.14 =
 * **NEW:** Enhanced telephone input scripts now are included in plugin and self-hosted.
