@@ -94,6 +94,7 @@ class JoinChat {
 	private function load_dependencies() {
 
 		require_once JOINCHAT_DIR . 'includes/class-joinchat-loader.php';
+		require_once JOINCHAT_DIR . 'includes/class-joinchat-common.php';
 		require_once JOINCHAT_DIR . 'includes/class-joinchat-i18n.php';
 		require_once JOINCHAT_DIR . 'includes/class-joinchat-integrations.php';
 		require_once JOINCHAT_DIR . 'includes/class-joinchat-util.php';

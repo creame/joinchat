@@ -31,6 +31,15 @@ class JoinChatAdmin {
 	private $version;
 
 	/**
+	 * Common class for admin and front methods.
+	 *
+	 * @since    4.2.0
+	 * @access   private
+	 * @var      JoinChatCommon    $common    instance.
+	 */
+	private $common;
+
+	/**
 	 * The setings of this plugin.
 	 *
 	 * @since    1.0.0
@@ -69,6 +78,7 @@ class JoinChatAdmin {
 
 		$this->plugin_name = $plugin_name;
 		$this->version     = $version;
+		$this->common      = new JoinChatCommon();
 
 		// Updated in get_settings() at 'admin_init' hook
 		$this->enhanced_phone = '17.0.12'; // intl-tel-input version
@@ -103,45 +113,8 @@ class JoinChatAdmin {
 			)
 		);
 
-		// Default settings
-		$default_settings = array_merge(
-			array(
-				'telephone'     => '',
-				'mobile_only'   => 'no',
-				'button_image'  => '',
-				'button_tip'    => '',
-				'button_delay'  => 3,
-				'whatsapp_web'  => 'no',
-				'message_text'  => '',
-				'message_delay' => 10,
-				'message_views' => 2,
-				'message_badge' => 'no',
-				'message_send'  => '',
-				'message_start' => __( 'Open chat', 'creame-whatsapp-me' ),
-				'position'      => 'right',
-				'visibility'    => array( 'all' => 'yes' ),
-				'color'         => '#25d366',
-				'dark_mode'     => 'no',
-				'header'        => '__jc__', // values: '__jc__', '__wa__' or other custom text
-			),
-			apply_filters( 'joinchat_extra_settings', array() )
-		);
-
-		$this->settings = $default_settings;
-		$saved_settings = get_option( 'joinchat', $default_settings );
-
-		if ( is_array( $saved_settings ) ) {
-			// Migrate addons 'remove_brand' setting to 'header' (v. < 4.1)
-			if ( isset( $saved_settings['remove_brand'] ) ) {
-				$remove                   = $saved_settings['remove_brand'];
-				$saved_settings['header'] = 'wa' == $remove ? '__wa__' : ( 'no' == $remove ? '__jc__' : '' );
-			}
-
-			// clean unused saved settings
-			$saved_settings = array_intersect_key( $saved_settings, $default_settings );
-			// merge defaults with saved settings
-			$this->settings = array_merge( $default_settings, $saved_settings );
-		}
+		// Load settings
+		$this->settings = $this->common->load_settings();
 
 	}
 
