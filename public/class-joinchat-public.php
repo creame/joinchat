@@ -106,6 +106,9 @@ class JoinChatPublic {
 			}
 		}
 
+		// If use "global $post;" take first post in loop on archive pages
+		$obj = get_queried_object();
+
 		// Filter for site settings (can be overriden by post settings)
 		$settings = apply_filters( 'joinchat_get_settings_site', $settings, $obj );
 
