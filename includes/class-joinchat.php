@@ -158,6 +158,7 @@ class JoinChat {
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'register_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'register_scripts' );
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'add_menu' );
+		$this->loader->add_action( 'admin_notices', $plugin_admin, 'notices' );
 		$this->loader->add_action( 'add_meta_boxes', $plugin_admin, 'add_meta_boxes' );
 		$this->loader->add_action( 'save_post', $plugin_admin, 'save_post' );
 		$this->loader->add_action( 'load-settings_page_joinchat', $plugin_admin, 'help_tab' );

@@ -678,6 +678,44 @@ class JoinChatAdmin {
 	}
 
 	/**
+	 * Show admin notices
+	 *
+	 * @since    4.2.0
+	 * @access   public
+	 * @return   void
+	 */
+	public function notices() {
+
+		$current_screen = get_current_screen();
+
+		// Save notice dismiss one month
+		if ( isset( $_GET['joinchat-ignore-notice'] ) ) {
+			set_transient( 'joinchat_notice_dismiss__' . get_current_user_id(), true, MONTH_IN_SECONDS );
+		}
+
+		// If no phone number defined
+		if ( ( ! defined( 'DISABLE_NAG_NOTICES' ) || ! DISABLE_NAG_NOTICES )
+			&& empty( $this->settings['telephone'] )
+			&& current_user_can( JoinChatUtil::capability() )
+			&& ( $current_screen && false === strpos( $current_screen->id, '_joinchat' ) )
+			&& ! get_transient( 'joinchat_notice_dismiss__' . get_current_user_id() )
+		) {
+
+			printf(
+				'<div class="notice notice-info"><p><strong>Join.chat</strong>&nbsp;&nbsp;%s %s %s</p></div>',
+				__( 'You only need to add your WhatsApp number to contact with your users.', 'creame-whatsapp-me' ),
+				sprintf( '<a href="%s" class="button-primary">%s</a>', JoinChatUtil::admin_url(), __( 'Settings', 'creame-whatsapp-me' ) ),
+				sprintf(
+					'<a href="%s" class="button-secondary">%s</a>',
+					add_query_arg( 'joinchat-ignore-notice', '', home_url( $_SERVER['REQUEST_URI'] ) ),
+					__( 'Dismiss', 'creame-whatsapp-me' )
+				)
+			);
+		}
+
+	}
+
+	/**
 	 * Add a help tab to the options page in the WordPress admin
 	 *
 	 * @since    3.0.0
