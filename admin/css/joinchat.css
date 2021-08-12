@@ -157,14 +157,17 @@ tr.joinchat--focus .joinchat_vars_help {
 
 /* Help */
 
+.toplevel_page_joinchat .help-tab-content li ul,
 .settings_page_joinchat .help-tab-content li ul {
   margin-top: 6px;
 }
 
+.toplevel_page_joinchat .help-tab-content li li,
 .settings_page_joinchat .help-tab-content li li {
   list-style-type: circle;
 }
 
+.toplevel_page_joinchat .help-tab-content code,
 .settings_page_joinchat .help-tab-content code {
   -webkit-user-select: all;
   -moz-user-select: all;

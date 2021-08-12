@@ -98,11 +98,11 @@ class JoinChatIntegrations {
 	 * @param  string $settings_url Join.chat settings base url
 	 * @return array
 	 */
-	public function elementor_finder_woocommerce_item( $items, $settings_url ) {
+	public function elementor_finder_woocommerce_item( $items ) {
 
 		$items['woocommerce'] = array(
 			'title'       => _x( 'WooCommerce Settings', 'Title in Elementor Finder', 'creame-whatsapp-me' ),
-			'url'         => $settings_url . '&tab=woocommerce',
+			'url'         => add_query_arg( 'tab', 'woocommerce', JoinChatUtil::admin_url() ),
 			'icon'        => 'woocommerce',
 			'keywords'    => explode( ',', 'joinchat,whatsapp,' . _x( 'woocommerce,shop,product', 'Keywords in Elementor Finder', 'creame-whatsapp-me' ) ),
 			'description' => __( 'Join.chat settings page', 'creame-whatsapp-me' ),

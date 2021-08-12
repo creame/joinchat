@@ -278,4 +278,43 @@ class JoinChatUtil {
 		return json_encode( $data, apply_filters( 'joinchat_json_options', $json_options ) );
 
 	}
+
+	/**
+	 * Return required capability to change settings
+	 *
+	 * Default capability 'manage_options'
+	 *
+	 * @since    4.2.0
+	 * @param  string $capability
+	 * @return string
+	 */
+	public static function capability( $capability = '' ) {
+
+		return apply_filters( 'joinchat_capability', $capability ?: 'manage_options' );
+
+	}
+
+	/**
+	 * Plugin admin page is in options submenu
+	 *
+	 * @since    4.2.0
+	 * @return bool
+	 */
+	public static function options_submenu() {
+
+		return apply_filters( 'joinchat_submenu', 'manage_options' === self::capability() );
+
+	}
+
+	/**
+	 * Plugin admin page url
+	 *
+	 * @since    4.2.0
+	 * @return string
+	 */
+	public static function admin_url() {
+
+		return admin_url( self::options_submenu() ? 'options-general.php' : 'admin.php' ) . '?page=joinchat';
+
+	}
 }

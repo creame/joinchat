@@ -658,12 +658,22 @@ class JoinChatAdmin {
 	 * Add menu to the options page in the WordPress admin
 	 *
 	 * @since    1.0.0
+	 * @since    4.2.0 allowed direct menu page
 	 * @access   public
 	 * @return   void
 	 */
 	public function add_menu() {
 
-		add_options_page( 'Join.chat', 'Join.chat', 'manage_options', 'joinchat', array( $this, 'options_page' ) );
+		$title = 'Join.chat';
+
+		if ( JoinChatUtil::options_submenu() ) {
+			$icon = '<span class="dashicons-before dashicons-whatsapp" aria-hidden="true" ' .
+				'style="display:inline-block;max-height:18px;position:relative;top:-2px;left:8px"></span>';
+
+			add_options_page( $title, $title . $icon, JoinChatUtil::capability(), $this->plugin_name, array( $this, 'options_page' ) );
+		} else {
+			add_menu_page( $title, $title, JoinChatUtil::capability(), $this->plugin_name, array( $this, 'options_page' ), 'dashicons-whatsapp', 81 );
+		}
 
 	}
 
@@ -760,7 +770,8 @@ class JoinChatAdmin {
 	 */
 	public function settings_link( $links ) {
 
-		$settings_link = '<a href="options-general.php?page=' . $this->plugin_name . '">' . __( 'Settings', 'creame-whatsapp-me' ) . '</a>';
+		$settings_link = sprintf( '<a href="%s">%s</a>', JoinChatUtil::admin_url(), __( 'Settings', 'creame-whatsapp-me' ) );
+
 		array_unshift( $links, $settings_link );
 
 		return $links;
@@ -815,6 +826,12 @@ class JoinChatAdmin {
 		?>
 			<div class="wrap">
 				<h1><?php _e( 'Join.chat Settings', 'creame-whatsapp-me' ); ?></h1>
+
+				<?php
+				if ( ! JoinChatUtil::options_submenu() ) {
+					settings_errors();
+				}
+				?>
 
 				<form method="post" id="joinchat_form" action="options.php" autocomplete="off">
 					<?php settings_fields( 'joinchat' ); ?>
@@ -1066,7 +1083,7 @@ class JoinChatAdmin {
 	public function admin_footer_text( $footer_text ) {
 		$current_screen = get_current_screen();
 
-		if ( $current_screen && 'settings_page_joinchat' === $current_screen->id ) {
+		if ( $current_screen && false !== strpos( $current_screen->id, '_joinchat' ) ) {
 			$footer_text = sprintf(
 				__( 'Do you like %1$s? Please help us with a %2$s rating.', 'creame-whatsapp-me' ),
 				'<strong>Join.chat</strong>',
