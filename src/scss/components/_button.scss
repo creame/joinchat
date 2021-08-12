@@ -1,0 +1,150 @@
+#{$class}__button {
+  display: flex;
+  flex-direction: row;
+  position: absolute;
+  z-index: 2;
+  bottom: 8px;
+  right: 8px;
+  height: var(--btn);
+  min-width: var(--btn);
+  max-width: 95vw;
+  background: $WA;
+  color: inherit;
+  border-radius: calc(var(--btn) / 2);
+  box-shadow: 1px 6px 24px 0 rgba($WAdarken, 0.24);
+  cursor: pointer;
+  transition: background 0.2s linear;
+  will-change: background-color, width;
+
+  #{$rtl} & {
+    flex-direction: row-reverse;
+  }
+
+  &:hover {
+    background: $WAdark;
+    transition: background 1.5s linear;
+  }
+
+  &:active {
+    background: $WAdark;
+    transition: none;
+  }
+
+  #{$class}--left & {
+    right: auto;
+    left: 8px;
+    flex-direction: row-reverse;
+
+    #{$rtl} & {
+      flex-direction: row;
+    }
+  }
+
+  #{$class}--chatbox & {
+    background: var(--color);
+    transition: background 0.2s linear;
+    box-shadow: 0 1px 2px 0 rgba($black, 0.3);
+
+    &:hover,
+    &:active {
+      background: var(--hover);
+    }
+  }
+
+}
+
+#{$class}__button__open {
+  width: var(--btn);
+  height: var(--btn);
+  background: $transparent svg-load("../../img/btn.svg") center no-repeat;
+  background-size: 60%;
+
+  #{$class}--chatbox & {
+    display: none;
+  }
+}
+
+#{$class}__button__image {
+  position: absolute;
+  top: 1px;
+  right: 1px;
+  width: calc(var(--btn) - 2px);
+  height: calc(var(--btn) - 2px);
+  border-radius: 50%;
+  overflow: hidden;
+  opacity: 0;
+
+  img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  #{$class}--show & {
+    animation: #{$name}_image_loop 20s linear 5s infinite normal both;
+  }
+
+  // Always show image
+  #{$class}--image & {
+    opacity: 1;
+    animation: none;
+  }
+
+  #{$class}--chatbox & {
+    display: none;
+  }
+}
+
+#{$class}__button__send {
+  display: none;
+  width: var(--btn);
+  height: var(--btn);
+  max-width: var(--btn); // fix theme Twenty Twenty max-width: 100%;
+  padding: 12px 11px 12px 13px;
+  margin: 0;
+  flex-shrink: 0;
+
+  #{$class}--chatbox & {
+    display: block;
+  }
+
+  path {
+    fill: none !important;
+    stroke: var(--text) !important;
+  }
+
+  #{$class}_svg__plain {
+    stroke-dasharray: 1097;
+    stroke-dashoffset: 1097;
+    animation: #{$name}_plain 6s 0.2s ease-in-out infinite;
+  }
+
+  #{$class}_svg__chat {
+    stroke-dasharray: 1020;
+    stroke-dashoffset: 1020;
+    animation: #{$name}_chat 6s 3.2s ease-in-out infinite;
+  }
+}
+
+#{$class}__button__sendtext {
+  padding: 0;
+  max-width: 0;
+  font-weight: 600;
+  line-height: var(--btn);
+  white-space: nowrap;
+  opacity: 0;
+  overflow: hidden;
+  transition: none;
+
+  #{$class}--chatbox & {
+    padding: 0 4px 0 24px;
+    max-width: 200px;
+    opacity: 1;
+    transition: max-width 0.2s linear, opacity 0.4s ease-out 0.2s;
+  }
+
+  #{$class}--chatbox#{$class}--left & {
+    padding: 0 24px 0 4px;
+  }
+}

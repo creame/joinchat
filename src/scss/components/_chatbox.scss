@@ -1,0 +1,188 @@
+#{$class}__box {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  z-index: 1;
+  width: calc(100vw - var(--sep) * 2);
+  max-width: 400px;
+  min-height: 170px;
+  max-height: calc(var(--vh) - var(--bottom) - var(--sep));
+  border-radius: 32px;
+  background: transparent;
+  box-shadow: 0 2px 6px 0 rgba($black, 0.5);
+  text-align: left;
+  overflow: hidden;
+  transform: scale3d(0, 0, 0);
+  opacity: 0;
+  transition: max-height 0.2s ease-out, opacity 0.4s ease-out, transform 0s linear 0.3s;
+
+  #{$rtl} & {
+    text-align: right;
+  }
+
+  #{$class}--chatbox & {
+    opacity: 1;
+    transform: scale3d(1, 1, 1);
+    transition: max-height 0.2s ease-out, opacity 0.2s ease-out, transform 0s linear;
+  }
+
+  #{$class}--left & {
+    right: auto;
+    left: 0;
+  }
+}
+
+#{$class}__header {
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  position: relative;
+  flex-shrink: 0;
+  height: var(--header);
+  padding: 0 70px 0 26px;
+  margin: 0;
+  background: var(--color);
+
+  #{$rtl} & {
+    padding: 0 26px 0 70px;
+  }
+
+  #{$class}--dark & {
+    background: var(--dark);
+  }
+
+  &__text {
+    font-size: 19px;
+    font-weight: 600;
+    max-width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    opacity: 0.8;
+  }
+}
+
+#{$class}__powered {
+  font-size: 11px;
+  line-height: 18px;
+  color: inherit !important;
+  text-decoration: none !important;
+  fill: currentColor;
+  opacity: 0.8;
+
+  svg {
+    display: inline-block;
+    width: auto;
+    height: 18px;
+    vertical-align: -30%;
+  }
+
+  &:hover,
+  &:active {
+    color: inherit !important;
+    text-decoration: none !important;
+    opacity: 0.9;
+    filter: drop-shadow(0 1px 3px rgba($black, 0.3));
+  }
+}
+
+#{$class}__wa {
+  height: 28px;
+  width: auto;
+  fill: currentColor;
+  opacity: 0.8;
+}
+
+#{$class}__close {
+  position: absolute;
+  top: 50%;
+  right: 24px;
+  width: 34px;
+  height: 34px;
+  margin-top: -16px;
+  border-radius: 50%;
+  background: rgba($black, 0.4) svg-load("../../img/close.svg", fill=$white) center no-repeat;
+  background-size: 12px;
+  cursor: pointer;
+  transition: background-color 0.3s ease-out;
+
+  &:hover {
+    background-color: rgba($black, 0.6);
+  }
+
+  &:active {
+    background-color: rgba($black, 0.7);
+  }
+
+  #{$rtl} & {
+    right: auto;
+    left: 24px;
+  }
+}
+
+#{$class}__box__scroll {
+  padding: 20px 0 70px 0;
+  padding-bottom: calc(var(--btn) + 10px);
+  background: $white linear-gradient(0deg, var(--bg), var(--bg));
+  overflow-x: hidden;
+  overflow-y: auto;
+  will-change: scroll-position;
+
+  &::-webkit-scrollbar {
+    width: 5px;
+    background: $transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 3px;
+    background: $transparent;
+  }
+
+  #{$class}--blur & {
+    background: rgba(var(--rgb), 0.2);
+    backdrop-filter: blur(10px);
+  }
+
+  #{$class}--dark & {
+    background: #1a1a1a;
+  }
+
+  &:hover::-webkit-scrollbar-thumb {
+    background: rgba($black, 0.2);
+  }
+
+  @include ios {
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+@include mobile {
+  #{$class}__header__text {
+    font-size: 17px;
+  }
+
+  #{$class}__close {
+    margin-top: -14px;
+    width: 28px;
+    height: 28px;
+  }
+
+  #{$class}__box__scroll {
+    padding-top: 15px;
+  }
+}
+
+@include dark {
+  #{$class}--dark-auto {
+    #{$class}__box__scroll {
+      background: #1a1a1a;
+    }
+
+    #{$class}__header {
+      background: var(--dark);
+    }
+  }
+}

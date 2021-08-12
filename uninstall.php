@@ -6,7 +6,7 @@
  * @link       https://crea.me
  * @since      1.0.0
  *
- * @package    WhatsAppMe
+ * @package    JoinChat
  */
 
 // If uninstall not called from WordPress, then exit.
@@ -15,17 +15,21 @@ if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 }
 
 /**
- * By default don't delete plugin data.
+ * By default delete all plugin data.
  *
- * Use "add_filter( 'whatsappme_delete_all', '__return_true' );"
- * before uninstall WAme to completely clear all plugin data.
+ * Use "add_filter( 'joinchat_delete_all', '__return_false' );"
+ * before uninstall Join.chat to prevent clear all plugin data.
  */
-if ( apply_filters( 'whatsappme_delete_all', false ) ) {
+if ( apply_filters( 'joinchat_delete_all', true ) ) {
 	global $wpdb;
 
-	// Delete general option 'whatsappme' added by plugin
-	delete_option( 'whatsappme' );
-	// Delete post meta '_whatsappme' added by plugin
-	$wpdb->delete( $wpdb->prefix . 'postmeta', array( 'meta_key' => '_whatsappme' ) );
+	// Delete general option 'joinchat' added by plugin
+	delete_option( 'joinchat' );
+	// Delete post meta '_joinchat' added by plugin
+	$wpdb->delete( $wpdb->prefix . 'postmeta', array( 'meta_key' => '_joinchat' ) );
 
+	// TODO: delete WPML/Polylang translations
+
+	// Clear any cached data that has been removed
+	wp_cache_flush();
 }

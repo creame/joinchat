@@ -1,0 +1,34 @@
+{
+  "name": "npm-postcss",
+  "version": "1.0.0",
+  "description": "PostCSS process for public styles",
+  "main": "index.js",
+  "author": "Creame",
+  "license": "ISC",
+  "devDependencies": {
+    "autoprefixer": "^10.2.6",
+    "cssnano-cli": "^1.0.5",
+    "del-cli": "^3.0.1",
+    "postcss-calc": "^8.0.0",
+    "postcss-cli": "^8.3.1",
+    "postcss-hexrgba": "^2.0.1",
+    "postcss-inline-svg": "^5.0.0",
+    "postcss-scss": "^3.0.5",
+    "postcss-strip-inline-comments": "^0.1.5",
+    "postcss-svgo": "^4.0.3",
+    "precss": "^4.0.0",
+    "stylelint": "^13.13.1",
+    "stylelint-config-standard": "^20.0.0"
+  },
+  "browserslist": [
+    "> 1%"
+  ],
+  "scripts": {
+    "watch": "postcss src/scss/styles.scss -o public/css/joinchat.css -w",
+    "lint": "stylelint \"src/**/*.{css,sass,scss,sss,less}\" --fix",
+    "css": "postcss src/scss/styles.scss -o public/css/joinchat.css -m",
+    "minify": "cssnano public/css/joinchat.css public/css/joinchat.min.css --no-svgo --safe",
+    "build": "npm run css && npm run minify",
+    "clean": "del dist/css/*"
+  }
+}
