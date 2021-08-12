@@ -180,18 +180,18 @@ class JoinChatAdmin {
 	public function settings_init() {
 
 		// Register WordPress 'joinchat' settings
-		register_setting( 'joinchat', 'joinchat', array( $this, 'settings_validate' ) );
+		register_setting( $this->plugin_name, $this->plugin_name, array( $this, 'settings_validate' ) );
 
 		foreach ( $this->tabs as $tab => $tab_name ) {
 
-			add_settings_section( "joinchat_tab_{$tab}_open", null, array( $this, 'settings_tab_open' ), 'joinchat' );
+			add_settings_section( "joinchat_tab_{$tab}_open", null, array( $this, 'settings_tab_open' ), $this->plugin_name );
 
 			$sections = $this->get_tab_sections( $tab );
 
 			foreach ( $sections as $section => $fields ) {
 				$section_id = "joinchat_tab_{$tab}__{$section}";
 
-				add_settings_section( $section_id, null, array( $this, 'section_output' ), 'joinchat' );
+				add_settings_section( $section_id, null, array( $this, 'section_output' ), $this->plugin_name );
 
 				foreach ( $fields as $field => $field_args ) {
 					if ( is_array( $field_args ) ) {
@@ -202,11 +202,11 @@ class JoinChatAdmin {
 						$field_callback = array( $this, 'field_output' );
 					}
 
-					add_settings_field( "joinchat_$field", $field_name, $field_callback, 'joinchat', $section_id, $field );
+					add_settings_field( "joinchat_$field", $field_name, $field_callback, $this->plugin_name, $section_id, $field );
 				}
 			}
 
-			add_settings_section( "joinchat_tab_{$tab}_close", null, array( $this, 'settings_tab_close' ), 'joinchat' );
+			add_settings_section( "joinchat_tab_{$tab}_close", null, array( $this, 'settings_tab_close' ), $this->plugin_name );
 		}
 
 	}
@@ -323,7 +323,7 @@ class JoinChatAdmin {
 
 		// Prevent bad behavior when validate twice on first save
 		// bug https://core.trac.wordpress.org/ticket/21989
-		if ( count( get_settings_errors( 'joinchat' ) ) ) {
+		if ( count( get_settings_errors( $this->plugin_name ) ) ) {
 			return $input;
 		}
 
@@ -360,8 +360,10 @@ class JoinChatAdmin {
 					return 'yes' == $v || 'no' == $v;
 				}
 			);
-			unset( $input['view'] );
 		}
+
+		// Clean input items that are not in settings
+		$input = array_intersect_key( $input, $this->settings );
 
 		// Filter for other validations or extra settings
 		$input = apply_filters( 'joinchat_settings_validate', $input );
@@ -381,7 +383,7 @@ class JoinChatAdmin {
 		// Extra actions on save
 		do_action( 'joinchat_settings_validate', $input );
 
-		add_settings_error( 'joinchat', 'settings_updated', __( 'Settings saved', 'creame-whatsapp-me' ), 'updated' );
+		add_settings_error( $this->plugin_name, 'settings_updated', __( 'Settings saved', 'creame-whatsapp-me' ), 'updated' );
 
 		return $input;
 	}
@@ -872,7 +874,7 @@ class JoinChatAdmin {
 				?>
 
 				<form method="post" id="joinchat_form" action="options.php" autocomplete="off">
-					<?php settings_fields( 'joinchat' ); ?>
+					<?php settings_fields( $this->plugin_name ); ?>
 					<h2 class="nav-tab-wrapper wp-clearfix" role="tablist">
 						<?php foreach ( $this->tabs as $tab => $name ) : ?>
 							<?php if ( $active_tab === $tab ) : ?>
@@ -883,7 +885,7 @@ class JoinChatAdmin {
 						<?php endforeach; ?>
 					</h2>
 					<div class="joinchat-tabs">
-						<?php do_settings_sections( 'joinchat' ); ?>
+						<?php do_settings_sections( $this->plugin_name ); ?>
 					</div><!-- end tabs -->
 					<?php submit_button(); ?>
 				</form>
@@ -909,7 +911,7 @@ class JoinChatAdmin {
 
 		foreach ( $post_types as $post_type ) {
 			add_meta_box(
-				'joinchat',
+				$this->plugin_name,
 				__( 'Join.chat', 'creame-whatsapp-me' ),
 				array( $this, 'meta_box' ),
 				$post_type,
@@ -1013,16 +1015,18 @@ class JoinChatAdmin {
 
 		global $wpdb;
 
-		if ( wp_is_post_autosave( $post_id ) ||
-			 ! isset( $_POST['joinchat_nonce'] ) ||
-			 ! wp_verify_nonce( $_POST['joinchat_nonce'], 'joinchat_data' ) ) {
+		if ( wp_is_post_autosave( $post_id )
+			|| ! isset( $_POST['joinchat_nonce'] )
+			|| ! wp_verify_nonce( $_POST['joinchat_nonce'], 'joinchat_data' )
+		) {
 			return;
 		}
 
 		// Encode emojis if utf8mb4 not supported by DB
 		if ( function_exists( 'wp_encode_emoji' )
-				&& 'utf8mb4' !== $wpdb->get_col_charset( $wpdb->postmeta, 'meta_value' )
-				&& ! has_filter( 'sanitize_text_field', 'wp_encode_emoji' ) ) {
+			&& 'utf8mb4' !== $wpdb->get_col_charset( $wpdb->postmeta, 'meta_value' )
+			&& ! has_filter( 'sanitize_text_field', 'wp_encode_emoji' )
+		) {
 			add_filter( 'sanitize_text_field', 'wp_encode_emoji' );
 		}
 
