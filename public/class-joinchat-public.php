@@ -97,15 +97,6 @@ class JoinChatPublic {
 		// Load settings
 		$settings = $this->common->load_settings();
 
-		// Load WPML/Polylang translated strings
-		$settings_i18n = JoinChatUtil::settings_i18n( $settings );
-
-		foreach ( $settings_i18n as $key => $label ) {
-			if ( isset( $settings[ $key ] ) ) {
-				$settings[ $key ] = $settings[ $key ] ? apply_filters( 'wpml_translate_single_string', $settings[ $key ], 'Join.chat', $label ) : '';
-			}
-		}
-
 		// If use "global $post;" take first post in loop on archive pages
 		$obj = get_queried_object();
 

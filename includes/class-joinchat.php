@@ -115,10 +115,7 @@ class JoinChat {
 	 */
 	private function set_locale() {
 
-		$plugin_i18n = new JoinChat_i18n();
-
-		// No delegate to $this->loader, use WordPress add_action
-		add_action( 'init', array( $plugin_i18n, 'load_plugin_textdomain' ) );
+		$plugin_i18n = new JoinChat_i18n( $this->loader );
 
 	}
 
@@ -168,6 +165,7 @@ class JoinChat {
 		$this->loader->add_filter( 'plugin_action_links_' . JOINCHAT_BASENAME, $plugin_admin, 'settings_link' );
 		$this->loader->add_filter( 'plugin_row_meta', $plugin_admin, 'plugin_links', 10, 2 );
 		$this->loader->add_filter( 'admin_footer_text', $plugin_admin, 'admin_footer_text', PHP_INT_MAX );
+
 		$this->loader->add_filter( 'option_page_capability_joinchat', 'JoinChatUtil', 'capability' );
 
 	}

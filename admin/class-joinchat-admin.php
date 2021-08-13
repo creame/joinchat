@@ -366,24 +366,12 @@ class JoinChatAdmin {
 		$input = array_intersect_key( $input, $this->settings );
 
 		// Filter for other validations or extra settings
-		$input = apply_filters( 'joinchat_settings_validate', $input );
-
-		/**
-		 * Register WPML/Polylang strings for translation
-		 * https://wpml.org/wpml-hook/wpml_register_single_string/
-		 */
-		$settings_i18n = JoinChatUtil::settings_i18n( $input );
-
-		foreach ( $settings_i18n as $setting_key => $setting_name ) {
-			if ( isset( $input[ $setting_key ] ) ) {
-				do_action( 'wpml_register_single_string', 'Join.chat', $setting_name, $input[ $setting_key ] );
-			}
-		}
-
-		// Extra actions on save
-		do_action( 'joinchat_settings_validate', $input );
+		$input = apply_filters( 'joinchat_settings_validate', $input, $this->settings );
 
 		add_settings_error( $this->plugin_name, 'settings_updated', __( 'Settings saved', 'creame-whatsapp-me' ), 'updated' );
+
+		// Extra actions on save
+		do_action( 'joinchat_settings_validation', $input, $this->settings );
 
 		return $input;
 	}

@@ -13,36 +13,6 @@
 class JoinChatUtil {
 
 	/**
-	 * Return list of settings that can be translated
-	 *
-	 * Note: don't translate string $name to prevent missing translations if
-	 * public front lang is different of admin lang
-	 *
-	 * @since    3.1.2
-	 * @since    4.1   added optional param $settings
-	 * @access   public
-	 * @param    null|array $settings
-	 * @return   array setting keys and string names
-	 */
-	public static function settings_i18n( $settings = null ) {
-
-		$localized = array(
-			'telephone'     => 'Telephone',
-			'button_tip'    => 'Tooltip',
-			'message_text'  => 'Call to Action',
-			'message_send'  => 'Message',
-			'message_start' => 'Button Text',
-		);
-
-		if ( isset( $settings['header'] ) && ! in_array( $settings['header'], array( '', '__jc__', '__wa__' ) ) ) {
-			$localized['header'] = 'Header';
-		}
-
-		return apply_filters( 'joinchat_settings_i18n', $localized, $settings );
-
-	}
-
-	/**
 	 * Clean user input fields
 	 *
 	 * @since    3.1.0
