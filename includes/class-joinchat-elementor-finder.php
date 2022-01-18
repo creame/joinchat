@@ -23,6 +23,18 @@ class JoinChatElementorFinder extends \Elementor\Core\Common\Modules\Finder\Base
 	}
 
 	/**
+	 * Get category id.
+	 *
+	 * @since 4.2.0
+	 * @return string
+	 */
+	public function get_id() {
+
+		return 'joinchat';
+
+	}
+
+	/**
 	 * Get category items.
 	 *
 	 * @since 4.1.12

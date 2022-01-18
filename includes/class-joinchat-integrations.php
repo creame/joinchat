@@ -86,7 +86,11 @@ class JoinChatIntegrations {
 
 		require_once JOINCHAT_DIR . 'includes/class-joinchat-elementor-finder.php';
 
-		$categories_manager->add_category( 'joinchat', new JoinChatElementorFinder() );
+		if ( version_compare( ELEMENTOR_VERSION, '3.5.0', '>=' ) ) {
+			$categories_manager->register( new JoinChatElementorFinder() );
+		} else {
+			$categories_manager->add_category( 'joinchat', new JoinChatElementorFinder() );
+		}
 
 	}
 
