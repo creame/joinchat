@@ -26,6 +26,13 @@
   }
 }
 
+// Devices with reduced motion
+@mixin motionless {
+  @media (prefers-reduced-motion) {
+    @content;
+  }
+}
+
 // Use for pseudo code
 @mixin pseudo($display: block, $pos: absolute, $content: '') {
   content: $content;
