@@ -33,6 +33,15 @@ class JoinChatPublic {
 	private $version;
 
 	/**
+	 * Common class for admin and front methods.
+	 *
+	 * @since    4.2.0
+	 * @access   private
+	 * @var      JoinChatCommon    $common    instance.
+	 */
+	private $common;
+
+	/**
 	 * The setings of this plugin.
 	 *
 	 * @since    1.0.0
@@ -65,6 +74,7 @@ class JoinChatPublic {
 
 		$this->plugin_name = $plugin_name;
 		$this->version     = $version;
+		$this->common      = new JoinChatCommon();
 
 		// Updated in get_settings() at 'wp' hook
 		$this->show     = false;
@@ -84,52 +94,11 @@ class JoinChatPublic {
 	 */
 	public function get_settings() {
 
+		// Load settings
+		$settings = $this->common->load_settings();
+
 		// If use "global $post;" take first post in loop on archive pages
 		$obj = get_queried_object();
-
-		$default_settings = array_merge(
-			array(
-				'telephone'     => '',
-				'mobile_only'   => 'no',
-				'button_image'  => '',
-				'button_tip'    => '',
-				'button_delay'  => 3,
-				'whatsapp_web'  => 'no',
-				'message_text'  => '',
-				'message_views' => 2,
-				'message_delay' => 10,
-				'message_badge' => 'no',
-				'message_send'  => '',
-				'message_start' => __( 'Open chat', 'creame-whatsapp-me' ),
-				'position'      => 'right',
-				'visibility'    => array( 'all' => 'yes' ),
-				'color'         => '#25d366',
-				'dark_mode'     => 'no',
-				'header'        => '__jc__', // values: '__jc__', '__wa__' or other custom text
-			),
-			apply_filters( 'joinchat_extra_settings', array() )
-		);
-
-		// Can hook 'option_joinchat' and 'default_option_joinchat' filters
-		$settings = array_merge( $default_settings, (array) get_option( 'joinchat', $default_settings ) );
-
-		// Migrate addons 'remove_brand' setting to 'header' (v. < 4.1)
-		if ( isset( $settings['remove_brand'] ) ) {
-			$remove             = $settings['remove_brand'];
-			$settings['header'] = 'wa' == $remove ? '__wa__' : ( 'no' == $remove ? '__jc__' : '' );
-		}
-
-		// Clean unused saved settings
-		$settings = array_intersect_key( $settings, $default_settings );
-
-		// Load WPML/Polylang translated strings
-		$settings_i18n = JoinChatUtil::settings_i18n( $settings );
-
-		foreach ( $settings_i18n as $key => $label ) {
-			if ( isset( $settings[ $key ] ) ) {
-				$settings[ $key ] = $settings[ $key ] ? apply_filters( 'wpml_translate_single_string', $settings[ $key ], 'Join.chat', $label ) : '';
-			}
-		}
 
 		// Filter for site settings (can be overriden by post settings)
 		$settings = apply_filters( 'joinchat_get_settings_site', $settings, $obj );

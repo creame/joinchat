@@ -13,36 +13,6 @@
 class JoinChatUtil {
 
 	/**
-	 * Return list of settings that can be translated
-	 *
-	 * Note: don't translate string $name to prevent missing translations if
-	 * public front lang is different of admin lang
-	 *
-	 * @since    3.1.2
-	 * @since    4.1   added optional param $settings
-	 * @access   public
-	 * @param    null|array $settings
-	 * @return   array setting keys and string names
-	 */
-	public static function settings_i18n( $settings = null ) {
-
-		$localized = array(
-			'telephone'     => 'Telephone',
-			'button_tip'    => 'Tooltip',
-			'message_text'  => 'Call to Action',
-			'message_send'  => 'Message',
-			'message_start' => 'Button Text',
-		);
-
-		if ( isset( $settings['header'] ) && ! in_array( $settings['header'], array( '', '__jc__', '__wa__' ) ) ) {
-			$localized['header'] = 'Header';
-		}
-
-		return apply_filters( 'joinchat_settings_i18n', $localized, $settings );
-
-	}
-
-	/**
 	 * Clean user input fields
 	 *
 	 * @since    3.1.0
@@ -245,7 +215,7 @@ class JoinChatUtil {
 
 		if ( is_home() || is_singular() ) {
 			$title = single_post_title( '', false );
-		} elseif ( is_tax() ) {
+		} elseif ( is_category() || is_tag() || is_tax() ) {
 			$title = single_term_title( '', false );
 		} elseif ( function_exists( 'wp_get_document_title' ) ) {
 			$title = wp_get_document_title();
@@ -276,6 +246,45 @@ class JoinChatUtil {
 			JSON_HEX_APOS | JSON_HEX_QUOT;
 
 		return json_encode( $data, apply_filters( 'joinchat_json_options', $json_options ) );
+
+	}
+
+	/**
+	 * Return required capability to change settings
+	 *
+	 * Default capability 'manage_options'
+	 *
+	 * @since    4.2.0
+	 * @param  string $capability
+	 * @return string
+	 */
+	public static function capability( $capability = '' ) {
+
+		return apply_filters( 'joinchat_capability', $capability ?: 'manage_options' );
+
+	}
+
+	/**
+	 * Plugin admin page is in options submenu
+	 *
+	 * @since    4.2.0
+	 * @return bool
+	 */
+	public static function options_submenu() {
+
+		return apply_filters( 'joinchat_submenu', 'manage_options' === self::capability() );
+
+	}
+
+	/**
+	 * Plugin admin page url
+	 *
+	 * @since    4.2.0
+	 * @return string
+	 */
+	public static function admin_url() {
+
+		return admin_url( self::options_submenu() ? 'options-general.php' : 'admin.php' ) . '?page=joinchat';
 
 	}
 }

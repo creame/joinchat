@@ -69,6 +69,10 @@
   &#{$class}--dark {
     --msg: var(--dark);
   }
+
+  @include motionless {
+    transition: none !important;
+  }
 }
 
 // Fallback (Microsoft Edge for Android & iOS < 13.7)

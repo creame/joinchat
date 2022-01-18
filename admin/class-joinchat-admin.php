@@ -31,6 +31,15 @@ class JoinChatAdmin {
 	private $version;
 
 	/**
+	 * Common class for admin and front methods.
+	 *
+	 * @since    4.2.0
+	 * @access   private
+	 * @var      JoinChatCommon    $common    instance.
+	 */
+	private $common;
+
+	/**
 	 * The setings of this plugin.
 	 *
 	 * @since    1.0.0
@@ -69,6 +78,7 @@ class JoinChatAdmin {
 
 		$this->plugin_name = $plugin_name;
 		$this->version     = $version;
+		$this->common      = new JoinChatCommon();
 
 		// Updated in get_settings() at 'admin_init' hook
 		$this->enhanced_phone = '17.0.12'; // intl-tel-input version
@@ -103,45 +113,8 @@ class JoinChatAdmin {
 			)
 		);
 
-		// Default settings
-		$default_settings = array_merge(
-			array(
-				'telephone'     => '',
-				'mobile_only'   => 'no',
-				'button_image'  => '',
-				'button_tip'    => '',
-				'button_delay'  => 3,
-				'whatsapp_web'  => 'no',
-				'message_text'  => '',
-				'message_delay' => 10,
-				'message_views' => 2,
-				'message_badge' => 'no',
-				'message_send'  => '',
-				'message_start' => __( 'Open chat', 'creame-whatsapp-me' ),
-				'position'      => 'right',
-				'visibility'    => array( 'all' => 'yes' ),
-				'color'         => '#25d366',
-				'dark_mode'     => 'no',
-				'header'        => '__jc__', // values: '__jc__', '__wa__' or other custom text
-			),
-			apply_filters( 'joinchat_extra_settings', array() )
-		);
-
-		$this->settings = $default_settings;
-		$saved_settings = get_option( 'joinchat', $default_settings );
-
-		if ( is_array( $saved_settings ) ) {
-			// Migrate addons 'remove_brand' setting to 'header' (v. < 4.1)
-			if ( isset( $saved_settings['remove_brand'] ) ) {
-				$remove                   = $saved_settings['remove_brand'];
-				$saved_settings['header'] = 'wa' == $remove ? '__wa__' : ( 'no' == $remove ? '__jc__' : '' );
-			}
-
-			// clean unused saved settings
-			$saved_settings = array_intersect_key( $saved_settings, $default_settings );
-			// merge defaults with saved settings
-			$this->settings = array_merge( $default_settings, $saved_settings );
-		}
+		// Load settings
+		$this->settings = $this->common->load_settings();
 
 	}
 
@@ -207,18 +180,18 @@ class JoinChatAdmin {
 	public function settings_init() {
 
 		// Register WordPress 'joinchat' settings
-		register_setting( 'joinchat', 'joinchat', array( $this, 'settings_validate' ) );
+		register_setting( $this->plugin_name, $this->plugin_name, array( $this, 'settings_validate' ) );
 
 		foreach ( $this->tabs as $tab => $tab_name ) {
 
-			add_settings_section( "joinchat_tab_{$tab}_open", null, array( $this, 'settings_tab_open' ), 'joinchat' );
+			add_settings_section( "joinchat_tab_{$tab}_open", null, array( $this, 'settings_tab_open' ), $this->plugin_name );
 
 			$sections = $this->get_tab_sections( $tab );
 
 			foreach ( $sections as $section => $fields ) {
 				$section_id = "joinchat_tab_{$tab}__{$section}";
 
-				add_settings_section( $section_id, null, array( $this, 'section_output' ), 'joinchat' );
+				add_settings_section( $section_id, null, array( $this, 'section_output' ), $this->plugin_name );
 
 				foreach ( $fields as $field => $field_args ) {
 					if ( is_array( $field_args ) ) {
@@ -229,11 +202,11 @@ class JoinChatAdmin {
 						$field_callback = array( $this, 'field_output' );
 					}
 
-					add_settings_field( "joinchat_$field", $field_name, $field_callback, 'joinchat', $section_id, $field );
+					add_settings_field( "joinchat_$field", $field_name, $field_callback, $this->plugin_name, $section_id, $field );
 				}
 			}
 
-			add_settings_section( "joinchat_tab_{$tab}_close", null, array( $this, 'settings_tab_close' ), 'joinchat' );
+			add_settings_section( "joinchat_tab_{$tab}_close", null, array( $this, 'settings_tab_close' ), $this->plugin_name );
 		}
 
 	}
@@ -350,7 +323,7 @@ class JoinChatAdmin {
 
 		// Prevent bad behavior when validate twice on first save
 		// bug https://core.trac.wordpress.org/ticket/21989
-		if ( count( get_settings_errors( 'joinchat' ) ) ) {
+		if ( count( get_settings_errors( $this->plugin_name ) ) ) {
 			return $input;
 		}
 
@@ -387,28 +360,18 @@ class JoinChatAdmin {
 					return 'yes' == $v || 'no' == $v;
 				}
 			);
-			unset( $input['view'] );
 		}
+
+		// Clean input items that are not in settings
+		$input = array_intersect_key( $input, $this->settings );
 
 		// Filter for other validations or extra settings
-		$input = apply_filters( 'joinchat_settings_validate', $input );
+		$input = apply_filters( 'joinchat_settings_validate', $input, $this->settings );
 
-		/**
-		 * Register WPML/Polylang strings for translation
-		 * https://wpml.org/wpml-hook/wpml_register_single_string/
-		 */
-		$settings_i18n = JoinChatUtil::settings_i18n( $input );
-
-		foreach ( $settings_i18n as $setting_key => $setting_name ) {
-			if ( isset( $input[ $setting_key ] ) ) {
-				do_action( 'wpml_register_single_string', 'Join.chat', $setting_name, $input[ $setting_key ] );
-			}
-		}
+		add_settings_error( $this->plugin_name, 'settings_updated', __( 'Settings saved', 'creame-whatsapp-me' ), 'updated' );
 
 		// Extra actions on save
-		do_action( 'joinchat_settings_validate', $input );
-
-		add_settings_error( 'joinchat', 'settings_updated', __( 'Settings saved', 'creame-whatsapp-me' ), 'updated' );
+		do_action( 'joinchat_settings_validation', $input, $this->settings );
 
 		return $input;
 	}
@@ -685,12 +648,60 @@ class JoinChatAdmin {
 	 * Add menu to the options page in the WordPress admin
 	 *
 	 * @since    1.0.0
+	 * @since    4.2.0 allowed direct menu page
 	 * @access   public
 	 * @return   void
 	 */
 	public function add_menu() {
 
-		add_options_page( 'Join.chat', 'Join.chat', 'manage_options', 'joinchat', array( $this, 'options_page' ) );
+		$title = 'Join.chat';
+
+		if ( JoinChatUtil::options_submenu() ) {
+			$icon = '<span class="dashicons-before dashicons-whatsapp" aria-hidden="true" ' .
+				'style="display:inline-block;max-height:18px;position:relative;top:-2px;left:8px"></span>';
+
+			add_options_page( $title, $title . $icon, JoinChatUtil::capability(), $this->plugin_name, array( $this, 'options_page' ) );
+		} else {
+			add_menu_page( $title, $title, JoinChatUtil::capability(), $this->plugin_name, array( $this, 'options_page' ), 'dashicons-whatsapp', 81 );
+		}
+
+	}
+
+	/**
+	 * Show admin notices
+	 *
+	 * @since    4.2.0
+	 * @access   public
+	 * @return   void
+	 */
+	public function notices() {
+
+		$current_screen = get_current_screen();
+
+		// Save notice dismiss one month
+		if ( isset( $_GET['joinchat-ignore-notice'] ) ) {
+			set_transient( 'joinchat_notice_dismiss__' . get_current_user_id(), true, MONTH_IN_SECONDS );
+		}
+
+		// If no phone number defined
+		if ( ( ! defined( 'DISABLE_NAG_NOTICES' ) || ! DISABLE_NAG_NOTICES )
+			&& empty( $this->settings['telephone'] )
+			&& current_user_can( JoinChatUtil::capability() )
+			&& ( $current_screen && false === strpos( $current_screen->id, '_joinchat' ) )
+			&& ! get_transient( 'joinchat_notice_dismiss__' . get_current_user_id() )
+		) {
+
+			printf(
+				'<div class="notice notice-info"><p><strong>Join.chat</strong>&nbsp;&nbsp;%s %s %s</p></div>',
+				__( 'You only need to add your WhatsApp number to contact with your users.', 'creame-whatsapp-me' ),
+				sprintf( '<a href="%s" class="button-primary">%s</a>', JoinChatUtil::admin_url(), __( 'Settings', 'creame-whatsapp-me' ) ),
+				sprintf(
+					'<a href="%s" class="button-secondary">%s</a>',
+					add_query_arg( 'joinchat-ignore-notice', '', home_url( $_SERVER['REQUEST_URI'] ) ),
+					__( 'Dismiss', 'creame-whatsapp-me' )
+				)
+			);
+		}
 
 	}
 
@@ -787,7 +798,8 @@ class JoinChatAdmin {
 	 */
 	public function settings_link( $links ) {
 
-		$settings_link = '<a href="options-general.php?page=' . $this->plugin_name . '">' . __( 'Settings', 'creame-whatsapp-me' ) . '</a>';
+		$settings_link = sprintf( '<a href="%s">%s</a>', JoinChatUtil::admin_url(), __( 'Settings', 'creame-whatsapp-me' ) );
+
 		array_unshift( $links, $settings_link );
 
 		return $links;
@@ -843,8 +855,14 @@ class JoinChatAdmin {
 			<div class="wrap">
 				<h1><?php _e( 'Join.chat Settings', 'creame-whatsapp-me' ); ?></h1>
 
+				<?php
+				if ( ! JoinChatUtil::options_submenu() ) {
+					settings_errors();
+				}
+				?>
+
 				<form method="post" id="joinchat_form" action="options.php" autocomplete="off">
-					<?php settings_fields( 'joinchat' ); ?>
+					<?php settings_fields( $this->plugin_name ); ?>
 					<h2 class="nav-tab-wrapper wp-clearfix" role="tablist">
 						<?php foreach ( $this->tabs as $tab => $name ) : ?>
 							<?php if ( $active_tab === $tab ) : ?>
@@ -855,7 +873,7 @@ class JoinChatAdmin {
 						<?php endforeach; ?>
 					</h2>
 					<div class="joinchat-tabs">
-						<?php do_settings_sections( 'joinchat' ); ?>
+						<?php do_settings_sections( $this->plugin_name ); ?>
 					</div><!-- end tabs -->
 					<?php submit_button(); ?>
 				</form>
@@ -881,7 +899,7 @@ class JoinChatAdmin {
 
 		foreach ( $post_types as $post_type ) {
 			add_meta_box(
-				'joinchat',
+				$this->plugin_name,
 				__( 'Join.chat', 'creame-whatsapp-me' ),
 				array( $this, 'meta_box' ),
 				$post_type,
@@ -985,16 +1003,18 @@ class JoinChatAdmin {
 
 		global $wpdb;
 
-		if ( wp_is_post_autosave( $post_id ) ||
-			 ! isset( $_POST['joinchat_nonce'] ) ||
-			 ! wp_verify_nonce( $_POST['joinchat_nonce'], 'joinchat_data' ) ) {
+		if ( wp_is_post_autosave( $post_id )
+			|| ! isset( $_POST['joinchat_nonce'] )
+			|| ! wp_verify_nonce( $_POST['joinchat_nonce'], 'joinchat_data' )
+		) {
 			return;
 		}
 
 		// Encode emojis if utf8mb4 not supported by DB
 		if ( function_exists( 'wp_encode_emoji' )
-				&& 'utf8mb4' !== $wpdb->get_col_charset( $wpdb->postmeta, 'meta_value' )
-				&& ! has_filter( 'sanitize_text_field', 'wp_encode_emoji' ) ) {
+			&& 'utf8mb4' !== $wpdb->get_col_charset( $wpdb->postmeta, 'meta_value' )
+			&& ! has_filter( 'sanitize_text_field', 'wp_encode_emoji' )
+		) {
 			add_filter( 'sanitize_text_field', 'wp_encode_emoji' );
 		}
 
@@ -1093,7 +1113,7 @@ class JoinChatAdmin {
 	public function admin_footer_text( $footer_text ) {
 		$current_screen = get_current_screen();
 
-		if ( $current_screen && 'settings_page_joinchat' === $current_screen->id ) {
+		if ( $current_screen && false !== strpos( $current_screen->id, '_joinchat' ) ) {
 			$footer_text = sprintf(
 				__( 'Do you like %1$s? Please help us with a %2$s rating.', 'creame-whatsapp-me' ),
 				'<strong>Join.chat</strong>',

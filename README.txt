@@ -1,25 +1,28 @@
 === Join.chat ===
 Contributors: creapuntome, pacotole, davidlillo, monillo
-Donate link: https://www.paypal.me/creapuntome/
-Tags: whatsapp business, whatsapp, click to chat, button, whatsapp support chat, support, contact, directly message whatsapp, floating whatsapp, whatsapp chat
+Donate link: https://join.chat/donate/
+Tags: Chat, Click to Chat, Facebook Messenger, WhatsApp, Telegram, Whatsapp Business, button, support chat, support, contact, directly message WhatsApp, floating WhatsApp, WhatsApp chat
 Requires at least: 3.5.0
 Tested up to: 5.8
 Requires PHP: 5.3
-Stable tag: 4.1.15
+Stable tag: 4.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-(formerly WAme) We help you capture users with WhatsApp and turn them into clients.
+WhatsApp, Messenger, Telegram, Phone call… capture users through their favorite Apps and turn into clients
 
 == Description ==
 
-### 💬 Connect your WordPress to WhatsApp in one click.
+**🎉 Chat with your website visitors through their favorite chat applications. Place a floating button at the bottom of your site and give the best support to your customers.**
 
-> The best WordPress plugin for WhatsApp, with more than 300,000 installations worldwide.
+> The best WordPress plugin for WhatsApp, with more than 400,000 installations worldwide.
 
 https://www.youtube.com/watch?v=Ad2ZpPnX_3Q
 
-[Documentation](https://join.chat/en/docs/?utm_source=wporg&utm_medium=web&utm_campaign=v4_1) | [Add-ons](https://join.chat/en/addons/?utm_source=wporg&utm_medium=web&utm_campaign=v4_1) | [Support](https://join.chat/en/support/?utm_source=wporg&utm_medium=web&utm_campaign=v4_1)
+[Documentation](https://join.chat/en/docs/?utm_source=wporg&utm_medium=web&utm_campaign=v4_2) | [Add-ons](https://join.chat/en/addons/?utm_source=wporg&utm_medium=web&utm_campaign=v4_2) | [Support](https://join.chat/en/support/?utm_source=wporg&utm_medium=web&utm_campaign=v4_2)
+
+### 🧪 Try Join.chat
+Do you want to test the Join.chat configuration panel without installing it? You can try it in a [WordPress on the fly demo](https://demo.tastewp.com/creame-whatsapp-me)
 
 ### ⌁ What you can do with Join.chat (formerly WAme) ✅
 
@@ -89,13 +92,10 @@ This Add-on allows you to create rich content in the chat window, to make the ca
 #### 🎲 [Random Phone](https://join.chat/en/addons/random-phone/).
 With Random Phone you can add as many phone numbers as you want, there is no limit. Every time a user of your site clicks on the start chat button, they will be randomly and equitably referred to each of the different support numbers you have configured.
 
-#### 🤖 [Chatbot Svachat](https://join.chat/en/addons/svachat-bot/).
-Our Add-on Chatbot (Svachat) is designed to answer your customers' recurring questions (FAQS) by creating a chatbot that interacts with the user and decides based on the user's queries.
-
 ### ⌁ If you like Join.chat 😍
 1. Please leave us a [★★★★★](https://wordpress.org/support/plugin/creame-whatsapp-me/reviews/#new-post) rating. We'll thank you.
 2. Help us with the [translation in your language](https://translate.wordpress.org/projects/wp-plugins/creame-whatsapp-me)
-3. Visit our blog and find tips and tricks at [join.chat](https://join.chat/en/blog/?utm_source=wporg&utm_medium=web&utm_campaign=v4_1).
+3. Visit our blog and find tips and tricks at [join.chat](https://join.chat/en/blog/?utm_source=wporg&utm_medium=web&utm_campaign=v4_2).
 4. Follow [@joinchatnow](https://twitter.com/joinchatnow) on twitter.
 
 
@@ -154,6 +154,29 @@ Join.chat save two localStorage variables for proper operation:
 
 * `joinchat_views` is a visits counter to control when to show chat window.
 * `joinchat_hashes` if you set a Call To Action (CTA), when user launch WhatsApp or close Chat Window the CTA hashed is saved to prevent show automatically that CTA again.
+
+= Allow other roles to change settings =
+
+By default Join.chat settings is a submenu under "Settings" and can only be edited by users with `administrator` role.
+You can change the required capability to edit Join.chat general settings with the filter `joinchat_capability`.
+
+e.g. allow shop managers:
+
+`add_filter( 'joinchat_capability', function(){ return 'manage_woocommerce'; } );`
+
+e.g. allow editors:
+
+`add_filter( 'joinchat_capability', function(){ return 'edit_pages'; } );`
+
+When change `joinchat_capability` Join.chat menu will be placed as direct menu in your wp-admin but also you can force it with the filter `joinchat_submenu`:
+
+e.g. force as menu:
+
+`add_filter( 'joinchat_submenu', '__return_false' );`
+
+e.g. force as submenu:
+
+`add_filter( 'joinchat_submenu', '__return_true' );`
 
 = WPML/Polylang translations =
 
@@ -216,6 +239,15 @@ There is a Javascript event that Join.chat triggers automatically before launch 
 6. Page settings
 
 == Changelog ==
+
+= 4.2 =
+* **NEW:** Now can change default role allowed to configure Join.chat global settings.
+* **NEW:** Now can show Join.chat as a direct menu in wp-admin.
+* **NEW:** link to update translatable settings when changed.
+* **NEW:** Accessibility: disable animations for devices with Reduced Motion preference.
+* FIX Elementor 3.5 Finder deprecation message.
+* FIX WPML ensure translations are registered in default site language.
+* Styles minor improvements.
 
 = 4.1.15 =
 * **NEW:** WordPress 5.8 tested & updated.
