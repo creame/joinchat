@@ -215,7 +215,7 @@ class JoinChatUtil {
 
 		if ( is_home() || is_singular() ) {
 			$title = single_post_title( '', false );
-		} elseif ( is_tax() ) {
+		} elseif ( is_category() || is_tag() || is_tax() ) {
 			$title = single_term_title( '', false );
 		} elseif ( function_exists( 'wp_get_document_title' ) ) {
 			$title = wp_get_document_title();
