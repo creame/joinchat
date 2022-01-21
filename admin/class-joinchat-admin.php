@@ -81,7 +81,7 @@ class JoinChatAdmin {
 		$this->common      = new JoinChatCommon();
 
 		// Updated in get_settings() at 'admin_init' hook
-		$this->enhanced_phone = '17.0.12'; // intl-tel-input version
+		$this->enhanced_phone = '17.0.15'; // intl-tel-input version
 		$this->tabs           = array();
 		$this->settings       = array();
 
