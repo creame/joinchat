@@ -50,6 +50,33 @@ class JoinChatUtil {
 	}
 
 	/**
+	 * Clean WhatsApp number
+	 *
+	 * View (https://faq.whatsapp.com/general/contacts/how-to-add-an-international-phone-number)
+	 *
+	 * @since    4.3.0
+	 * @access   public
+	 * @param    string $number to clean
+	 * @return   string $number cleaned
+	 */
+	public static function clean_whatsapp( $number ) {
+
+		// Remove any leading 0s or special calling codes
+		$clean = preg_replace( '/^0+|\D/', '', $number );
+
+		// Argentina (country code "54") should have a "9" between the country code and area code
+		// and prefix "15" must be removed so the final number will have 13 digits total.
+		// (intlTelInput saved numbers already has in international mode)
+		$clean = preg_replace( '/^54(0|1|2|3|4|5|6|7|8)/', '549$1', $clean );
+		$clean = preg_replace( '/^(54\d{5})15(\d{6})/', '$1$2', $clean );
+
+		// Mexico (country code "52") need to have "1" after "+52"
+		$clean = preg_replace( '/^52(0|2|3|4|5|6|7|8|9)/', '521$1', $clean );
+
+		return apply_filters( 'joinchat_clean_whatsapp', $clean, $number );
+	}
+
+	/**
 	 * Apply mb_substr() if available or fallback to substr()
 	 *
 	 * @since    3.1.0

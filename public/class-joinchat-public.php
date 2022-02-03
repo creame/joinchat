@@ -120,7 +120,7 @@ class JoinChatPublic {
 		}
 
 		// Prepare settings
-		$settings['telephone']     = preg_replace( '/^0+|\D/', '', $settings['telephone'] );
+		$settings['telephone']     = JoinChatUtil::clean_whatsapp( $settings['telephone'] );
 		$settings['mobile_only']   = 'yes' == $settings['mobile_only'];
 		$settings['whatsapp_web']  = 'yes' == $settings['whatsapp_web'];
 		$settings['message_badge'] = 'yes' == $settings['message_badge'] && '' != $settings['message_text'];
