@@ -49,7 +49,7 @@
         });
       }
 
-      $phone.on('input', function () {
+      $phone.on('input countrychange', function () {
         var $this = $(this);
         var iti = intlTelInputGlobals.getInstance(this);
 
@@ -199,9 +199,9 @@
       });
     }
 
-    if ($('.joinchat-metabox').length === 1) {
+    if ($('.joinchat-metabox').length) {
       // Texarea auto height
-      $('textarea', '.joinchat-metabox').on('focus input', textarea_autoheight).each(textarea_autoheight);
+      $('.joinchat-metabox textarea').on('focus input', textarea_autoheight).each(textarea_autoheight);
     }
   });
 })(jQuery);

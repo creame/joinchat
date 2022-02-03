@@ -177,6 +177,12 @@ tr.joinchat--focus .joinchat_vars_help {
 
 /* Join.chat metabox */
 
+.joinchat-metabox .iti,
+.joinchat-metabox .iti input,
+.joinchat-metabox textarea {
+  max-width: 100%;
+}
+
 .joinchat-metabox code {
   -webkit-user-select: all;
   -moz-user-select: all;
@@ -184,7 +190,7 @@ tr.joinchat--focus .joinchat_vars_help {
   user-select: all;
   padding: 2px 1px;
   font-size: smaller;
-  vertical-align: text-bottom;
+  vertical-align: baseline;
 }
 
 .joinchat-metabox .dashicons {
@@ -220,4 +226,14 @@ tr.joinchat--focus .joinchat_vars_help {
 .js .joinchat-metabox textarea {
   overflow: hidden;
   min-height: 3em;
+}
+
+/* Join.chat term metabox */
+
+.form-field.joinchat-metabox input[type=radio] {
+  margin-right: 4px;
+}
+
+.form-field.joinchat-metabox input[type=radio]+span {
+  margin-right: 15px;
 }
