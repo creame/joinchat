@@ -13,6 +13,24 @@
 class JoinChatUtil {
 
 	/**
+	 * Encode emojis if utf8mb4 not supported by DB
+	 *
+	 * @since    4.3.0
+	 * @access   public
+	 * @return   void
+	 */
+	public static function maybe_encode_emoji() {
+
+		global $wpdb;
+
+		if ( function_exists( 'wp_encode_emoji' )
+				&& 'utf8mb4' !== $wpdb->get_col_charset( $wpdb->options, 'option_value' )
+				&& ! has_filter( 'sanitize_text_field', 'wp_encode_emoji' ) ) {
+			add_filter( 'sanitize_text_field', 'wp_encode_emoji' );
+		}
+	}
+
+	/**
 	 * Clean user input fields
 	 *
 	 * @since    3.1.0
