@@ -650,8 +650,8 @@ class JoinChatAdmin {
 		$title = 'Join.chat';
 
 		if ( JoinChatUtil::options_submenu() ) {
-			$icon = '<span class="dashicons-before dashicons-whatsapp" aria-hidden="true" ' .
-				'style="display:inline-block;max-height:18px;position:relative;top:-2px;left:8px"></span>';
+			$icon = '<span class="dashicons dashicons-whatsapp" aria-hidden="true" ' .
+				'style="display:inline-block;max-height:18px;position:relative;top:-2px;margin:0 8px;"></span>';
 
 			add_options_page( $title, $title . $icon, JoinChatUtil::capability(), $this->plugin_name, array( $this, 'options_page' ) );
 		} else {
