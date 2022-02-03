@@ -5,11 +5,12 @@ Tags: Chat, Click to Chat, Facebook Messenger, WhatsApp, Telegram, Whatsapp Busi
 Requires at least: 3.5.0
 Tested up to: 5.8
 Requires PHP: 5.3
-Stable tag: 4.2
+Stable tag: 4.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 WhatsApp, Messenger, Telegram, Phone call… capture users through their favorite Apps and turn into clients
+
 
 == Description ==
 
@@ -30,7 +31,7 @@ Do you want to test the Join.chat configuration panel without installing it? You
 Add your logo, profile picture or even an animated gif. Define in which pages or zones it should appear, the delay time, if you want it to the right or to the left, only on mobile phones or also on the desktop. You can define a tooltip to capture the user's attention, the limit is set by your creativity.
 
 #### 📝 Edit at publication level.
-You can **change main settings on every Post, Page, Product or CPT**. In the right side you will find Join.chat metabox where you can modify Phone, CTA, Message and display options.
+You can **change main settings on every Post, Page, Product or CPT and for Tag or Category archive pages**. In the right side you will find Join.chat metabox where you can modify Phone, CTA, Message and display options.
 
 #### 🔴 Show a notification.
 Use a balloon on the button to get the user's attention. In this way, you ensure that you do not miss any important message you want to give them, surprise them in a less intrusive way.
@@ -104,6 +105,7 @@ With Random Phone you can add as many phone numbers as you want, there is no lim
 1. Upload the entire `creame-whatsapp-me` folder to the `/wp-content/plugins/` directory.
 2. Activate the plugin through the 'Plugins' menu in WordPress.
 
+
 == Frequently Asked Questions ==
 
 = Upgrade from WAme to Join.chat =
@@ -121,7 +123,7 @@ You can change the position of the button so that nothing covers it by adding th
 
 `.joinchat { z-index:9999; }`
 
-Higher values ​​of z-index are above, the default value is 1000.
+Higher values of z-index are above, the default value is 1000.
 
 If you need to move up:
 
@@ -146,14 +148,11 @@ This works with your phone settings and message with dynamic variables, **even o
 
 For custom WhatsApp links, you can create the url with our **[WhatsApp link generator](https://join.chat/en/whatsapp-link/) free tool** and copy it to your links.
 
-= What about GDPR? =
+= Disable enhanced telephone input =
 
-Join.chat don't use cookies.
+Join.chat uses International Telephone Input library to facilitate and validate the introduction of the phone number in the format of each country. If you have problems with your phone number or you want to write it directly without any changes you can disable it with this filter *(remember follow [WhatsApp guidelines](https://faq.whatsapp.com/general/contacts/how-to-add-an-international-phone-number))*:
 
-Join.chat save two localStorage variables for proper operation:
-
-* `joinchat_views` is a visits counter to control when to show chat window.
-* `joinchat_hashes` if you set a Call To Action (CTA), when user launch WhatsApp or close Chat Window the CTA hashed is saved to prevent show automatically that CTA again.
+`add_filter( 'joinchat_enhanced_phone', '__return_false' );`
 
 = Allow other roles to change settings =
 
@@ -229,6 +228,16 @@ There is a Javascript event that Join.chat triggers automatically before launch 
   });
 });`
 
+= What about GDPR? =
+
+Join.chat don't use cookies.
+
+Join.chat save two localStorage variables for proper operation:
+
+* `joinchat_views` is a visits counter to control when to show chat window.
+* `joinchat_hashes` if you set a Call To Action (CTA), when user launch WhatsApp or close Chat Window the CTA hashed is saved to prevent show automatically that CTA again.
+
+
 == Screenshots ==
 
 1. Mobile example
@@ -238,7 +247,13 @@ There is a Javascript event that Join.chat triggers automatically before launch 
 5. WooCommerce settings
 6. Page settings
 
+
 == Changelog ==
+
+= 4.3 =
+* **NEW:** Customize in category/tag archive page.
+* UPDATED styles for better browsers support.
+* UPDATED International Telephone Input library.
 
 = 4.2 =
 * **NEW:** Now can change default role allowed to configure Join.chat global settings.
@@ -372,6 +387,7 @@ There is a Javascript event that Join.chat triggers automatically before launch 
 **CHANGED for Devs:** All css classes, actions and filters change from `wame` or `whatsappme` to `joinchat`.
 
 See [changelog.txt](https://plugins.svn.wordpress.org/creame-whatsapp-me/trunk/changelog.txt) for older changelog
+
 
 == Upgrade Notice ==
 
