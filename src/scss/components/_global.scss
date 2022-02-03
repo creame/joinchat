@@ -9,14 +9,15 @@
   --red: 37;
   --green: 211;
   --blue: 102;
-  --rgb: var(--red), var(--green), var(--blue);
+  --rgb: var(--red) var(--green) var(--blue);
   --color: rgb(var(--rgb));
   --dark: rgb(calc(var(--red) - 75), calc(var(--green) - 75), calc(var(--blue) - 75)); // darker color
   --hover: rgb(calc(var(--red) + 50), calc(var(--green) + 50), calc(var(--blue) + 50)); // lighter color
-  --bg: rgba(var(--rgb), 0.04);
+  --bg: rgb(var(--rgb) / 4%);
   // Black or white color based on https://css-tricks.com/css-variables-calc-rgb-enforcing-high-contrast-colors/
   --tolerance: 210; // [0-255] Greater tolerance allow lighter colors with white text
   --bw: calc(((var(--red) * 0.2126) + (var(--green) * 0.7152) + (var(--blue) * 0.0722) - var(--tolerance)) * -100000);
+  /* Keep old rgba() to support clamp() for alpha */
   --text: rgba(var(--bw), var(--bw), var(--bw), clamp(0.7, var(--bw), 1)); // White rgba(255, 255, 255, 1) / Black rgba(0, 0, 0, 0.7)
   --msg: var(--color);
 

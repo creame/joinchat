@@ -7,14 +7,15 @@
   --red: 37;
   --green: 211;
   --blue: 102;
-  --rgb: var(--red), var(--green), var(--blue);
+  --rgb: var(--red) var(--green) var(--blue);
   --color: rgb(var(--rgb));
-  --dark: rgb(calc(var(--red) - 75), calc(var(--green) - 75), calc(var(--blue) - 75));
-  --hover: rgb(calc(var(--red) + 50), calc(var(--green) + 50), calc(var(--blue) + 50));
-  --bg: rgba(var(--rgb), 0.04);
+  --dark: rgb(calc(var(--red) - 75) calc(var(--green) - 75) calc(var(--blue) - 75));
+  --hover: rgb(calc(var(--red) + 50) calc(var(--green) + 50) calc(var(--blue) + 50));
+  --bg: rgb(var(--rgb) / 4%);
   --tolerance: 210;
-  --bw: calc((var(--red)*0.2126 + var(--green)*0.7152 + var(--blue)*0.0722 - var(--tolerance))*-100000);
-  --text: rgba(var(--bw), var(--bw), var(--bw), clamp(0.7, var(--bw), 1));
+  --bw: calc(((var(--red)*0.2126) + (var(--green)*0.7152) + (var(--blue)*0.0722) - var(--tolerance))*-100000);
+  /* Keep old rgba() to support clamp() for alpha */
+  --text: rgb(var(--bw) var(--bw) var(--bw) / clamp(0.7, var(--bw), 1));
   --msg: var(--color);
 
   position: fixed;
@@ -27,10 +28,11 @@
   transform: scale3d(0, 0, 0);
   transition: transform 0.3s ease-in-out;
   -webkit-user-select: none;
+     -moz-user-select: none;
   user-select: none;
   touch-action: manipulation;
   -webkit-font-smoothing: antialiased;
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  -webkit-tap-highlight-color: rgb(0 0 0 / 0%);
 }
 
 .joinchat *,
@@ -79,7 +81,7 @@
 
 @supports not (width: clamp(1px, 1%, 10px)) {
   .joinchat {
-    --text: rgba(var(--bw), var(--bw), var(--bw), 0.9);
+    --text: rgb(var(--bw) var(--bw) var(--bw) / 90%);
   }
 }
 
@@ -108,13 +110,13 @@
   background: #25d366;
   color: inherit;
   border-radius: calc(var(--btn)/2);
-  box-shadow: 1px 6px 24px 0 rgba(7, 94, 84, 0.24);
+  box-shadow: 1px 6px 24px 0 rgb(7 94 84 / 24%);
   cursor: pointer;
   transition: background 0.2s linear;
   will-change: background-color, width;
 }
 
-[dir=rtl] .joinchat__button {
+[dir="rtl"] .joinchat__button {
   flex-direction: row-reverse;
 }
 
@@ -134,14 +136,14 @@
   flex-direction: row-reverse;
 }
 
-[dir=rtl] .joinchat--left .joinchat__button {
+[dir="rtl"] .joinchat--left .joinchat__button {
   flex-direction: row;
 }
 
 .joinchat--chatbox .joinchat__button {
   background: var(--color);
   transition: background 0.2s linear;
-  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 30%);
 }
 
 .joinchat--chatbox .joinchat__button:hover,
@@ -152,7 +154,7 @@
 .joinchat__button__open {
   width: var(--btn);
   height: var(--btn);
-  background: rgba(0, 0, 0, 0) url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E %3Cpath fill='%23fff' d='M3.516 3.516c4.686-4.686 12.284-4.686 16.97 0 4.686 4.686 4.686 12.283 0 16.97a12.004 12.004 0 01-13.754 2.299l-5.814.735a.392.392 0 01-.438-.44l.748-5.788A12.002 12.002 0 013.517 3.517zm3.61 17.043l.3.158a9.846 9.846 0 0011.534-1.758c3.843-3.843 3.843-10.074 0-13.918-3.843-3.843-10.075-3.843-13.918 0a9.846 9.846 0 00-1.747 11.554l.16.303-.51 3.942a.196.196 0 00.219.22l3.961-.501zm6.534-7.003l-.933 1.164a9.843 9.843 0 01-3.497-3.495l1.166-.933a.792.792 0 00.23-.94L9.561 6.96a.793.793 0 00-.924-.445 1291.6 1291.6 0 00-2.023.524.797.797 0 00-.588.88 11.754 11.754 0 0010.005 10.005.797.797 0 00.88-.587l.525-2.023a.793.793 0 00-.445-.923L14.6 13.327a.792.792 0 00-.94.23z'/%3E %3C/svg%3E") center no-repeat;
+  background: rgb(0 0 0 / 0%) url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23fff' d='M3.516 3.516c4.686-4.686 12.284-4.686 16.97 0 4.686 4.686 4.686 12.283 0 16.97a12.004 12.004 0 0 1-13.754 2.299l-5.814.735a.392.392 0 0 1-.438-.44l.748-5.788A12.002 12.002 0 0 1 3.517 3.517zm3.61 17.043.3.158a9.846 9.846 0 0 0 11.534-1.758c3.843-3.843 3.843-10.074 0-13.918-3.843-3.843-10.075-3.843-13.918 0a9.846 9.846 0 0 0-1.747 11.554l.16.303-.51 3.942a.196.196 0 0 0 .219.22l3.961-.501zm6.534-7.003-.933 1.164a9.843 9.843 0 0 1-3.497-3.495l1.166-.933a.792.792 0 0 0 .23-.94L9.561 6.96a.793.793 0 0 0-.924-.445 1291.6 1291.6 0 0 0-2.023.524.797.797 0 0 0-.588.88 11.754 11.754 0 0 0 10.005 10.005.797.797 0 0 0 .88-.587l.525-2.023a.793.793 0 0 0-.445-.923L14.6 13.327a.792.792 0 0 0-.94.23z'/%3E%3C/svg%3E") center no-repeat;
   background-size: 60%;
 }
 
@@ -180,11 +182,13 @@
 }
 
 .joinchat--show .joinchat__button__image {
+  -webkit-animation: joinchat_image_loop 20s linear 5s infinite normal both;
   animation: joinchat_image_loop 20s linear 5s infinite normal both;
 }
 
 .joinchat--image .joinchat__button__image {
   opacity: 1;
+  -webkit-animation: none;
   animation: none;
 }
 
@@ -214,22 +218,26 @@
 .joinchat__button__send .joinchat_svg__plain {
   stroke-dasharray: 1097;
   stroke-dashoffset: 1097;
+  -webkit-animation: joinchat_plain 6s 0.2s ease-in-out infinite;
   animation: joinchat_plain 6s 0.2s ease-in-out infinite;
 }
 
 .joinchat__button__send .joinchat_svg__chat {
   stroke-dasharray: 1020;
   stroke-dashoffset: 1020;
+  -webkit-animation: joinchat_chat 6s 3.2s ease-in-out infinite;
   animation: joinchat_chat 6s 3.2s ease-in-out infinite;
 }
 
 @media (prefers-reduced-motion) {
   .joinchat__button__send .joinchat_svg__plain {
     stroke-dasharray: 0;
+    -webkit-animation: none;
     animation: none;
   }
 
   .joinchat__button__send .joinchat_svg__chat {
+    -webkit-animation: none;
     animation: none;
   }
 }
@@ -282,10 +290,12 @@
 }
 
 .joinchat__badge.joinchat__badge--in {
+  -webkit-animation: joinchat_badge_in 500ms cubic-bezier(0.27, 0.9, 0.41, 1.28) 1 both;
   animation: joinchat_badge_in 500ms cubic-bezier(0.27, 0.9, 0.41, 1.28) 1 both;
 }
 
 .joinchat__badge.joinchat__badge--out {
+  -webkit-animation: joinchat_badge_out 400ms cubic-bezier(0.215, 0.61, 0.355, 1) 1 both;
   animation: joinchat_badge_out 400ms cubic-bezier(0.215, 0.61, 0.355, 1) 1 both;
 }
 
@@ -299,18 +309,18 @@
   border: none;
   border-radius: 16px;
   background: #fff;
-  color: rgba(0, 0, 0, 0.8);
+  color: rgb(0 0 0 / 80%);
   line-height: 31px;
   white-space: nowrap;
   opacity: 0;
   transition: opacity 0.3s ease-out 0.4s;
-  filter: drop-shadow(0 1px 4px rgba(0, 0, 0, 0.4));
+  filter: drop-shadow(0 1px 4px rgb(0 0 0 / 40%));
   transform: translateY(-50%);
   pointer-events: none;
 }
 
 .joinchat__tooltip::after {
-  content: '';
+  content: "";
   display: block;
   position: absolute;
   top: 10px;
@@ -326,12 +336,14 @@
 }
 
 .joinchat--tooltip .joinchat__tooltip {
+  -webkit-animation: joinchat_tootlip 20s linear 5s 1 normal both;
   animation: joinchat_tootlip 20s linear 5s 1 normal both;
 }
 
 @media (hover: hover) {
   .joinchat__button:hover .joinchat__tooltip {
     opacity: 1;
+    -webkit-animation: none;
     animation: none;
     transition: opacity 0.2s;
   }
@@ -367,7 +379,7 @@
   max-height: calc(var(--vh) - var(--bottom) - var(--sep));
   border-radius: calc(var(--btn)/2 + 2px);
   background: transparent;
-  box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.5);
+  box-shadow: 0 2px 6px 0 rgb(0 0 0 / 50%);
   text-align: left;
   overflow: hidden;
   transform: scale3d(0, 0, 0);
@@ -375,7 +387,7 @@
   transition: max-height 0.2s ease-out, opacity 0.4s ease-out, transform 0s linear 0.3s;
 }
 
-[dir=rtl] .joinchat__box {
+[dir="rtl"] .joinchat__box {
   text-align: right;
 }
 
@@ -402,7 +414,7 @@
   background: var(--color);
 }
 
-[dir=rtl] .joinchat__header {
+[dir="rtl"] .joinchat__header {
   padding: 0 26px 0 70px;
 }
 
@@ -425,7 +437,7 @@
   line-height: 18px;
   color: inherit !important;
   text-decoration: none !important;
-  fill: currentColor;
+  fill: currentcolor;
   opacity: 0.8;
 }
 
@@ -441,13 +453,13 @@
   color: inherit !important;
   text-decoration: none !important;
   opacity: 0.9;
-  filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.3));
+  filter: drop-shadow(0 1px 3px rgb(0 0 0 / 30%));
 }
 
 .joinchat__wa {
   height: 28px;
   width: auto;
-  fill: currentColor;
+  fill: currentcolor;
   opacity: 0.8;
 }
 
@@ -459,27 +471,27 @@
   height: 34px;
   margin-top: -16px;
   border-radius: 50%;
-  background: rgba(0, 0, 0, 0.4) url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23fff'%3E %3Cpath d='M24 2.4L21.6 0 12 9.6 2.4 0 0 2.4 9.6 12 0 21.6 2.4 24l9.6-9.6 9.6 9.6 2.4-2.4-9.6-9.6L24 2.4z'/%3E %3C/svg%3E") center no-repeat;
+  background: rgb(0 0 0 / 40%) url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23fff'%3E%3Cpath d='M24 2.4 21.6 0 12 9.6 2.4 0 0 2.4 9.6 12 0 21.6 2.4 24l9.6-9.6 9.6 9.6 2.4-2.4-9.6-9.6L24 2.4z'/%3E%3C/svg%3E") center no-repeat;
   background-size: 12px;
   cursor: pointer;
   transition: background-color 0.3s ease-out;
 }
 
 .joinchat__close:hover {
-  background-color: rgba(0, 0, 0, 0.6);
+  background-color: rgb(0 0 0 / 60%);
 }
 
 .joinchat__close:active {
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: rgb(0 0 0 / 70%);
 }
 
-[dir=rtl] .joinchat__close {
+[dir="rtl"] .joinchat__close {
   right: auto;
   left: 24px;
 }
 
 .joinchat__box__scroll {
-  padding: 20px 0 70px 0;
+  padding: 20px 0 70px;
   padding-bottom: calc(var(--btn) + 10px);
   background: #fff linear-gradient(0deg, var(--bg), var(--bg));
   overflow-x: hidden;
@@ -490,16 +502,16 @@
 
 .joinchat__box__scroll::-webkit-scrollbar {
   width: 5px;
-  background: rgba(0, 0, 0, 0);
+  background: rgb(0 0 0 / 0%);
 }
 
 .joinchat__box__scroll::-webkit-scrollbar-thumb {
   border-radius: 3px;
-  background: rgba(0, 0, 0, 0);
+  background: rgb(0 0 0 / 0%);
 }
 
 .joinchat--blur .joinchat__box__scroll {
-  background: rgba(var(--rgb), 0.2);
+  background: rgba(var(--rgb) / 2%);
   -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
 }
@@ -509,7 +521,7 @@
 }
 
 .joinchat__box__scroll:hover::-webkit-scrollbar-thumb {
-  background: rgba(0, 0, 0, 0.2);
+  background: rgb(0 0 0 / 20%);
 }
 
 @supports (-webkit-overflow-scrolling: touch) {
@@ -563,12 +575,13 @@
   border-radius: 32px;
   background: #fff;
   color: #4a4a4a;
-  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3));
+  word-break: break-word;
+  filter: drop-shadow(0 1px 2px rgb(0 0 0 / 30%));
   transform: translateZ(0);
 }
 
 .joinchat__message::before {
-  content: '';
+  content: "";
   display: block;
   position: absolute;
   bottom: 20px;
@@ -576,6 +589,8 @@
   width: 17px;
   height: 25px;
   background: inherit;
+  -webkit-clip-path: url(#joinchat__message__peak);
+  clip-path: url(#joinchat__message__peak);
   -webkit-clip-path: var(--peak, url(#joinchat__message__peak));
   clip-path: var(--peak, url(#joinchat__message__peak));
 }
@@ -607,6 +622,18 @@
   }
 }
 
+@-webkit-keyframes joinchat_badge_in {
+  from {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 @keyframes joinchat_badge_in {
   from {
     opacity: 0;
@@ -616,6 +643,18 @@
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+@-webkit-keyframes joinchat_badge_out {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  to {
+    opacity: 0;
+    transform: translateY(-20px);
   }
 }
 
@@ -631,11 +670,37 @@
   }
 }
 
+@-webkit-keyframes joinchat_plain {
+  0%,
+  50%,
+  100% {
+    stroke-dashoffset: 1097;
+  }
+
+  5%,
+  45% {
+    stroke-dashoffset: 0;
+  }
+}
+
 @keyframes joinchat_plain {
   0%,
   50%,
   100% {
     stroke-dashoffset: 1097;
+  }
+
+  5%,
+  45% {
+    stroke-dashoffset: 0;
+  }
+}
+
+@-webkit-keyframes joinchat_chat {
+  0%,
+  50%,
+  100% {
+    stroke-dashoffset: 1020;
   }
 
   5%,
@@ -657,6 +722,22 @@
   }
 }
 
+@-webkit-keyframes joinchat_image_loop {
+  0% {
+    opacity: 0;
+  }
+
+  3%,
+  20% {
+    opacity: 1;
+  }
+
+  25%,
+  100% {
+    opacity: 0;
+  }
+}
+
 @keyframes joinchat_image_loop {
   0% {
     opacity: 0;
@@ -670,6 +751,25 @@
   25%,
   100% {
     opacity: 0;
+  }
+}
+
+@-webkit-keyframes joinchat_tootlip {
+  0% {
+    opacity: 0;
+    transform: scaleY(0);
+  }
+
+  1%,
+  20% {
+    opacity: 1;
+    transform: scaleY(1);
+  }
+
+  25%,
+  100% {
+    opacity: 0;
+    transform: scaleY(1);
   }
 }
 
