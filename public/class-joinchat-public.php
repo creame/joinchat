@@ -100,14 +100,19 @@ class JoinChatPublic {
 		// If use "global $post;" take first post in loop on archive pages
 		$obj = get_queried_object();
 
-		// Filter for site settings (can be overriden by post settings)
+		// Filter for site settings (can be overriden by post/term settings)
 		$settings = apply_filters( 'joinchat_get_settings_site', $settings, $obj );
 
-		// Post custom settings override site settings
-		$post_settings = is_a( $obj, 'WP_Post' ) ? get_post_meta( $obj->ID, '_joinchat', true ) : '';
+		// Post/term custom settings override site settings
+		$obj_settings = '';
+		if ( $obj instanceof WP_Post ) {
+			$obj_settings = get_post_meta( $obj->ID, '_joinchat', true );
+		} elseif ( $obj instanceof WP_Term ) {
+			$obj_settings = get_term_meta( $obj->term_id, '_joinchat', true );
+		}
 
-		if ( is_array( $post_settings ) ) {
-			$settings = array_merge( $settings, $post_settings );
+		if ( is_array( $obj_settings ) ) {
+			$settings = array_merge( $settings, $obj_settings );
 
 			// Allow override general settings with empty string with "{}"
 			$settings['message_text'] = preg_replace( '/^\{\s*\}$/', '', $settings['message_text'] );
@@ -115,7 +120,7 @@ class JoinChatPublic {
 		}
 
 		// Prepare settings
-		$settings['telephone']     = preg_replace( '/^0+|\D/', '', $settings['telephone'] );
+		$settings['telephone']     = JoinChatUtil::clean_whatsapp( $settings['telephone'] );
 		$settings['mobile_only']   = 'yes' == $settings['mobile_only'];
 		$settings['whatsapp_web']  = 'yes' == $settings['whatsapp_web'];
 		$settings['message_badge'] = 'yes' == $settings['message_badge'] && '' != $settings['message_text'];

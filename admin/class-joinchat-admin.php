@@ -81,7 +81,7 @@ class JoinChatAdmin {
 		$this->common      = new JoinChatCommon();
 
 		// Updated in get_settings() at 'admin_init' hook
-		$this->enhanced_phone = '17.0.12'; // intl-tel-input version
+		$this->enhanced_phone = '17.0.15'; // intl-tel-input version
 		$this->tabs           = array();
 		$this->settings       = array();
 
@@ -319,22 +319,15 @@ class JoinChatAdmin {
 	 */
 	public function settings_validate( $input ) {
 
-		global $wpdb;
-
 		// Prevent bad behavior when validate twice on first save
 		// bug https://core.trac.wordpress.org/ticket/21989
 		if ( count( get_settings_errors( $this->plugin_name ) ) ) {
 			return $input;
 		}
 
-		// Encode emojis if utf8mb4 not supported by DB
-		if ( function_exists( 'wp_encode_emoji' )
-				&& 'utf8mb4' !== $wpdb->get_col_charset( $wpdb->options, 'option_value' )
-				&& ! has_filter( 'sanitize_text_field', 'wp_encode_emoji' ) ) {
-			add_filter( 'sanitize_text_field', 'wp_encode_emoji' );
-		}
-
 		$util = new JoinChatUtil(); // Shortcut
+
+		$util::maybe_encode_emoji();
 
 		$input['telephone']     = $util::clean_input( $input['telephone'] );
 		$input['mobile_only']   = isset( $input['mobile_only'] ) ? 'yes' : 'no';
@@ -657,8 +650,8 @@ class JoinChatAdmin {
 		$title = 'Join.chat';
 
 		if ( JoinChatUtil::options_submenu() ) {
-			$icon = '<span class="dashicons-before dashicons-whatsapp" aria-hidden="true" ' .
-				'style="display:inline-block;max-height:18px;position:relative;top:-2px;left:8px"></span>';
+			$icon = '<span class="dashicons dashicons-whatsapp" aria-hidden="true" ' .
+				'style="display:inline-block;max-height:18px;position:relative;top:-2px;margin:0 8px;"></span>';
 
 			add_options_page( $title, $title . $icon, JoinChatUtil::capability(), $this->plugin_name, array( $this, 'options_page' ) );
 		} else {
@@ -918,7 +911,8 @@ class JoinChatAdmin {
 	 * @since    3.0.3     Capture and filter output
 	 * @since    3.2.0     Added filter 'joinchat_metabox_placeholders'
 	 * @access   public
-	 * @return   void
+	 * @param  WP_Post $post Current post object
+	 * @return void
 	 */
 	public function meta_box( $post ) {
 
@@ -955,68 +949,34 @@ class JoinChatAdmin {
 		$metabox_vars = apply_filters( 'joinchat_metabox_vars', array( 'SITE', 'URL', 'TITLE' ), $post );
 
 		ob_start();
-		?>
-			<div class="joinchat-metabox">
-				<?php wp_nonce_field( 'joinchat_data', 'joinchat_nonce' ); ?>
-				<p>
-					<label for="joinchat_phone"><?php _e( 'Telephone', 'creame-whatsapp-me' ); ?></label><br>
-					<input id="joinchat_phone" <?php echo $this->enhanced_phone ? 'data-' : ''; ?>name="joinchat_telephone" value="<?php echo esc_attr( $metadata['telephone'] ); ?>" type="text" placeholder="<?php echo $placeholders['telephone']; ?>">
-				</p>
-				<p>
-					<label for="joinchat_message"><?php _e( 'Call to Action', 'creame-whatsapp-me' ); ?></label><br>
-					<textarea id="joinchat_message" name="joinchat_message" rows="2" placeholder="<?php echo $placeholders['message_text']; ?>" class="large-text"><?php echo esc_textarea( $metadata['message_text'] ); ?></textarea>
-				</p>
-				<p>
-					<label for="joinchat_message_send"><?php _e( 'Message', 'creame-whatsapp-me' ); ?></label><br>
-					<textarea id="joinchat_message_send" name="joinchat_message_send" rows="2" placeholder="<?php echo $placeholders['message_send']; ?>" class="large-text"><?php echo esc_textarea( $metadata['message_send'] ); ?></textarea>
-					<?php if ( count( $metabox_vars ) ) : ?>
-						<small><?php _e( 'Can use vars', 'creame-whatsapp-me' ); ?> <code>{<?php echo join( '}</code> <code>{', $metabox_vars ); ?>}</code></small>
-					<?php endif; ?>
-					<small><?php _e( 'to leave it blank use', 'creame-whatsapp-me' ); ?> <code>{}</code></small>
-				</p>
-				<p>
-					<label><input type="radio" name="joinchat_view" value="yes" <?php checked( 'yes', $metadata['view'] ); ?>>
-						<span class="dashicons dashicons-visibility" title="<?php echo __( 'Show', 'creame-whatsapp-me' ); ?>"></span></label>
-					<label><input type="radio" name="joinchat_view" value="no" <?php checked( 'no', $metadata['view'] ); ?>>
-						<span class="dashicons dashicons-hidden" title="<?php echo __( 'Hide', 'creame-whatsapp-me' ); ?>"></span></label>
-					<label><input type="radio" name="joinchat_view" value="" <?php checked( '', $metadata['view'] ); ?>>
-						<?php echo __( 'Default visibility', 'creame-whatsapp-me' ); ?></label>
-				</p>
-			</div>
-		<?php
+		include __DIR__ . '/partials/post_meta_box.php';
 		$metabox_output = ob_get_clean();
 
 		echo apply_filters( 'joinchat_metabox_output', $metabox_output, $post, $metadata );
 	}
 
 	/**
-	 * Save meta data from "Join.chat" Meta Box on post save
+	 * Save meta data from "Join.chat"
 	 *
-	 * @since    1.1.0
-	 * @since    2.0.0     Change 'hide' key to 'view' now values can be [yes, no]
-	 * @since    2.2.0     Added "telephone"
-	 * @since    3.0.3     Filter metadata before save
+	 * @since    4.3.0
 	 * @access   public
-	 * @return   void
+	 * @param  int         $id post|term ID
+	 * @param  WP_Post|int $arg current post or term taxonomi id
+	 * @return void
 	 */
-	public function save_post( $post_id ) {
+	public function save_meta( $id, $arg ) {
 
-		global $wpdb;
-
-		if ( wp_is_post_autosave( $post_id )
-			|| ! isset( $_POST['joinchat_nonce'] )
-			|| ! wp_verify_nonce( $_POST['joinchat_nonce'], 'joinchat_data' )
-		) {
+		if ( ! isset( $_POST['joinchat_nonce'] ) || ! wp_verify_nonce( $_POST['joinchat_nonce'], 'joinchat_data' ) ) {
 			return;
 		}
 
-		// Encode emojis if utf8mb4 not supported by DB
-		if ( function_exists( 'wp_encode_emoji' )
-			&& 'utf8mb4' !== $wpdb->get_col_charset( $wpdb->postmeta, 'meta_value' )
-			&& ! has_filter( 'sanitize_text_field', 'wp_encode_emoji' )
-		) {
-			add_filter( 'sanitize_text_field', 'wp_encode_emoji' );
+		$type = $arg instanceof WP_Post ? 'post' : 'term';
+
+		if ( 'post' === $type && wp_is_post_autosave( $id ) ) {
+			return;
 		}
+
+		JoinChatUtil::maybe_encode_emoji();
 
 		// Clean and delete empty/false fields
 		$metadata = array_filter(
@@ -1030,13 +990,81 @@ class JoinChatAdmin {
 			)
 		);
 
-		$metadata = apply_filters( 'joinchat_metabox_save', $metadata, $post_id );
+		$metadata = apply_filters( 'joinchat_metabox_save', $metadata, $id, $type );
 
 		if ( count( $metadata ) ) {
-			update_post_meta( $post_id, '_joinchat', $metadata );
+			update_metadata( $type, $id, '_joinchat', $metadata );
 		} else {
-			delete_post_meta( $post_id, '_joinchat' );
+			delete_metadata( $type, $id, '_joinchat' );
 		}
+	}
+
+	/**
+	 * Add term edit form meta fields
+	 *
+	 * @since    4.3.0
+	 * @access   public
+	 * @return void
+	 */
+	public function add_term_meta_boxes() {
+
+		$taxonomies = apply_filters( 'joinchat_taxonomies_meta_box', array( 'category', 'post_tag' ) );
+
+		foreach ( $taxonomies as $tax ) {
+			add_action( "{$tax}_edit_form_fields", array( $this, 'term_meta_box' ), 10, 2 );
+			add_action( "edited_{$tax}", array( $this, 'save_meta' ), 10, 2 );
+		}
+
+	}
+
+	/**
+	 * Generate term edit form fields html
+	 *
+	 * @since    4.3.0
+	 * @access   public
+	 * @param  WP_Term $term Current taxonomy term object
+	 * @param  string  $taxonomy Current taxonomy slug
+	 * @return void
+	 */
+	public function term_meta_box( $term, $taxonomy ) {
+
+		// Enqueue assets
+		wp_enqueue_script( 'joinchat-admin' );
+		wp_enqueue_style( 'joinchat-admin' );
+
+		if ( $this->enhanced_phone ) {
+			wp_enqueue_style( 'intl-tel-input' );
+		}
+
+		$metadata = get_term_meta( $term->term_id, '_joinchat', true ) ?: array();
+		$metadata = array_merge(
+			array(
+				'telephone'    => '',
+				'message_text' => '',
+				'message_send' => '',
+				'view'         => '',
+			),
+			$metadata
+		);
+
+		$placeholders = apply_filters(
+			'joinchat_metabox_placeholders',
+			array(
+				'telephone'    => $this->settings['telephone'],
+				'message_text' => $this->settings['message_text'],
+				'message_send' => $this->settings['message_send'],
+			),
+			$term,
+			$this->settings
+		);
+
+		$metabox_vars = apply_filters( 'joinchat_metabox_vars', array( 'SITE', 'URL', 'TITLE' ), $term );
+
+		ob_start();
+		include __DIR__ . '/partials/term_meta_box.php';
+		$metabox_output = ob_get_clean();
+
+		echo apply_filters( 'joinchat_term_metabox_output', $metabox_output, $term, $metadata, $taxonomy );
 	}
 
 	/**

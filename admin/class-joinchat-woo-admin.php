@@ -26,6 +26,7 @@ class JoinChatWooAdmin {
 		$loader->add_filter( 'joinchat_settings_i18n', $this, 'settings_i18n' );
 		$loader->add_filter( 'joinchat_admin_tabs', $this, 'admin_tab' );
 		$loader->add_filter( 'joinchat_custom_post_types', $this, 'custom_post_types' );
+		$loader->add_filter( 'joinchat_taxonomies_meta_box', $this, 'custom_taxonomies' );
 		$loader->add_filter( 'joinchat_tab_visibility_sections', $this, 'visibility_tab_section' );
 		$loader->add_filter( 'joinchat_tab_woocommerce_sections', $this, 'woo_tab_sections' );
 		$loader->add_filter( 'joinchat_vars_help', $this, 'vars_help', 10, 2 );
@@ -105,14 +106,26 @@ class JoinChatWooAdmin {
 	 * Remove WooCommerce product custom post type
 	 *
 	 * @since    3.0.0
-	 * @param    array $custom_post_types       current tab sections and fields.
+	 * @param    array $custom_post_types list of post types
 	 * @return   array
 	 */
 	public function custom_post_types( $custom_post_types ) {
 
-		$custom_post_types = array_diff( $custom_post_types, array( 'product' ) );
+		return array_diff( $custom_post_types, array( 'product' ) );
 
-		return $custom_post_types;
+	}
+
+	/**
+	 * Add WooCommerce product taxonomies for metabox
+	 *
+	 * @since    4.3.0
+	 * @param    array $taxonomies list of taxonomies
+	 * @return   array
+	 */
+	public function custom_taxonomies( $taxonomies ) {
+
+		return array_merge( $taxonomies, array( 'product_cat', 'product_tag' ) );
+
 	}
 
 	/**
@@ -293,14 +306,14 @@ class JoinChatWooAdmin {
 	 * Add Product metabox variables info.
 	 *
 	 * @since    3.0.0
-	 * @param    array  $vars       current default vars.
-	 * @param    object $post       current post.
+	 * @param    array           $vars current default vars.
+	 * @param    WP_Post|WP_Term $obj current post|term.
 	 * @return   array
 	 */
-	public function metabox_vars( $vars, $post ) {
+	public function metabox_vars( $vars, $obj ) {
 
-		if ( 'product' == $post->post_type ) {
-			$product  = wc_get_product( $post->ID );
+		if ( $obj instanceof WP_Post && 'product' == $obj->post_type ) {
+			$product  = wc_get_product( $obj->ID );
 			$woo_vars = array( 'PRODUCT', 'SKU', 'PRICE' );
 
 			if ( $product->is_on_sale() ) {
@@ -319,15 +332,15 @@ class JoinChatWooAdmin {
 	 * Add Product metabox placeholders info.
 	 *
 	 * @since    3.2.0
-	 * @param    array  $placeholders   current placeholders.
-	 * @param    object $post           current post.
-	 * @param    array  $settings       current settings.
+	 * @param    array           $placeholders current placeholders.
+	 * @param    WP_Post|WP_Term $obj current post|term.
+	 * @param    array           $settings current settings.
 	 * @return   array
 	 */
-	public function metabox_placeholders( $placeholders, $post, $settings ) {
+	public function metabox_placeholders( $placeholders, $obj, $settings ) {
 
-		if ( 'product' == $post->post_type ) {
-			$product = wc_get_product( $post->ID );
+		if ( $obj instanceof WP_Post && 'product' == $obj->post_type ) {
+			$product = wc_get_product( $obj->ID );
 
 			$placeholders['message_send'] = $settings['message_send_product'] ?: $settings['message_send'];
 
