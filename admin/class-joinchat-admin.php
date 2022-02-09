@@ -363,6 +363,11 @@ class JoinChatAdmin {
 
 		add_settings_error( $this->plugin_name, 'settings_updated', __( 'Settings saved', 'creame-whatsapp-me' ), 'updated' );
 
+		// Delete notice option
+		if ( $input['telephone'] ) {
+			delete_option( 'joinchat_notice_dismiss' );
+		}
+
 		// Extra actions on save
 		do_action( 'joinchat_settings_validation', $input, $this->settings );
 
@@ -669,32 +674,47 @@ class JoinChatAdmin {
 	 */
 	public function notices() {
 
-		$current_screen = get_current_screen();
-
-		// Save notice dismiss one month
-		if ( isset( $_GET['joinchat-ignore-notice'] ) ) {
-			set_transient( 'joinchat_notice_dismiss__' . get_current_user_id(), true, MONTH_IN_SECONDS );
+		if ( defined( 'DISABLE_NAG_NOTICES' ) && DISABLE_NAG_NOTICES ) {
+			return;
 		}
 
+		$current_screen = get_current_screen();
+
 		// If no phone number defined
-		if ( ( ! defined( 'DISABLE_NAG_NOTICES' ) || ! DISABLE_NAG_NOTICES )
-			&& empty( $this->settings['telephone'] )
+		if ( empty( $this->settings['telephone'] )
 			&& current_user_can( JoinChatUtil::capability() )
 			&& ( $current_screen && false === strpos( $current_screen->id, '_joinchat' ) )
-			&& ! get_transient( 'joinchat_notice_dismiss__' . get_current_user_id() )
+			&& time() >= (int) get_option( 'joinchat_notice_dismiss' )
 		) {
 
 			printf(
-				'<div class="notice notice-info"><p><strong>Join.chat</strong>&nbsp;&nbsp;%s %s %s</p></div>',
+				'<div class="notice notice-info is-dismissible" id="joinchat-empty-phone"><p><strong>Join.chat</strong>&nbsp;&nbsp;%s %s</p></div>',
 				__( 'You only need to add your WhatsApp number to contact with your users.', 'creame-whatsapp-me' ),
-				sprintf( '<a href="%s" class="button-primary">%s</a>', JoinChatUtil::admin_url(), __( 'Settings', 'creame-whatsapp-me' ) ),
-				sprintf(
-					'<a href="%s" class="button-secondary">%s</a>',
-					add_query_arg( 'joinchat-ignore-notice', '', home_url( $_SERVER['REQUEST_URI'] ) ),
-					__( 'Dismiss', 'creame-whatsapp-me' )
-				)
+				sprintf( '<a href="%s"><strong>%s</strong></a>', JoinChatUtil::admin_url(), __( 'Go to settings', 'creame-whatsapp-me' ) )
+			);
+
+			printf(
+				'<script>jQuery("#joinchat-empty-phone").on("click", ".notice-dismiss", function () {' .
+				'jQuery.post(ajaxurl, { action: "joinchat_notice_dismiss", nonce: "%s"}, null, "json");' .
+				'});</script>',
+				wp_create_nonce( 'joinchat_nonce' )
 			);
 		}
+
+	}
+
+	/**
+	 * Notice Dismiss
+	 *
+	 * @since    4.3.1
+	 * @access   public
+	 * @return   void
+	 */
+	public function ajax_notice_dismiss() {
+
+		check_ajax_referer( 'joinchat_nonce', 'nonce', true );
+		update_option( 'joinchat_notice_dismiss', time() + MONTH_IN_SECONDS, true );
+		wp_send_json_success();
 
 	}
 

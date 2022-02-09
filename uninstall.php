@@ -25,6 +25,7 @@ if ( apply_filters( 'joinchat_delete_all', true ) ) {
 
 	// Delete general option 'joinchat' added by plugin
 	delete_option( 'joinchat' );
+	delete_option( 'joinchat_notice_dismiss' );
 	// Delete post meta '_joinchat' added by plugin
 	$wpdb->delete( $wpdb->prefix . 'postmeta', array( 'meta_key' => '_joinchat' ) );
 

@@ -3,9 +3,9 @@ Contributors: creapuntome, pacotole, davidlillo, monillo
 Donate link: https://join.chat/donate/
 Tags: Chat, Click to Chat, Facebook Messenger, WhatsApp, Telegram, Whatsapp Business, button, support chat, support, contact, directly message WhatsApp, floating WhatsApp, WhatsApp chat
 Requires at least: 3.5.0
-Tested up to: 5.8
+Tested up to: 5.9
 Requires PHP: 5.3
-Stable tag: 4.3
+Stable tag: 4.3.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -249,6 +249,9 @@ Join.chat save two localStorage variables for proper operation:
 
 
 == Changelog ==
+
+= 4.3.1 =
+* FIX empty phone notice dismiss.
 
 = 4.3 =
 * **NEW:** Customize in category/tag archive page.
