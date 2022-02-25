@@ -5,7 +5,7 @@ Tags: Chat, Click to Chat, Facebook Messenger, WhatsApp, Telegram, Whatsapp Busi
 Requires at least: 3.5.0
 Tested up to: 5.9
 Requires PHP: 5.3
-Stable tag: 4.3.1
+Stable tag: 4.3.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -249,6 +249,9 @@ Join.chat save two localStorage variables for proper operation:
 
 
 == Changelog ==
+
+= 4.3.2 =
+* Styles minor improvements, fix tooltip align.
 
 = 4.3.1 =
 * FIX empty phone notice dismiss.
