@@ -1,6 +1,6 @@
 #{$class}__tooltip {
   position: absolute;
-  top: 50%;
+  top: calc(var(--btn)/2 - 16px);
   right: calc(var(--btn) + 16px);
   max-width: calc(100vw - 105px);
   height: 32px;
@@ -14,7 +14,6 @@
   opacity: 0;
   transition: opacity 0.3s ease-out 0.4s;
   filter: drop-shadow(0 1px 4px rgba($black, 0.4));
-  transform: translateY(-50%);
   pointer-events: none;
 
   &::after {

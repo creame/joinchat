@@ -13,9 +13,8 @@
   --hover: rgb(calc(var(--red) + 50) calc(var(--green) + 50) calc(var(--blue) + 50));
   --bg: rgb(var(--rgb) / 4%);
   --tolerance: 210;
-  --bw: calc(((var(--red)*0.2126) + (var(--green)*0.7152) + (var(--blue)*0.0722) - var(--tolerance))*-100000);
-  /* Keep old rgba() to support clamp() for alpha */
-  --text: rgb(var(--bw) var(--bw) var(--bw) / clamp(0.7, var(--bw), 1));
+  --bw: calc((var(--red)*0.2126 + var(--green)*0.7152 + var(--blue)*0.0722 - var(--tolerance))*-10000000);
+  --text: hsl(0deg 0% calc(var(--bw)*1%) / clamp(70%, calc(var(--bw)*1%), 100%));
   --msg: var(--color);
 
   position: fixed;
@@ -301,7 +300,7 @@
 
 .joinchat__tooltip {
   position: absolute;
-  top: 50%;
+  top: calc(var(--btn)/2 - 16px);
   right: calc(var(--btn) + 16px);
   max-width: calc(100vw - 105px);
   height: 32px;
@@ -315,7 +314,6 @@
   opacity: 0;
   transition: opacity 0.3s ease-out 0.4s;
   filter: drop-shadow(0 1px 4px rgb(0 0 0 / 40%));
-  transform: translateY(-50%);
   pointer-events: none;
 }
 
