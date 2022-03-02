@@ -78,7 +78,7 @@
 // Fallback (Microsoft Edge for Android & iOS < 13.7)
 @supports not (width: clamp(1px, 1%, 10px)) {
   #{$class} {
-    --text: rgba(var(--bw), var(--bw), var(--bw), 0.9);
+    --text: hsl(0 0% calc(var(--bw)*1%) / 90%);
   }
 }
 
