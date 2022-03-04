@@ -67,10 +67,11 @@
 
   // Return WhatsApp link with optional message
   joinchat_obj.whatsapp_link = function (phone, message, wa_web) {
+    message = typeof message != 'undefined' ? message : this.settings.message_send || '';
     wa_web = typeof wa_web != 'undefined' ? wa_web : this.settings.whatsapp_web && !this.is_mobile;
-    var link = wa_web ? 'https://web.whatsapp.com/send' : 'https://api.whatsapp.com/send';
+    var link = (wa_web ? 'https://web.whatsapp.com/send?phone=' : 'https://wa.me/') + encodeURIComponent(phone || this.settings.telephone);
 
-    return link + '?phone=' + encodeURIComponent(phone) + '&text=' + encodeURIComponent(message || '');
+    return link + (message ? (wa_web ? '&text=' : '?text=') + encodeURIComponent(message) : '');
   };
 
   joinchat_obj.chatbox_show = function () {
