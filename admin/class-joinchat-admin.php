@@ -738,9 +738,10 @@ class JoinChatAdmin {
 					'<p>' . __( 'You can use formatting styles like in WhatsApp: _<em>italic</em>_ *<strong>bold</strong>* ~<del>strikethrough</del>~.', 'creame-whatsapp-me' ) . '</p>' .
 					'<p>' . __( 'You can use dynamic variables that will be replaced by the values of the page the user visits:', 'creame-whatsapp-me' ) .
 					'<p>' .
-					'<span><code>{SITE}</code> ➜ ' . get_bloginfo( 'name', 'display' ) . '</span>, ' .
-					'<span><code>{URL}</code> ➜ ' . home_url( 'example' ) . '</span>, ' .
-					'<span><code>{TITLE}</code> ➜ ' . __( 'Page Title', 'creame-whatsapp-me' ) . '</span>' .
+					'<span><code>{SITE}</code> ➜ ' . get_bloginfo( 'name', 'display' ) . '</span><br> ' .
+					'<span><code>{TITLE}</code> ➜ ' . __( 'Page Title', 'creame-whatsapp-me' ) . '</span><br>' .
+					'<span><code>{URL}</code> ➜ ' . home_url( 'awesome/' ) . '</span><br> ' .
+					'<span><code>{REFERER}</code> ➜ ' . home_url( 'awesome/' ) . '?utm_source=twitter&utm_medium=social&utm_campaign=XXX</span> ' .
 					'</p>',
 			),
 			array(
@@ -966,7 +967,7 @@ class JoinChatAdmin {
 			$this->settings
 		);
 
-		$metabox_vars = apply_filters( 'joinchat_metabox_vars', array( 'SITE', 'URL', 'TITLE' ), $post );
+		$metabox_vars = apply_filters( 'joinchat_metabox_vars', array( 'SITE', 'TITLE', 'URL', 'REFERER' ), $post );
 
 		ob_start();
 		include __DIR__ . '/partials/post_meta_box.php';
@@ -1078,7 +1079,7 @@ class JoinChatAdmin {
 			$this->settings
 		);
 
-		$metabox_vars = apply_filters( 'joinchat_metabox_vars', array( 'SITE', 'URL', 'TITLE' ), $term );
+		$metabox_vars = apply_filters( 'joinchat_metabox_vars', array( 'SITE', 'TITLE', 'URL', 'REFERER' ), $term );
 
 		ob_start();
 		include __DIR__ . '/partials/term_meta_box.php';
@@ -1097,7 +1098,7 @@ class JoinChatAdmin {
 	 */
 	public static function vars_help( $field ) {
 
-		$vars = apply_filters( 'joinchat_vars_help', array( 'SITE', 'URL', 'TITLE' ), $field );
+		$vars = apply_filters( 'joinchat_vars_help', array( 'SITE', 'TITLE', 'URL', 'REFERER' ), $field );
 
 		return count( $vars ) ? '<div class="joinchat_vars_help">' . __( 'You can use vars', 'creame-whatsapp-me' ) . ' ' .
 			'<a class="joinchat-show-help" href="#" title="' . __( 'Show Help', 'creame-whatsapp-me' ) . '">?</a><br> ' .

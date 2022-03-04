@@ -287,14 +287,14 @@ class JoinChatWooAdmin {
 		$tab['content'] .=
 			'<p> ' . __( '<strong>WooCommerce</strong>, in product pages you can also use:', 'creame-whatsapp-me' ) . '</p>' .
 			'<p>' .
-				'<span><code>{PRODUCT}</code> ➜ ' . __( 'Product Name', 'creame-whatsapp-me' ) . '</span>, ' .
-				'<span><code>{SKU}</code> ➜ ABC98798</span>, ' .
+				'<span><code>{PRODUCT}</code> ➜ ' . __( 'Product Name', 'creame-whatsapp-me' ) . '</span><br> ' .
+				'<span><code>{SKU}</code> ➜ ABC98798</span><br> ' .
 				'<span><code>{PRICE}</code> ➜ ' . strip_tags( wc_price( 7.95 ) ) . '</span> ' .
 			'</p>' .
 			'<p> ' . __( 'For the <strong>Call to Action for Products on Sale</strong>, you can also use:', 'creame-whatsapp-me' ) . '</p>' .
 			'<p>' .
-				'<span><code>{REGULAR}</code> ➜ ' . strip_tags( wc_price( 9.95 ) ) . '</span>, ' .
-				'<span><code>{PRICE}</code> ➜ ' . strip_tags( wc_price( 7.95 ) ) . '</span>, ' .
+				'<span><code>{REGULAR}</code> ➜ ' . strip_tags( wc_price( 9.95 ) ) . '</span><br> ' .
+				'<span><code>{PRICE}</code> ➜ ' . strip_tags( wc_price( 7.95 ) ) . '</span><br> ' .
 				'<span><code>{DISCOUNT}</code> ➜ -20%</span>' .
 			'</p>';
 

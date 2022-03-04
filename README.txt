@@ -51,6 +51,7 @@ Use variables in your CTAs and messages that change dynamically for each page:
 **{SITE}** ➡ Website title
 **{TITLE}** ➡ Current page title
 **{URL}** ➡ Current page url
+**{REFERER}** ➡ Current page url (full with query params)
 **{PRODUCT}** ➡ Product name (WooCommerce)
 **{SKU}** ➡ Product SKU (WooCommerce)
 **{REGULAR}** ➡ Product regular price (WooCommerce)
@@ -249,6 +250,9 @@ Join.chat save two localStorage variables for proper operation:
 
 
 == Changelog ==
+
+= 4.4 =
+* **NEW:** Dynamic variable `{REFERER}` for full URL with query params.
 
 = 4.3.2 =
 * Styles minor improvements, fix tooltip align.
