@@ -282,6 +282,17 @@
       }
     }
 
+    // Add QR Code
+    if (joinchat_obj.settings.qr && !joinchat_obj.is_mobile && typeof kjua == 'function') {
+      joinchat_obj.$('.joinchat__qr').kjua({
+        text: joinchat_obj.whatsapp_link(),
+        render: 'canvas',
+        rounded: 80,
+      });
+    } else {
+      joinchat_obj.$('.joinchat__qr').remove();
+    }
+
     // Fix message clip-path style broken by some CSS optimizers
     if (has_chatbox) {
       joinchat_obj.$div.css('--peak', 'ur' + 'l(#joinchat__message__peak)');

@@ -33,6 +33,9 @@ defined( 'WPINC' ) || exit;
 		<?php if ( $this->settings['button_tip'] ) : ?>
 			<div class="joinchat__tooltip"><div><?php echo esc_html( $this->settings['button_tip'] ); ?></div></div>
 		<?php endif; ?>
+		<?php if ( $this->settings['qr'] ) : ?>
+			<div class="joinchat__qr"><div><?php _e( 'or scan the code', 'creame-whatsapp-me' ); ?></div></div>
+		<?php endif; ?>
 	</div>
 	<?php if ( $box_content ) : ?>
 		<div class="joinchat__box">

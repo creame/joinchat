@@ -1,0 +1,52 @@
+#{$class}__qr {
+  position: absolute;
+  bottom: calc(var(--btn) + 16px);
+  right: 0;
+  display: none; // flex;
+  flex-direction: column-reverse;
+  width: 228px;
+  min-height: 200px;
+  padding: 14px 14px 10px;
+  border: none;
+  border-radius: 16px;
+  background: $white;
+  color: rgba($black, 0.8);
+  text-align: center;
+  white-space: nowrap;
+  opacity: 1;
+  transition: opacity 0.3s ease-out 0.4s;
+  filter: drop-shadow(0 1px 4px rgba($black, 0.4));
+  animation: #{$name}_badge_in 400ms cubic-bezier(0.11, 0.84, 0.83, 1.01) 1s both;
+  pointer-events: none;
+
+  &::after {
+    @include pseudo;
+
+    bottom: -6px;
+    right: calc(var(--btn)/2 - 6px);
+    border: 8px solid transparent;
+    border-width: 8px 6px 0 6px;
+    border-top-color: $white;
+  }
+
+  div {
+    font-size: 14px;
+    color: $chat_color;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  canvas {
+    display: block;
+    width: 200px;
+    height: 200px;
+    margin: 0;
+  }
+
+  @include hover {
+    #{$class}--btn #{$class}__button:hover &,
+    #{$class}--chatbox #{$class}__button:hover & {
+      display: flex;
+    }
+  }
+}

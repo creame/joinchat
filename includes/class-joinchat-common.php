@@ -32,6 +32,7 @@ class JoinChatCommon {
 			'button_tip'    => '',
 			'button_delay'  => 3,
 			'whatsapp_web'  => 'no',
+			'qr'            => 'no',
 			'message_text'  => '',
 			'message_views' => 2,
 			'message_delay' => 10,

@@ -233,6 +233,7 @@ class JoinChatAdmin {
 					'button_delay' => '<label for="joinchat_button_delay">' . __( 'Button Delay', 'creame-whatsapp-me' ) . '</label>',
 					'mobile_only'  => __( 'Mobile Only', 'creame-whatsapp-me' ),
 					'whatsapp_web' => __( 'WhatsApp Web', 'creame-whatsapp-me' ),
+					'qr'           => __( 'QR Code', 'creame-whatsapp-me' ),
 				),
 				'chat'      => array(
 					'message_text'  => '<label for="joinchat_message_text">' . __( 'Call to Action', 'creame-whatsapp-me' ) . '</label>' . self::vars_help( 'message_text' ),
@@ -335,6 +336,7 @@ class JoinChatAdmin {
 		$input['button_tip']    = $util::substr( $util::clean_input( $input['button_tip'] ), 0, 40 );
 		$input['button_delay']  = intval( $input['button_delay'] );
 		$input['whatsapp_web']  = isset( $input['whatsapp_web'] ) ? 'yes' : 'no';
+		$input['qr']            = isset( $input['qr'] ) ? 'yes' : 'no';
 		$input['message_text']  = $util::clean_input( $input['message_text'] );
 		$input['message_badge'] = isset( $input['message_badge'] ) ? 'yes' : 'no';
 		$input['message_send']  = $util::clean_input( $input['message_send'] );
@@ -540,6 +542,12 @@ class JoinChatAdmin {
 					$output = '<fieldset><legend class="screen-reader-text"><span>' . __( 'WhatsApp Web', 'creame-whatsapp-me' ) . '</span></legend>' .
 						'<label><input id="joinchat_whatsapp_web" name="joinchat[whatsapp_web]" value="yes" type="checkbox"' . checked( 'yes', $value, false ) . '> ' .
 						__( 'Open <em>WhatsApp Web</em> directly on desktop', 'creame-whatsapp-me' ) . '</label></fieldset>';
+					break;
+
+				case 'qr':
+					$output = '<fieldset><legend class="screen-reader-text"><span>' . __( 'QR Code', 'creame-whatsapp-me' ) . '</span></legend>' .
+						'<label><input id="joinchat_qr" name="joinchat[qr]" value="yes" type="checkbox"' . checked( 'yes', $value, false ) . '> ' .
+						__( 'Display QR code on desktop to scan with phone', 'creame-whatsapp-me' ) . '</label></fieldset>';
 					break;
 
 				case 'message_text':

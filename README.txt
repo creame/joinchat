@@ -252,6 +252,7 @@ Join.chat save two localStorage variables for proper operation:
 == Changelog ==
 
 = 4.4 =
+* **NEW: Display QR Code on desktop** to scan with phone.
 * **NEW:** Dynamic variable `{REFERER}` for full URL with query params.
 
 = 4.3.2 =

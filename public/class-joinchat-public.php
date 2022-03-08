@@ -124,6 +124,7 @@ class JoinChatPublic {
 		$settings['mobile_only']   = 'yes' == $settings['mobile_only'];
 		$settings['whatsapp_web']  = 'yes' == $settings['whatsapp_web'];
 		$settings['message_badge'] = 'yes' == $settings['message_badge'] && '' != $settings['message_text'];
+		$settings['qr']            = 'yes' == $settings['qr'];
 		$settings['message_send']  = JoinChatUtil::replace_variables( $settings['message_send'] );
 		// Set true to link http://web.whatsapp.com instead http://api.whatsapp.com
 		$settings['whatsapp_web'] = apply_filters( 'joinchat_whatsapp_web', 'yes' == $settings['whatsapp_web'] );
@@ -174,13 +175,24 @@ class JoinChatPublic {
 	 *
 	 * @since    1.0.0
 	 * @since    2.2.2     minified
+	 * @since    4.4.0     added kjua script
 	 * @return   void
 	 */
 	public function enqueue_scripts() {
 
 		if ( $this->show ) {
-			$min = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
-			wp_enqueue_script( $this->plugin_name, plugins_url( "js/{$this->plugin_name}{$min}.js", __FILE__ ), array( 'jquery' ), $this->version, true );
+			$min  = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
+			$deps = array( 'jquery' );
+
+			wp_register_script( "{$this->plugin_name}-kjua", plugins_url( 'js/kjua.min.js', __FILE__ ), array(), '0.9.0', true );
+
+			// Note: caution with cache plugins and wp_is_mobile()
+			// If kjua script is missing it fails silently and don't shows QR Code :)
+			if ( ! $this->settings['mobile_only'] && $this->settings['qr'] && ! wp_is_mobile() ) {
+				$deps[] = "{$this->plugin_name}-kjua";
+			}
+
+			wp_enqueue_script( $this->plugin_name, plugins_url( "js/{$this->plugin_name}{$min}.js", __FILE__ ), $deps, $this->version, true );
 		}
 
 	}
@@ -248,6 +260,10 @@ class JoinChatPublic {
 				$box_content = '<div class="joinchat__message">' . JoinChatUtil::formated_message( $this->settings['message_text'] ) . '</div>';
 			}
 			$box_content = apply_filters( 'joinchat_content', $box_content, $this->settings );
+
+			if ( empty( $box_content ) ) {
+				$joinchat_classes .= ' joinchat--btn';
+			}
 
 			ob_start();
 			include __DIR__ . '/partials/html.php';

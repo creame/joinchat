@@ -23,7 +23,7 @@
     right: -6px;
     border: 8px solid transparent;
     border-width: 6px 0 6px 8px;
-    border-left-color: white;
+    border-left-color: $white;
   }
 
   div {
@@ -56,7 +56,7 @@
       right: auto;
       border-color: transparent;
       border-width: 6px 8px 6px 0;
-      border-right-color: white;
+      border-right-color: $white;
     }
   }
 }
