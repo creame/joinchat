@@ -17,9 +17,22 @@
   };
 
   // Trigger Analytics events
-  joinchat_obj.send_event = function (label, action) {
-    label = label || '';
-    action = action || 'click';
+  joinchat_obj.send_event = function (label, action, params) {
+    label = label || ''; // Generally, destination URL
+    action = action || 'WhatsApp';
+    params = $.extend({ // Custom params
+      event_action: action,
+      event_label: label,
+      chat_channel: 'WhatsApp',
+      chat_id: '--',
+      is_mobile: this.is_mobile ? 'yes' : 'no',
+      page_location: location.href,
+      page_title: document.title || 'no title',
+    }, params);
+
+    // Filter extend or change custom params (set params.cancel to cancel send events)
+    $(doc).trigger('joinchat:event', [params]);
+    if (!params || params.cancel) return;
 
     // Can pass setting 'ga_tracker' for custom UA tracker name
     // Compatible with GADP for WordPress by MonsterInsights tracker name
@@ -36,32 +49,32 @@
       });
     }
 
-    // Send Google Analytics custom event (Google Analytics 4 - gtag.js)
+    // Send Google Analytics recomended event "generate_lead" (Google Analytics 4 - gtag.js)
     if (typeof gtag == 'function' && typeof data_layer == 'object') {
+      var ga4_params = $.extend({
+        event_category: 'JoinChat',
+        transport_type: 'beacon',
+      }, params);
+      // Already defined in GA4
+      delete ga4_params.page_location;
+      delete ga4_params.page_title;
+
       data_layer.forEach(function (item) {
         if (item[0] == 'config' && item[1].substring(0, 2) == 'G-') {
-          gtag('event', action, {
-            'event_category': 'JoinChat',
-            'event_label': label,
-            'send_to': item[1],
-            'transport_type': 'beacon',
-          });
+          ga4_params.send_to = item[1];
+          gtag('event', 'generate_lead', ga4_params);
         }
       });
     }
 
     // Send Google Tag Manager custom event
     if (typeof data_layer == 'object') {
-      data_layer.push({
-        'event': 'JoinChat',
-        'eventAction': action,
-        'eventLabel': label,
-      });
+      data_layer.push($.extend({ event: 'JoinChat' }, params));
     }
 
     // Send Facebook Pixel custom event
     if (typeof fbq == 'function') {
-      fbq('trackCustom', 'JoinChat', { eventAction: action, eventLabel: label });
+      fbq('trackCustom', 'JoinChat', params);
     }
   };
 
@@ -111,8 +124,13 @@
     }
   };
 
-  joinchat_obj.open_whatsapp = function (phone, msg) {
-    var args = { link: this.whatsapp_link(phone || this.settings.telephone, msg || this.settings.message_send) };
+  joinchat_obj.open_whatsapp = function (phone, message) {
+    message = typeof message != 'undefined' ? message : this.settings.message_send || '';
+    phone = phone || this.settings.telephone;
+    var args = {
+      link: this.whatsapp_link(phone, message),
+      action: 'WhatsApp: ' + phone,
+    };
     var secure_link = new RegExp("^https?:\/\/(wa\.me|(api|web|chat)\.whatsapp\.com|" + location.hostname.replace('.', '\.') + ")\/.*", 'i');
 
     // Trigger custom event (args obj allow edit link by third party scripts)
@@ -121,7 +139,7 @@
     // Ensure the link is safe
     if (secure_link.test(args.link)) {
       // Send analytics events
-      this.send_event(args.link);
+      this.send_event(args.link, args.action, { chat_id: phone });
       // Open WhatsApp link
       win.open(args.link, 'joinchat', 'noopener');
     } else {
