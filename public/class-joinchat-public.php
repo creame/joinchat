@@ -113,11 +113,11 @@ class JoinChatPublic {
 
 		if ( is_array( $obj_settings ) ) {
 			$settings = array_merge( $settings, $obj_settings );
-
-			// Allow override general settings with empty string with "{}"
-			$settings['message_text'] = preg_replace( '/^\{\s*\}$/', '', $settings['message_text'] );
-			$settings['message_send'] = preg_replace( '/^\{\s*\}$/', '', $settings['message_send'] );
 		}
+
+		// Replace "{}" with empty string
+		$settings['message_text'] = preg_replace( '/^\{\s*\}$/', '', $settings['message_text'] );
+		$settings['message_send'] = preg_replace( '/^\{\s*\}$/', '', $settings['message_send'] );
 
 		// Prepare settings
 		$settings['telephone']     = JoinChatUtil::clean_whatsapp( $settings['telephone'] );

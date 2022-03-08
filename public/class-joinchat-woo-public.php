@@ -82,10 +82,12 @@ class JoinChatWooPublic {
 
 			if ( $product->is_on_sale() && $settings['message_text_on_sale'] ) {
 				$settings['message_text'] = $settings['message_text_on_sale'];
-			} else {
-				$settings['message_text'] = $settings['message_text_product'] ?: $settings['message_text'];
+			} elseif ( $settings['message_text_product'] ) {
+				$settings['message_text'] = $settings['message_text_product'];
 			}
-			$settings['message_send'] = $settings['message_send_product'] ?: $settings['message_send'];
+			if ( $settings['message_send_product'] ) {
+				$settings['message_send'] = $settings['message_send_product'];
+			}
 		}
 		// Applies to shop catalog pages
 		elseif ( is_woocommerce() ) {
@@ -93,10 +95,6 @@ class JoinChatWooPublic {
 
 			if ( is_array( $shop_settings ) ) {
 				$settings = array_merge( $settings, $shop_settings );
-
-				// Allow override general settings with empty string with "{}"
-				$settings['message_text'] = preg_replace( '/^\{\s*\}$/', '', $settings['message_text'] );
-				$settings['message_send'] = preg_replace( '/^\{\s*\}$/', '', $settings['message_send'] );
 			}
 		}
 
