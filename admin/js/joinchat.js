@@ -82,7 +82,7 @@
 
       // Toggle WhatsApp web option
       $('#joinchat_mobile_only').on('change', function () {
-        $('#joinchat_whatsapp_web').closest('tr').toggleClass('joinchat-hidden', this.checked);
+        $('#joinchat_whatsapp_web, #joinchat_qr').closest('tr').toggleClass('joinchat-hidden', this.checked);
       }).trigger('change');
 
       // Toggle badge option
