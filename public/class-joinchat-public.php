@@ -250,9 +250,19 @@ class JoinChatPublic {
 				}
 			}
 
+			// class position
 			$joinchat_classes = 'joinchat--' . $this->settings['position'];
+			// class dark mode
 			if ( 'no' !== $this->settings['dark_mode'] ) {
 				$joinchat_classes .= 'auto' === $this->settings['dark_mode'] ? ' joinchat--dark-auto' : ' joinchat--dark';
+			}
+			// class direct display (w/o animation)
+			if ( $this->settings['button_delay'] < 0 ) {
+				$data['button_delay'] = 0;
+				$joinchat_classes    .= ' joinchat--show joinchat--noanim';
+				if ( $this->settings['mobile_only'] ) {
+					$joinchat_classes .= ' joinchat--mobile';
+				}
 			}
 
 			$box_content = '';
@@ -261,6 +271,7 @@ class JoinChatPublic {
 			}
 			$box_content = apply_filters( 'joinchat_content', $box_content, $this->settings );
 
+			// class only button
 			if ( empty( $box_content ) ) {
 				$joinchat_classes .= ' joinchat--btn';
 			}

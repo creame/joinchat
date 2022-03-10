@@ -44,7 +44,7 @@
     display: block;
   }
 
-  &#{$class}--left {
+  &--left {
     right: auto;
     left: var(--sep);
   }
@@ -56,17 +56,31 @@
   }
 
   @media (max-width: 767px) {
-    &#{$class}--footer-bar {
+    &--footer-bar {
       --bottom: 76px;
     }
   }
 
-  &#{$class}--dark {
+  @include nomobile {
+    &--mobile {
+      display: none !important;
+    }
+  }
+
+  &--dark {
     --msg: var(--dark);
   }
 
+  &--noanim {
+    animation: none;
+  }
+
   @include motionless {
-    animation: none !important;
+    animation: none;
+  }
+
+  &--hidden {
+    display: none !important;
   }
 }
 
@@ -78,7 +92,7 @@
 }
 
 @include dark {
-  #{$class}#{$class}--dark-auto {
+  #{$class}--dark-auto {
     --msg: var(--dark);
   }
 }

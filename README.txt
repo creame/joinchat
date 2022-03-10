@@ -254,6 +254,7 @@ Join.chat save two localStorage variables for proper operation:
 = 4.4 =
 * **NEW: Display QR Code on desktop** to scan with phone.
 * **NEW:** Dynamic variable `{REFERER}` for full URL with query params.
+* **NEW:** Allow direct show button without animation setting Button Delay as "-1".
 * CHANGED allow set empty CTA for products with `{}` in main settings.
 
 = 4.3.2 =

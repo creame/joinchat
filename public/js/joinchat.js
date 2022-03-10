@@ -347,6 +347,8 @@
       if (joinchat_obj.is_mobile || !joinchat_obj.settings.mobile_only) {
         joinchat_magic();
       } else {
+        // Ensure don't show
+        joinchat_obj.$div.removeClass('joinchat--show');
         // Launch WhatsApp when click on nodes with classes "joinchat_open" "joinchat_app" or links with href
         $(doc).on('click', '.joinchat_open, .joinchat_app, a[href="#joinchat"], a[href="#whatsapp"]', function (e) {
           e.preventDefault();

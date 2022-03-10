@@ -534,7 +534,8 @@ class JoinChatAdmin {
 					break;
 
 				case 'button_delay':
-					$output = '<input id="joinchat_button_delay" name="joinchat[button_delay]" value="' . intval( $value ) . '" type="number" min="0" max="120" style="width:5em"> ' . __( 'seconds', 'creame-whatsapp-me' ) .
+					$output = '<input id="joinchat_button_delay" name="joinchat[button_delay]" value="' . intval( $value ) . '" type="number" min="-1" max="120" style="width:5em"> ' .
+						__( 'seconds', 'creame-whatsapp-me' ) . ' (' . __( '-1 to display directly without animation', 'creame-whatsapp-me' ) . ')' .
 						'<p class="description">' . __( 'Time since the page is opened until the button is displayed', 'creame-whatsapp-me' ) . '</p>';
 					break;
 
@@ -570,7 +571,8 @@ class JoinChatAdmin {
 					break;
 
 				case 'message_delay':
-					$output = '<input id="joinchat_message_delay" name="joinchat[message_delay]" value="' . intval( $value ) . '" type="number" min="0" max="120" style="width:5em"> ' . __( 'seconds (0 disabled)', 'creame-whatsapp-me' ) .
+					$output = '<input id="joinchat_message_delay" name="joinchat[message_delay]" value="' . intval( $value ) . '" type="number" min="0" max="120" style="width:5em"> ' .
+					__( 'seconds', 'creame-whatsapp-me' ) . ' (' . __( '0 to disable', 'creame-whatsapp-me' ) . ')' .
 					'<p class="description">' . __( 'Chat Window auto displays after delay', 'creame-whatsapp-me' ) . '</p>';
 					break;
 

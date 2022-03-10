@@ -1,6 +1,12 @@
 // Mobile meqia query
 @mixin mobile {
-  @media (max-width: 480px), (orientation: landscape) and (max-width: 767px) {
+  @media (max-width: 480px), (orientation: landscape) and (max-height: 480px) {
+    @content;
+  }
+}
+
+@mixin nomobile {
+  @media (orientation: portrait) and (min-width: 481px), (orientation: landscape) and (min-height: 481px) {
     @content;
   }
 }
