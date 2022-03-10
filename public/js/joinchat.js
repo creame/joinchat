@@ -285,7 +285,7 @@
     // Add QR Code
     if (joinchat_obj.settings.qr && !joinchat_obj.is_mobile && typeof kjua == 'function') {
       joinchat_obj.$('.joinchat__qr').kjua({
-        text: joinchat_obj.whatsapp_link(),
+        text: joinchat_obj.whatsapp_link(undefined, undefined, false),
         render: 'canvas',
         rounded: 80,
       });
