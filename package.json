@@ -15,6 +15,7 @@
     "postcss-hexrgba": "^2.0.1",
     "postcss-inline-svg": "^5.0.0",
     "postcss-scss": "^4.0.3",
+    "postcss-sort-media-queries": "^4.2.1",
     "postcss-strip-inline-comments": "^0.1.5",
     "postcss-svgo": "^5.1.0",
     "precss": "^4.0.0",
