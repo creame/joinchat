@@ -17,22 +17,22 @@
   };
 
   // Trigger Analytics events
-  joinchat_obj.send_event = function (label, action, params) {
-    label = label || ''; // Generally, destination URL
-    action = action || 'WhatsApp';
-    params = $.extend({ // Custom params
-      event_action: action,
-      event_label: label,
-      chat_channel: 'WhatsApp',
-      chat_id: '--',
+  joinchat_obj.send_event = function (params) {
+    params = $.extend({
+      event_label: '',          // Destination url
+      event_action: '',         // "chanel: id"
+      chat_channel: 'WhatsApp', // Channel name
+      chat_id: '--',            // Channel contact (phone, username...)
       is_mobile: this.is_mobile ? 'yes' : 'no',
       page_location: location.href,
       page_title: document.title || 'no title',
     }, params);
+    params.event_label = params.event_label || params.link || '';
+    params.event_action = params.event_action || params.chat_channel + ': ' + params.chat_id;
+    delete params.link;
 
-    // Filter extend or change custom params (set params.cancel to cancel send events)
-    $(doc).trigger('joinchat:event', [params]);
-    if (!params || params.cancel) return;
+    // Trigger event (params can be edited by third party scripts or cancel if return false)
+    if (false === $(doc).triggerHandler('joinchat:event', [params])) return;
 
     // Can pass setting 'ga_tracker' for custom UA tracker name
     // Compatible with GADP for WordPress by MonsterInsights tracker name
@@ -45,9 +45,12 @@
       ga_tracker('set', 'transport', 'beacon');
       var trackers = ga_tracker.getAll();
       trackers.forEach(function (tracker) {
-        tracker.send('event', 'JoinChat', action, label);
+        tracker.send('event', 'JoinChat', params.event_action, params.event_label);
       });
     }
+
+    // GA4 param max_length of 100 chars (https://support.google.com/analytics/answer/9267744)
+    $.each(params, function (k, v) { params[k] = typeof v == 'string' ? v.substring(0, 100) : v; });
 
     // Send Google Analytics recomended event "generate_lead" (Google Analytics 4 - gtag.js)
     if (typeof gtag == 'function' && typeof data_layer == 'object') {
@@ -127,21 +130,24 @@
   joinchat_obj.open_whatsapp = function (phone, message) {
     message = typeof message != 'undefined' ? message : this.settings.message_send || '';
     phone = phone || this.settings.telephone;
-    var args = {
+
+    var params = {
       link: this.whatsapp_link(phone, message),
-      action: 'WhatsApp: ' + phone,
+      chat_channel: 'WhatsApp',
+      chat_id: phone,
+      chat_message: message,
     };
     var secure_link = new RegExp("^https?:\/\/(wa\.me|(api|web|chat)\.whatsapp\.com|" + location.hostname.replace('.', '\.') + ")\/.*", 'i');
 
-    // Trigger custom event (args obj allow edit link by third party scripts)
-    $(doc).trigger('joinchat:open', [args, this.settings]);
+    // Trigger event (params can be edited by third party scripts or cancel if return false)
+    if (false === $(doc).triggerHandler('joinchat:open', [params])) return;
 
     // Ensure the link is safe
-    if (secure_link.test(args.link)) {
+    if (secure_link.test(params.link)) {
       // Send analytics events
-      this.send_event(args.link, args.action, { chat_id: phone });
+      this.send_event(params);
       // Open WhatsApp link
-      win.open(args.link, 'joinchat', 'noopener');
+      win.open(params.link, 'joinchat', 'noopener');
     } else {
       console.error("Join.chat: the link doesn't seem safe, it must point to the current domain or whatsapp.com");
     }
