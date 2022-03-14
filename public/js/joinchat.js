@@ -128,8 +128,8 @@
   };
 
   joinchat_obj.open_whatsapp = function (phone, message) {
-    message = typeof message != 'undefined' ? message : this.settings.message_send || '';
     phone = phone || this.settings.telephone;
+    message = typeof message != 'undefined' ? message : this.settings.message_send || '';
 
     var params = {
       link: this.whatsapp_link(phone, message),
