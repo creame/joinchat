@@ -109,6 +109,11 @@
         .on('input', textarea_autoheight)
         .each(textarea_autoheight);
 
+      // Show title when placeholder
+      $('#joinchat_form').find('.regular-text')
+        .on('change', function () { this.title = this.value == '' ? joinchat_admin.example : ''; })
+        .on('dblclick', function () { if (this.value == '') { this.value = this.placeholder; this.title = ''; } })
+        .trigger('change');
 
       // Visibility view inheritance
       var $tab_visibility = $('#joinchat_tab_visibility');

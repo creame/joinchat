@@ -148,9 +148,11 @@ class JoinChatAdmin {
 	 */
 	public function register_scripts( $hook ) {
 
-		$min = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
+		$min  = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
+		$deps = array( 'jquery', 'wp-color-picker' );
 
 		if ( $this->enhanced_phone ) {
+			$deps[]   = 'intl-tel-input';
 			$localize = array(
 				'placeholder' => __( 'e.g.', 'creame-whatsapp-me' ),
 				'version'     => $this->enhanced_phone,
@@ -159,10 +161,10 @@ class JoinChatAdmin {
 
 			wp_register_script( 'intl-tel-input', plugins_url( "js/intlTelInput{$min}.js", __FILE__ ), array(), $this->enhanced_phone, true );
 			wp_localize_script( 'intl-tel-input', 'intlTelConf', $localize );
-			wp_register_script( 'joinchat-admin', plugins_url( "js/joinchat{$min}.js", __FILE__ ), array( 'jquery', 'wp-color-picker', 'intl-tel-input' ), $this->version, true );
-		} else {
-			wp_register_script( 'joinchat-admin', plugins_url( "js/joinchat{$min}.js", __FILE__ ), array( 'jquery', 'wp-color-picker' ), $this->version, true );
 		}
+
+		wp_register_script( 'joinchat-admin', plugins_url( "js/joinchat{$min}.js", __FILE__ ), $deps, $this->version, true );
+		wp_localize_script( 'joinchat-admin', 'joinchat_admin', array( 'example' => __( 'is an example, double click to use it', 'creame-whatsapp-me' ) ) );
 
 	}
 
