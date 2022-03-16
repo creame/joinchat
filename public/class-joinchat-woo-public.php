@@ -273,7 +273,7 @@ class JoinChatWooPublic {
 		add_filter(
 			'joinchat_classes',
 			function( $classes ) {
-				return $classes . ' joinchat--footer-bar';
+				return array_merge( $classes, array( 'joinchat--footer-bar' ) );
 			}
 		);
 

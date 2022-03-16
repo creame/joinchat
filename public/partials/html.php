@@ -12,7 +12,7 @@
 defined( 'WPINC' ) || exit;
 ?>
 
-<div class="joinchat <?php echo esc_attr( apply_filters( 'joinchat_classes', $joinchat_classes ) ); ?>" data-settings='<?php echo JoinChatUtil::to_json( $data ); ?>'>
+<div class="joinchat <?php echo esc_attr( join( ' ', $joinchat_classes ) ); ?>" data-settings='<?php echo JoinChatUtil::to_json( $data ); ?>'>
 	<div class="joinchat__button">
 		<div class="joinchat__button__open"></div>
 		<?php if ( $image ) : ?>
