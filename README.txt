@@ -155,9 +155,9 @@ To avoid using several prefixes from old and new versions we have decided to ren
 
 You can change the position of the button so that nothing covers it by adding this CSS in *Appearance > Customize > Custom CSS*:
 
-`.joinchat { z-index:9999; }`
+`.joinchat { z-index:999999; }`
 
-Higher values of z-index are above, the default value is 1000.
+Higher values of z-index are above, the default value is 9999.
 
 If you need to move up:
 
@@ -317,6 +317,7 @@ Join.chat save two localStorage variables for proper operation:
 * **NEW:** Dynamic variable `{REFERER}` for full URL with query params.
 * **NEW:** Better analytics events with more info.
 * **NEW:** Allow direct show button without animation setting Button Delay as "-1".
+* CHANGED default z-index is `9999`.
 * CHANGED allow set empty CTA for products with `{}` in main settings.
 
 = 4.3.2 =
