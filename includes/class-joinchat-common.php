@@ -44,6 +44,8 @@ class JoinChatCommon {
 			'color'         => '#25d366',
 			'dark_mode'     => 'no',
 			'header'        => '__jc__', // values: '__jc__', '__wa__' or other custom text
+			'optin_text'    => '',
+			'optin_check'   => 'no',
 		);
 
 		return array_merge( $defaults, apply_filters( 'joinchat_extra_settings', array() ) );

@@ -212,6 +212,11 @@
     joinchat_obj.$('.joinchat__button').on('click', joinchat_click);
     joinchat_obj.$('.joinchat__close').on('click', save_and_hide);
 
+    // Opt-in toggle
+    joinchat_obj.$('#joinchat_optin').on('change', function () {
+      joinchat_obj.$div.toggleClass('joinchat--optout', !this.checked);
+    });
+
     // Only scroll Join.chat message box (no all body)
     // TODO: disable also on touch
     joinchat_obj.$('.joinchat__box__scroll').on('mousewheel DOMMouseScroll', function (e) {

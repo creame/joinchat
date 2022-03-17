@@ -155,6 +155,10 @@ tr.joinchat--focus .joinchat_vars_help {
   visibility: visible;
 }
 
+#wp-joinchat_optin_text-editor-container {
+  max-width: 800px;
+}
+
 /* Help */
 
 .toplevel_page_joinchat .help-tab-content li ul,

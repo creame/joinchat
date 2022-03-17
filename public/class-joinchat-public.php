@@ -128,6 +128,7 @@ class JoinChatPublic {
 		$settings['message_send']  = JoinChatUtil::replace_variables( $settings['message_send'] );
 		// Set true to link http://web.whatsapp.com instead http://api.whatsapp.com
 		$settings['whatsapp_web'] = apply_filters( 'joinchat_whatsapp_web', 'yes' == $settings['whatsapp_web'] );
+		$settings['optin_check']   = 'yes' == $settings['optin_check'];
 
 		// Only show if there is a phone number
 		if ( empty( $settings['telephone'] ) ) {
@@ -222,6 +223,7 @@ class JoinChatPublic {
 					'color',
 					'dark_mode',
 					'header',
+					'optin_text',
 				)
 			);
 
@@ -274,6 +276,18 @@ class JoinChatPublic {
 
 			if ( $this->settings['message_text'] ) {
 				$box_content = '<div class="joinchat__message">' . JoinChatUtil::formated_message( $this->settings['message_text'] ) . '</div>';
+			}
+
+			if ( $this->settings['optin_text'] ) {
+				$optin = nl2br( $this->settings['optin_text'] );
+				$optin = str_replace( '<a ', '<a target="_blank" rel="nofollow noopener" ', $optin );
+
+				if ( $this->settings['optin_check'] ) {
+					$optin              = '<input type="checkbox" id="joinchat_optin"><label for="joinchat_optin">' . $optin . '</label>';
+					$joinchat_classes[] = 'joinchat--optout';
+				}
+
+				$box_content .= '<div class="joinchat__optin">' . $optin . '</div>';
 			}
 
 			$box_content = apply_filters( 'joinchat_content', $box_content, $this->settings );

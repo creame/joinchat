@@ -1,0 +1,91 @@
+#{$class}__optin {
+  padding: 0 16px;
+  margin-bottom: 16px;
+  color: $chat_color;
+  font-size: 13px;
+  line-height: 1.33;
+
+  a {
+    display: inline;
+    padding: 0;
+    color: inherit !important;
+    text-decoration: underline;
+
+    &:hover {
+      text-decoration-thickness: 2px;
+    }
+  }
+
+  input {
+    position: absolute;
+    width: 0;
+    height: 0;
+  }
+
+  label {
+    position: relative;
+    display: block;
+    margin: 0;
+    padding: 0 0 0 30px;
+    color: inherit;
+    font: inherit;
+    cursor: pointer;
+
+    &:before {
+      @include pseudo;
+      top: calc(50% - 11px);
+      left: 0;
+      width: 22px;
+      height: 22px;
+      border: 3px solid var(--color);
+      border-radius: 4px;
+      box-shadow: 0 0 0 1px var(--text);
+      transition: box-shadow 0.3s ease-in-out;
+    }
+
+    &:after {
+      @include pseudo(none);
+      top: calc(50% - 8px);
+      left: 8px;
+      width: 6px;
+      height: 14px;
+      border: solid var(--text);
+      border-width: 0 3px 3px 0;
+      transform: rotate(45deg);
+    }
+
+    #{$rtl} & {
+      padding: 0 30px 0 0;
+
+      &:before {
+        left: auto;
+        right: 0;
+      }
+
+      &:after {
+        left: auto;
+        right: 8px;
+      }
+    }
+  }
+
+  input:checked+label {
+    &:before {
+      box-shadow: 0 0 0 1px var(--text), inset 0 0 0 10px var(--color);
+    }
+
+    &:after {
+      display: block;
+    }
+  }
+
+  #{$class}--dark & {
+    color: $chat_dark_bg;
+  }
+
+  #{$class}--dark-auto & {
+    @include dark {
+      color: $chat_dark_bg;
+    }
+  }
+}

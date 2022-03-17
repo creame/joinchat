@@ -51,6 +51,21 @@
     }
   }
 
+  // Opt-in disabled
+  #{$class}--optout#{$class}--chatbox & {
+    background-color: #999;
+    opacity: .5;
+    pointer-events: none;
+
+    #{$class}_svg__plain {
+      stroke-dasharray: 0;
+      animation: none;
+    }
+
+    #{$class}_svg__chat {
+      animation: none;
+    }
+  }
 }
 
 #{$class}__button__open {

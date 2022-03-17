@@ -110,6 +110,7 @@ class JoinChatAdmin {
 			array(
 				'general'    => __( 'General', 'creame-whatsapp-me' ),
 				'visibility' => __( 'Visibility', 'creame-whatsapp-me' ),
+				'advanced'   => __( 'Advanced', 'creame-whatsapp-me' ),
 			)
 		);
 
@@ -297,6 +298,15 @@ class JoinChatAdmin {
 					$sections['cpt'][ "view__cpt_$custom_post_type" ] = $post_type_name;
 				}
 			}
+		} elseif ( 'advanced' == $tab ) {
+
+			$sections = array(
+				'optin'      => array(
+					'optin_text'  => __( 'Opt-in Text', 'creame-whatsapp-me' ),
+					'optin_check' => __( 'Opt-in Required', 'creame-whatsapp-me' ),
+				),
+			);
+
 		} else {
 
 			$sections = array();
@@ -349,6 +359,15 @@ class JoinChatAdmin {
 		$input['color']         = preg_match( '/^#[a-f0-9]{6}$/i', $input['color'] ) ? $input['color'] : '#25d366';
 		$input['dark_mode']     = in_array( $input['dark_mode'], array( 'no', 'yes', 'auto' ) ) ? $input['dark_mode'] : 'no';
 		$input['header']        = in_array( $input['header'], array( '__jc__', '__wa__' ) ) ? $input['header'] : $util::clean_input( $input['header_custom'] );
+		$input['optin_check']   = isset( $input['optin_check'] ) ? 'yes' : 'no';
+		$input['optin_text']    = wp_kses(
+			$input['optin_text'],
+			array(
+				'em'     => true,
+				'strong' => true,
+				'a'      => array( 'href' => true ),
+			)
+		);
 
 		if ( isset( $input['view'] ) ) {
 			$input['visibility'] = array_filter(
@@ -451,6 +470,11 @@ class JoinChatAdmin {
 
 			case 'joinchat_tab_visibility__cpt':
 				$output = '<h2 class="title">' . __( 'Custom Post Types', 'creame-whatsapp-me' ) . '</h2>';
+				break;
+
+			case 'joinchat_tab_advanced__optin':
+				$output = '<h2 class="title">' . __( 'Opt-in', 'creame-whatsapp-me' ) . '</h2>' .
+					'<p>' . __( 'Opt-in is a users’ consent to receive messages from a business.', 'creame-whatsapp-me' ) . '</p>';
 				break;
 
 			default:
@@ -616,6 +640,36 @@ class JoinChatAdmin {
 						__( 'Custom:', 'creame-whatsapp-me' ) . '</label> ' .
 						'<input id="joinchat_header_custom" name="joinchat[header_custom]" value="' . esc_attr( $value ) . '" type="text" maxlength="40" class="regular-text">' .
 						'</fieldset>';
+					break;
+
+				case 'optin_text':
+					$editor_settings = array(
+						'textarea_name' => 'joinchat[optin_text]',
+						'textarea_rows' => 4,
+						'teeny'         => true,
+						'media_buttons' => false,
+						'tinymce'       => array( 'statusbar' => false ),
+						'quicktags'     => false,
+					);
+
+					// phpcs:disable
+					add_filter( 'teeny_mce_plugins', function( $filters, $editor_id ) {
+						return 'joinchat_optin_text' === $editor_id ? array( 'wordpress', 'wplink' ) : $filters;
+					}, 10, 2 );
+
+					add_filter( 'teeny_mce_buttons', function( $mce_buttons, $editor_id ) {
+						return 'joinchat_optin_text' === $editor_id ? array( 'bold', 'italic', 'link' ) : $mce_buttons;
+					}, 10, 2 );
+					// phpcs:enable
+
+					$output = wp_editor( $value, 'joinchat_optin_text', $editor_settings ) .
+						'<p class="description">' . __( "Explain how you will use the user's contact and the conditions they accept.", 'creame-whatsapp-me' ) . '</p>';
+					break;
+
+				case 'optin_check':
+					$output = '<fieldset><legend class="screen-reader-text"><span>' . __( 'Opt-in Required', 'creame-whatsapp-me' ) . '</span></legend>' .
+						'<label><input id="joinchat_optin_check" name="joinchat[optin_check]" value="yes" type="checkbox"' . checked( 'yes', $value, false ) . '> ' .
+						__( 'User approval is required to enable the contact button', 'creame-whatsapp-me' ) . '</label></fieldset>';
 					break;
 
 				default:

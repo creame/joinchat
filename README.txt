@@ -59,6 +59,13 @@ Set the first message so that the visitor can start the conversation immediately
 
 Use our "Dynamic Variables" and you will know what page the visitor is coming from or what product they are looking at when they start the chat.
 
+#### ✅ Opt-in text.
+Opt-in is a users' consent to receive messages from a business.
+
+Write a text with the conditions under which the visitor contacts you (or other info that you consider important).
+
+You can make it mandatory and disable contact until the user accepts it.
+
 #### 🛒 Integration with WooCommerce.
 Define CTAs and Custom Start Messages for shop page, product pages and for products on sale.
 
@@ -314,6 +321,7 @@ Join.chat save two localStorage variables for proper operation:
 
 = 4.4 =
 * **NEW: Display QR Code on desktop** to scan with phone.
+* **NEW: Opt-in** text for user consent (optional or required).
 * **NEW:** Dynamic variable `{REFERER}` for full URL with query params.
 * **NEW:** Better analytics events with more info.
 * **NEW:** Allow direct show button without animation setting Button Delay as "-1".
