@@ -1,8 +1,8 @@
 .joinchat {
   --bottom: 20px;
   --sep: 20px;
-  --header: 70px;
   --btn: 60px;
+  --header: calc(var(--btn)*1.16667);
   --vh: 100vh;
   --red: 37;
   --green: 211;
@@ -193,7 +193,7 @@
   width: var(--btn);
   height: var(--btn);
   max-width: var(--btn);
-  padding: 12px 11px 12px 13px;
+  padding: calc(var(--btn)*0.18);
   margin: 0;
   overflow: hidden;
 }
@@ -319,7 +319,7 @@
 
 .joinchat--left .joinchat__tooltip {
   right: auto;
-  left: 76px;
+  left: calc(var(--btn) + 16px);
 }
 
 .joinchat--left .joinchat__tooltip::after {
@@ -431,6 +431,7 @@
   position: relative;
   flex-shrink: 0;
   height: var(--header);
+  min-height: 50px;
   padding: 0 70px 0 26px;
   margin: 0;
   background: var(--color);
@@ -486,12 +487,13 @@
 }
 
 .joinchat__close {
+  --size: 34px;
+
   position: absolute;
-  top: 50%;
+  top: calc(50% - var(--size)/2);
   right: 24px;
-  width: 34px;
-  height: 34px;
-  margin-top: -16px;
+  width: var(--size);
+  height: var(--size);
   border-radius: 50%;
   background: rgb(0 0 0 / 40%) url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23fff'%3E%3Cpath d='M24 2.4 21.6 0 12 9.6 2.4 0 0 2.4 9.6 12 0 21.6 2.4 24l9.6-9.6 9.6 9.6 2.4-2.4-9.6-9.6L24 2.4z'/%3E%3C/svg%3E") center no-repeat;
   background-size: 12px;
@@ -862,16 +864,14 @@
   .joinchat {
     --bottom: 6px;
     --sep: 6px;
-    --header: 55px;
+    --header: calc(var(--btn)*0.91667);
   }
   .joinchat__header__text {
     font-size: 17px;
   }
 
   .joinchat__close {
-    margin-top: -14px;
-    width: 28px;
-    height: 28px;
+    --size: 28px;
   }
 
   .joinchat__box__scroll {

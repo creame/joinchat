@@ -2,8 +2,8 @@
   // Position/size
   --bottom: 20px;
   --sep: 20px;
-  --header: 70px;
   --btn: 60px;
+  --header: calc(var(--btn)*1.166667);
   --vh: 100vh;
   // Colors
   --red: 37;
@@ -52,7 +52,7 @@
   @include mobile {
     --bottom: 6px;
     --sep: 6px;
-    --header: 55px;
+    --header: calc(var(--btn)*0.9166667);
   }
 
   @media (max-width: 767px) {
