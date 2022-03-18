@@ -75,12 +75,12 @@ Use variables in your CTAs and Start Messages that change dynamically for each p
 **{SITE}** ➡ Website title
 **{TITLE}** ➡ Current page title
 **{URL}** ➡ Current page url
-**{FULLURL}** ➡ Current page url (full with query params)
-**{PRODUCT}** ➡ Product name (WooCommerce)
-**{SKU}** ➡ Product SKU (WooCommerce)
-**{REGULAR}** ➡ Product regular price (WooCommerce)
-**{PRICE}** ➡ Product current price (WooCommerce)
-**{DISCOUNT}** ➡ Product percent discount when is on sale (WooCommerce)
+**{HREF}** ➡ Current page url (full with query params)
+**{PRODUCT}** ➡ Product name (Woo)
+**{SKU}** ➡ Product SKU (Woo)
+**{REGULAR}** ➡ Product regular price (Woo)
+**{PRICE}** ➡ Product current price (Woo)
+**{DISCOUNT}** ➡ Product percent discount when is on sale (Woo)
 
 #### 📈 Analytics Integration.
 Automatically send events to **Google Analytics, Google Tag Manager and Facebook Pixel** when the user opens WhatsApp.
@@ -324,7 +324,7 @@ Join.chat save two localStorage variables for proper operation:
 = 4.4 =
 * **NEW: Display QR Code on desktop** to scan with phone.
 * **NEW: Opt-in** text for user consent (optional or required).
-* **NEW:** Dynamic variable `{REFERER}` for full URL with query params.
+* **NEW:** Dynamic variable `{HREF}` for full URL with query params.
 * **NEW:** Google Ads conversion.
 * **NEW:** Better analytics events with more info.
 * **NEW:** Allow direct show button without animation setting Button Delay as "-1".

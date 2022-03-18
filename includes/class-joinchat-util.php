@@ -229,10 +229,10 @@ class JoinChatUtil {
 		$replacements = apply_filters(
 			'joinchat_variable_replacements',
 			array(
-				'SITE'    => get_bloginfo( 'name' ),
-				'URL'     => home_url( $wp->request ),
-				'REFERER' => home_url( add_query_arg( null, null ) ),
-				'TITLE'   => self::get_title(),
+				'SITE'  => get_bloginfo( 'name' ),
+				'URL'   => home_url( $wp->request ),
+				'HREF'  => home_url( add_query_arg( null, null ) ),
+				'TITLE' => self::get_title(),
 			)
 		);
 
