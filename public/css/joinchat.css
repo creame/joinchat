@@ -19,7 +19,7 @@
 
   display: none;
   position: fixed;
-  z-index: 1000;
+  z-index: 9999;
   right: var(--sep);
   bottom: var(--bottom);
   color: var(--text);
@@ -123,11 +123,30 @@
   background: var(--hover);
 }
 
+.joinchat--optout.joinchat--chatbox .joinchat__button {
+  background-color: #999;
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.joinchat--optout.joinchat--chatbox .joinchat__button .joinchat_svg__plain {
+  stroke-dasharray: 0;
+  -webkit-animation: none;
+  animation: none;
+}
+
+.joinchat--optout.joinchat--chatbox .joinchat__button .joinchat_svg__chat {
+  -webkit-animation: none;
+  animation: none;
+}
+
 .joinchat__button__open {
   width: var(--btn);
   height: var(--btn);
+  border-radius: 50%;
   background: rgb(0 0 0 / 0%) url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23fff' d='M3.516 3.516c4.686-4.686 12.284-4.686 16.97 0 4.686 4.686 4.686 12.283 0 16.97a12.004 12.004 0 0 1-13.754 2.299l-5.814.735a.392.392 0 0 1-.438-.44l.748-5.788A12.002 12.002 0 0 1 3.517 3.517zm3.61 17.043.3.158a9.846 9.846 0 0 0 11.534-1.758c3.843-3.843 3.843-10.074 0-13.918-3.843-3.843-10.075-3.843-13.918 0a9.846 9.846 0 0 0-1.747 11.554l.16.303-.51 3.942a.196.196 0 0 0 .219.22l3.961-.501zm6.534-7.003-.933 1.164a9.843 9.843 0 0 1-3.497-3.495l1.166-.933a.792.792 0 0 0 .23-.94L9.561 6.96a.793.793 0 0 0-.924-.445 1291.6 1291.6 0 0 0-2.023.524.797.797 0 0 0-.588.88 11.754 11.754 0 0 0 10.005 10.005.797.797 0 0 0 .88-.587l.525-2.023a.793.793 0 0 0-.445-.923L14.6 13.327a.792.792 0 0 0-.94.23z'/%3E%3C/svg%3E") center no-repeat;
   background-size: 60%;
+  overflow: hidden;
 }
 
 .joinchat--chatbox .joinchat__button__open {
@@ -170,12 +189,13 @@
 
 .joinchat__button__send {
   display: none;
+  flex-shrink: 0;
   width: var(--btn);
   height: var(--btn);
   max-width: var(--btn);
   padding: 12px 11px 12px 13px;
   margin: 0;
-  flex-shrink: 0;
+  overflow: hidden;
 }
 
 .joinchat--chatbox .joinchat__button__send {
@@ -204,6 +224,7 @@
 .joinchat__button__sendtext {
   padding: 0;
   max-width: 0;
+  border-radius: var(--btn);
   font-weight: 600;
   line-height: var(--btn);
   white-space: nowrap;
@@ -341,6 +362,16 @@
   border: 8px solid transparent;
   border-width: 8px 6px 0;
   border-top-color: #fff;
+}
+
+.joinchat--left .joinchat__qr {
+  left: 0;
+  right: auto;
+}
+
+.joinchat--left .joinchat__qr::after {
+  left: calc(var(--btn)/2 - 6px);
+  right: auto;
 }
 
 .joinchat__qr div {
@@ -520,6 +551,94 @@
     overflow-y: scroll;
     -webkit-overflow-scrolling: touch;
   }
+}
+
+.joinchat__optin {
+  padding: 0 16px;
+  margin-bottom: 16px;
+  color: #4a4a4a;
+  font-size: 13px;
+  line-height: 1.33;
+}
+
+.joinchat__optin a {
+  display: inline;
+  padding: 0;
+  color: inherit !important;
+  text-decoration: underline;
+}
+
+.joinchat__optin a:hover {
+  text-decoration-thickness: 2px;
+}
+
+.joinchat__optin input {
+  position: absolute;
+  width: 0;
+  height: 0;
+}
+
+.joinchat__optin label {
+  position: relative;
+  display: block;
+  margin: 0;
+  padding: 0 0 0 30px;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+
+.joinchat__optin label::before {
+  content: "";
+  display: block;
+  position: absolute;
+  top: calc(50% - 11px);
+  left: 0;
+  width: 22px;
+  height: 22px;
+  border: 3px solid var(--color);
+  border-radius: 4px;
+  box-shadow: 0 0 0 1px var(--text);
+  transition: box-shadow 0.3s ease-in-out;
+}
+
+.joinchat__optin label::after {
+  content: "";
+  display: none;
+  position: absolute;
+  top: calc(50% - 8px);
+  left: 8px;
+  width: 6px;
+  height: 14px;
+  border: solid var(--text);
+  border-width: 0 3px 3px 0;
+  transform: rotate(45deg);
+}
+
+[dir="rtl"] .joinchat__optin label {
+  padding: 0 30px 0 0;
+}
+
+[dir="rtl"] .joinchat__optin label::before {
+  left: auto;
+  right: 0;
+}
+
+[dir="rtl"] .joinchat__optin label::after {
+  left: auto;
+  right: 8px;
+}
+
+.joinchat__optin input:checked + label::before {
+  box-shadow: 0 0 0 1px var(--text), inset 0 0 0 10px var(--color);
+}
+
+.joinchat__optin input:checked + label::after {
+  display: block;
+}
+
+.joinchat--dark .joinchat__optin {
+  color: #d8d8d8;
 }
 
 .joinchat__message {
@@ -776,6 +895,9 @@
   .joinchat--dark-auto .joinchat__header {
     background: var(--dark);
   }
+  .joinchat--dark-auto .joinchat__optin {
+    color: #d8d8d8;
+  }
   .joinchat--dark-auto .joinchat__message {
     background: #505050;
     color: #d8d8d8;
@@ -805,6 +927,9 @@
 
   .joinchat--dark-auto .joinchat__header {
     background: var(--dark);
+  }
+  .joinchat--dark-auto .joinchat__optin {
+    color: #d8d8d8;
   }
   .joinchat--dark-auto .joinchat__message {
     background: #505050;

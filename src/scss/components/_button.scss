@@ -71,8 +71,10 @@
 #{$class}__button__open {
   width: var(--btn);
   height: var(--btn);
+  border-radius: 50%;
   background: $transparent svg-load("../../img/btn.svg") center no-repeat;
   background-size: 60%;
+  overflow: hidden;
 
   #{$class}--chatbox & {
     display: none;
@@ -113,12 +115,13 @@
 
 #{$class}__button__send {
   display: none;
+  flex-shrink: 0;
   width: var(--btn);
   height: var(--btn);
   max-width: var(--btn); // fix theme Twenty Twenty max-width: 100%;
   padding: 12px 11px 12px 13px;
   margin: 0;
-  flex-shrink: 0;
+  overflow: hidden;
 
   #{$class}--chatbox & {
     display: block;
@@ -156,6 +159,7 @@
 #{$class}__button__sendtext {
   padding: 0;
   max-width: 0;
+  border-radius: var(--btn);
   font-weight: 600;
   line-height: var(--btn);
   white-space: nowrap;

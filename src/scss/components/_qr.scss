@@ -29,6 +29,16 @@
     border-top-color: $white;
   }
 
+  #{$class}--left & {
+    left: 0;
+    right: auto;
+
+    &::after {
+      left: calc(var(--btn)/2 - 6px);
+      right: auto;
+    }
+  }
+
   div {
     font-size: 14px;
     color: $chat_color;
