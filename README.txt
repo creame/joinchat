@@ -87,6 +87,8 @@ Automatically send events to **Google Analytics, Google Tag Manager and Facebook
 
 **Google Analytics 4** integration with the recommended `"generate_lead"` event.
 
+**Google Ads** conversion, just add your Conversion ID and Conversion Label.
+
 You can also **create your own custom events or add event parameters**. [View FAQs](https://wordpress.org/plugins/creame-whatsapp-me/faq/) / [Read more](https://join.chat/en/joinchat-measures-whatsapp-events-in-google-analytics/)
 
 #### 🍾 Chat Triggers.
@@ -323,6 +325,7 @@ Join.chat save two localStorage variables for proper operation:
 * **NEW: Display QR Code on desktop** to scan with phone.
 * **NEW: Opt-in** text for user consent (optional or required).
 * **NEW:** Dynamic variable `{REFERER}` for full URL with query params.
+* **NEW:** Google Ads conversion.
 * **NEW:** Better analytics events with more info.
 * **NEW:** Allow direct show button without animation setting Button Delay as "-1".
 * CHANGED default z-index is `9999`.

@@ -305,6 +305,9 @@ class JoinChatAdmin {
 					'optin_text'  => __( 'Opt-in Text', 'creame-whatsapp-me' ),
 					'optin_check' => __( 'Opt-in Required', 'creame-whatsapp-me' ),
 				),
+				'conversion' => array(
+					'gads' => __( 'Google Ads Conversion', 'creame-whatsapp-me' ),
+				),
 			);
 
 		} else {
@@ -368,6 +371,7 @@ class JoinChatAdmin {
 				'a'      => array( 'href' => true ),
 			)
 		);
+		$input['gads']          = $util::clean_input( $input['gads'] );
 
 		if ( isset( $input['view'] ) ) {
 			$input['visibility'] = array_filter(
@@ -475,6 +479,10 @@ class JoinChatAdmin {
 			case 'joinchat_tab_advanced__optin':
 				$output = '<h2 class="title">' . __( 'Opt-in', 'creame-whatsapp-me' ) . '</h2>' .
 					'<p>' . __( 'Opt-in is a users’ consent to receive messages from a business.', 'creame-whatsapp-me' ) . '</p>';
+				break;
+
+			case 'joinchat_tab_advanced__conversion':
+				$output = '<hr><h2 class="title">' . __( 'Conversions', 'creame-whatsapp-me' ) . '</h2>';
 				break;
 
 			default:
@@ -672,6 +680,11 @@ class JoinChatAdmin {
 						__( 'User approval is required to enable the contact button', 'creame-whatsapp-me' ) . '</label></fieldset>';
 					break;
 
+				case 'gads':
+					$output = '<input id="joinchat_gads" name="joinchat[gads]" value="' . esc_attr( $value ) . '" type="text" maxlength="20" class="regular-text" placeholder="' . esc_attr__( 'AW-CONVERSION_ID/CONVERSION_LABEL', 'creame-whatsapp-me' ) . '"> ' .
+						'<p class="description">' . __( 'Send the conversion automatically at the chat start', 'creame-whatsapp-me' ) . '</p>';
+					break;
+
 				default:
 					$output = '';
 					break;
@@ -721,8 +734,7 @@ class JoinChatAdmin {
 		$title = 'Join.chat';
 
 		if ( JoinChatUtil::options_submenu() ) {
-			$icon = '<span class="dashicons dashicons-whatsapp" aria-hidden="true" ' .
-				'style="display:inline-block;max-height:18px;position:relative;top:-2px;margin:0 8px;"></span>';
+			$icon = '<span class="dashicons dashicons-whatsapp" aria-hidden="true" style="height:18px;font-size:18px;margin:0 8px;"></span>';
 
 			add_options_page( $title, $title . $icon, JoinChatUtil::capability(), $this->plugin_name, array( $this, 'options_page' ) );
 		} else {

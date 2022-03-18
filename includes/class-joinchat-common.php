@@ -46,6 +46,7 @@ class JoinChatCommon {
 			'header'        => '__jc__', // values: '__jc__', '__wa__' or other custom text
 			'optin_text'    => '',
 			'optin_check'   => 'no',
+			'gads'          => '',
 		);
 
 		return array_merge( $defaults, apply_filters( 'joinchat_extra_settings', array() ) );

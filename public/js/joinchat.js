@@ -52,8 +52,9 @@
     // GA4 param max_length of 100 chars (https://support.google.com/analytics/answer/9267744)
     $.each(params, function (k, v) { params[k] = typeof v == 'string' ? v.substring(0, 100) : v; });
 
-    // Send Google Analytics recomended event "generate_lead" (Google Analytics 4 - gtag.js)
+    // gtag.js
     if (typeof gtag == 'function' && typeof data_layer == 'object') {
+      // Google Analytics 4 send recomended event "generate_lead"
       var ga4_params = $.extend({
         event_category: 'JoinChat',
         transport_type: 'beacon',
@@ -68,6 +69,11 @@
           gtag('event', 'generate_lead', ga4_params);
         }
       });
+
+      // Send Google Ads conversion
+      if (this.settings.gads) {
+        gtag('event', 'conversion', { send_to: this.settings.gads });
+      }
     }
 
     // Send Google Tag Manager custom event
