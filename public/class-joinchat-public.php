@@ -126,8 +126,7 @@ class JoinChatPublic {
 		$settings['message_badge'] = 'yes' == $settings['message_badge'] && '' != $settings['message_text'];
 		$settings['qr']            = 'yes' == $settings['qr'];
 		$settings['message_send']  = JoinChatUtil::replace_variables( $settings['message_send'] );
-		// Set true to link http://web.whatsapp.com instead http://api.whatsapp.com
-		$settings['whatsapp_web'] = apply_filters( 'joinchat_whatsapp_web', 'yes' == $settings['whatsapp_web'] );
+		$settings['whatsapp_web']  = 'yes' == $settings['whatsapp_web'];
 		$settings['optin_check']   = 'yes' == $settings['optin_check'];
 
 		// Only show if there is a phone number
