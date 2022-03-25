@@ -223,6 +223,7 @@ class JoinChatPublic {
 					'dark_mode',
 					'header',
 					'optin_text',
+					'optin_check',
 				)
 			);
 
