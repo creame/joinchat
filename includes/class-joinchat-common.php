@@ -32,6 +32,7 @@ class JoinChatCommon {
 			'button_tip'    => '',
 			'button_delay'  => 3,
 			'whatsapp_web'  => 'no',
+			'qr'            => 'no',
 			'message_text'  => '',
 			'message_views' => 2,
 			'message_delay' => 10,
@@ -43,6 +44,9 @@ class JoinChatCommon {
 			'color'         => '#25d366',
 			'dark_mode'     => 'no',
 			'header'        => '__jc__', // values: '__jc__', '__wa__' or other custom text
+			'optin_text'    => '',
+			'optin_check'   => 'no',
+			'gads'          => '',
 		);
 
 		return array_merge( $defaults, apply_filters( 'joinchat_extra_settings', array() ) );

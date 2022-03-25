@@ -231,6 +231,7 @@ class JoinChatUtil {
 			array(
 				'SITE'  => get_bloginfo( 'name' ),
 				'URL'   => home_url( $wp->request ),
+				'HREF'  => home_url( add_query_arg( null, null ) ),
 				'TITLE' => self::get_title(),
 			)
 		);
@@ -313,11 +314,12 @@ class JoinChatUtil {
 	 * Plugin admin page is in options submenu
 	 *
 	 * @since    4.2.0
+	 * @since    4.4.0 return false by default
 	 * @return bool
 	 */
 	public static function options_submenu() {
 
-		return apply_filters( 'joinchat_submenu', 'manage_options' === self::capability() );
+		return 'manage_options' === self::capability() && apply_filters( 'joinchat_submenu', false );
 
 	}
 

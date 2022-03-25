@@ -110,6 +110,7 @@ class JoinChatAdmin {
 			array(
 				'general'    => __( 'General', 'creame-whatsapp-me' ),
 				'visibility' => __( 'Visibility', 'creame-whatsapp-me' ),
+				'advanced'   => __( 'Advanced', 'creame-whatsapp-me' ),
 			)
 		);
 
@@ -148,9 +149,11 @@ class JoinChatAdmin {
 	 */
 	public function register_scripts( $hook ) {
 
-		$min = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
+		$min  = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
+		$deps = array( 'jquery', 'wp-color-picker' );
 
 		if ( $this->enhanced_phone ) {
+			$deps[]   = 'intl-tel-input';
 			$localize = array(
 				'placeholder' => __( 'e.g.', 'creame-whatsapp-me' ),
 				'version'     => $this->enhanced_phone,
@@ -159,10 +162,10 @@ class JoinChatAdmin {
 
 			wp_register_script( 'intl-tel-input', plugins_url( "js/intlTelInput{$min}.js", __FILE__ ), array(), $this->enhanced_phone, true );
 			wp_localize_script( 'intl-tel-input', 'intlTelConf', $localize );
-			wp_register_script( 'joinchat-admin', plugins_url( "js/joinchat{$min}.js", __FILE__ ), array( 'jquery', 'wp-color-picker', 'intl-tel-input' ), $this->version, true );
-		} else {
-			wp_register_script( 'joinchat-admin', plugins_url( "js/joinchat{$min}.js", __FILE__ ), array( 'jquery', 'wp-color-picker' ), $this->version, true );
 		}
+
+		wp_register_script( 'joinchat-admin', plugins_url( "js/joinchat{$min}.js", __FILE__ ), $deps, $this->version, true );
+		wp_localize_script( 'joinchat-admin', 'joinchat_admin', array( 'example' => __( 'is an example, double click to use it', 'creame-whatsapp-me' ) ) );
 
 	}
 
@@ -233,6 +236,7 @@ class JoinChatAdmin {
 					'button_delay' => '<label for="joinchat_button_delay">' . __( 'Button Delay', 'creame-whatsapp-me' ) . '</label>',
 					'mobile_only'  => __( 'Mobile Only', 'creame-whatsapp-me' ),
 					'whatsapp_web' => __( 'WhatsApp Web', 'creame-whatsapp-me' ),
+					'qr'           => __( 'QR Code', 'creame-whatsapp-me' ),
 				),
 				'chat'      => array(
 					'message_text'  => '<label for="joinchat_message_text">' . __( 'Call to Action', 'creame-whatsapp-me' ) . '</label>' . self::vars_help( 'message_text' ),
@@ -294,6 +298,18 @@ class JoinChatAdmin {
 					$sections['cpt'][ "view__cpt_$custom_post_type" ] = $post_type_name;
 				}
 			}
+		} elseif ( 'advanced' == $tab ) {
+
+			$sections = array(
+				'optin'      => array(
+					'optin_text'  => __( 'Opt-in Text', 'creame-whatsapp-me' ),
+					'optin_check' => __( 'Opt-in Required', 'creame-whatsapp-me' ),
+				),
+				'conversion' => array(
+					'gads' => __( 'Google Ads Conversion', 'creame-whatsapp-me' ),
+				),
+			);
+
 		} else {
 
 			$sections = array();
@@ -335,6 +351,7 @@ class JoinChatAdmin {
 		$input['button_tip']    = $util::substr( $util::clean_input( $input['button_tip'] ), 0, 40 );
 		$input['button_delay']  = intval( $input['button_delay'] );
 		$input['whatsapp_web']  = isset( $input['whatsapp_web'] ) ? 'yes' : 'no';
+		$input['qr']            = isset( $input['qr'] ) ? 'yes' : 'no';
 		$input['message_text']  = $util::clean_input( $input['message_text'] );
 		$input['message_badge'] = isset( $input['message_badge'] ) ? 'yes' : 'no';
 		$input['message_send']  = $util::clean_input( $input['message_send'] );
@@ -345,6 +362,16 @@ class JoinChatAdmin {
 		$input['color']         = preg_match( '/^#[a-f0-9]{6}$/i', $input['color'] ) ? $input['color'] : '#25d366';
 		$input['dark_mode']     = in_array( $input['dark_mode'], array( 'no', 'yes', 'auto' ) ) ? $input['dark_mode'] : 'no';
 		$input['header']        = in_array( $input['header'], array( '__jc__', '__wa__' ) ) ? $input['header'] : $util::clean_input( $input['header_custom'] );
+		$input['optin_check']   = isset( $input['optin_check'] ) ? 'yes' : 'no';
+		$input['optin_text']    = wp_kses(
+			$input['optin_text'],
+			array(
+				'em'     => true,
+				'strong' => true,
+				'a'      => array( 'href' => true ),
+			)
+		);
+		$input['gads']          = $util::clean_input( $input['gads'] );
 
 		if ( isset( $input['view'] ) ) {
 			$input['visibility'] = array_filter(
@@ -449,6 +476,15 @@ class JoinChatAdmin {
 				$output = '<h2 class="title">' . __( 'Custom Post Types', 'creame-whatsapp-me' ) . '</h2>';
 				break;
 
+			case 'joinchat_tab_advanced__optin':
+				$output = '<h2 class="title">' . __( 'Opt-in', 'creame-whatsapp-me' ) . '</h2>' .
+					'<p>' . __( 'Opt-in is a users’ consent to receive messages from a business.', 'creame-whatsapp-me' ) . '</p>';
+				break;
+
+			case 'joinchat_tab_advanced__conversion':
+				$output = '<hr><h2 class="title">' . __( 'Conversions', 'creame-whatsapp-me' ) . '</h2>';
+				break;
+
 			default:
 				$output = '';
 				break;
@@ -482,7 +518,7 @@ class JoinChatAdmin {
 
 			$value = isset( $this->settings[ $field_id ] ) ? $this->settings[ $field_id ] : '';
 			$utm   = '?utm_source=settings&utm_medium=wpadmin&utm_campaign=v' . str_replace( '.', '_', $this->version );
-			$lang  = _x( 'en', 'url lang slug (only available for spanish "es")', 'creame-whatsapp-me' );
+			$lang  = false !== strpos( strtolower( get_locale() ), 'es' ) ? 'es' : 'en';
 
 			switch ( $field_id ) {
 				case 'telephone':
@@ -527,12 +563,13 @@ class JoinChatAdmin {
 					break;
 
 				case 'button_tip':
-					$output = '<input id="joinchat_button_tip" name="joinchat[button_tip]" value="' . esc_attr( $value ) . '" type="text" maxlength="40" class="regular-text" placeholder="' . esc_attr__( '💬 Need help?', 'creame-whatsapp-me' ) . '"> ' .
+					$output = '<input id="joinchat_button_tip" name="joinchat[button_tip]" value="' . esc_attr( $value ) . '" type="text" maxlength="40" class="regular-text autofill" placeholder="' . esc_attr__( '💬 Need help?', 'creame-whatsapp-me' ) . '"> ' .
 						'<p class="description">' . __( 'Short text shown next to button', 'creame-whatsapp-me' ) . '</p>';
 					break;
 
 				case 'button_delay':
-					$output = '<input id="joinchat_button_delay" name="joinchat[button_delay]" value="' . intval( $value ) . '" type="number" min="0" max="120" style="width:5em"> ' . __( 'seconds', 'creame-whatsapp-me' ) .
+					$output = '<input id="joinchat_button_delay" name="joinchat[button_delay]" value="' . intval( $value ) . '" type="number" min="-1" max="120" style="width:5em"> ' .
+						__( 'seconds', 'creame-whatsapp-me' ) . ' (' . __( '-1 to display directly without animation', 'creame-whatsapp-me' ) . ')' .
 						'<p class="description">' . __( 'Time since the page is opened until the button is displayed', 'creame-whatsapp-me' ) . '</p>';
 					break;
 
@@ -542,8 +579,14 @@ class JoinChatAdmin {
 						__( 'Open <em>WhatsApp Web</em> directly on desktop', 'creame-whatsapp-me' ) . '</label></fieldset>';
 					break;
 
+				case 'qr':
+					$output = '<fieldset><legend class="screen-reader-text"><span>' . __( 'QR Code', 'creame-whatsapp-me' ) . '</span></legend>' .
+						'<label><input id="joinchat_qr" name="joinchat[qr]" value="yes" type="checkbox"' . checked( 'yes', $value, false ) . '> ' .
+						__( 'Display QR code on desktop to scan with phone', 'creame-whatsapp-me' ) . '</label></fieldset>';
+					break;
+
 				case 'message_text':
-					$output = '<textarea id="joinchat_message_text" name="joinchat[message_text]" rows="4" class="regular-text" placeholder="' . esc_attr__( "Hello 👋\nCan we help you?", 'creame-whatsapp-me' ) . '">' . esc_textarea( $value ) . '</textarea>' .
+					$output = '<textarea id="joinchat_message_text" name="joinchat[message_text]" rows="4" class="regular-text autofill" placeholder="' . esc_attr__( "Hello 👋\nCan we help you?", 'creame-whatsapp-me' ) . '">' . esc_textarea( $value ) . '</textarea>' .
 						'<p class="description">' . __( 'Define a text to encourage users to contact by WhatsApp', 'creame-whatsapp-me' ) . '</p>' .
 						'<p class="joinchat-addon">' . sprintf(
 							__( 'Add links, images, videos and more with %s', 'creame-whatsapp-me' ),
@@ -552,17 +595,18 @@ class JoinChatAdmin {
 					break;
 
 				case 'message_send':
-					$output = '<textarea id="joinchat_message_send" name="joinchat[message_send]" rows="3" class="regular-text" placeholder="' . esc_attr__( 'Hi *{SITE}*! I need more info about {TITLE} {URL}', 'creame-whatsapp-me' ) . '">' . esc_textarea( $value ) . '</textarea>' .
+					$output = '<textarea id="joinchat_message_send" name="joinchat[message_send]" rows="3" class="regular-text autofill" placeholder="' . esc_attr__( 'Hi *{SITE}*! I need more info about {TITLE} {URL}', 'creame-whatsapp-me' ) . '">' . esc_textarea( $value ) . '</textarea>' .
 						'<p class="description">' . __( 'Predefined text for the first message the user will send you', 'creame-whatsapp-me' ) . '</p>';
 					break;
 
 				case 'message_start':
-					$output = '<input id="joinchat_message_start" name="joinchat[message_start]" value="' . esc_attr( $value ) . '" type="text" maxlength="20" class="regular-text" placeholder="' . esc_attr__( 'Open chat', 'creame-whatsapp-me' ) . '"> ' .
+					$output = '<input id="joinchat_message_start" name="joinchat[message_start]" value="' . esc_attr( $value ) . '" type="text" maxlength="20" class="regular-text autofill" placeholder="' . esc_attr__( 'Open chat', 'creame-whatsapp-me' ) . '"> ' .
 						'<p class="description">' . __( 'Text to open chat on Chat Window button', 'creame-whatsapp-me' ) . '</p>';
 					break;
 
 				case 'message_delay':
-					$output = '<input id="joinchat_message_delay" name="joinchat[message_delay]" value="' . intval( $value ) . '" type="number" min="0" max="120" style="width:5em"> ' . __( 'seconds (0 disabled)', 'creame-whatsapp-me' ) .
+					$output = '<input id="joinchat_message_delay" name="joinchat[message_delay]" value="' . intval( $value ) . '" type="number" min="0" max="120" style="width:5em"> ' .
+					__( 'seconds', 'creame-whatsapp-me' ) . ' (' . __( '0 to disable', 'creame-whatsapp-me' ) . ')' .
 					'<p class="description">' . __( 'Chat Window auto displays after delay', 'creame-whatsapp-me' ) . '</p>';
 					break;
 
@@ -602,8 +646,43 @@ class JoinChatAdmin {
 						__( 'WhatsApp Logo', 'creame-whatsapp-me' ) . '</label><br>' .
 						'<label><input name="joinchat[header]" value="__custom__" type="radio"' . checked( '__custom__', $check, false ) . '> ' .
 						__( 'Custom:', 'creame-whatsapp-me' ) . '</label> ' .
-						'<input id="joinchat_header_custom" name="joinchat[header_custom]" value="' . esc_attr( $value ) . '" type="text" maxlength="40" class="regular-text" placeholder="">' .
+						'<input id="joinchat_header_custom" name="joinchat[header_custom]" value="' . esc_attr( $value ) . '" type="text" maxlength="40" class="regular-text">' .
 						'</fieldset>';
+					break;
+
+				case 'optin_text':
+					$editor_settings = array(
+						'textarea_name' => 'joinchat[optin_text]',
+						'textarea_rows' => 4,
+						'teeny'         => true,
+						'media_buttons' => false,
+						'tinymce'       => array( 'statusbar' => false ),
+						'quicktags'     => false,
+					);
+
+					// phpcs:disable
+					add_filter( 'teeny_mce_plugins', function( $filters, $editor_id ) {
+						return 'joinchat_optin_text' === $editor_id ? array( 'wordpress', 'wplink' ) : $filters;
+					}, 10, 2 );
+
+					add_filter( 'teeny_mce_buttons', function( $mce_buttons, $editor_id ) {
+						return 'joinchat_optin_text' === $editor_id ? array( 'bold', 'italic', 'link' ) : $mce_buttons;
+					}, 10, 2 );
+					// phpcs:enable
+
+					$output = wp_editor( $value, 'joinchat_optin_text', $editor_settings ) .
+						'<p class="description">' . __( "Explain how you will use the user's contact and the conditions they accept.", 'creame-whatsapp-me' ) . '</p>';
+					break;
+
+				case 'optin_check':
+					$output = '<fieldset><legend class="screen-reader-text"><span>' . __( 'Opt-in Required', 'creame-whatsapp-me' ) . '</span></legend>' .
+						'<label><input id="joinchat_optin_check" name="joinchat[optin_check]" value="yes" type="checkbox"' . checked( 'yes', $value, false ) . '> ' .
+						__( 'User approval is required to enable the contact button', 'creame-whatsapp-me' ) . '</label></fieldset>';
+					break;
+
+				case 'gads':
+					$output = '<input id="joinchat_gads" name="joinchat[gads]" value="' . esc_attr( $value ) . '" type="text" maxlength="20" class="regular-text" placeholder="' . esc_attr__( 'AW-CONVERSION_ID/CONVERSION_LABEL', 'creame-whatsapp-me' ) . '"> ' .
+						'<p class="description">' . __( 'Send the conversion automatically at the chat start', 'creame-whatsapp-me' ) . '</p>';
 					break;
 
 				default:
@@ -655,8 +734,7 @@ class JoinChatAdmin {
 		$title = 'Join.chat';
 
 		if ( JoinChatUtil::options_submenu() ) {
-			$icon = '<span class="dashicons dashicons-whatsapp" aria-hidden="true" ' .
-				'style="display:inline-block;max-height:18px;position:relative;top:-2px;margin:0 8px;"></span>';
+			$icon = '<span class="dashicons dashicons-whatsapp" aria-hidden="true" style="height:18px;font-size:18px;margin:0 8px;"></span>';
 
 			add_options_page( $title, $title . $icon, JoinChatUtil::capability(), $this->plugin_name, array( $this, 'options_page' ) );
 		} else {
@@ -728,7 +806,7 @@ class JoinChatAdmin {
 	function help_tab() {
 		$screen = get_current_screen();
 		$utm    = '?utm_source=helptab&utm_medium=wpadmin&utm_campaign=v' . str_replace( '.', '_', $this->version );
-		$lang   = _x( 'en', 'url lang slug (only available for spanish "es")', 'creame-whatsapp-me' );
+		$lang   = false !== strpos( strtolower( get_locale() ), 'es' ) ? 'es' : 'en';
 
 		$help_tabs = array(
 			array(
@@ -738,9 +816,10 @@ class JoinChatAdmin {
 					'<p>' . __( 'You can use formatting styles like in WhatsApp: _<em>italic</em>_ *<strong>bold</strong>* ~<del>strikethrough</del>~.', 'creame-whatsapp-me' ) . '</p>' .
 					'<p>' . __( 'You can use dynamic variables that will be replaced by the values of the page the user visits:', 'creame-whatsapp-me' ) .
 					'<p>' .
-					'<span><code>{SITE}</code> ➜ ' . get_bloginfo( 'name', 'display' ) . '</span>, ' .
-					'<span><code>{URL}</code> ➜ ' . home_url( 'example' ) . '</span>, ' .
-					'<span><code>{TITLE}</code> ➜ ' . __( 'Page Title', 'creame-whatsapp-me' ) . '</span>' .
+					'<span><code>{SITE}</code> ➜ ' . get_bloginfo( 'name', 'display' ) . '</span><br> ' .
+					'<span><code>{TITLE}</code> ➜ ' . __( 'Page Title', 'creame-whatsapp-me' ) . '</span><br>' .
+					'<span><code>{URL}</code> ➜ ' . home_url( 'awesome/' ) . '</span><br> ' .
+					'<span><code>{HREF}</code> ➜ ' . home_url( 'awesome/' ) . '?utm_source=twitter&utm_medium=social&utm_campaign=XXX</span> ' .
 					'</p>',
 			),
 			array(
@@ -773,9 +852,9 @@ class JoinChatAdmin {
 				'content' =>
 					'<p>' . sprintf(
 						__( 'If you need help, first review our <a href="%1$s" target="_blank">documentation</a> and if you don\'t find a solution check the <a href="%2$s" target="_blank">free plugin support forum</a> or buy our <a href="%3$s" target="_blank">premium support</a>.', 'creame-whatsapp-me' ),
-						esc_url( 'https://join.chat/' . $lang . '/docs/' . $utm ),
+						esc_url( "https://join.chat/$lang/docs/$utm" ),
 						esc_url( 'https://wordpress.org/support/plugin/creame-whatsapp-me/' ),
-						esc_url( 'https://my.join.chat/' . $utm )
+						esc_url( "https://my.join.chat/$utm" )
 					) . '</p>' .
 					'<p>' . __( 'If you like Join.chat 😍', 'creame-whatsapp-me' ) . '</p>' .
 					'<ul>' .
@@ -815,6 +894,15 @@ class JoinChatAdmin {
 
 		array_unshift( $links, $settings_link );
 
+		$utm  = '?utm_source=action&utm_medium=wpadmin&utm_campaign=v' . str_replace( '.', '_', $this->version );
+		$lang = false !== strpos( strtolower( get_locale() ), 'es' ) ? 'es' : 'en';
+
+		$links['premium'] = sprintf(
+			'<a href="%1$s" target="_blank" style="font-weight:bold;color:#f9603a;">%2$s</a>',
+			esc_url( "https://join.chat/$lang/premium/$utm" ),
+			esc_html__( 'Premium', 'creame-whatsapp-me' )
+		);
+
 		return $links;
 
 	}
@@ -832,11 +920,10 @@ class JoinChatAdmin {
 
 		if ( 'creame-whatsapp-me/joinchat.php' == $plugin_file ) {
 			$utm  = '?utm_source=plugins&utm_medium=wpadmin&utm_campaign=v' . str_replace( '.', '_', $this->version );
-			$lang = _x( 'en', 'url lang slug (only available for spanish "es")', 'creame-whatsapp-me' );
+			$lang = false !== strpos( strtolower( get_locale() ), 'es' ) ? 'es' : 'en';
 
-			$plugin_meta[] = '<a target="_blank" href="https://join.chat/' . $lang . '/docs/' . $utm . '">' . __( 'Documentation', 'creame-whatsapp-me' ) . '</a>';
-			$plugin_meta[] = '<a target="_blank" href="https://join.chat/' . $lang . '/addons/' . $utm . '">' . __( 'Add-ons', 'creame-whatsapp-me' ) . '</a>';
-			$plugin_meta[] = '<a target="_blank" href="https://join.chat/' . $lang . '/support/' . $utm . '">' . __( 'Support', 'creame-whatsapp-me' ) . '</a>';
+			$plugin_meta[] = sprintf( '<a href="%1$s" target="_blank">%2$s</a>', esc_url( "https://join.chat/$lang/docs/$utm" ), __( 'Documentation', 'creame-whatsapp-me' ) );
+			$plugin_meta[] = sprintf( '<a href="%1$s" target="_blank">%2$s</a>', esc_url( "https://join.chat/$lang/support/$utm" ), __( 'Support', 'creame-whatsapp-me' ) );
 		}
 
 		return $plugin_meta;
@@ -966,7 +1053,7 @@ class JoinChatAdmin {
 			$this->settings
 		);
 
-		$metabox_vars = apply_filters( 'joinchat_metabox_vars', array( 'SITE', 'URL', 'TITLE' ), $post );
+		$metabox_vars = apply_filters( 'joinchat_metabox_vars', array( 'SITE', 'TITLE', 'URL', 'HREF' ), $post );
 
 		ob_start();
 		include __DIR__ . '/partials/post_meta_box.php';
@@ -1078,7 +1165,7 @@ class JoinChatAdmin {
 			$this->settings
 		);
 
-		$metabox_vars = apply_filters( 'joinchat_metabox_vars', array( 'SITE', 'URL', 'TITLE' ), $term );
+		$metabox_vars = apply_filters( 'joinchat_metabox_vars', array( 'SITE', 'TITLE', 'URL', 'HREF' ), $term );
 
 		ob_start();
 		include __DIR__ . '/partials/term_meta_box.php';
@@ -1097,7 +1184,7 @@ class JoinChatAdmin {
 	 */
 	public static function vars_help( $field ) {
 
-		$vars = apply_filters( 'joinchat_vars_help', array( 'SITE', 'URL', 'TITLE' ), $field );
+		$vars = apply_filters( 'joinchat_vars_help', array( 'SITE', 'TITLE', 'URL', 'HREF' ), $field );
 
 		return count( $vars ) ? '<div class="joinchat_vars_help">' . __( 'You can use vars', 'creame-whatsapp-me' ) . ' ' .
 			'<a class="joinchat-show-help" href="#" title="' . __( 'Show Help', 'creame-whatsapp-me' ) . '">?</a><br> ' .

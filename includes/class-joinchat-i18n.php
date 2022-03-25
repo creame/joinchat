@@ -61,6 +61,7 @@ class JoinChat_i18n {
 			'message_text'  => 'Call to Action',
 			'message_send'  => 'Message',
 			'message_start' => 'Button Text',
+			'optin_text'    => 'Opt-in Text',
 		);
 
 		if ( isset( $settings['header'] ) && ! in_array( $settings['header'], array( '', '__jc__', '__wa__' ) ) ) {

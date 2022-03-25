@@ -1,7 +1,7 @@
 #{$class}__tooltip {
   position: absolute;
-  top: calc(var(--btn)/2 - 16px);
-  right: calc(var(--btn) + 16px);
+  top: calc(var(--s)/2 - 16px);
+  right: calc(var(--s) + 16px);
   max-width: calc(100vw - 105px);
   height: 32px;
   padding: 0 14px;
@@ -23,7 +23,7 @@
     right: -6px;
     border: 8px solid transparent;
     border-width: 6px 0 6px 8px;
-    border-left-color: white;
+    border-left-color: $white;
   }
 
   div {
@@ -49,14 +49,14 @@
 
   #{$class}--left & {
     right: auto;
-    left: 76px;
+    left: calc(var(--s) + 16px);
 
     &::after {
       left: -6px;
       right: auto;
       border-color: transparent;
       border-width: 6px 8px 6px 0;
-      border-right-color: white;
+      border-right-color: $white;
     }
   }
 }
