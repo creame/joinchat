@@ -72,7 +72,7 @@
   width: var(--btn);
   height: var(--btn);
   border-radius: 50%;
-  background: $transparent svg-load("../../img/btn.svg") center no-repeat;
+  background: $transparent var(--joinchat-ico) center no-repeat;
   background-size: 60%;
   overflow: hidden;
 

@@ -11,6 +11,24 @@
 class JoinChatWooPublic {
 
 	/**
+	 * Product Button Text
+	 *
+	 * @since    4.4.0
+	 * @access   private
+	 * @var      string    $btn_text    Product Button text.
+	 */
+	private $btn_text;
+
+	/**
+	 * Product Button Show
+	 *
+	 * @since    4.4.0
+	 * @access   private
+	 * @var      bool     $btn_show    Product Button is showed.
+	 */
+	private $btn_show = false;
+
+	/**
 	 * Initialize all hooks
 	 *
 	 * @since    3.0.0
@@ -30,6 +48,8 @@ class JoinChatWooPublic {
 
 		$loader->add_filter( 'storefront_handheld_footer_bar_links', $this, 'storefront_footer_bar' );
 
+		$loader->add_action( 'wp_footer', $this, 'enqueue_styles' );
+
 	}
 
 	/**
@@ -45,6 +65,8 @@ class JoinChatWooPublic {
 			'message_text_product' => '',
 			'message_text_on_sale' => '',
 			'message_send_product' => '',
+			'woo_btn_position'     => 'none',
+			'woo_btn_text'         => '',
 		);
 
 		return array_merge( $settings, $woo_settings );
@@ -62,6 +84,7 @@ class JoinChatWooPublic {
 		$settings['message_text_product'] = 'Call to Action for Products';
 		$settings['message_text_on_sale'] = 'Call to Action for Products on sale';
 		$settings['message_send_product'] = 'Message for Products';
+		$settings['woo_btn_text']         = 'Product Button Text';
 
 		return $settings;
 	}
@@ -96,6 +119,15 @@ class JoinChatWooPublic {
 			if ( is_array( $shop_settings ) ) {
 				$settings = array_merge( $settings, $shop_settings );
 			}
+		}
+
+		// Add Product Button
+		if ( is_product() && 'none' !== $settings['woo_btn_position'] ) {
+
+			$this->btn_text = $settings['woo_btn_text'];
+
+			add_action( $settings['woo_btn_position'], array( $this, 'product_button' ), apply_filters( 'joinchat_woo_btn_priority', 10 ) );
+
 		}
 
 		return $settings;
@@ -185,6 +217,8 @@ class JoinChatWooPublic {
 			'message_text_product',
 			'message_text_on_sale',
 			'message_send_product',
+			'woo_btn_position',
+			'woo_btn_text',
 		);
 
 		return array_merge( $fields, $excluded );
@@ -278,6 +312,38 @@ class JoinChatWooPublic {
 		);
 
 		return $links;
+
+	}
+
+	/**
+	 * Product Button output
+	 *
+	 * @since    4.4.0
+	 * @return   void
+	 */
+	public function product_button() {
+
+		$this->btn_show = true;
+
+		echo '<div class="joinchat__woo-btn__wrapper"><div class="joinchat__woo-btn joinchat_app">' . esc_html( $this->btn_text ) . '</div></div>';
+
+	}
+
+	/**
+	 * Enqueue Styles
+	 *
+	 * @since    4.4.0
+	 * @return void
+	 */
+	public function enqueue_styles() {
+
+		if ( $this->btn_show && ! wp_style_is( 'joinchat', 'done' ) ) {
+
+			$min = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
+
+			wp_enqueue_style( 'joinchat-woo', plugins_url( "css/woo{$min}.css", __FILE__ ), array(), JOINCHAT_VERSION, 'all' );
+
+		}
 
 	}
 

@@ -32,6 +32,10 @@
     "css": "postcss src/scss/styles.scss -o public/css/joinchat.css -m",
     "minify": "cssnano public/css/joinchat.css public/css/joinchat.min.css --no-svgo --safe",
     "build": "npm run css && npm run minify",
+    "woo:css": "postcss src/scss/woo.scss -o public/css/woo.css -m",
+    "woo:minify": "cssnano public/css/woo.css public/css/woo.min.css --no-svgo --safe",
+    "woo:build": "npm run woo:css && npm run woo:minify",
+    "build-all": "npm run build && npm run woo:build",
     "clean": "del dist/css/*"
   }
 }

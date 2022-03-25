@@ -51,6 +51,8 @@ class JoinChatWooAdmin {
 			'message_text_product' => '',
 			'message_text_on_sale' => '',
 			'message_send_product' => '',
+			'woo_btn_position'     => 'none',
+			'woo_btn_text'         => '',
 		);
 
 		return array_merge( $settings, $woo_settings );
@@ -68,6 +70,8 @@ class JoinChatWooAdmin {
 		$input['message_text_product'] = JoinChatUtil::clean_input( $input['message_text_product'] );
 		$input['message_text_on_sale'] = JoinChatUtil::clean_input( $input['message_text_on_sale'] );
 		$input['message_send_product'] = JoinChatUtil::clean_input( $input['message_send_product'] );
+		$input['btn_position']         = array_key_exists( $input['btn_position'], $this->btn_positions() ) ? $input['btn_position'] : 'none';
+		$input['woo_btn_text']         = JoinChatUtil::clean_input( $input['woo_btn_text'] );
 
 		return $input;
 	}
@@ -84,6 +88,7 @@ class JoinChatWooAdmin {
 		$settings['message_text_product'] = 'Call to Action for Products';
 		$settings['message_text_on_sale'] = 'Call to Action for Products on Sale';
 		$settings['message_send_product'] = 'Message for Products';
+		$settings['woo_btn_text']         = 'Product Button Text';
 
 		return $settings;
 	}
@@ -129,6 +134,28 @@ class JoinChatWooAdmin {
 	}
 
 	/**
+	 * Return Product Button available positions
+	 *
+	 * Array of WooCommerce action => named position
+	 *
+	 * @since    4.4.0
+	 * @return   array
+	 */
+	private function btn_positions() {
+
+		$positions = array(
+			'woocommerce_before_add_to_cart_form'        => __( 'Before "Add To Cart" form', 'creame-whatsapp-me' ),
+			'woocommerce_before_add_to_cart_button'      => __( 'Before "Add To Cart" button', 'creame-whatsapp-me' ),
+			'woocommerce_after_add_to_cart_button'       => __( 'After "Add To Cart" button', 'creame-whatsapp-me' ),
+			'woocommerce_after_add_to_cart_form'         => __( 'After "Add To Cart" form', 'creame-whatsapp-me' ),
+			'woocommerce_product_additional_information' => __( 'After "Additional information"', 'creame-whatsapp-me' ),
+		);
+
+		return array( 'none' => __( "Don't show", 'creame-whatsapp-me' ) ) + apply_filters( 'joinchat_woo_btn_positions', $positions );
+
+	}
+
+	/**
 	 * Woocommerce sections and fields for 'joinchat_tab_visibility'
 	 *
 	 * @since    3.0.0
@@ -168,7 +195,11 @@ class JoinChatWooAdmin {
 			$woo_sections[ $key ] = "<label for=\"joinchat_$key\">$label</label>" . JoinChatAdmin::vars_help( $key );
 		}
 
-		$sections['chat'] = $woo_sections;
+		$sections['chat']   = $woo_sections;
+		$sections['button'] = array(
+			'woo_btn_position' => '<label for="joinchat_woo_btn_position">' . __( 'Button Position', 'creame-whatsapp-me' ) . '</label>',
+			'woo_btn_text'     => '<label for="joinchat_woo_btn_text">' . __( 'Button Text', 'creame-whatsapp-me' ) . '</label>',
+		);
 
 		return $sections;
 	}
@@ -202,17 +233,20 @@ class JoinChatWooAdmin {
 	 */
 	public function section_ouput( $output, $section_id ) {
 
-		if ( 'joinchat_tab_visibility__woo' == $section_id ) {
+		switch ( $section_id ) {
+			case 'joinchat_tab_visibility__woo':
+				$output = '<h2 class="title">' . __( 'WooCommerce', 'creame-whatsapp-me' ) . '</h2>';
+				break;
 
-			$output = '<h2 class="title">' . __( 'WooCommerce', 'creame-whatsapp-me' ) . '</h2>';
+			case 'joinchat_tab_woocommerce__chat':
+				$output = '<h2 class="title">' . __( 'Product Chat Window', 'creame-whatsapp-me' ) . '</h2>' .
+					'<p>' . __( 'You can define other different texts for the Chat Window on the product pages.', 'creame-whatsapp-me' ) . '</p>';
+				break;
 
-		} elseif ( 'joinchat_tab_woocommerce__chat' == $section_id ) {
-
-			$output = '<h2 class="title">' . __( 'Product Chat Window', 'creame-whatsapp-me' ) . '</h2>' .
-				'<p>' .
-				__( 'You can define other different texts for the Chat Window on the product pages.', 'creame-whatsapp-me' ) .
-				'</p>';
-
+			case 'joinchat_tab_woocommerce__button':
+				$output = '<hr><h2 class="title">' . __( 'Product Button', 'creame-whatsapp-me' ) . '</h2>' .
+					'<p>' . __( 'Add a contact button on the product sheet.', 'creame-whatsapp-me' ) . '</p>';
+				break;
 		}
 
 		return $output;
@@ -251,6 +285,20 @@ class JoinChatWooAdmin {
 					'placeholder="' . esc_attr__( "*Hi {SITE}!*\nI have a question about *{PRODUCT} ({SKU})*", 'creame-whatsapp-me' ) . '">' .
 					esc_textarea( $value ) . '</textarea>' .
 					'<p class="description">' . __( 'Predefined text for the first message the client will send you', 'creame-whatsapp-me' ) . '</p>';
+				break;
+
+			case 'woo_btn_position':
+				$options = $this->btn_positions();
+
+				$output = '<select id="joinchat_woo_btn_position" name="joinchat[woo_btn_position]">';
+				foreach ( $options as $key => $option ) {
+					$output .= sprintf( '<option%s value="%s">%s</option>', $key === $value ? ' selected' : '', esc_attr( $key ), esc_html( $option ) );
+				}
+				$output .= '</select><p class="description">' . __( 'Select the position of the button on the product page', 'creame-whatsapp-me' ) . '</p>';
+				break;
+
+			case 'woo_btn_text':
+				$output = '<input id="joinchat_woo_btn_text" name="joinchat[woo_btn_text]" value="' . esc_attr( $value ) . '" type="text" maxlength="40" class="regular-text autofill" placeholder="' . esc_attr__( 'Ask for More Info', 'creame-whatsapp-me' ) . '">';
 				break;
 		}
 

@@ -202,6 +202,11 @@
       $('#joinchat_header_custom').on('click', function () {
         $(this).prev().find('input').prop('checked', true);
       });
+
+      // Toggle Woo Product Button text
+      $('#joinchat_woo_btn_position').on('change', function () {
+        $('#joinchat_woo_btn_text').closest('tr').toggleClass('joinchat-hidden', $(this).val() == 'none');
+      }).trigger('change');
     }
 
     if ($('.joinchat-metabox').length) {
