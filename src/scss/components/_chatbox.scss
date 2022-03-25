@@ -9,7 +9,7 @@
   max-width: 400px;
   min-height: 170px;
   max-height: calc(var(--vh) - var(--bottom) - var(--sep));
-  border-radius: calc((var(--btn) / 2) + 2px);
+  border-radius: calc((var(--s) / 2) + 2px);
   background: transparent;
   box-shadow: 0 2px 6px 0 rgba($black, 0.5);
   text-align: left;
@@ -125,7 +125,7 @@
 
 #{$class}__box__scroll {
   padding: 20px 0 70px 0;
-  padding-bottom: calc(var(--btn) + 10px);
+  padding-bottom: calc(var(--s) + 10px);
   background: $white linear-gradient(0deg, var(--bg), var(--bg));
   overflow-x: hidden;
   overflow-y: auto;

@@ -1,7 +1,7 @@
 #{$class}__tooltip {
   position: absolute;
-  top: calc(var(--btn)/2 - 16px);
-  right: calc(var(--btn) + 16px);
+  top: calc(var(--s)/2 - 16px);
+  right: calc(var(--s) + 16px);
   max-width: calc(100vw - 105px);
   height: 32px;
   padding: 0 14px;
@@ -49,7 +49,7 @@
 
   #{$class}--left & {
     right: auto;
-    left: calc(var(--btn) + 16px);
+    left: calc(var(--s) + 16px);
 
     &::after {
       left: -6px;

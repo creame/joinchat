@@ -5,12 +5,12 @@
   z-index: 2;
   bottom: 8px;
   right: 8px;
-  height: var(--btn);
-  min-width: var(--btn);
+  height: var(--s);
+  min-width: var(--s);
   max-width: 95vw;
   background: $WA;
   color: inherit;
-  border-radius: calc(var(--btn) / 2);
+  border-radius: calc(var(--s) / 2);
   box-shadow: 1px 6px 24px 0 rgba($WAdarken, 0.24);
   cursor: pointer;
   transition: background 0.2s linear;
@@ -69,8 +69,8 @@
 }
 
 #{$class}__button__open {
-  width: var(--btn);
-  height: var(--btn);
+  width: var(--s);
+  height: var(--s);
   border-radius: 50%;
   background: $transparent var(--joinchat-ico) center no-repeat;
   background-size: 60%;
@@ -85,8 +85,8 @@
   position: absolute;
   top: 1px;
   right: 1px;
-  width: calc(var(--btn) - 2px);
-  height: calc(var(--btn) - 2px);
+  width: calc(var(--s) - 2px);
+  height: calc(var(--s) - 2px);
   border-radius: 50%;
   overflow: hidden;
   opacity: 0;
@@ -116,10 +116,10 @@
 #{$class}__button__send {
   display: none;
   flex-shrink: 0;
-  width: var(--btn);
-  height: var(--btn);
-  max-width: var(--btn); // fix theme Twenty Twenty max-width: 100%;
-  padding: calc(var(--btn)*0.18);
+  width: var(--s);
+  height: var(--s);
+  max-width: var(--s); // fix theme Twenty Twenty max-width: 100%;
+  padding: calc(var(--s)*0.18);
   margin: 0;
   overflow: hidden;
 
@@ -159,9 +159,9 @@
 #{$class}__button__sendtext {
   padding: 0;
   max-width: 0;
-  border-radius: var(--btn);
+  border-radius: var(--s);
   font-weight: 600;
-  line-height: var(--btn);
+  line-height: var(--s);
   white-space: nowrap;
   opacity: 0;
   overflow: hidden;

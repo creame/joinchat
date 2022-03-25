@@ -1,6 +1,6 @@
 #{$class}__qr {
   position: absolute;
-  bottom: calc(var(--btn) + 16px);
+  bottom: calc(var(--s) + 16px);
   right: 0;
   display: none; // flex;
   flex-direction: column-reverse;
@@ -23,7 +23,7 @@
     @include pseudo;
 
     bottom: -6px;
-    right: calc(var(--btn)/2 - 6px);
+    right: calc(var(--s)/2 - 6px);
     border: 8px solid transparent;
     border-width: 8px 6px 0 6px;
     border-top-color: $white;
@@ -34,7 +34,7 @@
     right: auto;
 
     &::after {
-      left: calc(var(--btn)/2 - 6px);
+      left: calc(var(--s)/2 - 6px);
       right: auto;
     }
   }
