@@ -313,12 +313,18 @@ Join.chat save two localStorage variables for proper operation:
 
 == Screenshots ==
 
-1. Mobile example
-2. Desktop example (with Dynamic Vars)
-3. General settings
-4. Visibility settings
-5. WooCommerce settings
-6. Page settings
+1. Real example
+2. Real example
+3. Real example
+4. Real example
+5. Real example
+6. Real example
+7. Product Button example
+8. General settings
+9. Visibility settings
+10. WooCommerce settings
+11. Advanced settings
+12. Page settings
 
 
 == Changelog ==
