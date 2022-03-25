@@ -5,7 +5,7 @@ Tags: Chat, Click to Chat, Facebook Messenger, WhatsApp, Telegram, Whatsapp Busi
 Requires at least: 3.5.0
 Tested up to: 5.9
 Requires PHP: 5.3
-Stable tag: 4.3.2
+Stable tag: 4.4.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -20,7 +20,7 @@ WhatsApp, Messenger, Telegram, Phone call… capture users through their favorit
 
 https://www.youtube.com/watch?v=Ad2ZpPnX_3Q
 
-[Documentation](https://join.chat/en/docs/?utm_source=wporg&utm_medium=web&utm_campaign=v4_2) | [Add-ons](https://join.chat/en/addons/?utm_source=wporg&utm_medium=web&utm_campaign=v4_2) | [Support](https://join.chat/en/support/?utm_source=wporg&utm_medium=web&utm_campaign=v4_2)
+[Documentation](https://join.chat/en/docs/?utm_source=wporg&utm_medium=web&utm_campaign=v4_4) | [Add-ons](https://join.chat/en/addons/?utm_source=wporg&utm_medium=web&utm_campaign=v4_4) | [Support](https://join.chat/en/support/?utm_source=wporg&utm_medium=web&utm_campaign=v4_4)
 
 ### ⌁ What you can do with Join.chat (formerly WAme) ✅
 
@@ -52,7 +52,7 @@ In this way, you ensure that you do not miss any important message you want to g
 #### 📯 Create call-to-action messages.
 To get users to start the chat, use custom CTAs on each page, product or section.
 
-Welcome them, help them and offer them offers or promotions. [Read more](https://join.chat/es/joinchat-mucho-mas-que-un-click-to-chat/)
+Welcome them, help them and offer them offers or promotions. [Read more](https://join.chat/es/joinchat-mucho-mas-que-un-click-to-chat/?utm_source=wporg&utm_medium=web&utm_campaign=v4_4)
 
 #### 💬 Customize conversation start messages.
 Set the first message so that the visitor can start the conversation immediately.
@@ -68,6 +68,8 @@ You can make it mandatory and disable contact until the user accepts it.
 
 #### 🛒 Integration with WooCommerce.
 Define CTAs and Custom Start Messages for shop page, product pages and for products on sale.
+
+Add a **WhatsApp Contact Button** directly on your product page next to the "Add to cart" button.
 
 #### 🃏 Dynamic Variables.
 Use variables in your CTAs and Start Messages that change dynamically for each page:
@@ -89,7 +91,7 @@ Automatically send events to **Google Analytics, Google Tag Manager and Facebook
 
 **Google Ads** conversion, just add your Conversion ID and Conversion Label.
 
-You can also **create your own custom events or add event parameters**. [View FAQs](https://wordpress.org/plugins/creame-whatsapp-me/faq/) / [Read more](https://join.chat/en/joinchat-measures-whatsapp-events-in-google-analytics/)
+You can also **create your own custom events or add event parameters**. [View FAQs](https://wordpress.org/plugins/creame-whatsapp-me/faq/) / [Read more](https://join.chat/en/joinchat-measures-whatsapp-events-in-google-analytics/?utm_source=wporg&utm_medium=web&utm_campaign=v4_4)
 
 #### 🍾 Chat Triggers.
 Any element in your page can be a chat trigger, eg: it can launch WhatsApp from a link or show the Joinchat CTA when the user scrolls to the footer.
@@ -107,7 +109,9 @@ Any element in your page can be a chat trigger, eg: it can launch WhatsApp from 
 * class `"joinchat_force_show"` opens Joinchat CTA (always)
 
 #### 💱 Multi-Language & RTL Support.
-To be able to support all your users, wherever they are. Our plugin is **compatible with WPML and Polylang** and also **RTL languages** are supported. [View FAQs](https://wordpress.org/plugins/creame-whatsapp-me/faq/)
+To be able to support all your users, wherever they are. Our plugin is **compatible with WPML and Polylang** and also **RTL languages** are supported.
+
+**Direct link to edit translations** when a translatable field is changed.
 
 #### 🌈 Theme Colors & 🌚 Dark Mode.
 You choose a color and we customize the entire visual theme of the widget. With Dark Mode display the chat window with dark colors and white text. From settings you can activate it or leave it automatic and detects devices' configuration.
@@ -121,17 +125,19 @@ Fully extensible, with lots of filters and actions to extend its functionality o
 ### ⌁ PREMIUM ADD-ONS 🍡
 Extend Join.chat with awesome features:
 
-#### 📡 [OmniChannel](https://join.chat/en/addons/omnichannel/).
-This Add-on will allow you to add more chat applications to the basic plug-in, in addition to WhatsApp. You can now add Telegram, Facebook Messenger, SMS, Phone call, Skype and FaceTime.
+#### 🤹🏻‍♂️ [Create Support Agents](https://join.chat/en/addons/support-agents/?utm_source=wporg&utm_medium=web&utm_campaign=v4_4).
+Managing multiple WhatsApp accounts has never been easier. Add multiple phone numbers and monitor their availability, even if your employees are out of the office, your website users will know how long it will be before they are back up and running!
 
-#### 👥 [Support Agents](https://join.chat/en/addons/support-agents/).
-This Add-on allows you to add several WhatsApp accounts, defining the personal data of each agent's profile, as well as their work schedule. This way customers can choose who they want to talk to.
+#### 🎲 [Avoid Overloading](https://join.chat/en/addons/random-phone/?utm_source=wporg&utm_medium=web&utm_campaign=v4_4).
+Avoid delays in support chats. Joinchat allows you to add as many phone numbers as you want. We distribute customer chats evenly among each of your support agents, so you never have to worry about bottlenecks or dropped calls again.
 
-#### 🎬 [CTA Extras](https://join.chat/en/addons/cta-extras/).
-This Add-on allows you to create rich content in the chat window, to make the calls to action (CTA) 😍 irresistible. You can add links to images, call to action buttons, you can even add animated Iframes or GIFs.
+#### 📡 [Don’t Miss a Chat](https://join.chat/en/addons/omnichannel/?utm_source=wporg&utm_medium=web&utm_campaign=v4_4).
+This feature will allow you to add more chat apps to the basic plugin, in addition to WhatsApp. You can now add Telegram, Facebook Messenger, SMS, phone call, Skype and FaceTime.
 
-#### 🎲 [Random Phone](https://join.chat/en/addons/random-phone/).
-With Random Phone you can add as many phone numbers as you want, there is no limit. Every time a user of your site clicks on the start chat button, they will be randomly and equitably referred to each of the different support numbers you have configured.
+#### 🥁 [Convincing Calls to Action](https://join.chat/en/addons/cta-extras/?utm_source=wporg&utm_medium=web&utm_campaign=v4_4).
+Use our embed tool to beautifully design the content that appears in the chat window. Drive your leads from landings to sales and conversion pages. Add links, images, animated GIFs, buttons or even embedded content from other platforms, surveys, chatbots, forms...
+
+[👉 Upgrade Joinchat Now](https://join.chat/en/premium/?utm_source=wporg&utm_medium=web&utm_campaign=v4_4)
 
 ### 🧪 Try Join.chat
 Do you want to test the Join.chat configuration panel without installing it? You can try it in a [WordPress on the fly demo](https://demo.tastewp.com/creame-whatsapp-me)
@@ -139,7 +145,7 @@ Do you want to test the Join.chat configuration panel without installing it? You
 ### ⌁ If you like Join.chat 😍
 1. Please leave us a [★★★★★](https://wordpress.org/support/plugin/creame-whatsapp-me/reviews/#new-post) rating. We'll thank you.
 2. Help us with the [translation in your language](https://translate.wordpress.org/projects/wp-plugins/creame-whatsapp-me)
-3. Visit our blog and find tips and tricks at [join.chat](https://join.chat/en/blog/?utm_source=wporg&utm_medium=web&utm_campaign=v4_2).
+3. Visit our blog and find tips and tricks at [join.chat](https://join.chat/en/blog/?utm_source=wporg&utm_medium=web&utm_campaign=v4_4).
 4. Follow [@joinchatnow](https://twitter.com/joinchatnow) on twitter.
 
 
@@ -150,15 +156,6 @@ Do you want to test the Join.chat configuration panel without installing it? You
 
 
 == Frequently Asked Questions ==
-
-= Upgrade from WAme to Join.chat =
-
-From version 4.0 we change our name to Join.chat.
-To avoid using several prefixes from old and new versions we have decided to rename all them to the new `joinchat`.
-
-* All analytics events change from `WhatsAppMe` to `JoinChat`
-* All css styles change from `wame` or `whatsappme` to `joinchat`.
-* All actions and filters change from `wame_` or `whatsappme_` to `joinchat_`.
 
 = I can't see the button or it's over / under another thing =
 
@@ -174,20 +171,37 @@ If you need to move up:
 .joinchat { --bottom: 60px; }
 
 /* mobile only */
-@media (max-width: 480px), (max-width: 767px) and (orientation: landscape) {
+@media (max-width: 480px), (orientation: landscape) and (max-height: 480px) {
   .joinchat { --bottom: 60px; }
 }`
+
+= Change button size =
+
+You can change the button size by adding this CSS in *Appearance > Customize > Custom CSS*:
+
+`/* always */
+.joinchat { --s: 50px; }
+
+/* mobile only */
+@media (max-width: 480px), (orientation: landscape) and (max-height: 480px) {
+  .joinchat { --s: 40px; }
+}`
+
+For WooCommerce Product Button you can chage size with:
+
+`.joinchat__woo-btn { --s: 50px; }`
+
 
 = Shortcodes / Triggers =
 
 Join.chat does not provide any shortcodes, but you can easily link to WhatsApp in two ways:
 
-1. Add an anchor link to `#whatsapp` (open WhastApp directly) or `#joinchat` (show chat window). e.g.: add in your menu a custom link with the URL `#whatsapp`
-2. Add a css class to any element, `joinchat_app` (open WhastApp directly) or `joinchat_open` (show chat window). e.g.: `<img src="contact.jpg" class="joinchat_open" alt="Contact">`
+1. Add an anchor link to `#whatsapp` (open WhastApp directly) or `#joinchat` (show chat window).<br>e.g.: add in your menu a custom link with the URL `#whatsapp`
+2. Add a css class to any element, `joinchat_app` (open WhastApp directly) or `joinchat_open` (show chat window).<br>e.g.: `<img src="contact.jpg" class="joinchat_open" alt="Contact">`
 
 This works with your phone settings and message with dynamic variables, **even on pages without Join.chat visible**.
 
-For custom WhatsApp links, you can create the url with our **[WhatsApp link generator](https://join.chat/en/whatsapp-link/) free tool** and copy it to your links.
+For custom WhatsApp links, you can create the url with our **[WhatsApp link generator](https://join.chat/en/whatsapp-link/?utm_source=wporg&utm_medium=web&utm_campaign=v4_4) free tool** and copy it to your links.
 
 = Disable enhanced telephone input =
 
@@ -197,8 +211,8 @@ Join.chat uses International Telephone Input library to facilitate and validate 
 
 = Allow other roles to change settings =
 
-By default Join.chat settings is a submenu under "Settings" and can only be edited by users with `administrator` role.
-You can change the required capability to edit Join.chat general settings with the filter `"joinchat_capability"`.
+By default Join.chat settings can only be edited by users with `manage_options` capability (administrator).
+You can change the required capability with the filter `"joinchat_capability"`.
 
 `// e.g. allow shop managers:
 add_filter( 'joinchat_capability', function(){ return 'manage_woocommerce'; } );
@@ -206,12 +220,9 @@ add_filter( 'joinchat_capability', function(){ return 'manage_woocommerce'; } );
 // e.g. allow editors:
 add_filter( 'joinchat_capability', function(){ return 'edit_pages'; } );`
 
-When change `"joinchat_capability"` Join.chat menu will be placed as direct menu in your wp-admin but also you can force it with the filter `"joinchat_submenu"`:
+Since v4.4 Join.chat menu is placed as direct menu in your wp-admin but you can change it with the filter `"joinchat_submenu"`:
 
-`//e.g. force as menu:
-add_filter( 'joinchat_submenu', '__return_false' );
-
-//e.g. force as submenu:
+`// Show as submenu under Settings (also require "manage_options" capability)
 add_filter( 'joinchat_submenu', '__return_true' );`
 
 = WPML/Polylang translations =
@@ -280,16 +291,7 @@ Joinchat triggers custom events before launch WhatsApp `'joinchat:open'` and bef
 
 You can use them to extend them to your needs, add extra functions, cancel events or add extra parameters.
 
-`// e.g.: Send Google Ads conversion
-jQuery(document).on('joinchat:open', function () {
-  gtag('event', 'conversion', {
-    'send_to': 'AW-CONVERSION_ID/CONVERSION_LABEL',
-    'value': 1.0,
-    'currency': 'USD',
-  });
-});
-
-// e.g.: Send webhook to Zapier
+`// e.g.: Send webhook to Zapier
 jQuery(document).on('joinchat:event', function (event, params) {
   jQuery.post('https://hooks.zapier.com/hooks/catch/123456/xxxxxx/', params );
 });
@@ -324,12 +326,15 @@ Join.chat save two localStorage variables for proper operation:
 = 4.4 =
 * **NEW: Display QR Code on desktop** to scan with phone.
 * **NEW: Opt-in** text for user consent (optional or required).
+* **NEW: WooCommerce Product Button** for product pages.
 * **NEW:** Dynamic variable `{HREF}` for full URL with query params.
 * **NEW:** Google Ads conversion.
 * **NEW:** Better analytics events with more info.
 * **NEW:** Allow direct show button without animation setting Button Delay as "-1".
+* **TIP:** Easier configuration, double click to apply the example settings in placeholders.
 * CHANGED default z-index is `9999`.
 * CHANGED allow set empty CTA for products with `{}` in main settings.
+* **CHANGED** GA4 custom 'JoinChat' event now is 'generate_lead' recomended event.
 
 = 4.3.2 =
 * Styles minor improvements, fix tooltip align.
