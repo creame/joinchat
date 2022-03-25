@@ -6,7 +6,7 @@
 .joinchat {
   --bottom: 20px;
   --sep: 20px;
-  --s: 60px;
+  --s: var(--btn, 60px);
   --header: calc(var(--s)*1.16667);
   --vh: 100vh;
   --red: 37;
