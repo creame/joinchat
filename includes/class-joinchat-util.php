@@ -314,11 +314,12 @@ class JoinChatUtil {
 	 * Plugin admin page is in options submenu
 	 *
 	 * @since    4.2.0
+	 * @since    4.4.0 return false by default
 	 * @return bool
 	 */
 	public static function options_submenu() {
 
-		return apply_filters( 'joinchat_submenu', 'manage_options' === self::capability() );
+		return apply_filters( 'joinchat_submenu', false );
 
 	}
 
