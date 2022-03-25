@@ -319,7 +319,7 @@ class JoinChatUtil {
 	 */
 	public static function options_submenu() {
 
-		return apply_filters( 'joinchat_submenu', false );
+		return 'manage_options' === self::capability() && apply_filters( 'joinchat_submenu', false );
 
 	}
 
