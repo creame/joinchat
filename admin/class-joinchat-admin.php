@@ -306,7 +306,7 @@ class JoinChatAdmin {
 					'optin_check' => __( 'Opt-in Required', 'creame-whatsapp-me' ),
 				),
 				'conversion' => array(
-					'gads' => __( 'Google Ads Conversion', 'creame-whatsapp-me' ),
+					'gads' => '<label for="joinchat_gads">' . __( 'Google Ads Conversion', 'creame-whatsapp-me' ) . '</label>',
 				),
 			);
 
@@ -361,7 +361,7 @@ class JoinChatAdmin {
 		$input['position']      = $input['position'] != 'left' ? 'right' : 'left';
 		$input['color']         = preg_match( '/^#[a-f0-9]{6}$/i', $input['color'] ) ? $input['color'] : '#25d366';
 		$input['dark_mode']     = in_array( $input['dark_mode'], array( 'no', 'yes', 'auto' ) ) ? $input['dark_mode'] : 'no';
-		$input['header']        = in_array( $input['header'], array( '__jc__', '__wa__' ) ) ? $input['header'] : $util::clean_input( $input['header_custom'] );
+		$input['header']        = in_array( $input['header'], array( '__jc__', '__wa__' ) ) ? $input['header'] : $util::substr( $util::clean_input( $input['header_custom'] ), 0, 40 );
 		$input['optin_check']   = isset( $input['optin_check'] ) ? 'yes' : 'no';
 		$input['optin_text']    = wp_kses(
 			$input['optin_text'],
@@ -371,7 +371,7 @@ class JoinChatAdmin {
 				'a'      => array( 'href' => true ),
 			)
 		);
-		$input['gads']          = $util::clean_input( $input['gads'] );
+		$input['gads']          = $util::substr( $util::clean_input( $input['gads'] ), 0, 40 );
 
 		if ( isset( $input['view'] ) ) {
 			$input['visibility'] = array_filter(
@@ -681,7 +681,8 @@ class JoinChatAdmin {
 					break;
 
 				case 'gads':
-					$output = '<input id="joinchat_gads" name="joinchat[gads]" value="' . esc_attr( $value ) . '" type="text" maxlength="20" class="regular-text" placeholder="' . esc_attr__( 'AW-CONVERSION_ID/CONVERSION_LABEL', 'creame-whatsapp-me' ) . '"> ' .
+					$output = '<input id="joinchat_gads" name="joinchat[gads]" value="' . esc_attr( $value ) . '" type="text" maxlength="40" class="regular-text" ' .
+						'placeholder="' . esc_attr__( 'AW-CONVERSION_ID/CONVERSION_LABEL', 'creame-whatsapp-me' ) . '" title="' . esc_attr__( 'AW-CONVERSION_ID/CONVERSION_LABEL', 'creame-whatsapp-me' ) . '"> ' .
 						'<p class="description">' . __( 'Send the conversion automatically at the chat start', 'creame-whatsapp-me' ) . '</p>';
 					break;
 
