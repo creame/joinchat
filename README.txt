@@ -5,7 +5,7 @@ Tags: Chat, Click to Chat, Facebook Messenger, WhatsApp, Telegram, Whatsapp Busi
 Requires at least: 3.5.0
 Tested up to: 5.9
 Requires PHP: 5.3
-Stable tag: 4.4.0
+Stable tag: 4.4.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -20,7 +20,7 @@ WhatsApp, Messenger, Telegram, Phone call… capture users through their favorit
 
 https://www.youtube.com/watch?v=Ad2ZpPnX_3Q
 
-[Documentation](https://join.chat/en/docs/?utm_source=wporg&utm_medium=web&utm_campaign=v4_4) | [Add-ons](https://join.chat/en/addons/?utm_source=wporg&utm_medium=web&utm_campaign=v4_4) | [Support](https://join.chat/en/support/?utm_source=wporg&utm_medium=web&utm_campaign=v4_4)
+[Documentation](https://join.chat/en/docs/?utm_source=wporg&utm_medium=web&utm_campaign=v4_4) | [Premium](https://join.chat/en/premium/?utm_source=wporg&utm_medium=web&utm_campaign=v4_4) | [Support](https://join.chat/en/support/?utm_source=wporg&utm_medium=web&utm_campaign=v4_4)
 
 ### ⌁ What you can do with Join.chat (formerly WAme) ✅
 
@@ -329,6 +329,9 @@ Join.chat save two localStorage variables for proper operation:
 
 == Changelog ==
 
+= 4.4.1 =
+* FIX Google Ads conversion field is too short.
+
 = 4.4 =
 * **NEW: Display QR Code on desktop** to scan with phone.
 * **NEW: Opt-in** text for user consent (optional or required).
@@ -340,7 +343,7 @@ Join.chat save two localStorage variables for proper operation:
 * **TIP:** Easier configuration, double click to apply the example settings in placeholders.
 * CHANGED default z-index is `9999`.
 * CHANGED allow set empty CTA for products with `{}` in main settings.
-* **CHANGED** GA4 custom 'JoinChat' event now is 'generate_lead' recomended event.
+* **CHANGED** GA4 custom 'JoinChat' event now is 'generate_lead' recommended event.
 
 = 4.3.2 =
 * Styles minor improvements, fix tooltip align.
@@ -488,6 +491,9 @@ See [changelog.txt](https://plugins.svn.wordpress.org/creame-whatsapp-me/trunk/c
 
 
 == Upgrade Notice ==
+
+= 4.4.0 =
+Google Analytics 4 custom "JoinChat" event replaced with recommended "generate_lead" event.
 
 = 4.0.0 =
 **Join.chat rebrand!!** Analytics events change from `WhatsAppMe` to `JoinChat` and classes, actions and filters change from `wame` or `whatsappme` to `joinchat`.
