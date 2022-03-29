@@ -35,7 +35,7 @@ class JoinChatElementorPublic {
 	 */
 	public function elementor_preview_disable( $show ) {
 
-		$is_preview   = \Elementor\Plugin::$instance->preview->is_preview_mode();
+		$is_preview   = isset($_GET['elementor-preview']) || ( isset($_GET['render_mode']) && 'template-preview' === $_GET['render_mode']);
 		$preview_show = apply_filters( 'joinchat_elementor_preview_show', false );
 
 		return $is_preview ? $show && $preview_show : $show;
