@@ -9,43 +9,50 @@
     opacity: 0;
     transform: translateY(50px);
   }
-}
 
-@keyframes #{$name}_badge_out {
-  from {
+  to {
     opacity: 1;
     transform: translateY(0);
   }
-
-  to {
-    opacity: 0;
-    transform: translateY(-20px);
-  }
 }
 
-@keyframes #{$name}_plain {
-  0%,
-  50%,
-  100% {
-    stroke-dashoffset: 1097;
+@if $type == full {
+  @keyframes #{$name}_badge_out {
+    from {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    to {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
   }
 
-  5%,
-  45% {
-    stroke-dashoffset: 0;
-  }
-}
+  @keyframes #{$name}_plain {
+    0%,
+    50%,
+    100% {
+      stroke-dashoffset: 1097;
+    }
 
-@keyframes #{$name}_chat {
-  0%,
-  50%,
-  100% {
-    stroke-dashoffset: 1020;
+    5%,
+    45% {
+      stroke-dashoffset: 0;
+    }
   }
 
-  5%,
-  45% {
-    stroke-dashoffset: 0;
+  @keyframes #{$name}_chat {
+    0%,
+    50%,
+    100% {
+      stroke-dashoffset: 1020;
+    }
+
+    5%,
+    45% {
+      stroke-dashoffset: 0;
+    }
   }
 }
 

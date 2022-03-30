@@ -18,17 +18,17 @@ defined( 'WPINC' ) || exit;
 		<?php if ( $image ) : ?>
 			<div class="joinchat__button__image"><?php echo $image; ?></div>
 		<?php endif; ?>
-			<?php if ( $this->settings['message_start'] ) : ?>
-			<div class="joinchat__button__sendtext"><?php echo esc_html( $this->settings['message_start'] ); ?></div>
-		<?php endif; ?>
 		<?php if ( $box_content ) : ?>
+			<?php if ( $this->settings['message_start'] ) : ?>
+				<div class="joinchat__button__sendtext"><?php echo esc_html( $this->settings['message_start'] ); ?></div>
+			<?php endif; ?>
 			<svg class="joinchat__button__send" width="60" height="60" viewbox="0 0 400 400" stroke-linecap="round" stroke-width="33">
 				<path class="joinchat_svg__plain" d="M168.83 200.504H79.218L33.04 44.284a1 1 0 0 1 1.386-1.188L365.083 199.04a1 1 0 0 1 .003 1.808L34.432 357.903a1 1 0 0 1-1.388-1.187l29.42-99.427"/>
 				<path class="joinchat_svg__chat" d="M318.087 318.087c-52.982 52.982-132.708 62.922-195.725 29.82l-80.449 10.18 10.358-80.112C18.956 214.905 28.836 134.99 81.913 81.913c65.218-65.217 170.956-65.217 236.174 0 42.661 42.661 57.416 102.661 44.265 157.316"/>
 			</svg>
-		<?php endif; ?>
-		<?php if ( $this->settings['message_badge'] ) : ?>
-			<div class="joinchat__badge">1</div>
+			<?php if ( $this->settings['message_badge'] ) : ?>
+				<div class="joinchat__badge">1</div>
+			<?php endif; ?>
 		<?php endif; ?>
 		<?php if ( $this->settings['button_tip'] ) : ?>
 			<div class="joinchat__tooltip"><div><?php echo esc_html( $this->settings['button_tip'] ); ?></div></div>
@@ -57,6 +57,6 @@ defined( 'WPINC' ) || exit;
 				</div>
 			</div>
 		</div>
+		<svg height="0" width="0"><defs><clipPath id="joinchat__message__peak"><path d="M17 25V0C17 12.877 6.082 14.9 1.031 15.91c-1.559.31-1.179 2.272.004 2.272C9.609 18.182 17 18.088 17 25z"/></clipPath></defs></svg>
 	<?php endif; ?>
-	<svg height="0" width="0"><defs><clipPath id="joinchat__message__peak"><path d="M17 25V0C17 12.877 6.082 14.9 1.031 15.91c-1.559.31-1.179 2.272.004 2.272C9.609 18.182 17 18.088 17 25z"/></clipPath></defs></svg>
 </div>

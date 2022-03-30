@@ -6,7 +6,7 @@
 .joinchat {
   --bottom: 20px;
   --sep: 20px;
-  --s: var(--btn, 60px);
+  --s: 60px;
   --header: calc(var(--s)*1.16667);
   --vh: 100vh;
   --red: 37;
@@ -22,12 +22,12 @@
   --text: hsl(0deg 0% calc(var(--bw)*1%) / clamp(70%, calc(var(--bw)*1%), 100%));
   --msg: var(--color);
 
+  color: var(--text);
   display: none;
   position: fixed;
   z-index: 9999;
   right: var(--sep);
   bottom: var(--bottom);
-  color: var(--text);
   font: normal normal normal 16px/1.625em var(--joinchat-font);
   letter-spacing: 0;
   -webkit-animation: joinchat_show 500ms cubic-bezier(0.18, 0.89, 0.32, 1.28) 10ms both;
@@ -89,8 +89,7 @@
   border-radius: calc(var(--s)/2);
   box-shadow: 1px 6px 24px 0 rgb(7 94 84 / 24%);
   cursor: pointer;
-  transition: background 0.2s linear;
-  will-change: background-color, width;
+  transition: background-color 0.2s linear;
 }
 
 [dir="rtl"] .joinchat__button {
@@ -99,7 +98,7 @@
 
 .joinchat__button:hover {
   background: #128c7e;
-  transition: background 1.5s linear;
+  transition-duration: 1.5s;
 }
 
 .joinchat__button:active {
@@ -119,7 +118,7 @@
 
 .joinchat--chatbox .joinchat__button {
   background: var(--color);
-  transition: background 0.2s linear;
+  transition-duration: 0.2s;
   box-shadow: 0 1px 2px 0 rgb(0 0 0 / 30%);
 }
 
@@ -526,7 +525,6 @@
   overflow-x: hidden;
   overflow-y: auto;
   overscroll-behavior-y: contain;
-  will-change: scroll-position;
 }
 
 .joinchat__box__scroll::-webkit-scrollbar {
@@ -695,12 +693,22 @@
     opacity: 0;
     transform: translateY(50px);
   }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @keyframes joinchat_badge_in {
   from {
     opacity: 0;
     transform: translateY(50px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 

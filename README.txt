@@ -5,7 +5,7 @@ Tags: Chat, Click to Chat, Facebook Messenger, WhatsApp, Telegram, Whatsapp Busi
 Requires at least: 3.5.0
 Tested up to: 5.9
 Requires PHP: 5.3
-Stable tag: 4.4.1
+Stable tag: 4.4.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -256,6 +256,8 @@ If your site don't have standard names for UA tracker ('ga') or data layer ('dat
     return $settings;
 } );`
 
+Joinchat is compatible with plugins **MonsterInsights – Google Analytics Dashboard for WordPress** and **Google Tag Manager for WordPress** custom names.
+
 = Google Tag Manager integration =
 
 Join.chat sends a `'JoinChat'` event if GTM is detected when user launch WhatsApp:
@@ -328,6 +330,14 @@ Join.chat save two localStorage variables for proper operation:
 
 
 == Changelog ==
+
+= 4.4.2 =
+* **NEW Optimized CSS** for only button without Call to Action (only 2.5kB).
+* **NEW** Compatible with **Perfect Brands for WooCommerce** for brand custom settings.
+* **NEW** Compatible with **Google Tag Manager for WordPress** custom DataLayer name.
+* **NEW** Don't load on Elementor Site Builder previews.
+* FIX badge animation don't show error introduced in v4.4.0.
+* CHANGED optimized render without unused elements.
 
 = 4.4.1 =
 * FIX Google Ads conversion field is too short.

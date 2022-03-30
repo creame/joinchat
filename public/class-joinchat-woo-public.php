@@ -341,7 +341,7 @@ class JoinChatWooPublic {
 
 			$min = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
 
-			wp_enqueue_style( 'joinchat-woo', plugins_url( "css/woo{$min}.css", __FILE__ ), array(), JOINCHAT_VERSION, 'all' );
+			wp_enqueue_style( 'joinchat-woo', plugins_url( "css/joinchat-woo{$min}.css", __FILE__ ), array(), JOINCHAT_VERSION, 'all' );
 
 		}
 

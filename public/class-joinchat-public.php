@@ -155,17 +155,27 @@ class JoinChatPublic {
 	 *
 	 * @since    1.0.0
 	 * @since    2.2.2     minified
+	 * @since    4.4.2     use "only button stylesheet" if no chatbox
 	 * @return   void
 	 */
 	public function enqueue_styles() {
 
 		if ( $this->show ) {
-			$min             = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
-			$color           = $this->settings['color'];
-			list($r, $g, $b) = sscanf( $color, '#%02x%02x%02x' );
+			$file = $this->plugin_name;
+			$min  = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
 
-			wp_enqueue_style( $this->plugin_name, plugins_url( "css/{$this->plugin_name}{$min}.css", __FILE__ ), array(), $this->version, 'all' );
-			wp_add_inline_style( $this->plugin_name, apply_filters( 'joinchat_inline_style', ".joinchat{ --red:$r; --green:$g; --blue:$b; }", $this->settings ) );
+			// If not chatbox use lighter only button styles
+			if ( empty( $this->settings['message_text'] ) && empty( $this->settings['optin_text'] ) && ! has_filter( 'joinchat_content' ) ) {
+				$file .= '-btn';
+			}
+
+			wp_enqueue_style( $this->plugin_name, plugins_url( "css/{$file}{$min}.css", __FILE__ ), array(), $this->version, 'all' );
+
+			if ( $file === $this->plugin_name ) {
+				list($r, $g, $b) = sscanf( $this->settings['color'], '#%02x%02x%02x' );
+
+				wp_add_inline_style( $this->plugin_name, apply_filters( 'joinchat_inline_style', ".joinchat{ --red:$r; --green:$g; --blue:$b; }", $this->settings ) );
+			}
 		}
 
 	}

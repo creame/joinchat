@@ -38,7 +38,8 @@
     // Compatible with GADP for WordPress by MonsterInsights tracker name
     var ga_tracker = win[this.settings.ga_tracker] || win['ga'] || win['__gaTracker'];
     // Can pass setting 'data_layer' for custom data layer name
-    var data_layer = win[this.settings.data_layer] || win['dataLayer'];
+    // Compatible with GTM4WP custom DataLayer name
+    var data_layer = win[this.settings.data_layer] || win[win.gtm4wp_datalayer_name] || win['dataLayer'];
 
     // Send Google Analytics custom event (Universal Analytics - analytics.js)
     if (typeof ga_tracker == 'function' && typeof ga_tracker.getAll == 'function') {
