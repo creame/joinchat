@@ -130,7 +130,7 @@
   overflow-x: hidden;
   overflow-y: auto;
   overscroll-behavior-y: contain;
-  will-change: scroll-position;
+  // will-change: scroll-position;
 
   &::-webkit-scrollbar {
     width: 5px;

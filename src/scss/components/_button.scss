@@ -1,6 +1,8 @@
 #{$class}__button {
-  display: flex;
-  flex-direction: row;
+  @if $type == full {
+    display: flex;
+    flex-direction: row;
+  }
   position: absolute;
   z-index: 2;
   bottom: 8px;
@@ -13,16 +15,19 @@
   border-radius: calc(var(--s) / 2);
   box-shadow: 1px 6px 24px 0 rgba($WAdarken, 0.24);
   cursor: pointer;
-  transition: background 0.2s linear;
-  will-change: background-color, width;
+  transition: background-color 0.2s linear;
 
-  #{$rtl} & {
-    flex-direction: row-reverse;
+  @if $type == full {
+    #{$rtl} & {
+      flex-direction: row-reverse;
+    }
   }
 
   &:hover {
     background: $WAdark;
-    transition: background 1.5s linear;
+    @if $type == full {
+      transition-duration: 1.5s;
+    }
   }
 
   &:active {
@@ -33,37 +38,42 @@
   #{$class}--left & {
     right: auto;
     left: 8px;
-    flex-direction: row-reverse;
 
-    #{$rtl} & {
-      flex-direction: row;
+    @if $type == full {
+      flex-direction: row-reverse;
+
+      #{$rtl} & {
+        flex-direction: row;
+      }
     }
   }
 
-  #{$class}--chatbox & {
-    background: var(--color);
-    transition: background 0.2s linear;
-    box-shadow: 0 1px 2px 0 rgba($black, 0.3);
+  @if $type == full {
+    #{$class}--chatbox & {
+      background: var(--color);
+      transition-duration: 0.2s;
+      box-shadow: 0 1px 2px 0 rgba($black, 0.3);
 
-    &:hover,
-    &:active {
-      background: var(--hover);
-    }
-  }
-
-  // Opt-in disabled
-  #{$class}--optout#{$class}--chatbox & {
-    background-color: #999;
-    opacity: .5;
-    pointer-events: none;
-
-    #{$class}_svg__plain {
-      stroke-dasharray: 0;
-      animation: none;
+      &:hover,
+      &:active {
+        background: var(--hover);
+      }
     }
 
-    #{$class}_svg__chat {
-      animation: none;
+    // Opt-in disabled
+    #{$class}--optout#{$class}--chatbox & {
+      background-color: #999;
+      opacity: .5;
+      pointer-events: none;
+
+      #{$class}_svg__plain {
+        stroke-dasharray: 0;
+        animation: none;
+      }
+
+      #{$class}_svg__chat {
+        animation: none;
+      }
     }
   }
 }
@@ -76,8 +86,10 @@
   background-size: 60%;
   overflow: hidden;
 
-  #{$class}--chatbox & {
-    display: none;
+  @if $type == full {
+    #{$class}--chatbox & {
+      display: none;
+    }
   }
 }
 
@@ -108,77 +120,81 @@
     animation: none;
   }
 
-  #{$class}--chatbox & {
-    display: none;
+  @if $type == full {
+    #{$class}--chatbox & {
+      display: none;
+    }
   }
 }
 
-#{$class}__button__send {
-  display: none;
-  flex-shrink: 0;
-  width: var(--s);
-  height: var(--s);
-  max-width: var(--s); // fix theme Twenty Twenty max-width: 100%;
-  padding: calc(var(--s)*0.18);
-  margin: 0;
-  overflow: hidden;
+@if $type == full {
+  #{$class}__button__send {
+    display: none;
+    flex-shrink: 0;
+    width: var(--s);
+    height: var(--s);
+    max-width: var(--s); // fix theme Twenty Twenty max-width: 100%;
+    padding: calc(var(--s)*0.18);
+    margin: 0;
+    overflow: hidden;
 
-  #{$class}--chatbox & {
-    display: block;
-  }
+    #{$class}--chatbox & {
+      display: block;
+    }
 
-  path {
-    fill: none !important;
-    stroke: var(--text) !important;
-  }
+    path {
+      fill: none !important;
+      stroke: var(--text) !important;
+    }
 
-  #{$class}_svg__plain {
-    stroke-dasharray: 1097;
-    stroke-dashoffset: 1097;
-    animation: #{$name}_plain 6s 0.2s ease-in-out infinite;
-  }
-
-  #{$class}_svg__chat {
-    stroke-dasharray: 1020;
-    stroke-dashoffset: 1020;
-    animation: #{$name}_chat 6s 3.2s ease-in-out infinite;
-  }
-
-  @include motionless {
     #{$class}_svg__plain {
-      stroke-dasharray: 0;
-      animation: none;
+      stroke-dasharray: 1097;
+      stroke-dashoffset: 1097;
+      animation: #{$name}_plain 6s 0.2s ease-in-out infinite;
     }
 
     #{$class}_svg__chat {
-      animation: none;
+      stroke-dasharray: 1020;
+      stroke-dashoffset: 1020;
+      animation: #{$name}_chat 6s 3.2s ease-in-out infinite;
+    }
+
+    @include motionless {
+      #{$class}_svg__plain {
+        stroke-dasharray: 0;
+        animation: none;
+      }
+
+      #{$class}_svg__chat {
+        animation: none;
+      }
     }
   }
-}
 
-#{$class}__button__sendtext {
-  padding: 0;
-  max-width: 0;
-  border-radius: var(--s);
-  font-weight: 600;
-  line-height: var(--s);
-  white-space: nowrap;
-  opacity: 0;
-  overflow: hidden;
-  transition: none;
+  #{$class}__button__sendtext {
+    padding: 0;
+    max-width: 0;
+    border-radius: var(--s);
+    font-weight: 600;
+    line-height: var(--s);
+    white-space: nowrap;
+    opacity: 0;
+    overflow: hidden;
+    transition: none;
 
-  #{$class}--chatbox & {
-    padding: 0 4px 0 24px;
-    max-width: 200px;
-    opacity: 1;
-    transition: max-width 0.2s linear, opacity 0.4s ease-out 0.2s;
-  }
+    #{$class}--chatbox & {
+      padding: 0 4px 0 24px;
+      max-width: 200px;
+      opacity: 1;
+      transition: max-width 0.2s linear, opacity 0.4s ease-out 0.2s;
+    }
 
-  #{$class}--chatbox#{$class}--left & {
-    padding: 0 24px 0 4px;
-  }
+    #{$class}--chatbox#{$class}--left & {
+      padding: 0 24px 0 4px;
+    }
 
-  @include motionless {
-    transition: none !important;
+    @include motionless {
+      transition: none !important;
+    }
   }
 }

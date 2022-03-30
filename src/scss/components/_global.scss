@@ -2,30 +2,34 @@
   // Position/size
   --bottom: 20px;
   --sep: 20px;
-  --s: var(--btn, 60px); // Button size (old --btn)
-  --header: calc(var(--s)*1.166667);
-  --vh: 100vh;
-  // Colors
-  --red: 37;
-  --green: 211;
-  --blue: 102;
-  --rgb: var(--red) var(--green) var(--blue);
-  --color: rgb(var(--rgb));
-  --dark: rgb(calc(var(--red) - 75), calc(var(--green) - 75), calc(var(--blue) - 75)); // darker color
-  --hover: rgb(calc(var(--red) + 50), calc(var(--green) + 50), calc(var(--blue) + 50)); // lighter color
-  --bg: rgb(var(--rgb) / 4%);
-  // Black or white color based on https://css-tricks.com/switch-font-color-for-different-backgrounds-with-css/
-  --tolerance: 210; // [0-255] Greater tolerance allow lighter colors with white text
-  --bw: calc((var(--red)*0.2126 + var(--green)*0.7152 + var(--blue)*0.0722 - var(--tolerance)) * -10000000);
-  --text: hsl(0 0% calc(var(--bw)*1%) / clamp(70%, calc(var(--bw)*1%), 100%)); // White hsl(0 0% 100% / 100%) / Black hsl(0 0% 0% / 70%)
-  --msg: var(--color);
+  --s: 60px; // Button size (old --btn)
+
+  @if $type == full {
+    --header: calc(var(--s)*1.166667);
+    --vh: 100vh;
+    // Colors
+    --red: 37;
+    --green: 211;
+    --blue: 102;
+    --rgb: var(--red) var(--green) var(--blue);
+    --color: rgb(var(--rgb));
+    --dark: rgb(calc(var(--red) - 75), calc(var(--green) - 75), calc(var(--blue) - 75)); // darker color
+    --hover: rgb(calc(var(--red) + 50), calc(var(--green) + 50), calc(var(--blue) + 50)); // lighter color
+    --bg: rgb(var(--rgb) / 4%);
+    // Black or white color based on https://css-tricks.com/switch-font-color-for-different-backgrounds-with-css/
+    --tolerance: 210; // [0-255] Greater tolerance allow lighter colors with white text
+    --bw: calc((var(--red)*0.2126 + var(--green)*0.7152 + var(--blue)*0.0722 - var(--tolerance)) * -10000000);
+    --text: hsl(0 0% calc(var(--bw)*1%) / clamp(70%, calc(var(--bw)*1%), 100%)); // White hsl(0 0% 100% / 100%) / Black hsl(0 0% 0% / 70%)
+    --msg: var(--color);
+
+    color: var(--text);
+  }
 
   display: none;
   position: fixed;
   z-index: 9999;
   right: var(--sep);
   bottom: var(--bottom);
-  color: var(--text);
   font: normal normal normal 16px/1.625em var(--joinchat-font);
   letter-spacing: 0;
   animation: #{$name}_show 500ms cubic-bezier(0.18, 0.89, 0.32, 1.28) 10ms both;
@@ -52,7 +56,10 @@
   @include mobile {
     --bottom: 6px;
     --sep: 6px;
-    --header: calc(var(--s)*0.9166667);
+
+    @if $type == full {
+      --header: calc(var(--s)*0.9166667);
+    }
   }
 
   @media (max-width: 767px) {
@@ -67,8 +74,10 @@
     }
   }
 
-  &--dark {
-    --msg: var(--dark);
+  @if $type == full {
+    &--dark {
+      --msg: var(--dark);
+    }
   }
 
   &--noanim {
@@ -79,20 +88,24 @@
     animation: none;
   }
 
-  &--hidden {
-    display: none !important;
+  @if $type == full {
+    &--hidden {
+      display: none !important;
+    }
   }
 }
 
-// Fallback (Microsoft Edge for Android & iOS < 13.7)
-@supports not (width: clamp(1px, 1%, 10px)) {
-  #{$class} {
-    --text: hsl(0 0% calc(var(--bw)*1%) / 90%);
+@if $type == full {
+  // Fallback (Microsoft Edge for Android & iOS < 13.7)
+  @supports not (width: clamp(1px, 1%, 10px)) {
+    #{$class} {
+      --text: hsl(0 0% calc(var(--bw)*1%) / 90%);
+    }
   }
-}
 
-@include dark {
-  #{$class}--dark-auto {
-    --msg: var(--dark);
+  @include dark {
+    #{$class}--dark-auto {
+      --msg: var(--dark);
+    }
   }
 }

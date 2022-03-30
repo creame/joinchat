@@ -43,8 +43,10 @@
     }
   }
 
-  #{$class}--chatbox & {
-    display: none;
+  @if $type == full {
+    #{$class}--chatbox & {
+      display: none;
+    }
   }
 
   #{$class}--left & {

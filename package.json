@@ -6,7 +6,7 @@
   "author": "Creame",
   "license": "ISC",
   "devDependencies": {
-    "autoprefixer": "^10.4.2",
+    "autoprefixer": "^10.4.4",
     "cssnano-cli": "^1.0.5",
     "del-cli": "^4.0.1",
     "postcss-calc": "^8.2.4",
@@ -19,7 +19,7 @@
     "postcss-strip-inline-comments": "^0.1.5",
     "postcss-svgo": "^5.1.0",
     "precss": "^4.0.0",
-    "stylelint": "^14.5.3",
+    "stylelint": "^14.6.1",
     "stylelint-config-standard": "^25.0.0"
   },
   "browserslist": [
@@ -32,10 +32,13 @@
     "css": "postcss src/scss/styles.scss -o public/css/joinchat.css -m",
     "minify": "cssnano public/css/joinchat.css public/css/joinchat.min.css --no-svgo --safe",
     "build": "npm run css && npm run minify",
-    "woo:css": "postcss src/scss/woo.scss -o public/css/woo.css -m",
-    "woo:minify": "cssnano public/css/woo.css public/css/woo.min.css --no-svgo --safe",
+    "woo:css": "postcss src/scss/woo.scss -o public/css/joinchat-woo.css -m",
+    "woo:minify": "cssnano public/css/joinchat-woo.css public/css/joinchat-woo.min.css --no-svgo --safe",
     "woo:build": "npm run woo:css && npm run woo:minify",
-    "build-all": "npm run build && npm run woo:build",
+    "btn:css": "postcss src/scss/btn.scss -o public/css/joinchat-btn.css -m",
+    "btn:minify": "cssnano public/css/joinchat-btn.css public/css/joinchat-btn.min.css --no-svgo --safe",
+    "btn:build": "npm run btn:css && npm run btn:minify",
+    "build-all": "npm run build && npm run woo:build && npm run btn:build",
     "clean": "del dist/css/*"
   }
 }

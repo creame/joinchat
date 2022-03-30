@@ -54,9 +54,15 @@
   }
 
   @include hover {
-    #{$class}--btn #{$class}__button:hover &,
-    #{$class}--chatbox #{$class}__button:hover & {
-      display: flex;
+    @if $type == full {
+      #{$class}--btn #{$class}__button:hover &,
+      #{$class}--chatbox #{$class}__button:hover & {
+        display: flex;
+      }
+    } @else {
+      #{$class}--btn #{$class}__button:hover & {
+        display: flex;
+      }
     }
   }
 }
