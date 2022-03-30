@@ -36,6 +36,11 @@ class JoinChatWooAdmin {
 		$loader->add_filter( 'joinchat_help_tab_styles_and_vars', $this, 'help_tab_vars' );
 		$loader->add_filter( 'joinchat_metabox_vars', $this, 'metabox_vars', 10, 2 );
 		$loader->add_filter( 'joinchat_metabox_placeholders', $this, 'metabox_placeholders', 10, 3 );
+
+		if ( defined( 'PWB_PLUGIN_FILE' ) ) { // Perfect Brands for WooCommerce
+			$loader->add_filter( 'joinchat_term_metabox_output', $this, 'term_metabox_fix', 10, 4 );
+		}
+
 	}
 
 	/**
@@ -129,7 +134,13 @@ class JoinChatWooAdmin {
 	 */
 	public function custom_taxonomies( $taxonomies ) {
 
-		return array_merge( $taxonomies, array( 'product_cat', 'product_tag' ) );
+		$product_taxs = array( 'product_cat', 'product_tag' );
+
+		if ( defined( 'PWB_PLUGIN_FILE' ) ) {
+			$product_taxs[] = 'pwb-brand';
+		}
+
+		return array_merge( $taxonomies, $product_taxs );
 
 	}
 
@@ -375,7 +386,6 @@ class JoinChatWooAdmin {
 		return $vars;
 	}
 
-
 	/**
 	 * Add Product metabox placeholders info.
 	 *
@@ -400,5 +410,25 @@ class JoinChatWooAdmin {
 		}
 
 		return $placeholders;
+	}
+
+	/**
+	 * Fix term meteabox for Brands
+	 *
+	 * @since    4.4.2
+	 * @param    string  $metabox_output
+	 * @param    WP_Term $term Current taxonomy term object
+	 * @param    array   $metadata
+	 * @param    string  $taxonomy Current taxonomy slug
+	 * @return   string
+	 */
+	public function term_metabox_fix( $metabox_output, $term, $metadata, $taxonomy ) {
+
+		if ( 'pwb-brand' === $taxonomy ) {
+			$metabox_output = '<table class="form-table">' . $metabox_output;
+		}
+
+		return $metabox_output;
+
 	}
 }
