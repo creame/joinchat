@@ -32,6 +32,8 @@
   letter-spacing: 0;
   -webkit-animation: joinchat_show 500ms cubic-bezier(0.18, 0.89, 0.32, 1.28) 10ms both;
   animation: joinchat_show 500ms cubic-bezier(0.18, 0.89, 0.32, 1.28) 10ms both;
+  transform: scale3d(0, 0, 0);
+  transform-origin: calc(var(--s)/-2) calc(var(--s)/-4);
   -webkit-user-select: none;
      -moz-user-select: none;
   user-select: none;
@@ -48,6 +50,7 @@
 
 .joinchat--show {
   display: block;
+  transform: scale3d(1, 1, 1);
 }
 
 .joinchat--left {
@@ -62,6 +65,12 @@
 .joinchat--noanim {
   -webkit-animation: none;
   animation: none;
+}
+
+.joinchat--chatbox:not(.joinchat--noanim) {
+  transform-origin: 0 0;
+  -webkit-animation-timing-function: ease-in-out;
+  animation-timing-function: ease-in-out;
 }
 
 .joinchat--hidden {
@@ -616,7 +625,7 @@
   height: 14px;
   border: solid var(--text);
   border-width: 0 3px 3px 0;
-  transform: rotate(45deg);
+  transform: rotate3d(0, 0, 1, 45deg);
 }
 
 [dir="rtl"] .joinchat__optin label {
@@ -678,61 +687,69 @@
 
 @-webkit-keyframes joinchat_show {
   from {
-    transform: scale(0);
+    transform: scale3d(0, 0, 0);
+  }
+
+  to {
+    transform: scale3d(1, 1, 1);
   }
 }
 
 @keyframes joinchat_show {
   from {
-    transform: scale(0);
+    transform: scale3d(0, 0, 0);
+  }
+
+  to {
+    transform: scale3d(1, 1, 1);
   }
 }
 
 @-webkit-keyframes joinchat_badge_in {
   from {
     opacity: 0;
-    transform: translateY(50px);
+    transform: translate3d(0, 50px, 0);
   }
 
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: translate3d(0, 0, 0);
   }
 }
 
 @keyframes joinchat_badge_in {
   from {
     opacity: 0;
-    transform: translateY(50px);
+    transform: translate3d(0, 50px, 0);
   }
 
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: translate3d(0, 0, 0);
   }
 }
 
 @-webkit-keyframes joinchat_badge_out {
   from {
     opacity: 1;
-    transform: translateY(0);
+    transform: translate3d(0, 0, 0);
   }
 
   to {
     opacity: 0;
-    transform: translateY(-20px);
+    transform: translate3d(0, -20px, 0);
   }
 }
 
 @keyframes joinchat_badge_out {
   from {
     opacity: 1;
-    transform: translateY(0);
+    transform: translate3d(0, 0, 0);
   }
 
   to {
     opacity: 0;
-    transform: translateY(-20px);
+    transform: translate3d(0, -20px, 0);
   }
 }
 
@@ -823,38 +840,38 @@
 @-webkit-keyframes joinchat_tootlip {
   0% {
     opacity: 0;
-    transform: scaleY(0);
+    transform: scale3d(1, 0, 1);
   }
 
   1%,
   20% {
     opacity: 1;
-    transform: scaleY(1);
+    transform: scale3d(1, 1, 1);
   }
 
   25%,
   100% {
     opacity: 0;
-    transform: scaleY(1);
+    transform: scale3d(1, 1, 1);
   }
 }
 
 @keyframes joinchat_tootlip {
   0% {
     opacity: 0;
-    transform: scaleY(0);
+    transform: scale3d(1, 0, 1);
   }
 
   1%,
   20% {
     opacity: 1;
-    transform: scaleY(1);
+    transform: scale3d(1, 1, 1);
   }
 
   25%,
   100% {
     opacity: 0;
-    transform: scaleY(1);
+    transform: scale3d(1, 1, 1);
   }
 }
 
