@@ -66,8 +66,8 @@ class JoinChatGutenberg {
 
 		$joinchat_data = array(
 			'image_qr'     => plugins_url( 'admin/img/qr.png', JOINCHAT_FILE ),
-			'defaults'     => array_intersect_key( $this->common->settings, array_flip( array( 'telephone', 'message_text', 'message_send' ) ) ),
-			'message_vars' => apply_filters( 'joinchat_metabox_vars', array( 'SITE', 'TITLE', 'URL', 'HREF' ), get_post() ),
+			'defaults'     => $this->common->get_obj_placeholders( get_post() ),
+			'message_vars' => $this->common->get_obj_vars( get_post() ),
 		);
 
 		wp_enqueue_script( 'joinchat-gutenberg', plugins_url( 'gutenberg/build/index.js', JOINCHAT_FILE ), $asset_file['dependencies'], $asset_file['version'], true );

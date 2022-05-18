@@ -265,18 +265,8 @@ class JoinChatAdmin {
 			$metadata
 		);
 
-		$placeholders = apply_filters(
-			'joinchat_metabox_placeholders',
-			array(
-				'telephone'    => $this->common->settings['telephone'],
-				'message_text' => $this->common->settings['message_text'],
-				'message_send' => $this->common->settings['message_send'],
-			),
-			$post,
-			$this->common->settings
-		);
-
-		$metabox_vars = apply_filters( 'joinchat_metabox_vars', array( 'SITE', 'TITLE', 'URL', 'HREF' ), $post );
+		$placeholders = $this->common->get_obj_placeholders( $post );
+		$metabox_vars = $this->common->get_obj_vars( $post );
 
 		ob_start();
 		include __DIR__ . '/partials/post_meta_box.php';
@@ -377,18 +367,8 @@ class JoinChatAdmin {
 			$metadata
 		);
 
-		$placeholders = apply_filters(
-			'joinchat_metabox_placeholders',
-			array(
-				'telephone'    => $this->common->settings['telephone'],
-				'message_text' => $this->common->settings['message_text'],
-				'message_send' => $this->common->settings['message_send'],
-			),
-			$term,
-			$this->common->settings
-		);
-
-		$metabox_vars = apply_filters( 'joinchat_metabox_vars', array( 'SITE', 'TITLE', 'URL', 'HREF' ), $term );
+		$placeholders = $this->common->get_obj_placeholders( $term );
+		$metabox_vars = $this->common->get_obj_vars( $term );
 
 		ob_start();
 		include __DIR__ . '/partials/term_meta_box.php';

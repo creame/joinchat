@@ -150,4 +150,39 @@ class JoinChatCommon {
 
 	}
 
+	/**
+	 * Get post/term form placeholders
+	 *
+	 * @since 4.5.0
+	 * @param  WP_Post|WP_Term $obj  Current post or term.
+	 * @return array
+	 */
+	public function get_obj_placeholders( $obj ) {
+
+		return apply_filters(
+			'joinchat_metabox_placeholders',
+			array(
+				'telephone'    => $this->settings['telephone'],
+				'message_text' => $this->settings['message_text'],
+				'message_send' => $this->settings['message_send'],
+			),
+			$obj,
+			$this->settings
+		);
+
+	}
+
+	/**
+	 * Get post/term dynamic variables for form help text
+	 *
+	 * @since 4.5.0
+	 * @param  WP_Post|WP_Term $obj  Current post or term.
+	 * @return array
+	 */
+	public function get_obj_vars( $obj ) {
+
+		return apply_filters( 'joinchat_metabox_vars', array( 'SITE', 'TITLE', 'URL', 'HREF' ), $obj );
+
+	}
+
 }
