@@ -20,12 +20,14 @@ WhatsApp, Messenger, Telegram, Phone call… capture users through their favorit
 
 https://www.youtube.com/watch?v=Ad2ZpPnX_3Q
 
-[Documentation](https://join.chat/en/docs/?utm_source=wporg&utm_medium=web&utm_campaign=v4_4) | [Premium](https://join.chat/en/premium/?utm_source=wporg&utm_medium=web&utm_campaign=v4_4) | [Support](https://join.chat/en/support/?utm_source=wporg&utm_medium=web&utm_campaign=v4_4)
+[Documentation](https://join.chat/en/docs/?utm_source=wporg&utm_medium=web&utm_campaign=v4_4) | [**Premium**](https://join.chat/en/premium/?utm_source=wporg&utm_medium=web&utm_campaign=v4_4) | [Support](https://join.chat/en/support/?utm_source=wporg&utm_medium=web&utm_campaign=v4_4)
 
 ### ⌁ What you can do with Join.chat (formerly WAme) ✅
 
 #### 🛎 Insert a contact button for WhatsApp on your website.
 Set your ‘WhatsApp’ or ‘WhatsApp Business’ number and let your visitors contact you easily:
+
+🧩 **NEW!! WhatsApp Contact Button Block** with optional QR Code
 
 📱 On mobile, launch WhatsApp mobile app
 
@@ -70,6 +72,15 @@ You can make it mandatory and disable contact until the user accepts it.
 Define CTAs and Custom Start Messages for shop page, product pages and for products on sale.
 
 Add a **WhatsApp Contact Button** directly on your product page next to the "Add to cart" button.
+
+#### 🧩 WhatsApp Contact Button Block.
+Add beautiful and customizable WhatsApp contact buttons in the Block Editor.
+
+Ready to use patterns with different styles are also included.
+
+Enable QR Code on desktop to allow your visitors to scan it and start messaging from their phone.
+
+You can define phone and initial message of the button or use the post/general Joinchat settings (ideal for Reusable Blocks).
 
 #### 🃏 Dynamic Variables.
 Use variables in your CTAs and Start Messages that change dynamically for each page:
@@ -332,9 +343,9 @@ Join.chat save two localStorage variables for proper operation:
 == Changelog ==
 
 = 4.5 =
-* **NEW:** Change metabox for SidebarPlugin on editor Block
-* **NEW:** Block CTA
-* **NEW:** Pattern for light and dark style
+* **NEW: WhastApp Contact Button Block.**
+* **NEW:** Replace old metabox with native sidebar on Block Editor.
+* **NEW:** Patterns with different styles included.
 
 = 4.4.3 =
 * Minor CSS fixes and optimizations.
