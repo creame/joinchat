@@ -79,10 +79,6 @@
   font-size: 13px;
 }
 
-.iti--allow-dropdown input {
-  padding-left: 52px !important;
-}
-
 #joinchat_button_image_wrapper {
   position: relative;
   padding: 8px 0 0 80px;
@@ -157,6 +153,32 @@ tr.joinchat--focus .joinchat_vars_help {
 
 #wp-joinchat_optin_text-editor-container {
   max-width: 800px;
+}
+
+.joinchat-gads {
+  display: inline-block;
+  padding: 0 0 0 8px;
+  margin: 0 1px;
+  border: 1px solid #8c8f94;
+  border-radius: 4px;
+  background-color: #fff;
+  color: #2c3338;
+  line-height: 2;
+  box-shadow: 0 0 0 transparent;
+  cursor: text;
+}
+
+.joinchat-gads:focus-within {
+  border-color: #2271b1;
+  box-shadow: 0 0 0 1px #2271b1;
+  outline: 2px solid transparent;
+}
+
+.joinchat-gads input {
+  display: inline-block !important;
+  padding: 0 6px;
+  border: none;
+  background: transparent;
 }
 
 /* Help */

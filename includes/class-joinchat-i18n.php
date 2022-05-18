@@ -20,8 +20,7 @@ class JoinChat_i18n {
 	 */
 	public function __construct( $loader ) {
 
-		// No delegate to $loader, use WordPress add_action
-		add_action( 'init', array( $this, 'load_plugin_textdomain' ) );
+		$loader->add_action( 'init', $this, 'load_plugin_textdomain', 11 );
 
 		if ( defined( 'WPML_PLUGIN_PATH' ) || defined( 'POLYLANG_VERSION' ) ) {
 

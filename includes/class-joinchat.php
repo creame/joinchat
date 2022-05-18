@@ -70,6 +70,11 @@ class JoinChat {
 			$this->define_public_hooks();
 		}
 
+		// WordPress 5.0 or higher.
+		if ( function_exists( 'register_block_type' ) ) {
+			$this->define_gutenberg_hooks();
+		}
+
 		add_action( 'joinchat_run_pre', array( $this, 'disable_remove_brand' ), 11 );
 
 	}
@@ -137,6 +142,30 @@ class JoinChat {
 	}
 
 	/**
+	 * Register all of the hooks related to gutenberg functionality
+	 * of the plugin.
+	 *
+	 * @since    4.5.0
+	 * @access   private
+	 * @return   void
+	 */
+	private function define_gutenberg_hooks() {
+
+		require_once JOINCHAT_DIR . 'gutenberg/class-joinchat-gutenberg.php';
+
+		$plugin_gutenberg = new JoinChatGutenberg( $this->get_plugin_name(), $this->get_version() );
+
+		$this->loader->add_action( 'init', $plugin_gutenberg, 'register_meta', 11 );
+		$this->loader->add_action( 'init', $plugin_gutenberg, 'register_blocks', 11 );
+
+		$this->loader->add_action( 'admin_init', $plugin_gutenberg, 'register_patterns' );
+		$this->loader->add_action( 'enqueue_block_editor_assets', $plugin_gutenberg, 'enqueue_editor_assets' );
+
+		$this->loader->add_action( 'wp_footer', $plugin_gutenberg, 'root_styles', 100 );
+
+	}
+
+	/**
 	 * Register all of the hooks related to the admin area functionality
 	 * of the plugin.
 	 *
@@ -147,28 +176,30 @@ class JoinChat {
 	private function define_admin_hooks() {
 
 		require_once JOINCHAT_DIR . 'admin/class-joinchat-admin.php';
+		require_once JOINCHAT_DIR . 'admin/class-joinchat-admin-page.php';
 
 		$plugin_admin = new JoinChatAdmin( $this->get_plugin_name(), $this->get_version() );
+		$plugin_page  = new JoinChatAdminPage( $this->get_plugin_name(), $this->get_version() );
 
-		$this->loader->add_action( 'admin_init', $plugin_admin, 'get_settings', 5 );
-		$this->loader->add_action( 'admin_init', $plugin_admin, 'settings_init' );
+		$this->loader->add_action( 'admin_init', JoinChatCommon::instance(), 'load_settings', 5 );
+		$this->loader->add_filter( 'option_page_capability_joinchat', 'JoinChatUtil', 'capability' );
+
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'register_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'register_scripts' );
-		$this->loader->add_action( 'admin_menu', $plugin_admin, 'add_menu' );
 		$this->loader->add_action( 'admin_notices', $plugin_admin, 'notices' );
 		$this->loader->add_action( 'wp_ajax_joinchat_notice_dismiss', $plugin_admin, 'ajax_notice_dismiss' );
 		$this->loader->add_action( 'add_meta_boxes', $plugin_admin, 'add_meta_boxes' );
 		$this->loader->add_action( 'admin_init', $plugin_admin, 'add_term_meta_boxes' );
 		$this->loader->add_action( 'save_post', $plugin_admin, 'save_meta', 10, 2 );
-		$this->loader->add_action( 'load-settings_page_joinchat', $plugin_admin, 'help_tab' );
-		$this->loader->add_action( 'load-toplevel_page_joinchat', $plugin_admin, 'help_tab' );
 		$this->loader->add_action( 'update_option_joinchat', $plugin_admin, 'clear_cache', 100 );
-
 		$this->loader->add_filter( 'plugin_action_links_' . JOINCHAT_BASENAME, $plugin_admin, 'settings_link' );
 		$this->loader->add_filter( 'plugin_row_meta', $plugin_admin, 'plugin_links', 10, 2 );
-		$this->loader->add_filter( 'admin_footer_text', $plugin_admin, 'admin_footer_text', PHP_INT_MAX );
 
-		$this->loader->add_filter( 'option_page_capability_joinchat', 'JoinChatUtil', 'capability' );
+		$this->loader->add_action( 'admin_init', $plugin_page, 'settings_init' );
+		$this->loader->add_action( 'admin_menu', $plugin_page, 'add_menu' );
+		$this->loader->add_action( 'load-settings_page_joinchat', $plugin_page, 'help_tab' );
+		$this->loader->add_action( 'load-toplevel_page_joinchat', $plugin_page, 'help_tab' );
+		$this->loader->add_filter( 'admin_footer_text', $plugin_page, 'admin_footer_text', PHP_INT_MAX );
 
 	}
 
@@ -190,7 +221,7 @@ class JoinChat {
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
 		$this->loader->add_action( 'wp_footer', $plugin_public, 'footer_html' );
-		$this->loader->add_action( 'wp_print_footer_scripts', $plugin_public, 'links_script', 20 );
+		$this->loader->add_action( 'wp_print_footer_scripts', $plugin_public, 'enqueue_qr_script', 5 );
 
 	}
 
@@ -204,49 +235,6 @@ class JoinChat {
 	public function disable_remove_brand() {
 
 		$this->loader->remove_filter( null, 'JoinChatRemoveBrand' );
-
-	}
-
-	/**
-	 * Migrate 'whatsappme' settings on versions < 4.0 to new 'joinchat'
-	 *
-	 * @since    4.0.0
-	 * @access   public
-	 * @return   void
-	 */
-	public function update_wame( $option = false ) {
-		global $wpdb;
-
-		$wame_option = get_option( 'whatsappme' );
-
-		if ( false !== $wame_option ) {
-			// General option
-			$option = $wame_option;
-			update_option( 'joinchat', $option );
-			delete_option( 'whatsappme' );
-
-			// Post metas
-			$wpdb->update( $wpdb->postmeta, array( 'meta_key' => '_joinchat' ), array( 'meta_key' => '_whatsappme' ) );
-
-			// WPML strings
-			$wpml_strings_table = $wpdb->prefix . 'icl_strings';
-			if ( $wpdb->get_var( "SHOW TABLES LIKE '$wpml_strings_table'" ) === $wpml_strings_table ) {
-				$wpdb->update( $wpml_strings_table, array( 'context' => 'Join.chat' ), array( 'context' => 'WhatsApp me' ) );
-			}
-
-			// Polylang strings
-			$polylang_strings = get_option( 'polylang_wpml_strings' );
-			if ( false !== $polylang_strings ) {
-				foreach ( $polylang_strings as $key => $data ) {
-					if ( 'WhatsApp me' == $data['context'] ) {
-						$polylang_strings[ $key ]['context'] = 'Join.chat';
-					}
-				}
-				update_option( 'polylang_wpml_strings', $polylang_strings );
-			}
-		}
-
-		return $option;
 
 	}
 

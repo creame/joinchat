@@ -50,7 +50,7 @@
       height: 14px;
       border: solid var(--text);
       border-width: 0 3px 3px 0;
-      transform: rotate(45deg);
+      transform: rotate3d(0, 0, 1, 45deg);
     }
 
     #{$rtl} & {

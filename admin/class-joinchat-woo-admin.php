@@ -203,7 +203,7 @@ class JoinChatWooAdmin {
 		);
 
 		foreach ( $woo_sections as $key => $label ) {
-			$woo_sections[ $key ] = "<label for=\"joinchat_$key\">$label</label>" . JoinChatAdmin::vars_help( $key );
+			$woo_sections[ $key ] = "<label for=\"joinchat_$key\">$label</label>" . JoinChatAdminPage::vars_help( $key );
 		}
 
 		$sections['chat']   = $woo_sections;

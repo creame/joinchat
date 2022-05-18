@@ -1,0 +1,81 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 2,
+	"name": "joinchat/button",
+	"version": "0.1.0",
+	"title": "Joinchat Button",
+	"category": "widgets",
+	"icon": "smiley",
+	"description": "WhatsApp contact button",
+	"keywords": ["WhatsApp", "QR", "contact", "phone"],
+	"textdomain": "creame-whatsapp-me",
+	"editorStyle": "file:../index.css",
+	"style": "file:../style-index.css",
+	"example": {},
+	"attributes": {
+		"cta": {
+			"type": "string",
+			"source": "html",
+			"selector": ".joinchat-button__link>span",
+			"default": "<strong>Open Chat</strong>"
+		},
+		"backgroundColor": {
+			"type": "string"
+		},
+		"textColor": {
+			"type": "string",
+			"default": "#ffffff"
+		},
+		"phone": {
+			"type": "string"
+		},
+		"message": {
+			"type": "string"
+		},
+		"qr_code": {
+			"type": "string",
+			"enum": [
+				"both",
+				"only",
+				"no"
+			],
+			"default": "both"
+		},
+		"style": {
+			"type": "object",
+			"default": {
+				"color": {
+					"background": "#25d366"
+				},
+				"border": {
+					"width": "6px",
+					"style": "solid",
+					"color": "#25d366",
+					"radius": "30px"
+				}
+			}
+		}
+	},
+	"supports": {
+		"anchor": true,
+		"align": true,
+		"alignWide": false,
+		"color": {
+			"__experimentalSkipSerialization": true,
+			"gradients": true,
+			"background": true,
+			"__experimentalDefaultControls": {
+				"background": true,
+				"text": true,
+				"border": true
+			}
+		},
+		"reusable": true,
+		"spacing": {
+			"margin": true,
+			"padding": true
+		},
+		"__experimentalBorder": true,
+		"__experimentalSelector": ".joinchat-button__link"
+	}
+}
