@@ -353,6 +353,7 @@ Join.chat save two localStorage variables for proper operation:
 * **NEW:** Patterns with different styles included.
 * **NEW:** Direct WhatsApp triggers can use custom phone and initial message.
 * **NEW:** Triggers also fire analytics events even without the Joinchat floating button.
+* CHANGED Can change default "JoinChat" event name via javascript event.
 * CHANGED Improved interface to enter phone with country code and Google Ads conversion ID.
 
 = 4.4.3 =

@@ -9,10 +9,11 @@
   // Trigger Analytics events
   joinchat_obj.send_event = function (params) {
     params = $.extend({
-      event_label: '',          // Destination url
-      event_action: '',         // "chanel: id"
-      chat_channel: 'WhatsApp', // Channel name
-      chat_id: '--',            // Channel contact (phone, username...)
+      event_category: 'JoinChat', // Name
+      event_label: '',            // Destination url
+      event_action: '',           // "chanel: id"
+      chat_channel: 'WhatsApp',   // Channel name
+      chat_id: '--',              // Channel contact (phone, username...)
       is_mobile: this.is_mobile ? 'yes' : 'no',
       page_location: location.href,
       page_title: document.title || 'no title',
@@ -36,7 +37,7 @@
       ga_tracker('set', 'transport', 'beacon');
       var trackers = ga_tracker.getAll();
       trackers.forEach(function (tracker) {
-        tracker.send('event', 'JoinChat', params.event_action, params.event_label);
+        tracker.send('event', params.event_category, params.event_action, params.event_label);
       });
     }
 
@@ -46,10 +47,7 @@
     // gtag.js
     if (typeof gtag == 'function' && typeof data_layer == 'object') {
       // Google Analytics 4 send recomended event "generate_lead"
-      var ga4_params = $.extend({
-        event_category: 'JoinChat',
-        transport_type: 'beacon',
-      }, params);
+      var ga4_params = $.extend({ transport_type: 'beacon' }, params);
       // Already defined in GA4
       delete ga4_params.page_location;
       delete ga4_params.page_title;
@@ -67,14 +65,18 @@
       }
     }
 
+    // Store category in var and delete from params
+    var event_category = params.event_category;
+    delete params.event_category;
+
     // Send Google Tag Manager custom event
     if (typeof data_layer == 'object') {
-      data_layer.push($.extend({ event: 'JoinChat' }, params));
+      data_layer.push($.extend({ event: event_category }, params));
     }
 
     // Send Facebook Pixel custom event
     if (typeof fbq == 'function') {
-      fbq('trackCustom', 'JoinChat', params);
+      fbq('trackCustom', event_category, params);
     }
   };
 
