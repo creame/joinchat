@@ -35,14 +35,14 @@ class JoinChatUtil {
 	 *
 	 * @since    3.1.0
 	 * @access   public
-	 * @param    mixed $value to clean
+	 * @param    mixed $value to clean.
 	 * @return   mixed $value cleaned
 	 */
 	public static function clean_input( $value ) {
 		if ( is_array( $value ) ) {
 			return array_map( 'self::clean_input', $value );
 		} elseif ( is_string( $value ) ) {
-			// Split lines, clean and re-join lines
+			// Split lines, clean and re-join lines.
 			return implode( "\n", array_map( 'sanitize_text_field', explode( "\n", trim( $value ) ) ) );
 		} else {
 			return $value;
@@ -56,21 +56,21 @@ class JoinChatUtil {
 	 *
 	 * @since    4.3.0
 	 * @access   public
-	 * @param    string $number to clean
-	 * @return   string $number cleaned
+	 * @param    string $number phone number to clean.
+	 * @return   string number cleaned
 	 */
 	public static function clean_whatsapp( $number ) {
 
-		// Remove any leading 0s or special calling codes
+		// Remove any leading 0s or special calling codes.
 		$clean = preg_replace( '/^0+|\D/', '', $number );
 
 		// Argentina (country code "54") should have a "9" between the country code and area code
 		// and prefix "15" must be removed so the final number will have 13 digits total.
-		// (intlTelInput saved numbers already has in international mode)
+		// (intlTelInput saved numbers already has in international mode).
 		$clean = preg_replace( '/^54(0|1|2|3|4|5|6|7|8)/', '549$1', $clean );
 		$clean = preg_replace( '/^(54\d{5})15(\d{6})/', '$1$2', $clean );
 
-		// Mexico (country code "52") need to have "1" after "+52"
+		// Mexico (country code "52") need to have "1" after "+52".
 		$clean = preg_replace( '/^52(0|2|3|4|5|6|7|8|9)/', '521$1', $clean );
 
 		return apply_filters( 'joinchat_clean_whatsapp', $clean, $number );
@@ -81,9 +81,9 @@ class JoinChatUtil {
 	 *
 	 * @since    3.1.0
 	 * @access   public
-	 * @param    string $str The input string
-	 * @param    int    $start The first position used in str
-	 * @param    int    $length The maximum length of the returned string
+	 * @param    string $str The input string.
+	 * @param    int    $start The first position used in str.
+	 * @param    int    $length The maximum length of the returned string.
 	 * @return   string     The portion of str specified by the start and length parameters
 	 */
 	public static function substr( $str, $start, $length = null ) {
@@ -97,17 +97,17 @@ class JoinChatUtil {
 	 *
 	 * @since    3.1.0
 	 * @access   public
-	 * @param    mixed $img Image path or attachment ID
-	 * @param    int   $width The widht of thumbnail
-	 * @param    int   $height The height of thumbnail
-	 * @param    bool  $crop If crop to exact thumbnail size or not
+	 * @param    mixed $img Image path or attachment ID.
+	 * @param    int   $width The widht of thumbnail.
+	 * @param    int   $height The height of thumbnail.
+	 * @param    bool  $crop If crop to exact thumbnail size or not.
 	 * @return   array  With thumbnail info (url, width, height)
 	 */
 	public static function thumb( $img, $width, $height, $crop = true ) {
 
 		$img_path = intval( $img ) > 0 ? get_attached_file( $img ) : $img;
 
-		// Try fallback if file don't exists (filter to true to skip thumbnail generation)
+		// Try fallback if file don't exists (filter to true to skip thumbnail generation).
 		if ( apply_filters( 'joinchat_disable_thumbs', ! $img_path || ! file_exists( $img_path ) ) ) {
 			$src = wp_get_attachment_image_src( $img, array( $width, $height ) );
 
@@ -139,7 +139,7 @@ class JoinChatUtil {
 					'height' => $new_img['height'],
 				);
 			} else {
-				// Fallback to original image
+				// Fallback to original image.
 				@list($w, $h) = getimagesize( $img_path );
 
 				$thumb = array(
@@ -167,7 +167,7 @@ class JoinChatUtil {
 	 *
 	 * @since    3.1.0
 	 * @access   public
-	 * @param    mixed $img Image path or attachment ID
+	 * @param    mixed $img Image path or attachment ID.
 	 * @return   bool  true if is an animated gif, false otherwise
 	 */
 	public static function is_animated_gif( $img ) {
@@ -182,7 +182,7 @@ class JoinChatUtil {
 	 *
 	 * @since    3.1.0
 	 * @since    3.1.2      Allowed callback replecements
-	 * @param    string $string    string to apply format replacements
+	 * @param    string $string    string to apply format replacements.
 	 * @return   string     string formated
 	 */
 	public static function formated_message( $string ) {
@@ -196,7 +196,7 @@ class JoinChatUtil {
 			)
 		);
 
-		// Split text into lines and apply replacements line by line
+		// Split text into lines and apply replacements line by line.
 		$lines = explode( "\n", $string );
 		foreach ( $lines as $key => $line ) {
 			$escaped_line = esc_html( $line );
@@ -220,7 +220,7 @@ class JoinChatUtil {
 	 * Format message send, replace vars.
 	 *
 	 * @since    3.1.0
-	 * @param    string $string    string to apply variable replacements
+	 * @param    string $string    string to apply variable replacements.
 	 * @return   string     string with replaced variables
 	 */
 	public static function replace_variables( $string ) {
@@ -236,13 +236,13 @@ class JoinChatUtil {
 			)
 		);
 
-		// Patterns as regex {VAR}
+		// Patterns as regex {VAR}.
 		$patterns = array();
 		foreach ( $replacements as $var => $replacement ) {
 			$patterns[] = "/\{$var\}/u";
 		}
 
-		// Prevent malformed json
+		// Prevent malformed json.
 		foreach ( $replacements as $var => $replacement ) {
 			$replacements[ $var ] = str_replace( '&quot;', '"', $replacement );
 		}
@@ -266,7 +266,7 @@ class JoinChatUtil {
 		} elseif ( function_exists( 'wp_get_document_title' ) ) {
 			$title = wp_get_document_title();
 
-			// Try to remove sitename from $title for cleaner title
+			// Try to remove sitename from $title for cleaner title.
 			$sep   = apply_filters( 'document_title_separator', '-' );
 			$site  = get_bloginfo( 'name', 'display' );
 			$title = str_replace( esc_html( convert_chars( wptexturize( " $sep " . $site ) ) ), '', $title );
@@ -282,7 +282,7 @@ class JoinChatUtil {
 	 * Encode JSON with filtered options
 	 *
 	 * @since    4.0.9
-	 * @param    array $data    data to encode
+	 * @param    array $data    data to encode.
 	 * @return   string     data json encoded
 	 */
 	public static function to_json( $data ) {
@@ -301,12 +301,12 @@ class JoinChatUtil {
 	 * Default capability 'manage_options'
 	 *
 	 * @since    4.2.0
-	 * @param  string $capability
+	 * @param  string $capability required capability.
 	 * @return string
 	 */
 	public static function capability( $capability = '' ) {
 
-		return apply_filters( 'joinchat_capability', $capability ?: 'manage_options' );
+		return apply_filters( 'joinchat_capability', $capability ?: 'manage_options' ); //phpcs:ignore WordPress.PHP.DisallowShortTernary
 
 	}
 

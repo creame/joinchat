@@ -327,7 +327,7 @@ class JoinChatAdminPage {
 	public function settings_tab_open( $args ) {
 
 		$tab_id     = str_replace( array( 'joinchat_tab_', '_open' ), '', $args['id'] );
-		$active_tab = isset( $_GET['tab'] ) && in_array( $_GET['tab'], array_keys( $this->tabs ), true ) ? $_GET['tab'] : 'general'; // phpcs:ignore WordPress.Security.NonceVerification
+		$active_tab = isset( $_GET['tab'] ) && in_array( $_GET['tab'], array_keys( $this->tabs ), true ) ? wp_unslash( $_GET['tab'] ) : 'general'; // phpcs:ignore WordPress.Security.NonceVerification
 
 		printf(
 			'<div id="joinchat_tab_%1$s" class="joinchat-tab %2$s" role="tabpanel" aria-labelledby="navtab_%1$s">',
@@ -735,7 +735,8 @@ class JoinChatAdminPage {
 		);
 
 		foreach ( $help_tabs as $tab_data ) {
-			$screen->add_help_tab( apply_filters( 'joinchat_help_tab_' . str_replace( '-', '_', $tab_data['id'] ), $tab_data ) );
+			$tab_id = str_replace( '-', '_', $tab_data['id'] );
+			$screen->add_help_tab( apply_filters( "joinchat_help_tab_{$tab_id}", $tab_data ) );
 		}
 
 	}
@@ -759,7 +760,7 @@ class JoinChatAdminPage {
 			wp_enqueue_style( 'intl-tel-input' );
 		}
 
-		$active_tab = isset( $_GET['tab'] ) && in_array( $_GET['tab'], array_keys( $this->tabs ), true ) ? $_GET['tab'] : 'general'; // phpcs:ignore WordPress.Security.NonceVerification
+		$active_tab = isset( $_GET['tab'] ) && in_array( $_GET['tab'], array_keys( $this->tabs ), true ) ? wp_unslash( $_GET['tab'] ) : 'general'; // phpcs:ignore WordPress.Security.NonceVerification
 		?>
 			<div class="wrap">
 				<h1><?php esc_html_e( 'Join.chat Settings', 'creame-whatsapp-me' ); ?></h1>

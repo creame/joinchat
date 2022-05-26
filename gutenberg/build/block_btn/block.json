@@ -7,7 +7,12 @@
 	"category": "widgets",
 	"icon": "smiley",
 	"description": "WhatsApp contact button",
-	"keywords": ["WhatsApp", "QR", "contact", "phone"],
+	"keywords": [
+		"WhatsApp",
+		"QR",
+		"contact",
+		"phone"
+	],
 	"textdomain": "creame-whatsapp-me",
 	"editorStyle": "file:../index.css",
 	"style": "file:../style-index.css",
@@ -66,8 +71,7 @@
 			"background": true,
 			"__experimentalDefaultControls": {
 				"background": true,
-				"text": true,
-				"border": true
+				"text": true
 			}
 		},
 		"reusable": true,
@@ -75,7 +79,16 @@
 			"margin": true,
 			"padding": true
 		},
-		"__experimentalBorder": true,
+		"__experimentalBorder": {
+			"radius": true,
+			"color": true,
+			"width": true,
+			"style": true,
+			"__experimentalDefaultControls": {
+				"radius": true,
+				"color": true
+			}
+		},
 		"__experimentalSelector": ".joinchat-button__link"
 	}
 }

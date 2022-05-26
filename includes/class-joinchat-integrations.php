@@ -79,7 +79,7 @@ class JoinChatIntegrations {
 	 * Add Join.chat category to Elementor Finder.
 	 *
 	 * @since    4.1.12
-	 * @param Categories_Manager $categories_manager
+	 * @param Categories_Manager $categories_manager instance.
 	 * @return void
 	 */
 	public function elementor_finder_integration( $categories_manager ) {
@@ -98,8 +98,7 @@ class JoinChatIntegrations {
 	 * Add WooCommerce item in Join.chat category for Elementor Finder.
 	 *
 	 * @since    4.1.12
-	 * @param  array  $items current Elementor Finder joina.chat items
-	 * @param  string $settings_url Join.chat settings base url
+	 * @param  array $items current Elementor Finder joina.chat items.
 	 * @return array
 	 */
 	public function elementor_finder_woocommerce_item( $items ) {

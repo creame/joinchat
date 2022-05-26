@@ -17,6 +17,8 @@ class JoinChat_i18n {
 	 * Initialize the class.
 	 *
 	 * @since    4.2.0
+	 * @param  JoinChatLoader $loader loader instance.
+	 * @return void
 	 */
 	public function __construct( $loader ) {
 
@@ -49,7 +51,7 @@ class JoinChat_i18n {
 	 *
 	 * @since    4.2   (before this was in JoinChatUtil)
 	 * @access   private
-	 * @param    null|array $settings
+	 * @param    null|array $settings list of settings.
 	 * @return   array setting keys and string names
 	 */
 	private function settings_i18n( $settings = null ) {
@@ -78,8 +80,8 @@ class JoinChat_i18n {
 	 * view: https://wpml.org/wpml-hook/wpml_register_single_string/
 	 *
 	 * @since  4.2
-	 * @param  array $settings
-	 * @param  array $old_settings
+	 * @param  array $settings new values of settings.
+	 * @param  array $old_settings old values of settings.
 	 * @return void
 	 */
 	public function settings_save( $settings, $old_settings ) {
@@ -97,7 +99,7 @@ class JoinChat_i18n {
 			}
 		}
 
-		// Show notice with link to string translations
+		// Show notice with link to string translations.
 		if ( $translate_notice ) {
 
 			if ( defined( 'WPML_PLUGIN_PATH' ) ) {
@@ -119,9 +121,10 @@ class JoinChat_i18n {
 				);
 			}
 
-			// Note: message is wrapped with <strong>...</strong> tags
+			// Note: message is wrapped with <strong>...</strong> tags.
 			$message = sprintf(
 				'%s</strong>&nbsp;&nbsp;%s&nbsp;&nbsp;<strong><a href="%s">%s</a>',
+				/* translators: %s: site language. */
 				sprintf( __( 'Default site language (%s)', 'creame-whatsapp-me' ), strtoupper( $default_language ) ),
 				__( 'There are changes in fields that can be translated.', 'creame-whatsapp-me' ),
 				esc_url( $link ),
@@ -138,7 +141,7 @@ class JoinChat_i18n {
 	 * Get settings translations for current language
 	 *
 	 * @since  4.2
-	 * @param  array $settings
+	 * @param  array $settings list of settings.
 	 * @return array
 	 */
 	public function settings_load( $settings ) {
