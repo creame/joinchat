@@ -263,15 +263,13 @@ class JoinChatUtil {
 			$title = single_post_title( '', false );
 		} elseif ( is_category() || is_tag() || is_tax() ) {
 			$title = single_term_title( '', false );
-		} elseif ( function_exists( 'wp_get_document_title' ) ) {
+		} else {
 			$title = wp_get_document_title();
 
 			// Try to remove sitename from $title for cleaner title.
 			$sep   = apply_filters( 'document_title_separator', '-' );
 			$site  = get_bloginfo( 'name', 'display' );
 			$title = str_replace( esc_html( convert_chars( wptexturize( " $sep " . $site ) ) ), '', $title );
-		} else {
-			$title = get_bloginfo( 'name' );
 		}
 
 		return apply_filters( 'joinchat_get_title', $title );

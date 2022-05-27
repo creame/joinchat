@@ -212,12 +212,14 @@ class JoinChatAdmin {
 	 * Add Meta Box for all the public post types
 	 *
 	 * @since    1.1.0
+	 * @since    4.5.0   Added back_compat to disable in block editor
 	 * @access   public
 	 * @return   void
 	 */
 	public function add_meta_boxes() {
 
-		$post_types = $this->common->get_public_post_types();
+		$post_types  = $this->common->get_public_post_types();
+		$back_compat = apply_filters( 'joinchat_gutenberg_sidebar', true );
 
 		foreach ( $post_types as $post_type ) {
 			add_meta_box(
@@ -227,7 +229,7 @@ class JoinChatAdmin {
 				$post_type,
 				'side',
 				'default',
-				array( '__back_compat_meta_box' => apply_filters( 'joinchat_gutenberg_sidebar', true ) ),
+				array( '__back_compat_meta_box' => $back_compat && post_type_supports( $post_type, 'custom-fields' ) ),
 			);
 		}
 	}

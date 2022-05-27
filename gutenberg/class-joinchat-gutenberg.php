@@ -75,7 +75,8 @@ class JoinChatGutenberg {
 		wp_set_script_translations( 'joinchat-gutenberg', 'creame-whatsapp-me', JOINCHAT_DIR . 'languages' );
 
 		// Disable sidebar?
-		if ( ! $this->show_sidebar() ) {
+		// Required CPT support 'custom-fields' for Gutenberg access to postmeta.
+		if ( ! $this->show_sidebar() || ! post_type_supports( get_post_type(), 'custom-fields' ) ) {
 			wp_add_inline_script( 'joinchat-gutenberg', 'wp.hooks.addFilter( "joinchat_gutenberg_sidebar", "joinchat", () => { return false; } );', 'before' );
 		}
 
@@ -124,6 +125,10 @@ class JoinChatGutenberg {
 			$content = str_replace( $escaped, esc_attr( JoinChatUtil::replace_variables( $attributes['message'] ) ), $content );
 		}
 
+		// Render an empty Button Block to ensure enqueue button styles.
+		$button = parse_blocks( '<!-- wp:button /-->' );
+		render_block( $button[0] );
+
 		return $content;
 
 	}
@@ -164,23 +169,7 @@ class JoinChatGutenberg {
 			return;
 		}
 
-		register_block_pattern(
-			'joinchat/pattern_dark',
-			array(
-				'title'       => __( 'CTA dark for join.chat', 'creame-whatsapp-me' ),
-				'description' => _x( 'Join.chat button with heading, paragraph on a cover', 'Block pattern description', 'creame-whatsapp-me' ),
-				'content'     => file_get_contents( JOINCHAT_DIR . '/gutenberg/patterns/pattern-dark.html' ),
-			)
-		);
-
-		register_block_pattern(
-			'joinchat/pattern_light',
-			array(
-				'title'       => __( 'CTA light for join.chat', 'creame-whatsapp-me' ),
-				'description' => _x( 'Join.chat button with heading, paragraph on a cover', 'Block pattern description', 'creame-whatsapp-me' ),
-				'content'     => file_get_contents( JOINCHAT_DIR . '/gutenberg/patterns/pattern-light.html' ),
-			)
-		);
+		// Comming soon.
 
 	}
 

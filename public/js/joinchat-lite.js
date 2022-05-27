@@ -12,7 +12,7 @@
       event_category: 'JoinChat', // Name
       event_label: '',            // Destination url
       event_action: '',           // "chanel: id"
-      chat_channel: 'WhatsApp',   // Channel name
+      chat_channel: 'whatsapp',   // Channel name
       chat_id: '--',              // Channel contact (phone, username...)
       is_mobile: this.is_mobile ? 'yes' : 'no',
       page_location: location.href,
@@ -95,7 +95,7 @@
 
     var params = {
       link: this.whatsapp_link(phone, message),
-      chat_channel: 'WhatsApp',
+      chat_channel: 'whatsapp',
       chat_id: phone,
       chat_message: message,
     };

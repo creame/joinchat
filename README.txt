@@ -2,10 +2,10 @@
 Contributors: creapuntome, pacotole, davidlillo, monillo
 Donate link: https://join.chat/donate/
 Tags: Chat, Click to Chat, Facebook Messenger, WhatsApp, Telegram, Whatsapp Business, button, support chat, support, contact, directly message WhatsApp, floating WhatsApp, WhatsApp chat
-Requires at least: 3.5.0
-Tested up to: 5.9
+Requires at least: 4.4.0
+Tested up to: 6.0
 Requires PHP: 5.3
-Stable tag: 4.4.3
+Stable tag: 4.5.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -253,16 +253,16 @@ If Google Analytics 4 (gtag.js) is detected, use the recommended `'generate_lead
 
 `gtag('event', 'generate_lead', {
     event_category: 'JoinChat',
-    event_action: 'WhatsApp: 99999999999',
+    event_action: 'whatsapp: 99999999999',
     event_label: destination_url,
-    chat_channel: 'WhatsApp',
+    chat_channel: 'whatsapp',
     chat_id: '99999999999',
     is_mobile: 'yes' | 'no',
 });`
 
 If Universal Analtics (analytics.js) is detected:
 
-`ga('send', 'event', 'JoinChat', 'WhatsApp: 99999999999', destination_url);`
+`ga('send', 'event', 'JoinChat', 'whatsapp: 99999999999', destination_url);`
 
 If your site don't have standard names for UA tracker ('ga') or data layer ('dataLayer') you can set your custom names with this filter:
 
@@ -280,9 +280,9 @@ Join.chat sends a `'JoinChat'` event if GTM is detected when user launch WhatsAp
 
 `dataLayer.push({
     event: 'JoinChat',
-    event_action: 'WhatsApp: 99999999999',
+    event_action: 'whatsapp: 99999999999',
     event_label: destination_url,
-    chat_channel: 'WhatsApp',
+    chat_channel: 'whatsapp',
     chat_id: '99999999999',
     is_mobile: 'yes' | 'no',
     page_location: current_url,
@@ -294,9 +294,9 @@ Join.chat sends a `'JoinChat'` event if GTM is detected when user launch WhatsAp
 Join.chat sends a `'JoinChat'` custom event if Facebook Pixel is detected when user launch WhatsApp:
 
 `fbq('trackCustom', 'JoinChat', {
-    event_action: 'WhatsApp: 99999999999',
+    event_action: 'whatsapp: 99999999999',
     event_label: destination_url,
-    chat_channel: 'WhatsApp',
+    chat_channel: 'whatsapp',
     chat_id: '99999999999',
     is_mobile: 'yes' | 'no',
     page_location: current_url,
@@ -348,11 +348,12 @@ Join.chat save two localStorage variables for proper operation:
 == Changelog ==
 
 = 4.5 =
-* **NEW: WhastApp Contact Button Block.**
-* **NEW:** Replace old metabox with native sidebar on Block Editor.
-* **NEW:** Patterns with different styles included.
+* **NEW: Added Gutenberg native support.**
+* **NEW:** WhastApp Contact Button Block.
+* **NEW:** Native Joinchat sidebar on Block Editor.
 * **NEW:** Direct WhatsApp triggers can use custom phone and initial message.
 * **NEW:** Triggers also fire analytics events even without the Joinchat floating button.
+* CHANGED Bump min WordPress version to 4.4 and tested up to 6.0.
 * CHANGED Can change default "JoinChat" event name via javascript event.
 * CHANGED Improved interface to enter phone with country code and Google Ads conversion ID.
 

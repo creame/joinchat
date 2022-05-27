@@ -9,13 +9,13 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2022-05-26T09:31:49+00:00\n"
+"POT-Creation-Date: 2022-05-27T16:11:33+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 "X-Domain: creame-whatsapp-me\n"
 
 #. Plugin Name of the plugin
-#: admin/class-joinchat-admin.php:225
+#: admin/class-joinchat-admin.php:227
 #: admin/partials/term_meta_box.php:16
 #: gutenberg/build/index.js:1
 msgid "Join.chat"
@@ -730,20 +730,6 @@ msgstr ""
 #: admin/partials/term_meta_box.php:47
 #: gutenberg/build/index.js:1
 msgid "Default visibility"
-msgstr ""
-
-#: gutenberg/class-joinchat-gutenberg.php:170
-msgid "CTA dark for join.chat"
-msgstr ""
-
-#: gutenberg/class-joinchat-gutenberg.php:171
-#: gutenberg/class-joinchat-gutenberg.php:180
-msgctxt "Block pattern description"
-msgid "Join.chat button with heading, paragraph on a cover"
-msgstr ""
-
-#: gutenberg/class-joinchat-gutenberg.php:179
-msgid "CTA light for join.chat"
 msgstr ""
 
 #: includes/class-joinchat-elementor-finder.php:48

@@ -145,6 +145,10 @@ tr.joinchat--focus .joinchat_vars_help {
   .joinchat_vars_help br {
     display: none;
   }
+
+  .iti {
+    width: 18em;
+  }
 }
 
 #joinchat_form .iris-picker {
@@ -206,7 +210,7 @@ tr.joinchat--focus .joinchat_vars_help {
 .joinchat-metabox .iti,
 .joinchat-metabox .iti input,
 .joinchat-metabox textarea {
-  max-width: 100%;
+  max-width: 99%;
 }
 
 .joinchat-metabox code {
