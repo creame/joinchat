@@ -48,12 +48,6 @@
   animation: none;
 }
 
-.joinchat--chatbox:not(.joinchat--noanim) {
-  transform-origin: 0 0;
-  -webkit-animation-timing-function: ease-in-out;
-  animation-timing-function: ease-in-out;
-}
-
 .joinchat__button {
   position: absolute;
   z-index: 2;
