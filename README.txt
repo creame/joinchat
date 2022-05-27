@@ -2,10 +2,10 @@
 Contributors: creapuntome, pacotole, davidlillo, monillo
 Donate link: https://join.chat/donate/
 Tags: Chat, Click to Chat, Facebook Messenger, WhatsApp, Telegram, Whatsapp Business, button, support chat, support, contact, directly message WhatsApp, floating WhatsApp, WhatsApp chat
-Requires at least: 3.5.0
-Tested up to: 5.9
+Requires at least: 4.4.0
+Tested up to: 6.0
 Requires PHP: 5.3
-Stable tag: 4.4.3
+Stable tag: 4.5.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -20,12 +20,14 @@ WhatsApp, Messenger, Telegram, Phone call… capture users through their favorit
 
 https://www.youtube.com/watch?v=Ad2ZpPnX_3Q
 
-[Documentation](https://join.chat/en/docs/?utm_source=wporg&utm_medium=web&utm_campaign=v4_4) | [Premium](https://join.chat/en/premium/?utm_source=wporg&utm_medium=web&utm_campaign=v4_4) | [Support](https://join.chat/en/support/?utm_source=wporg&utm_medium=web&utm_campaign=v4_4)
+[Documentation](https://join.chat/en/docs/?utm_source=wporg&utm_medium=web&utm_campaign=v4_4) | [**Premium**](https://join.chat/en/premium/?utm_source=wporg&utm_medium=web&utm_campaign=v4_4) | [Support](https://join.chat/en/support/?utm_source=wporg&utm_medium=web&utm_campaign=v4_4)
 
 ### ⌁ What you can do with Join.chat (formerly WAme) ✅
 
 #### 🛎 Insert a contact button for WhatsApp on your website.
 Set your ‘WhatsApp’ or ‘WhatsApp Business’ number and let your visitors contact you easily:
+
+🧩 **NEW!! WhatsApp Contact Button Block** with optional QR Code
 
 📱 On mobile, launch WhatsApp mobile app
 
@@ -71,6 +73,15 @@ Define CTAs and Custom Start Messages for shop page, product pages and for produ
 
 Add a **WhatsApp Contact Button** directly on your product page next to the "Add to cart" button.
 
+#### 🧩 WhatsApp Contact Button Block.
+Add beautiful and customizable WhatsApp contact buttons in the Block Editor.
+
+Ready to use patterns with different styles are also included.
+
+Enable QR Code on desktop to allow your visitors to scan it and start messaging from their phone.
+
+You can define phone and initial message of the button or use the post/general Joinchat settings (ideal for Reusable Blocks).
+
 #### 🃏 Dynamic Variables.
 Use variables in your CTAs and Start Messages that change dynamically for each page:
 
@@ -108,6 +119,11 @@ Any element in your page can be a chat trigger, eg: it can launch WhatsApp from 
 * class `"joinchat_show"` opens Joinchat CTA (first time)
 * class `"joinchat_force_show"` opens Joinchat CTA (always)
 
+Set **custom phone and initial message** for direct WhatsApp triggers:
+
+* `data-phone="99999999"`
+* `data-message="Only for this trigger message"`.
+
 #### 💱 Multi-Language & RTL Support.
 To be able to support all your users, wherever they are. Our plugin is **compatible with WPML and Polylang** and also **RTL languages** are supported.
 
@@ -137,7 +153,7 @@ This feature will allow you to add more chat apps to the basic plugin, in additi
 #### 🥁 [Convincing Calls to Action](https://join.chat/en/addons/cta-extras/?utm_source=wporg&utm_medium=web&utm_campaign=v4_4).
 Use our embed tool to beautifully design the content that appears in the chat window. Drive your leads from landings to sales and conversion pages. Add links, images, animated GIFs, buttons or even embedded content from other platforms, surveys, chatbots, forms...
 
-[👉 Upgrade Joinchat Now](https://join.chat/en/premium/?utm_source=wporg&utm_medium=web&utm_campaign=v4_4)
+[**👉 Upgrade Joinchat Now**](https://join.chat/en/premium/?utm_source=wporg&utm_medium=web&utm_campaign=v4_4)
 
 ### 🧪 Try Join.chat
 Do you want to test the Join.chat configuration panel without installing it? You can try it in a [WordPress on the fly demo](https://demo.tastewp.com/creame-whatsapp-me)
@@ -201,7 +217,7 @@ Join.chat does not provide any shortcodes, but you can easily link to WhatsApp i
 
 This works with your phone settings and message with dynamic variables, **even on pages without Join.chat visible**.
 
-For custom WhatsApp links, you can create the url with our **[WhatsApp link generator](https://join.chat/en/whatsapp-link/?utm_source=wporg&utm_medium=web&utm_campaign=v4_4) free tool** and copy it to your links.
+For custom direct WhatsApp links you can add `data-phone` and `data-message` attributes.<br>e.g.: `<a href="#whatsapp" data-phone="99999999" data-message="I want to chat">Chat now!</a>`
 
 = Disable enhanced telephone input =
 
@@ -237,16 +253,16 @@ If Google Analytics 4 (gtag.js) is detected, use the recommended `'generate_lead
 
 `gtag('event', 'generate_lead', {
     event_category: 'JoinChat',
-    event_action: 'WhatsApp: 99999999999',
+    event_action: 'whatsapp: 99999999999',
     event_label: destination_url,
-    chat_channel: 'WhatsApp',
+    chat_channel: 'whatsapp',
     chat_id: '99999999999',
     is_mobile: 'yes' | 'no',
 });`
 
 If Universal Analtics (analytics.js) is detected:
 
-`ga('send', 'event', 'JoinChat', 'WhatsApp: 99999999999', destination_url);`
+`ga('send', 'event', 'JoinChat', 'whatsapp: 99999999999', destination_url);`
 
 If your site don't have standard names for UA tracker ('ga') or data layer ('dataLayer') you can set your custom names with this filter:
 
@@ -264,9 +280,9 @@ Join.chat sends a `'JoinChat'` event if GTM is detected when user launch WhatsAp
 
 `dataLayer.push({
     event: 'JoinChat',
-    event_action: 'WhatsApp: 99999999999',
+    event_action: 'whatsapp: 99999999999',
     event_label: destination_url,
-    chat_channel: 'WhatsApp',
+    chat_channel: 'whatsapp',
     chat_id: '99999999999',
     is_mobile: 'yes' | 'no',
     page_location: current_url,
@@ -278,9 +294,9 @@ Join.chat sends a `'JoinChat'` event if GTM is detected when user launch WhatsAp
 Join.chat sends a `'JoinChat'` custom event if Facebook Pixel is detected when user launch WhatsApp:
 
 `fbq('trackCustom', 'JoinChat', {
-    event_action: 'WhatsApp: 99999999999',
+    event_action: 'whatsapp: 99999999999',
     event_label: destination_url,
-    chat_channel: 'WhatsApp',
+    chat_channel: 'whatsapp',
     chat_id: '99999999999',
     is_mobile: 'yes' | 'no',
     page_location: current_url,
@@ -330,6 +346,16 @@ Join.chat save two localStorage variables for proper operation:
 
 
 == Changelog ==
+
+= 4.5 =
+* **NEW: Added Gutenberg native support.**
+* **NEW:** WhastApp Contact Button Block.
+* **NEW:** Native Joinchat sidebar on Block Editor.
+* **NEW:** Direct WhatsApp triggers can use custom phone and initial message.
+* **NEW:** Triggers also fire analytics events even without the Joinchat floating button.
+* CHANGED Bump min WordPress version to 4.4 and tested up to 6.0.
+* CHANGED Can change default "JoinChat" event name via javascript event.
+* CHANGED Improved interface to enter phone with country code and Google Ads conversion ID.
 
 = 4.4.3 =
 * Minor CSS fixes and optimizations.

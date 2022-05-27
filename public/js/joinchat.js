@@ -1,16 +1,14 @@
 (function ($, win, doc) {
   'use strict';
 
-  win.joinchat_obj = win.joinchat_obj || {};
-
-  joinchat_obj = $.extend({
+  win.joinchat_obj = $.extend({
     $div: null,
     settings: null,
     store: null,
     chatbox: false,
     showed_at: 0,
-    is_mobile: false,
-  }, joinchat_obj);
+    is_mobile: !!navigator.userAgent.match(/Android|iPhone|BlackBerry|IEMobile|Opera Mini/i),
+  }, win.joinchat_obj || {});
 
   joinchat_obj.$ = function (sel) {
     return $(sel || this.$div, this.$div);
@@ -19,10 +17,11 @@
   // Trigger Analytics events
   joinchat_obj.send_event = function (params) {
     params = $.extend({
-      event_label: '',          // Destination url
-      event_action: '',         // "chanel: id"
-      chat_channel: 'WhatsApp', // Channel name
-      chat_id: '--',            // Channel contact (phone, username...)
+      event_category: 'JoinChat', // Name
+      event_label: '',            // Destination url
+      event_action: '',           // "chanel: id"
+      chat_channel: 'whatsapp',   // Channel name
+      chat_id: '--',              // Channel contact (phone, username...)
       is_mobile: this.is_mobile ? 'yes' : 'no',
       page_location: location.href,
       page_title: document.title || 'no title',
@@ -46,7 +45,7 @@
       ga_tracker('set', 'transport', 'beacon');
       var trackers = ga_tracker.getAll();
       trackers.forEach(function (tracker) {
-        tracker.send('event', 'JoinChat', params.event_action, params.event_label);
+        tracker.send('event', params.event_category, params.event_action, params.event_label);
       });
     }
 
@@ -56,10 +55,7 @@
     // gtag.js
     if (typeof gtag == 'function' && typeof data_layer == 'object') {
       // Google Analytics 4 send recomended event "generate_lead"
-      var ga4_params = $.extend({
-        event_category: 'JoinChat',
-        transport_type: 'beacon',
-      }, params);
+      var ga4_params = $.extend({ transport_type: 'beacon' }, params);
       // Already defined in GA4
       delete ga4_params.page_location;
       delete ga4_params.page_title;
@@ -77,14 +73,18 @@
       }
     }
 
+    // Store category in var and delete from params
+    var event_category = params.event_category;
+    delete params.event_category;
+
     // Send Google Tag Manager custom event
     if (typeof data_layer == 'object') {
-      data_layer.push($.extend({ event: 'JoinChat' }, params));
+      data_layer.push($.extend({ event: event_category }, params));
     }
 
     // Send Facebook Pixel custom event
     if (typeof fbq == 'function') {
-      fbq('trackCustom', 'JoinChat', params);
+      fbq('trackCustom', event_category, params);
     }
   };
 
@@ -140,7 +140,7 @@
 
     var params = {
       link: this.whatsapp_link(phone, message),
-      chat_channel: 'WhatsApp',
+      chat_channel: 'whatsapp',
       chat_id: phone,
       chat_message: message,
     };
@@ -266,12 +266,11 @@
       }).trigger('resize');
     }
 
-    // Open chatbox or launch WhatsApp when click on nodes with classes "joinchat_open" "joinchat_app"
-    // or links with href "#joinchat" or "#whatsapp"
+    // Triggers: open chatbox or launch WhatsApp on click
     $(doc).on('click', '.joinchat_open, .joinchat_app, a[href="#joinchat"], a[href="#whatsapp"]', function (e) {
       e.preventDefault();
-      if (!has_chatbox || $(this).is('.joinchat_app, a[href="#whatsapp"]')) joinchat_obj.open_whatsapp(); // WhatsApp direct
-      else clear_and_show(); // Open chatbox
+      if (has_chatbox && $(this).is('.joinchat_open, a[href="#joinchat"]')) clear_and_show(); // Open chatbox
+      else joinchat_obj.open_whatsapp($(this).data('phone'), $(this).data('message')); // WhatsApp direct
     });
 
     // Close chatbox when click on nodes with class "joinchat_close"
@@ -280,7 +279,7 @@
       joinchat_obj.chatbox_hide();
     });
 
-    // Open Join.chat when "joinchat_show" or "joinchat_force_show" on viewport
+    // Triggers: open chatbox on scroll (when node on viewport)
     if (has_chatbox && 'IntersectionObserver' in win) {
       var $show_on_scroll = $('.joinchat_show, .joinchat_force_show');
 
@@ -334,7 +333,6 @@
     if (!joinchat_obj.$div.length) return;
 
     joinchat_obj.settings = joinchat_obj.$div.data('settings');
-    joinchat_obj.is_mobile = !!navigator.userAgent.match(/Android|iPhone|BlackBerry|IEMobile|Opera Mini/i);
 
     // Fallback if localStorage not supported (iOS incognito)
     // Implements functional storage in memory and will not persist between page loads
@@ -367,11 +365,25 @@
       } else {
         // Ensure don't show
         joinchat_obj.$div.removeClass('joinchat--show');
-        // Launch WhatsApp when click on nodes with classes "joinchat_open" "joinchat_app" or links with href
+
+        // Triggers: launch WhatsApp on click
         $(doc).on('click', '.joinchat_open, .joinchat_app, a[href="#joinchat"], a[href="#whatsapp"]', function (e) {
           e.preventDefault();
-          joinchat_obj.open_whatsapp();
+          joinchat_obj.open_whatsapp($(this).data('phone'), $(this).data('message'));
         });
+      }
+
+      // Gutenberg buttons add QR
+      if (typeof kjua == 'function' && !joinchat_obj.is_mobile) {
+        $('.joinchat-button__qr').each(function () {
+          $(this).kjua({
+            text: joinchat_obj.whatsapp_link($(this).data('phone'), $(this).data('message'), false),
+            render: 'canvas',
+            rounded: 80,
+          });
+        });
+      } else {
+        $('.wp-block-joinchat-button figure').remove();
       }
     }
 

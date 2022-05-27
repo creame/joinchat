@@ -21,6 +21,10 @@
   cursor: pointer;
   transition: background-color 200ms;
 
+  &:empty {
+    padding-right: 0;
+  }
+
   &:hover {
     background-color: $WAdark;
   }

@@ -87,9 +87,11 @@
     animation: none;
   }
 
-  &--chatbox:not(&--noanim) {
-    transform-origin: 0 0;
-    animation-timing-function: ease-in-out;
+  @if $type == full {
+    &--chatbox:not(&--noanim) {
+      transform-origin: 0 0;
+      animation-timing-function: ease-in-out;
+    }
   }
 
   @include motionless {

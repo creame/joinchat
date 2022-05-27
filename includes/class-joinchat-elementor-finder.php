@@ -38,7 +38,7 @@ class JoinChatElementorFinder extends \Elementor\Core\Common\Modules\Finder\Base
 	 * Get category items.
 	 *
 	 * @since 4.1.12
-	 * @param array $options
+	 * @param array $options options.
 	 * @return array $items array of Finder items.
 	 */
 	public function get_category_items( array $options = array() ) {

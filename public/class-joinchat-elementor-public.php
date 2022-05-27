@@ -31,11 +31,12 @@ class JoinChatElementorPublic {
 	 * Set 'show' false when is editing on Elementor
 	 *
 	 * @since    4.1.10
-	 * @param    object      /Elementor/Preview instance
+	 * @param  bool $show current show button.
+	 * @return bool
 	 */
 	public function elementor_preview_disable( $show ) {
 
-		$is_preview   = isset( $_GET['elementor-preview'] ) || ( isset( $_GET['render_mode'] ) && 'template-preview' === $_GET['render_mode'] );
+		$is_preview   = isset( $_GET['elementor-preview'] ) || ( isset( $_GET['render_mode'] ) && 'template-preview' === $_GET['render_mode'] ); // phpcs:ignore WordPress.Security.NonceVerification
 		$preview_show = apply_filters( 'joinchat_elementor_preview_show', false );
 
 		return $is_preview ? $show && $preview_show : $show;

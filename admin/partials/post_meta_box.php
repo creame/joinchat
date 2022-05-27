@@ -16,7 +16,7 @@ defined( 'WPINC' ) || exit;
 	<?php wp_nonce_field( 'joinchat_data', 'joinchat_nonce' ); ?>
 	<p>
 		<label for="joinchat_phone"><?php _e( 'Telephone', 'creame-whatsapp-me' ); ?></label><br>
-		<input id="joinchat_phone" <?php echo $this->enhanced_phone ? 'data-' : ''; ?>name="joinchat_telephone" value="<?php echo esc_attr( $metadata['telephone'] ); ?>" type="text" placeholder="<?php echo $placeholders['telephone']; ?>">
+		<input id="joinchat_phone" <?php echo $this->common->intltel ? 'data-' : ''; ?>name="joinchat_telephone" value="<?php echo esc_attr( $metadata['telephone'] ); ?>" type="text" placeholder="<?php echo $placeholders['telephone']; ?>">
 	</p>
 	<p>
 		<label for="joinchat_message"><?php _e( 'Call to Action', 'creame-whatsapp-me' ); ?></label><br>

@@ -18,7 +18,7 @@ defined( 'WPINC' ) || exit;
 </tr>
 <tr class="form-field joinchat-metabox">
 	<th scope="row"><label for="joinchat_phone"><?php _e( 'Telephone', 'creame-whatsapp-me' ); ?></label></th>
-	<td><input id="joinchat_phone" <?php echo $this->enhanced_phone ? 'data-' : ''; ?>name="joinchat_telephone" value="<?php echo esc_attr( $metadata['telephone'] ); ?>" type="text" placeholder="<?php echo $placeholders['telephone']; ?>"></td>
+	<td><input id="joinchat_phone" <?php echo $this->common->intltel ? 'data-' : ''; ?>name="joinchat_telephone" value="<?php echo esc_attr( $metadata['telephone'] ); ?>" type="text" placeholder="<?php echo $placeholders['telephone']; ?>"></td>
 </tr>
 <tr class="form-field joinchat-metabox">
 	<th scope="row"><label for="joinchat_message"><?php _e( 'Call to Action', 'creame-whatsapp-me' ); ?></label></th>

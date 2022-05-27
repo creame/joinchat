@@ -22,6 +22,7 @@
 
       var iti = intlTelInput($phone.get(0), {
         hiddenInput: $phone.data('name') || 'joinchat[telephone]',
+        separateDialCode: true,
         initialCountry: 'auto',
         preferredCountries: [country_code || ''],
         geoIpLookup: function (callback) {
@@ -207,15 +208,6 @@
       $('#joinchat_woo_btn_position').on('change', function () {
         $('#joinchat_woo_btn_text').closest('tr').toggleClass('joinchat-hidden', $(this).val() == 'none');
       }).trigger('change');
-
-      // Google Ads format validate
-      $('#joinchat_gads').on('focus', function () {
-        if ('' == $(this).val()) $(this).val('AW-_________/____________________');
-      }).on('input focus', function () {
-        $(this).css('color', !/^AW-\d{9}\/\w{19,22}$/.test($(this).val().trim()) ? '#ca4a1f' : '');
-      }).on('blur', function () {
-        if ('AW-_________/____________________' == $(this).val()) $(this).val('');
-      });
     }
 
     if ($('.joinchat-metabox').length) {
