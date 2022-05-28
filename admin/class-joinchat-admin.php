@@ -229,7 +229,7 @@ class JoinChatAdmin {
 				$post_type,
 				'side',
 				'default',
-				array( '__back_compat_meta_box' => $back_compat && post_type_supports( $post_type, 'custom-fields' ) ),
+				array( '__back_compat_meta_box' => $back_compat && post_type_supports( $post_type, 'custom-fields' ) )
 			);
 		}
 	}
