@@ -4,8 +4,8 @@ Donate link: https://join.chat/donate/
 Tags: Chat, Click to Chat, Facebook Messenger, WhatsApp, Telegram, Whatsapp Business, button, support chat, support, contact, directly message WhatsApp, floating WhatsApp, WhatsApp chat
 Requires at least: 4.4.0
 Tested up to: 6.0
-Requires PHP: 5.3
-Stable tag: 4.5.0
+Requires PHP: 5.5
+Stable tag: 4.5.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -346,6 +346,10 @@ Join.chat save two localStorage variables for proper operation:
 
 
 == Changelog ==
+
+= 4.5.1 =
+* FIX PHP error introduced in v4.5
+* CHANGED Bump min PHP version to 5.5.
 
 = 4.5 =
 * **NEW: Added Gutenberg native support.**
