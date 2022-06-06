@@ -55,8 +55,6 @@ class JoinChat {
 	 */
 	public function __construct() {
 
-		global $pagenow;
-
 		$this->version     = defined( 'JOINCHAT_VERSION' ) ? JOINCHAT_VERSION : '1.0.0';
 		$this->plugin_name = 'joinchat';
 
@@ -64,16 +62,11 @@ class JoinChat {
 		$this->set_locale();
 		$this->load_integrations();
 
-		if ( is_admin() ) {
-			$this->define_admin_hooks();
-		} elseif ( 'wp-login.php' !== $pagenow ) {
-			$this->define_public_hooks();
-		}
+		$this->define_admin_hooks();
+		$this->define_public_hooks();
 
-		// WordPress 5.0 or higher.
-		if ( function_exists( 'register_block_type' ) ) {
-			$this->define_gutenberg_hooks();
-		}
+		// WordPress 5.9 or higher.
+		$this->define_gutenberg_hooks();
 
 		add_action( 'joinchat_run_pre', array( $this, 'disable_remove_brand' ), 11 );
 
@@ -151,6 +144,10 @@ class JoinChat {
 	 */
 	private function define_gutenberg_hooks() {
 
+		if ( ! JoinChatUtil::can_gutenberg() ) {
+			return;
+		}
+
 		require_once JOINCHAT_DIR . 'gutenberg/class-joinchat-gutenberg.php';
 
 		$plugin_gutenberg = new JoinChatGutenberg( $this->get_plugin_name(), $this->get_version() );
@@ -174,6 +171,10 @@ class JoinChat {
 	 * @return   void
 	 */
 	private function define_admin_hooks() {
+
+		if ( ! is_admin() ) {
+			return;
+		}
 
 		require_once JOINCHAT_DIR . 'admin/class-joinchat-admin.php';
 		require_once JOINCHAT_DIR . 'admin/class-joinchat-admin-page.php';
@@ -212,6 +213,10 @@ class JoinChat {
 	 * @return   void
 	 */
 	private function define_public_hooks() {
+
+		if ( is_admin() || 'wp-login.php' === $pagenow ) {
+			return;
+		}
 
 		require_once JOINCHAT_DIR . 'public/class-joinchat-public.php';
 

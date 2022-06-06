@@ -5,7 +5,7 @@ Tags: Chat, Click to Chat, Facebook Messenger, WhatsApp, Telegram, Whatsapp Busi
 Requires at least: 4.4.0
 Tested up to: 6.0
 Requires PHP: 5.5
-Stable tag: 4.5.1
+Stable tag: 4.5.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -73,7 +73,7 @@ Define CTAs and Custom Start Messages for shop page, product pages and for produ
 
 Add a **WhatsApp Contact Button** directly on your product page next to the "Add to cart" button.
 
-#### 🧩 WhatsApp Contact Button Block.
+#### 🧩 WhatsApp Contact Button Block (min WP 5.9).
 Add beautiful and customizable WhatsApp contact buttons in the Block Editor.
 
 Ready to use patterns with different styles are also included.
@@ -346,6 +346,9 @@ Join.chat save two localStorage variables for proper operation:
 
 
 == Changelog ==
+
+= 4.5.2 =
+* FIX Joinchat integration with Gutenberg only loads for WordPress 5.9 or higher.
 
 = 4.5.1 =
 * FIX PHP error introduced in v4.5
