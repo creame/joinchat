@@ -5,7 +5,7 @@ Tags: Chat, Click to Chat, Facebook Messenger, WhatsApp, Telegram, Whatsapp Busi
 Requires at least: 4.4.0
 Tested up to: 6.0
 Requires PHP: 5.5
-Stable tag: 4.5.2
+Stable tag: 4.5.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -346,6 +346,9 @@ Join.chat save two localStorage variables for proper operation:
 
 
 == Changelog ==
+
+= 4.5.3 =
+* FIX PHP warning introduced in v4.5.2.
 
 = 4.5.2 =
 * FIX Joinchat integration with Gutenberg only loads for WordPress 5.9 or higher.
