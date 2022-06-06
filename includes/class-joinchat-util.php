@@ -332,4 +332,18 @@ class JoinChatUtil {
 		return admin_url( self::options_submenu() ? 'options-general.php' : 'admin.php' ) . '?page=joinchat';
 
 	}
+
+	/**
+	 * Can use Gutenberg
+	 *
+	 * Require at least WordPress 5.9
+	 *
+	 * @since    4.5.2
+	 * @return void
+	 */
+	public static function can_gutenberg() {
+
+		return function_exists( 'register_block_type' ) && version_compare( get_bloginfo( 'version' ), '5.9', '>=' );
+
+	}
 }
