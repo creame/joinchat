@@ -347,6 +347,9 @@ Join.chat save two localStorage variables for proper operation:
 
 == Changelog ==
 
+= 4.5.4 =
+* FIX Allows Google Ads conversion ID of 11 characters.
+
 = 4.5.3 =
 * FIX PHP warning introduced in v4.5.2.
 
