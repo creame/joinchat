@@ -5,7 +5,7 @@ Tags: Chat, Click to Chat, Facebook Messenger, WhatsApp, Telegram, Whatsapp Busi
 Requires at least: 4.4.0
 Tested up to: 6.0
 Requires PHP: 5.5
-Stable tag: 4.5.4
+Stable tag: 4.5.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -346,6 +346,9 @@ Join.chat save two localStorage variables for proper operation:
 
 
 == Changelog ==
+
+= 4.5.5 =
+* FIX WhatsApp Web always deactivated in frontend.
 
 = 4.5.4 =
 * FIX Allows Google Ads conversion ID of 11 characters.
