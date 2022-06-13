@@ -178,7 +178,6 @@ class JoinChatGutenberg {
 		}
 
 		// Comming soon.
-
 	}
 
 	/**
