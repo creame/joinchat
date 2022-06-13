@@ -5,7 +5,7 @@ Tags: Chat, Click to Chat, Facebook Messenger, WhatsApp, Telegram, Whatsapp Busi
 Requires at least: 4.4.0
 Tested up to: 6.0
 Requires PHP: 5.5
-Stable tag: 4.5.5
+Stable tag: 4.5.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -241,6 +241,14 @@ Since v4.4 Join.chat menu is placed as direct menu in your wp-admin but you can 
 `// Show as submenu under Settings (also require "manage_options" capability)
 add_filter( 'joinchat_submenu', '__return_true' );`
 
+= Disable Gutenberg sidebar =
+
+The block editor evolves quickly and errors can occur that we have not anticipated.
+
+If you have any errors with Gutenberg and Joinchat or simply prefer the old Joinchat metabox you can use this filter:
+
+`add_filter( 'joinchat_gutenberg_sidebar', '__return_false' );`
+
 = WPML/Polylang translations =
 
 Join.chat settings are saved in your site's main language. For other languages translation go to *WPML/Polylang Settings > String translations*, filter strings group by "Join.chat" and update the strings for each language.
@@ -346,6 +354,9 @@ Join.chat save two localStorage variables for proper operation:
 
 
 == Changelog ==
+
+= 4.5.6 =
+* FIX Joinchat sidebar for Gutenberg only must be loaded on public CPTs.
 
 = 4.5.5 =
 * FIX WhatsApp Web always deactivated in frontend.
