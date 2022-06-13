@@ -74,9 +74,17 @@ class JoinChatGutenberg {
 		wp_localize_script( 'joinchat-gutenberg', 'joinchatData', $joinchat_data );
 		wp_set_script_translations( 'joinchat-gutenberg', 'creame-whatsapp-me', JOINCHAT_DIR . 'languages' );
 
-		// Disable sidebar?
-		// Required CPT support 'custom-fields' for Gutenberg access to postmeta.
-		if ( ! $this->show_sidebar() || ! post_type_supports( get_post_type(), 'custom-fields' ) ) {
+		/**
+		 * Disable sidebar?
+		 */
+
+		$conditions = array(
+			$this->show_sidebar(),                                                     // Is enabled sidebar?
+			in_array( get_post_type(), $this->common->get_public_post_types(), true ), // CPT is plubic (with '_joinchat' meta registered)?
+			post_type_supports( get_post_type(), 'custom-fields' ),                    // CPT supports 'custom-fields' for Gutenberg access to postmeta?
+		);
+
+		if ( count( array_filter( $conditions ) ) < count( $conditions ) ) {
 			wp_add_inline_script( 'joinchat-gutenberg', 'wp.hooks.addFilter( "joinchat_gutenberg_sidebar", "joinchat", () => { return false; } );', 'before' );
 		}
 

@@ -111,12 +111,11 @@ class JoinChatPublic {
 
 		// Prepare settings.
 		$settings['telephone']     = JoinChatUtil::clean_whatsapp( $settings['telephone'] );
+		$settings['message_send']  = JoinChatUtil::replace_variables( $settings['message_send'] );
 		$settings['mobile_only']   = 'yes' === $settings['mobile_only'];
 		$settings['whatsapp_web']  = 'yes' === $settings['whatsapp_web'];
-		$settings['message_badge'] = 'yes' === $settings['message_badge'] && '' !== $settings['message_text'];
 		$settings['qr']            = 'yes' === $settings['qr'];
-		$settings['message_send']  = JoinChatUtil::replace_variables( $settings['message_send'] );
-		$settings['whatsapp_web']  = 'yes' === $settings['whatsapp_web'];
+		$settings['message_badge'] = 'yes' === $settings['message_badge'] && '' !== $settings['message_text'];
 		$settings['optin_check']   = 'yes' === $settings['optin_check'];
 
 		if ( empty( $settings['gads'] ) ) {

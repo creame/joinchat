@@ -95,7 +95,7 @@ class JoinChatCommon {
 			'position'      => 'right',
 			'visibility'    => array( 'all' => 'yes' ),
 			'color'         => '#25d366',
-			'dark_mode'     => 'no',
+			'dark_mode'     => 'no',     // values: 'no', 'yes' or 'auto'.
 			'header'        => '__jc__', // values: '__jc__', '__wa__' or other custom text.
 			'optin_text'    => '',
 			'optin_check'   => 'no',

@@ -214,6 +214,8 @@ class JoinChat {
 	 */
 	private function define_public_hooks() {
 
+		global $pagenow;
+
 		if ( is_admin() || 'wp-login.php' === $pagenow ) {
 			return;
 		}

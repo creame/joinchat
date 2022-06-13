@@ -285,7 +285,7 @@ class JoinChatAdminPage {
 				'a'      => array( 'href' => true ),
 			)
 		);
-		$input['gads']          = sprintf( 'AW-%s/%s', $util::substr( $util::clean_input( $input['gads'][0] ), 0, 9 ), $util::substr( $util::clean_input( $input['gads'][1] ), 0, 20 ) );
+		$input['gads']          = sprintf( 'AW-%s/%s', $util::substr( $util::clean_input( $input['gads'][0] ), 0, 11 ), $util::substr( $util::clean_input( $input['gads'][1] ), 0, 20 ) );
 		$input['gads']          = 'AW-/' !== $input['gads'] ? $input['gads'] : '';
 
 		if ( isset( $input['view'] ) ) {
@@ -607,7 +607,7 @@ class JoinChatAdminPage {
 					$parts = $value ? explode( '/', str_replace( 'AW-', '', $value ) ) : array( '', '' );
 
 					$output = '<label class="joinchat-gads">AW-' .
-					'<input id="joinchat_gads" name="joinchat[gads][]" value="' . esc_attr( $parts[0] ) . '" type="text" maxlength="9" style="width:6em;" placeholder="999999999" title="' . esc_attr__( 'Conversion ID', 'creame-whatsapp-me' ) . '">/ ' .
+					'<input id="joinchat_gads" name="joinchat[gads][]" value="' . esc_attr( $parts[0] ) . '" type="text" maxlength="11" style="width:7.5em;" placeholder="99999999999" title="' . esc_attr__( 'Conversion ID', 'creame-whatsapp-me' ) . '">/ ' .
 					'<input name="joinchat[gads][]" value="' . esc_attr( $parts[1] ) . '" type="text" maxlength="20" style="width:13em;" placeholder="ABCDEFGHIJ0123456789" title="' . esc_attr__( 'Conversion label', 'creame-whatsapp-me' ) . '"> ' .
 					'</label> <span style="white-space:nowrap">AW-<em>CONVERSION_ID</em>/<em>CONVERSION_LABEL</em></span>' .
 					'<p class="description">' . __( 'Send the conversion automatically at the chat start', 'creame-whatsapp-me' ) . '</p>';
