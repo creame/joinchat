@@ -358,11 +358,9 @@
   color: rgb(0 0 0 / 80%);
   text-align: center;
   white-space: nowrap;
-  opacity: 1;
-  transition: opacity 0.3s ease-out 0.4s;
   filter: drop-shadow(0 1px 4px rgb(0 0 0 / 40%));
-  -webkit-animation: joinchat_badge_in 400ms cubic-bezier(0.11, 0.84, 0.83, 1.01) 1s both;
-  animation: joinchat_badge_in 400ms cubic-bezier(0.11, 0.84, 0.83, 1.01) 1s both;
+  -webkit-animation: joinchat_badge_in 400ms cubic-bezier(0.11, 0.84, 0.83, 1.01) 300ms both;
+  animation: joinchat_badge_in 400ms cubic-bezier(0.11, 0.84, 0.83, 1.01) 300ms both;
   pointer-events: none;
 }
 

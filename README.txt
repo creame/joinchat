@@ -5,7 +5,7 @@ Tags: Chat, Click to Chat, Facebook Messenger, WhatsApp, Telegram, Whatsapp Busi
 Requires at least: 4.4.0
 Tested up to: 6.0
 Requires PHP: 5.5
-Stable tag: 4.5.6
+Stable tag: 4.5.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -354,6 +354,12 @@ Join.chat save two localStorage variables for proper operation:
 
 
 == Changelog ==
+
+= 4.5.7 =
+* **NEW:** Added "Test Number" button for phone input.
+* CHANGED Reduded delay for QR tooltip.
+* UPDATED International Telephone Input library.
+* Reduce size of QR generator script.
 
 = 4.5.6 =
 * FIX Joinchat sidebar for Gutenberg only must be loaded on public CPTs.

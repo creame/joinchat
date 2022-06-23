@@ -32,7 +32,7 @@ class JoinChatCommon {
 	 * @since    4.5.0
 	 * @var string|false
 	 */
-	public $intltel = '17.0.15';
+	public $intltel = null;
 
 	/**
 	 * Require QR Script on front.
@@ -65,8 +65,7 @@ class JoinChatCommon {
 	 */
 	public function __construct() {
 
-		// Use International Telephone Input library version or false to disable.
-		$this->intltel = apply_filters( 'joinchat_enhanced_phone', $this->intltel );
+		$this->intltel = '17.0.17';
 
 	}
 
@@ -110,9 +109,13 @@ class JoinChatCommon {
 	 * Load saved settings.
 	 *
 	 * @since    4.2.0
+	 * @since    4.5.7  Intitialize intltel.
 	 * @return array
 	 */
 	public function load_settings() {
+
+		// Use International Telephone Input library version or false to disable.
+		$this->intltel = apply_filters( 'joinchat_enhanced_phone', $this->intltel );
 
 		$default_settings = $this->default_settings();
 
