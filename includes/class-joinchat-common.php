@@ -65,7 +65,7 @@ class JoinChatCommon {
 	 */
 	public function __construct() {
 
-		$this->intltel = '17.0.15';
+		$this->intltel = '17.0.17';
 
 	}
 
