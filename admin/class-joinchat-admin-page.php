@@ -682,25 +682,28 @@ class JoinChatAdminPage {
 				'id'      => 'triggers',
 				'title'   => __( 'Triggers', 'creame-whatsapp-me' ),
 				'content' =>
-					'<p>' . __( 'You can interact on your page with Join.chat in two ways:', 'creame-whatsapp-me' ) . '</p>' .
-					'<p>' . __( 'With anchor links:', 'creame-whatsapp-me' ) . '</p>' .
+					'<p>' . __( 'Any element in your pages can be a chat trigger:', 'creame-whatsapp-me' ) . '</p>' .
+					'<p><strong>' . __( 'On click:', 'creame-whatsapp-me' ) . '</strong></p>' .
 					'<ul>' .
-						'<li><code>#joinchat</code> ' . __( 'to show Chat Window (or open WhatsApp if there is no CTA) on click.', 'creame-whatsapp-me' ) . '</li>' .
-						'<li><code>#whatsapp</code> ' . __( 'to open WhatsApp directly on click.', 'creame-whatsapp-me' ) . '</li>' .
+						'<li>class <code>joinchat_app</code> ' . __( 'to open WhatsApp directly.', 'creame-whatsapp-me' ) . '</li>' .
+						'<li>class <code>joinchat_open</code> ' . __( 'to show chat window (or open WhatsApp if there is no CTA).', 'creame-whatsapp-me' ) . '</li>' .
+						'<li>href <code>#whatsapp</code> ' . __( 'to open WhatsApp directly.', 'creame-whatsapp-me' ) . '</li>' .
+						'<li>href <code>#joinchat</code> ' . __( 'to show chat window (or open WhatsApp if there is no CTA).', 'creame-whatsapp-me' ) . '</li>' .
 					'</ul>' .
-					'<p>' . __( 'Example:', 'creame-whatsapp-me' ) . '<code>&lt;a href="#whatsapp"&gt;' . __( 'Contact us', 'creame-whatsapp-me' ) . '&lt;/a&gt;</code></p>' .
-					'<p>' . __( 'Adding some CSS classes in your HTML:', 'creame-whatsapp-me' ) . '</p>' .
+					'<p><strong>' . __( 'On scroll (when element appears on screen):', 'creame-whatsapp-me' ) . '</strong></p>' .
 					'<ul>' .
-						'<li><code>joinchat_open</code> ' . __( 'to show Chat Window (or open WhatsApp if there is no CTA) on click.', 'creame-whatsapp-me' ) . '</li>' .
-						'<li><code>joinchat_close</code> ' . __( 'to hide Chat Window on click.', 'creame-whatsapp-me' ) . '</li>' .
-						'<li><code>joinchat_app</code> ' . __( 'to open WhatsApp directly on click.', 'creame-whatsapp-me' ) . '</li>' .
-						'<li>' . __( 'To show Chat Window when an HTML element appears on screen when user scrolls:', 'creame-whatsapp-me' ) .
-						'<ul>' .
-							'<li><code>joinchat_show</code> ' . __( 'only show if it\'s an not seen CTA.', 'creame-whatsapp-me' ) . '</li>' .
-							'<li><code>joinchat_force_show</code> ' . __( 'to show always.', 'creame-whatsapp-me' ) . '</li>' .
-						'</ul></li>' .
+						'<li>class <code>joinchat_show</code> ' . __( 'only show if it\'s an not seen CTA.', 'creame-whatsapp-me' ) . '</li>' .
+						'<li>class <code>joinchat_force_show</code> ' . __( 'to show always.', 'creame-whatsapp-me' ) . '</li>' .
 					'</ul>' .
-					'<p>' . __( 'Example:', 'creame-whatsapp-me' ) . '<code>&lt;img src="contact.jpg" class="joinchat_open" alt="' . __( 'Contact us', 'creame-whatsapp-me' ) . '"&gt;</code></p>',
+					'<p>' . sprintf(
+						/* translators: 1: attribute phone, 2: attribute message. */
+						__( 'You can set <strong>custom phone and initial message</strong> for direct WhatsApp triggers with attributes %1$s and %2$s.', 'creame-whatsapp-me' ),
+						'<code>data-phone</code>',
+						'<code>data-message</code>'
+					) . '</p>' .
+					'<p>' . __( 'Examples:', 'creame-whatsapp-me' ) . '</p>' .
+					'<p><code>&lt;a href="#whatsapp" data-phone="99999999"&gt;' . __( 'Contact us', 'creame-whatsapp-me' ) . '&lt;/a&gt;</code></p>' .
+					'<p><code>&lt;img src="contact.jpg" class="joinchat_open" alt="' . __( 'Contact us', 'creame-whatsapp-me' ) . '"&gt;</code></p>',
 			),
 			array(
 				'id'      => 'support',
