@@ -2,14 +2,14 @@
 # This file is distributed under the GPL-2.0+.
 msgid ""
 msgstr ""
-"Project-Id-Version: Join.chat 4.5.7\n"
+"Project-Id-Version: Joinchat 4.5.7\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/creame-whatsapp-me\n"
 "Last-Translator: Pacotoleo <pacotole@crea.me>\n"
 "Language-Team: Creame <hola@crea.me>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2022-06-23T15:24:23+00:00\n"
+"POT-Creation-Date: 2022-07-14T17:43:52+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 "X-Domain: creame-whatsapp-me\n"
@@ -18,7 +18,7 @@ msgstr ""
 #: admin/class-joinchat-admin.php:227
 #: admin/partials/term_meta_box.php:16
 #: gutenberg/build/index.js:1
-msgid "Join.chat"
+msgid "Joinchat"
 msgstr ""
 
 #. Plugin URI of the plugin
@@ -415,7 +415,7 @@ msgid "Auto (detects device dark mode)"
 msgstr ""
 
 #: admin/class-joinchat-admin-page.php:568
-msgid "Powered by Join.chat"
+msgid "Powered by Joinchat"
 msgstr ""
 
 #: admin/class-joinchat-admin-page.php:570
@@ -521,7 +521,7 @@ msgid "If you need help, first review our <a href=\"%1$s\" target=\"_blank\">doc
 msgstr ""
 
 #: admin/class-joinchat-admin-page.php:720
-msgid "If you like Join.chat 😍"
+msgid "If you like Joinchat 😍"
 msgstr ""
 
 #. translators: %s: Add review link.
@@ -529,25 +529,25 @@ msgstr ""
 msgid "Please leave us a %s rating. We'll thank you."
 msgstr ""
 
-#. translators: %s: Join.chat page link.
+#. translators: %s: Joinchat page link.
 #: admin/class-joinchat-admin-page.php:729
 msgid "Subscribe to our newsletter and visit our blog at %s."
 msgstr ""
 
-#. translators: %s: Join.chat twitter link.
+#. translators: %s: Joinchat twitter link.
 #: admin/class-joinchat-admin-page.php:734
 msgid "Follow %s on twitter."
 msgstr ""
 
 #: admin/class-joinchat-admin-page.php:770
-msgid "Join.chat Settings"
+msgid "Joinchat Settings"
 msgstr ""
 
 #: admin/class-joinchat-admin-page.php:812
 msgid "You can use vars"
 msgstr ""
 
-#. translators: 1: Join.chat, 2: Add review link.
+#. translators: 1: Joinchat, 2: Add review link.
 #: admin/class-joinchat-admin-page.php:833
 msgid "Do you like %1$s? Please help us with a %2$s rating."
 msgstr ""
@@ -745,7 +745,7 @@ msgstr ""
 #: includes/class-joinchat-elementor-finder.php:52
 #: includes/class-joinchat-elementor-finder.php:59
 #: includes/class-joinchat-integrations.php:111
-msgid "Join.chat settings page"
+msgid "Joinchat settings page"
 msgstr ""
 
 #: includes/class-joinchat-elementor-finder.php:55

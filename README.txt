@@ -1,4 +1,4 @@
-=== Join.chat ===
+=== Joinchat ===
 Contributors: creapuntome, pacotole, davidlillo, monillo
 Donate link: https://join.chat/donate/
 Tags: Chat, Click to Chat, Facebook Messenger, WhatsApp, Telegram, Whatsapp Business, button, support chat, support, contact, directly message WhatsApp, floating WhatsApp, WhatsApp chat
@@ -22,7 +22,7 @@ https://www.youtube.com/watch?v=Ad2ZpPnX_3Q
 
 [Documentation](https://join.chat/en/docs/?utm_source=wporg&utm_medium=web) | [**Premium**](https://join.chat/en/premium/?utm_source=wporg&utm_medium=web) | [Support](https://join.chat/en/support/?utm_source=wporg&utm_medium=web)
 
-### ⌁ What you can do with Join.chat (formerly WAme) ✅
+### ⌁ What you can do with Joinchat (formerly WAme) ✅
 
 #### 🛎 Insert a contact button for WhatsApp on your website.
 Set your ‘WhatsApp’ or ‘WhatsApp Business’ number and let your visitors contact you easily:
@@ -139,7 +139,7 @@ Only load what need when needed. Joinchat is lightweight and follow best coding 
 Fully extensible, with lots of filters and actions to extend its functionality or change behavior.
 
 ### ⌁ PREMIUM ADD-ONS 🍡
-Extend Join.chat with awesome features:
+Extend Joinchat with awesome features:
 
 #### 🤹🏻‍♂️ [Create Support Agents](https://join.chat/en/addons/support-agents/?utm_source=wporg&utm_medium=web).
 Managing multiple WhatsApp accounts has never been easier. Add multiple phone numbers and monitor their availability, even if your employees are out of the office, your website users will know how long it will be before they are back up and running!
@@ -155,10 +155,10 @@ Use our embed tool to beautifully design the content that appears in the chat wi
 
 [**👉 Upgrade Joinchat Now**](https://join.chat/en/premium/?utm_source=wporg&utm_medium=web)
 
-### 🧪 Try Join.chat
-Do you want to test the Join.chat configuration panel without installing it? You can try it in a [WordPress on the fly demo](https://demo.tastewp.com/creame-whatsapp-me)
+### 🧪 Try Joinchat
+Do you want to test the Joinchat configuration panel without installing it? You can try it in a [WordPress on the fly demo](https://demo.tastewp.com/creame-whatsapp-me)
 
-### ⌁ If you like Join.chat 😍
+### ⌁ If you like Joinchat 😍
 1. Please leave us a [★★★★★](https://wordpress.org/support/plugin/creame-whatsapp-me/reviews/#new-post) rating. We'll thank you.
 2. Help us with the [translation in your language](https://translate.wordpress.org/projects/wp-plugins/creame-whatsapp-me)
 3. Visit our blog and find tips and tricks at [join.chat](https://join.chat/en/blog/?utm_source=wporg&utm_medium=web).
@@ -210,24 +210,24 @@ For WooCommerce Product Button you can change size with:
 
 = Shortcodes / Triggers =
 
-Join.chat does not provide any shortcodes, but you can easily link to WhatsApp in two ways:
+Joinchat does not provide any shortcodes, but you can easily link to WhatsApp in two ways:
 
 1. Add an anchor link to `#whatsapp` (open WhastApp directly) or `#joinchat` (show chat window).<br>e.g.: add in your menu a custom link with the URL `#whatsapp`
 2. Add a css class to any element, `joinchat_app` (open WhastApp directly) or `joinchat_open` (show chat window).<br>e.g.: `<img src="contact.jpg" class="joinchat_open" alt="Contact">`
 
-This works with your phone settings and message with dynamic variables, **even on pages without Join.chat visible**.
+This works with your phone settings and message with dynamic variables, **even on pages without Joinchat visible**.
 
 For custom direct WhatsApp links you can add `data-phone` and `data-message` attributes.<br>e.g.: `<a href="#whatsapp" data-phone="99999999" data-message="I want to chat">Chat now!</a>`
 
 = Disable enhanced telephone input =
 
-Join.chat uses International Telephone Input library to facilitate and validate the introduction of the phone number in the format of each country. If you have problems with your phone number or you want to write it directly without any changes you can disable it with this filter *(remember follow [WhatsApp guidelines](https://faq.whatsapp.com/general/contacts/how-to-add-an-international-phone-number))*:
+Joinchat uses International Telephone Input library to facilitate and validate the introduction of the phone number in the format of each country. If you have problems with your phone number or you want to write it directly without any changes you can disable it with this filter *(remember follow [WhatsApp guidelines](https://faq.whatsapp.com/general/contacts/how-to-add-an-international-phone-number))*:
 
 `add_filter( 'joinchat_enhanced_phone', '__return_false' );`
 
 = Allow other roles to change settings =
 
-By default Join.chat settings can only be edited by users with `manage_options` capability (administrator).
+By default Joinchat settings can only be edited by users with `manage_options` capability (administrator).
 You can change the required capability with the filter `"joinchat_capability"`.
 
 `// e.g. allow shop managers:
@@ -236,7 +236,7 @@ add_filter( 'joinchat_capability', function(){ return 'manage_woocommerce'; } );
 // e.g. allow editors:
 add_filter( 'joinchat_capability', function(){ return 'edit_pages'; } );`
 
-Since v4.4 Join.chat menu is placed as direct menu in your wp-admin but you can change it with the filter `"joinchat_submenu"`:
+Since v4.4 Joinchat menu is placed as direct menu in your wp-admin but you can change it with the filter `"joinchat_submenu"`:
 
 `// Show as submenu under Settings (also require "manage_options" capability)
 add_filter( 'joinchat_submenu', '__return_true' );`
@@ -251,11 +251,11 @@ If you have any errors with Gutenberg and Joinchat or simply prefer the old Join
 
 = WPML/Polylang translations =
 
-Join.chat settings are saved in your site's main language. For other languages translation go to *WPML/Polylang Settings > String translations*, filter strings group by "Join.chat" and update the strings for each language.
+Joinchat settings are saved in your site's main language. For other languages translation go to *WPML/Polylang Settings > String translations*, filter strings group by "Joinchat" and update the strings for each language.
 
 = Google Analytics integration =
 
-Join.chat sends a custom event when user launch WhatsApp.
+Joinchat sends a custom event when user launch WhatsApp.
 
 If Google Analytics 4 (gtag.js) is detected, use the recommended `'generate_lead'` event:
 
@@ -284,7 +284,7 @@ Joinchat is compatible with plugins **MonsterInsights – Google Analytics Dashb
 
 = Google Tag Manager integration =
 
-Join.chat sends a `'JoinChat'` event if GTM is detected when user launch WhatsApp:
+Joinchat sends a `'JoinChat'` event if GTM is detected when user launch WhatsApp:
 
 `dataLayer.push({
     event: 'JoinChat',
@@ -299,7 +299,7 @@ Join.chat sends a `'JoinChat'` event if GTM is detected when user launch WhatsAp
 
 = Facebook Pixel integration =
 
-Join.chat sends a `'JoinChat'` custom event if Facebook Pixel is detected when user launch WhatsApp:
+Joinchat sends a `'JoinChat'` custom event if Facebook Pixel is detected when user launch WhatsApp:
 
 `fbq('trackCustom', 'JoinChat', {
     event_action: 'whatsapp: 99999999999',
@@ -329,9 +329,9 @@ jQuery(document).on('joinchat:event', function (event, params) {
 
 = What about GDPR? =
 
-Join.chat don't use cookies and don't collect personal data.
+Joinchat don't use cookies and don't collect personal data.
 
-Join.chat save two localStorage variables for proper operation:
+Joinchat save two localStorage variables for proper operation:
 
 * `joinchat_views` is a visits counter to control when to show chat window.
 * `joinchat_hashes` if you set a Call To Action (CTA), when user launch WhatsApp or close Chat Window the CTA hashed is saved to prevent show automatically that CTA again.

@@ -148,7 +148,7 @@ class JoinChatCommon {
 		// Custom post types with public url.
 		$custom_post_types = array_keys( get_post_types( array( 'has_archive' => true ), 'names' ) );
 
-		// Add/remove posts types for "Join.chat" meta box.
+		// Add/remove posts types for "Joinchat" meta box.
 		return apply_filters( 'joinchat_post_types_meta_box', array_merge( $builtin_post_types, $custom_post_types ) );
 
 	}

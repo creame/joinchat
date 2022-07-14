@@ -128,7 +128,7 @@ class JoinChatAdmin {
 		) {
 
 			printf(
-				'<div class="notice notice-info is-dismissible" id="joinchat-empty-phone"><p><strong>Join.chat</strong>&nbsp;&nbsp;%s %s</p></div>',
+				'<div class="notice notice-info is-dismissible" id="joinchat-empty-phone"><p><strong>Joinchat</strong>&nbsp;&nbsp;%s %s</p></div>',
 				esc_html__( 'You only need to add your WhatsApp number to contact with your users.', 'creame-whatsapp-me' ),
 				sprintf( '<a href="%s"><strong>%s</strong></a>', esc_url( JoinChatUtil::admin_url() ), esc_html__( 'Go to settings', 'creame-whatsapp-me' ) )
 			);
@@ -224,7 +224,7 @@ class JoinChatAdmin {
 		foreach ( $post_types as $post_type ) {
 			add_meta_box(
 				$this->plugin_name,
-				__( 'Join.chat', 'creame-whatsapp-me' ),
+				__( 'Joinchat', 'creame-whatsapp-me' ),
 				array( $this, 'meta_box' ),
 				$post_type,
 				'side',
@@ -278,7 +278,7 @@ class JoinChatAdmin {
 	}
 
 	/**
-	 * Save meta data from "Join.chat"
+	 * Save meta data from "Joinchat"
 	 *
 	 * @since    4.3.0
 	 * @access   public

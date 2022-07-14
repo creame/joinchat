@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Join.chat admin post meta box
+ * Joinchat admin post meta box
  *
  * @since      4.3.0
  * @package    JoinChat

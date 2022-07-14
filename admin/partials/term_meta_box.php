@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Join.chat admin term edit from fields
+ * Joinchat admin term edit from fields
  *
  * @since      4.3.0
  * @package    JoinChat
@@ -13,7 +13,7 @@ defined( 'WPINC' ) || exit;
 ?>
 
 <tr class="form-field">
-	<th><h2 style="margin:0"><?php _e( 'Join.chat', 'creame-whatsapp-me' ); ?></h2></th>
+	<th><h2 style="margin:0"><?php _e( 'Joinchat', 'creame-whatsapp-me' ); ?></h2></th>
 	<td><?php wp_nonce_field( 'joinchat_data', 'joinchat_nonce' ); ?></td>
 </tr>
 <tr class="form-field joinchat-metabox">

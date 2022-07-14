@@ -76,7 +76,7 @@ class JoinChatIntegrations {
 	/**
 	 * Elementor Finder integration.
 	 *
-	 * Add Join.chat category to Elementor Finder.
+	 * Add Joinchat category to Elementor Finder.
 	 *
 	 * @since    4.1.12
 	 * @param Categories_Manager $categories_manager instance.
@@ -95,7 +95,7 @@ class JoinChatIntegrations {
 	}
 
 	/**
-	 * Add WooCommerce item in Join.chat category for Elementor Finder.
+	 * Add WooCommerce item in Joinchat category for Elementor Finder.
 	 *
 	 * @since    4.1.12
 	 * @param  array $items current Elementor Finder joina.chat items.
@@ -108,7 +108,7 @@ class JoinChatIntegrations {
 			'url'         => add_query_arg( 'tab', 'woocommerce', JoinChatUtil::admin_url() ),
 			'icon'        => 'woocommerce',
 			'keywords'    => explode( ',', 'joinchat,whatsapp,' . _x( 'woocommerce,shop,product', 'Keywords in Elementor Finder', 'creame-whatsapp-me' ) ),
-			'description' => __( 'Join.chat settings page', 'creame-whatsapp-me' ),
+			'description' => __( 'Joinchat settings page', 'creame-whatsapp-me' ),
 		);
 
 		return $items;

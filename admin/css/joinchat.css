@@ -1,4 +1,4 @@
-/* Join.chat settings page */
+/* Joinchat settings page */
 
 .joinchat-hidden {
   display: none !important;
@@ -205,7 +205,7 @@ tr.joinchat--focus .joinchat_vars_help {
   user-select: all;
 }
 
-/* Join.chat metabox */
+/* Joinchat metabox */
 
 .joinchat-metabox .iti,
 .joinchat-metabox .iti input,
@@ -258,7 +258,7 @@ tr.joinchat--focus .joinchat_vars_help {
   min-height: 3em;
 }
 
-/* Join.chat term metabox */
+/* Joinchat term metabox */
 
 .form-field.joinchat-metabox input[type=radio] {
   margin-right: 4px;

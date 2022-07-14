@@ -1,7 +1,7 @@
 <?php
 
 /**
- * WhatsApp me to Join.chat migration helper
+ * WhatsApp me to Joinchat migration helper
  */
 
 // If this file is called directly, abort.

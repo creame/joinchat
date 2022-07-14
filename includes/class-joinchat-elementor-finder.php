@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Join.chat category for Elementor Finder.
+ * Joinchat category for Elementor Finder.
  *
  * @since      4.1.12
  * @package    JoinChat
@@ -18,7 +18,7 @@ class JoinChatElementorFinder extends \Elementor\Core\Common\Modules\Finder\Base
 	 */
 	public function get_title() {
 
-		return 'Join.chat';
+		return 'Joinchat';
 
 	}
 
@@ -49,14 +49,14 @@ class JoinChatElementorFinder extends \Elementor\Core\Common\Modules\Finder\Base
 				'url'         => JoinChatUtil::admin_url(),
 				'icon'        => 'settings',
 				'keywords'    => explode( ',', 'joinchat,whatsapp,' . _x( 'settings,phone', 'Keywords in Elementor Finder', 'creame-whatsapp-me' ) ),
-				'description' => __( 'Join.chat settings page', 'creame-whatsapp-me' ),
+				'description' => __( 'Joinchat settings page', 'creame-whatsapp-me' ),
 			),
 			'visibility' => array(
 				'title'       => _x( 'Visibility Settings', 'Title in Elementor Finder', 'creame-whatsapp-me' ),
 				'url'         => add_query_arg( 'tab', 'visibility', JoinChatUtil::admin_url() ),
 				'icon'        => 'eye',
 				'keywords'    => explode( ',', 'joinchat,whatsapp,' . _x( 'visibility,show,hide', 'Keywords in Elementor Finder', 'creame-whatsapp-me' ) ),
-				'description' => __( 'Join.chat settings page', 'creame-whatsapp-me' ),
+				'description' => __( 'Joinchat settings page', 'creame-whatsapp-me' ),
 			),
 		);
 
