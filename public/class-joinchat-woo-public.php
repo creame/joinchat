@@ -325,6 +325,11 @@ class JoinChatWooPublic {
 	 */
 	public function product_button() {
 
+		// Only for main single product.
+		if ( '' !== wc_get_loop_prop( 'name' ) ) {
+			return;
+		}
+
 		$this->btn_show = true;
 
 		echo '<div class="joinchat__woo-btn__wrapper"><div class="joinchat__woo-btn joinchat_app">' . esc_html( $this->btn_text ) . '</div></div>';
