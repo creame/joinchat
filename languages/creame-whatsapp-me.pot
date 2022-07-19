@@ -2,7 +2,7 @@
 # This file is distributed under the GPL-2.0+.
 msgid ""
 msgstr ""
-"Project-Id-Version: Joinchat 4.5.8\n"
+"Project-Id-Version: Joinchat 4.5.9\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/creame-whatsapp-me\n"
 "Last-Translator: Pacotoleo <pacotole@crea.me>\n"
 "Language-Team: Creame <hola@crea.me>\n"
