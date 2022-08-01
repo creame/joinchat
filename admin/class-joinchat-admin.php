@@ -271,7 +271,7 @@ class JoinChatAdmin {
 		$metabox_vars = $this->common->get_obj_vars( $post );
 
 		ob_start();
-		include __DIR__ . '/partials/post_meta_box.php';
+		include __DIR__ . '/partials/post-meta-box.php';
 		$metabox_output = ob_get_clean();
 
 		echo apply_filters( 'joinchat_metabox_output', $metabox_output, $post, $metadata ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
@@ -373,7 +373,7 @@ class JoinChatAdmin {
 		$metabox_vars = $this->common->get_obj_vars( $term );
 
 		ob_start();
-		include __DIR__ . '/partials/term_meta_box.php';
+		include __DIR__ . '/partials/term-meta-box.php';
 		$metabox_output = ob_get_clean();
 
 		echo apply_filters( 'joinchat_term_metabox_output', $metabox_output, $term, $metadata, $taxonomy ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
