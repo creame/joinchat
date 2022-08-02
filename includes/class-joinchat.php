@@ -179,11 +179,10 @@ class JoinChat {
 		require_once JOINCHAT_DIR . 'admin/class-joinchat-admin.php';
 		require_once JOINCHAT_DIR . 'admin/class-joinchat-admin-page.php';
 
-		$plugin_admin = new JoinChatAdmin( $this->get_plugin_name(), $this->get_version() );
-		$plugin_page  = new JoinChatAdminPage( $this->get_plugin_name(), $this->get_version() );
-
 		$this->loader->add_action( 'admin_init', JoinChatCommon::instance(), 'load_settings', 5 );
 		$this->loader->add_filter( 'option_page_capability_joinchat', 'JoinChatUtil', 'capability' );
+
+		$plugin_admin = new JoinChatAdmin( $this->get_plugin_name(), $this->get_version() );
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'register_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'register_scripts' );
@@ -195,6 +194,8 @@ class JoinChat {
 		$this->loader->add_action( 'update_option_joinchat', $plugin_admin, 'clear_cache', 100 );
 		$this->loader->add_filter( 'plugin_action_links_' . JOINCHAT_BASENAME, $plugin_admin, 'settings_link' );
 		$this->loader->add_filter( 'plugin_row_meta', $plugin_admin, 'plugin_links', 10, 2 );
+
+		$plugin_page = new JoinChatAdminPage( $this->get_plugin_name(), $this->get_version() );
 
 		$this->loader->add_action( 'admin_init', $plugin_page, 'settings_init' );
 		$this->loader->add_action( 'admin_menu', $plugin_page, 'add_menu' );
