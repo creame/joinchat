@@ -1,5 +1,5 @@
 
-# Join.chat
+# Joinchat
 Wordpress plugin
 
 ## Description [EN]

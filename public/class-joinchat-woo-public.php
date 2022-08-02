@@ -11,15 +11,6 @@
 class JoinChatWooPublic {
 
 	/**
-	 * Product Button Text
-	 *
-	 * @since    4.4.0
-	 * @access   private
-	 * @var      string    $btn_text    Product Button text.
-	 */
-	private $btn_text;
-
-	/**
 	 * Product Button Show
 	 *
 	 * @since    4.4.0
@@ -123,9 +114,6 @@ class JoinChatWooPublic {
 
 		// Add Product Button.
 		if ( is_product() && 'none' !== $settings['woo_btn_position'] ) {
-
-			$this->btn_text = $settings['woo_btn_text'];
-
 			add_action( $settings['woo_btn_position'], array( $this, 'product_button' ), apply_filters( 'joinchat_woo_btn_priority', 10 ) );
 		}
 
@@ -325,9 +313,17 @@ class JoinChatWooPublic {
 	 */
 	public function product_button() {
 
+		// Only for main single product.
+		if ( '' !== wc_get_loop_prop( 'name' ) ) {
+			return;
+		}
+
 		$this->btn_show = true;
 
-		echo '<div class="joinchat__woo-btn__wrapper"><div class="joinchat__woo-btn joinchat_app">' . esc_html( $this->btn_text ) . '</div></div>';
+		printf(
+			'<div class="joinchat__woo-btn__wrapper"><div class="joinchat__woo-btn joinchat_app">%s</div></div>',
+			esc_html( JoinChatCommon::instance()->settings['woo_btn_text'] )
+		);
 
 	}
 

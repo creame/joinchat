@@ -71,7 +71,7 @@ class JoinChatAdminPage {
 	 */
 	public function add_menu() {
 
-		$title = 'Join.chat';
+		$title = 'Joinchat';
 
 		if ( JoinChatUtil::options_submenu() ) {
 			$icon = '<span class="dashicons dashicons-whatsapp" aria-hidden="true" style="height:18px;font-size:18px;margin:0 8px;"></span>';
@@ -442,8 +442,8 @@ class JoinChatAdminPage {
 
 			switch ( $field_id ) {
 				case 'telephone':
-					$output = '<input id="joinchat_phone" ' . ( $this->common->intltel ? 'data-' : '' ) . 'name="joinchat[telephone]" value="' . esc_attr( $value ) . '" type="text" style="width:15em;display:inline-block"> ' .
-						'<input id="joinchat_phone_test" type="button" value="' . esc_attr__( 'Test Number', 'creame-whatsapp-me' ) . '" class="button" ' . ( empty( $value ) ? 'disabled' : '') . '>' .
+					$output = '<input id="joinchat_phone" ' . ( $this->common->get_intltel() ? 'data-' : '' ) . 'name="joinchat[telephone]" value="' . esc_attr( $value ) . '" type="text" style="width:15em;display:inline-block"> ' .
+						'<input id="joinchat_phone_test" type="button" value="' . esc_attr__( 'Test Number', 'creame-whatsapp-me' ) . '" class="button" ' . ( empty( $value ) ? 'disabled' : '' ) . '>' .
 						'<p class="description">' . __( "Contact phone number <strong>(the button will not be shown if it's empty)</strong>", 'creame-whatsapp-me' ) . '</p>' .
 						'<p class="joinchat-addon">' . sprintf(
 							/* translators: 1: Random Phone link, 2: Support Agents link. */
@@ -565,7 +565,7 @@ class JoinChatAdminPage {
 
 					$output = '<fieldset><legend class="screen-reader-text"><span>' . __( 'Header', 'creame-whatsapp-me' ) . '</span></legend>' .
 						'<label><input name="joinchat[header]" value="__jc__" type="radio"' . checked( '__jc__', $check, false ) . '> ' .
-						__( 'Powered by Join.chat', 'creame-whatsapp-me' ) . '</label><br>' .
+						__( 'Powered by Joinchat', 'creame-whatsapp-me' ) . '</label><br>' .
 						'<label><input name="joinchat[header]" value="__wa__" type="radio"' . checked( '__wa__', $check, false ) . '> ' .
 						__( 'WhatsApp Logo', 'creame-whatsapp-me' ) . '</label><br>' .
 						'<label><input name="joinchat[header]" value="__custom__" type="radio"' . checked( '__custom__', $check, false ) . '> ' .
@@ -717,7 +717,7 @@ class JoinChatAdminPage {
 						esc_url( 'https://wordpress.org/support/plugin/creame-whatsapp-me/' ),
 						esc_url( "https://my.join.chat/$utm" )
 					) . '</p>' .
-					'<p>' . __( 'If you like Join.chat 😍', 'creame-whatsapp-me' ) . '</p>' .
+					'<p>' . __( 'If you like Joinchat 😍', 'creame-whatsapp-me' ) . '</p>' .
 					'<ul>' .
 					'<li>' . sprintf(
 						/* translators: %s: Add review link. */
@@ -725,12 +725,12 @@ class JoinChatAdminPage {
 						'<a href="https://wordpress.org/support/plugin/creame-whatsapp-me/reviews/#new-post" target="_blank">★★★★★</a>'
 					) . '</li>' .
 					'<li>' . sprintf(
-						/* translators: %s: Join.chat page link. */
+						/* translators: %s: Joinchat page link. */
 						__( 'Subscribe to our newsletter and visit our blog at %s.', 'creame-whatsapp-me' ),
 						'<a href="https://join.chat/' . $utm . '" target="_blank">join.chat</a>'
 					) . '</li>' .
 					'<li>' . sprintf(
-						/* translators: %s: Join.chat twitter link. */
+						/* translators: %s: Joinchat twitter link. */
 						__( 'Follow %s on twitter.', 'creame-whatsapp-me' ),
 						'<a href="https://twitter.com/joinchatnow" target="_blank">@joinchatnow</a>'
 					) . '</li>' .
@@ -760,14 +760,14 @@ class JoinChatAdminPage {
 		wp_enqueue_script( 'joinchat-admin' );
 		wp_enqueue_style( 'joinchat-admin' );
 
-		if ( $this->common->intltel ) {
+		if ( $this->common->get_intltel() ) {
 			wp_enqueue_style( 'intl-tel-input' );
 		}
 
 		$active_tab = isset( $_GET['tab'] ) && in_array( $_GET['tab'], array_keys( $this->tabs ), true ) ? wp_unslash( $_GET['tab'] ) : 'general'; // phpcs:ignore WordPress.Security.NonceVerification
 		?>
 			<div class="wrap">
-				<h1><?php esc_html_e( 'Join.chat Settings', 'creame-whatsapp-me' ); ?></h1>
+				<h1><?php esc_html_e( 'Joinchat Settings', 'creame-whatsapp-me' ); ?></h1>
 
 				<?php
 				if ( ! JoinChatUtil::options_submenu() ) {
@@ -829,9 +829,9 @@ class JoinChatAdminPage {
 
 		if ( $current_screen && false !== strpos( $current_screen->id, '_joinchat' ) ) {
 			$footer_text = sprintf(
-				/* translators: 1: Join.chat, 2: Add review link. */
+				/* translators: 1: Joinchat, 2: Add review link. */
 				__( 'Do you like %1$s? Please help us with a %2$s rating.', 'creame-whatsapp-me' ),
-				'<strong>Join.chat</strong>',
+				'<strong>Joinchat</strong>',
 				'<a href="https://wordpress.org/support/plugin/creame-whatsapp-me/reviews/#new-post" target="_blank">★★★★★</a>'
 			);
 		}

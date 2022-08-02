@@ -11,6 +11,13 @@
 class JoinChatCommon {
 
 	/**
+	 * International Telephone Input library version.
+	 *
+	 * @since    4.5.10
+	 */
+	const INTL_TEL_INPUT_VERSION = '17.0.17';
+
+	/**
 	 * Singleton instance.
 	 *
 	 * @since    4.5.0
@@ -25,14 +32,6 @@ class JoinChatCommon {
 	 * @var null|array
 	 */
 	public $settings = null;
-
-	/**
-	 * Intl-tel-input version.
-	 *
-	 * @since    4.5.0
-	 * @var string|false
-	 */
-	public $intltel = null;
 
 	/**
 	 * Require QR Script on front.
@@ -63,11 +62,7 @@ class JoinChatCommon {
 	 *
 	 * @since    4.2.0
 	 */
-	public function __construct() {
-
-		$this->intltel = '17.0.17';
-
-	}
+	private function __construct() {}
 
 	/**
 	 * Return the default settings.
@@ -114,9 +109,6 @@ class JoinChatCommon {
 	 */
 	public function load_settings() {
 
-		// Use International Telephone Input library version or false to disable.
-		$this->intltel = apply_filters( 'joinchat_enhanced_phone', $this->intltel );
-
 		$default_settings = $this->default_settings();
 
 		// Can hook 'option_joinchat' and 'default_option_joinchat' filters.
@@ -136,6 +128,20 @@ class JoinChatCommon {
 	}
 
 	/**
+	 * Get International Telephone Input library version
+	 *
+	 * Return IntlTelInput library version or false to disable.
+	 *
+	 * @since    4.5.10
+	 * @return string|false
+	 */
+	public function get_intltel() {
+
+		return apply_filters( 'joinchat_enhanced_phone', self::INTL_TEL_INPUT_VERSION );
+
+	}
+
+	/**
 	 * Get public post_types
 	 *
 	 * @since    4.5.0
@@ -148,7 +154,7 @@ class JoinChatCommon {
 		// Custom post types with public url.
 		$custom_post_types = array_keys( get_post_types( array( 'has_archive' => true ), 'names' ) );
 
-		// Add/remove posts types for "Join.chat" meta box.
+		// Add/remove posts types for "Joinchat" meta box.
 		return apply_filters( 'joinchat_post_types_meta_box', array_merge( $builtin_post_types, $custom_post_types ) );
 
 	}

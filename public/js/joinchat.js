@@ -156,7 +156,7 @@
       // Open WhatsApp link
       win.open(params.link, 'joinchat', 'noopener');
     } else {
-      console.error("Join.chat: the link doesn't seem safe, it must point to the current domain or whatsapp.com");
+      console.error("Joinchat: the link doesn't seem safe, it must point to the current domain or whatsapp.com");
     }
   };
 
@@ -209,7 +209,7 @@
       }
     }
 
-    // Open Join.chat on mouse over
+    // Open Joinchat on mouse over
     if (has_chatbox && !joinchat_obj.is_mobile) {
       joinchat_obj.$('.joinchat__button')
         .on('mouseenter', function () { timeoutHover = setTimeout(clear_and_show, 1500); })
@@ -224,7 +224,7 @@
       joinchat_obj.$div.toggleClass('joinchat--optout', !this.checked);
     });
 
-    // Only scroll Join.chat message box (no all body)
+    // Only scroll Joinchat message box (no all body)
     // TODO: disable also on touch
     joinchat_obj.$('.joinchat__box__scroll').on('mousewheel DOMMouseScroll', function (e) {
       e.preventDefault();
@@ -354,7 +354,7 @@
         joinchat_obj.settings = JSON.parse(joinchat_obj.$div.attr('data-settings'));
       } catch (error) {
         joinchat_obj.settings = undefined;
-        console.error("Join.chat: can't get settings");
+        console.error("Joinchat: can't get settings");
       }
     }
 
@@ -390,7 +390,7 @@
     joinchat_obj.store.setItem('joinchat_views', parseInt(joinchat_obj.store.getItem('joinchat_views') || 0) + 1);
   }
 
-  // Ready!! (in some scenarios jQuery.ready doesn't fire, this try to ensure Join.chat initialization)
+  // Ready!! (in some scenarios jQuery.ready doesn't fire, this try to ensure Joinchat initialization)
   var once_page_ready = once(on_page_ready);
   $(once_page_ready);
   $(win).on('load', once_page_ready);

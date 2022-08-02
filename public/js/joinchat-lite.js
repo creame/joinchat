@@ -111,7 +111,7 @@
       // Open WhatsApp link
       win.open(params.link, 'joinchat', 'noopener');
     } else {
-      console.error("Join.chat: the link doesn't seem safe, it must point to the current domain or whatsapp.com");
+      console.error("Joinchat: the link doesn't seem safe, it must point to the current domain or whatsapp.com");
     }
   };
 
