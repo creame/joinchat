@@ -69,8 +69,9 @@ class JoinChatAdmin {
 
 		wp_register_style( 'joinchat-admin', plugins_url( "css/joinchat{$min}.css", __FILE__ ), array( 'wp-color-picker' ), $this->version, 'all' );
 
-		if ( $this->common->intltel ) {
-			wp_register_style( 'intl-tel-input', plugins_url( "css/intlTelInput{$min}.css", __FILE__ ), array(), $this->common->intltel, 'all' );
+		$intltel = $this->common->get_intltel();
+		if ( $intltel ) {
+			wp_register_style( 'intl-tel-input', plugins_url( "css/intlTelInput{$min}.css", __FILE__ ), array(), $intltel, 'all' );
 		}
 
 	}
@@ -88,15 +89,16 @@ class JoinChatAdmin {
 		$min  = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
 		$deps = array( 'jquery', 'wp-color-picker' );
 
-		if ( $this->common->intltel ) {
+		$intltel = $this->common->get_intltel();
+		if ( $intltel ) {
 			$deps[]   = 'intl-tel-input';
 			$localize = array(
 				'placeholder' => __( 'e.g.', 'creame-whatsapp-me' ),
-				'version'     => $this->common->intltel,
+				'version'     => $intltel,
 				'utils_js'    => plugins_url( 'js/utils.js', __FILE__ ),
 			);
 
-			wp_register_script( 'intl-tel-input', plugins_url( "js/intlTelInput{$min}.js", __FILE__ ), array(), $this->common->intltel, true );
+			wp_register_script( 'intl-tel-input', plugins_url( "js/intlTelInput{$min}.js", __FILE__ ), array(), $intltel, true );
 			wp_localize_script( 'intl-tel-input', 'intlTelConf', $localize );
 		}
 
@@ -252,7 +254,7 @@ class JoinChatAdmin {
 		wp_enqueue_script( 'joinchat-admin' );
 		wp_enqueue_style( 'joinchat-admin' );
 
-		if ( $this->common->intltel ) {
+		if ( $this->common->get_intltel() ) {
 			wp_enqueue_style( 'intl-tel-input' );
 		}
 
@@ -354,7 +356,7 @@ class JoinChatAdmin {
 		wp_enqueue_script( 'joinchat-admin' );
 		wp_enqueue_style( 'joinchat-admin' );
 
-		if ( $this->common->intltel ) {
+		if ( $this->common->get_intltel() ) {
 			wp_enqueue_style( 'intl-tel-input' );
 		}
 

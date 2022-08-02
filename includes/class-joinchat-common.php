@@ -11,6 +11,13 @@
 class JoinChatCommon {
 
 	/**
+	 * International Telephone Input library version.
+	 *
+	 * @since    4.5.10
+	 */
+	const INTL_TEL_INPUT_VERSION = '17.0.17';
+
+	/**
 	 * Singleton instance.
 	 *
 	 * @since    4.5.0
@@ -25,14 +32,6 @@ class JoinChatCommon {
 	 * @var null|array
 	 */
 	public $settings = null;
-
-	/**
-	 * Intl-tel-input version.
-	 *
-	 * @since    4.5.0
-	 * @var string|false
-	 */
-	public $intltel = null;
 
 	/**
 	 * Require QR Script on front.
@@ -63,11 +62,7 @@ class JoinChatCommon {
 	 *
 	 * @since    4.2.0
 	 */
-	public function __construct() {
-
-		$this->intltel = '17.0.17';
-
-	}
+	private function __construct() {}
 
 	/**
 	 * Return the default settings.
@@ -114,9 +109,6 @@ class JoinChatCommon {
 	 */
 	public function load_settings() {
 
-		// Use International Telephone Input library version or false to disable.
-		$this->intltel = apply_filters( 'joinchat_enhanced_phone', $this->intltel );
-
 		$default_settings = $this->default_settings();
 
 		// Can hook 'option_joinchat' and 'default_option_joinchat' filters.
@@ -132,6 +124,20 @@ class JoinChatCommon {
 		$this->settings = array_intersect_key( $settings, $default_settings );
 
 		return $this->settings;
+
+	}
+
+	/**
+	 * Get International Telephone Input library version
+	 *
+	 * Return IntlTelInput library version or false to disable.
+	 *
+	 * @since    4.5.10
+	 * @return string|false
+	 */
+	public function get_intltel() {
+
+		return apply_filters( 'joinchat_enhanced_phone', self::INTL_TEL_INPUT_VERSION );
 
 	}
 
