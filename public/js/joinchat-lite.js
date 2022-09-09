@@ -6,8 +6,19 @@
     is_mobile: !!navigator.userAgent.match(/Android|iPhone|BlackBerry|IEMobile|Opera Mini/i),
   }, win.joinchat_obj || {});
 
-  // Trigger Analytics events
-  joinchat_obj.send_event = function (params) {
+  /**
+   * Trigger Analytics events
+   *
+   * Available customizations via joinchat_obj.settings:
+   *  - 'ga_tracker' for custom UA tracker name (default 'ga' or GADP by MonsterInsights '__gaTracker')
+   *  - 'data_layer' for custom data layer name (default 'dataLayer' or GTM4WP custom DataLayer name)
+   *  - 'ga_event'   for GA4 custom event       (default 'generate_lead' recommended event)
+   *
+   * All params can be edited with document event 'joinchat:event' or cancel if returns false.
+   * e.g.: $(document).on('joinchat:event', function(){ return false; });
+   *
+   */
+   joinchat_obj.send_event = function (params) {
     params = $.extend({
       event_category: 'JoinChat', // Name
       event_label: '',            // Destination url
@@ -25,11 +36,7 @@
     // Trigger event (params can be edited by third party scripts or cancel if return false)
     if (false === $(doc).triggerHandler('joinchat:event', [params])) return;
 
-    // Can pass setting 'ga_tracker' for custom UA tracker name
-    // Compatible with GADP for WordPress by MonsterInsights tracker name
     var ga_tracker = win[this.settings.ga_tracker] || win['ga'] || win['__gaTracker'];
-    // Can pass setting 'data_layer' for custom data layer name
-    // Compatible with GTM4WP custom DataLayer name
     var data_layer = win[this.settings.data_layer] || win[win.gtm4wp_datalayer_name] || win['dataLayer'];
 
     // Send Google Analytics custom event (Universal Analytics - analytics.js)
@@ -47,15 +54,16 @@
     // gtag.js
     if (typeof gtag == 'function' && typeof data_layer == 'object') {
       // Google Analytics 4 send recomended event "generate_lead"
+      var ga4_event = this.settings.ga_event || 'generate_lead';
       var ga4_params = $.extend({ transport_type: 'beacon' }, params);
       // Already defined in GA4
       delete ga4_params.page_location;
       delete ga4_params.page_title;
 
       data_layer.forEach(function (item) {
-        if (item[0] == 'config' && item[1].substring(0, 2) == 'G-') {
+        if (item[0] == 'config' && item[1] && item[1].substring(0, 2) == 'G-') {
           ga4_params.send_to = item[1];
-          gtag('event', 'generate_lead', ga4_params);
+          gtag('event', ga4_event, ga4_params);
         }
       });
 
