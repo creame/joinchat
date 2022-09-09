@@ -5,7 +5,7 @@ Tags: Chat, Click to Chat, Facebook Messenger, WhatsApp, Telegram, Whatsapp Busi
 Requires at least: 4.4.0
 Tested up to: 6.0
 Requires PHP: 5.5
-Stable tag: 4.5.9
+Stable tag: 4.5.10
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -179,7 +179,7 @@ You can change the position of the button so that nothing covers it by adding th
 
 `.joinchat { z-index:999999; }`
 
-Higher values of z-index are above, the default value is 9999.
+Higher values of z-index are above, the default value is 9000.
 
 If you need to move up:
 
@@ -272,10 +272,11 @@ If Universal Analtics (analytics.js) is detected:
 
 `ga('send', 'event', 'JoinChat', 'whatsapp: 99999999999', destination_url);`
 
-If your site don't have standard names for UA tracker ('ga') or data layer ('dataLayer') you can set your custom names with this filter:
+If your site don't have standard names for UA tracker ('ga') or data layer ('dataLayer') you can set your custom names with this PHP filter. Also can set a different event name for GA4:
 
 `add_filter( 'joinchat_get_settings', function( $settings ){
     $settings['ga_tracker'] = 'gaCustom';
+    $settings['ga_event'] = 'myGA4Event';
     $settings['data_layer'] = 'dataLayerCustom';
     return $settings;
 } );`
@@ -354,6 +355,10 @@ Joinchat save two localStorage variables for proper operation:
 
 
 == Changelog ==
+
+= 4.5.10 =
++ **NEW:** GA4 "generate_lead" event can now be changed to a custom event.
+* CHANGED default z-index to `9000` for compatibility with major cookies plugins.
 
 = 4.5.9 =
 * FIX Product Button should not appear on related products.
