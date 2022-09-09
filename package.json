@@ -6,7 +6,7 @@
   "author": "Creame",
   "license": "ISC",
   "devDependencies": {
-    "autoprefixer": "^10.4.7",
+    "autoprefixer": "^10.4.8",
     "cssnano-cli": "^1.0.5",
     "del-cli": "^4.0.1",
     "postcss-calc": "^8.2.4",
@@ -15,11 +15,11 @@
     "postcss-hexrgba": "^2.1.0",
     "postcss-inline-svg": "^5.0.0",
     "postcss-scss": "^4.0.4",
-    "postcss-sort-media-queries": "^4.2.1",
+    "postcss-sort-media-queries": "^4.3.0",
     "postcss-strip-inline-comments": "^0.1.5",
     "postcss-svgo": "^5.1.0",
     "precss": "^4.0.0",
-    "stylelint": "^14.9.1",
+    "stylelint": "^14.11.0",
     "stylelint-config-standard": "^26.0.0"
   },
   "browserslist": [
