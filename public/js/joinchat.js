@@ -7,7 +7,9 @@
     store: null,
     chatbox: false,
     showed_at: 0,
+    is_ready: false, // Change to true when Joinchat ends initialization
     is_mobile: !!navigator.userAgent.match(/Android|iPhone|BlackBerry|IEMobile|Opera Mini/i),
+    is_qr: typeof kjua == 'function',
   }, win.joinchat_obj || {});
 
   joinchat_obj.$ = function (sel) {
@@ -270,7 +272,7 @@
       // Ensure header is visible
       $(win).on('resize', function () {
         clearTimeout(timeoutResize);
-        timeoutResize = setTimeout(function () { joinchat_obj.$div[0].style.setProperty('--vh', window.innerHeight + 'px'); }, 200);
+        timeoutResize = setTimeout(function () { joinchat_obj.$div[0].style.setProperty('--vh', win.innerHeight + 'px'); }, 200);
       }).trigger('resize');
     }
 
@@ -308,7 +310,7 @@
     }
 
     // Add QR Code
-    if (joinchat_obj.settings.qr && !joinchat_obj.is_mobile && typeof kjua == 'function') {
+    if (joinchat_obj.settings.qr && joinchat_obj.is_qr && !joinchat_obj.is_mobile) {
       joinchat_obj.$('.joinchat__qr').kjua({
         text: joinchat_obj.whatsapp_link(undefined, undefined, false),
         render: 'canvas',
@@ -324,6 +326,7 @@
     }
 
     $(doc).trigger('joinchat:start');
+    joinchat_obj.is_ready = true;
   }
 
   // Simple run only once wrapper
@@ -382,7 +385,7 @@
       }
 
       // Gutenberg buttons add QR
-      if (typeof kjua == 'function' && !joinchat_obj.is_mobile) {
+      if (joinchat_obj.is_qr && !joinchat_obj.is_mobile) {
         $('.joinchat-button__qr').each(function () {
           $(this).kjua({
             text: joinchat_obj.whatsapp_link($(this).data('phone'), $(this).data('message'), false),
