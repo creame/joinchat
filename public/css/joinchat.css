@@ -30,7 +30,6 @@
   bottom: var(--bottom);
   font: normal normal normal 16px/1.625em var(--joinchat-font);
   letter-spacing: 0;
-  -webkit-animation: joinchat_show 500ms cubic-bezier(0.18, 0.89, 0.32, 1.28) 10ms both;
   animation: joinchat_show 500ms cubic-bezier(0.18, 0.89, 0.32, 1.28) 10ms both;
   transform: scale3d(0, 0, 0);
   transform-origin: calc(var(--s)/-2) calc(var(--s)/-4);
@@ -63,13 +62,11 @@
 }
 
 .joinchat--noanim {
-  -webkit-animation: none;
   animation: none;
 }
 
 .joinchat--chatbox:not(.joinchat--noanim) {
   transform-origin: 0 0;
-  -webkit-animation-timing-function: ease-in-out;
   animation-timing-function: ease-in-out;
 }
 
@@ -144,12 +141,10 @@
 
 .joinchat--optout.joinchat--chatbox .joinchat__button .joinchat_svg__plain {
   stroke-dasharray: 0;
-  -webkit-animation: none;
   animation: none;
 }
 
 .joinchat--optout.joinchat--chatbox .joinchat__button .joinchat_svg__chat {
-  -webkit-animation: none;
   animation: none;
 }
 
@@ -186,13 +181,11 @@
 }
 
 .joinchat--show .joinchat__button__image {
-  -webkit-animation: joinchat_image_loop 20s linear 5s infinite normal both;
   animation: joinchat_image_loop 20s linear 5s infinite normal both;
 }
 
 .joinchat--image .joinchat__button__image {
   opacity: 1;
-  -webkit-animation: none;
   animation: none;
 }
 
@@ -223,14 +216,12 @@
 .joinchat__button__send .joinchat_svg__plain {
   stroke-dasharray: 1097;
   stroke-dashoffset: 1097;
-  -webkit-animation: joinchat_plain 6s 0.2s ease-in-out infinite;
   animation: joinchat_plain 6s 0.2s ease-in-out infinite;
 }
 
 .joinchat__button__send .joinchat_svg__chat {
   stroke-dasharray: 1020;
   stroke-dashoffset: 1020;
-  -webkit-animation: joinchat_chat 6s 3.2s ease-in-out infinite;
   animation: joinchat_chat 6s 3.2s ease-in-out infinite;
 }
 
@@ -277,12 +268,10 @@
 }
 
 .joinchat__badge.joinchat__badge--in {
-  -webkit-animation: joinchat_badge_in 500ms cubic-bezier(0.27, 0.9, 0.41, 1.28) 1 both;
   animation: joinchat_badge_in 500ms cubic-bezier(0.27, 0.9, 0.41, 1.28) 1 both;
 }
 
 .joinchat__badge.joinchat__badge--out {
-  -webkit-animation: joinchat_badge_out 400ms cubic-bezier(0.215, 0.61, 0.355, 1) 1 both;
   animation: joinchat_badge_out 400ms cubic-bezier(0.215, 0.61, 0.355, 1) 1 both;
 }
 
@@ -322,7 +311,6 @@
 }
 
 .joinchat--tooltip .joinchat__tooltip {
-  -webkit-animation: joinchat_tootlip 20s linear 5s 1 normal both;
   animation: joinchat_tootlip 20s linear 5s 1 normal both;
 }
 
@@ -359,7 +347,6 @@
   text-align: center;
   white-space: nowrap;
   filter: drop-shadow(0 1px 4px rgba(0,0,0, 0.4));
-  -webkit-animation: joinchat_badge_in 400ms cubic-bezier(0.11, 0.84, 0.83, 1.01) 300ms both;
   animation: joinchat_badge_in 400ms cubic-bezier(0.11, 0.84, 0.83, 1.01) 300ms both;
   pointer-events: none;
 }
@@ -683,16 +670,6 @@
   color: #d8d8d8;
 }
 
-@-webkit-keyframes joinchat_show {
-  from {
-    transform: scale3d(0, 0, 0);
-  }
-
-  to {
-    transform: scale3d(1, 1, 1);
-  }
-}
-
 @keyframes joinchat_show {
   from {
     transform: scale3d(0, 0, 0);
@@ -700,18 +677,6 @@
 
   to {
     transform: scale3d(1, 1, 1);
-  }
-}
-
-@-webkit-keyframes joinchat_badge_in {
-  from {
-    opacity: 0;
-    transform: translate3d(0, 50px, 0);
-  }
-
-  to {
-    opacity: 1;
-    transform: translate3d(0, 0, 0);
   }
 }
 
@@ -727,18 +692,6 @@
   }
 }
 
-@-webkit-keyframes joinchat_badge_out {
-  from {
-    opacity: 1;
-    transform: translate3d(0, 0, 0);
-  }
-
-  to {
-    opacity: 0;
-    transform: translate3d(0, -20px, 0);
-  }
-}
-
 @keyframes joinchat_badge_out {
   from {
     opacity: 1;
@@ -751,37 +704,11 @@
   }
 }
 
-@-webkit-keyframes joinchat_plain {
-  0%,
-  50%,
-  100% {
-    stroke-dashoffset: 1097;
-  }
-
-  5%,
-  45% {
-    stroke-dashoffset: 0;
-  }
-}
-
 @keyframes joinchat_plain {
   0%,
   50%,
   100% {
     stroke-dashoffset: 1097;
-  }
-
-  5%,
-  45% {
-    stroke-dashoffset: 0;
-  }
-}
-
-@-webkit-keyframes joinchat_chat {
-  0%,
-  50%,
-  100% {
-    stroke-dashoffset: 1020;
   }
 
   5%,
@@ -803,22 +730,6 @@
   }
 }
 
-@-webkit-keyframes joinchat_image_loop {
-  0% {
-    opacity: 0;
-  }
-
-  3%,
-  20% {
-    opacity: 1;
-  }
-
-  25%,
-  100% {
-    opacity: 0;
-  }
-}
-
 @keyframes joinchat_image_loop {
   0% {
     opacity: 0;
@@ -832,25 +743,6 @@
   25%,
   100% {
     opacity: 0;
-  }
-}
-
-@-webkit-keyframes joinchat_tootlip {
-  0% {
-    opacity: 0;
-    transform: scale3d(1, 0, 1);
-  }
-
-  1%,
-  20% {
-    opacity: 1;
-    transform: scale3d(1, 1, 1);
-  }
-
-  25%,
-  100% {
-    opacity: 0;
-    transform: scale3d(1, 1, 1);
   }
 }
 
@@ -944,7 +836,6 @@
 @media (hover: hover) {
   .joinchat__button:hover .joinchat__tooltip {
     opacity: 1;
-    -webkit-animation: none;
     animation: none;
     transition: opacity 0.2s;
   }
@@ -976,17 +867,14 @@
 
 @media (prefers-reduced-motion) {
   .joinchat {
-    -webkit-animation: none;
     animation: none;
   }
   .joinchat__button__send .joinchat_svg__plain {
     stroke-dasharray: 0;
-    -webkit-animation: none;
     animation: none;
   }
 
   .joinchat__button__send .joinchat_svg__chat {
-    -webkit-animation: none;
     animation: none;
   }
   .joinchat__button__sendtext {
