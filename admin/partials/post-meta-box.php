@@ -25,7 +25,7 @@ defined( 'WPINC' ) || exit;
 		<label for="joinchat_message_send"><?php esc_html_e( 'Message', 'creame-whatsapp-me' ); ?></label><br>
 		<textarea id="joinchat_message_send" name="joinchat_message_send" rows="2" placeholder="<?php echo esc_attr( $placeholders['message_send'] ); ?>" class="large-text"><?php echo esc_textarea( $metadata['message_send'] ); ?></textarea>
 		<?php if ( count( $metabox_vars ) ) : ?>
-			<small><?php esc_html_e( 'Can use vars', 'creame-whatsapp-me' ); ?> <code>{<?php echo esc_html( join( '}</code> <code>{', $metabox_vars ) ); ?>}</code></small>
+			<small><?php esc_html_e( 'Can use vars', 'creame-whatsapp-me' ); ?> <code>{<?php echo join( '}</code> <code>{', $metabox_vars ); ?>}</code></small>
 		<?php endif; ?>
 		<small><?php esc_html_e( 'to leave it blank use', 'creame-whatsapp-me' ); ?> <code>{}</code></small>
 	</p>
