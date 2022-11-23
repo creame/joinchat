@@ -358,6 +358,7 @@ Joinchat save two localStorage variables for proper operation:
 
 = 4.5.12 =
 * FIX Unescape help dynamic vars on post/term metabox.
+* CHANGED Better get title for dynamic var {TITLE}.
 
 = 4.5.11 =
 * CHANGED Better Joinchat script initialization for deferred or async load by optimizers.

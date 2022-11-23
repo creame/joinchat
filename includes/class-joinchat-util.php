@@ -259,20 +259,26 @@ class JoinChatUtil {
 	 */
 	public static function get_title() {
 
-		if ( is_home() || is_singular() ) {
-			$title = single_post_title( '', false );
-		} elseif ( is_category() || is_tag() || is_tax() ) {
-			$title = single_term_title( '', false );
-		} else {
-			$title = wp_get_document_title();
+		add_filter( 'document_title_parts', 'JoinChatUtil::only_title_part' );
 
-			// Try to remove sitename from $title for cleaner title.
-			$sep   = apply_filters( 'document_title_separator', '-' );
-			$site  = get_bloginfo( 'name', 'display' );
-			$title = str_replace( esc_html( convert_chars( wptexturize( " $sep " . $site ) ) ), '', $title );
-		}
+		$title = wp_get_document_title();
+
+		remove_filter( 'document_title_parts', 'JoinChatUtil::only_title_part' );
 
 		return apply_filters( 'joinchat_get_title', $title );
+
+	}
+
+	/**
+	 * Get only 'title' of title parts
+	 *
+	 * @since    4.5.12
+	 * @param    array $parts title parts
+	 * @return   array
+	 */
+	public static function only_title_part( $parts ) {
+
+		return array( 'title' => $parts['title'] );
 
 	}
 
