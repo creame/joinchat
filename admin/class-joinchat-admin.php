@@ -401,7 +401,7 @@ class JoinChatAdmin {
 			'joinchat_cache_plugins',
 			array(
 				'autoptimizeCache::clearall_actionless', // Autoptimize https://wordpress.org/plugins/autoptimize/.
-				'ce_clear_cache',                        // Cache Enabler https://wordpress.org/plugins/cache-enabler/.
+				'cache_enabler_clear_complete_cache',    // Cache Enabler https://wordpress.org/plugins/cache-enabler/.
 				'cachify_flush_cache',                   // Cachify https://wordpress.org/plugins/cachify/.
 				'LiteSpeed_Cache_API::purge_all',        // LiteSpeed Cache https://wordpress.org/plugins/litespeed-cache/.
 				'sg_cachepress_purge_cache',             // SG Optimizer https://es.wordpress.org/plugins/sg-cachepress/.
