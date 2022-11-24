@@ -356,6 +356,9 @@ Joinchat save two localStorage variables for proper operation:
 
 == Changelog ==
 
+= 4.5.13 =
+* FIX Tooltip text is cut off when there is an image emoji.
+
 = 4.5.12 =
 * FIX Unescape help dynamic vars on post/term metabox.
 * CHANGED Better get title for dynamic var {TITLE}.

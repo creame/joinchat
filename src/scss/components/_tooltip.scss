@@ -2,7 +2,7 @@
   position: absolute;
   top: calc(var(--s)/2 - 16px);
   right: calc(var(--s) + 16px);
-  max-width: calc(100vw - 105px);
+  max-width: calc(100vw - var(--s) - 45px);
   height: 32px;
   padding: 0 14px;
   border: none;
@@ -27,6 +27,8 @@
   }
 
   div {
+    width: max-content;
+    max-width: 100%;
     overflow: hidden;
     text-overflow: ellipsis;
   }
