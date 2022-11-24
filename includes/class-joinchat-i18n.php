@@ -13,6 +13,8 @@
  */
 class JoinChat_i18n {
 
+	const DOMAIN_GROUP = 'Join.chat'; // TODO: in future change to "Joinchat".
+
 	/**
 	 * Initialize the class.
 	 *
@@ -65,7 +67,7 @@ class JoinChat_i18n {
 			'optin_text'    => 'Opt-in Text',
 		);
 
-		if ( isset( $settings['header'] ) && ! in_array( $settings['header'], array( '', '__jc__', '__wa__' ) ) ) {
+		if ( isset( $settings['header'] ) && ! in_array( $settings['header'], array( '', '__jc__', '__wa__' ), true ) ) {
 			$localized['header'] = 'Header';
 		}
 
@@ -92,7 +94,7 @@ class JoinChat_i18n {
 
 		foreach ( $settings_i18n as $key => $label ) {
 			$value = isset( $settings[ $key ] ) ? $settings[ $key ] : '';
-			do_action( 'wpml_register_single_string', 'Join.chat', $label, $value, false, $default_language );
+			do_action( 'wpml_register_single_string', self::DOMAIN_GROUP, $label, $value, false, $default_language );
 
 			if ( isset( $old_settings[ $key ] ) && $old_settings[ $key ] !== $value ) {
 				$translate_notice = true;
@@ -103,21 +105,15 @@ class JoinChat_i18n {
 		if ( $translate_notice ) {
 
 			if ( defined( 'WPML_PLUGIN_PATH' ) ) {
-				$link = add_query_arg(
-					array(
-						'page'    => 'wpml-string-translation/menu/string-translation.php',
-						'context' => 'Join.chat',
-					),
-					admin_url( 'admin.php' )
+				$args = array(
+					'page'    => 'wpml-string-translation/menu/string-translation.php',
+					'context' => self::DOMAIN_GROUP,
 				);
 			} else {
-				$link = add_query_arg(
-					array(
-						'page'  => 'mlang_strings',
-						'group' => 'Join.chat',
-						'lang'  => 'all',
-					),
-					admin_url( 'admin.php' )
+				$args = array(
+					'page'  => 'mlang_strings',
+					'group' => self::DOMAIN_GROUP,
+					'lang'  => 'all',
 				);
 			}
 
@@ -127,7 +123,7 @@ class JoinChat_i18n {
 				/* translators: %s: site language. */
 				sprintf( __( 'Default site language (%s)', 'creame-whatsapp-me' ), strtoupper( $default_language ) ),
 				__( 'There are changes in fields that can be translated.', 'creame-whatsapp-me' ),
-				esc_url( $link ),
+				esc_url( add_query_arg( $args, admin_url( 'admin.php' ) ) ),
 				__( 'Check translations', 'creame-whatsapp-me' )
 			);
 
@@ -150,7 +146,7 @@ class JoinChat_i18n {
 
 		foreach ( $settings_i18n as $key => $label ) {
 			if ( isset( $settings[ $key ] ) ) {
-				$settings[ $key ] = apply_filters( 'wpml_translate_single_string', $settings[ $key ], 'Join.chat', $label );
+				$settings[ $key ] = apply_filters( 'wpml_translate_single_string', $settings[ $key ], self::DOMAIN_GROUP, $label );
 			}
 		}
 
