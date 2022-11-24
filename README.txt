@@ -358,6 +358,7 @@ Joinchat save two localStorage variables for proper operation:
 
 = 4.5.13 =
 * FIX Tooltip text is cut off when there is an image emoji.
+* FIX PHP notice undefined 'title' introduced in v4.5.12.
 
 = 4.5.12 =
 * FIX Unescape help dynamic vars on post/term metabox.

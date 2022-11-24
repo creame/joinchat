@@ -273,12 +273,12 @@ class JoinChatUtil {
 	 * Get only 'title' of title parts
 	 *
 	 * @since    4.5.12
-	 * @param    array $parts title parts
+	 * @param    array $parts title parts.
 	 * @return   array
 	 */
 	public static function only_title_part( $parts ) {
 
-		return array( 'title' => $parts['title'] );
+		return empty( $parts['title'] ) ? $parts : array( 'title' => $parts['title'] );
 
 	}
 
@@ -345,7 +345,7 @@ class JoinChatUtil {
 	 * Require at least WordPress 5.9
 	 *
 	 * @since    4.5.2
-	 * @return void
+	 * @return bool
 	 */
 	public static function can_gutenberg() {
 
