@@ -358,6 +358,7 @@ Joinchat save two localStorage variables for proper operation:
 
 = 4.5.14 =
 * CHANGE Delay 'message_send' replace variables until used (fix conflict with Rank Math).
+* CHANGE Optimized variable replacement, runs only when needed.
 
 = 4.5.13 =
 * FIX Tooltip text is cut off when there is an image emoji.

@@ -224,6 +224,12 @@ class JoinChatUtil {
 	 * @return   string     string with replaced variables
 	 */
 	public static function replace_variables( $string ) {
+
+		// If empty or don't has vars return early.
+		if ( empty( $string ) || false === strpos( $string, '{' ) ) {
+			return $string;
+		}
+
 		global $wp;
 
 		$replacements = apply_filters(
