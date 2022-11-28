@@ -356,6 +356,9 @@ Joinchat save two localStorage variables for proper operation:
 
 == Changelog ==
 
+= 4.5.14 =
+* CHANGE Delay 'message_send' replace variables until used (fix conflict with Rank Math).
+
 = 4.5.13 =
 * FIX Tooltip text is cut off when there is an image emoji.
 * FIX PHP notice undefined 'title' introduced in v4.5.12.

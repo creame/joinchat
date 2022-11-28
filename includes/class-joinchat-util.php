@@ -259,26 +259,19 @@ class JoinChatUtil {
 	 */
 	public static function get_title() {
 
-		add_filter( 'document_title_parts', 'JoinChatUtil::only_title_part' );
+		$filter = function ( $parts ) {
+			return empty( $parts['title'] ) ? $parts : array( 'title' => $parts['title'] );
+		};
+
+		add_filter( 'pre_get_document_title', '__return_empty_string', 100 ); // "Disable" third party bypass.
+		add_filter( 'document_title_parts', $filter, 100 ); // Filter only 'title' part.
 
 		$title = wp_get_document_title();
 
-		remove_filter( 'document_title_parts', 'JoinChatUtil::only_title_part' );
+		remove_filter( 'pre_get_document_title', '__return_empty_string', 100 ); // "Re-enable" third party bypass.
+		remove_filter( 'document_title_parts', $filter, 100 ); // Remove our filter.
 
 		return apply_filters( 'joinchat_get_title', $title );
-
-	}
-
-	/**
-	 * Get only 'title' of title parts
-	 *
-	 * @since    4.5.12
-	 * @param    array $parts title parts.
-	 * @return   array
-	 */
-	public static function only_title_part( $parts ) {
-
-		return empty( $parts['title'] ) ? $parts : array( 'title' => $parts['title'] );
 
 	}
 
