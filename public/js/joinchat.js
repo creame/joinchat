@@ -170,6 +170,10 @@
     }
   };
 
+  joinchat_obj.optin = function () {
+    return !this.$div.hasClass('joinchat--optout');
+  }
+
   function joinchat_magic() {
     $(doc).trigger('joinchat:starting');
 
@@ -279,7 +283,7 @@
     // Triggers: open chatbox or launch WhatsApp on click
     $(doc).on('click', '.joinchat_open, .joinchat_app, a[href="#joinchat"], a[href="#whatsapp"]', function (e) {
       e.preventDefault();
-      if (has_chatbox && $(this).is('.joinchat_open, a[href="#joinchat"]')) clear_and_show(); // Open chatbox
+      if (has_chatbox && (!joinchat_obj.optin() || $(this).is('.joinchat_open, a[href="#joinchat"]'))) clear_and_show(); // Open chatbox
       else joinchat_obj.open_whatsapp($(this).data('phone'), $(this).data('message')); // WhatsApp direct
     });
 
