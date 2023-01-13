@@ -1,22 +1,22 @@
-# Copyright (C) 2022 Creame
+# Copyright (C) 2023 Creame
 # This file is distributed under the GPL-2.0+.
 msgid ""
 msgstr ""
-"Project-Id-Version: Joinchat 4.5.11\n"
+"Project-Id-Version: Joinchat 4.5.15\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/creame-whatsapp-me\n"
 "Last-Translator: Pacotoleo <pacotole@crea.me>\n"
 "Language-Team: Creame <hola@crea.me>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2022-07-14T17:43:52+00:00\n"
+"POT-Creation-Date: 2023-01-13T15:16:22+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 "X-Domain: creame-whatsapp-me\n"
 
 #. Plugin Name of the plugin
-#: admin/class-joinchat-admin.php:227
-#: admin/partials/term_meta_box.php:16
+#: admin/class-joinchat-admin.php:229
+#: admin/partials/term-meta-box.php:15
 #: gutenberg/build/index.js:1
 msgid "Joinchat"
 msgstr ""
@@ -42,7 +42,7 @@ msgid "General"
 msgstr ""
 
 #: admin/class-joinchat-admin-page.php:100
-#: admin/partials/term_meta_box.php:40
+#: admin/partials/term-meta-box.php:39
 #: gutenberg/build/index.js:1
 msgid "Visibility"
 msgstr ""
@@ -52,15 +52,15 @@ msgid "Advanced"
 msgstr ""
 
 #: admin/class-joinchat-admin-page.php:150
-#: admin/partials/post_meta_box.php:18
-#: admin/partials/term_meta_box.php:20
+#: admin/partials/post-meta-box.php:17
+#: admin/partials/term-meta-box.php:19
 #: gutenberg/build/index.js:1
 msgid "Telephone"
 msgstr ""
 
 #: admin/class-joinchat-admin-page.php:151
-#: admin/partials/post_meta_box.php:26
-#: admin/partials/term_meta_box.php:28
+#: admin/partials/post-meta-box.php:25
+#: admin/partials/term-meta-box.php:27
 #: gutenberg/build/index.js:1
 msgid "Message"
 msgstr ""
@@ -99,14 +99,14 @@ msgid "QR Code"
 msgstr ""
 
 #: admin/class-joinchat-admin-page.php:161
-#: admin/partials/post_meta_box.php:22
-#: admin/partials/term_meta_box.php:24
+#: admin/partials/post-meta-box.php:21
+#: admin/partials/term-meta-box.php:23
 #: gutenberg/build/index.js:1
 msgid "Call to Action"
 msgstr ""
 
 #: admin/class-joinchat-admin-page.php:162
-#: admin/class-joinchat-woo-admin.php:212
+#: admin/class-joinchat-woo-admin.php:217
 msgid "Button Text"
 msgstr ""
 
@@ -257,16 +257,16 @@ msgstr ""
 
 #: admin/class-joinchat-admin-page.php:431
 #: admin/class-joinchat-admin-page.php:649
-#: admin/partials/post_meta_box.php:35
-#: admin/partials/term_meta_box.php:43
+#: admin/partials/post-meta-box.php:34
+#: admin/partials/term-meta-box.php:42
 #: gutenberg/build/index.js:1
 msgid "Show"
 msgstr ""
 
 #: admin/class-joinchat-admin-page.php:433
 #: admin/class-joinchat-admin-page.php:651
-#: admin/partials/post_meta_box.php:37
-#: admin/partials/term_meta_box.php:45
+#: admin/partials/post-meta-box.php:36
+#: admin/partials/term-meta-box.php:44
 #: gutenberg/build/index.js:1
 msgid "Hide"
 msgstr ""
@@ -378,7 +378,7 @@ msgid "Predefined text for the first message the user will send you"
 msgstr ""
 
 #: admin/class-joinchat-admin-page.php:527
-#: includes/class-joinchat-common.php:93
+#: includes/class-joinchat-common.php:88
 msgid "Open chat"
 msgstr ""
 
@@ -511,7 +511,7 @@ msgid "Contact us"
 msgstr ""
 
 #: admin/class-joinchat-admin-page.php:711
-#: admin/class-joinchat-admin.php:204
+#: admin/class-joinchat-admin.php:206
 msgid "Support"
 msgstr ""
 
@@ -552,182 +552,213 @@ msgstr ""
 msgid "Do you like %1$s? Please help us with a %2$s rating."
 msgstr ""
 
-#: admin/class-joinchat-admin.php:94
+#: admin/class-joinchat-admin.php:96
 msgid "e.g."
 msgstr ""
 
-#: admin/class-joinchat-admin.php:104
+#: admin/class-joinchat-admin.php:106
 msgid "is an example, double click to use it"
 msgstr ""
 
-#: admin/class-joinchat-admin.php:132
+#: admin/class-joinchat-admin.php:134
 msgid "You only need to add your WhatsApp number to contact with your users."
 msgstr ""
 
-#: admin/class-joinchat-admin.php:133
+#: admin/class-joinchat-admin.php:135
 msgid "Go to settings"
 msgstr ""
 
-#: admin/class-joinchat-admin.php:171
+#: admin/class-joinchat-admin.php:173
 msgid "Settings"
 msgstr ""
 
-#: admin/class-joinchat-admin.php:181
+#: admin/class-joinchat-admin.php:183
 msgid "Premium"
 msgstr ""
 
-#: admin/class-joinchat-admin.php:203
+#: admin/class-joinchat-admin.php:205
 msgid "Documentation"
 msgstr ""
 
 #: admin/class-joinchat-woo-admin.php:158
-msgid "Before \"Add To Cart\" form"
+msgid "After title"
 msgstr ""
 
 #: admin/class-joinchat-woo-admin.php:159
-msgid "Before \"Add To Cart\" button"
+msgid "After price"
 msgstr ""
 
 #: admin/class-joinchat-woo-admin.php:160
-msgid "After \"Add To Cart\" button"
+msgid "After short description"
 msgstr ""
 
 #: admin/class-joinchat-woo-admin.php:161
-msgid "After \"Add To Cart\" form"
+msgid "After meta info"
 msgstr ""
 
 #: admin/class-joinchat-woo-admin.php:162
+msgid "After share links"
+msgstr ""
+
+#: admin/class-joinchat-woo-admin.php:163
 msgid "After \"Additional information\""
 msgstr ""
 
+#: admin/class-joinchat-woo-admin.php:164
+msgid "Before \"Add To Cart\" form"
+msgstr ""
+
+#: admin/class-joinchat-woo-admin.php:164
 #: admin/class-joinchat-woo-admin.php:165
+#: admin/class-joinchat-woo-admin.php:166
+#: admin/class-joinchat-woo-admin.php:167
+msgid "Only when product has price"
+msgstr ""
+
+#: admin/class-joinchat-woo-admin.php:165
+msgid "Before \"Add To Cart\" button"
+msgstr ""
+
+#: admin/class-joinchat-woo-admin.php:166
+msgid "After \"Add To Cart\" button"
+msgstr ""
+
+#: admin/class-joinchat-woo-admin.php:167
+msgid "After \"Add To Cart\" form"
+msgstr ""
+
+#: admin/class-joinchat-woo-admin.php:170
 msgid "Don't show"
 msgstr ""
 
-#: admin/class-joinchat-woo-admin.php:179
+#: admin/class-joinchat-woo-admin.php:184
 msgid "Shop"
 msgstr ""
 
-#: admin/class-joinchat-woo-admin.php:180
+#: admin/class-joinchat-woo-admin.php:185
 msgid "Product Page"
 msgstr ""
 
-#: admin/class-joinchat-woo-admin.php:181
+#: admin/class-joinchat-woo-admin.php:186
 msgid "Cart"
 msgstr ""
 
-#: admin/class-joinchat-woo-admin.php:182
+#: admin/class-joinchat-woo-admin.php:187
 msgid "Checkout"
 msgstr ""
 
-#: admin/class-joinchat-woo-admin.php:183
+#: admin/class-joinchat-woo-admin.php:188
 msgid "Thank You"
 msgstr ""
 
-#: admin/class-joinchat-woo-admin.php:184
+#: admin/class-joinchat-woo-admin.php:189
 msgid "My Account"
 msgstr ""
 
-#: admin/class-joinchat-woo-admin.php:200
+#: admin/class-joinchat-woo-admin.php:205
 msgid "Call to Action for Products"
 msgstr ""
 
-#: admin/class-joinchat-woo-admin.php:201
+#: admin/class-joinchat-woo-admin.php:206
 msgid "Call to Action for Products on Sale"
 msgstr ""
 
-#: admin/class-joinchat-woo-admin.php:202
+#: admin/class-joinchat-woo-admin.php:207
 msgid "Message for Products"
 msgstr ""
 
-#: admin/class-joinchat-woo-admin.php:211
+#: admin/class-joinchat-woo-admin.php:216
 msgid "Button Position"
 msgstr ""
 
-#: admin/class-joinchat-woo-admin.php:249
+#: admin/class-joinchat-woo-admin.php:254
 msgid "WooCommerce"
 msgstr ""
 
-#: admin/class-joinchat-woo-admin.php:253
+#: admin/class-joinchat-woo-admin.php:258
 msgid "Product Chat Window"
 msgstr ""
 
-#: admin/class-joinchat-woo-admin.php:254
+#: admin/class-joinchat-woo-admin.php:259
 msgid "You can define other different texts for the Chat Window on the product pages."
 msgstr ""
 
-#: admin/class-joinchat-woo-admin.php:258
+#: admin/class-joinchat-woo-admin.php:263
 msgid "Product Button"
 msgstr ""
 
-#: admin/class-joinchat-woo-admin.php:259
+#: admin/class-joinchat-woo-admin.php:264
 msgid "Add a contact button on the product sheet."
 msgstr ""
 
-#: admin/class-joinchat-woo-admin.php:282
+#: admin/class-joinchat-woo-admin.php:287
 msgid ""
 "This *{PRODUCT}* can be yours for only *{PRICE}*!\n"
 "If you have any questions, ask us."
 msgstr ""
 
-#: admin/class-joinchat-woo-admin.php:284
+#: admin/class-joinchat-woo-admin.php:289
 msgid "Define a text for your products to encourage customers to contact"
 msgstr ""
 
-#: admin/class-joinchat-woo-admin.php:289
+#: admin/class-joinchat-woo-admin.php:294
 msgid ""
 "Save {DISCOUNT}! This *{PRODUCT}* can be yours for only ~{REGULAR}~ *{PRICE}*.\n"
 "If you have any questions, ask us."
 msgstr ""
 
-#: admin/class-joinchat-woo-admin.php:291
+#: admin/class-joinchat-woo-admin.php:296
 msgid "Define a text for your products on sale to encourage customers to contact"
 msgstr ""
 
-#: admin/class-joinchat-woo-admin.php:296
+#: admin/class-joinchat-woo-admin.php:301
 msgid ""
 "*Hi {SITE}!*\n"
 "I have a question about *{PRODUCT} ({SKU})*"
 msgstr ""
 
-#: admin/class-joinchat-woo-admin.php:298
+#: admin/class-joinchat-woo-admin.php:303
 msgid "Predefined text for the first message the client will send you"
 msgstr ""
 
-#: admin/class-joinchat-woo-admin.php:308
+#: admin/class-joinchat-woo-admin.php:313
 msgid "Select the position of the button on the product page"
 msgstr ""
 
-#: admin/class-joinchat-woo-admin.php:312
+#: admin/class-joinchat-woo-admin.php:314
+msgid "The position may vary depending on the theme or some plugins, try until you find the best location"
+msgstr ""
+
+#: admin/class-joinchat-woo-admin.php:318
 msgid "Ask for More Info"
 msgstr ""
 
-#: admin/class-joinchat-woo-admin.php:347
+#: admin/class-joinchat-woo-admin.php:353
 msgid "<strong>WooCommerce</strong>, in product pages you can also use:"
 msgstr ""
 
-#: admin/class-joinchat-woo-admin.php:349
+#: admin/class-joinchat-woo-admin.php:355
 msgid "Product Name"
 msgstr ""
 
-#: admin/class-joinchat-woo-admin.php:353
+#: admin/class-joinchat-woo-admin.php:359
 msgid "For the <strong>Call to Action for Products on Sale</strong>, you can also use:"
 msgstr ""
 
-#: admin/partials/post_meta_box.php:29
-#: admin/partials/term_meta_box.php:33
+#: admin/partials/post-meta-box.php:28
+#: admin/partials/term-meta-box.php:32
 #: gutenberg/build/index.js:1
 msgid "Can use vars"
 msgstr ""
 
-#: admin/partials/post_meta_box.php:31
-#: admin/partials/term_meta_box.php:35
+#: admin/partials/post-meta-box.php:30
+#: admin/partials/term-meta-box.php:34
 #: gutenberg/build/index.js:1
 msgid "to leave it blank use"
 msgstr ""
 
-#: admin/partials/post_meta_box.php:39
-#: admin/partials/term_meta_box.php:47
+#: admin/partials/post-meta-box.php:38
+#: admin/partials/term-meta-box.php:46
 #: gutenberg/build/index.js:1
 msgid "Default visibility"
 msgstr ""
@@ -759,15 +790,15 @@ msgid "visibility,show,hide"
 msgstr ""
 
 #. translators: %s: site language.
-#: includes/class-joinchat-i18n.php:128
+#: includes/class-joinchat-i18n.php:124
 msgid "Default site language (%s)"
 msgstr ""
 
-#: includes/class-joinchat-i18n.php:129
+#: includes/class-joinchat-i18n.php:125
 msgid "There are changes in fields that can be translated."
 msgstr ""
 
-#: includes/class-joinchat-i18n.php:131
+#: includes/class-joinchat-i18n.php:127
 msgid "Check translations"
 msgstr ""
 

@@ -155,11 +155,16 @@ class JoinChatWooAdmin {
 	private function btn_positions() {
 
 		$positions = array(
-			'woocommerce_before_add_to_cart_form'        => __( 'Before "Add To Cart" form', 'creame-whatsapp-me' ),
-			'woocommerce_before_add_to_cart_button'      => __( 'Before "Add To Cart" button', 'creame-whatsapp-me' ),
-			'woocommerce_after_add_to_cart_button'       => __( 'After "Add To Cart" button', 'creame-whatsapp-me' ),
-			'woocommerce_after_add_to_cart_form'         => __( 'After "Add To Cart" form', 'creame-whatsapp-me' ),
+			'woocommerce_single_product_summary__5'      => __( 'After title', 'creame-whatsapp-me' ),
+			'woocommerce_single_product_summary__10'     => __( 'After price', 'creame-whatsapp-me' ),
+			'woocommerce_single_product_summary__20'     => __( 'After short description', 'creame-whatsapp-me' ),
+			'woocommerce_single_product_summary__40'     => __( 'After meta info', 'creame-whatsapp-me' ),
+			'woocommerce_single_product_summary__50'     => __( 'After share links', 'creame-whatsapp-me' ),
 			'woocommerce_product_additional_information' => __( 'After "Additional information"', 'creame-whatsapp-me' ),
+			'woocommerce_before_add_to_cart_form'        => sprintf( '%s (%s)', __( 'Before "Add To Cart" form', 'creame-whatsapp-me' ), __( 'Only when product has price', 'creame-whatsapp-me' ) ),
+			'woocommerce_before_add_to_cart_button'      => sprintf( '%s (%s)', __( 'Before "Add To Cart" button', 'creame-whatsapp-me' ), __( 'Only when product has price', 'creame-whatsapp-me' ) ),
+			'woocommerce_after_add_to_cart_button'       => sprintf( '%s (%s)', __( 'After "Add To Cart" button', 'creame-whatsapp-me' ), __( 'Only when product has price', 'creame-whatsapp-me' ) ),
+			'woocommerce_after_add_to_cart_form'         => sprintf( '%s (%s)', __( 'After "Add To Cart" form', 'creame-whatsapp-me' ), __( 'Only when product has price', 'creame-whatsapp-me' ) ),
 		);
 
 		return array( 'none' => __( "Don't show", 'creame-whatsapp-me' ) ) + apply_filters( 'joinchat_woo_btn_positions', $positions );
@@ -305,7 +310,8 @@ class JoinChatWooAdmin {
 				foreach ( $options as $key => $option ) {
 					$output .= sprintf( '<option%s value="%s">%s</option>', $key === $value ? ' selected' : '', esc_attr( $key ), esc_html( $option ) );
 				}
-				$output .= '</select><p class="description">' . __( 'Select the position of the button on the product page', 'creame-whatsapp-me' ) . '</p>';
+				$output .= '</select><p class="description">' . __( 'Select the position of the button on the product page', 'creame-whatsapp-me' ) .
+					'<br><small>(' . __( 'The position may vary depending on the theme or some plugins, try until you find the best location', 'creame-whatsapp-me' ) . ')</small></p>';
 				break;
 
 			case 'woo_btn_text':
