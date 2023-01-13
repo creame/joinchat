@@ -224,6 +224,12 @@ class JoinChatUtil {
 	 * @return   string     string with replaced variables
 	 */
 	public static function replace_variables( $string ) {
+
+		// If empty or don't has vars return early.
+		if ( empty( $string ) || false === strpos( $string, '{' ) ) {
+			return $string;
+		}
+
 		global $wp;
 
 		$replacements = apply_filters(
@@ -259,18 +265,17 @@ class JoinChatUtil {
 	 */
 	public static function get_title() {
 
-		if ( is_home() || is_singular() ) {
-			$title = single_post_title( '', false );
-		} elseif ( is_category() || is_tag() || is_tax() ) {
-			$title = single_term_title( '', false );
-		} else {
-			$title = wp_get_document_title();
+		$filter = function ( $parts ) {
+			return empty( $parts['title'] ) ? $parts : array( 'title' => $parts['title'] );
+		};
 
-			// Try to remove sitename from $title for cleaner title.
-			$sep   = apply_filters( 'document_title_separator', '-' );
-			$site  = get_bloginfo( 'name', 'display' );
-			$title = str_replace( esc_html( convert_chars( wptexturize( " $sep " . $site ) ) ), '', $title );
-		}
+		add_filter( 'pre_get_document_title', '__return_empty_string', 100 ); // "Disable" third party bypass.
+		add_filter( 'document_title_parts', $filter, 100 ); // Filter only 'title' part.
+
+		$title = wp_get_document_title();
+
+		remove_filter( 'pre_get_document_title', '__return_empty_string', 100 ); // "Re-enable" third party bypass.
+		remove_filter( 'document_title_parts', $filter, 100 ); // Remove our filter.
 
 		return apply_filters( 'joinchat_get_title', $title );
 
@@ -339,7 +344,7 @@ class JoinChatUtil {
 	 * Require at least WordPress 5.9
 	 *
 	 * @since    4.5.2
-	 * @return void
+	 * @return bool
 	 */
 	public static function can_gutenberg() {
 

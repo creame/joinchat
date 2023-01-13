@@ -109,9 +109,8 @@ class JoinChatPublic {
 		$settings['message_text'] = preg_replace( '/^\{\s*\}$/', '', $settings['message_text'] );
 		$settings['message_send'] = preg_replace( '/^\{\s*\}$/', '', $settings['message_send'] );
 
-		// Prepare settings.
+		// Prepare settings ('message_send' delay replace variables until they are used).
 		$settings['telephone']     = JoinChatUtil::clean_whatsapp( $settings['telephone'] );
-		$settings['message_send']  = JoinChatUtil::replace_variables( $settings['message_send'] );
 		$settings['mobile_only']   = 'yes' === $settings['mobile_only'];
 		$settings['whatsapp_web']  = 'yes' === $settings['whatsapp_web'];
 		$settings['qr']            = 'yes' === $settings['qr'];
@@ -212,6 +211,8 @@ class JoinChatPublic {
 
 			$data = array_intersect_key( $this->common->settings, array_flip( array( 'telephone', 'whatsapp_web', 'message_send', 'gads', 'ga_tracker', 'data_layer' ) ) );
 
+			$data['message_send'] = JoinChatUtil::replace_variables( $data['message_send'] );
+
 			// Enqueue lite script.
 			wp_enqueue_script( 'joinchat-lite', plugins_url( "js/joinchat-lite{$min}.js", __FILE__ ), $deps, $this->version, true );
 			wp_localize_script( 'joinchat-lite', 'joinchat_obj', array( 'settings' => $data ) );
@@ -281,6 +282,8 @@ class JoinChatPublic {
 		);
 
 		$data = array_diff_key( $settings, array_flip( $excluded_fields ) );
+
+		$data['message_send'] = JoinChatUtil::replace_variables( $data['message_send'] );
 
 		if ( '__jc__' === $settings['header'] ) {
 			$powered_args = array(

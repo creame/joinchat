@@ -3,9 +3,9 @@ Contributors: creapuntome, pacotole, davidlillo, monillo
 Donate link: https://join.chat/donate/
 Tags: Chat, Click to Chat, Facebook Messenger, WhatsApp, Telegram, Whatsapp Business, button, support chat, support, contact, directly message WhatsApp, floating WhatsApp, WhatsApp chat
 Requires at least: 4.4.0
-Tested up to: 6.0
+Tested up to: 6.1
 Requires PHP: 5.5
-Stable tag: 4.5.10
+Stable tag: 4.5.14
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -355,6 +355,21 @@ Joinchat save two localStorage variables for proper operation:
 
 
 == Changelog ==
+
+= 4.5.14 =
+* CHANGE Delay 'message_send' replace variables until used (fix conflict with Rank Math).
+* CHANGE Optimized variable replacement, runs only when needed.
+
+= 4.5.13 =
+* FIX Tooltip text is cut off when there is an image emoji.
+* FIX PHP notice undefined 'title' introduced in v4.5.12.
+
+= 4.5.12 =
+* FIX Unescape help dynamic vars on post/term metabox.
+* CHANGED Better get title for dynamic var {TITLE}.
+
+= 4.5.11 =
+* CHANGED Better Joinchat script initialization for deferred or async load by optimizers.
 
 = 4.5.10 =
 + **NEW:** GA4 "generate_lead" event can now be changed to a custom event.
