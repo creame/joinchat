@@ -5,7 +5,7 @@ Tags: Chat, Click to Chat, Facebook Messenger, WhatsApp, Telegram, Whatsapp Busi
 Requires at least: 4.4.0
 Tested up to: 6.1
 Requires PHP: 5.5
-Stable tag: 4.5.14
+Stable tag: 4.5.15
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -71,7 +71,7 @@ You can make it mandatory and disable contact until the user accepts it.
 #### 🛒 Integration with WooCommerce.
 Define CTAs and Custom Start Messages for shop page, product pages and for products on sale.
 
-Add a **WhatsApp Contact Button** directly on your product page next to the "Add to cart" button.
+Add a **WhatsApp Contact Button** directly on your product page next to the "Add to cart" button or choose the best position, even on products without a price.
 
 #### 🧩 WhatsApp Contact Button Block (min WP 5.9).
 Add beautiful and customizable WhatsApp contact buttons in the Block Editor.
@@ -355,6 +355,11 @@ Joinchat save two localStorage variables for proper operation:
 
 
 == Changelog ==
+
+= 4.5.15 =
+* **NEW:** Added new locations for WooCommerce Product Button.
+* CHANGE Prevent launch WhatsApp from triggers or Product Button if Opt-in is required (need approval consent).
+* FIX Elementor 3.5 Finder deprecation message.
 
 = 4.5.14 =
 * CHANGE Delay 'message_send' replace variables until used (fix conflict with Rank Math).

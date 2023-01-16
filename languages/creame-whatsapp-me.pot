@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2023-01-13T15:16:22+00:00\n"
+"POT-Creation-Date: 2023-01-16T11:56:09+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 "X-Domain: creame-whatsapp-me\n"
@@ -775,7 +775,7 @@ msgstr ""
 
 #: includes/class-joinchat-elementor-finder.php:52
 #: includes/class-joinchat-elementor-finder.php:59
-#: includes/class-joinchat-integrations.php:111
+#: includes/class-joinchat-integrations.php:112
 msgid "Joinchat settings page"
 msgstr ""
 
@@ -802,12 +802,12 @@ msgstr ""
 msgid "Check translations"
 msgstr ""
 
-#: includes/class-joinchat-integrations.php:107
+#: includes/class-joinchat-integrations.php:108
 msgctxt "Title in Elementor Finder"
 msgid "WooCommerce Settings"
 msgstr ""
 
-#: includes/class-joinchat-integrations.php:110
+#: includes/class-joinchat-integrations.php:111
 msgctxt "Keywords in Elementor Finder"
 msgid "woocommerce,shop,product"
 msgstr ""
