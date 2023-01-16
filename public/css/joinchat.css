@@ -599,8 +599,13 @@
   height: 22px;
   border: 3px solid var(--color);
   border-radius: 4px;
+  background: #fff;
   box-shadow: 0 0 0 1px var(--text);
   transition: box-shadow 0.3s ease-in-out;
+}
+
+.joinchat--dark .joinchat__optin label::before {
+  background: #000;
 }
 
 .joinchat__optin label::after {
@@ -858,6 +863,9 @@
 
   .joinchat--dark-auto .joinchat__header {
     background: var(--dark);
+  }
+  .joinchat--dark-auto .joinchat__optin label::before {
+    background: #000;
   }
   .joinchat--dark-auto .joinchat__optin {
     color: #d8d8d8;
