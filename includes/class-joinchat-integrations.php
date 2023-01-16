@@ -68,7 +68,8 @@ class JoinChatIntegrations {
 			}
 
 			// Add Elementor Finder integration (since 4.1.12).
-			add_action( 'elementor/finder/categories/init', array( $this, 'elementor_finder_integration' ) );
+			$hook = version_compare( ELEMENTOR_VERSION, '3.5.0', '>=' ) ? 'elementor/finder/register' : 'elementor/finder/categories/init';
+			add_action( $hook, array( $this, 'elementor_finder_integration' ) );
 		}
 
 	}
