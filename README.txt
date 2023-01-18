@@ -356,6 +356,9 @@ Joinchat save two localStorage variables for proper operation:
 
 == Changelog ==
 
+= 4.5.16 =
+* UPDATED International Telephone Input library.
+
 = 4.5.15 =
 * **NEW:** Added new locations for WooCommerce Product Button.
 * CHANGE Prevent launch WhatsApp from triggers or Product Button if Opt-in is required (need approval consent).

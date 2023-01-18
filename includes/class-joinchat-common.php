@@ -15,7 +15,7 @@ class JoinChatCommon {
 	 *
 	 * @since    4.5.10
 	 */
-	const INTL_TEL_INPUT_VERSION = '17.0.17';
+	const INTL_TEL_INPUT_VERSION = '17.0.19';
 
 	/**
 	 * Singleton instance.
