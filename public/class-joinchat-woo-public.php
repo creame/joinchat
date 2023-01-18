@@ -315,7 +315,7 @@ class JoinChatWooPublic {
 	public function product_button() {
 
 		// Only for main single product.
-		if ( '' !== wc_get_loop_prop( 'name' ) ) {
+		if ( ! is_main_query() ) {
 			return;
 		}
 
