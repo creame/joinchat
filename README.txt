@@ -356,6 +356,9 @@ Joinchat save two localStorage variables for proper operation:
 
 == Changelog ==
 
+= 4.5.17 =
+* CHANGED Refactor filter 'joinchat_custom_post_types'.
+
 = 4.5.16 =
 * FIX Product Button don't appears when are products list before the single product template.
 * FIX On multi-language prevent return old cached translations on empty settings.

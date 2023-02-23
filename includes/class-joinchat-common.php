@@ -142,6 +142,20 @@ class JoinChatCommon {
 	}
 
 	/**
+	 * Get public custom post types
+	 *
+	 * Custom post types with public url.
+	 *
+	 * @since    4.5.17
+	 * @return array
+	 */
+	public function get_custom_post_types() {
+
+		return apply_filters( 'joinchat_custom_post_types', array_keys( get_post_types( array( 'has_archive' => true ), 'names' ) ) );
+
+	}
+
+	/**
 	 * Get public post_types
 	 *
 	 * @since    4.5.0
@@ -149,10 +163,8 @@ class JoinChatCommon {
 	 */
 	public function get_public_post_types() {
 
-		// Default post types.
-		$builtin_post_types = array( 'post', 'page' );
-		// Custom post types with public url.
-		$custom_post_types = array_keys( get_post_types( array( 'has_archive' => true ), 'names' ) );
+		$builtin_post_types = array( 'post', 'page' );        // Built-in post types.
+		$custom_post_types  = $this->get_custom_post_types(); // Custom post types with public url.
 
 		// Add/remove posts types for "Joinchat" meta box.
 		return apply_filters( 'joinchat_post_types_meta_box', array_merge( $builtin_post_types, $custom_post_types ) );

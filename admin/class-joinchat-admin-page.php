@@ -200,10 +200,7 @@ class JoinChatAdminPage {
 			}
 
 			// Custom Post Types.
-			$custom_post_types = apply_filters(
-				'joinchat_custom_post_types',
-				array_keys( get_post_types( array( 'has_archive' => true ), 'names' ) )
-			);
+			$custom_post_types = $this->common->get_custom_post_types();
 
 			if ( count( $custom_post_types ) ) {
 				$sections['cpt'] = array();
