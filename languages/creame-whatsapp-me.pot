@@ -688,7 +688,7 @@ msgid "Product Button"
 msgstr ""
 
 #: admin/class-joinchat-woo-admin.php:264
-msgid "Add a contact button on the product sheet."
+msgid "Add a contact button on the single product page."
 msgstr ""
 
 #: admin/class-joinchat-woo-admin.php:287

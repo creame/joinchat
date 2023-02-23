@@ -261,7 +261,7 @@ class JoinChatWooAdmin {
 
 			case 'joinchat_tab_woocommerce__button':
 				$output = '<hr><h2 class="title">' . __( 'Product Button', 'creame-whatsapp-me' ) . '</h2>' .
-					'<p>' . __( 'Add a contact button on the product sheet.', 'creame-whatsapp-me' ) . '</p>';
+					'<p>' . __( 'Add a contact button on the single product page.', 'creame-whatsapp-me' ) . '</p>';
 				break;
 		}
 
