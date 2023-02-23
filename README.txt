@@ -357,6 +357,7 @@ Joinchat save two localStorage variables for proper operation:
 == Changelog ==
 
 = 4.5.17 =
+* FIX Remove "Close" aria-label attribute.
 * CHANGED Refactor filter 'joinchat_custom_post_types'.
 
 = 4.5.16 =

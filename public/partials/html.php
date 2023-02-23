@@ -49,7 +49,7 @@ defined( 'WPINC' ) || exit;
 				<?php elseif ( '' !== $settings['header'] ) : ?>
 					<span class="joinchat__header__text"><?php echo esc_html( $settings['header'] ); ?></span>
 				<?php endif; ?>
-				<div class="joinchat__close" aria-label="<?php esc_attr_e( 'Close', 'creame-whatsapp-me' ); ?>"></div>
+				<div class="joinchat__close" title="<?php esc_attr_e( 'Close', 'creame-whatsapp-me' ); ?>"></div>
 			</div>
 			<div class="joinchat__box__scroll">
 				<div class="joinchat__box__content">
