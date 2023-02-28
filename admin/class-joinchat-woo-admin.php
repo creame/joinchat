@@ -25,7 +25,6 @@ class JoinChatWooAdmin {
 		$loader->add_filter( 'joinchat_settings_validate', $this, 'settings_validate' );
 		$loader->add_filter( 'joinchat_settings_i18n', $this, 'settings_i18n' );
 		$loader->add_filter( 'joinchat_admin_tabs', $this, 'admin_tab' );
-		$loader->add_filter( 'joinchat_custom_post_types', $this, 'custom_post_types' );
 		$loader->add_filter( 'joinchat_taxonomies_meta_box', $this, 'custom_taxonomies' );
 		$loader->add_filter( 'joinchat_tab_visibility_sections', $this, 'visibility_tab_section' );
 		$loader->add_filter( 'joinchat_tab_woocommerce_sections', $this, 'woo_tab_sections' );
@@ -113,19 +112,6 @@ class JoinChatWooAdmin {
 	}
 
 	/**
-	 * Remove WooCommerce product custom post type
-	 *
-	 * @since    3.0.0
-	 * @param    array $custom_post_types list of post types.
-	 * @return   array
-	 */
-	public function custom_post_types( $custom_post_types ) {
-
-		return array_diff( $custom_post_types, array( 'product' ) );
-
-	}
-
-	/**
 	 * Add WooCommerce product taxonomies for metabox
 	 *
 	 * @since    4.3.0
@@ -175,10 +161,17 @@ class JoinChatWooAdmin {
 	 * Woocommerce sections and fields for 'joinchat_tab_visibility'
 	 *
 	 * @since    3.0.0
+	 * @since    4.5.18                Remove 'product' CPT.
 	 * @param    array $sections       current tab sections and fields.
 	 * @return   array
 	 */
 	public function visibility_tab_section( $sections ) {
+
+		// Remove product CPT field.
+		unset( $sections['cpt']['view__cpt_product'] );
+		if ( empty( $sections['cpt'] ) ) {
+			unset( $sections['cpt'] );
+		}
 
 		$sections['woo'] = array(
 			'view__woocommerce'  => __( 'Shop', 'creame-whatsapp-me' ),

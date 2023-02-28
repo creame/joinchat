@@ -356,6 +356,9 @@ Joinchat save two localStorage variables for proper operation:
 
 == Changelog ==
 
+= 4.5.18 =
+* FIX Removed WooCommerce product metabox introduced in v4.5.17.
+
 = 4.5.17 =
 * FIX Remove "Close" aria-label attribute.
 * CHANGED Refactor filter 'joinchat_custom_post_types'.
