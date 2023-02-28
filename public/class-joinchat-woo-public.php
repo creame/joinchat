@@ -226,7 +226,7 @@ class JoinChatWooPublic {
 	 */
 	public function format_price( $product, $price ) {
 
-		$string = wp_strip_all_tags( wc_price( wc_get_price_to_display( $product, array( 'price' => $price ) ) ) );
+		$string = html_entity_decode( wp_strip_all_tags( wc_price( wc_get_price_to_display( $product, array( 'price' => $price ) ) ) ) );
 
 		// Escape $ for regex replacement.
 		return str_replace( '$', '\$', $string );

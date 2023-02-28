@@ -358,6 +358,7 @@ Joinchat save two localStorage variables for proper operation:
 
 = 4.5.18 =
 * FIX Removed WooCommerce product metabox introduced in v4.5.17.
+* FIX Correct currency symbol for products on WhastApp message.
 
 = 4.5.17 =
 * FIX Remove "Close" aria-label attribute.
