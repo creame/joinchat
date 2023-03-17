@@ -516,6 +516,7 @@
 }
 
 .joinchat__box__scroll {
+  min-height: 120px;
   padding: 20px 0 70px;
   padding-bottom: calc(var(--s) + 10px);
   background: #fff linear-gradient(0deg, var(--bg), var(--bg));

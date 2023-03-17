@@ -124,6 +124,7 @@
 }
 
 #{$class}__box__scroll {
+  min-height: 120px;
   padding: 20px 0 70px 0;
   padding-bottom: calc(var(--s) + 10px);
   background: $white linear-gradient(0deg, var(--bg), var(--bg));
