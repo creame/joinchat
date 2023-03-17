@@ -5,7 +5,7 @@ Tags: Chat, Click to Chat, Facebook Messenger, WhatsApp, Telegram, Whatsapp Busi
 Requires at least: 4.4.0
 Tested up to: 6.1
 Requires PHP: 5.5
-Stable tag: 4.5.18
+Stable tag: 4.5.19
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -362,7 +362,7 @@ Joinchat save two localStorage variables for proper operation:
 == Changelog ==
 
 = 4.5.19 =
-* **NEW:** Not displayed during editing with the main page builders.
+* **NEW:** Not display on editing with major visual editors and page builders. Added new editors in addition to Elementor.
 
 = 4.5.18 =
 * FIX Removed WooCommerce product metabox introduced in v4.5.17.
