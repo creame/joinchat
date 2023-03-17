@@ -6,7 +6,7 @@
   "author": "Creame",
   "license": "ISC",
   "devDependencies": {
-    "autoprefixer": "^10.4.13",
+    "autoprefixer": "^10.4.14",
     "cssnano-cli": "^1.0.5",
     "del-cli": "^5.0.0",
     "postcss-calc": "^8.2.4",
