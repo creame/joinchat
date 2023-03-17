@@ -19,6 +19,11 @@ class JoinChatIntegrations {
 	public function load_integrations() {
 
 		/**
+		 * Page Builders
+		 */
+		add_filter( 'joinchat_show', array( $this, 'page_builder_show' ) );
+
+		/**
 		 * WooCommerce Integration
 		 */
 		if ( class_exists( 'WooCommerce' ) && version_compare( WC_VERSION, '3.0', '>=' ) ) {
@@ -56,14 +61,6 @@ class JoinChatIntegrations {
 				$plugin_elementor_admin = new JoinChatElementorAdmin();
 
 				add_action( 'joinchat_run_pre', array( $plugin_elementor_admin, 'init' ) );
-
-			} else {
-
-				require_once JOINCHAT_DIR . 'public/class-joinchat-elementor-public.php';
-
-				$plugin_elementor_public = new JoinChatElementorPublic();
-
-				add_action( 'joinchat_run_pre', array( $plugin_elementor_public, 'init' ) );
 
 			}
 
@@ -113,6 +110,33 @@ class JoinChatIntegrations {
 		);
 
 		return $items;
+
+	}
+
+	/**
+	 * Hide on Page Builder live edition mode.
+	 *
+	 * @since    4.5.19
+	 * @param  bool $show current show button.
+	 * @return bool
+	 */
+	public function page_builder_show( $show ) {
+
+		// phpcs:disable WordPress.Security.NonceVerification
+		$is_builder = false
+			|| isset( $_GET['fl_builder'] )                                                     // Beaver Builder.
+			|| isset( $_GET['is-editor-iframe'] )                                               // Brizy Page Builder.
+			|| isset( $_GET['elementor-preview'] )                                              // Elementor editor.
+			|| ( isset( $_GET['render_mode'] ) && 'template-preview' === $_GET['render_mode'] ) // Elementor template preview.
+			|| isset( $_GET['ct_builder'] )                                                     // Oxygen Builder.
+			|| isset( $_GET['siteorigin_panels_live_editor'] )                                  // Page Builder by SiteOrigin.
+			|| isset( $_GET['vcv-editable'] )                                                   // Visual Composer.
+			|| ( isset( $_GET['load_for'] ) && 'wppb_editor_iframe' === $_GET['load_for'] );    // WP Page Builder.
+		// phpcs:enable
+
+		$builder_show = apply_filters( 'joinchat_page_builder_show', false );
+
+		return $is_builder ? $show && $builder_show : $show;
 
 	}
 

@@ -135,6 +135,11 @@ You choose a color and we customize the entire visual theme of the widget. With 
 #### ⚡ Fast & Light.
 Only load what need when needed. Joinchat is lightweight and follow best coding practices. [See tests report](https://wphive.com/plugins/creame-whatsapp-me/)
 
+#### 🔕 No distractions.
+Joinchat integrates with all major Visual Editors and Page Builders and will not appear when editing a page.
+
+Supported editors: **Beaver Builder**, **Brizy Page Builder**, **Elementor**, **Oxygen Builder**, **Page Builder by SiteOrigin**, **Visual Composer** and **WP Page Builder**.
+
 #### 👨‍💻 Developer friendly.
 Fully extensible, with lots of filters and actions to extend its functionality or change behavior.
 
@@ -355,6 +360,9 @@ Joinchat save two localStorage variables for proper operation:
 
 
 == Changelog ==
+
+= 4.5.19 =
+* **NEW:** Not displayed during editing with the main page builders.
 
 = 4.5.18 =
 * FIX Removed WooCommerce product metabox introduced in v4.5.17.
