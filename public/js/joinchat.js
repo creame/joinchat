@@ -9,7 +9,7 @@
     showed_at: 0,
     is_ready: false, // Change to true when Joinchat ends initialization
     is_mobile: !!navigator.userAgent.match(/Android|iPhone|BlackBerry|IEMobile|Opera Mini/i),
-    is_qr: typeof kjua == 'function',
+    can_qr: typeof kjua == 'function',
   }, win.joinchat_obj || {});
 
   joinchat_obj.$ = function (sel) {
@@ -172,6 +172,15 @@
 
   joinchat_obj.optin = function () {
     return !this.$div.hasClass('joinchat--optout');
+  };
+
+  // Generate QR canvas
+  joinchat_obj.qr = function (text, options) {
+    return kjua($.extend({
+      text: text,
+      render: 'canvas',
+      rounded: 80,
+    }, joinchat_obj.settings.qr || {}, options || {}));
   }
 
   function joinchat_magic() {
@@ -314,12 +323,8 @@
     }
 
     // Add QR Code
-    if (joinchat_obj.settings.qr && joinchat_obj.is_qr && !joinchat_obj.is_mobile) {
-      joinchat_obj.$('.joinchat__qr').kjua({
-        text: joinchat_obj.whatsapp_link(undefined, undefined, false),
-        render: 'canvas',
-        rounded: 80,
-      });
+    if (joinchat_obj.settings.qr && joinchat_obj.can_qr && !joinchat_obj.is_mobile) {
+      joinchat_obj.$('.joinchat__qr').append(joinchat_obj.qr(joinchat_obj.whatsapp_link(undefined, undefined, false)));
     } else {
       joinchat_obj.$('.joinchat__qr').remove();
     }
@@ -389,13 +394,9 @@
       }
 
       // Gutenberg buttons add QR
-      if (joinchat_obj.is_qr && !joinchat_obj.is_mobile) {
+      if (joinchat_obj.can_qr && !joinchat_obj.is_mobile) {
         $('.joinchat-button__qr').each(function () {
-          $(this).kjua({
-            text: joinchat_obj.whatsapp_link($(this).data('phone'), $(this).data('message'), false),
-            render: 'canvas',
-            rounded: 80,
-          });
+          $(this).append(joinchat_obj.qr(joinchat_obj.whatsapp_link($(this).data('phone'), $(this).data('message'), false)));
         });
       } else {
         $('.wp-block-joinchat-button figure').remove();

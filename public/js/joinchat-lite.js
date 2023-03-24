@@ -4,6 +4,7 @@
   win.joinchat_obj = $.extend({
     settings: null,
     is_mobile: !!navigator.userAgent.match(/Android|iPhone|BlackBerry|IEMobile|Opera Mini/i),
+    can_qr: typeof kjua == 'function',
   }, win.joinchat_obj || {});
 
   /**
@@ -123,6 +124,15 @@
     }
   };
 
+  // Generate QR canvas
+  joinchat_obj.qr = function (text, options) {
+    return kjua($.extend({
+      text: text,
+      render: 'canvas',
+      rounded: 80,
+    }, joinchat_obj.settings.qr || {}, options || {}));
+  }
+
   // Triggers: launch WhatsApp on click
   $(doc).on('click', '.joinchat_open, .joinchat_app, a[href="#joinchat"], a[href="#whatsapp"]', function (e) {
     e.preventDefault();
@@ -130,13 +140,9 @@
   });
 
   // Gutenberg buttons add QR
-  if (typeof kjua == 'function' && !joinchat_obj.is_mobile) {
+  if (joinchat_obj.can_qr && !joinchat_obj.is_mobile) {
     $('.joinchat-button__qr').each(function () {
-      $(this).kjua({
-        text: joinchat_obj.whatsapp_link($(this).data('phone'), $(this).data('message'), false),
-        render: 'canvas',
-        rounded: 80,
-      });
+      $(this).append(joinchat_obj.qr(joinchat_obj.whatsapp_link($(this).data('phone'), $(this).data('message'), false)));
     });
   } else {
     $('.wp-block-joinchat-button figure').remove();

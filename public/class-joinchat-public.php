@@ -186,6 +186,7 @@ class JoinChatPublic {
 	 * @since    2.2.2     minified
 	 * @since    4.4.0     added kjua script
 	 * @since    4.5.0     added joinchat-lite script
+	 * @since    4.5.20    abstract QR script
 	 * @return   void
 	 */
 	public function enqueue_scripts() {
@@ -194,12 +195,12 @@ class JoinChatPublic {
 		$deps = array( 'jquery' );
 
 		// Register QR script.
-		wp_register_script( 'joinchat-kjua', plugins_url( 'js/kjua.min.js', __FILE__ ), array(), '0.9.0', true );
+		wp_register_script( 'joinchat-qr', plugins_url( 'js/kjua.min.js', __FILE__ ), array(), '0.9.0', true );
 
 		// Note: caution with cache plugins and wp_is_mobile()
-		// If kjua script is missing it fails silently and don't shows QR Code :).
+		// If QR script is missing it fails silently and don't shows QR Code :).
 		if ( $this->common->qr && ! wp_is_mobile() ) {
-			$deps[] = 'joinchat-kjua';
+			$deps[] = 'joinchat-qr';
 		}
 
 		if ( $this->show ) {
@@ -240,7 +241,7 @@ class JoinChatPublic {
 	 */
 	public function enqueue_qr_script() {
 
-		if ( ! $this->common->qr || wp_script_is( 'joinchat-kjua', 'enqueued' ) || wp_is_mobile() ) {
+		if ( ! $this->common->qr || wp_script_is( 'joinchat-qr', 'enqueued' ) || wp_is_mobile() ) {
 			return;
 		}
 
@@ -252,7 +253,7 @@ class JoinChatPublic {
 
 		// Add dependency.
 		if ( $script ) {
-			$script->deps[] = 'joinchat-kjua';
+			$script->deps[] = 'joinchat-qr';
 		}
 	}
 
