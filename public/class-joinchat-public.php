@@ -209,7 +209,17 @@ class JoinChatPublic {
 
 		} elseif ( apply_filters( 'joinchat_script_lite', ! empty( $this->common->settings['telephone'] ) ) ) {
 
-			$data = array_intersect_key( $this->common->settings, array_flip( array( 'telephone', 'whatsapp_web', 'message_send', 'gads', 'ga_tracker', 'data_layer' ) ) );
+			$fields = array(
+				'telephone',    // Joinchat settings.
+				'whatsapp_web',
+				'message_send',
+				'gads',
+				'ga_tracker',   // Event customize.
+				'ga_event',
+				'data_layer',
+			);
+
+			$data = array_intersect_key( $this->common->settings, array_flip( apply_filters( 'joinchat_script_lite_fields', $fields ) ) );
 
 			$data['message_send'] = JoinChatUtil::replace_variables( $data['message_send'] );
 
