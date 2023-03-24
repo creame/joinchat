@@ -133,7 +133,7 @@
 }
 
 .joinchat__tooltip::after {
-  content: "";
+  content: '';
   display: block;
   position: absolute;
   top: 10px;
@@ -189,7 +189,7 @@
 }
 
 .joinchat__qr::after {
-  content: "";
+  content: '';
   display: block;
   position: absolute;
   bottom: -6px;
