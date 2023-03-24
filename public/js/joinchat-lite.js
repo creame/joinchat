@@ -18,7 +18,7 @@
    * e.g.: $(document).on('joinchat:event', function(){ return false; });
    *
    */
-   joinchat_obj.send_event = function (params) {
+  joinchat_obj.send_event = function (params) {
     params = $.extend({
       event_category: 'JoinChat', // Name
       event_label: '',            // Destination url
@@ -140,6 +140,15 @@
     });
   } else {
     $('.wp-block-joinchat-button figure').remove();
+  }
+
+  // Replace product variable SKU
+  if (!!joinchat_obj.settings && joinchat_obj.settings.sku !== undefined) {
+    var message = joinchat_obj.settings.message_send;
+    $('form.variations_form').on('found_variation reset_data', function (e, variation) {
+      var sku = variation && variation.sku || joinchat_obj.settings.sku;
+      joinchat_obj.settings.message_send = message.replace(/<sku>.*<\/sku>/g, sku);
+    });
   }
 
 }(jQuery, window, document));
