@@ -1,7 +1,7 @@
-(function ($, win, doc) {
+(function ($, window, document, joinchat_obj) {
   'use strict';
 
-  win.joinchat_obj = $.extend({
+  joinchat_obj = $.extend({
     $div: null,
     settings: null,
     store: null,
@@ -10,7 +10,8 @@
     is_ready: false, // Change to true when Joinchat ends initialization
     is_mobile: !!navigator.userAgent.match(/Android|iPhone|BlackBerry|IEMobile|Opera Mini/i),
     can_qr: typeof kjua == 'function',
-  }, win.joinchat_obj || {});
+  }, joinchat_obj);
+  window.joinchat_obj = joinchat_obj; // Save global
 
   joinchat_obj.$ = function (sel) {
     return $(sel || this.$div, this.$div);
@@ -44,10 +45,10 @@
     delete params.link;
 
     // Trigger event (params can be edited by third party scripts or cancel if return false)
-    if (false === $(doc).triggerHandler('joinchat:event', [params])) return;
+    if (false === $(document).triggerHandler('joinchat:event', [params])) return;
 
-    var ga_tracker = win[this.settings.ga_tracker] || win['ga'] || win['__gaTracker'];
-    var data_layer = win[this.settings.data_layer] || win[win.gtm4wp_datalayer_name] || win['dataLayer'];
+    var ga_tracker = window[this.settings.ga_tracker] || window['ga'] || window['__gaTracker'];
+    var data_layer = window[this.settings.data_layer] || window[window.gtm4wp_datalayer_name] || window['dataLayer'];
 
     // Send Google Analytics custom event (Universal Analytics - analytics.js)
     if (typeof ga_tracker == 'function' && typeof ga_tracker.getAll == 'function') {
@@ -100,13 +101,14 @@
 
   // Return WhatsApp link with optional message
   joinchat_obj.whatsapp_link = function (phone, message, wa_web) {
-    message = typeof message != 'undefined' ? message : this.settings.message_send || '';
-    wa_web = typeof wa_web != 'undefined' ? wa_web : this.settings.whatsapp_web && !this.is_mobile;
+    message = message !== undefined ? message : this.settings.message_send || '';
+    wa_web = wa_web !== undefined ? wa_web : this.settings.whatsapp_web && !this.is_mobile;
     var link = (wa_web ? 'https://web.whatsapp.com/send?phone=' : 'https://wa.me/') + encodeURIComponent(phone || this.settings.telephone);
 
     return link + (message ? (wa_web ? '&text=' : '?text=') + encodeURIComponent(message) : '');
   };
 
+  // Open Chatbox and trigger event
   joinchat_obj.chatbox_show = function () {
     if (!this.chatbox) {
       this.chatbox = true;
@@ -117,10 +119,11 @@
         this.$('.joinchat__badge').toggleClass('joinchat__badge--in joinchat__badge--out');
       }
       // Trigger custom event
-      $(doc).trigger('joinchat:show');
+      $(document).trigger('joinchat:show');
     }
   };
 
+  // Close Chatbox and trigger event
   joinchat_obj.chatbox_hide = function () {
     if (this.chatbox) {
       this.chatbox = false;
@@ -130,10 +133,11 @@
         this.$('.joinchat__badge').removeClass('joinchat__badge--out');
       }
       // Trigger custom event
-      $(doc).trigger('joinchat:hide');
+      $(document).trigger('joinchat:hide');
     }
   };
 
+  // Save CTA hash
   joinchat_obj.save_hash = function () {
     var hash = this.settings.message_hash || 'none';
     var saved_hashes = (this.store.getItem('joinchat_hashes') || '').split(',').filter(Boolean);
@@ -144,9 +148,10 @@
     }
   };
 
+  // Open WhatsApp link with supplied phone and message or with settings defaults
   joinchat_obj.open_whatsapp = function (phone, message) {
     phone = phone || this.settings.telephone;
-    message = typeof message != 'undefined' ? message : this.settings.message_send || '';
+    message = message !== undefined ? message : this.settings.message_send || '';
 
     var params = {
       link: this.whatsapp_link(phone, message),
@@ -157,14 +162,14 @@
     var secure_link = new RegExp("^https?:\/\/(wa\.me|(api|web|chat)\.whatsapp\.com|" + location.hostname.replace('.', '\.') + ")\/.*", 'i');
 
     // Trigger event (params can be edited by third party scripts or cancel if return false)
-    if (false === $(doc).triggerHandler('joinchat:open', [params])) return;
+    if (false === $(document).triggerHandler('joinchat:open', [params])) return;
 
     // Ensure the link is safe
     if (secure_link.test(params.link)) {
       // Send analytics events
       this.send_event(params);
       // Open WhatsApp link
-      win.open(params.link, 'joinchat', 'noopener');
+      window.open(params.link, 'joinchat', 'noopener');
     } else {
       console.error("Joinchat: the link doesn't seem safe, it must point to the current domain or whatsapp.com");
     }
@@ -184,7 +189,7 @@
   }
 
   function joinchat_magic() {
-    $(doc).trigger('joinchat:starting');
+    $(document).trigger('joinchat:starting');
 
     var button_delay = joinchat_obj.settings.button_delay * 1000;
     var chat_delay = joinchat_obj.settings.message_delay * 1000;
@@ -260,7 +265,7 @@
       var timeoutKB, timeoutResize;
 
       function form_focus_toggle() {
-        var type = (doc.activeElement.type || '').toLowerCase();
+        var type = (document.activeElement.type || '').toLowerCase();
 
         if (['date', 'datetime', 'email', 'month', 'number', 'password', 'search', 'tel', 'text', 'textarea', 'time', 'url', 'week'].indexOf(type) >= 0) {
           if (joinchat_obj.chatbox) {
@@ -275,7 +280,7 @@
       }
 
       // Hide on mobile when virtual keyboard is open (on fill forms)
-      $(doc).on('focus blur', 'input, textarea', function (e) {
+      $(document).on('focus blur', 'input, textarea', function (e) {
         if (!$(e.target).closest(joinchat_obj.$div).length) {
           clearTimeout(timeoutKB);
           timeoutKB = setTimeout(form_focus_toggle, 200);
@@ -283,27 +288,27 @@
       });
 
       // Ensure header is visible
-      $(win).on('resize', function () {
+      $(window).on('resize', function () {
         clearTimeout(timeoutResize);
-        timeoutResize = setTimeout(function () { joinchat_obj.$div[0].style.setProperty('--vh', win.innerHeight + 'px'); }, 200);
+        timeoutResize = setTimeout(function () { joinchat_obj.$div[0].style.setProperty('--vh', window.innerHeight + 'px'); }, 200);
       }).trigger('resize');
     }
 
     // Triggers: open chatbox or launch WhatsApp on click
-    $(doc).on('click', '.joinchat_open, .joinchat_app, a[href="#joinchat"], a[href="#whatsapp"]', function (e) {
+    $(document).on('click', '.joinchat_open, .joinchat_app, a[href="#joinchat"], a[href="#whatsapp"]', function (e) {
       e.preventDefault();
       if (has_chatbox && (!joinchat_obj.optin() || $(this).is('.joinchat_open, a[href="#joinchat"]'))) clear_and_show(); // Open chatbox
       else joinchat_obj.open_whatsapp($(this).data('phone'), $(this).data('message')); // WhatsApp direct
     });
 
     // Close chatbox when click on nodes with class "joinchat_close"
-    $(doc).on('click', '.joinchat_close', function (e) {
+    $(document).on('click', '.joinchat_close', function (e) {
       e.preventDefault();
       joinchat_obj.chatbox_hide();
     });
 
     // Triggers: open chatbox on scroll (when node on viewport)
-    if (has_chatbox && 'IntersectionObserver' in win) {
+    if (has_chatbox && 'IntersectionObserver' in window) {
       var $show_on_scroll = $('.joinchat_show, .joinchat_force_show');
 
       function joinchat_observed(objs) {
@@ -334,7 +339,7 @@
       joinchat_obj.$div.css('--peak', 'ur' + 'l(#joinchat__message__peak)');
     }
 
-    $(doc).trigger('joinchat:start');
+    $(document).trigger('joinchat:start');
     joinchat_obj.is_ready = true;
   }
 
@@ -387,7 +392,7 @@
         joinchat_obj.$div.removeClass('joinchat--show');
 
         // Triggers: launch WhatsApp on click
-        $(doc).on('click', '.joinchat_open, .joinchat_app, a[href="#joinchat"], a[href="#whatsapp"]', function (e) {
+        $(document).on('click', '.joinchat_open, .joinchat_app, a[href="#joinchat"], a[href="#whatsapp"]', function (e) {
           e.preventDefault();
           joinchat_obj.open_whatsapp($(this).data('phone'), $(this).data('message'));
         });
@@ -419,7 +424,7 @@
   // Ready!! (in some scenarios jQuery.ready doesn't fire, this try to ensure Joinchat initialization)
   var once_page_ready = once(on_page_ready);
   $(once_page_ready);
-  $(win).on('load', once_page_ready);
-  doc.addEventListener('DOMContentLoaded', once_page_ready);
+  $(window).on('load', once_page_ready);
+  document.addEventListener('DOMContentLoaded', once_page_ready);
 
-}(jQuery, window, document));
+}(jQuery, window, document, window.joinchat_obj || {}));

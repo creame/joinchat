@@ -1,11 +1,12 @@
-(function ($, win, doc) {
+(function ($, window, document, joinchat_obj) {
   'use strict';
 
-  win.joinchat_obj = $.extend({
+  joinchat_obj = $.extend({
     settings: null,
     is_mobile: !!navigator.userAgent.match(/Android|iPhone|BlackBerry|IEMobile|Opera Mini/i),
     can_qr: typeof kjua == 'function',
-  }, win.joinchat_obj || {});
+  }, joinchat_obj);
+  window.joinchat_obj = joinchat_obj; // Save global
 
   /**
    * Trigger Analytics events
@@ -35,10 +36,10 @@
     delete params.link;
 
     // Trigger event (params can be edited by third party scripts or cancel if return false)
-    if (false === $(doc).triggerHandler('joinchat:event', [params])) return;
+    if (false === $(document).triggerHandler('joinchat:event', [params])) return;
 
-    var ga_tracker = win[this.settings.ga_tracker] || win['ga'] || win['__gaTracker'];
-    var data_layer = win[this.settings.data_layer] || win[win.gtm4wp_datalayer_name] || win['dataLayer'];
+    var ga_tracker = window[this.settings.ga_tracker] || window['ga'] || window['__gaTracker'];
+    var data_layer = window[this.settings.data_layer] || window[window.gtm4wp_datalayer_name] || window['dataLayer'];
 
     // Send Google Analytics custom event (Universal Analytics - analytics.js)
     if (typeof ga_tracker == 'function' && typeof ga_tracker.getAll == 'function') {
@@ -91,16 +92,17 @@
 
   // Return WhatsApp link with optional message
   joinchat_obj.whatsapp_link = function (phone, message, wa_web) {
-    message = typeof message != 'undefined' ? message : this.settings.message_send || '';
-    wa_web = typeof wa_web != 'undefined' ? wa_web : this.settings.whatsapp_web && !this.is_mobile;
+    message = message !== undefined ? message : this.settings.message_send || '';
+    wa_web = wa_web !== undefined ? wa_web : this.settings.whatsapp_web && !this.is_mobile;
     var link = (wa_web ? 'https://web.whatsapp.com/send?phone=' : 'https://wa.me/') + encodeURIComponent(phone || this.settings.telephone);
 
     return link + (message ? (wa_web ? '&text=' : '?text=') + encodeURIComponent(message) : '');
   };
 
+  // Open WhatsApp link with supplied phone and message or with settings defaults
   joinchat_obj.open_whatsapp = function (phone, message) {
     phone = phone || this.settings.telephone;
-    message = typeof message != 'undefined' ? message : this.settings.message_send || '';
+    message = message !== undefined ? message : this.settings.message_send || '';
 
     var params = {
       link: this.whatsapp_link(phone, message),
@@ -111,14 +113,14 @@
     var secure_link = new RegExp("^https?:\/\/(wa\.me|(api|web|chat)\.whatsapp\.com|" + location.hostname.replace('.', '\.') + ")\/.*", 'i');
 
     // Trigger event (params can be edited by third party scripts or cancel if return false)
-    if (false === $(doc).triggerHandler('joinchat:open', [params])) return;
+    if (false === $(document).triggerHandler('joinchat:open', [params])) return;
 
     // Ensure the link is safe
     if (secure_link.test(params.link)) {
       // Send analytics events
       this.send_event(params);
       // Open WhatsApp link
-      win.open(params.link, 'joinchat', 'noopener');
+      window.open(params.link, 'joinchat', 'noopener');
     } else {
       console.error("Joinchat: the link doesn't seem safe, it must point to the current domain or whatsapp.com");
     }
@@ -134,7 +136,7 @@
   }
 
   // Triggers: launch WhatsApp on click
-  $(doc).on('click', '.joinchat_open, .joinchat_app, a[href="#joinchat"], a[href="#whatsapp"]', function (e) {
+  $(document).on('click', '.joinchat_open, .joinchat_app, a[href="#joinchat"], a[href="#whatsapp"]', function (e) {
     e.preventDefault();
     joinchat_obj.open_whatsapp($(this).data('phone'), $(this).data('message'));
   });
@@ -157,4 +159,4 @@
     });
   }
 
-}(jQuery, window, document));
+}(jQuery, window, document, window.joinchat_obj || {}));
