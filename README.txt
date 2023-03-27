@@ -5,7 +5,7 @@ Tags: Chat, Click to Chat, Facebook Messenger, WhatsApp, Telegram, Whatsapp Busi
 Requires at least: 4.4.0
 Tested up to: 6.1
 Requires PHP: 5.5
-Stable tag: 4.5.19
+Stable tag: 4.5.20
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -360,6 +360,11 @@ Joinchat save two localStorage variables for proper operation:
 
 
 == Changelog ==
+
+= 4.5.20 =
+* **NEW:** WooCommerce product variable {SKU} now works with variable products.
+* CHANGE Better optimization reduce script size.
+* FIX Joinchat lite script allow GA4 event name param "ga_event".
 
 = 4.5.19 =
 * **NEW:** Not display on editing with major visual editors and page builders. Added new editors in addition to Elementor.
