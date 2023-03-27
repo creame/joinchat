@@ -143,93 +143,95 @@ class JoinChatAdminPage {
 	 */
 	private function get_tab_sections( $tab ) {
 
-		if ( 'general' === $tab ) {
+		switch ( $tab ) {
 
-			$sections = array(
-				'button'    => array(
-					'telephone'    => '<label for="joinchat_phone">' . __( 'Telephone', 'creame-whatsapp-me' ) . '</label>',
-					'message_send' => '<label for="joinchat_message_send">' . __( 'Message', 'creame-whatsapp-me' ) . '</label>' . self::vars_help( 'message_send' ),
-					'button_image' => __( 'Image', 'creame-whatsapp-me' ),
-					'button_tip'   => '<label for="joinchat_button_tip">' . __( 'Tooltip', 'creame-whatsapp-me' ) . '</label>',
-					'position'     => __( 'Position on Screen', 'creame-whatsapp-me' ),
-					'button_delay' => '<label for="joinchat_button_delay">' . __( 'Button Delay', 'creame-whatsapp-me' ) . '</label>',
-					'mobile_only'  => __( 'Mobile Only', 'creame-whatsapp-me' ),
-					'whatsapp_web' => __( 'WhatsApp Web', 'creame-whatsapp-me' ),
-					'qr'           => __( 'QR Code', 'creame-whatsapp-me' ),
-				),
-				'chat'      => array(
-					'message_text'  => '<label for="joinchat_message_text">' . __( 'Call to Action', 'creame-whatsapp-me' ) . '</label>' . self::vars_help( 'message_text' ),
-					'message_start' => '<label for="joinchat_message_start">' . __( 'Button Text', 'creame-whatsapp-me' ) . '</label>',
-					'color'         => __( 'Theme Color', 'creame-whatsapp-me' ),
-					'dark_mode'     => __( 'Dark Mode', 'creame-whatsapp-me' ),
-					'header'        => __( 'Header', 'creame-whatsapp-me' ),
-				),
-				'chat_open' => array(
-					'message_delay' => '<label for="joinchat_message_delay">' . __( 'Chat Delay', 'creame-whatsapp-me' ) . '</label>',
-					'message_views' => '<label for="joinchat_message_views">' . __( 'Page Views', 'creame-whatsapp-me' ) . '</label>',
-					'message_badge' => __( 'Notification Balloon', 'creame-whatsapp-me' ),
-				),
-			);
-
-		} elseif ( 'visibility' === $tab ) {
-
-			$sections = array(
-				'global' => array(
-					'view__all' => array(
-						'label'    => __( 'Global', 'creame-whatsapp-me' ),
-						'callback' => array( $this, 'field_view_all' ),
+			case 'general':
+				$sections = array(
+					'button'    => array(
+						'telephone'    => '<label for="joinchat_phone">' . __( 'Telephone', 'creame-whatsapp-me' ) . '</label>',
+						'message_send' => '<label for="joinchat_message_send">' . __( 'Message', 'creame-whatsapp-me' ) . '</label>' . self::vars_help( 'message_send' ),
+						'button_image' => __( 'Image', 'creame-whatsapp-me' ),
+						'button_tip'   => '<label for="joinchat_button_tip">' . __( 'Tooltip', 'creame-whatsapp-me' ) . '</label>',
+						'position'     => __( 'Position on Screen', 'creame-whatsapp-me' ),
+						'button_delay' => '<label for="joinchat_button_delay">' . __( 'Button Delay', 'creame-whatsapp-me' ) . '</label>',
+						'mobile_only'  => __( 'Mobile Only', 'creame-whatsapp-me' ),
+						'whatsapp_web' => __( 'WhatsApp Web', 'creame-whatsapp-me' ),
+						'qr'           => __( 'QR Code', 'creame-whatsapp-me' ),
 					),
-				),
-				'wp'     => array(
-					'view__front_page' => __( 'Front Page', 'creame-whatsapp-me' ),
-					'view__blog_page'  => __( 'Blog Page', 'creame-whatsapp-me' ),
-					'view__404_page'   => __( '404 Page', 'creame-whatsapp-me' ),
-					'view__search'     => __( 'Search Results', 'creame-whatsapp-me' ),
-					'view__archive'    => __( 'Archives', 'creame-whatsapp-me' ),
-					'view__date'       => '— ' . __( 'Date Archives', 'creame-whatsapp-me' ),
-					'view__author'     => '— ' . __( 'Author Archives', 'creame-whatsapp-me' ),
-					'view__singular'   => __( 'Singular', 'creame-whatsapp-me' ),
-					'view__page'       => '— ' . __( 'Page', 'creame-whatsapp-me' ),
-					'view__post'       => '— ' . __( 'Post', 'creame-whatsapp-me' ),
-				),
-			);
+					'chat'      => array(
+						'message_text'  => '<label for="joinchat_message_text">' . __( 'Call to Action', 'creame-whatsapp-me' ) . '</label>' . self::vars_help( 'message_text' ),
+						'message_start' => '<label for="joinchat_message_start">' . __( 'Button Text', 'creame-whatsapp-me' ) . '</label>',
+						'color'         => __( 'Theme Color', 'creame-whatsapp-me' ),
+						'dark_mode'     => __( 'Dark Mode', 'creame-whatsapp-me' ),
+						'header'        => __( 'Header', 'creame-whatsapp-me' ),
+					),
+					'chat_open' => array(
+						'message_delay' => '<label for="joinchat_message_delay">' . __( 'Chat Delay', 'creame-whatsapp-me' ) . '</label>',
+						'message_views' => '<label for="joinchat_message_views">' . __( 'Page Views', 'creame-whatsapp-me' ) . '</label>',
+						'message_badge' => __( 'Notification Balloon', 'creame-whatsapp-me' ),
+					),
+				);
+				break;
 
-			// If isn't set Blog Page or is the same than Front Page unset blog_page option.
-			if ( get_option( 'show_on_front' ) === 'posts' || get_option( 'page_for_posts' ) === 0 ) {
-				unset( $sections['wp']['view__blog_page'] );
-			}
+			case 'visibility':
+				$sections = array(
+					'global' => array(
+						'view__all' => array(
+							'label'    => __( 'Global', 'creame-whatsapp-me' ),
+							'callback' => array( $this, 'field_view_all' ),
+						),
+					),
+					'wp'     => array(
+						'view__front_page' => __( 'Front Page', 'creame-whatsapp-me' ),
+						'view__blog_page'  => __( 'Blog Page', 'creame-whatsapp-me' ),
+						'view__404_page'   => __( '404 Page', 'creame-whatsapp-me' ),
+						'view__search'     => __( 'Search Results', 'creame-whatsapp-me' ),
+						'view__archive'    => __( 'Archives', 'creame-whatsapp-me' ),
+						'view__date'       => '— ' . __( 'Date Archives', 'creame-whatsapp-me' ),
+						'view__author'     => '— ' . __( 'Author Archives', 'creame-whatsapp-me' ),
+						'view__singular'   => __( 'Singular', 'creame-whatsapp-me' ),
+						'view__page'       => '— ' . __( 'Page', 'creame-whatsapp-me' ),
+						'view__post'       => '— ' . __( 'Post', 'creame-whatsapp-me' ),
+					),
+				);
 
-			// Custom Post Types.
-			$custom_post_types = $this->common->get_custom_post_types();
-
-			if ( count( $custom_post_types ) ) {
-				$sections['cpt'] = array();
-
-				foreach ( $custom_post_types as $custom_post_type ) {
-					$post_type      = get_post_type_object( $custom_post_type );
-					$post_type_name = function_exists( 'mb_convert_case' ) ?
-						mb_convert_case( $post_type->labels->name, MB_CASE_TITLE ) :
-						strtolower( $post_type->labels->name );
-
-					$sections['cpt'][ "view__cpt_$custom_post_type" ] = $post_type_name;
+				// If isn't set Blog Page or is the same than Front Page unset blog_page option.
+				if ( get_option( 'show_on_front' ) === 'posts' || get_option( 'page_for_posts' ) === 0 ) {
+					unset( $sections['wp']['view__blog_page'] );
 				}
-			}
-		} elseif ( 'advanced' === $tab ) {
 
-			$sections = array(
-				'optin'      => array(
-					'optin_text'  => __( 'Opt-in Text', 'creame-whatsapp-me' ),
-					'optin_check' => __( 'Opt-in Required', 'creame-whatsapp-me' ),
-				),
-				'conversion' => array(
-					'gads' => '<label for="joinchat_gads">' . __( 'Google Ads Conversion', 'creame-whatsapp-me' ) . '</label>',
-				),
-			);
+				// Custom Post Types.
+				$custom_post_types = $this->common->get_custom_post_types();
 
-		} else {
+				if ( count( $custom_post_types ) ) {
+					$sections['cpt'] = array();
 
-			$sections = array();
+					foreach ( $custom_post_types as $custom_post_type ) {
+						$post_type      = get_post_type_object( $custom_post_type );
+						$post_type_name = function_exists( 'mb_convert_case' ) ?
+							mb_convert_case( $post_type->labels->name, MB_CASE_TITLE ) :
+							strtolower( $post_type->labels->name );
 
+						$sections['cpt'][ "view__cpt_$custom_post_type" ] = $post_type_name;
+					}
+				}
+				break;
+
+			case 'advanced':
+				$sections = array(
+					'optin'      => array(
+						'optin_text'  => __( 'Opt-in Text', 'creame-whatsapp-me' ),
+						'optin_check' => __( 'Opt-in Required', 'creame-whatsapp-me' ),
+					),
+					'conversion' => array(
+						'gads' => '<label for="joinchat_gads">' . __( 'Google Ads Conversion', 'creame-whatsapp-me' ) . '</label>',
+					),
+				);
+				break;
+
+			default:
+				$sections = array();
+				break;
 		}
 
 		// Filter tab sections to add, remove or edit sections or fields.
@@ -605,10 +607,10 @@ class JoinChatAdminPage {
 					$parts = $value ? explode( '/', str_replace( 'AW-', '', $value ) ) : array( '', '' );
 
 					$output = '<label class="joinchat-gads">AW-' .
-					'<input id="joinchat_gads" name="joinchat[gads][]" value="' . esc_attr( $parts[0] ) . '" type="text" maxlength="11" style="width:7.5em;" placeholder="99999999999" title="' . esc_attr__( 'Conversion ID', 'creame-whatsapp-me' ) . '">/ ' .
-					'<input name="joinchat[gads][]" value="' . esc_attr( $parts[1] ) . '" type="text" maxlength="20" style="width:13em;" placeholder="ABCDEFGHIJ0123456789" title="' . esc_attr__( 'Conversion label', 'creame-whatsapp-me' ) . '"> ' .
-					'</label> <span style="white-space:nowrap">AW-<em>CONVERSION_ID</em>/<em>CONVERSION_LABEL</em></span>' .
-					'<p class="description">' . __( 'Send the conversion automatically at the chat start', 'creame-whatsapp-me' ) . '</p>';
+						'<input id="joinchat_gads" name="joinchat[gads][]" value="' . esc_attr( $parts[0] ) . '" type="text" maxlength="11" style="width:7.5em;" placeholder="99999999999" title="' . esc_attr__( 'Conversion ID', 'creame-whatsapp-me' ) . '">/ ' .
+						'<input name="joinchat[gads][]" value="' . esc_attr( $parts[1] ) . '" type="text" maxlength="20" style="width:13em;" placeholder="ABCDEFGHIJ0123456789" title="' . esc_attr__( 'Conversion label', 'creame-whatsapp-me' ) . '"> ' .
+						'</label> <span style="white-space:nowrap">AW-<em>CONVERSION_ID</em>/<em>CONVERSION_LABEL</em></span>' .
+						'<p class="description">' . __( 'Send the conversion automatically at the chat start', 'creame-whatsapp-me' ) . '</p>';
 					break;
 
 				default:
