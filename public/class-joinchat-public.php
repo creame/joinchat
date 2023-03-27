@@ -195,7 +195,7 @@ class JoinChatPublic {
 		$deps = array( 'jquery' );
 
 		// Register QR script.
-		wp_register_script( 'joinchat-qr', plugins_url( 'js/kjua.min.js', __FILE__ ), array(), '0.9.0', true );
+		wp_register_script( 'joinchat-qr', plugins_url( 'js/qr-creator.min.js', __FILE__ ), array(), '1.0.0', true );
 
 		// Note: caution with cache plugins and wp_is_mobile()
 		// If QR script is missing it fails silently and don't shows QR Code :).

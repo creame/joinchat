@@ -361,6 +361,9 @@ Joinchat save two localStorage variables for proper operation:
 
 == Changelog ==
 
+= 5.0.0 =
+* CHANGE Replace QR generator library (reduces 13.9kB, 4.8kB gzipped).
+
 = 4.5.20 =
 * **NEW:** WooCommerce product variable {SKU} now works with variable products.
 * CHANGE Better optimization reduce script size.
