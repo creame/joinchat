@@ -68,8 +68,6 @@ class JoinChat {
 		// WordPress 5.9 or higher.
 		$this->define_gutenberg_hooks();
 
-		add_action( 'joinchat_run_pre', array( $this, 'disable_remove_brand' ), 11 );
-
 	}
 
 	/**
@@ -230,19 +228,6 @@ class JoinChat {
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
 		$this->loader->add_action( 'wp_footer', $plugin_public, 'footer_html' );
 		$this->loader->add_action( 'wp_footer', $plugin_public, 'enqueue_qr_script', 5 );
-
-	}
-
-	/**
-	 * Remove all JoinChatRemoveBrand filters
-	 *
-	 * @since    4.1.0
-	 * @access   public
-	 * @return   void
-	 */
-	public function disable_remove_brand() {
-
-		$this->loader->remove_filter( null, 'JoinChatRemoveBrand' );
 
 	}
 
