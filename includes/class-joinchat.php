@@ -65,6 +65,8 @@ class JoinChat {
 		$this->define_admin_hooks();
 		$this->define_public_hooks();
 
+		$this->define_premium_hooks();
+
 		// WordPress 5.9 or higher.
 		$this->define_gutenberg_hooks();
 
@@ -228,6 +230,30 @@ class JoinChat {
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
 		$this->loader->add_action( 'wp_footer', $plugin_public, 'footer_html' );
 		$this->loader->add_action( 'wp_footer', $plugin_public, 'enqueue_qr_script', 5 );
+
+	}
+
+	/**
+	 * Register all of the hooks related to the premium info.
+	 *
+	 * @since    5.0.0
+	 * @access   private
+	 * @return   void
+	 */
+	private function define_premium_hooks() {
+
+		if ( ! is_admin() ) {
+			return;
+		}
+
+		require_once JOINCHAT_DIR . 'admin/class-joinchat-premium.php';
+
+		$plugin_premium = new JoinChatPremium( $this->get_plugin_name(), $this->get_version() );
+
+		$this->loader->add_filter( 'plugin_action_links_' . JOINCHAT_BASENAME, $plugin_premium, 'action_link' );
+		$this->loader->add_filter( 'joinchat_admin_tabs', $plugin_premium, 'admin_tab', 1000 );
+		$this->loader->add_filter( 'joinchat_tab_premium_sections', $plugin_premium, 'tab_sections' );
+		$this->loader->add_filter( 'joinchat_section_output', $plugin_premium, 'section_ouput', 10, 2 );
 
 	}
 

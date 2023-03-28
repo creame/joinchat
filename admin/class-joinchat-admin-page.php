@@ -231,7 +231,6 @@ class JoinChatAdminPage {
 
 			default:
 				$sections = array();
-				break;
 		}
 
 		// Filter tab sections to add, remove or edit sections or fields.
@@ -405,7 +404,6 @@ class JoinChatAdminPage {
 
 			default:
 				$output = '';
-				break;
 		}
 
 		// Filter section opening ouput.
@@ -436,20 +434,12 @@ class JoinChatAdminPage {
 		} else {
 
 			$value = isset( $this->common->settings[ $field_id ] ) ? $this->common->settings[ $field_id ] : '';
-			$utm   = '?utm_source=settings&utm_medium=wpadmin&utm_campaign=v' . str_replace( '.', '_', $this->version );
-			$lang  = false !== strpos( strtolower( get_locale() ), 'es' ) ? 'es' : 'en';
 
 			switch ( $field_id ) {
 				case 'telephone':
 					$output = '<input id="joinchat_phone" ' . ( $this->common->get_intltel() ? 'data-' : '' ) . 'name="joinchat[telephone]" value="' . esc_attr( $value ) . '" type="text" style="width:15em;display:inline-block"> ' .
 						'<input id="joinchat_phone_test" type="button" value="' . esc_attr__( 'Test Number', 'creame-whatsapp-me' ) . '" class="button" ' . ( empty( $value ) ? 'disabled' : '' ) . '>' .
-						'<p class="description">' . __( "Contact phone number <strong>(the button will not be shown if it's empty)</strong>", 'creame-whatsapp-me' ) . '</p>' .
-						'<p class="joinchat-addon">' . sprintf(
-							/* translators: 1: Random Phone link, 2: Support Agents link. */
-							__( 'Add unlimited numbers with %1$s or multiple contacts with %2$s', 'creame-whatsapp-me' ),
-							'<a href="https://join.chat/' . $lang . '/addons/random-phone/' . $utm . '" target="_blank">\'Random Phone\'</a>',
-							'<a href="https://join.chat/' . $lang . '/addons/support-agents/' . $utm . '" target="_blank">\'Support Agents\'</a>'
-						) . '</p>';
+						'<p class="description">' . __( "Contact phone number <strong>(the button will not be shown if it's empty)</strong>", 'creame-whatsapp-me' ) . '</p>';
 					break;
 
 				case 'mobile_only':
@@ -476,12 +466,7 @@ class JoinChatAdminPage {
 						'<input id="joinchat_button_image_add" type="button" value="' . esc_attr__( 'Select an image', 'creame-whatsapp-me' ) . '" class="button-primary" ' .
 						'data-title="' . esc_attr__( 'Select button image', 'creame-whatsapp-me' ) . '" data-button="' . esc_attr__( 'Use image', 'creame-whatsapp-me' ) . '"> ' .
 						'<input id="joinchat_button_image_remove" type="button" value="' . esc_attr__( 'Remove', 'creame-whatsapp-me' ) . '" class="button-secondary' . ( $image ? '' : ' joinchat-hidden' ) . '">' .
-						'<p class="description">' . __( 'The image will alternate with button icon', 'creame-whatsapp-me' ) . '</p></div>' .
-						'<p class="joinchat-addon">' . sprintf(
-							/* translators: %s: OmniChannel link. */
-							__( 'Other icons and more channels (Telegram, Messenger…) with %s', 'creame-whatsapp-me' ),
-							'<a href="https://join.chat/' . $lang . '/addons/omnichannel/' . $utm . '" target="_blank">\'Omnichannel\'</a>'
-						) . '</p>';
+						'<p class="description">' . __( 'The image will alternate with button icon', 'creame-whatsapp-me' ) . '</p></div>';
 					break;
 
 				case 'button_tip':
@@ -509,12 +494,7 @@ class JoinChatAdminPage {
 
 				case 'message_text':
 					$output = '<textarea id="joinchat_message_text" name="joinchat[message_text]" rows="4" class="regular-text autofill" placeholder="' . esc_attr__( "Hello 👋\nCan we help you?", 'creame-whatsapp-me' ) . '">' . esc_textarea( $value ) . '</textarea>' .
-						'<p class="description">' . __( 'Define a text to encourage users to contact by WhatsApp', 'creame-whatsapp-me' ) . '</p>' .
-						'<p class="joinchat-addon">' . sprintf(
-							/* translators: %s: CTA Extras link. */
-							__( 'Add links, images, videos and more with %s', 'creame-whatsapp-me' ),
-							'<a href="https://join.chat/' . $lang . '/addons/cta-extras/' . $utm . '" target="_blank">\'CTA Extras\'</a>'
-						) . '</p>';
+						'<p class="description">' . __( 'Define a text to encourage users to contact by WhatsApp', 'creame-whatsapp-me' ) . '</p>';
 					break;
 
 				case 'message_send':
@@ -615,7 +595,6 @@ class JoinChatAdminPage {
 
 				default:
 					$output = '';
-					break;
 			}
 		}
 

@@ -174,15 +174,6 @@ class JoinChatAdmin {
 
 		array_unshift( $links, $settings_link );
 
-		$utm  = '?utm_source=action&utm_medium=wpadmin&utm_campaign=v' . str_replace( '.', '_', $this->version );
-		$lang = false !== strpos( strtolower( get_locale() ), 'es' ) ? 'es' : 'en';
-
-		$links['premium'] = sprintf(
-			'<a href="%1$s" target="_blank" style="font-weight:bold;color:#f9603a;">%2$s</a>',
-			esc_url( "https://join.chat/$lang/premium/$utm" ),
-			esc_html__( 'Premium', 'creame-whatsapp-me' )
-		);
-
 		return $links;
 
 	}
