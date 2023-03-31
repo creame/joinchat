@@ -80,6 +80,7 @@ class JoinChatCommon {
 			'button_delay'  => 3,
 			'whatsapp_web'  => 'no',
 			'qr'            => 'no',
+			'qr_text'       => __( 'Scan the code', 'creame-whatsapp-me' ),
 			'message_text'  => '',
 			'message_views' => 2,
 			'message_delay' => 10,

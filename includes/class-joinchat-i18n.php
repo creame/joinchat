@@ -41,7 +41,9 @@ class JoinChat_i18n {
 	 */
 	public function load_plugin_textdomain() {
 
-		load_plugin_textdomain( 'creame-whatsapp-me', false, dirname( JOINCHAT_BASENAME ) . '/languages' );
+		if ( is_admin() ) {
+			load_plugin_textdomain( 'creame-whatsapp-me', false, dirname( JOINCHAT_BASENAME ) . '/languages' );
+		}
 
 	}
 

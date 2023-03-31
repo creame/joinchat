@@ -289,6 +289,7 @@ class JoinChatPublic {
 				'header',
 				'optin_text',
 				'optin_check',
+				'qr_text',
 			)
 		);
 
