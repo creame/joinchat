@@ -364,6 +364,7 @@ Joinchat save two localStorage variables for proper operation:
 = 5.0.0 =
 * CHANGE Replace QR generator library (reduces 13.9kB, 4.8kB gzipped).
 * CHANGE Optimized, only load translations in admin pages.
+* CHANGE All PHP classes replaced "JoinChat" with "Joinchat".
 
 = 4.5.20 =
 * **NEW:** WooCommerce product variable {SKU} now works with variable products.

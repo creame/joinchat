@@ -6,7 +6,7 @@
  * @link       https://crea.me
  * @since      1.0.0
  *
- * @package    JoinChat
+ * @package    Joinchat
  */
 
 // If uninstall not called from WordPress, then exit.

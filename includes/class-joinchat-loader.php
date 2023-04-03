@@ -8,11 +8,11 @@
  * run function to execute the list of actions and filters.
  *
  * @since      1.0.0
- * @package    JoinChat
- * @subpackage JoinChat/includes
+ * @package    Joinchat
+ * @subpackage Joinchat/includes
  * @author     Creame <hola@crea.me>
  */
-class JoinChatLoader {
+class JoinchatLoader {
 
 	/**
 	 * The array of actions registered with WordPress.

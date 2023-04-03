@@ -4,11 +4,11 @@
  * Define the third party plugins integration functionality.
  *
  * @since      3.0.0
- * @package    JoinChat
- * @subpackage JoinChat/includes
+ * @package    Joinchat
+ * @subpackage Joinchat/includes
  * @author     Creame <hola@crea.me>
  */
-class JoinChatIntegrations {
+class JoinchatIntegrations {
 
 	/**
 	 * Load third party plugins integrations.
@@ -32,7 +32,7 @@ class JoinChatIntegrations {
 
 				require_once JOINCHAT_DIR . 'admin/class-joinchat-woo-admin.php';
 
-				$plugin_woo_admin = new JoinChatWooAdmin();
+				$plugin_woo_admin = new JoinchatWooAdmin();
 
 				add_action( 'joinchat_run_pre', array( $plugin_woo_admin, 'init' ) );
 
@@ -40,7 +40,7 @@ class JoinChatIntegrations {
 
 				require_once JOINCHAT_DIR . 'public/class-joinchat-woo-public.php';
 
-				$plugin_woo_public = new JoinChatWooPublic();
+				$plugin_woo_public = new JoinchatWooPublic();
 
 				add_action( 'joinchat_run_pre', array( $plugin_woo_public, 'init' ) );
 
@@ -58,7 +58,7 @@ class JoinChatIntegrations {
 
 				require_once JOINCHAT_DIR . 'admin/class-joinchat-elementor-admin.php';
 
-				$plugin_elementor_admin = new JoinChatElementorAdmin();
+				$plugin_elementor_admin = new JoinchatElementorAdmin();
 
 				add_action( 'joinchat_run_pre', array( $plugin_elementor_admin, 'init' ) );
 
@@ -85,9 +85,9 @@ class JoinChatIntegrations {
 		require_once JOINCHAT_DIR . 'includes/class-joinchat-elementor-finder.php';
 
 		if ( version_compare( ELEMENTOR_VERSION, '3.5.0', '>=' ) ) {
-			$categories_manager->register( new JoinChatElementorFinder() );
+			$categories_manager->register( new JoinchatElementorFinder() );
 		} else {
-			$categories_manager->add_category( 'joinchat', new JoinChatElementorFinder() );
+			$categories_manager->add_category( 'joinchat', new JoinchatElementorFinder() );
 		}
 
 	}
@@ -103,7 +103,7 @@ class JoinChatIntegrations {
 
 		$items['woocommerce'] = array(
 			'title'       => _x( 'WooCommerce Settings', 'Title in Elementor Finder', 'creame-whatsapp-me' ),
-			'url'         => add_query_arg( 'tab', 'woocommerce', JoinChatUtil::admin_url() ),
+			'url'         => add_query_arg( 'tab', 'woocommerce', JoinchatUtil::admin_url() ),
 			'icon'        => 'woocommerce',
 			'keywords'    => explode( ',', 'joinchat,whatsapp,' . _x( 'woocommerce,shop,product', 'Keywords in Elementor Finder', 'creame-whatsapp-me' ) ),
 			'description' => __( 'Joinchat settings page', 'creame-whatsapp-me' ),

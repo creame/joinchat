@@ -4,11 +4,11 @@
  * The public-facing functionality of the WooCommerce integration.
  *
  * @since      3.0.0
- * @package    JoinChat
- * @subpackage JoinChat/admin
+ * @package    Joinchat
+ * @subpackage Joinchat/admin
  * @author     Creame <hola@crea.me>
  */
-class JoinChatWooPublic {
+class JoinchatWooPublic {
 
 	/**
 	 * Product Button Show
@@ -23,7 +23,7 @@ class JoinChatWooPublic {
 	 * Initialize all hooks
 	 *
 	 * @since    3.0.0
-	 * @param    array $joinchat       JoinChat object.
+	 * @param    array $joinchat       Joinchat object.
 	 * @return   void
 	 */
 	public function init( $joinchat ) {
@@ -369,7 +369,7 @@ class JoinChatWooPublic {
 
 		printf(
 			'<div class="joinchat__woo-btn__wrapper"><div class="joinchat__woo-btn joinchat_app">%s</div></div>',
-			esc_html( JoinChatCommon::instance()->settings['woo_btn_text'] )
+			esc_html( JoinchatCommon::instance()->settings['woo_btn_text'] )
 		);
 
 	}

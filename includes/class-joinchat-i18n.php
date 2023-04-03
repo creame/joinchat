@@ -7,11 +7,11 @@
  * so that it is ready for translation.
  *
  * @since      1.0.0
- * @package    JoinChat
- * @subpackage JoinChat/includes
+ * @package    Joinchat
+ * @subpackage Joinchat/includes
  * @author     Creame <hola@crea.me>
  */
-class JoinChat_i18n {
+class Joinchat_i18n {
 
 	const DOMAIN_GROUP = 'Join.chat'; // TODO: in future change to "Joinchat".
 
@@ -19,7 +19,7 @@ class JoinChat_i18n {
 	 * Initialize the class.
 	 *
 	 * @since    4.2.0
-	 * @param  JoinChatLoader $loader loader instance.
+	 * @param  JoinchatLoader $loader loader instance.
 	 * @return void
 	 */
 	public function __construct( $loader ) {
@@ -53,7 +53,7 @@ class JoinChat_i18n {
 	 * Note: don't translate string labels to prevent missing translations if
 	 * public front lang is different of admin lang
 	 *
-	 * @since    4.2   (before this was in JoinChatUtil)
+	 * @since    4.2   (before this was in JoinchatUtil)
 	 * @access   private
 	 * @param    null|array $settings list of settings.
 	 * @return   array setting keys and string names

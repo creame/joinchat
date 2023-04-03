@@ -3,8 +3,8 @@
  * Joinchat premium addons
  *
  * @since      5.0.0
- * @package    JoinChat
- * @subpackage JoinChat/admin
+ * @package    Joinchat
+ * @subpackage Joinchat/admin
  * @author     Creame <hola@crea.me>
  */
 

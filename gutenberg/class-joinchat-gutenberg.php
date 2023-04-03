@@ -5,11 +5,11 @@
  * Add native sidebar for postmeta and register blocks and patterns.
  *
  * @since      1.0.0
- * @package    JoinChatGutenberg
- * @subpackage JoinChat/gutenberg
+ * @package    JoinchatGutenberg
+ * @subpackage Joinchat/gutenberg
  * @author     Creame <hola@crea.me>
  */
-class JoinChatGutenberg {
+class JoinchatGutenberg {
 
 	/**
 	 * The ID of this plugin.
@@ -34,7 +34,7 @@ class JoinChatGutenberg {
 	 *
 	 * @since    4.5.0
 	 * @access   private
-	 * @var      JoinChatCommon    $common    instance.
+	 * @var      JoinchatCommon    $common    instance.
 	 */
 	private $common;
 
@@ -50,7 +50,7 @@ class JoinChatGutenberg {
 
 		$this->plugin_name = $plugin_name;
 		$this->version     = $version;
-		$this->common      = JoinChatCommon::instance();
+		$this->common      = JoinchatCommon::instance();
 
 	}
 
@@ -130,7 +130,7 @@ class JoinChatGutenberg {
 		// Replace dynamic vars.
 		if ( ! empty( $attributes['message'] ) ) {
 			$escaped = str_replace( array( '&', '"', '>' ), array( '&amp;', '&quot;', '&gt;' ), $attributes['message'] );
-			$content = str_replace( $escaped, esc_attr( JoinChatUtil::replace_variables( $attributes['message'] ) ), $content );
+			$content = str_replace( $escaped, esc_attr( JoinchatUtil::replace_variables( $attributes['message'] ) ), $content );
 		}
 
 		// Render an empty Button Block to ensure enqueue button styles.
@@ -247,9 +247,9 @@ class JoinChatGutenberg {
 	 */
 	public function sanitize_meta( $meta_value ) {
 
-		JoinChatUtil::maybe_encode_emoji();
+		JoinchatUtil::maybe_encode_emoji();
 
-		return array_filter( JoinChatUtil::clean_input( $meta_value ) );
+		return array_filter( JoinchatUtil::clean_input( $meta_value ) );
 
 	}
 

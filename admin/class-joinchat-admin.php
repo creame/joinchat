@@ -6,11 +6,11 @@
  * @since      1.0.0
  * @since      2.0.0      Added visibility settings
  * @since      3.0.0      More extendable admin via hooks
- * @package    JoinChat
- * @subpackage JoinChat/admin
+ * @package    Joinchat
+ * @subpackage Joinchat/admin
  * @author     Creame <hola@crea.me>
  */
-class JoinChatAdmin {
+class JoinchatAdmin {
 
 	/**
 	 * The ID of this plugin.
@@ -35,7 +35,7 @@ class JoinChatAdmin {
 	 *
 	 * @since    4.2.0
 	 * @access   private
-	 * @var      JoinChatCommon    $common    instance.
+	 * @var      JoinchatCommon    $common    instance.
 	 */
 	private $common;
 
@@ -51,7 +51,7 @@ class JoinChatAdmin {
 
 		$this->plugin_name = $plugin_name;
 		$this->version     = $version;
-		$this->common      = JoinChatCommon::instance();
+		$this->common      = JoinchatCommon::instance();
 
 	}
 
@@ -124,7 +124,7 @@ class JoinChatAdmin {
 
 		// If no phone number defined.
 		if ( empty( $this->common->settings['telephone'] )
-			&& current_user_can( JoinChatUtil::capability() )
+			&& current_user_can( JoinchatUtil::capability() )
 			&& ( $current_screen && false === strpos( $current_screen->id, '_joinchat' ) )
 			&& time() >= (int) get_option( 'joinchat_notice_dismiss' )
 		) {
@@ -132,7 +132,7 @@ class JoinChatAdmin {
 			printf(
 				'<div class="notice notice-info is-dismissible" id="joinchat-empty-phone"><p><strong>Joinchat</strong>&nbsp;&nbsp;%s %s</p></div>',
 				esc_html__( 'You only need to add your WhatsApp number to contact with your users.', 'creame-whatsapp-me' ),
-				sprintf( '<a href="%s"><strong>%s</strong></a>', esc_url( JoinChatUtil::admin_url() ), esc_html__( 'Go to settings', 'creame-whatsapp-me' ) )
+				sprintf( '<a href="%s"><strong>%s</strong></a>', esc_url( JoinchatUtil::admin_url() ), esc_html__( 'Go to settings', 'creame-whatsapp-me' ) )
 			);
 
 			printf(
@@ -170,7 +170,7 @@ class JoinChatAdmin {
 	 */
 	public function settings_link( $links ) {
 
-		$settings_link = sprintf( '<a href="%s">%s</a>', JoinChatUtil::admin_url(), __( 'Settings', 'creame-whatsapp-me' ) );
+		$settings_link = sprintf( '<a href="%s">%s</a>', JoinchatUtil::admin_url(), __( 'Settings', 'creame-whatsapp-me' ) );
 
 		array_unshift( $links, $settings_link );
 
@@ -212,7 +212,7 @@ class JoinChatAdmin {
 	public function add_meta_boxes() {
 
 		$post_types  = $this->common->get_public_post_types();
-		$back_compat = apply_filters( 'joinchat_gutenberg_sidebar', JoinChatUtil::can_gutenberg() );
+		$back_compat = apply_filters( 'joinchat_gutenberg_sidebar', JoinchatUtil::can_gutenberg() );
 
 		foreach ( $post_types as $post_type ) {
 			add_meta_box(
@@ -291,11 +291,11 @@ class JoinChatAdmin {
 			return;
 		}
 
-		JoinChatUtil::maybe_encode_emoji();
+		JoinchatUtil::maybe_encode_emoji();
 
 		// Clean and delete empty/false fields.
 		$metadata = array_filter(
-			JoinChatUtil::clean_input(
+			JoinchatUtil::clean_input(
 				array(
 					'telephone'    => $_POST['joinchat_telephone'],
 					'message_text' => $_POST['joinchat_message'],

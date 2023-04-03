@@ -4,11 +4,11 @@
  * Front and Back Common class.
  *
  * @since      4.2.0
- * @package    JoinChat
- * @subpackage JoinChat/includes
+ * @package    Joinchat
+ * @subpackage Joinchat/includes
  * @author     Creame <hola@crea.me>
  */
-class JoinChatCommon {
+class JoinchatCommon {
 
 	/**
 	 * International Telephone Input library version.
@@ -45,7 +45,7 @@ class JoinChatCommon {
 	 * Instantiates Manager.
 	 *
 	 * @since    4.5.0
-	 * @return JoinChatCommon
+	 * @return JoinchatCommon
 	 */
 	public static function instance() {
 

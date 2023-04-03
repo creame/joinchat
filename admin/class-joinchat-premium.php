@@ -4,11 +4,11 @@
  * The Joinchat Premium upsell functionality of the plugin.
  *
  * @since      5.0.0
- * @package    JoinChat
- * @subpackage JoinChat/admin
+ * @package    Joinchat
+ * @subpackage Joinchat/admin
  * @author     Creame <hola@crea.me>
  */
-class JoinChatPremium {
+class JoinchatPremium {
 
 	/**
 	 * The ID of this plugin.

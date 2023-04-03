@@ -4,11 +4,11 @@
  * The admin settings page of the plugin.
  *
  * @since      4.5.0
- * @package    JoinChat
- * @subpackage JoinChat/admin
+ * @package    Joinchat
+ * @subpackage Joinchat/admin
  * @author     Creame <hola@crea.me>
  */
-class JoinChatAdminPage {
+class JoinchatAdminPage {
 
 	/**
 	 * The ID of this plugin.
@@ -33,7 +33,7 @@ class JoinChatAdminPage {
 	 *
 	 * @since    4.5.0
 	 * @access   private
-	 * @var      JoinChatCommon    $common    instance.
+	 * @var      JoinchatCommon    $common    instance.
 	 */
 	private $common;
 
@@ -57,7 +57,7 @@ class JoinChatAdminPage {
 
 		$this->plugin_name = $plugin_name;
 		$this->version     = $version;
-		$this->common      = JoinChatCommon::instance();
+		$this->common      = JoinchatCommon::instance();
 		$this->tabs        = array();
 
 	}
@@ -73,12 +73,12 @@ class JoinChatAdminPage {
 
 		$title = 'Joinchat';
 
-		if ( JoinChatUtil::options_submenu() ) {
+		if ( JoinchatUtil::options_submenu() ) {
 			$icon = '<span class="dashicons dashicons-whatsapp" aria-hidden="true" style="height:18px;font-size:18px;margin:0 8px;"></span>';
 
-			add_options_page( $title, $title . $icon, JoinChatUtil::capability(), $this->plugin_name, array( $this, 'options_page' ) );
+			add_options_page( $title, $title . $icon, JoinchatUtil::capability(), $this->plugin_name, array( $this, 'options_page' ) );
 		} else {
-			add_menu_page( $title, $title, JoinChatUtil::capability(), $this->plugin_name, array( $this, 'options_page' ), 'dashicons-whatsapp', 81 );
+			add_menu_page( $title, $title, JoinchatUtil::capability(), $this->plugin_name, array( $this, 'options_page' ), 'dashicons-whatsapp', 81 );
 		}
 
 	}
@@ -253,7 +253,7 @@ class JoinChatAdminPage {
 			return $input;
 		}
 
-		$util = new JoinChatUtil(); // Shortcut.
+		$util = new JoinchatUtil(); // Shortcut.
 
 		$util::maybe_encode_emoji();
 
@@ -457,7 +457,7 @@ class JoinChatAdminPage {
 					break;
 
 				case 'button_image':
-					$thumb = JoinChatUtil::thumb( $value, 116, 116 );
+					$thumb = JoinchatUtil::thumb( $value, 116, 116 );
 					$image = is_array( $thumb ) ? $thumb['url'] : false;
 
 					$output = '<div id="joinchat_button_image_wrapper">' .
@@ -748,7 +748,7 @@ class JoinChatAdminPage {
 				<h1><?php esc_html_e( 'Joinchat Settings', 'creame-whatsapp-me' ); ?></h1>
 
 				<?php
-				if ( ! JoinChatUtil::options_submenu() ) {
+				if ( ! JoinchatUtil::options_submenu() ) {
 					settings_errors();
 				}
 				?>

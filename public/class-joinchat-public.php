@@ -8,11 +8,11 @@
  *
  * @since      1.0.0
  * @since      3.0.0      Added $show property and more hooks
- * @package    JoinChat
- * @subpackage JoinChat/public
+ * @package    Joinchat
+ * @subpackage Joinchat/public
  * @author     Creame <hola@crea.me>
  */
-class JoinChatPublic {
+class JoinchatPublic {
 
 	/**
 	 * The ID of this plugin.
@@ -38,7 +38,7 @@ class JoinChatPublic {
 	 * @since    4.2.0
 	 * @since    4.5.0  Store $settings globally
 	 * @access   private
-	 * @var      JoinChatCommon    $common    instance.
+	 * @var      JoinchatCommon    $common    instance.
 	 */
 	private $common;
 
@@ -66,7 +66,7 @@ class JoinChatPublic {
 
 		$this->plugin_name = $plugin_name;
 		$this->version     = $version;
-		$this->common      = JoinChatCommon::instance();
+		$this->common      = JoinchatCommon::instance();
 
 		$this->show = false;
 
@@ -110,7 +110,7 @@ class JoinChatPublic {
 		$settings['message_send'] = preg_replace( '/^\{\s*\}$/', '', $settings['message_send'] );
 
 		// Prepare settings ('message_send' delay replace variables until they are used).
-		$settings['telephone']     = JoinChatUtil::clean_whatsapp( $settings['telephone'] );
+		$settings['telephone']     = JoinchatUtil::clean_whatsapp( $settings['telephone'] );
 		$settings['mobile_only']   = 'yes' === $settings['mobile_only'];
 		$settings['whatsapp_web']  = 'yes' === $settings['whatsapp_web'];
 		$settings['qr']            = 'yes' === $settings['qr'];
@@ -222,7 +222,7 @@ class JoinChatPublic {
 
 			$data = array_intersect_key( $this->common->settings, array_flip( apply_filters( 'joinchat_script_lite_fields', $fields ) ) );
 
-			$data['message_send'] = JoinChatUtil::replace_variables( $data['message_send'] );
+			$data['message_send'] = JoinchatUtil::replace_variables( $data['message_send'] );
 
 			// Enqueue lite script.
 			wp_enqueue_script( 'joinchat-lite', plugins_url( "js/joinchat-lite{$min}.js", __FILE__ ), $deps, $this->version, true );
@@ -295,7 +295,7 @@ class JoinChatPublic {
 
 		$data = array_diff_key( $settings, array_flip( $excluded_fields ) );
 
-		$data['message_send'] = JoinChatUtil::replace_variables( $data['message_send'] );
+		$data['message_send'] = JoinchatUtil::replace_variables( $data['message_send'] );
 
 		if ( '__jc__' === $settings['header'] ) {
 			$powered_args = array(
@@ -312,12 +312,12 @@ class JoinChatPublic {
 		if ( is_null( $image ) && $settings['button_image'] ) {
 			$img_id = $settings['button_image'];
 
-			if ( apply_filters( 'joinchat_image_original', JoinChatUtil::is_animated_gif( $img_id ), $img_id, 'button' ) ) {
+			if ( apply_filters( 'joinchat_image_original', JoinchatUtil::is_animated_gif( $img_id ), $img_id, 'button' ) ) {
 				$image = '<img src="' . wp_get_attachment_url( $img_id ) . '" alt="" loading="lazy">';
-			} elseif ( is_array( JoinChatUtil::thumb( $img_id, 58, 58 ) ) ) {
-				$thumb  = JoinChatUtil::thumb( $img_id, 58, 58 );
-				$thumb2 = JoinChatUtil::thumb( $img_id, 116, 116 );
-				$thumb3 = JoinChatUtil::thumb( $img_id, 174, 174 );
+			} elseif ( is_array( JoinchatUtil::thumb( $img_id, 58, 58 ) ) ) {
+				$thumb  = JoinchatUtil::thumb( $img_id, 58, 58 );
+				$thumb2 = JoinchatUtil::thumb( $img_id, 116, 116 );
+				$thumb3 = JoinchatUtil::thumb( $img_id, 174, 174 );
 				$image  = "<img src=\"{$thumb['url']}\" srcset=\"{$thumb2['url']} 2x, {$thumb3['url']} 3x\" alt=\"\" loading=\"lazy\">";
 			}
 		}
@@ -345,7 +345,7 @@ class JoinChatPublic {
 		}
 
 		if ( $settings['message_text'] ) {
-			$box_content = '<div class="joinchat__message">' . JoinChatUtil::formated_message( $settings['message_text'] ) . '</div>';
+			$box_content = '<div class="joinchat__message">' . JoinchatUtil::formated_message( $settings['message_text'] ) . '</div>';
 		}
 
 		if ( $settings['optin_text'] ) {

@@ -4,17 +4,17 @@
  * The admin-specific functionality of the Elementor integration.
  *
  * @since      4.1.10
- * @package    JoinChat
- * @subpackage JoinChat/admin
+ * @package    Joinchat
+ * @subpackage Joinchat/admin
  * @author     Creame <hola@crea.me>
  */
-class JoinChatElementorAdmin {
+class JoinchatElementorAdmin {
 
 	/**
 	 * Initialize all hooks
 	 *
 	 * @since    4.1.10
-	 * @param    array $joinchat       JoinChat object.
+	 * @param    array $joinchat       Joinchat object.
 	 * @return   void
 	 */
 	public function init( $joinchat ) {

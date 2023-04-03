@@ -6,11 +6,11 @@
  * Include static methods.
  *
  * @since      3.1.0
- * @package    JoinChat
- * @subpackage JoinChat/includes
+ * @package    Joinchat
+ * @subpackage Joinchat/includes
  * @author     Creame <hola@crea.me>
  */
-class JoinChatUtil {
+class JoinchatUtil {
 
 	/**
 	 * Encode emojis if utf8mb4 not supported by DB

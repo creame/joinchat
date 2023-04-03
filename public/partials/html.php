@@ -4,15 +4,15 @@
  * Joinchat public html template
  *
  * @since      4.1.5
- * @package    JoinChat
- * @subpackage JoinChat/public
+ * @package    Joinchat
+ * @subpackage Joinchat/public
  * @author     Creame <hola@crea.me>
  */
 
 defined( 'WPINC' ) || exit;
 ?>
 
-<div class="joinchat <?php echo esc_attr( join( ' ', $joinchat_classes ) ); ?>" data-settings='<?php echo JoinChatUtil::to_json( $data ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>'>
+<div class="joinchat <?php echo esc_attr( join( ' ', $joinchat_classes ) ); ?>" data-settings='<?php echo JoinchatUtil::to_json( $data ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>'>
 	<div class="joinchat__button">
 		<div class="joinchat__button__open"></div>
 		<?php if ( $image ) : ?>

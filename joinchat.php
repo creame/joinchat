@@ -3,7 +3,7 @@
 /**
  * @link              https://crea.me
  * @since             1.0.0
- * @package           JoinChat
+ * @package           Joinchat
  *
  * @wordpress-plugin
  * Plugin Name:       Joinchat
@@ -49,7 +49,7 @@ require JOINCHAT_DIR . 'includes/class-joinchat.php';
  */
 function run_joinchat() {
 
-	$plugin = new JoinChat();
+	$plugin = new Joinchat();
 
 	add_action( 'init', array( $plugin, 'run' ) );
 
