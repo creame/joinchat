@@ -5,7 +5,7 @@
  *
  * @since      3.0.0
  * @package    Joinchat
- * @subpackage Joinchat/admin
+ * @subpackage Joinchat/public
  * @author     Creame <hola@crea.me>
  */
 class JoinchatWooPublic {

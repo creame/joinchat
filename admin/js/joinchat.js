@@ -93,7 +93,7 @@
           });
         }
 
-        // View JoinChatUtil::clean_whatsapp() for regex clean info
+        // View JoinchatUtil::clean_whatsapp() for regex clean info
         $('#joinchat_phone_test').on('click', function () {
           var phone = has_iti ? intlTelInputGlobals.getInstance($('#joinchat_phone')[0]).getNumber() : $('#joinchat_phone').val();
           phone = phone.replace(/^0+|\D/, '')

@@ -189,7 +189,7 @@ class JoinchatAdmin {
 	 */
 	public function plugin_links( $plugin_meta, $plugin_file ) {
 
-		if ( 'creame-whatsapp-me/joinchat.php' === $plugin_file ) {
+		if ( JOINCHAT_BASENAME === $plugin_file ) {
 			$utm  = '?utm_source=plugins&utm_medium=wpadmin&utm_campaign=v' . str_replace( '.', '_', $this->version );
 			$lang = false !== strpos( strtolower( get_locale() ), 'es' ) ? 'es' : 'en';
 

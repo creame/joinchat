@@ -1,11 +1,9 @@
 <?php
-
 /**
  * Fired when the plugin is uninstalled.
  *
  * @link       https://crea.me
  * @since      1.0.0
- *
  * @package    Joinchat
  */
 
