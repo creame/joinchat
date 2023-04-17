@@ -107,13 +107,25 @@ class JoinchatPremium {
 
 		switch ( $section_id ) {
 			case 'joinchat_tab_premium__info':
-				// TODO: add upsell message and links.
+				if ( false !== strpos( strtolower( get_locale() ), 'es' ) ) {
+					$link = 'https://join.chat/es/precio/?utm_source=cta&utm_medium=wpadmin&utm_campaign=v' . str_replace( '.', '_', $this->version );
+				} else {
+					$link = 'https://join.chat/en/pricing/?utm_source=cta&utm_medium=wpadmin&utm_campaign=v' . str_replace( '.', '_', $this->version );
+				}
+
 				$output = '<h2 class="title">' . __( 'Premium', 'creame-whatsapp-me' ) . '</h2>' .
-					'<p>' . __( 'SUPER AWESOME STUFF!!', 'creame-whatsapp-me' ) . '</p>';
+					'<p>' .
+						__( 'With <b>Joinchat Premium</b> you can enjoy exclusive features such as advanced Call to Action customization, multiple agents with scheduling of service hours, add other contact channels and much more.', 'creame-whatsapp-me' ) . ' ' .
+						__( 'In addition, you will receive specialized technical support to solve any questions or issues you may have.', 'creame-whatsapp-me' ) .
+					'</p>' .
+					'<p>' . __( 'Take your customer service to the next level with <b>Joinchat Premium</b>!', 'creame-whatsapp-me' ) . '</p>' .
+					'<p><a class="button" href="' . esc_url( $link ) . '" target="_blank">' . __( 'Go Premium', 'creame-whatsapp-me' ) . '</a></p>';
 				break;
 
 			case 'joinchat_tab_premium__addons':
-				$this->premium_addons();
+				$output  = '<hr><h2 class="title">' . __( 'Add-ons', 'creame-whatsapp-me' ) . '</h2>' .
+					'<p>' . __( 'Enable only the features you need to optimize resource load and improve your user experience.', 'creame-whatsapp-me' ) . '</p>';
+				$output .= $this->premium_addons();
 				break;
 		}
 
@@ -128,58 +140,48 @@ class JoinchatPremium {
 	 */
 	private function premium_addons() {
 
-		$utm  = '?utm_source=premiumtab&utm_medium=wpadmin&utm_campaign=v' . str_replace( '.', '_', $this->version );
-		$lang = false !== strpos( strtolower( get_locale() ), 'es' ) ? 'es' : 'en';
-
 		$addons = array(
 			'cta-extras'     => array(
-				'name'        => 'CTA Extras',
-				'description' => 'Use our embed tool to beautifully design the content that appears in the chat window. Drive your leads from landings to sales and conversion pages. Add links, images, animated GIFs, buttons or even embedded content from other platforms, surveys, chatbots, forms…',
-				'ver'         => '2.6',
-				'info_en'     => 'https://join.chat/en/addons/cta-extras/',
-				'docs_en'     => 'https://join.chat/en/docs/setting-up-cta-extras/',
-				'info_es'     => 'https://join.chat/es/addons/cta-extras/',
-				'docs_es'     => 'https://join.chat/es/docs/configurando-cta-extras/',
+				'name'        => _x( 'CTA Extras', 'Add-on name', 'creame-whatsapp-me' ),
+				'description' => _x( 'Use our embed tool to beautifully design the content that appears in the chat window. Drive your leads from landings to sales and conversion pages. Add links, images, animated GIFs, buttons or even embedded content from other platforms, surveys, chatbots, forms…', 'Add-on description', 'creame-whatsapp-me' ),
+				'ver'         => '3.0',
 			),
 			'support-agents' => array(
-				'name'        => 'Support Agents',
-				'description' => 'Managing multiple WhatsApp accounts has never been easier. Add multiple phone numbers and monitor their availability, even if your employees are out of the office, your website users will know how long it will be before they are back up and running!',
-				'ver'         => '3.7',
-				'info_en'     => 'https://join.chat/en/addons/support-agents/',
-				'docs_en'     => 'https://join.chat/en/docs/setting-up-support-agents/',
-				'info_es'     => 'https://join.chat/es/addons/agentes-de-soporte/',
-				'docs_es'     => 'https://join.chat/es/docs/configurando-agentes-de-soporte/',
+				'name'        => _x( 'Support Agents', 'Add-on name', 'creame-whatsapp-me' ),
+				'description' => _x( 'Managing multiple WhatsApp accounts has never been easier. Add multiple phone numbers and monitor their availability, even if your employees are out of the office, your website users will know how long it will be before they are back up and running!', 'Add-on description', 'creame-whatsapp-me' ),
+				'ver'         => '4.0',
 			),
 			'random-phone'   => array(
-				'name'        => 'Random Phone',
-				'description' => 'Avoid delays in support chats. Joinchat allows you to add as many phone numbers as you want. We distribute customer chats evenly among each of your support agents, so you never have to worry about bottlenecks or dropped calls again.',
-				'ver'         => '3.5',
-				'info_en'     => 'https://join.chat/en/addons/random-phone/',
-				'docs_en'     => 'https://join.chat/en/docs/setting-up-cta-extras/',
-				'info_es'     => 'https://join.chat/es/addons/random-phone/',
-				'docs_es'     => 'https://join.chat/es/docs/configurando-random-phone/',
+				'name'        => _x( 'Random Phone', 'Add-on name', 'creame-whatsapp-me' ),
+				'description' => _x( 'Avoid delays in support chats. Joinchat allows you to add as many phone numbers as you want. We distribute customer chats evenly among each of your support agents, so you never have to worry about bottlenecks or dropped calls again.', 'Add-on description', 'creame-whatsapp-me' ),
+				'ver'         => '4.0',
 			),
 			'omnichannel'    => array(
-				'name'        => 'OmniChannel',
-				'description' => 'This feature will allow you to add more chat apps to the basic plugin, in addition to WhatsApp. You can now add Telegram, Facebook Messenger, SMS, phone call, Skype and FaceTime.',
-				'ver'         => '2.0',
-				'info_en'     => 'https://join.chat/en/addons/omnichannel/',
-				'docs_en'     => 'https://join.chat/en/docs/setting-up-omnichannel/',
-				'info_es'     => 'https://join.chat/es/addons/omnichannel/',
-				'docs_es'     => 'https://join.chat/es/docs/configurando-omnichannel/',
+				'name'        => _x( 'OmniChannel', 'Add-on name', 'creame-whatsapp-me' ),
+				'description' => _x( 'This feature will allow you to add more chat apps to the basic plugin, in addition to WhatsApp. You can now add Telegram, Facebook Messenger, SMS, phone call, Skype and FaceTime.', 'Add-on description', 'creame-whatsapp-me' ),
+				'ver'         => '3.0',
 			),
 			'chat-funnels'   => array(
-				'name'        => 'Chat Funnels',
-				'description' => 'Nullam sagittis. Quisque libero metus, condimentum nec, tempor a, commodo mollis, magna. In ac felis quis tortor malesuada pretium.', // TODO: Chat Funnels description.
+				'name'        => _x( 'Chat Funnels', 'Add-on name', 'creame-whatsapp-me' ),
+				'description' => _x( 'Nullam sagittis. Quisque libero metus, condimentum nec, tempor a, commodo mollis, magna. In ac felis quis tortor malesuada pretium.', 'Add-on description', 'creame-whatsapp-me' ), // TODO: Chat Funnels description.
 				'ver'         => '1.0',
-				'info_en'     => 'https://join.chat/en/addons/chat-funnels/',
-				'docs_en'     => 'https://join.chat/en/docs/setting-up-chat-funnels/',
-				'info_es'     => 'https://join.chat/es/addons/chat-funnels/',
-				'docs_es'     => 'https://join.chat/es/docs/setting-up-chat-funnels/',
 			),
 		);
 
+		$utm  = '?utm_source=upselltab&utm_medium=wpadmin&utm_campaign=v' . str_replace( '.', '_', $this->version );
+		$lang = false !== strpos( strtolower( get_locale() ), 'es' ) ? 'es' : 'en';
+
+		foreach ( $addons as $slug => $addon ) {
+			$addon['info']   = "https://join.chat/$lang/addons/$slug/$utm";
+			$addon['docs']   = "https://join.chat/$lang/docs/setting-up-$slug/$utm";
+			$addons[ $slug ] = $addon;
+		}
+
+		ob_start();
 		include __DIR__ . '/partials/premium.php';
+		$output = ob_get_clean();
+
+		return $output;
 
 	}
 

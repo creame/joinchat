@@ -14,23 +14,25 @@ defined( 'WPINC' ) || exit;
 <table class="wp-list-table widefat plugins">
 	<thead>
 		<tr>
+			<td class="manage-column column-cb check-column"><label class="screen-reader-text" for="cb-select-all-1"><?php _e( 'Select All' ); ?></label><input id="cb-select-all-1" type="checkbox" disabled></td>
 			<th scope="col" id="name" class="manage-column column-name column-primary"><?php _e( 'Add-on', 'creame-whatsapp-me' ); ?></th>
 			<th scope="col" id="description" class="manage-column column-description"><?php _e( 'Description' ); ?></th>
 		</tr>
 	</thead>
 
 	<tbody id="the-list" data-wp-lists="list:addon">
-	<?php foreach ( $addons as $key => $addon ) : ?>
+	<?php foreach ( $addons as $addon ) : ?>
 		<tr class="inactive">
+			<th scope="row" class="check-column"><input type="checkbox" disabled></th>
 			<td class="plugin-title column-primary"><strong><?php echo esc_html( $addon['name'] ); ?></strong>
-				<div class="row-actions visible"><span class="activate"><a href="#" id="activate-joinchat-agentes-de-soporte" class="edit"><?php _e( 'Activate' ); ?></a></span></div>
+				<div class="row-actions visible"></div>
 			</td>
 			<td class="column-description desc">
 				<div class="plugin-description"><?php echo esc_html( $addon['description'] ); ?></div>
 				<div class="inactive second plugin-version-author-uri">
 					<?php printf( __( 'Version: %s' ), $addon['ver'] ); ?> |
-					<a href="<?php echo esc_url( $addon[ "info_$lang" ] . $utm ); ?>"><?php _e( 'View details' ); ?></a> |
-					<a href="<?php echo esc_url( $addon[ "docs_$lang" ] . $utm ); ?>"><?php _e( 'Documentation' ); ?></a>
+					<a href="<?php echo esc_url( $addon['info'] ); ?>" target="_blank"><?php _e( 'View details' ); ?></a> |
+					<a href="<?php echo esc_url( $addon['docs'] ); ?>" target="_blank"><?php _e( 'Documentation' ); ?></a>
 				</div>
 			</td>
 		</tr>
@@ -39,6 +41,7 @@ defined( 'WPINC' ) || exit;
 
 	<tfoot>
 		<tr>
+			<td class="manage-column column-cb check-column"><label class="screen-reader-text" for="cb-select-all-2"><?php _e( 'Select All' ); ?></label><input id="cb-select-all-2" type="checkbox" disabled></td>
 			<th scope="col" class="manage-column column-name column-primary"><?php _e( 'Add-on', 'creame-whatsapp-me' ); ?></th>
 			<th scope="col" class="manage-column column-description"><?php _e( 'Description' ); ?></th>
 		</tr>
