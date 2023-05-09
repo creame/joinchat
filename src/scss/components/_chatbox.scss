@@ -7,10 +7,9 @@
   z-index: 1;
   width: calc(100vw - var(--sep) * 2);
   max-width: 400px;
-  min-height: 170px;
   max-height: calc(var(--vh) - var(--bottom) - var(--sep));
   border-radius: calc((var(--s) / 2) + 2px);
-  background: transparent;
+  background: $white linear-gradient(0deg, var(--bg), var(--bg));
   box-shadow: 0 2px 6px 0 rgba($black, 0.5);
   text-align: left;
   overflow: hidden;
@@ -124,22 +123,19 @@
 }
 
 #{$class}__box__scroll {
-  min-height: 120px;
-  padding: 20px 0 70px 0;
-  padding-bottom: calc(var(--s) + 10px);
-  background: $white linear-gradient(0deg, var(--bg), var(--bg));
   overflow-x: hidden;
-  overflow-y: auto;
+  overflow-y: scroll;
   overscroll-behavior-y: contain;
+  -webkit-overflow-scrolling: touch;
   // will-change: scroll-position;
 
   &::-webkit-scrollbar {
-    width: 5px;
+    width: 4px;
     background: $transparent;
   }
 
   &::-webkit-scrollbar-thumb {
-    border-radius: 3px;
+    border-radius: 2px;
     background: $transparent;
   }
 
@@ -155,11 +151,11 @@
   &:hover::-webkit-scrollbar-thumb {
     background: rgba($black, 0.2);
   }
+}
 
-  @include ios {
-    overflow-y: scroll;
-    -webkit-overflow-scrolling: touch;
-  }
+#{$class}__box__content {
+  width: calc(100% + 4px); // 100% + scrollbar width
+  padding: 20px 0 calc(var(--s) + 16px);
 }
 
 @include mobile {
