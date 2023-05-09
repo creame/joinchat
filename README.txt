@@ -3,7 +3,7 @@ Contributors: creapuntome, pacotole, davidlillo, monillo
 Donate link: https://join.chat/donate/
 Tags: Chat, Click to Chat, Facebook Messenger, WhatsApp, Telegram, Whatsapp Business, button, support chat, support, contact, directly message WhatsApp, floating WhatsApp, WhatsApp chat
 Requires at least: 4.4.0
-Tested up to: 6.1
+Tested up to: 6.2
 Requires PHP: 5.5
 Stable tag: 4.5.20
 License: GPLv2 or later
@@ -16,7 +16,7 @@ WhatsApp, Messenger, Telegram, Phone call… capture users through their favorit
 
 **🎉 Chat with your website visitors through their favorite chat applications. Place a floating button at the bottom of your site and give the best support to your customers.**
 
-> The best WordPress plugin for WhatsApp, with more than 400,000 installations worldwide.
+> The best WordPress plugin for WhatsApp, with more than **600,000 installations** worldwide.
 
 https://www.youtube.com/watch?v=Ad2ZpPnX_3Q
 
@@ -162,6 +162,11 @@ Use our embed tool to beautifully design the content that appears in the chat wi
 
 ### 🧪 Try Joinchat
 Do you want to test the Joinchat configuration panel without installing it? You can try it in a [WordPress on the fly demo](https://demo.tastewp.com/creame-whatsapp-me)
+
+### 🎨 "Business Chat" is our WordPress theme recommended
+**Business Chat** is a versatile WordPress theme designed for businesses seeking a professional online presence. It offers a fully responsive design, built-in SEO tools, extensive customization options, and a chat integration through Joinchat. It's compatible with popular page builders and backed by dedicated customer support. Also it's the ultimate solution for a high-performing, user-friendly business website.
+
+**Business Chat** offers both a [free](https://wordpress.org/themes/business-chat/) and a [premium version](https://superbthemes.com/business-chat/), catering to businesses with varying budgets and requirements. This flexibility makes it an ideal choice for businesses looking for a comprehensive and versatile solution to establish their online presence.
 
 ### ⌁ If you like Joinchat 😍
 1. Please leave us a [★★★★★](https://wordpress.org/support/plugin/creame-whatsapp-me/reviews/#new-post) rating. We'll thank you.
