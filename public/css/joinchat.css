@@ -89,7 +89,6 @@
   right: 8px;
   height: var(--s);
   min-width: var(--s);
-  max-width: 95vw;
   background: #25d366;
   color: inherit;
   border-radius: calc(var(--s)/2);
@@ -233,12 +232,13 @@
   white-space: nowrap;
   opacity: 0;
   overflow: hidden;
+  text-overflow: ellipsis;
   transition: none;
 }
 
 .joinchat--chatbox .joinchat__button__sendtext {
   padding: 0 4px 0 24px;
-  max-width: 200px;
+  max-width: min(400px - 16px - var(--s), 100vw - 16px - var(--s) - 2*var(--sep));
   opacity: 1;
   transition: max-width 0.2s linear, opacity 0.4s ease-out 0.2s;
 }
@@ -587,7 +587,7 @@
   content: '';
   display: block;
   position: absolute;
-  top: calc(50% - 11px);
+  top: min(50% - 11px, 5px);
   left: 0;
   width: 22px;
   height: 22px;
@@ -606,7 +606,7 @@
   content: '';
   display: none;
   position: absolute;
-  top: calc(50% - 8px);
+  top: min(50% - 8px, 8px);
   left: 8px;
   width: 6px;
   height: 14px;

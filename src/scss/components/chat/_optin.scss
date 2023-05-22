@@ -32,7 +32,7 @@
 
     &:before {
       @include pseudo;
-      top: calc(50% - 11px);
+      top: min(50% - 11px, 5px);
       left: 0;
       width: 22px;
       height: 22px;
@@ -55,7 +55,7 @@
 
     &:after {
       @include pseudo(none);
-      top: calc(50% - 8px);
+      top: min(50% - 8px, 8px);
       left: 8px;
       width: 6px;
       height: 14px;
