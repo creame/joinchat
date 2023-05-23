@@ -61,8 +61,14 @@ class JoinchatCommon {
 	 * Initialize the class.
 	 *
 	 * @since    4.2.0
+	 * @since    5.0.0 Ensure load settings only once.
 	 */
-	private function __construct() {}
+	private function __construct() {
+
+		add_action( 'admin_init', array( $this, 'load_settings' ), 5 );
+		add_action( 'wp', array( $this, 'load_settings' ) );
+
+	}
 
 	/**
 	 * Return the default settings.
@@ -106,9 +112,14 @@ class JoinchatCommon {
 	 *
 	 * @since    4.2.0
 	 * @since    4.5.7  Intitialize intltel.
+	 * @since    5.0.0  Only run once and add filter 'joinchat_settings'
 	 * @return array
 	 */
 	public function load_settings() {
+
+		if ( ! is_null( $this->settings ) ) {
+			return $this->settings;
+		}
 
 		$default_settings = $this->default_settings();
 
@@ -122,7 +133,9 @@ class JoinchatCommon {
 		}
 
 		// Clean unused saved settings.
-		$this->settings = array_intersect_key( $settings, $default_settings );
+		$settings = array_intersect_key( $settings, $default_settings );
+
+		$this->settings = apply_filters( 'joinchat_settings', $settings );
 
 		return $this->settings;
 

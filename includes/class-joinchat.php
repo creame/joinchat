@@ -27,6 +27,15 @@ class Joinchat {
 	protected $loader;
 
 	/**
+	 * Common settings along all plugin parts
+	 *
+	 * @since    1.0.0
+	 * @access   protected
+	 * @var      JoinchatCommon    $common    Front and Back common class.
+	 */
+	protected $common;
+
+	/**
 	 * The unique identifier of this plugin.
 	 *
 	 * @since    1.0.0
@@ -98,6 +107,7 @@ class Joinchat {
 		require_once JOINCHAT_DIR . 'includes/class-joinchat-util.php';
 
 		$this->loader = new JoinchatLoader();
+		$this->common = JoinchatCommon::instance();
 
 	}
 
@@ -179,7 +189,6 @@ class Joinchat {
 		require_once JOINCHAT_DIR . 'admin/class-joinchat-admin.php';
 		require_once JOINCHAT_DIR . 'admin/class-joinchat-admin-page.php';
 
-		$this->loader->add_action( 'admin_init', JoinchatCommon::instance(), 'load_settings', 5 );
 		$this->loader->add_filter( 'option_page_capability_joinchat', 'JoinchatUtil', 'capability' );
 
 		$plugin_admin = new JoinchatAdmin( $this->get_plugin_name(), $this->get_version() );
@@ -225,7 +234,7 @@ class Joinchat {
 
 		$plugin_public = new JoinchatPublic( $this->get_plugin_name(), $this->get_version() );
 
-		$this->loader->add_action( 'wp', $plugin_public, 'get_settings' );
+		$this->loader->add_filter( 'joinchat_settings', $plugin_public, 'get_settings' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
 		$this->loader->add_action( 'wp_footer', $plugin_public, 'footer_html' );

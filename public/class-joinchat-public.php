@@ -80,12 +80,11 @@ class JoinchatPublic {
 	 * @since    2.2.0   Post settings can also change "telephone". Added 'whastapp_web' setting
 	 * @since    2.3.0   Fix global $post incorrect post id on loops. WPML integration.
 	 * @since    3.0.0   New filters.
-	 * @return   void
+	 * @since    5.0.0   Work as a filter for JoinchatCommon->load_settings()
+	 * @param    array $settings    Raw settings
+	 * @return   array   Front prepared settings for current page
 	 */
-	public function get_settings() {
-
-		// Load settings.
-		$settings = $this->common->load_settings();
+	public function get_settings( $settings ) {
 
 		// If use "global $post;" take first post in loop on archive pages.
 		$obj = get_queried_object();
@@ -145,7 +144,7 @@ class JoinchatPublic {
 			$this->common->qr = true;
 		}
 
-		$this->common->settings = $settings;
+		return $settings;
 
 	}
 
@@ -272,7 +271,8 @@ class JoinchatPublic {
 
 		global $wp;
 
-		$settings = $this->common->settings;
+		$settings   = $this->common->settings;
+		$is_preview = $this->common->is_preview();
 
 		// Clean unnecessary settings on front.
 		$excluded_fields = apply_filters(
@@ -297,7 +297,7 @@ class JoinchatPublic {
 
 		$data['message_send'] = JoinchatUtil::replace_variables( $data['message_send'] );
 
-		if ( '__jc__' === $settings['header'] ) {
+		if ( '__jc__' === $settings['header'] || $is_preview ) {
 			$powered_args = array(
 				'site' => rawurlencode( get_bloginfo( 'name' ) ),
 				'url'  => rawurlencode( home_url( $wp->request ) ),
@@ -346,6 +346,8 @@ class JoinchatPublic {
 
 		if ( $settings['message_text'] ) {
 			$box_content = '<div class="joinchat__message">' . JoinchatUtil::formated_message( $settings['message_text'] ) . '</div>';
+		} elseif ( $is_preview ) {
+			$box_content .= '<div class="joinchat__message"></div>';
 		}
 
 		if ( $settings['optin_text'] ) {
@@ -358,6 +360,8 @@ class JoinchatPublic {
 			}
 
 			$box_content .= '<div class="joinchat__optin">' . $optin . '</div>';
+		} elseif ( $is_preview ) {
+			$box_content .= '<div class="joinchat__optin"></div>';
 		}
 
 		$box_content = apply_filters( 'joinchat_content', $box_content, $settings );
@@ -370,7 +374,7 @@ class JoinchatPublic {
 		$joinchat_classes = apply_filters( 'joinchat_classes', $joinchat_classes, $settings );
 
 		ob_start();
-		include __DIR__ . '/partials/html.php';
+		include __DIR__ . '/partials/' . ( $is_preview ? 'preview' : 'html' ) . '.php';
 		$html_output = ob_get_clean();
 
 		echo apply_filters( 'joinchat_html_output', $html_output, $settings ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
