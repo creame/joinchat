@@ -8,6 +8,14 @@
     $(this).height(0).height(this.scrollHeight);
   }
 
+  // View JoinchatUtil::clean_whatsapp() for regex clean info
+  function phone_to_whatsapp(phone) {
+    return phone.replace(/^0+|\D/, '')
+      .replace(/^54(0|1|2|3|4|5|6|7|8)/, '549$1')
+      .replace(/^(54\d{5})15(\d{6})/, '$1$2')
+      .replace(/^52(0|2|3|4|5|6|7|8|9)/, '521$1');
+  }
+
   $(function () {
     var media_frame;
     var has_iti = typeof intlTelInput === 'function';
@@ -96,11 +104,7 @@
         // View JoinchatUtil::clean_whatsapp() for regex clean info
         $('#joinchat_phone_test').on('click', function () {
           var phone = has_iti ? intlTelInputGlobals.getInstance($('#joinchat_phone')[0]).getNumber() : $('#joinchat_phone').val();
-          phone = phone.replace(/^0+|\D/, '')
-            .replace(/^54(0|1|2|3|4|5|6|7|8)/, '549$1')
-            .replace(/^(54\d{5})15(\d{6})/, '$1$2')
-            .replace(/^52(0|2|3|4|5|6|7|8|9)/, '521$1');
-          window.open('https://wa.me/' + encodeURIComponent(phone), 'joinchat', 'noopener');
+          window.open('https://wa.me/' + encodeURIComponent(phone_to_whatsapp(phone)), 'joinchat', 'noopener');
         });
       }
 
@@ -136,7 +140,7 @@
       // Show title when placeholder
       $('#joinchat_form').find('.autofill')
         .on('change', function () { this.title = this.value == '' ? joinchat_admin.example : ''; })
-        .on('dblclick', function () { if (this.value == '') { this.value = this.placeholder; this.title = ''; } })
+        .on('dblclick', function () { if (this.value == '') { this.value = this.placeholder; this.title = ''; $(this).trigger('change'); } })
         .trigger('change');
 
       // Visibility view inheritance
@@ -167,9 +171,7 @@
         }
       }
 
-      $('input', $tab_visibility).on('change', function () {
-        propagate_inheritance();
-      });
+      $('input', $tab_visibility).on('change', function () { propagate_inheritance(); });
 
       $('.joinchat_view_reset').on('click', function (e) {
         e.preventDefault();
@@ -180,6 +182,7 @@
 
       propagate_inheritance();
 
+      // Button image
       $('#joinchat_button_image_add').on('click', function (e) {
         e.preventDefault();
 
@@ -201,6 +204,7 @@
             $('#joinchat_button_image_holder').css({ 'background-size': 'cover', 'background-image': 'url(' + url + ')' });
             $('#joinchat_button_image').val(attachment.id);
             $('#joinchat_button_image_remove').removeClass('joinchat-hidden');
+            if (prev_jc) prev_jc.$('.joinchat__button__image').html('<img src="' + url + '">');
           });
 
           media_frame.on('open', function () {
@@ -219,18 +223,167 @@
         $('#joinchat_button_image_holder').removeAttr('style');
         $('#joinchat_button_image').val('');
         $(this).addClass('joinchat-hidden');
+        if (prev_jc) prev_jc.$('.joinchat__button__image').html('');
       });
 
       $('#joinchat_color').wpColorPicker();
 
-      $('#joinchat_header_custom').on('click', function () {
-        $(this).prev().find('input').prop('checked', true);
-      });
+      $('#joinchat_header_custom').on('click', function () { $(this).prev().find('input').prop('checked', true); });
+
+      // Focus Opt-in editor
+      $('label[for="joinchat_optin_text"]').on('click', function () { tinymce.get('joinchat_optin_text').focus(); });
+
+      // Toggle Show Chat Window if CTA
+      $('#joinchat_message_text').on('change', function () {
+        $('.joinchat__chat_open__wrapper').toggleClass('joinchat-hidden', this.value.trim() == '');
+      }).trigger('change');
 
       // Toggle Woo Product Button text
       $('#joinchat_woo_btn_position').on('change', function () {
         $('#joinchat_woo_btn_text').closest('tr').toggleClass('joinchat-hidden', $(this).val() == 'none');
       }).trigger('change');
+
+
+      /*************************************
+       * Preview Sync
+       *************************************/
+
+      var prev_jc = null; // joinchat_obj of preview iframe
+      var prev_cta = false;
+      var prev_optin = false;
+      var chatbox_on = true;
+
+      function update_has_chatbox() { prev_jc.has_chatbox = prev_cta || prev_optin; }
+      function view_chatbox() { chatbox_on && prev_jc.has_chatbox ? prev_jc.chatbox_show() : prev_jc.chatbox_hide(); }
+
+      $('#joinchat_preview_show').on('click', function (e) {
+        e.preventDefault();
+        var is_off = $(this).hasClass('active');
+        $(this).toggleClass('active', !is_off);
+        $('body').toggleClass('jcpreview', !is_off);
+
+        if (!is_off && $('#joinchatprev').length == 0) {
+          // Add preview
+          $('#wpwrap').append('<div id="joinchatprev"><div id="joinchatprev__resize"></div><iframe id="joinchat_preview" src="http://joinchat.local/?joinchat-preview" scrolling="no"></iframe></div>');
+
+          $('#joinchat_preview').on('load', function () {
+            prev_jc = this.contentWindow.joinchat_obj;
+            prev_cta = $('#joinchat_message_text').val().trim() != '';
+            prev_optin = tinymce.get('joinchat_optin_text').getContent() != '';
+            preview_sync();
+          });
+
+          // Resizable preview
+          var start_x, start_w;
+          function do_resize(e) { e.preventDefault(); document.documentElement.style.setProperty('--preview-width', Math.min(Math.max(start_w + start_x - e.clientX, 300), 600) + 'px'); }
+          function end_resize(e) { e.preventDefault(); $('body').removeClass('jcpreview-resize').off('mousemove mouseup', do_resize).off('mouseup mouseleave', end_resize); }
+          $('#joinchatprev__resize').on('mousedown', function (e) {
+            e.preventDefault();
+            start_w = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--preview-width'));
+            start_x = e.clientX;
+
+            $('body').addClass('jcpreview-resize').on('mousemove mouseup', do_resize).on('mouseup mouseleave', end_resize);
+          });
+        }
+      });
+
+      function preview_sync() {
+        update_has_chatbox();
+
+        // Contact
+        $('#joinchat_phone').on('change', function () {
+          prev_jc.settings.telephone = phone_to_whatsapp(has_iti ? intlTelInputGlobals.getInstance(this).getNumber() : $(this).val());
+          prev_jc.$div.toggleClass('joinchat--disabled', prev_jc.settings.telephone == '');
+        });
+        $('#joinchat_message_send').on('change', function () { prev_jc.settings.message_send = $(this).val(); });
+
+        // Button
+        $('#joinchat_mobile_only').on('change', function () { prev_jc.$div.toggleClass('joinchat--mobile_only', this.checked); });
+        $('#joinchat_button_tip')
+          .on('focus blur', function (e) {
+            if (e.type == 'focus') prev_jc.chatbox_hide();
+            prev_jc.$('.joinchat__tooltip').toggleClass('joinchat--show', e.type == 'focus');
+          })
+          .on('input change', function () {
+            prev_jc.$('.joinchat__tooltip').toggleClass('joinchat--hidden', $(this).val().trim() == '');
+            prev_jc.$('.joinchat__tooltip div').text($(this).val());
+          });
+        $('input[name="joinchat[position]"]').on('change', function () {
+          prev_jc.$div.toggleClass('joinchat--right', this.value == 'right').toggleClass('joinchat--left', this.value == 'left');
+        });
+
+        // Chatbox show (if available)
+        $('#joinchat_message_text,#joinchat_message_start,input[name="joinchat[dark_mode]"],input[name="joinchat[header]"],#joinchat_header_custom').on('focus', view_chatbox);
+
+        $('#joinchat_message_text').on('input change', function (e) {
+          prev_cta = $(this).val().trim() != '';
+          update_has_chatbox();
+          prev_jc.$('.joinchat__message').html($(this).val().trim().replaceAll("\n", '<br>'));
+          view_chatbox();
+        });
+        $('#joinchat_message_start').on('input change', function (e) {
+          prev_jc.$('.joinchat__button__sendtext').text($(this).val().trim());
+          view_chatbox();
+        });
+        $('#joinchat_color').wpColorPicker('option', 'change', function (e, ui) {
+          var rgb = ui.color.toRgb();
+          var style = prev_jc.$div.get(0).style;
+          style.setProperty('--red', rgb.r);
+          style.setProperty('--green', rgb.g);
+          style.setProperty('--blue', rgb.b);
+          view_chatbox();
+        });
+        $('input[name="joinchat[dark_mode]"]').on('change', function () {
+          prev_jc.$div.toggleClass('joinchat--dark', this.value == 'yes').toggleClass('joinchat--dark-auto', this.value == 'auto');
+          view_chatbox();
+        });
+        $('input[name="joinchat[header]"]').on('change', function () {
+          prev_jc.$('.joinchat__powered').toggleClass('joinchat--hidden', this.value != '__jc__');
+          prev_jc.$('.joinchat__wa ').toggleClass('joinchat--hidden', this.value != '__wa__');
+          prev_jc.$('.joinchat__header__text').toggleClass('joinchat--hidden', this.value != '__custom__');
+          view_chatbox();
+        });
+        $('#joinchat_header_custom').on('input change', function () {
+          prev_jc.$('.joinchat__header__text').text($(this).val());
+          view_chatbox();
+        });
+
+        // Badge
+        $('#joinchat_message_badge').on('change', function () {
+          prev_jc.settings.message_badge = this.checked;
+          if (!prev_cta) return;
+          this.checked ? prev_jc.chatbox_hide() : prev_jc.chatbox_show();
+          prev_jc.$('.joinchat__badge').toggleClass('joinchat__badge--in', this.checked);
+        });
+
+        // Optin
+        tinymce.get('joinchat_optin_text').on('change', update_optin);
+        $('#joinchat_optin_check').on('change', update_optin);
+
+        // Trigger change to force updated settings on preview
+        chatbox_on = false;
+        $('#joinchat_tab_general').find('input[type="text"],input[type="number"],input[type="checkbox"],input[type="radio"]:checked,textarea').trigger('change');
+        $('#joinchat_color').wpColorPicker('color', $('#joinchat_color').val());
+        chatbox_on = true;
+      }
+
+      function update_optin() {
+        var text = tinymce.get('joinchat_optin_text').getContent();
+        var check = $('#joinchat_optin_check')[0].checked;
+        prev_optin = text != '';
+        update_has_chatbox();
+        prev_jc.$div.toggleClass('joinchat--optout', text != '' && check);
+        if (text == '') {
+          prev_jc.$('.joinchat__optin').html('');
+        } else {
+          text = text.replaceAll('<p>', '').replaceAll('</p>', '<br><br>').replace(/<br><br>$/, '');
+          text = check ? '<label for="joinchat_optin">' + text + '</label>' : '<span>' + text + '</span>';
+          prev_jc.$('.joinchat__optin').html('<input type="checkbox" id="joinchat_optin">' + text);
+          prev_jc.$('#joinchat_optin').on('change', function () { prev_jc.$div.toggleClass('joinchat--optout', !this.checked); });
+        }
+        view_chatbox();
+      }
+
     }
 
     if ($('.joinchat-metabox').length) {

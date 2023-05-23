@@ -147,7 +147,7 @@ class JoinchatAdminPage {
 
 			case 'general':
 				$sections = array(
-					'button'    => array(
+					'button'     => array(
 						'telephone'    => '<label for="joinchat_phone">' . __( 'Telephone', 'creame-whatsapp-me' ) . '</label>',
 						'message_send' => '<label for="joinchat_message_send">' . __( 'Message', 'creame-whatsapp-me' ) . '</label>' . self::vars_help( 'message_send' ),
 						'button_image' => __( 'Image', 'creame-whatsapp-me' ),
@@ -158,18 +158,23 @@ class JoinchatAdminPage {
 						'whatsapp_web' => __( 'WhatsApp Web', 'creame-whatsapp-me' ),
 						'qr'           => __( 'QR Code', 'creame-whatsapp-me' ),
 					),
-					'chat'      => array(
+					'chat'       => array(
 						'message_text'  => '<label for="joinchat_message_text">' . __( 'Call to Action', 'creame-whatsapp-me' ) . '</label>' . self::vars_help( 'message_text' ),
 						'message_start' => '<label for="joinchat_message_start">' . __( 'Button Text', 'creame-whatsapp-me' ) . '</label>',
 						'color'         => __( 'Theme Color', 'creame-whatsapp-me' ),
 						'dark_mode'     => __( 'Dark Mode', 'creame-whatsapp-me' ),
 						'header'        => __( 'Header', 'creame-whatsapp-me' ),
 					),
-					'chat_open' => array(
+					'optin'      => array(
+						'optin_text'  => __( 'Opt-in Text', 'creame-whatsapp-me' ),
+						'optin_check' => __( 'Opt-in Required', 'creame-whatsapp-me' ),
+					),
+					'chat_open'  => array(
 						'message_delay' => '<label for="joinchat_message_delay">' . __( 'Chat Delay', 'creame-whatsapp-me' ) . '</label>',
 						'message_views' => '<label for="joinchat_message_views">' . __( 'Page Views', 'creame-whatsapp-me' ) . '</label>',
 						'message_badge' => __( 'Notification Balloon', 'creame-whatsapp-me' ),
 					),
+					'chat_open2' => array(),
 				);
 				break;
 
@@ -219,10 +224,6 @@ class JoinchatAdminPage {
 
 			case 'advanced':
 				$sections = array(
-					'optin'      => array(
-						'optin_text'  => __( 'Opt-in Text', 'creame-whatsapp-me' ),
-						'optin_check' => __( 'Opt-in Required', 'creame-whatsapp-me' ),
-					),
 					'conversion' => array(
 						'gads' => '<label for="joinchat_gads">' . __( 'Google Ads Conversion', 'creame-whatsapp-me' ) . '</label>',
 					),
@@ -267,7 +268,7 @@ class JoinchatAdminPage {
 		$input['message_text']  = $util::clean_input( $input['message_text'] );
 		$input['message_badge'] = isset( $input['message_badge'] ) ? 'yes' : 'no';
 		$input['message_send']  = $util::clean_input( $input['message_send'] );
-		$input['message_start'] = $util::substr( $util::clean_input( $input['message_start'] ), 0, 20 );
+		$input['message_start'] = $util::substr( $util::clean_input( $input['message_start'] ), 0, 40 );
 		$input['message_delay'] = intval( $input['message_delay'] );
 		$input['message_views'] = intval( $input['message_views'] ) ? intval( $input['message_views'] ) : 1;
 		$input['position']      = 'left' !== $input['position'] ? 'right' : 'left';
@@ -361,7 +362,7 @@ class JoinchatAdminPage {
 		switch ( $section_id ) {
 			case 'joinchat_tab_general__button':
 				$output = '<h2 class="title">' . __( 'Button', 'creame-whatsapp-me' ) . '</h2>' .
-					'<p>' . __( 'Set the contact number and where you want the WhatsApp button to be displayed.', 'creame-whatsapp-me' ) . '</p>';
+					'<p>' . __( 'Set the contact number and the appearance of the WhatsApp button.', 'creame-whatsapp-me' ) . '</p>';
 				break;
 
 			case 'joinchat_tab_general__chat':
@@ -373,10 +374,16 @@ class JoinchatAdminPage {
 				break;
 
 			case 'joinchat_tab_general__chat_open':
-				$output = '<p>' .
-						__( 'If it\'s defined a "Call to Action", the Chat Window can be displayed automatically if conditions are met.', 'creame-whatsapp-me' ) .
+				$output = '<div class="joinchat__chat_open__wrapper">' .
+					'<h2 class="title">Show automatically</h2>' .
+					'<p>' .
+						__( 'If a "Call to Action" is defined, the Chat Window can be displayed automatically to capture the user\'s attention.', 'creame-whatsapp-me' ) .
 						' <a class="joinchat-show-help" href="#tab-link-triggers" title="' . __( 'Show Help', 'creame-whatsapp-me' ) . '">?</a>' .
 					'</p>';
+				break;
+
+			case 'joinchat_tab_general__chat_open2':
+				$output = '</div><!-- .joinchat__chat_open__wrapper -->';
 				break;
 
 			case 'joinchat_tab_visibility__global':
@@ -393,13 +400,8 @@ class JoinchatAdminPage {
 				$output = '<h2 class="title">' . __( 'Custom Post Types', 'creame-whatsapp-me' ) . '</h2>';
 				break;
 
-			case 'joinchat_tab_advanced__optin':
-				$output = '<h2 class="title">' . __( 'Opt-in', 'creame-whatsapp-me' ) . '</h2>' .
-					'<p>' . __( 'Opt-in is a users’ consent to receive messages from a business.', 'creame-whatsapp-me' ) . '</p>';
-				break;
-
 			case 'joinchat_tab_advanced__conversion':
-				$output = '<hr><h2 class="title">' . __( 'Conversions', 'creame-whatsapp-me' ) . '</h2>';
+				$output = '<h2 class="title">' . __( 'Conversions', 'creame-whatsapp-me' ) . '</h2>';
 				break;
 
 			default:
@@ -439,7 +441,7 @@ class JoinchatAdminPage {
 				case 'telephone':
 					$output = '<input id="joinchat_phone" ' . ( $this->common->get_intltel() ? 'data-' : '' ) . 'name="joinchat[telephone]" value="' . esc_attr( $value ) . '" type="text" style="width:15em;display:inline-block"> ' .
 						'<input id="joinchat_phone_test" type="button" value="' . esc_attr__( 'Test Number', 'creame-whatsapp-me' ) . '" class="button" ' . ( empty( $value ) ? 'disabled' : '' ) . '>' .
-						'<p class="description">' . __( "Contact phone number <strong>(the button will not be shown if it's empty)</strong>", 'creame-whatsapp-me' ) . '</p>';
+						'<p class="description">' . __( "Contact WhatsApp number <strong>(the button will not be shown if it's empty)</strong>", 'creame-whatsapp-me' ) . '</p>';
 					break;
 
 				case 'mobile_only':
@@ -503,7 +505,7 @@ class JoinchatAdminPage {
 					break;
 
 				case 'message_start':
-					$output = '<input id="joinchat_message_start" name="joinchat[message_start]" value="' . esc_attr( $value ) . '" type="text" maxlength="20" class="regular-text autofill" placeholder="' . esc_attr__( 'Open chat', 'creame-whatsapp-me' ) . '"> ' .
+					$output = '<input id="joinchat_message_start" name="joinchat[message_start]" value="' . esc_attr( $value ) . '" type="text" maxlength="40" class="regular-text autofill" placeholder="' . esc_attr__( 'Open chat', 'creame-whatsapp-me' ) . '"> ' .
 						'<p class="description">' . __( 'Text to open chat on Chat Window button', 'creame-whatsapp-me' ) . '</p>';
 					break;
 
@@ -573,8 +575,15 @@ class JoinchatAdminPage {
 					}, 10, 2 );
 					// phpcs:enable
 
-					$output = wp_editor( $value, 'joinchat_optin_text', $editor_settings ) .
-						'<p class="description">' . __( "Explain how you will use the user's contact and the conditions they accept.", 'creame-whatsapp-me' ) . '</p>';
+					ob_start();
+					wp_editor( $value, 'joinchat_optin_text', $editor_settings );
+					$editor_output = ob_get_clean();
+
+					$output = '<fieldset><legend class="screen-reader-text"><span>' . __( 'Opt-in Text', 'creame-whatsapp-me' ) . '</span></legend>' .
+						'<p><label for="joinchat_optin_text">' . __( 'Opt-in is a users’ consent to receive messages from a business.', 'creame-whatsapp-me' ) . ' ' .
+						__( "Here you can include legal text about how you will use the user's contact and the conditions they accept, or other important information.", 'creame-whatsapp-me' ) . '</label></p>' .
+						$editor_output .
+						'</fieldset>';
 					break;
 
 				case 'optin_check':
@@ -766,6 +775,7 @@ class JoinchatAdminPage {
 						}
 						?>
 					</h2>
+					<div class="joinchat_preview_control"><a id="joinchat_preview_show" href="#" class="button dashicons-before"><?php _e( 'Preview', 'creame-whatsapp-me' ); ?></a></div>
 					<div class="joinchat-tabs">
 						<?php do_settings_sections( $this->plugin_name ); ?>
 					</div><!-- end tabs -->

@@ -79,6 +79,8 @@ class Joinchat {
 		// WordPress 5.9 or higher.
 		$this->define_gutenberg_hooks();
 
+		add_action( 'joinchat_run_pre', array( $this, 'define_preview_hooks' ) );
+
 	}
 
 	/**
@@ -239,6 +241,39 @@ class Joinchat {
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
 		$this->loader->add_action( 'wp_footer', $plugin_public, 'footer_html' );
 		$this->loader->add_action( 'wp_footer', $plugin_public, 'enqueue_qr_script', 5 );
+
+	}
+
+	/**
+	 * Register all of the hooks related to render Joinchat preview.
+	 *
+	 * Run on "init" to check user capability
+	 *
+	 * @since    5.0.0
+	 * @access   public
+	 * @return   void
+	 */
+	public function define_preview_hooks() {
+
+		if ( ! isset( $_GET['joinchat-preview'] ) ) {
+			return;
+		}
+
+		if ( ! current_user_can( JoinchatUtil::capability() ) ) {
+			return;
+		}
+
+		$this->common->set_preview( true );
+
+		require_once JOINCHAT_DIR . 'admin/class-joinchat-preview.php';
+
+		$plugin_preview = new JoinchatPreview( $this->get_plugin_name(), $this->get_version() );
+
+		$this->loader->add_filter( 'template_include', $plugin_preview, 'blank_template', PHP_INT_MAX );
+		$this->loader->add_filter( 'show_admin_bar', $plugin_preview, 'hide_admin_bar', 1000 );
+		$this->loader->add_filter( 'joinchat_show', $plugin_preview, 'always_show', 1000 );
+		$this->loader->add_filter( 'joinchat_classes', $plugin_preview, 'preview_classes', 10, 2 );
+		$this->loader->add_filter( 'script_loader_src', $plugin_preview, 'dequeue_script', 10, 2 );
 
 	}
 

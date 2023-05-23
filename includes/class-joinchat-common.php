@@ -42,6 +42,14 @@ class JoinchatCommon {
 	public $qr = false;
 
 	/**
+	 * Is joinchat preview
+	 *
+	 * @since    5.0.0
+	 * @var bool
+	 */
+	private $preview = false;
+
+	/**
 	 * Instantiates Manager.
 	 *
 	 * @since    4.5.0
@@ -217,6 +225,31 @@ class JoinchatCommon {
 	public function get_obj_vars( $obj ) {
 
 		return apply_filters( 'joinchat_metabox_vars', array( 'SITE', 'TITLE', 'URL', 'HREF' ), $obj );
+
+	}
+
+	/**
+	 * Set is preview
+	 *
+	 * @since 5.0.0
+	 * @param  bool $preview true if si preview, false otherwise
+	 * @return void
+	 */
+	public function set_preview( bool $preview ) {
+
+		$this->preview = $preview;
+
+	}
+
+	/**
+	 * Get is preview
+	 *
+	 * @since 5.0.0
+	 * @return bool
+	 */
+	public function is_preview() {
+
+		return $this->preview;
 
 	}
 
