@@ -209,6 +209,7 @@ class Joinchat {
 		$plugin_page = new JoinchatAdminPage( $this->get_plugin_name(), $this->get_version() );
 
 		$this->loader->add_action( 'admin_init', $plugin_page, 'settings_init' );
+		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_page, 'enqueue_assets' );
 		$this->loader->add_action( 'admin_menu', $plugin_page, 'add_menu' );
 		$this->loader->add_action( 'load-settings_page_joinchat', $plugin_page, 'help_tab' );
 		$this->loader->add_action( 'load-toplevel_page_joinchat', $plugin_page, 'help_tab' );

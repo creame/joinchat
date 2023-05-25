@@ -804,6 +804,38 @@ class JoinchatAdminPage {
 	}
 
 	/**
+	 * Enqueue the scripts and stylesheets for the admin page.
+	 *
+	 * @since    5.0.0
+	 * @param    string $hook       The id of the page.
+	 * @return   void
+	 */
+	public function enqueue_assets( $hook ) {
+
+		if ( false === strpos( $hook, '_joinchat' ) ) {
+			return;
+		}
+
+		// Enqueue WordPress media scripts.
+		wp_enqueue_media();
+		// Enqueue assets.
+		wp_enqueue_script( 'joinchat-admin' );
+		wp_enqueue_style( 'joinchat-admin' );
+
+		// Enqueue Custom CSS editor.
+		if ( function_exists( 'wp_enqueue_code_editor' ) ) {
+			$editor_settings = wp_enqueue_code_editor( array( 'type' => 'text/css' ) );
+			wp_add_inline_script( 'code-editor', 'var custom_css_settings = ' . wp_json_encode( $editor_settings ) . ';' );
+		}
+
+		// Enqueue IntlTelInput styles.
+		if ( $this->common->get_intltel() ) {
+			wp_enqueue_style( 'intl-tel-input' );
+		}
+
+	}
+
+	/**
 	 * Modifies the "Thank you" text displayed in the admin footer.
 	 *
 	 * @since 4.5.0
