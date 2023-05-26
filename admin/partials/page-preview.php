@@ -19,9 +19,17 @@ defined( 'WPINC' ) || exit;
 	<meta charset="<?php bloginfo( 'charset' ); ?>" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 
-	<?php wp_head(); ?>
+	<?php
+	// wp_head(); Don't run because only need Joinchat styles and scripts.
 
-	<style>
+	remove_action( 'wp_print_styles', 'print_emoji_styles' );
+
+	wp_enqueue_scripts();
+	wp_print_scripts();
+	wp_print_styles();
+	?>
+
+	<style id="joinchat-preview-inline-css">
 		.joinchat__tooltip.joinchat--show {
 			opacity: 1;
 			animation: none;
@@ -51,7 +59,11 @@ defined( 'WPINC' ) || exit;
 <body>
 	<div id="page" class="site"></div>
 
-	<?php wp_footer(); ?>
+	<?php
+	// wp_footer(); Don't run because only want Joinchat actions.
+
+	do_action( 'preview_footer' );
+	?>
 
 	<script>
 		(function($, window, document, joinchat_obj) {

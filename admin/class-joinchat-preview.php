@@ -95,20 +95,6 @@ class JoinchatPreview {
 	}
 
 	/**
-	 * Dequeue joinchat script
-	 *
-	 * @since 5.0.0
-	 * @param  string $src
-	 * @param  string $handle
-	 * @return string
-	 */
-	public function dequeue_script( string $src, string $handle ) {
-
-		return 'joinchat' === $handle ? '' : $src;
-
-	}
-
-	/**
 	 * Ensure inline styles are present
 	 *
 	 * @since 5.0.0
@@ -121,4 +107,36 @@ class JoinchatPreview {
 
 	}
 
+	/**
+	 * Remove all scripts (except jQuery)
+	 *
+	 * @since 5.0.0
+	 * @return void
+	 */
+	public function remove_all_scripts() {
+
+		global $wp_scripts;
+
+		$wp_scripts->queue = array( 'jquery' );
+
+	}
+
+	/**
+	 * Remove all non Joinchat styles
+	 *
+	 * @since 5.0.0
+	 * @return void
+	 */
+	public function remove_all_styles() {
+
+		global $wp_styles;
+
+		$wp_styles->queue = array_filter(
+			$wp_styles->queue,
+			function( $handle ) {
+				return false !== strpos( $handle, 'joinchat' );
+			}
+		);
+
+	}
 }
