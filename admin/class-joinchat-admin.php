@@ -120,12 +120,10 @@ class JoinchatAdmin {
 			return;
 		}
 
-		$current_screen = get_current_screen();
-
 		// If no phone number defined.
 		if ( empty( $this->common->settings['telephone'] )
 			&& current_user_can( JoinchatUtil::capability() )
-			&& ( $current_screen && false === strpos( $current_screen->id, '_joinchat' ) )
+			&& ! JoinchatUtil::is_admin_screen()
 			&& time() >= (int) get_option( 'joinchat_notice_dismiss' )
 		) {
 

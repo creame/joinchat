@@ -741,20 +741,10 @@ class JoinchatAdminPage {
 	 */
 	public function options_page() {
 
-		// Enqueue WordPress media scripts.
-		wp_enqueue_media();
-		// Enqueue assets.
-		wp_enqueue_script( 'joinchat-admin' );
-		wp_enqueue_style( 'joinchat-admin' );
-
-		if ( $this->common->get_intltel() ) {
-			wp_enqueue_style( 'intl-tel-input' );
-		}
-
 		$active_tab = isset( $_GET['tab'] ) && in_array( $_GET['tab'], array_keys( $this->tabs ), true ) ? wp_unslash( $_GET['tab'] ) : 'general'; // phpcs:ignore WordPress.Security.NonceVerification
 		?>
 			<div class="wrap">
-				<h1><?php esc_html_e( 'Joinchat Settings', 'creame-whatsapp-me' ); ?></h1>
+				<div class="wp-header-end"></div>
 
 				<?php
 				if ( ! JoinchatUtil::options_submenu() ) {
@@ -836,6 +826,43 @@ class JoinchatAdminPage {
 	}
 
 	/**
+	 * Update admin title
+	 *
+	 * @since 5.0.0
+	 * @param  string $admin_title  current title
+	 * @return string
+	 */
+	public static function admin_title( $admin_title ) {
+
+		if ( ! JoinchatUtil::is_admin_screen() ) {
+			return $admin_title;
+		}
+
+		return sprintf( '%s &lsaquo; %s', __( 'Joinchat Settings', 'creame-whatsapp-me' ), get_bloginfo( 'name' ) );
+
+	}
+
+	/**
+	 * Custom admin header with Joinchat logo
+	 *
+	 * @return void
+	 */
+	public function admin_header() {
+
+		if ( ! JoinchatUtil::is_admin_screen() ) {
+			return;
+		}
+
+		?>
+		<div id="jcadminbar">
+			<div class="joinchat-header">
+				<h1><img src="<?php echo esc_url( plugin_dir_url( JOINCHAT_FILE ) . '/admin/img/joinchat.svg' ); ?>" width="159" height="40" alt="Joinchat"></h1>
+			</div>
+		</div>
+		<?php
+	}
+
+	/**
 	 * Modifies the "Thank you" text displayed in the admin footer.
 	 *
 	 * @since 4.5.0
@@ -845,18 +872,16 @@ class JoinchatAdminPage {
 	 */
 	public function admin_footer_text( $footer_text ) {
 
-		$current_screen = get_current_screen();
-
-		if ( $current_screen && false !== strpos( $current_screen->id, '_joinchat' ) ) {
-			$footer_text = sprintf(
-				/* translators: 1: Joinchat, 2: Add review link. */
-				__( 'Do you like %1$s? Please help us with a %2$s rating.', 'creame-whatsapp-me' ),
-				'<strong>Joinchat</strong>',
-				'<a href="https://wordpress.org/support/plugin/creame-whatsapp-me/reviews/#new-post" target="_blank">★★★★★</a>'
-			);
+		if ( ! JoinchatUtil::is_admin_screen() ) {
+			return $footer_text;
 		}
 
-		return $footer_text;
+		return sprintf(
+			/* translators: 1: Joinchat, 2: Add review link. */
+			__( 'Do you like %1$s? Please help us with a %2$s rating.', 'creame-whatsapp-me' ),
+			'<strong>Joinchat</strong>',
+			'<a href="https://wordpress.org/support/plugin/creame-whatsapp-me/reviews/#new-post" target="_blank">★★★★★</a>'
+		);
 
 	}
 }

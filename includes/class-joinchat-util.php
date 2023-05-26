@@ -351,4 +351,18 @@ class JoinchatUtil {
 		return function_exists( 'register_block_type' ) && version_compare( get_bloginfo( 'version' ), '5.9', '>=' );
 
 	}
+
+	/**
+	 * Is Joinchat admin screen
+	 *
+	 * @since    5.0.0
+	 * @return bool
+	 */
+	public static function is_admin_screen() {
+
+		$current_screen = get_current_screen();
+
+		return null !== $current_screen && false !== strpos( $current_screen->id, '_joinchat' );
+
+	}
 }

@@ -210,9 +210,11 @@ class Joinchat {
 
 		$this->loader->add_action( 'admin_init', $plugin_page, 'settings_init' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_page, 'enqueue_assets' );
+		$this->loader->add_action( 'in_admin_header', $plugin_page, 'admin_header' );
 		$this->loader->add_action( 'admin_menu', $plugin_page, 'add_menu' );
 		$this->loader->add_action( 'load-settings_page_joinchat', $plugin_page, 'help_tab' );
 		$this->loader->add_action( 'load-toplevel_page_joinchat', $plugin_page, 'help_tab' );
+		$this->loader->add_filter( 'admin_title', $plugin_page, 'admin_title' );
 		$this->loader->add_filter( 'admin_footer_text', $plugin_page, 'admin_footer_text', PHP_INT_MAX );
 
 	}

@@ -300,6 +300,55 @@ tr.joinchat--focus .joinchat_vars_help {
   margin-right: 15px;
 }
 
+/* Joinchat adminbar */
+
+#jcadminbar {
+  position: relative;
+  min-height: 50px;
+  background: #fff;
+  -webkit-filter: drop-shadow(0 0px 2px #0003);
+          filter: drop-shadow(0 0px 2px #0003);
+}
+
+#jcadminbar:before {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -200px;
+  width: 200px;
+  background: inherit;
+}
+
+.joinchat-header {
+  padding-top: 5px;
+  padding-bottom: 1px;
+}
+
+#jcadminbar h1 {
+  margin: 0;
+}
+
+#jcadminbar + #wpbody .wrap {
+  margin-top: 30px;
+}
+
+#jcadminbar + #wpbody .wp-header-end + .notice {
+  margin-top: 40px;
+}
+
+[dir=rtl] #jcadminbar:before {
+  left: auto;
+  right: -200px;
+}
+
+@media screen and (max-width: 600px) {
+  #jcadminbar {
+    top: 46px;
+  }
+}
+
 /* Preview */
 
 .joinchat_preview_control {
