@@ -73,22 +73,51 @@ class JoinchatPreview {
 
 	}
 
-	public function preview_classes( $joinchat_classes, $settings ) {
+	/**
+	 * Add preview classes
+	 *
+	 * @since 5.0.0
+	 * @param  array $classes
+	 * @param  array $settings
+	 * @return array
+	 */
+	public function preview_classes( $classes, $settings ) {
 
 		if ( '' === $settings['telephone'] ) {
-			$joinchat_classes[] = 'joinchat--disabled';
+			$classes[] = 'joinchat--disabled';
 		}
 		if ( $settings['mobile_only'] ) {
-			$joinchat_classes[] = 'joinchat--mobile_only';
+			$classes[] = 'joinchat--mobile_only';
 		}
 
-		return $joinchat_classes;
+		return $classes;
 
 	}
 
+	/**
+	 * Dequeue joinchat script
+	 *
+	 * @since 5.0.0
+	 * @param  string $src
+	 * @param  string $handle
+	 * @return string
+	 */
 	public function dequeue_script( string $src, string $handle ) {
 
 		return 'joinchat' === $handle ? '' : $src;
+
+	}
+
+	/**
+	 * Ensure inline styles are present
+	 *
+	 * @since 5.0.0
+	 * @param  string $css Current inline styles.
+	 * @return string
+	 */
+	public function inline_style( string $css ) {
+
+		return empty( $css ) ? 'a{}' : $css;
 
 	}
 

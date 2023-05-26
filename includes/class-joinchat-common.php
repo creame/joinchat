@@ -82,9 +82,32 @@ class JoinchatCommon {
 	 * Return the default settings.
 	 *
 	 * @since    4.2.0
-	 * @return array
+	 * @since    5.0.0  added $key param.
+	 * @param  string|false $key  Setting key or false.
+	 * @return mixed
 	 */
-	public function default_settings() {
+	public function default_settings( $key = false ) {
+
+		$default_css = <<<CSS
+			/* Joinchat styles (default values) */
+			.joinchat {
+				/* z-index: 9999;  /* (9000) */
+				/* --s: 50px;      /* button size: (60px) */
+				/* --bottom: 80px; /* bottom separation (20px) */
+				/* --sep: 20px;    /* right/left separation (20px) */
+				/* --header: 60px; /* chatbox header height (70px) */
+			}
+
+			/* Joinchat mobile styles */
+			@media (max-width: 480px), (orientation: landscape) and (max-width: 767px) {
+				.joinchat {
+					/* --s: 50px;      /* button size: (60px) */
+					/* --sep: 10px;    /* right/left separation (6px) */
+					/* --bottom: 60px; /* bottom separation (6px) */
+					/* --header: 60px; /* chatbox header height (50px) */
+				}
+			}
+			CSS;
 
 		$defaults = array(
 			'telephone'     => '',
@@ -109,9 +132,16 @@ class JoinchatCommon {
 			'optin_text'    => '',
 			'optin_check'   => 'no',
 			'gads'          => '',
+			'custom_css'    => $default_css,
 		);
 
-		return array_merge( $defaults, apply_filters( 'joinchat_extra_settings', array() ) );
+		$defaults = array_merge( $defaults, apply_filters( 'joinchat_extra_settings', array() ) );
+
+		if ( empty( $key ) ) {
+			return $defaults;
+		}
+
+		return isset( $defaults[ $key ] ) ? $defaults[ $key ] : false;
 
 	}
 

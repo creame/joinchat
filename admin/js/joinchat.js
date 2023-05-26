@@ -74,6 +74,11 @@
       });
     }
 
+
+    /*************************************
+     * Joinchat Settings admin page
+     *************************************/
+
     if ($('#joinchat_form').length === 1) {
       // Tabs
       $('.nav-tab').on('click', function (e) {
@@ -89,8 +94,12 @@
         $('.nav-tab').removeClass('nav-tab-active').attr('aria-selected', 'false');
         $navtab.addClass('nav-tab-active').attr('aria-selected', 'true').get(0).blur();
         $('.joinchat-tab').removeClass('joinchat-tab-active');
-        $(href).addClass('joinchat-tab-active').find('textarea').each(textarea_autoheight);
+        $(href).addClass('joinchat-tab-active');
+        // Trigger event
+        $(document).trigger('navtabchange', [$(href), href]);
       });
+
+      $(document).on('navtabchange', function (e, $tab) { $tab.find('textarea').each(textarea_autoheight); });
 
       // Test phone number
       if ($('#joinchat_phone').length) {
@@ -243,6 +252,11 @@
         $('#joinchat_woo_btn_text').closest('tr').toggleClass('joinchat-hidden', $(this).val() == 'none');
       }).trigger('change');
 
+      // Custom CSS
+      var custom_css_editor = wp.codeEditor.initialize($('#joinchat_custom_css'), custom_css_settings);
+      $(document).on('navtabchange', function (e, $tab, id) { if (id == '#joinchat_tab_advanced') custom_css_editor.codemirror.refresh(); });
+      $('label[for="joinchat_custom_css"]').on('click', function () { custom_css_editor.codemirror.focus(); });
+
 
       /*************************************
        * Preview Sync
@@ -375,10 +389,18 @@
         tinymce.get('joinchat_optin_text').on('change', update_optin);
         $('#joinchat_optin_check').on('change', update_optin);
 
+        // Custom CSS
+        custom_css_editor.codemirror.on('change', function (ed) {
+          $('#joinchat_preview')[0].contentDocument.getElementById('joinchat-inline-css').innerHTML = ed.getValue();
+        });
+
         // Trigger change to force updated settings on preview
         chatbox_on = false;
         $('#joinchat_tab_general').find('input[type="text"],input[type="number"],input[type="checkbox"],input[type="radio"]:checked,textarea').trigger('change');
         $('#joinchat_color').wpColorPicker('color', $('#joinchat_color').val());
+        var temp = custom_css_editor.codemirror.getValue();
+        custom_css_editor.codemirror.setValue(temp + ' ');
+        custom_css_editor.codemirror.setValue(temp);
         chatbox_on = true;
       }
 

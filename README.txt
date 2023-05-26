@@ -362,6 +362,8 @@ Joinchat save two localStorage variables for proper operation:
 == Changelog ==
 
 = 5.0.0 =
+* **NEW:** Live Preview Panel on wp-admin settings page.
+* **NEW:** Custom CSS advanced field.
 * CHANGE Replace QR generator library (reduces 13.9kB, 4.8kB gzipped).
 * CHANGE Optimized, only load translations in admin pages.
 * CHANGE All PHP class names replaced "JoinChat" with "Joinchat".

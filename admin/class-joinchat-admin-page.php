@@ -227,6 +227,9 @@ class JoinchatAdminPage {
 					'conversion' => array(
 						'gads' => '<label for="joinchat_gads">' . __( 'Google Ads Conversion', 'creame-whatsapp-me' ) . '</label>',
 					),
+					'css'        => array(
+						'custom_css' => __( 'Custom CSS', 'creame-whatsapp-me' ),
+					),
 				);
 				break;
 
@@ -286,6 +289,7 @@ class JoinchatAdminPage {
 		);
 		$input['gads']          = sprintf( 'AW-%s/%s', $util::substr( $util::clean_input( $input['gads'][0] ), 0, 11 ), $util::substr( $util::clean_input( $input['gads'][1] ), 0, 20 ) );
 		$input['gads']          = 'AW-/' !== $input['gads'] ? $input['gads'] : '';
+		$input['custom_css']    = $input['custom_css'] !== $this->common->default_settings( 'custom_css' ) ? trim( $input['custom_css'] ) : '';
 
 		if ( isset( $input['view'] ) ) {
 			$input['visibility'] = array_filter(
@@ -602,6 +606,17 @@ class JoinchatAdminPage {
 						'<p class="description">' . __( 'Send the conversion automatically at the chat start', 'creame-whatsapp-me' ) . '</p>';
 					break;
 
+				case 'custom_css':
+					if ( empty( $value ) ) {
+						$value = $this->common->default_settings( 'custom_css' );
+					}
+
+					$output = '<fieldset><legend class="screen-reader-text"><span>' . __( 'Custom CSS', 'creame-whatsapp-me' ) . '</span></legend>' .
+						'<p><label for="joinchat_custom_css">' . __( 'Add your own CSS code here to customize the appearance of Joinchat.', 'creame-whatsapp-me' ) . '</label></p>' .
+						'<textarea id="joinchat_custom_css" name="joinchat[custom_css]" rows="3" class="regular-text autofill" placeholder="">' . esc_textarea( $value ) . '</textarea>' .
+						'</fieldset>';
+					break;
+
 				default:
 					$output = '';
 			}
@@ -845,6 +860,7 @@ class JoinchatAdminPage {
 	/**
 	 * Custom admin header with Joinchat logo
 	 *
+	 * @since 5.0.0
 	 * @return void
 	 */
 	public function admin_header() {

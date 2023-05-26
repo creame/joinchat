@@ -171,9 +171,24 @@ class JoinchatPublic {
 			wp_enqueue_style( $this->plugin_name, plugins_url( "css/{$file}{$min}.css", __FILE__ ), array(), $this->version, 'all' );
 
 			if ( $file === $this->plugin_name ) {
-				list($r, $g, $b) = sscanf( $settings['color'], '#%02x%02x%02x' );
+				$inline_css = '';
 
-				wp_add_inline_style( $this->plugin_name, apply_filters( 'joinchat_inline_style', ".joinchat{ --red:$r; --green:$g; --blue:$b; }", $settings ) );
+				if ( $settings['color'] !== $this->common->default_settings( 'color' ) ) {
+					list($r, $g, $b) = sscanf( $settings['color'], '#%02x%02x%02x' );
+					$inline_css     .= ".joinchat{ --red:$r; --green:$g; --blue:$b; }";
+				}
+
+				if ( ! empty( $settings['custom_css'] ) && $settings['custom_css'] !== $this->common->default_settings( 'custom_css' ) ) {
+					// Note that esc_html() cannot be used because `div &gt; span`.
+					$inline_css .= strip_tags( $settings['custom_css'] );
+				}
+
+				$inline_css = apply_filters( 'joinchat_inline_style', $inline_css, $settings );
+
+				// Remove spaces & comments.
+				$inline_css = preg_replace( array( '/(\s*)([{|}|:|;|,])(\s+)/', '/\/\*.*?\*\/|\n|\t/' ), array( '$2', '' ), $inline_css );
+
+				wp_add_inline_style( $this->plugin_name, $inline_css );
 			}
 		}
 	}
@@ -290,6 +305,7 @@ class JoinchatPublic {
 				'optin_text',
 				'optin_check',
 				'qr_text',
+				'custom_css',
 			)
 		);
 
