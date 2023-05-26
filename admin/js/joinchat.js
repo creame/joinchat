@@ -274,16 +274,31 @@
           });
 
           // Resizable preview
-          var start_x, start_w;
-          function do_resize(e) { e.preventDefault(); document.documentElement.style.setProperty('--preview-width', Math.min(Math.max(start_w + start_x - e.clientX, 300), 600) + 'px'); }
-          function end_resize(e) { e.preventDefault(); $('body').removeClass('jcpreview-resize').off('mousemove mouseup', do_resize).off('mouseup mouseleave', end_resize); }
-          $('#joinchatprev__resize').on('mousedown', function (e) {
-            e.preventDefault();
-            start_w = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--preview-width'));
-            start_x = e.clientX;
+          var start_x, start_w, is_rtl = $('[dir=rtl]').length > 0;
+          $('#joinchatprev__resize').on('mousedown', start_resize);
 
-            $('body').addClass('jcpreview-resize').on('mousemove mouseup', do_resize).on('mouseup mouseleave', end_resize);
-          });
+          function start_resize(e) {
+            e.preventDefault();
+            start_x = e.clientX;
+            start_w = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--preview-width'));
+
+            $('body')
+              .addClass('jcpreview-resize')
+              .on('mousemove mouseup', do_resize)
+              .on('mouseup mouseleave', end_resize);
+          }
+          function do_resize(e) {
+            e.preventDefault();
+            var diff = (start_x - e.clientX) * (is_rtl ? -1 : 1);
+            document.documentElement.style.setProperty('--preview-width', Math.min(Math.max(start_w + diff, 300), 600) + 'px');
+          }
+          function end_resize(e) {
+            e.preventDefault();
+            $('body')
+              .removeClass('jcpreview-resize')
+              .off('mousemove mouseup', do_resize)
+              .off('mouseup mouseleave', end_resize);
+          }
         }
       });
 

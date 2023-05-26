@@ -368,3 +368,35 @@ body.jcpreview-resize {
 body.jcpreview-resize #joinchatprev__resize {
   width: 100%;
 }
+
+[dir=rtl] .joinchat_preview_control {
+  text-align: left;
+}
+
+[dir=rtl] #joinchat_preview_show:before {
+  margin-right: 0;
+  margin-left: 5px;
+}
+
+[dir=rtl] #joinchatprev {
+  left: 0;
+  right: auto;
+  border-left: none;
+  border-right: 1px solid #dcdcde;
+}
+
+[dir=rtl] .jcpreview #wpcontent,
+[dir=rtl] .jcpreview #wpfooter {
+  margin-right: 160px;
+  margin-left: var(--preview-width);
+}
+
+[dir=rtl] .folded.jcpreview #wpcontent,
+[dir=rtl] .folded.jcpreview #wpfooter {
+  margin-right: 36px;
+}
+
+[dir=rtl] #joinchatprev__resize {
+  left: auto;
+  right: 0;
+}
