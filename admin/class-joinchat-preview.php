@@ -117,7 +117,7 @@ class JoinchatPreview {
 
 		global $wp_scripts;
 
-		$wp_scripts->queue = array( 'jquery' );
+		$wp_scripts->queue = array( 'jquery', 'joinchat-qr' );
 
 	}
 

@@ -1,9 +1,6 @@
 (function ($) {
   'use strict';
 
-  // Compatibility with old addons (to be removed)
-  window.intl_tel_input_version = window.intlTelConf && intlTelConf.version;
-
   function textarea_autoheight() {
     $(this).height(0).height(this.scrollHeight);
   }
@@ -267,7 +264,14 @@
       var prev_optin = false;
       var chatbox_on = true;
 
-      function update_has_chatbox() { prev_jc.has_chatbox = prev_cta || prev_optin; }
+      function prev_width(width) {
+        if (width == undefined) return parseInt(getComputedStyle(document.documentElement).getPropertyValue('--preview-width'));
+        else document.documentElement.style.setProperty('--preview-width', Math.min(Math.max(width, 300), 600) + 'px');
+      }
+      function update_has_chatbox() {
+        prev_jc.has_chatbox = prev_cta || prev_optin;
+        prev_jc.$div.toggleClass('joinchat--btn', !prev_jc.has_chatbox);
+      }
       function view_chatbox() { chatbox_on && prev_jc.has_chatbox ? prev_jc.chatbox_show() : prev_jc.chatbox_hide(); }
 
       $('#joinchat_preview_show').on('click', function (e) {
@@ -288,13 +292,13 @@
           });
 
           // Resizable preview
-          var start_x, start_w, is_rtl = $('[dir=rtl]').length > 0;
+          var start_x, start_w, is_rtl = $('[dir=rtl]').length > 0 ? -1 : 1;
           $('#joinchatprev__resize').on('mousedown', start_resize);
 
           function start_resize(e) {
             e.preventDefault();
             start_x = e.clientX;
-            start_w = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--preview-width'));
+            start_w = prev_width();
 
             $('body')
               .addClass('jcpreview-resize')
@@ -303,8 +307,7 @@
           }
           function do_resize(e) {
             e.preventDefault();
-            var diff = (start_x - e.clientX) * (is_rtl ? -1 : 1);
-            document.documentElement.style.setProperty('--preview-width', Math.min(Math.max(start_w + diff, 300), 600) + 'px');
+            prev_width(start_w + (start_x - e.clientX) * is_rtl);
           }
           function end_resize(e) {
             e.preventDefault();
@@ -339,6 +342,23 @@
           });
         $('input[name="joinchat[position]"]').on('change', function () {
           prev_jc.$div.toggleClass('joinchat--right', this.value == 'right').toggleClass('joinchat--left', this.value == 'left');
+        });
+
+        // QR
+        var qr_show_timeout;
+        $('#joinchat_qr').on('change', function () {
+          clearTimeout(qr_show_timeout);
+          if ($('#joinchat_mobile_only')[0].checked) return;
+          if (this.checked) {
+            prev_jc.$('.joinchat__qr canvas').remove();
+            prev_jc.$('.joinchat__qr').append(prev_jc.qr(prev_jc.whatsapp_link(undefined, undefined, false)));
+          }
+          if (chatbox_on && this.checked && prev_width() <= 480) prev_width(481);
+          if (chatbox_on && this.checked && prev_jc.has_chatbox) prev_jc.chatbox_show();
+          if (chatbox_on) {
+            prev_jc.$('.joinchat__qr').toggleClass('joinchat--show', this.checked);
+            qr_show_timeout = setTimeout(function () { prev_jc.$('.joinchat__qr').removeClass('joinchat--show'); }, 5000);
+          }
         });
 
         // Chatbox show (if available)

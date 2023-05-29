@@ -52,6 +52,16 @@ defined( 'WPINC' ) || exit;
 				opacity: .2;
 				pointer-events: none;
 			}
+
+			.joinchat__qr.joinchat--show {
+				display: flex;
+			}
+		}
+
+		@media (max-width: 480px) {
+			.joinchat__qr{
+				display: none !important;
+			}
 		}
 	</style>
 </head>
@@ -187,8 +197,6 @@ defined( 'WPINC' ) || exit;
 				// Add QR Code
 				if (joinchat_obj.settings.qr && joinchat_obj.can_qr && !joinchat_obj.is_mobile) {
 					joinchat_obj.$('.joinchat__qr').append(joinchat_obj.qr(joinchat_obj.whatsapp_link(undefined, undefined, false)));
-				} else {
-					joinchat_obj.$('.joinchat__qr').remove();
 				}
 
 				// Fix message clip-path style broken by some CSS optimizers

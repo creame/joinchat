@@ -271,6 +271,7 @@ class Joinchat {
 		}
 
 		$this->common->set_preview( true );
+		$this->common->qr = true;
 
 		require_once JOINCHAT_DIR . 'admin/class-joinchat-preview.php';
 
