@@ -50,6 +50,10 @@
   }
 
   @if $type == full {
+    #{$class}--btn &:hover {
+      transition-duration: 0.2s;
+    }
+
     #{$class}--chatbox & {
       background: var(--color);
       transition-duration: 0.2s;
