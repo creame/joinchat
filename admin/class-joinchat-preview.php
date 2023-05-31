@@ -29,33 +29,50 @@ class JoinchatPreview {
 	}
 
 	/**
-	 * Initialize the class and set its properties.
+	 * blank_template
 	 *
-	 * @since    1.0.0
-	 * @since    3.0.0     Added $tabs initilization and removed get_settings()
-	 * @param    string $plugin_name       The name of this plugin.
-	 * @param    string $version           The version of this plugin.
+	 * @param  mixed $template
+	 * @return void
 	 */
-	public function __construct( $plugin_name, $version ) {
-
-		$this->plugin_name = $plugin_name;
-		$this->version     = $version;
-		$this->common      = JoinchatCommon::instance();
-
-	}
-
 	public function blank_template( $template ) {
 
 		return JOINCHAT_DIR . 'admin/partials/page-preview.php';
 
 	}
 
+	/**
+	 * Disable page custom Joinchat settings ('_joinchat' postmeta)
+	 *
+	 * @since 5.0.0
+	 * @param  mixed  $value      The value to return.
+	 * @param  int    $object_id  ID of the object metadata is for.
+	 * @param  string $meta_key   Metadata key.
+	 * @return mixed
+	 */
+	public function disable_postmeta( $value, $object_id, $meta_key ) {
+
+		return '_joinchat' === $meta_key ? false : $value;
+
+	}
+
+	/**
+	 * hide_admin_bar
+	 *
+	 * @param  mixed $show_admin_bar
+	 * @return void
+	 */
 	public function hide_admin_bar( $show_admin_bar ) {
 
 		return false;
 
 	}
 
+	/**
+	 * always_show
+	 *
+	 * @param  mixed $show
+	 * @return void
+	 */
 	public function always_show( $show ) {
 
 		return true;
@@ -120,12 +137,7 @@ class JoinchatPreview {
 
 		global $wp_styles;
 
-		$wp_styles->queue = array_filter(
-			$wp_styles->queue,
-			function( $handle ) {
-				return false !== strpos( $handle, 'joinchat' );
-			}
-		);
+		$wp_styles->queue = array_filter( $wp_styles->queue, function( $handle ) { return false !== strpos( $handle, 'joinchat' ); } ); // phpcs:ignore
 
 	}
 }

@@ -245,6 +245,7 @@ class Joinchat {
 		$plugin_preview = new JoinchatPreview();
 
 		$this->loader->add_filter( 'template_include', $plugin_preview, 'blank_template', PHP_INT_MAX );
+		$this->loader->add_filter( 'get_post_metadata', $plugin_preview, 'disable_postmeta', 1000, 3 );
 		$this->loader->add_filter( 'show_admin_bar', $plugin_preview, 'hide_admin_bar', 1000 );
 		$this->loader->add_filter( 'joinchat_show', $plugin_preview, 'always_show', 1000 );
 		$this->loader->add_filter( 'joinchat_classes', $plugin_preview, 'preview_classes', 10, 2 );
