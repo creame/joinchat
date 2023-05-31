@@ -226,13 +226,11 @@
 
     // Show button (and tooltip)
     var classes = 'joinchat--show';
-    if (!is_viewed && (!has_cta || !chat_delay || joinchat_obj.settings.message_badge || !has_pageviews)) {
-      classes += ' joinchat--tooltip';
-    }
+    if (!is_viewed && (joinchat_obj.settings.message_badge || !has_cta || !chat_delay || !has_pageviews)) classes += ' joinchat--tooltip';
     setTimeout(function () { joinchat_obj.$div.addClass(classes); }, button_delay);
 
     // Show badge or chatbox
-    if (has_cta && !is_viewed && chat_delay) {
+    if (has_cta && chat_delay && !is_viewed) {
       if (joinchat_obj.settings.message_badge) {
         timeoutCTA = setTimeout(function () { joinchat_obj.$('.joinchat__badge').addClass('joinchat__badge--in'); }, button_delay + chat_delay);
       } else if (has_pageviews) {
@@ -240,7 +238,7 @@
       }
     }
 
-    // Open Joinchat on mouse over
+    // Open Chatbox on mouse over
     if (has_chatbox && !joinchat_obj.is_mobile) {
       joinchat_obj.$('.joinchat__button')
         .on('mouseenter', function () { timeoutHover = setTimeout(clear_and_show, 1500); })
@@ -304,7 +302,7 @@
       else joinchat_obj.open_whatsapp($(this).data('phone'), $(this).data('message')); // WhatsApp direct
     });
 
-    // Close chatbox when click on nodes with class "joinchat_close"
+    // Triggers: close chatbox when click on nodes with class "joinchat_close"
     $(document).on('click', '.joinchat_close', function (e) {
       e.preventDefault();
       joinchat_obj.chatbox_hide();
