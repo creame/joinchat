@@ -232,7 +232,8 @@
         if (prev_jc) prev_jc.$('.joinchat__button__image').html('');
       });
 
-      $('#joinchat_color').wpColorPicker();
+      // Init ColorPicker with "changecolor" trigger event on change
+      $('#joinchat_color').wpColorPicker({ change: function (e, ui) { $(this).trigger('changecolor', [ui.color.toRgb()]); } });
 
       $('#joinchat_header_custom').on('click', function () { $(this).prev().find('input').prop('checked', true); });
 
@@ -260,8 +261,6 @@
        *************************************/
 
       var prev_jc = null; // joinchat_obj of preview iframe
-      var prev_cta = false;
-      var prev_optin = false;
       var chatbox_on = true;
 
       function prev_width(width) {
@@ -269,7 +268,7 @@
         else document.documentElement.style.setProperty('--preview-width', Math.min(Math.max(width, 300), 600) + 'px');
       }
       function update_has_chatbox() {
-        prev_jc.has_chatbox = prev_cta || prev_optin;
+        prev_jc.has_chatbox = prev_jc.has_cta || prev_jc.has_optin;
         prev_jc.$div.toggleClass('joinchat--btn', !prev_jc.has_chatbox);
       }
       function view_chatbox() { chatbox_on && prev_jc.has_chatbox ? prev_jc.chatbox_show() : prev_jc.chatbox_hide(); }
@@ -282,13 +281,14 @@
 
         if (!is_off && $('#joinchatprev').length == 0) {
           // Add preview
-          $('#wpwrap').append('<div id="joinchatprev"><div id="joinchatprev__resize"></div><iframe id="joinchat_preview" src="http://joinchat.local/?joinchat-preview" scrolling="no"></iframe></div>');
+          $('#wpwrap').append('<div id="joinchatprev"><div id="joinchatprev__resize"></div>' +
+            '<iframe id="joinchat_preview" src="' + joinchat_admin.home + '?joinchat-preview=1" scrolling="no"></iframe></div>');
 
           $('#joinchat_preview').on('load', function () {
             prev_jc = this.contentWindow.joinchat_obj;
-            prev_cta = $('#joinchat_message_text').val().trim() != '';
-            prev_optin = tinymce.get('joinchat_optin_text').getContent() != '';
-            preview_sync();
+            prev_jc.has_cta = $('#joinchat_message_text').val().trim() != '';
+            prev_jc.has_optin = tinymce.get('joinchat_optin_text').getContent() != '';
+            $(document).trigger('preview', [this, prev_jc]); // Trigger preview ready!
           });
 
           // Resizable preview
@@ -319,7 +319,7 @@
         }
       });
 
-      function preview_sync() {
+      $(document).on('preview', function () {
         update_has_chatbox();
 
         // Contact
@@ -365,17 +365,16 @@
         $('#joinchat_message_text,#joinchat_message_start,input[name="joinchat[dark_mode]"],input[name="joinchat[header]"],#joinchat_header_custom').on('focus', view_chatbox);
 
         $('#joinchat_message_text').on('input change', function (e) {
-          prev_cta = $(this).val().trim() != '';
+          prev_jc.has_cta = $(this).val().trim() != '';
           update_has_chatbox();
-          prev_jc.$('.joinchat__message').html($(this).val().trim().replaceAll("\n", '<br>'));
+          prev_jc.update_cta($(this).val().trim());
           view_chatbox();
         });
         $('#joinchat_message_start').on('input change', function (e) {
           prev_jc.$('.joinchat__button__sendtext').text($(this).val().trim());
           view_chatbox();
         });
-        $('#joinchat_color').wpColorPicker('option', 'change', function (e, ui) {
-          var rgb = ui.color.toRgb();
+        $('#joinchat_color').on('changecolor', function (e, rgb) {
           var style = prev_jc.$div.get(0).style;
           style.setProperty('--red', rgb.r);
           style.setProperty('--green', rgb.g);
@@ -400,7 +399,7 @@
         // Badge
         $('#joinchat_message_badge').on('change', function () {
           prev_jc.settings.message_badge = this.checked;
-          if (!prev_cta) return;
+          if (!prev_jc.has_cta) return;
           this.checked ? prev_jc.chatbox_hide() : prev_jc.chatbox_show();
           prev_jc.$('.joinchat__badge').toggleClass('joinchat__badge--in', this.checked);
         });
@@ -422,12 +421,12 @@
         custom_css_editor.codemirror.setValue(temp + ' ');
         custom_css_editor.codemirror.setValue(temp);
         chatbox_on = true;
-      }
+      });
 
       function update_optin() {
         var text = tinymce.get('joinchat_optin_text').getContent();
         var check = $('#joinchat_optin_check')[0].checked;
-        prev_optin = text != '';
+        prev_jc.has_optin = text != '';
         update_has_chatbox();
         prev_jc.$div.toggleClass('joinchat--optout', text != '' && check);
         if (text == '') {

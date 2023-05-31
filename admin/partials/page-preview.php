@@ -59,7 +59,7 @@ defined( 'WPINC' ) || exit;
 		}
 
 		@media (max-width: 480px) {
-			.joinchat__qr{
+			.joinchat__qr {
 				display: none !important;
 			}
 		}
@@ -82,7 +82,6 @@ defined( 'WPINC' ) || exit;
 			joinchat_obj = $.extend({
 				$div: null,
 				settings: null,
-				// store: null,
 				has_chatbox: false,
 				chatbox: false,
 				showed_at: 0,
@@ -137,9 +136,6 @@ defined( 'WPINC' ) || exit;
 				}
 			};
 
-			// Save CTA hash
-			joinchat_obj.save_hash = function() {};
-
 			// Open WhatsApp link with supplied phone and message or with settings defaults
 			joinchat_obj.open_whatsapp = function(phone, message) {
 				phone = phone || this.settings.telephone;
@@ -177,6 +173,7 @@ defined( 'WPINC' ) || exit;
 				joinchat_obj.$div.addClass('joinchat--show');
 
 				var chatbox_hide = joinchat_obj.chatbox_hide.bind(joinchat_obj);
+
 				function joinchat_click() {
 					if (joinchat_obj.has_chatbox && !joinchat_obj.chatbox) {
 						joinchat_obj.chatbox_show();

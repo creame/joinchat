@@ -68,8 +68,13 @@ class JoinchatAdmin {
 			wp_localize_script( 'intl-tel-input', 'intlTelConf', $localize );
 		}
 
-		wp_register_script( 'joinchat-admin', plugins_url( "js/joinchat{$min}.js", __FILE__ ), $deps, $this->version, true );
-		wp_localize_script( 'joinchat-admin', 'joinchat_admin', array( 'example' => __( 'is an example, double click to use it', 'creame-whatsapp-me' ) ) );
+		$localize = array(
+			'home'    => home_url(),
+			'example' => __( 'is an example, double click to use it', 'creame-whatsapp-me' ),
+		);
+
+		wp_register_script( 'joinchat-admin', plugins_url( "js/joinchat{$min}.js", __FILE__ ), $deps, JOINCHAT_VERSION, true );
+		wp_localize_script( 'joinchat-admin', 'joinchat_admin', $localize );
 
 	}
 
