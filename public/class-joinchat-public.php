@@ -152,7 +152,9 @@ class JoinchatPublic {
 				$inline_css = apply_filters( 'joinchat_inline_style', $inline_css, $settings );
 
 				// Remove spaces & comments.
-				$inline_css = preg_replace( array( '/(\s*)([{|}|:|;|,])(\s+)/', '/\/\*.*?\*\/|\n|\t/' ), array( '$2', '' ), $inline_css );
+				if ( ! defined( 'SCRIPT_DEBUG' ) || ! SCRIPT_DEBUG ) {
+					$inline_css = preg_replace( array( '/(\s*)([{|}|:|;|,])(\s+)/', '/\/\*.*?\*\/|\n|\t/' ), array( '$2', '' ), $inline_css );
+				}
 
 				wp_add_inline_style( JOINCHAT_SLUG, $inline_css );
 			}
@@ -356,7 +358,8 @@ class JoinchatPublic {
 		$joinchat_classes = apply_filters( 'joinchat_classes', $joinchat_classes, $settings );
 
 		ob_start();
-		include __DIR__ . '/partials/' . ( $is_preview ? 'preview' : 'html' ) . '.php';
+		$include = $is_preview ? 'preview' : 'html';
+		include __DIR__ . "/partials/$include.php";
 		$html_output = ob_get_clean();
 
 		echo apply_filters( 'joinchat_html_output', $html_output, $settings ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
