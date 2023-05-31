@@ -260,6 +260,15 @@
        * Preview Sync
        *************************************/
 
+      $(document).on('navtabchange', function (e, $tab, id) {
+        if (id == '#joinchat_tab_general' || id == '#joinchat_tab_advanced') {
+          $('#joinchat_preview_show').removeClass('disabled');
+        } else {
+          $('body').removeClass('jcpreview');
+          $('#joinchat_preview_show').addClass('disabled').removeClass('active');
+        }
+      });
+
       var prev_jc = null; // joinchat_obj of preview iframe
       var chatbox_on = true;
 
@@ -275,6 +284,7 @@
 
       $('#joinchat_preview_show').on('click', function (e) {
         e.preventDefault();
+        if ($(this).hasClass('disabled')) return;
         var is_off = $(this).hasClass('active');
         $(this).toggleClass('active', !is_off);
         $('body').toggleClass('jcpreview', !is_off);
