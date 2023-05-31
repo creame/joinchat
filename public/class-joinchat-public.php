@@ -189,6 +189,8 @@ class JoinchatPublic {
 
 			// Enqueue default full script.
 			wp_enqueue_script( 'joinchat', plugins_url( "js/joinchat{$min}.js", __FILE__ ), $deps, JOINCHAT_VERSION, true );
+			// Do action.
+			do_action( 'joinchat_enqueue_script' );
 
 		} elseif ( apply_filters( 'joinchat_script_lite', ! empty( jc_common()->settings['telephone'] ) ) ) {
 
@@ -227,7 +229,7 @@ class JoinchatPublic {
 			return;
 		}
 
-		if ( wp_script_is( 'joinchat', 'enqueued' ) ) {
+		if ( wp_script_is( 'joinchat' ) ) {
 			$script = wp_scripts()->query( 'joinchat', 'registered' );
 		} elseif ( wp_script_is( 'joinchat-lite', 'enqueued' ) ) {
 			$script = wp_scripts()->query( 'joinchat-lite', 'registered' );
@@ -363,6 +365,8 @@ class JoinchatPublic {
 		$html_output = ob_get_clean();
 
 		echo apply_filters( 'joinchat_html_output', $html_output, $settings ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+
+		do_action( 'joinchat_after_html' );
 
 	}
 
