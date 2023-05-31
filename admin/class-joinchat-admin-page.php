@@ -11,33 +11,6 @@
 class JoinchatAdminPage {
 
 	/**
-	 * The ID of this plugin.
-	 *
-	 * @since    4.5.0
-	 * @access   private
-	 * @var      string    $plugin_name    The ID of this plugin.
-	 */
-	private $plugin_name;
-
-	/**
-	 * The version of this plugin.
-	 *
-	 * @since    4.5.0
-	 * @access   private
-	 * @var      string    $version    The current version of this plugin.
-	 */
-	private $version;
-
-	/**
-	 * Common class for admin and front methods.
-	 *
-	 * @since    4.5.0
-	 * @access   private
-	 * @var      JoinchatCommon    $common    instance.
-	 */
-	private $common;
-
-	/**
 	 * Admin page tabs
 	 *
 	 * @since    4.5.0
@@ -53,12 +26,9 @@ class JoinchatAdminPage {
 	 * @param    string $plugin_name       The name of this plugin.
 	 * @param    string $version           The version of this plugin.
 	 */
-	public function __construct( $plugin_name, $version ) {
+	public function __construct() {
 
-		$this->plugin_name = $plugin_name;
-		$this->version     = $version;
-		$this->common      = JoinchatCommon::instance();
-		$this->tabs        = array();
+		$this->tabs = array();
 
 	}
 
@@ -76,9 +46,9 @@ class JoinchatAdminPage {
 		if ( JoinchatUtil::options_submenu() ) {
 			$icon = '<span class="dashicons dashicons-whatsapp" aria-hidden="true" style="height:18px;font-size:18px;margin:0 8px;"></span>';
 
-			add_options_page( $title, $title . $icon, JoinchatUtil::capability(), $this->plugin_name, array( $this, 'options_page' ) );
+			add_options_page( $title, $title . $icon, JoinchatUtil::capability(), JOINCHAT_SLUG, array( $this, 'options_page' ) );
 		} else {
-			add_menu_page( $title, $title, JoinchatUtil::capability(), $this->plugin_name, array( $this, 'options_page' ), 'dashicons-whatsapp', 81 );
+			add_menu_page( $title, $title, JoinchatUtil::capability(), JOINCHAT_SLUG, array( $this, 'options_page' ), 'dashicons-whatsapp', 81 );
 		}
 
 	}
@@ -103,18 +73,18 @@ class JoinchatAdminPage {
 		);
 
 		// Register WordPress 'joinchat' settings.
-		register_setting( $this->plugin_name, $this->plugin_name, array( $this, 'settings_validate' ) );
+		register_setting( JOINCHAT_SLUG, JOINCHAT_SLUG, array( $this, 'settings_validate' ) );
 
 		foreach ( $this->tabs as $tab => $tab_name ) {
 
-			add_settings_section( "joinchat_tab_{$tab}_open", null, array( $this, 'settings_tab_open' ), $this->plugin_name );
+			add_settings_section( "joinchat_tab_{$tab}_open", null, array( $this, 'settings_tab_open' ), JOINCHAT_SLUG );
 
 			$sections = $this->get_tab_sections( $tab );
 
 			foreach ( $sections as $section => $fields ) {
 				$section_id = "joinchat_tab_{$tab}__{$section}";
 
-				add_settings_section( $section_id, null, array( $this, 'section_output' ), $this->plugin_name );
+				add_settings_section( $section_id, null, array( $this, 'section_output' ), JOINCHAT_SLUG );
 
 				foreach ( $fields as $field => $field_args ) {
 					if ( is_array( $field_args ) ) {
@@ -125,11 +95,11 @@ class JoinchatAdminPage {
 						$field_callback = array( $this, 'field_output' );
 					}
 
-					add_settings_field( "joinchat_$field", $field_name, $field_callback, $this->plugin_name, $section_id, $field );
+					add_settings_field( "joinchat_$field", $field_name, $field_callback, JOINCHAT_SLUG, $section_id, $field );
 				}
 			}
 
-			add_settings_section( "joinchat_tab_{$tab}_close", null, array( $this, 'settings_tab_close' ), $this->plugin_name );
+			add_settings_section( "joinchat_tab_{$tab}_close", null, array( $this, 'settings_tab_close' ), JOINCHAT_SLUG );
 		}
 
 	}
@@ -206,7 +176,7 @@ class JoinchatAdminPage {
 				}
 
 				// Custom Post Types.
-				$custom_post_types = $this->common->get_custom_post_types();
+				$custom_post_types = jc_common()->get_custom_post_types();
 
 				if ( count( $custom_post_types ) ) {
 					$sections['cpt'] = array();
@@ -253,7 +223,7 @@ class JoinchatAdminPage {
 
 		// Prevent bad behavior when validate twice on first save
 		// bug (view https://core.trac.wordpress.org/ticket/21989).
-		if ( count( get_settings_errors( $this->plugin_name ) ) ) {
+		if ( count( get_settings_errors( JOINCHAT_SLUG ) ) ) {
 			return $input;
 		}
 
@@ -289,7 +259,7 @@ class JoinchatAdminPage {
 		);
 		$input['gads']          = sprintf( 'AW-%s/%s', $util::substr( $util::clean_input( $input['gads'][0] ), 0, 11 ), $util::substr( $util::clean_input( $input['gads'][1] ), 0, 20 ) );
 		$input['gads']          = 'AW-/' !== $input['gads'] ? $input['gads'] : '';
-		$input['custom_css']    = $input['custom_css'] !== $this->common->default_settings( 'custom_css' ) ? trim( $input['custom_css'] ) : '';
+		$input['custom_css']    = $input['custom_css'] !== jc_common()->defaults( 'custom_css' ) ? trim( $input['custom_css'] ) : '';
 
 		if ( isset( $input['view'] ) ) {
 			$input['visibility'] = array_filter(
@@ -301,12 +271,12 @@ class JoinchatAdminPage {
 		}
 
 		// Clean input items that are not in settings.
-		$input = array_intersect_key( $input, $this->common->settings );
+		$input = array_intersect_key( $input, jc_common()->settings );
 
 		// Filter for other validations or extra settings.
-		$input = apply_filters( 'joinchat_settings_validate', $input, $this->common->settings );
+		$input = apply_filters( 'joinchat_settings_validate', $input, jc_common()->settings );
 
-		add_settings_error( $this->plugin_name, 'settings_updated', __( 'Settings saved', 'creame-whatsapp-me' ), 'updated' );
+		add_settings_error( JOINCHAT_SLUG, 'settings_updated', __( 'Settings saved', 'creame-whatsapp-me' ), 'updated' );
 
 		// Delete notice option.
 		if ( $input['telephone'] ) {
@@ -314,7 +284,7 @@ class JoinchatAdminPage {
 		}
 
 		// Extra actions on save.
-		do_action( 'joinchat_settings_validation', $input, $this->common->settings );
+		do_action( 'joinchat_settings_validation', $input, jc_common()->settings );
 
 		return $input;
 
@@ -428,7 +398,7 @@ class JoinchatAdminPage {
 
 		if ( strpos( $field_id, 'view__' ) === 0 ) {
 			$field = substr( $field_id, 6 );
-			$value = isset( $this->common->settings['visibility'][ $field ] ) ? $this->common->settings['visibility'][ $field ] : '';
+			$value = isset( jc_common()->settings['visibility'][ $field ] ) ? jc_common()->settings['visibility'][ $field ] : '';
 
 			$output = '<label><input type="radio" name="joinchat[view][' . $field . ']" value="yes"' . checked( 'yes', $value, false ) . '> ' .
 				'<span class="dashicons dashicons-visibility" title="' . __( 'Show', 'creame-whatsapp-me' ) . '"></span></label>' .
@@ -439,11 +409,11 @@ class JoinchatAdminPage {
 
 		} else {
 
-			$value = isset( $this->common->settings[ $field_id ] ) ? $this->common->settings[ $field_id ] : '';
+			$value = isset( jc_common()->settings[ $field_id ] ) ? jc_common()->settings[ $field_id ] : '';
 
 			switch ( $field_id ) {
 				case 'telephone':
-					$output = '<input id="joinchat_phone" ' . ( $this->common->get_intltel() ? 'data-' : '' ) . 'name="joinchat[telephone]" value="' . esc_attr( $value ) . '" type="text" style="width:15em;display:inline-block"> ' .
+					$output = '<input id="joinchat_phone" ' . ( jc_common()->get_intltel() ? 'data-' : '' ) . 'name="joinchat[telephone]" value="' . esc_attr( $value ) . '" type="text" style="width:15em;display:inline-block"> ' .
 						'<input id="joinchat_phone_test" type="button" value="' . esc_attr__( 'Test Number', 'creame-whatsapp-me' ) . '" class="button" ' . ( empty( $value ) ? 'disabled' : '' ) . '>' .
 						'<p class="description">' . __( "Contact WhatsApp number <strong>(the button will not be shown if it's empty)</strong>", 'creame-whatsapp-me' ) . '</p>';
 					break;
@@ -608,7 +578,7 @@ class JoinchatAdminPage {
 
 				case 'custom_css':
 					if ( empty( $value ) ) {
-						$value = $this->common->default_settings( 'custom_css' );
+						$value = jc_common()->defaults( 'custom_css' );
 					}
 
 					$output = '<fieldset><legend class="screen-reader-text"><span>' . __( 'Custom CSS', 'creame-whatsapp-me' ) . '</span></legend>' .
@@ -623,7 +593,7 @@ class JoinchatAdminPage {
 		}
 
 		// Filter field ouput.
-		echo apply_filters( 'joinchat_field_output', $output, $field_id, $this->common->settings ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo apply_filters( 'joinchat_field_output', $output, $field_id, jc_common()->settings ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 
 	}
 
@@ -635,7 +605,7 @@ class JoinchatAdminPage {
 	 */
 	public function field_view_all() {
 
-		$value = ( isset( $this->common->settings['visibility']['all'] ) && 'no' === $this->common->settings['visibility']['all'] ) ? 'no' : 'yes';
+		$value = ( isset( jc_common()->settings['visibility']['all'] ) && 'no' === jc_common()->settings['visibility']['all'] ) ? 'no' : 'yes';
 
 		$inheritance = apply_filters(
 			'joinchat_visibility_inheritance',
@@ -664,7 +634,7 @@ class JoinchatAdminPage {
 	public function help_tab() {
 
 		$screen = get_current_screen();
-		$utm    = '?utm_source=helptab&utm_medium=wpadmin&utm_campaign=v' . str_replace( '.', '_', $this->version );
+		$utm    = '?utm_source=helptab&utm_medium=wpadmin&utm_campaign=v' . str_replace( '.', '_', JOINCHAT_VERSION );
 		$lang   = false !== strpos( strtolower( get_locale() ), 'es' ) ? 'es' : 'en';
 
 		$help_tabs = array(
@@ -768,7 +738,7 @@ class JoinchatAdminPage {
 				?>
 
 				<form method="post" id="joinchat_form" action="options.php" autocomplete="off">
-					<?php settings_fields( $this->plugin_name ); ?>
+					<?php settings_fields( JOINCHAT_SLUG ); ?>
 					<h2 class="nav-tab-wrapper wp-clearfix" role="tablist">
 						<?php
 						foreach ( $this->tabs as $tab => $name ) {
@@ -782,7 +752,7 @@ class JoinchatAdminPage {
 					</h2>
 					<div class="joinchat_preview_control"><a id="joinchat_preview_show" href="#" class="button dashicons-before"><?php _e( 'Preview', 'creame-whatsapp-me' ); ?></a></div>
 					<div class="joinchat-tabs">
-						<?php do_settings_sections( $this->plugin_name ); ?>
+						<?php do_settings_sections( JOINCHAT_SLUG ); ?>
 					</div><!-- end tabs -->
 					<?php submit_button(); ?>
 				</form>
@@ -834,7 +804,7 @@ class JoinchatAdminPage {
 		}
 
 		// Enqueue IntlTelInput styles.
-		if ( $this->common->get_intltel() ) {
+		if ( jc_common()->get_intltel() ) {
 			wp_enqueue_style( 'intl-tel-input' );
 		}
 

@@ -13,31 +13,20 @@
 class JoinchatPreview {
 
 	/**
-	 * The ID of this plugin.
+	 * Initialize the class and set its properties.
 	 *
-	 * @since    1.0.0
-	 * @access   private
-	 * @var      string    $plugin_name    The ID of this plugin.
+	 * @since    5.0.0
 	 */
-	private $plugin_name;
+	public function __construct() {
 
-	/**
-	 * The version of this plugin.
-	 *
-	 * @since    1.0.0
-	 * @access   private
-	 * @var      string    $version    The current version of this plugin.
-	 */
-	private $version;
+		jc_common()->preview = true;
+		jc_common()->qr      = true;
 
-	/**
-	 * Common class for admin and front methods.
-	 *
-	 * @since    4.2.0
-	 * @access   private
-	 * @var      JoinchatCommon    $common    instance.
-	 */
-	private $common;
+		if ( ! defined( 'DONOTCACHEPAGE' ) ) {
+			define( 'DONOTCACHEPAGE', true );
+		}
+
+	}
 
 	/**
 	 * Initialize the class and set its properties.

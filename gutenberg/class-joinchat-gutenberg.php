@@ -12,33 +12,6 @@
 class JoinchatGutenberg {
 
 	/**
-	 * The ID of this plugin.
-	 *
-	 * @since    4.5.0
-	 * @access   private
-	 * @var      string    $plugin_name    The ID of this plugin.
-	 */
-	private $plugin_name;
-
-	/**
-	 * The version of this plugin.
-	 *
-	 * @since    4.5.0
-	 * @access   private
-	 * @var      string    $version    The current version of this plugin.
-	 */
-	private $version;
-
-	/**
-	 * Common class for admin and front methods.
-	 *
-	 * @since    4.5.0
-	 * @access   private
-	 * @var      JoinchatCommon    $common    instance.
-	 */
-	private $common;
-
-	/**
 	 * Initialize the class and set its properties.
 	 *
 	 * @since    4.5.0
@@ -46,13 +19,7 @@ class JoinchatGutenberg {
 	 * @param    string $version    The version of this plugin.
 	 * @return   void
 	 */
-	public function __construct( $plugin_name, $version ) {
-
-		$this->plugin_name = $plugin_name;
-		$this->version     = $version;
-		$this->common      = JoinchatCommon::instance();
-
-	}
+	public function __construct() {}
 
 	/**
 	 * Register the stylesheets for the gutenberg editor
@@ -66,8 +33,8 @@ class JoinchatGutenberg {
 
 		$joinchat_data = array(
 			'image_qr'     => plugins_url( 'admin/img/qr.png', JOINCHAT_FILE ),
-			'defaults'     => $this->common->get_obj_placeholders( get_post() ),
-			'message_vars' => $this->common->get_obj_vars( get_post() ),
+			'defaults'     => jc_common()->get_obj_placeholders( get_post() ),
+			'message_vars' => jc_common()->get_obj_vars( get_post() ),
 		);
 
 		wp_enqueue_script( 'joinchat-gutenberg', plugins_url( 'gutenberg/build/index.js', JOINCHAT_FILE ), $asset_file['dependencies'], $asset_file['version'], true );
@@ -79,9 +46,9 @@ class JoinchatGutenberg {
 		 */
 
 		$conditions = array(
-			$this->show_sidebar(),                                                     // Is enabled sidebar?
-			in_array( get_post_type(), $this->common->get_public_post_types(), true ), // CPT is plubic (with '_joinchat' meta registered)?
-			post_type_supports( get_post_type(), 'custom-fields' ),                    // CPT supports 'custom-fields' for Gutenberg access to postmeta?
+			$this->show_sidebar(),                                                   // Is enabled sidebar?
+			in_array( get_post_type(), jc_common()->get_public_post_types(), true ), // CPT is plubic (with '_joinchat' meta registered)?
+			post_type_supports( get_post_type(), 'custom-fields' ),                  // CPT supports 'custom-fields' for Gutenberg access to postmeta?
 		);
 
 		if ( count( array_filter( $conditions ) ) < count( $conditions ) ) {
@@ -124,7 +91,7 @@ class JoinchatGutenberg {
 
 		// Need render QR code.
 		if ( isset( $attributes['qr_code'] ) && 'no' !== $attributes['qr_code'] ) {
-			$this->common->qr = true;
+			jc_common()->qr = true;
 		}
 
 		// Replace dynamic vars.
@@ -204,7 +171,7 @@ class JoinchatGutenberg {
 			return;
 		}
 
-		$post_types = $this->common->get_public_post_types();
+		$post_types = jc_common()->get_public_post_types();
 
 		foreach ( $post_types as $post_type ) {
 			register_meta(

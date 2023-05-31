@@ -369,7 +369,7 @@ class JoinchatWooPublic {
 
 		printf(
 			'<div class="joinchat__woo-btn__wrapper"><div class="joinchat__woo-btn joinchat_app">%s</div></div>',
-			esc_html( JoinchatCommon::instance()->settings['woo_btn_text'] )
+			esc_html( jc_common()->settings['woo_btn_text'] )
 		);
 
 	}

@@ -47,7 +47,7 @@ class JoinchatCommon {
 	 * @since    5.0.0
 	 * @var bool
 	 */
-	private $preview = false;
+	public $preview = false;
 
 	/**
 	 * Instantiates Manager.
@@ -81,12 +81,12 @@ class JoinchatCommon {
 	/**
 	 * Return the default settings.
 	 *
-	 * @since    4.2.0
-	 * @since    5.0.0  added $key param.
+	 * @since    4.2.0  default_settings()
+	 * @since    5.0.0  renamed to defaults() & added $key param.
 	 * @param  string|false $key  Setting key or false.
 	 * @return mixed
 	 */
-	public function default_settings( $key = false ) {
+	public function defaults( $key = false ) {
 
 		$default_css = <<<CSS
 			/* Joinchat styles (default values) */
@@ -159,7 +159,7 @@ class JoinchatCommon {
 			return $this->settings;
 		}
 
-		$default_settings = $this->default_settings();
+		$default_settings = $this->defaults();
 
 		// Can hook 'option_joinchat' and 'default_option_joinchat' filters.
 		$settings = array_merge( $default_settings, (array) get_option( 'joinchat', $default_settings ) );
@@ -257,30 +257,17 @@ class JoinchatCommon {
 		return apply_filters( 'joinchat_metabox_vars', array( 'SITE', 'TITLE', 'URL', 'HREF' ), $obj );
 
 	}
+}
 
-	/**
-	 * Set is preview
-	 *
-	 * @since 5.0.0
-	 * @param  bool $preview true if si preview, false otherwise
-	 * @return void
-	 */
-	public function set_preview( bool $preview ) {
 
-		$this->preview = $preview;
+/**
+ * Returns the One True Instance of JoinchatCommon.
+ *
+ * @since 5.0.0
+ * @return JoinchatCommon
+ */
+function jc_common() {
 
-	}
-
-	/**
-	 * Get is preview
-	 *
-	 * @since 5.0.0
-	 * @return bool
-	 */
-	public function is_preview() {
-
-		return $this->preview;
-
-	}
+	return JoinchatCommon::instance();
 
 }

@@ -27,33 +27,6 @@ class Joinchat {
 	protected $loader;
 
 	/**
-	 * Common settings along all plugin parts
-	 *
-	 * @since    1.0.0
-	 * @access   protected
-	 * @var      JoinchatCommon    $common    Front and Back common class.
-	 */
-	protected $common;
-
-	/**
-	 * The unique identifier of this plugin.
-	 *
-	 * @since    1.0.0
-	 * @access   protected
-	 * @var      string    $plugin_name    The string used to uniquely identify this plugin.
-	 */
-	protected $plugin_name;
-
-	/**
-	 * The current version of the plugin.
-	 *
-	 * @since    1.0.0
-	 * @access   protected
-	 * @var      string    $version    The current version of the plugin.
-	 */
-	protected $version;
-
-	/**
 	 * Define the core functionality of the plugin.
 	 *
 	 * Set the plugin name and the plugin version that can be used throughout the plugin.
@@ -63,9 +36,6 @@ class Joinchat {
 	 * @since    1.0.0
 	 */
 	public function __construct() {
-
-		$this->version     = defined( 'JOINCHAT_VERSION' ) ? JOINCHAT_VERSION : '1.0.0';
-		$this->plugin_name = 'joinchat';
 
 		$this->load_dependencies();
 		$this->set_locale();
@@ -109,7 +79,7 @@ class Joinchat {
 		require_once JOINCHAT_DIR . 'includes/class-joinchat-util.php';
 
 		$this->loader = new JoinchatLoader();
-		$this->common = JoinchatCommon::instance();
+		jc_common(); // Instance JoinchatCommon.
 
 	}
 
@@ -162,7 +132,7 @@ class Joinchat {
 
 		require_once JOINCHAT_DIR . 'gutenberg/class-joinchat-gutenberg.php';
 
-		$plugin_gutenberg = new JoinchatGutenberg( $this->get_plugin_name(), $this->get_version() );
+		$plugin_gutenberg = new JoinchatGutenberg();
 
 		$this->loader->add_action( 'init', $plugin_gutenberg, 'register_meta', 11 );
 		$this->loader->add_action( 'init', $plugin_gutenberg, 'register_blocks', 11 );
@@ -193,7 +163,7 @@ class Joinchat {
 
 		$this->loader->add_filter( 'option_page_capability_joinchat', 'JoinchatUtil', 'capability' );
 
-		$plugin_admin = new JoinchatAdmin( $this->get_plugin_name(), $this->get_version() );
+		$plugin_admin = new JoinchatAdmin();
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'register_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'register_scripts' );
@@ -206,7 +176,7 @@ class Joinchat {
 		$this->loader->add_filter( 'plugin_action_links_' . JOINCHAT_BASENAME, $plugin_admin, 'settings_link' );
 		$this->loader->add_filter( 'plugin_row_meta', $plugin_admin, 'plugin_links', 10, 2 );
 
-		$plugin_page = new JoinchatAdminPage( $this->get_plugin_name(), $this->get_version() );
+		$plugin_page = new JoinchatAdminPage();
 
 		$this->loader->add_action( 'admin_init', $plugin_page, 'settings_init' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_page, 'enqueue_assets' );
@@ -237,7 +207,7 @@ class Joinchat {
 
 		require_once JOINCHAT_DIR . 'public/class-joinchat-public.php';
 
-		$plugin_public = new JoinchatPublic( $this->get_plugin_name(), $this->get_version() );
+		$plugin_public = new JoinchatPublic();
 
 		$this->loader->add_filter( 'joinchat_settings', $plugin_public, 'get_settings' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
@@ -270,12 +240,9 @@ class Joinchat {
 			return;
 		}
 
-		$this->common->set_preview( true );
-		$this->common->qr = true;
-
 		require_once JOINCHAT_DIR . 'admin/class-joinchat-preview.php';
 
-		$plugin_preview = new JoinchatPreview( $this->get_plugin_name(), $this->get_version() );
+		$plugin_preview = new JoinchatPreview();
 
 		$this->loader->add_filter( 'template_include', $plugin_preview, 'blank_template', PHP_INT_MAX );
 		$this->loader->add_filter( 'show_admin_bar', $plugin_preview, 'hide_admin_bar', 1000 );
@@ -303,7 +270,7 @@ class Joinchat {
 
 		require_once JOINCHAT_DIR . 'admin/class-joinchat-premium.php';
 
-		$plugin_premium = new JoinchatPremium( $this->get_plugin_name(), $this->get_version() );
+		$plugin_premium = new JoinchatPremium();
 
 		$this->loader->add_filter( 'plugin_action_links_' . JOINCHAT_BASENAME, $plugin_premium, 'action_link' );
 		$this->loader->add_filter( 'joinchat_admin_tabs', $plugin_premium, 'admin_tab', 1000 );
@@ -330,17 +297,6 @@ class Joinchat {
 	}
 
 	/**
-	 * The name of the plugin used to uniquely identify it within the context of
-	 * WordPress and to define internationalization functionality.
-	 *
-	 * @since     1.0.0
-	 * @return    string    The name of the plugin.
-	 */
-	public function get_plugin_name() {
-		return $this->plugin_name;
-	}
-
-	/**
 	 * The reference to the class that orchestrates the hooks with the plugin.
 	 *
 	 * @since     1.0.0
@@ -348,16 +304,6 @@ class Joinchat {
 	 */
 	public function get_loader() {
 		return $this->loader;
-	}
-
-	/**
-	 * Retrieve the version number of the plugin.
-	 *
-	 * @since     1.0.0
-	 * @return    string    The version number of the plugin.
-	 */
-	public function get_version() {
-		return $this->version;
 	}
 
 }

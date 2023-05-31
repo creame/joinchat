@@ -11,36 +11,13 @@
 class JoinchatPremium {
 
 	/**
-	 * The ID of this plugin.
-	 *
-	 * @since    5.0.0
-	 * @access   private
-	 * @var      string    $plugin_name    The ID of this plugin.
-	 */
-	private $plugin_name;
-
-	/**
-	 * The version of this plugin.
-	 *
-	 * @since    5.0.0
-	 * @access   private
-	 * @var      string    $version    The current version of this plugin.
-	 */
-	private $version;
-
-	/**
 	 * Initialize the class and set its properties.
 	 *
 	 * @since    5.0.0
 	 * @param    string $plugin_name       The name of this plugin.
 	 * @param    string $version           The version of this plugin.
 	 */
-	public function __construct( $plugin_name, $version ) {
-
-		$this->plugin_name = $plugin_name;
-		$this->version     = $version;
-
-	}
+	public function __construct() {}
 
 	/**
 	 * Add link to options page on plugins page
@@ -52,7 +29,7 @@ class JoinchatPremium {
 	 */
 	public function action_link( $links ) {
 
-		$utm  = '?utm_source=action&utm_medium=wpadmin&utm_campaign=v' . str_replace( '.', '_', $this->version );
+		$utm  = '?utm_source=action&utm_medium=wpadmin&utm_campaign=v' . str_replace( '.', '_', JOINCHAT_VERSION );
 		$lang = false !== strpos( strtolower( get_locale() ), 'es' ) ? 'es' : 'en';
 
 		$links['premium'] = sprintf(
@@ -108,9 +85,9 @@ class JoinchatPremium {
 		switch ( $section_id ) {
 			case 'joinchat_tab_premium__info':
 				if ( false !== strpos( strtolower( get_locale() ), 'es' ) ) {
-					$link = 'https://join.chat/es/precio/?utm_source=cta&utm_medium=wpadmin&utm_campaign=v' . str_replace( '.', '_', $this->version );
+					$link = 'https://join.chat/es/precio/?utm_source=cta&utm_medium=wpadmin&utm_campaign=v' . str_replace( '.', '_', JOINCHAT_VERSION );
 				} else {
-					$link = 'https://join.chat/en/pricing/?utm_source=cta&utm_medium=wpadmin&utm_campaign=v' . str_replace( '.', '_', $this->version );
+					$link = 'https://join.chat/en/pricing/?utm_source=cta&utm_medium=wpadmin&utm_campaign=v' . str_replace( '.', '_', JOINCHAT_VERSION );
 				}
 
 				$output = '<h2 class="title">' . __( 'Premium', 'creame-whatsapp-me' ) . '</h2>' .
@@ -168,7 +145,7 @@ class JoinchatPremium {
 			),
 		);
 
-		$utm  = '?utm_source=upselltab&utm_medium=wpadmin&utm_campaign=v' . str_replace( '.', '_', $this->version );
+		$utm  = '?utm_source=upselltab&utm_medium=wpadmin&utm_campaign=v' . str_replace( '.', '_', JOINCHAT_VERSION );
 		$lang = false !== strpos( strtolower( get_locale() ), 'es' ) ? 'es' : 'en';
 
 		foreach ( $addons as $slug => $addon ) {

@@ -27,6 +27,7 @@ if ( ! defined( 'WPINC' ) ) {
  * Define constants.
  */
 define( 'JOINCHAT_VERSION', '5.0.0' );
+define( 'JOINCHAT_SLUG', 'joinchat' );
 define( 'JOINCHAT_FILE', __FILE__ );
 define( 'JOINCHAT_DIR', plugin_dir_path( JOINCHAT_FILE ) );
 define( 'JOINCHAT_BASENAME', plugin_basename( JOINCHAT_FILE ) );

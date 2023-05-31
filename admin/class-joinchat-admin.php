@@ -13,47 +13,13 @@
 class JoinchatAdmin {
 
 	/**
-	 * The ID of this plugin.
-	 *
-	 * @since    1.0.0
-	 * @access   private
-	 * @var      string    $plugin_name    The ID of this plugin.
-	 */
-	private $plugin_name;
-
-	/**
-	 * The version of this plugin.
-	 *
-	 * @since    1.0.0
-	 * @access   private
-	 * @var      string    $version    The current version of this plugin.
-	 */
-	private $version;
-
-	/**
-	 * Common class for admin and front methods.
-	 *
-	 * @since    4.2.0
-	 * @access   private
-	 * @var      JoinchatCommon    $common    instance.
-	 */
-	private $common;
-
-	/**
 	 * Initialize the class and set its properties.
 	 *
 	 * @since    1.0.0
 	 * @since    3.0.0     Added $tabs initilization and removed get_settings()
-	 * @param    string $plugin_name       The name of this plugin.
-	 * @param    string $version           The version of this plugin.
+	 * @since    5.0.0     empty function
 	 */
-	public function __construct( $plugin_name, $version ) {
-
-		$this->plugin_name = $plugin_name;
-		$this->version     = $version;
-		$this->common      = JoinchatCommon::instance();
-
-	}
+	public function __construct() {}
 
 	/**
 	 * Register the stylesheets for the admin area.
@@ -67,9 +33,9 @@ class JoinchatAdmin {
 
 		$min = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
 
-		wp_register_style( 'joinchat-admin', plugins_url( "css/joinchat{$min}.css", __FILE__ ), array( 'wp-color-picker' ), $this->version, 'all' );
+		wp_register_style( 'joinchat-admin', plugins_url( "css/joinchat{$min}.css", __FILE__ ), array( 'wp-color-picker' ), JOINCHAT_VERSION, 'all' );
 
-		$intltel = $this->common->get_intltel();
+		$intltel = jc_common()->get_intltel();
 		if ( $intltel ) {
 			wp_register_style( 'intl-tel-input', plugins_url( "css/intlTelInput{$min}.css", __FILE__ ), array(), $intltel, 'all' );
 		}
@@ -89,7 +55,7 @@ class JoinchatAdmin {
 		$min  = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
 		$deps = array( 'jquery', 'wp-color-picker' );
 
-		$intltel = $this->common->get_intltel();
+		$intltel = jc_common()->get_intltel();
 		if ( $intltel ) {
 			$deps[]   = 'intl-tel-input';
 			$localize = array(
@@ -121,7 +87,7 @@ class JoinchatAdmin {
 		}
 
 		// If no phone number defined.
-		if ( empty( $this->common->settings['telephone'] )
+		if ( empty( jc_common()->settings['telephone'] )
 			&& current_user_can( JoinchatUtil::capability() )
 			&& ! JoinchatUtil::is_admin_screen()
 			&& time() >= (int) get_option( 'joinchat_notice_dismiss' )
@@ -188,7 +154,7 @@ class JoinchatAdmin {
 	public function plugin_links( $plugin_meta, $plugin_file ) {
 
 		if ( JOINCHAT_BASENAME === $plugin_file ) {
-			$utm  = '?utm_source=plugins&utm_medium=wpadmin&utm_campaign=v' . str_replace( '.', '_', $this->version );
+			$utm  = '?utm_source=plugins&utm_medium=wpadmin&utm_campaign=v' . str_replace( '.', '_', JOINCHAT_VERSION );
 			$lang = false !== strpos( strtolower( get_locale() ), 'es' ) ? 'es' : 'en';
 
 			$plugin_meta[] = sprintf( '<a href="%1$s" target="_blank">%2$s</a>', esc_url( "https://join.chat/$lang/docs/$utm" ), __( 'Documentation', 'creame-whatsapp-me' ) );
@@ -209,12 +175,12 @@ class JoinchatAdmin {
 	 */
 	public function add_meta_boxes() {
 
-		$post_types  = $this->common->get_public_post_types();
+		$post_types  = jc_common()->get_public_post_types();
 		$back_compat = apply_filters( 'joinchat_gutenberg_sidebar', JoinchatUtil::can_gutenberg() );
 
 		foreach ( $post_types as $post_type ) {
 			add_meta_box(
-				$this->plugin_name,
+				JOINCHAT_SLUG,
 				__( 'Joinchat', 'creame-whatsapp-me' ),
 				array( $this, 'meta_box' ),
 				$post_type,
@@ -243,7 +209,7 @@ class JoinchatAdmin {
 		wp_enqueue_script( 'joinchat-admin' );
 		wp_enqueue_style( 'joinchat-admin' );
 
-		if ( $this->common->get_intltel() ) {
+		if ( jc_common()->get_intltel() ) {
 			wp_enqueue_style( 'intl-tel-input' );
 		}
 
@@ -258,8 +224,8 @@ class JoinchatAdmin {
 			$metadata
 		);
 
-		$placeholders = $this->common->get_obj_placeholders( $post );
-		$metabox_vars = $this->common->get_obj_vars( $post );
+		$placeholders = jc_common()->get_obj_placeholders( $post );
+		$metabox_vars = jc_common()->get_obj_vars( $post );
 
 		ob_start();
 		include __DIR__ . '/partials/post-meta-box.php';
@@ -345,7 +311,7 @@ class JoinchatAdmin {
 		wp_enqueue_script( 'joinchat-admin' );
 		wp_enqueue_style( 'joinchat-admin' );
 
-		if ( $this->common->get_intltel() ) {
+		if ( jc_common()->get_intltel() ) {
 			wp_enqueue_style( 'intl-tel-input' );
 		}
 
@@ -360,8 +326,8 @@ class JoinchatAdmin {
 			$metadata
 		);
 
-		$placeholders = $this->common->get_obj_placeholders( $term );
-		$metabox_vars = $this->common->get_obj_vars( $term );
+		$placeholders = jc_common()->get_obj_placeholders( $term );
+		$metabox_vars = jc_common()->get_obj_vars( $term );
 
 		ob_start();
 		include __DIR__ . '/partials/term-meta-box.php';
