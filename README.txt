@@ -369,6 +369,7 @@ Joinchat save two localStorage variables for proper operation:
 * CHANGE Optimized, only load translations in admin pages.
 * CHANGE All PHP class names replaced "JoinChat" with "Joinchat".
 * CHANGE Better styles when chatbox has scroll.
+* UPDATED International Telephone Input library (18.1.6).
 
 = 4.5.20 =
 * **NEW:** WooCommerce product variable {SKU} now works with variable products.
