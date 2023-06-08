@@ -194,11 +194,10 @@ class JoinchatAdminPage {
 
 			case 'advanced':
 				$sections = array(
-					'conversion' => array(
-						'gads' => '<label for="joinchat_gads">' . __( 'Google Ads Conversion', 'creame-whatsapp-me' ) . '</label>',
-					),
-					'css'        => array(
+					'global' => array(
+						'gads'       => '<label for="joinchat_gads">' . __( 'Google Ads Conversion', 'creame-whatsapp-me' ) . '</label>',
 						'custom_css' => __( 'Custom CSS', 'creame-whatsapp-me' ),
+						'clear'      => __( 'Clear on uninstall', 'creame-whatsapp-me' ),
 					),
 				);
 				break;
@@ -260,6 +259,7 @@ class JoinchatAdminPage {
 		$input['gads']          = sprintf( 'AW-%s/%s', $util::substr( $util::clean_input( $input['gads'][0] ), 0, 11 ), $util::substr( $util::clean_input( $input['gads'][1] ), 0, 20 ) );
 		$input['gads']          = 'AW-/' !== $input['gads'] ? $input['gads'] : '';
 		$input['custom_css']    = $input['custom_css'] !== jc_common()->defaults( 'custom_css' ) ? trim( $input['custom_css'] ) : '';
+		$input['clear']         = isset( $input['clear'] ) ? 'yes' : 'no';
 
 		if ( isset( $input['view'] ) ) {
 			$input['visibility'] = array_filter(
@@ -374,8 +374,8 @@ class JoinchatAdminPage {
 				$output = '<h2 class="title">' . __( 'Custom Post Types', 'creame-whatsapp-me' ) . '</h2>';
 				break;
 
-			case 'joinchat_tab_advanced__conversion':
-				$output = '<h2 class="title">' . __( 'Conversions', 'creame-whatsapp-me' ) . '</h2>';
+			case 'joinchat_tab_advanced__global':
+				$output = '<h2 class="title">' . __( 'Advanced Settings', 'creame-whatsapp-me' ) . '</h2>';
 				break;
 
 			default:
@@ -580,11 +580,22 @@ class JoinchatAdminPage {
 					if ( empty( $value ) ) {
 						$value = jc_common()->defaults( 'custom_css' );
 					}
+					$lang = false !== strpos( strtolower( get_locale() ), 'es' ) ? 'es' : 'en';
 
 					$output = '<fieldset><legend class="screen-reader-text"><span>' . __( 'Custom CSS', 'creame-whatsapp-me' ) . '</span></legend>' .
-						'<p><label for="joinchat_custom_css">' . __( 'Add your own CSS code here to customize the appearance of Joinchat.', 'creame-whatsapp-me' ) . '</label></p>' .
+						'<p><label for="joinchat_custom_css">' . __( 'Add your own CSS code here to customize the appearance of Joinchat.', 'creame-whatsapp-me' ) . ' ' .
+						sprintf( /* translators: %s: CSS tricks link. */
+							__( 'You can find examples and more tricks <a href="%s" target="_blank">here</a>.', 'creame-whatsapp-me' ),
+							esc_url( "https://join.chat/$lang/css/?utm_source=help&utm_medium=wpadmin&utm_campaign=v" . str_replace( '.', '_', JOINCHAT_VERSION ) )
+						) . '</label></p>' .
 						'<textarea id="joinchat_custom_css" name="joinchat[custom_css]" rows="3" class="regular-text autofill" placeholder="">' . esc_textarea( $value ) . '</textarea>' .
 						'</fieldset>';
+					break;
+
+				case 'clear':
+					$output = '<fieldset><legend class="screen-reader-text"><span>' . __( 'Clear on uninstall', 'creame-whatsapp-me' ) . '</span></legend>' .
+						'<label><input id="joinchat_clear" name="joinchat[clear]" value="yes" type="checkbox"' . checked( 'yes', $value, false ) . '> ' .
+						__( 'All Joinchat settings will be removed', 'creame-whatsapp-me' ) . '</label></fieldset>';
 					break;
 
 				default:

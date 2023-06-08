@@ -364,6 +364,7 @@ Joinchat save two localStorage variables for proper operation:
 = 5.0.0 =
 * **NEW:** Live Preview Panel on wp-admin settings page.
 * **NEW:** Custom CSS advanced field.
+* **NEW:** Added setting to clear all Joinchat data on uninstall.
 * CHANGE Replace QR generator library (reduces 13.9kB, 4.8kB gzipped).
 * CHANGE Optimized, only load translations in admin pages.
 * CHANGE All PHP class names replaced "JoinChat" with "Joinchat".

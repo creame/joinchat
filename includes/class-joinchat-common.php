@@ -133,6 +133,7 @@ class JoinchatCommon {
 			'optin_check'   => 'no',
 			'gads'          => '',
 			'custom_css'    => $default_css,
+			'clear'         => 'no',
 		);
 
 		$defaults = array_merge( $defaults, apply_filters( 'joinchat_extra_settings', array() ) );

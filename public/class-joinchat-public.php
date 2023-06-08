@@ -276,6 +276,7 @@ class JoinchatPublic {
 				'optin_check',
 				'qr_text',
 				'custom_css',
+				'clear',
 			)
 		);
 
