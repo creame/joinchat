@@ -28,6 +28,7 @@ class Joinchat_i18n {
 
 		if ( defined( 'WPML_PLUGIN_PATH' ) || defined( 'POLYLANG_VERSION' ) ) {
 
+			$loader->add_action( 'admin_notices', $this, 'settings_notice' );
 			$loader->add_action( 'joinchat_settings_validation', $this, 'settings_save', 10, 2 );
 			$loader->add_filter( 'joinchat_get_settings_site', $this, 'settings_load' );
 
@@ -78,6 +79,33 @@ class Joinchat_i18n {
 	}
 
 	/**
+	 * Show notice with default language info at Joinchat settings page
+	 *
+	 * @since 5.0.0
+	 * @return void
+	 */
+	public function settings_notice() {
+
+		if ( ! JoinchatUtil::is_admin_screen() || count( get_settings_errors( 'joinchat' ) ) ) {
+			return;
+		}
+
+		$spaces  = '&nbsp;&nbsp;';
+		$message = sprintf(
+			"<strong>%s$spaces%s (%s)</strong>$spaces%s$spaces<a href=\"%s\">%s</a>",
+			$this->default_language_flag(), // Flag <img>.
+			__( 'Default site language', 'creame-whatsapp-me' ),
+			esc_html( $this->default_language_name() ),
+			__( 'Settings are defined in the main language', 'creame-whatsapp-me' ),
+			esc_url( $this->translations_link() ),
+			__( 'Manage translations', 'creame-whatsapp-me' )
+		);
+
+		echo '<div class="notice notice-info"><p>' . $message . '</p></div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+
+	}
+
+	/**
 	 * Register strings for translation
 	 *
 	 * Register traslatable fields and show notice if has changes.
@@ -104,34 +132,23 @@ class Joinchat_i18n {
 		}
 
 		// Show notice with link to string translations.
-		if ( $translate_notice ) {
-
-			if ( defined( 'WPML_PLUGIN_PATH' ) ) {
-				$args = array(
-					'page'    => 'wpml-string-translation/menu/string-translation.php',
-					'context' => self::DOMAIN_GROUP,
-				);
-			} else {
-				$args = array(
-					'page'  => 'mlang_strings',
-					'group' => self::DOMAIN_GROUP,
-					'lang'  => 'all',
-				);
-			}
-
-			// Note: message is wrapped with <strong>...</strong> tags.
-			$message = sprintf(
-				'%s</strong>&nbsp;&nbsp;%s&nbsp;&nbsp;<strong><a href="%s">%s</a>',
-				/* translators: %s: site language. */
-				sprintf( __( 'Default site language (%s)', 'creame-whatsapp-me' ), strtoupper( $default_language ) ),
-				__( 'There are changes in fields that can be translated.', 'creame-whatsapp-me' ),
-				esc_url( add_query_arg( $args, admin_url( 'admin.php' ) ) ),
-				__( 'Check translations', 'creame-whatsapp-me' )
-			);
-
-			add_settings_error( 'joinchat', 'review_i18n', $message, 'info' );
-
+		if ( ! $translate_notice ) {
+			return;
 		}
+
+		// Note: message is wrapped with <strong>...</strong> tags.
+		$spaces  = '&nbsp;&nbsp;';
+		$message = sprintf(
+			"%s$spaces%s (%s)$spaces%s$spaces<a href=\"%s\" class=\"button\">%s</a>",
+			$this->default_language_flag(), // Flag <img>.
+			__( 'Default site language', 'creame-whatsapp-me' ),
+			esc_html( $this->default_language_name() ),
+			__( 'There are changes in fields that can be translated', 'creame-whatsapp-me' ),
+			esc_url( $this->translations_link() ),
+			__( 'Manage translations', 'creame-whatsapp-me' )
+		);
+
+		add_settings_error( 'joinchat', 'review_i18n', $message, 'warning' );
 
 	}
 
@@ -156,4 +173,79 @@ class Joinchat_i18n {
 
 	}
 
+	/**
+	 * Return strings translations url for WPML/Polylang
+	 *
+	 * @since 5.0.0
+	 * @return string
+	 */
+	private function translations_link() {
+
+		if ( defined( 'WPML_PLUGIN_PATH' ) ) {
+			// WPML.
+			$args = array(
+				'page'    => 'wpml-string-translation/menu/string-translation.php',
+				'context' => self::DOMAIN_GROUP,
+			);
+		} else {
+			// Polylang.
+			$args = array(
+				'page'  => 'mlang_strings',
+				'group' => self::DOMAIN_GROUP,
+				'lang'  => 'all',
+			);
+		}
+
+		return add_query_arg( $args, admin_url( 'admin.php' ) );
+
+	}
+
+	/**
+	 * Return default language name for WPML/Polylang
+	 *
+	 * @since 5.0.0
+	 * @return string
+	 */
+	private function default_language_name() {
+
+		if ( function_exists( 'pll_default_language' ) ) {
+			// Polylang.
+			$name = pll_default_language( 'name' );
+		} else {
+			// WPML.
+			$default_language = apply_filters( 'wpml_default_language', null );
+			$current_language = apply_filters( 'wpml_current_language', null );
+
+			$name = apply_filters( 'wpml_translated_language_name', null, $default_language, $current_language );
+		}
+
+		return $name;
+
+	}
+
+	/**
+	 * Return default language flag for WPML/Polylang
+	 *
+	 * @since 5.0.0
+	 * @return string
+	 */
+	private function default_language_flag() {
+
+		if ( function_exists( 'pll_the_languages' ) ) {
+			// Polylang.
+			$languages = pll_the_languages( array( 'raw' => 1 ) );
+			$language  = $languages[ pll_default_language() ];
+
+			$img = '<img src="' . esc_url( $language['flag'] ) . '" alt="' . esc_attr( $language['slug'] ) . '" height="11" width="16" />';
+		} else {
+			// WPML.
+			$languages = apply_filters( 'wpml_active_languages', null, array() );
+			$language  = $languages[ apply_filters( 'wpml_default_language', null ) ];
+
+			$img = '<img src="' . esc_url( $language['country_flag_url'] ) . '" alt="' . esc_attr( $language['language_code'] ) . '" height="12" width="18" />';
+		}
+
+		return $img;
+
+	}
 }
