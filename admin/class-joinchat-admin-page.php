@@ -17,20 +17,7 @@ class JoinchatAdminPage {
 	 * @access   private
 	 * @var      array    $tabs    Admin page tabs.
 	 */
-	private $tabs;
-
-	/**
-	 * Initialize the class and set its properties.
-	 *
-	 * @since    4.5.0
-	 * @param    string $plugin_name       The name of this plugin.
-	 * @param    string $version           The version of this plugin.
-	 */
-	public function __construct() {
-
-		$this->tabs = array();
-
-	}
+	private $tabs = array();
 
 	/**
 	 * Add menu to the options page in the WordPress admin
@@ -56,11 +43,11 @@ class JoinchatAdminPage {
 	/**
 	 * Initialize the settings for WordPress admin
 	 *
-	 * @since    4.5.0
+	 * @since    5.0.0 before named settings_init()
 	 * @access   public
 	 * @return   void
 	 */
-	public function settings_init() {
+	public function setting_fields() {
 
 		// Admin tabs.
 		$this->tabs = apply_filters(
@@ -71,9 +58,6 @@ class JoinchatAdminPage {
 				'advanced'   => __( 'Advanced', 'creame-whatsapp-me' ),
 			)
 		);
-
-		// Register WordPress 'joinchat' settings.
-		register_setting( JOINCHAT_SLUG, JOINCHAT_SLUG, array( $this, 'settings_validate' ) );
 
 		foreach ( $this->tabs as $tab => $tab_name ) {
 
@@ -101,6 +85,24 @@ class JoinchatAdminPage {
 
 			add_settings_section( "joinchat_tab_{$tab}_close", null, array( $this, 'settings_tab_close' ), JOINCHAT_SLUG );
 		}
+
+	}
+
+	/**
+	 * Add settings page hooks
+	 *
+	 * @since    5.0.0
+	 * @return void
+	 */
+	public function page_hooks() {
+
+		$this->help_tab();
+
+		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_assets' ) );
+		add_action( 'in_admin_header', array( $this, 'admin_header' ) );
+
+		add_filter( 'admin_title', array( $this, 'admin_title' ) );
+		add_filter( 'admin_footer_text', array( $this, 'admin_footer_text' ), PHP_INT_MAX );
 
 	}
 
@@ -208,85 +210,6 @@ class JoinchatAdminPage {
 
 		// Filter tab sections to add, remove or edit sections or fields.
 		return apply_filters( "joinchat_tab_{$tab}_sections", $sections );
-
-	}
-
-	/**
-	 * Validate settings, clean and set defaults before save
-	 *
-	 * @since    4.5.0
-	 * @param    array $input  contain keys 'id', 'title' and 'callback'.
-	 * @return   array
-	 */
-	public function settings_validate( $input ) {
-
-		// Prevent bad behavior when validate twice on first save
-		// bug (view https://core.trac.wordpress.org/ticket/21989).
-		if ( count( get_settings_errors( JOINCHAT_SLUG ) ) ) {
-			return $input;
-		}
-
-		$util = new JoinchatUtil(); // Shortcut.
-
-		$util::maybe_encode_emoji();
-
-		$input['telephone']     = $util::clean_input( $input['telephone'] );
-		$input['mobile_only']   = isset( $input['mobile_only'] ) ? 'yes' : 'no';
-		$input['button_image']  = intval( $input['button_image'] );
-		$input['button_tip']    = $util::substr( $util::clean_input( $input['button_tip'] ), 0, 40 );
-		$input['button_delay']  = intval( $input['button_delay'] );
-		$input['whatsapp_web']  = isset( $input['whatsapp_web'] ) ? 'yes' : 'no';
-		$input['qr']            = isset( $input['qr'] ) ? 'yes' : 'no';
-		$input['message_text']  = $util::clean_input( $input['message_text'] );
-		$input['message_badge'] = isset( $input['message_badge'] ) ? 'yes' : 'no';
-		$input['message_send']  = $util::clean_input( $input['message_send'] );
-		$input['message_start'] = $util::substr( $util::clean_input( $input['message_start'] ), 0, 40 );
-		$input['message_delay'] = intval( $input['message_delay'] );
-		$input['message_views'] = intval( $input['message_views'] ) ? intval( $input['message_views'] ) : 1;
-		$input['position']      = 'left' !== $input['position'] ? 'right' : 'left';
-		$input['color']         = preg_match( '/^#[a-f0-9]{6}$/i', $input['color'] ) ? $input['color'] : '#25d366';
-		$input['dark_mode']     = in_array( $input['dark_mode'], array( 'no', 'yes', 'auto' ), true ) ? $input['dark_mode'] : 'no';
-		$input['header']        = in_array( $input['header'], array( '__jc__', '__wa__' ), true ) ? $input['header'] : $util::substr( $util::clean_input( $input['header_custom'] ), 0, 40 );
-		$input['optin_check']   = isset( $input['optin_check'] ) ? 'yes' : 'no';
-		$input['optin_text']    = wp_kses(
-			$input['optin_text'],
-			array(
-				'em'     => true,
-				'strong' => true,
-				'a'      => array( 'href' => true ),
-			)
-		);
-		$input['gads']          = sprintf( 'AW-%s/%s', $util::substr( $util::clean_input( $input['gads'][0] ), 0, 11 ), $util::substr( $util::clean_input( $input['gads'][1] ), 0, 20 ) );
-		$input['gads']          = 'AW-/' !== $input['gads'] ? $input['gads'] : '';
-		$input['custom_css']    = $input['custom_css'] !== jc_common()->defaults( 'custom_css' ) ? trim( $input['custom_css'] ) : '';
-		$input['clear']         = isset( $input['clear'] ) ? 'yes' : 'no';
-
-		if ( isset( $input['view'] ) ) {
-			$input['visibility'] = array_filter(
-				$input['view'],
-				function( $v ) {
-					return 'yes' === $v || 'no' === $v;
-				}
-			);
-		}
-
-		// Clean input items that are not in settings.
-		$input = array_intersect_key( $input, jc_common()->settings );
-
-		// Filter for other validations or extra settings.
-		$input = apply_filters( 'joinchat_settings_validate', $input, jc_common()->settings );
-
-		add_settings_error( JOINCHAT_SLUG, 'settings_updated', __( 'Settings saved', 'creame-whatsapp-me' ), 'updated' );
-
-		// Delete notice option.
-		if ( $input['telephone'] ) {
-			delete_option( 'joinchat_notice_dismiss' );
-		}
-
-		// Extra actions on save.
-		do_action( 'joinchat_settings_validation', $input, jc_common()->settings );
-
-		return $input;
 
 	}
 
@@ -798,25 +721,37 @@ class JoinchatAdminPage {
 	 */
 	public function enqueue_assets( $hook ) {
 
-		if ( false === strpos( $hook, '_joinchat' ) ) {
-			return;
-		}
+		$handle = 'joinchat-admin';
+		$min    = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
+		$deps   = array( 'jquery', 'wp-color-picker' );
 
 		// Enqueue WordPress media scripts.
 		wp_enqueue_media();
-		// Enqueue assets.
-		wp_enqueue_script( 'joinchat-admin' );
-		wp_enqueue_style( 'joinchat-admin' );
+
+		// Enqueue styles.
+		wp_deregister_style( $handle );
+		wp_enqueue_style( $handle, plugins_url( "css/joinchat{$min}.css", __FILE__ ), array( 'wp-color-picker' ), JOINCHAT_VERSION, 'all' );
+
+		// Enqueue IntlTelInput assets
+		if ( jc_common()->get_intltel() ) {
+			$deps[] = 'intl-tel-input';
+			wp_enqueue_style( 'intl-tel-input' );
+		}
+
+		// Enqueue scripts.
+		$config = array(
+			'home'    => home_url(),
+			'example' => __( 'is an example, double click to use it', 'creame-whatsapp-me' ),
+		);
+
+		wp_deregister_script( $handle );
+		wp_enqueue_script( $handle, plugins_url( "js/joinchat-page{$min}.js", __FILE__ ), $deps, JOINCHAT_VERSION, true );
+		wp_add_inline_script( $handle, 'var joinchat_admin = ' . wp_json_encode( $config ) . ';' );
 
 		// Enqueue Custom CSS editor.
 		if ( function_exists( 'wp_enqueue_code_editor' ) ) {
 			$editor_settings = wp_enqueue_code_editor( array( 'type' => 'text/css' ) );
 			wp_add_inline_script( 'code-editor', 'var custom_css_settings = ' . wp_json_encode( $editor_settings ) . ';' );
-		}
-
-		// Enqueue IntlTelInput styles.
-		if ( jc_common()->get_intltel() ) {
-			wp_enqueue_style( 'intl-tel-input' );
 		}
 
 	}
@@ -830,10 +765,6 @@ class JoinchatAdminPage {
 	 */
 	public static function admin_title( $admin_title ) {
 
-		if ( ! JoinchatUtil::is_admin_screen() ) {
-			return $admin_title;
-		}
-
 		return sprintf( '%s &lsaquo; %s', __( 'Joinchat Settings', 'creame-whatsapp-me' ), get_bloginfo( 'name' ) );
 
 	}
@@ -845,11 +776,6 @@ class JoinchatAdminPage {
 	 * @return void
 	 */
 	public function admin_header() {
-
-		if ( ! JoinchatUtil::is_admin_screen() ) {
-			return;
-		}
-
 		?>
 		<div id="jcadminbar">
 			<div class="joinchat-header">
@@ -868,10 +794,6 @@ class JoinchatAdminPage {
 	 * @return string The content that will be printed.
 	 */
 	public function admin_footer_text( $footer_text ) {
-
-		if ( ! JoinchatUtil::is_admin_screen() ) {
-			return $footer_text;
-		}
 
 		return sprintf(
 			/* translators: 1: Joinchat, 2: Add review link. */

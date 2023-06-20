@@ -165,27 +165,25 @@ class Joinchat {
 
 		$plugin_admin = new JoinchatAdmin();
 
+		$this->loader->add_action( 'admin_init', $plugin_admin, 'register_setting' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'register_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'register_scripts' );
 		$this->loader->add_action( 'admin_notices', $plugin_admin, 'notices' );
 		$this->loader->add_action( 'wp_ajax_joinchat_notice_dismiss', $plugin_admin, 'ajax_notice_dismiss' );
 		$this->loader->add_action( 'add_meta_boxes', $plugin_admin, 'add_meta_boxes' );
-		$this->loader->add_action( 'admin_init', $plugin_admin, 'add_term_meta_boxes' );
+		$this->loader->add_action( 'load-term.php', $plugin_admin, 'add_term_meta_boxes' );
 		$this->loader->add_action( 'save_post', $plugin_admin, 'save_meta', 10, 2 );
 		$this->loader->add_action( 'update_option_joinchat', $plugin_admin, 'clear_cache', 100 );
+		// Plugins page.
 		$this->loader->add_filter( 'plugin_action_links_' . JOINCHAT_BASENAME, $plugin_admin, 'settings_link' );
 		$this->loader->add_filter( 'plugin_row_meta', $plugin_admin, 'plugin_links', 10, 2 );
 
 		$plugin_page = new JoinchatAdminPage();
 
-		$this->loader->add_action( 'admin_init', $plugin_page, 'settings_init' );
-		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_page, 'enqueue_assets' );
-		$this->loader->add_action( 'in_admin_header', $plugin_page, 'admin_header' );
 		$this->loader->add_action( 'admin_menu', $plugin_page, 'add_menu' );
-		$this->loader->add_action( 'load-settings_page_joinchat', $plugin_page, 'help_tab' );
-		$this->loader->add_action( 'load-toplevel_page_joinchat', $plugin_page, 'help_tab' );
-		$this->loader->add_filter( 'admin_title', $plugin_page, 'admin_title' );
-		$this->loader->add_filter( 'admin_footer_text', $plugin_page, 'admin_footer_text', PHP_INT_MAX );
+		$this->loader->add_action( 'admin_init', $plugin_page, 'setting_fields' );
+		$this->loader->add_action( 'load-settings_page_joinchat', $plugin_page, 'page_hooks' ); // Settings submenu.
+		$this->loader->add_action( 'load-toplevel_page_joinchat', $plugin_page, 'page_hooks' ); // Joinchat menu.
 
 	}
 
