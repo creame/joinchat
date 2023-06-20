@@ -43,7 +43,6 @@ class Joinchat {
 
 		$this->define_admin_hooks();
 		$this->define_public_hooks();
-
 		$this->define_premium_hooks();
 
 		// WordPress 5.9 or higher.
@@ -160,6 +159,7 @@ class Joinchat {
 
 		require_once JOINCHAT_DIR . 'admin/class-joinchat-admin.php';
 		require_once JOINCHAT_DIR . 'admin/class-joinchat-admin-page.php';
+		require_once JOINCHAT_DIR . 'admin/class-joinchat-admin-onboard.php';
 
 		$this->loader->add_filter( 'option_page_capability_joinchat', 'JoinchatUtil', 'capability' );
 
@@ -184,6 +184,14 @@ class Joinchat {
 		$this->loader->add_action( 'admin_init', $plugin_page, 'setting_fields' );
 		$this->loader->add_action( 'load-settings_page_joinchat', $plugin_page, 'page_hooks' ); // Settings submenu.
 		$this->loader->add_action( 'load-toplevel_page_joinchat', $plugin_page, 'page_hooks' ); // Joinchat menu.
+
+		$plugin_onboard = new JoinchatAdminOnboard();
+
+		$this->loader->add_action( 'admin_menu', $plugin_onboard, 'add_menu' );
+		$this->loader->add_action( 'admin_head', $plugin_onboard, 'remove_menu' );
+		$this->loader->add_action( 'load-settings_page_joinchat-onboard', $plugin_onboard, 'page_hooks' ); // Settings submenu.
+		$this->loader->add_action( 'load-joinchat_page_joinchat-onboard', $plugin_onboard, 'page_hooks' ); // Joinchat submenu.
+		$this->loader->add_action( 'wp_ajax_joinchat_onboard', $plugin_onboard, 'save' );
 
 	}
 

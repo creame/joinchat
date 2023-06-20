@@ -363,6 +363,7 @@ Joinchat save two localStorage variables for proper operation:
 
 = 5.0.0 =
 * **NEW:** Live Preview Panel on wp-admin settings page.
+* **NEW:** Onboarding page.
 * **NEW:** Custom CSS advanced field.
 * **NEW:** Added setting to clear all Joinchat data on uninstall.
 * **NEW:** Multi-language notice to inform about to set settings in main language.

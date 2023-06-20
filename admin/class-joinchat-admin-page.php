@@ -96,6 +96,18 @@ class JoinchatAdminPage {
 	 */
 	public function page_hooks() {
 
+		if ( isset( $_GET['onboard'] ) ) {
+			$is_onboard = true === filter_var( $_GET['onboard'], FILTER_VALIDATE_BOOL );
+		} else {
+			$is_onboard = jc_common()->settings === jc_common()->defaults();
+		}
+
+		// Redirect to onboard page.
+		if ( apply_filters( 'joinchat_onboard', $is_onboard ) ) {
+			wp_safe_redirect( add_query_arg( 'page', 'joinchat-onboard', admin_url( 'admin.php' ) ) );
+			return;
+		}
+
 		$this->help_tab();
 
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_assets' ) );
