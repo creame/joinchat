@@ -3,11 +3,9 @@
 /**
  * The preview functionality of the plugin.
  *
- * TODO: add docs
- *
  * @since      5.0.0
  * @package    Joinchat
- * @subpackage Joinchat/admin
+ * @subpackage Joinchat/public
  * @author     Creame <hola@crea.me>
  */
 class JoinchatPreview {
@@ -29,10 +27,11 @@ class JoinchatPreview {
 	}
 
 	/**
-	 * blank_template
+	 * Use blank template for preview
 	 *
-	 * @param  mixed $template
-	 * @return void
+	 * @since      5.0.0
+	 * @param  string $template
+	 * @return string
 	 */
 	public function blank_template( $template ) {
 
@@ -56,10 +55,11 @@ class JoinchatPreview {
 	}
 
 	/**
-	 * hide_admin_bar
+	 * Hide admin bar
 	 *
-	 * @param  mixed $show_admin_bar
-	 * @return void
+	 * @since      5.0.0
+	 * @param  bool $show_admin_bar
+	 * @return bool
 	 */
 	public function hide_admin_bar( $show_admin_bar ) {
 
@@ -68,10 +68,11 @@ class JoinchatPreview {
 	}
 
 	/**
-	 * always_show
+	 * Force to show Joinchat html
 	 *
-	 * @param  mixed $show
-	 * @return void
+	 * @since      5.0.0
+	 * @param  bool $show
+	 * @return bool
 	 */
 	public function always_show( $show ) {
 
@@ -101,6 +102,32 @@ class JoinchatPreview {
 	}
 
 	/**
+	 * Don't do nothing but ensures load Joinchat styles
+	 *
+	 * @since 5.0.0
+	 * @param  string $content
+	 * @return string
+	 */
+	public function preview_content( $content ) {
+
+		return $content;
+
+	}
+
+	/**
+	 * Change Joinchat html template
+	 *
+	 * @since 5.0.0
+	 * @param  string $classes
+	 * @return string
+	 */
+	public function preview_template( $template ) {
+
+		return str_replace( '/html.php', '/preview.php', $template );
+
+	}
+
+	/**
 	 * Ensure inline styles are present
 	 *
 	 * @since 5.0.0
@@ -109,7 +136,7 @@ class JoinchatPreview {
 	 */
 	public function inline_style( string $css ) {
 
-		return empty( $css ) ? 'a{}' : $css;
+		return empty( $css ) ? '/* preview */' : $css;
 
 	}
 
@@ -137,7 +164,25 @@ class JoinchatPreview {
 
 		global $wp_styles;
 
-		$wp_styles->queue = array_filter( $wp_styles->queue, function( $handle ) { return false !== strpos( $handle, 'joinchat' ); } ); // phpcs:ignore
+		$wp_styles->queue = array_filter( $wp_styles->queue, function( $handle ) { // phpcs:ignore
+			return false !== strpos( $handle, 'joinchat' );
+		} ); // phpcs:ignore
+
+	}
+
+	/**
+	 * Preview header actions
+	 *
+	 * @since 5.0.0
+	 * @return void
+	 */
+	public function preview_header() {
+
+		remove_action( 'wp_print_styles', 'print_emoji_styles' );
+
+		wp_enqueue_scripts();
+		wp_print_scripts();
+		wp_print_styles();
 
 	}
 }

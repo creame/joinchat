@@ -213,9 +213,9 @@ class Joinchat {
 		$this->loader->add_action( 'wp_footer', $plugin_public, 'footer_html' );
 		$this->loader->add_action( 'wp_footer', $plugin_public, 'enqueue_qr_script', 5 );
 
-		// Actions (only) for preview
-		$this->loader->add_action( 'preview_footer', $plugin_public, 'footer_html' );
-		$this->loader->add_action( 'preview_footer', $plugin_public, 'enqueue_qr_script', 5 );
+		// Actions (only) for preview.
+		$this->loader->add_action( 'joinchat_preview_footer', $plugin_public, 'footer_html' );
+		$this->loader->add_action( 'joinchat_preview_footer', $plugin_public, 'enqueue_qr_script', 5 );
 
 	}
 
@@ -238,7 +238,7 @@ class Joinchat {
 			return;
 		}
 
-		require_once JOINCHAT_DIR . 'admin/class-joinchat-preview.php';
+		require_once JOINCHAT_DIR . 'public/class-joinchat-preview.php';
 
 		$plugin_preview = new JoinchatPreview();
 
@@ -247,10 +247,13 @@ class Joinchat {
 		$this->loader->add_filter( 'show_admin_bar', $plugin_preview, 'hide_admin_bar', 1000 );
 		$this->loader->add_filter( 'joinchat_show', $plugin_preview, 'always_show', 1000 );
 		$this->loader->add_filter( 'joinchat_classes', $plugin_preview, 'preview_classes', 10, 2 );
+		$this->loader->add_filter( 'joinchat_content', $plugin_preview, 'preview_content' );
+		$this->loader->add_filter( 'joinchat_template', $plugin_preview, 'preview_template' );
 		$this->loader->add_filter( 'joinchat_inline_style', $plugin_preview, 'inline_style' );
 
 		$this->loader->add_action( 'wp_print_scripts', $plugin_preview, 'remove_all_scripts', 1000 );
 		$this->loader->add_action( 'wp_print_styles', $plugin_preview, 'remove_all_styles', 1000 );
+		$this->loader->add_action( 'joinchat_preview_header', $plugin_preview, 'preview_header' );
 
 	}
 

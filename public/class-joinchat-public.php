@@ -358,11 +358,11 @@ class JoinchatPublic {
 			$joinchat_classes[] = 'joinchat--btn';
 		}
 
-		$joinchat_classes = apply_filters( 'joinchat_classes', $joinchat_classes, $settings );
+		$joinchat_classes  = apply_filters( 'joinchat_classes', $joinchat_classes, $settings );
+		$joinchat_template = apply_filters( 'joinchat_template', __DIR__ . '/partials/html.php' );
 
 		ob_start();
-		$include = $is_preview ? 'preview' : 'html';
-		include __DIR__ . "/partials/$include.php";
+		include $joinchat_template;
 		$html_output = ob_get_clean();
 
 		echo apply_filters( 'joinchat_html_output', $html_output, $settings ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped

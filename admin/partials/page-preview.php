@@ -21,15 +21,14 @@ defined( 'WPINC' ) || exit;
 
 	<?php
 	// wp_head(); Don't run because only need Joinchat styles and scripts.
-
-	remove_action( 'wp_print_styles', 'print_emoji_styles' );
-
-	wp_enqueue_scripts();
-	wp_print_scripts();
-	wp_print_styles();
+	do_action( 'joinchat_preview_header' );
 	?>
 
 	<style id="joinchat-preview-inline-css">
+		body {
+			background: #fff;
+		}
+
 		.joinchat__tooltip.joinchat--show {
 			opacity: 1;
 			animation: none;
@@ -71,8 +70,7 @@ defined( 'WPINC' ) || exit;
 
 	<?php
 	// wp_footer(); Don't run because only want Joinchat actions.
-
-	do_action( 'preview_footer' );
+	do_action( 'joinchat_preview_footer' );
 	?>
 
 	<script>
@@ -88,7 +86,7 @@ defined( 'WPINC' ) || exit;
 				is_ready: false, // Change to true when Joinchat ends initialization
 				is_mobile: !!navigator.userAgent.match(/Android|iPhone|BlackBerry|IEMobile|Opera Mini/i),
 				can_qr: window.QrCreator && typeof QrCreator.render == 'function',
-			}, joinchat_obj);
+			}, joinchat_obj || {});
 			window.joinchat_obj = joinchat_obj; // Save global
 
 			joinchat_obj.$ = function(sel) {
@@ -169,6 +167,16 @@ defined( 'WPINC' ) || exit;
 				return canvas;
 			}
 
+			joinchat_obj.update_cta = function(str) {
+				str = str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;"); // Secure
+				str = str.replace(/(^|\W)_(.+?)_(\W|$)/gu, '$1<em>$2</em>$3');           // Italic
+				str = str.replace(/(^|\W)\*(.+?)\*(\W|$)/gu, '$1<strong>$2</strong>$3'); // Bold
+				str = str.replace(/(^|\W)~(.+?)~(\W|$)/gu, '$1<del>$2</del>$3');         // Strikethrough
+				str = str.replace(/\n/g, '<br>');                                        // New lines
+
+				this.$('.joinchat__message').html(str);
+			}
+
 			function joinchat_magic() {
 				joinchat_obj.$div.addClass('joinchat--show');
 
@@ -223,7 +231,7 @@ defined( 'WPINC' ) || exit;
 			$(window).on('load', once_page_ready);
 			document.addEventListener('DOMContentLoaded', once_page_ready);
 
-		}(jQuery, window, document, window.joinchat_obj || {}));
+		}(jQuery, window, document, window.joinchat_obj));
 	</script>
 </body>
 
