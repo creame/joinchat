@@ -365,4 +365,26 @@ class JoinchatUtil {
 		return null !== $current_screen && false !== strpos( $current_screen->id, '_joinchat' );
 
 	}
+
+	/**
+	 * Return link to https://join.chat with utm
+	 *
+	 * @since    5.0.0
+	 * @param  string $path
+	 * @param  string $utm_source
+	 * @return string
+	 */
+	public static function link( $path = '', $utm_source = '' ) {
+
+		$lang = false !== strpos( strtolower( get_locale() ), 'es' ) ? 'es' : 'en';
+		$path = empty( $path ) ? '' : trim( $path, '/' ) . '/';
+		$args = array(
+			'utm_source'   => $utm_source,
+			'utm_medium'   => 'wpadmin',
+			'utm_campaign' => 'v' . str_replace( '.', '_', JOINCHAT_VERSION ),
+		);
+
+		return add_query_arg( $args, "https://join.chat/$lang/$path" );
+
+	}
 }

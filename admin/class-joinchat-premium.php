@@ -11,15 +11,6 @@
 class JoinchatPremium {
 
 	/**
-	 * Initialize the class and set its properties.
-	 *
-	 * @since    5.0.0
-	 * @param    string $plugin_name       The name of this plugin.
-	 * @param    string $version           The version of this plugin.
-	 */
-	public function __construct() {}
-
-	/**
 	 * Add link to options page on plugins page
 	 *
 	 * @since    5.0.0
@@ -29,12 +20,9 @@ class JoinchatPremium {
 	 */
 	public function action_link( $links ) {
 
-		$utm  = '?utm_source=action&utm_medium=wpadmin&utm_campaign=v' . str_replace( '.', '_', JOINCHAT_VERSION );
-		$lang = false !== strpos( strtolower( get_locale() ), 'es' ) ? 'es' : 'en';
-
 		$links['premium'] = sprintf(
 			'<a href="%1$s" target="_blank" style="font-weight:bold;color:#f9603a;">%2$s</a>',
-			esc_url( "https://join.chat/$lang/premium/$utm" ),
+			esc_url( JoinchatUtil::link( 'premium', 'action' ) ),
 			esc_html__( 'Premium', 'creame-whatsapp-me' )
 		);
 
@@ -84,19 +72,13 @@ class JoinchatPremium {
 
 		switch ( $section_id ) {
 			case 'joinchat_tab_premium__info':
-				if ( false !== strpos( strtolower( get_locale() ), 'es' ) ) {
-					$link = 'https://join.chat/es/precio/?utm_source=cta&utm_medium=wpadmin&utm_campaign=v' . str_replace( '.', '_', JOINCHAT_VERSION );
-				} else {
-					$link = 'https://join.chat/en/pricing/?utm_source=cta&utm_medium=wpadmin&utm_campaign=v' . str_replace( '.', '_', JOINCHAT_VERSION );
-				}
-
 				$output = '<h2 class="title">' . __( 'Premium', 'creame-whatsapp-me' ) . '</h2>' .
 					'<p>' .
 						__( 'With <b>Joinchat Premium</b> you can enjoy exclusive features such as advanced Call to Action customization, multiple agents with scheduling of service hours, add other contact channels and much more.', 'creame-whatsapp-me' ) . ' ' .
 						__( 'In addition, you will receive specialized technical support to solve any questions or issues you may have.', 'creame-whatsapp-me' ) .
 					'</p>' .
 					'<p>' . __( 'Take your customer service to the next level with <b>Joinchat Premium</b>!', 'creame-whatsapp-me' ) . '</p>' .
-					'<p><a class="button" href="' . esc_url( $link ) . '" target="_blank">' . __( 'Go Premium', 'creame-whatsapp-me' ) . '</a></p>';
+					'<p><a class="button" href="' . esc_url( JoinchatUtil::link( 'pricing', 'cta' ) ) . '" target="_blank">' . __( 'Go Premium', 'creame-whatsapp-me' ) . '</a></p>';
 				break;
 
 			case 'joinchat_tab_premium__addons':
@@ -145,12 +127,9 @@ class JoinchatPremium {
 			),
 		);
 
-		$utm  = '?utm_source=upselltab&utm_medium=wpadmin&utm_campaign=v' . str_replace( '.', '_', JOINCHAT_VERSION );
-		$lang = false !== strpos( strtolower( get_locale() ), 'es' ) ? 'es' : 'en';
-
 		foreach ( $addons as $slug => $addon ) {
-			$addon['info']   = "https://join.chat/$lang/addons/$slug/$utm";
-			$addon['docs']   = "https://join.chat/$lang/docs/setting-up-$slug/$utm";
+			$addon['info']   = JoinchatUtil::link( "addons/$slug", 'upselltab' );
+			$addon['docs']   = JoinchatUtil::link( "docs/setting-up-$slug", 'upselltab' );
 			$addons[ $slug ] = $addon;
 		}
 

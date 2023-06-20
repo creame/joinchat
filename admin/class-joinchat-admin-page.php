@@ -503,13 +503,12 @@ class JoinchatAdminPage {
 					if ( empty( $value ) ) {
 						$value = jc_common()->defaults( 'custom_css' );
 					}
-					$lang = false !== strpos( strtolower( get_locale() ), 'es' ) ? 'es' : 'en';
 
 					$output = '<fieldset><legend class="screen-reader-text"><span>' . __( 'Custom CSS', 'creame-whatsapp-me' ) . '</span></legend>' .
 						'<p><label for="joinchat_custom_css">' . __( 'Add your own CSS code here to customize the appearance of Joinchat.', 'creame-whatsapp-me' ) . ' ' .
 						sprintf( /* translators: %s: CSS tricks link. */
 							__( 'You can find examples and more tricks <a href="%s" target="_blank">here</a>.', 'creame-whatsapp-me' ),
-							esc_url( "https://join.chat/$lang/css/?utm_source=help&utm_medium=wpadmin&utm_campaign=v" . str_replace( '.', '_', JOINCHAT_VERSION ) )
+							esc_url( JoinchatUtil::link( 'css', 'help' ) )
 						) . '</label></p>' .
 						'<textarea id="joinchat_custom_css" name="joinchat[custom_css]" rows="3" class="regular-text autofill" placeholder="">' . esc_textarea( $value ) . '</textarea>' .
 						'</fieldset>';
@@ -567,10 +566,6 @@ class JoinchatAdminPage {
 	 */
 	public function help_tab() {
 
-		$screen = get_current_screen();
-		$utm    = '?utm_source=helptab&utm_medium=wpadmin&utm_campaign=v' . str_replace( '.', '_', JOINCHAT_VERSION );
-		$lang   = false !== strpos( strtolower( get_locale() ), 'es' ) ? 'es' : 'en';
-
 		$help_tabs = array(
 			array(
 				'id'      => 'styles-and-vars',
@@ -619,9 +614,9 @@ class JoinchatAdminPage {
 					'<p>' . sprintf(
 						/* translators: 1: docs url, 2: wordpress.org plugin support url, 3: premium support url. */
 						__( 'If you need help, first review our <a href="%1$s" target="_blank">documentation</a> and if you don\'t find a solution check the <a href="%2$s" target="_blank">free plugin support forum</a> or buy our <a href="%3$s" target="_blank">premium support</a>.', 'creame-whatsapp-me' ),
-						esc_url( "https://join.chat/$lang/docs/$utm" ),
+						esc_url( JoinchatUtil::link( 'docs', 'helptab' ) ),
 						esc_url( 'https://wordpress.org/support/plugin/creame-whatsapp-me/' ),
-						esc_url( "https://my.join.chat/$utm" )
+						esc_url( JoinchatUtil::link( 'premium-support', 'helptab' ) )
 					) . '</p>' .
 					'<p>' . __( 'If you like Joinchat 😍', 'creame-whatsapp-me' ) . '</p>' .
 					'<ul>' .
@@ -633,7 +628,7 @@ class JoinchatAdminPage {
 					'<li>' . sprintf(
 						/* translators: %s: Joinchat page link. */
 						__( 'Subscribe to our newsletter and visit our blog at %s.', 'creame-whatsapp-me' ),
-						'<a href="https://join.chat/' . $utm . '" target="_blank">join.chat</a>'
+						'<a href="' . esc_url( JoinchatUtil::link( '', 'helptab' ) ) . '" target="_blank">join.chat</a>'
 					) . '</li>' .
 					'<li>' . sprintf(
 						/* translators: %s: Joinchat twitter link. */
@@ -643,6 +638,8 @@ class JoinchatAdminPage {
 					'</ul>',
 			),
 		);
+
+		$screen = get_current_screen();
 
 		foreach ( $help_tabs as $tab_data ) {
 			$tab_id = str_replace( '-', '_', $tab_data['id'] );

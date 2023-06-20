@@ -242,11 +242,8 @@ class JoinchatAdmin {
 	public function plugin_links( $plugin_meta, $plugin_file ) {
 
 		if ( JOINCHAT_BASENAME === $plugin_file ) {
-			$utm  = '?utm_source=plugins&utm_medium=wpadmin&utm_campaign=v' . str_replace( '.', '_', JOINCHAT_VERSION );
-			$lang = false !== strpos( strtolower( get_locale() ), 'es' ) ? 'es' : 'en';
-
-			$plugin_meta[] = sprintf( '<a href="%1$s" target="_blank">%2$s</a>', esc_url( "https://join.chat/$lang/docs/$utm" ), __( 'Documentation', 'creame-whatsapp-me' ) );
-			$plugin_meta[] = sprintf( '<a href="%1$s" target="_blank">%2$s</a>', esc_url( "https://join.chat/$lang/support/$utm" ), __( 'Support', 'creame-whatsapp-me' ) );
+			$plugin_meta[] = sprintf( '<a href="%1$s" target="_blank">%2$s</a>', esc_url( JoinchatUtil::link( 'docs', 'plugins' ) ), __( 'Documentation', 'creame-whatsapp-me' ) );
+			$plugin_meta[] = sprintf( '<a href="%1$s" target="_blank">%2$s</a>', esc_url( JoinchatUtil::link( 'support', 'plugins' ) ), __( 'Support', 'creame-whatsapp-me' ) );
 		}
 
 		return $plugin_meta;
