@@ -182,13 +182,11 @@ class Joinchat_i18n {
 	private function translations_link() {
 
 		if ( defined( 'WPML_PLUGIN_PATH' ) ) {
-			// WPML.
 			$args = array(
 				'page'    => 'wpml-string-translation/menu/string-translation.php',
 				'context' => self::DOMAIN_GROUP,
 			);
 		} else {
-			// Polylang.
 			$args = array(
 				'page'  => 'mlang_strings',
 				'group' => self::DOMAIN_GROUP,
@@ -208,15 +206,13 @@ class Joinchat_i18n {
 	 */
 	private function default_language_name() {
 
-		if ( function_exists( 'pll_default_language' ) ) {
-			// Polylang.
-			$name = pll_default_language( 'name' );
-		} else {
-			// WPML.
+		if ( defined( 'WPML_PLUGIN_PATH' ) ) {
 			$default_language = apply_filters( 'wpml_default_language', null );
 			$current_language = apply_filters( 'wpml_current_language', null );
 
 			$name = apply_filters( 'wpml_translated_language_name', null, $default_language, $current_language );
+		} else {
+			$name = pll_default_language( 'name' );
 		}
 
 		return $name;
@@ -231,18 +227,16 @@ class Joinchat_i18n {
 	 */
 	private function default_language_flag() {
 
-		if ( function_exists( 'pll_the_languages' ) ) {
-			// Polylang.
-			$languages = pll_the_languages( array( 'raw' => 1 ) );
-			$language  = $languages[ pll_default_language() ];
-
-			$img = '<img src="' . esc_url( $language['flag'] ) . '" alt="' . esc_attr( $language['slug'] ) . '" height="11" width="16" />';
-		} else {
-			// WPML.
+		if ( defined( 'WPML_PLUGIN_PATH' ) ) {
 			$languages = apply_filters( 'wpml_active_languages', null, array() );
 			$language  = $languages[ apply_filters( 'wpml_default_language', null ) ];
 
 			$img = '<img src="' . esc_url( $language['country_flag_url'] ) . '" alt="' . esc_attr( $language['language_code'] ) . '" height="12" width="18" />';
+		} else {
+			$languages = pll_the_languages( array( 'raw' => 1 ) );
+			$language  = $languages[ pll_default_language() ];
+
+			$img = '<img src="' . esc_url( $language['flag'] ) . '" alt="' . esc_attr( $language['slug'] ) . '" height="11" width="16" />';
 		}
 
 		return $img;

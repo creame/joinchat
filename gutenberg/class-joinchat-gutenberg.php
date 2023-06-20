@@ -12,16 +12,6 @@
 class JoinchatGutenberg {
 
 	/**
-	 * Initialize the class and set its properties.
-	 *
-	 * @since    4.5.0
-	 * @param    string $plugin_name       The name of the plugin.
-	 * @param    string $version    The version of this plugin.
-	 * @return   void
-	 */
-	public function __construct() {}
-
-	/**
 	 * Register the stylesheets for the gutenberg editor
 	 *
 	 * @since    4.5.0
