@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Joinchat public html template
  *
@@ -49,7 +48,7 @@ defined( 'WPINC' ) || exit;
 				<?php elseif ( '' !== $settings['header'] ) : ?>
 					<span class="joinchat__header__text"><?php echo esc_html( $settings['header'] ); ?></span>
 				<?php endif; ?>
-				<div class="joinchat__close" title="<?php esc_attr_e( 'Close' ); ?>"></div>
+				<div class="joinchat__close" title="<?php esc_attr_e( 'Close' ); // phpcs:ignore WordPress.WP.I18n.MissingArgDomain ?>"></div>
 			</div>
 			<div class="joinchat__box__scroll">
 				<div class="joinchat__box__content">

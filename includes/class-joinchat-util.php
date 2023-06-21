@@ -370,8 +370,8 @@ class JoinchatUtil {
 	 * Return link to https://join.chat with utm
 	 *
 	 * @since    5.0.0
-	 * @param  string $path
-	 * @param  string $utm_source
+	 * @param  string $path        URL path after join.chat/lang/.
+	 * @param  string $utm_source  utm_source param.
 	 * @return string
 	 */
 	public static function link( $path = '', $utm_source = '' ) {

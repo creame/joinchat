@@ -11,7 +11,7 @@
  * @subpackage Joinchat/includes
  * @author     Creame <hola@crea.me>
  */
-class Joinchat_i18n {
+class Joinchat_I18n {
 
 	const DOMAIN_GROUP = 'Join.chat'; // TODO: in future change to "Joinchat".
 

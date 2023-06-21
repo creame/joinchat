@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Joinchat preview blank html
  *

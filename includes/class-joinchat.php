@@ -94,7 +94,7 @@ class Joinchat {
 	 */
 	private function set_locale() {
 
-		$plugin_i18n = new Joinchat_i18n( $this->loader );
+		$plugin_i18n = new Joinchat_I18n( $this->loader );
 
 	}
 

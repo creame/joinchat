@@ -21,19 +21,19 @@ if ( isset( $option['clear'] ) && $option['clear'] ) {
 
 	global $wpdb;
 
-	// Delete general option 'joinchat' added by plugin
+	// Delete general option 'joinchat' added by plugin.
 	delete_option( 'joinchat' );
 	delete_option( 'joinchat_notice_dismiss' );
 
-	// Delete post meta '_joinchat' added by plugin
+	// Delete post meta '_joinchat' added by plugin.
 	$wpdb->delete( $wpdb->prefix . 'postmeta', array( 'meta_key' => '_joinchat' ) );
 
-	// Delete term meta '_joinchat' added by plugin
+	// Delete term meta '_joinchat' added by plugin.
 	$wpdb->delete( $wpdb->prefix . 'termmeta', array( 'meta_key' => '_joinchat' ) );
 
-	// TODO: delete WPML/Polylang translations
+	// TODO: delete WPML/Polylang translations.
 
-	// Clear any cached data that has been removed
+	// Clear any cached data that has been removed.
 	wp_cache_flush();
 
 }

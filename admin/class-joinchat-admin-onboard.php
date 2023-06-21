@@ -97,12 +97,12 @@ class JoinchatAdminOnboard {
 	 * Update admin title
 	 *
 	 * @since    5.0.0
-	 * @param    string $admin_title  current admin title
+	 * @param    string $admin_title  current admin title.
 	 * @return   string
 	 */
 	public static function admin_title( $admin_title ) {
 
-		return sprintf( '%s &lsaquo; %s', __( 'Welcome to Joinchat', 'creame-whastapp-me' ), get_bloginfo( 'name' ) );
+		return sprintf( '%s &lsaquo; %s', __( 'Welcome to Joinchat', 'creame-whatsapp-me' ), get_bloginfo( 'name' ) );
 
 	}
 
@@ -151,7 +151,7 @@ class JoinchatAdminOnboard {
 		// Enqueue styles.
 		wp_enqueue_style( $handle, plugins_url( "css/joinchat-onboard{$min}.css", __FILE__ ), array(), JOINCHAT_VERSION, 'all' );
 
-		// Enqueue IntlTelInput assets
+		// Enqueue IntlTelInput assets.
 		if ( jc_common()->get_intltel() ) {
 			$deps[] = 'intl-tel-input';
 			wp_enqueue_style( 'intl-tel-input' );
@@ -233,7 +233,7 @@ class JoinchatAdminOnboard {
 				'https://eu5-api.connectif.cloud:443/integration-type/system/scrippet-notification/03362af2-f194-457a-a5c7-5b7d94f29cb6?eventId=64903bd547fb425e8608f3b3',
 				array(
 					'headers' => array( 'Content-Type' => 'application/json' ),
-					'body'    => json_encode( $body ),
+					'body'    => wp_json_encode( $body ),
 					'timeout' => 15,
 				)
 			);

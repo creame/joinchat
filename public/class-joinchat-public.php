@@ -30,8 +30,6 @@ class JoinchatPublic {
 	 * @since    2.0.0     Added visibility setting
 	 * @since    2.1.0     Added message_badge
 	 * @since    2.3.0     Added button_delay and whatsapp_web settings, message_delay in seconds
-	 * @param    string $plugin_name       The name of the plugin.
-	 * @param    string $version    The version of this plugin.
 	 * @return   void
 	 */
 	public function __construct() {
@@ -47,7 +45,7 @@ class JoinchatPublic {
 	 * @since    2.3.0   Fix global $post incorrect post id on loops. WPML integration.
 	 * @since    3.0.0   New filters.
 	 * @since    5.0.0   Work as a filter for JoinchatCommon->load_settings()
-	 * @param    array $settings    Raw settings
+	 * @param    array $settings    Raw settings.
 	 * @return   array   Front prepared settings for current page
 	 */
 	public function get_settings( $settings ) {
@@ -139,15 +137,15 @@ class JoinchatPublic {
 
 		wp_enqueue_style( JOINCHAT_SLUG, plugins_url( "css/{$file}{$min}.css", __FILE__ ), array(), JOINCHAT_VERSION, 'all' );
 
-		if ( $file === JOINCHAT_SLUG ) {
+		if ( JOINCHAT_SLUG === $file ) {
 			$inline_css = '';
 
-			if ( $settings['color'] !== jc_common()->defaults( 'color' ) ) {
+			if ( jc_common()->defaults( 'color' ) !== $settings['color'] ) {
 				list($r, $g, $b) = sscanf( $settings['color'], '#%02x%02x%02x' );
 				$inline_css     .= ".joinchat{ --red:$r; --green:$g; --blue:$b; }";
 			}
 
-			if ( ! empty( $settings['custom_css'] ) && $settings['custom_css'] !== jc_common()->defaults( 'custom_css' ) ) {
+			if ( ! empty( $settings['custom_css'] ) && jc_common()->defaults( 'custom_css' ) !== $settings['custom_css'] ) {
 				// Note that esc_html() cannot be used because `div &gt; span`.
 				$inline_css .= strip_tags( $settings['custom_css'] );
 			}

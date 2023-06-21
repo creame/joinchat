@@ -1,6 +1,7 @@
 <?php
-
 /**
+ * Connect WordPress with WhatsApp
+ *
  * @link              https://crea.me
  * @since             1.0.0
  * @package           Joinchat

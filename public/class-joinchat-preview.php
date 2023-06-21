@@ -30,7 +30,7 @@ class JoinchatPreview {
 	 * Use blank template for preview
 	 *
 	 * @since      5.0.0
-	 * @param  string $template
+	 * @param  string $template current template.
 	 * @return string
 	 */
 	public function blank_template( $template ) {
@@ -58,7 +58,7 @@ class JoinchatPreview {
 	 * Hide admin bar
 	 *
 	 * @since      5.0.0
-	 * @param  bool $show_admin_bar
+	 * @param  bool $show_admin_bar Should show admin admin bar.
 	 * @return bool
 	 */
 	public function hide_admin_bar( $show_admin_bar ) {
@@ -71,7 +71,7 @@ class JoinchatPreview {
 	 * Force to show Joinchat html
 	 *
 	 * @since      5.0.0
-	 * @param  bool $show
+	 * @param  bool $show Should show Joinchat.
 	 * @return bool
 	 */
 	public function always_show( $show ) {
@@ -84,8 +84,8 @@ class JoinchatPreview {
 	 * Add preview classes
 	 *
 	 * @since 5.0.0
-	 * @param  array $classes
-	 * @param  array $settings
+	 * @param  array $classes  Current Joinchat classes.
+	 * @param  array $settings Current Joinchat settings.
 	 * @return array
 	 */
 	public function preview_classes( $classes, $settings ) {
@@ -105,7 +105,7 @@ class JoinchatPreview {
 	 * Don't do nothing but ensures load Joinchat styles
 	 *
 	 * @since 5.0.0
-	 * @param  string $content
+	 * @param  string $content Joinchat html string.
 	 * @return string
 	 */
 	public function preview_content( $content ) {
@@ -118,7 +118,7 @@ class JoinchatPreview {
 	 * Change Joinchat html template
 	 *
 	 * @since 5.0.0
-	 * @param  string $classes
+	 * @param  string $template Joinchat html template path.
 	 * @return string
 	 */
 	public function preview_template( $template ) {
