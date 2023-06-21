@@ -174,7 +174,7 @@
       this.$last_msg.remove();
       this.reply(option.text);
       this.loading();
-      $.post(ajaxurl, { action: 'joinchat_settings', nonce: joinchat_settings.nonce, data: this.saved }, null, 'json')
+      $.post(ajaxurl, { action: 'joinchat_onboard', nonce: joinchat_settings.nonce, data: this.saved }, null, 'json')
         .always(function () { that.$last_msg.remove(); })
         .done(function () { that.loadStep(that.step_number + 1); })
         .fail(function () { that.loadStep(that.step_number + 2); });
