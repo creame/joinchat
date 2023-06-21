@@ -4,7 +4,6 @@
   position: relative;
   min-height: 50px;
   background: #fff;
-  -webkit-filter: drop-shadow(0 0px 2px #0003);
   filter: drop-shadow(0 0px 2px #0003);
 }
 
@@ -145,6 +144,8 @@
 
 .joinchat__dialog .joinchat__message--reply {
   transform-origin: 100% 50%;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
   width: fit-content;
   margin-left: auto;
   margin-right: 26px;

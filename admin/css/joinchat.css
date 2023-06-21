@@ -42,8 +42,6 @@
 }
 
 #joinchat_tab_visibility input[type=radio]+span {
-  -webkit-transition: all 200ms;
-  -o-transition: all 200ms;
   transition: all 200ms;
 }
 
@@ -97,15 +95,13 @@
   position: absolute;
   top: 0;
   left: 0;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+  box-sizing: border-box;
   width: 60px;
   height: 60px;
   border: 1px solid #25d366;
   border-radius: 50%;
   background: #25d366 var(--joinchat-ico) no-repeat center;
-  -webkit-box-shadow: 1px 6px 24px 0 rgba(7, 94, 84, .24);
-          box-shadow: 1px 6px 24px 0 rgba(7, 94, 84, .24);
+  box-shadow: 1px 6px 24px 0 rgba(7, 94, 84, .24);
   overflow: hidden;
 }
 
@@ -124,23 +120,18 @@
   font-weight: normal;
   line-height: 1.9;
   opacity: 0;
-  -webkit-transition: opacity 0.2s ease-out 0.2s;
-  -o-transition: opacity 0.2s ease-out 0.2s;
   transition: opacity 0.2s ease-out 0.2s;
 }
 
 tr:hover .joinchat_vars_help,
 tr.joinchat--focus .joinchat_vars_help {
   opacity: 1;
-  -webkit-transition-delay: 0.5s;
-       -o-transition-delay: 0.5s;
-          transition-delay: 0.5s;
+  transition-delay: 0.5s;
 }
 
 .joinchat_vars_help code {
   -webkit-user-select: all;
   -moz-user-select: all;
-  -ms-user-select: all;
   user-select: all;
   padding: 2px 1px;
   font-size: inherit;
@@ -183,15 +174,13 @@ tr.joinchat--focus .joinchat_vars_help {
   background-color: #fff;
   color: #2c3338;
   line-height: 2;
-  -webkit-box-shadow: 0 0 0 transparent;
-          box-shadow: 0 0 0 transparent;
+  box-shadow: 0 0 0 transparent;
   cursor: text;
 }
 
 .joinchat-gads:focus-within {
   border-color: #2271b1;
-  -webkit-box-shadow: 0 0 0 1px #2271b1;
-          box-shadow: 0 0 0 1px #2271b1;
+  box-shadow: 0 0 0 1px #2271b1;
   outline: 2px solid transparent;
 }
 
@@ -218,7 +207,6 @@ tr.joinchat--focus .joinchat_vars_help {
 .settings_page_joinchat .help-tab-content code {
   -webkit-user-select: all;
   -moz-user-select: all;
-  -ms-user-select: all;
   user-select: all;
 }
 
@@ -233,7 +221,6 @@ tr.joinchat--focus .joinchat_vars_help {
 .joinchat-metabox code {
   -webkit-user-select: all;
   -moz-user-select: all;
-  -ms-user-select: all;
   user-select: all;
   padding: 2px 1px;
   font-size: smaller;
@@ -244,19 +231,7 @@ tr.joinchat--focus .joinchat_vars_help {
   opacity: .5;
 }
 
-.joinchat-metabox input::-webkit-input-placeholder {
-  color: #dedfe0;
-}
-
 .joinchat-metabox input::-moz-placeholder {
-  color: #dedfe0;
-}
-
-.joinchat-metabox input:-ms-input-placeholder {
-  color: #dedfe0;
-}
-
-.joinchat-metabox input::-ms-input-placeholder {
   color: #dedfe0;
 }
 
@@ -274,8 +249,6 @@ tr.joinchat--focus .joinchat_vars_help {
 
 .joinchat-metabox input[type=radio]+span {
   margin-right: 5px;
-  -webkit-transition: all 200ms;
-  -o-transition: all 200ms;
   transition: all 200ms;
 }
 
@@ -309,8 +282,7 @@ tr.joinchat--focus .joinchat_vars_help {
   position: relative;
   min-height: 50px;
   background: #fff;
-  -webkit-filter: drop-shadow(0 0px 2px #0003);
-          filter: drop-shadow(0 0px 2px #0003);
+  filter: drop-shadow(0 0px 2px #0003);
 }
 
 #jcadminbar:before {
@@ -355,6 +327,7 @@ tr.joinchat--focus .joinchat_vars_help {
 /* Preview */
 
 .joinchat_preview_control {
+  position: -webkit-sticky;
   position: sticky;
   z-index: 10;
   top: 30px;
@@ -363,7 +336,7 @@ tr.joinchat--focus .joinchat_vars_help {
 }
 
 #joinchat_preview_show {
-  margin-top: 20px;
+  margin-top: 10px;
   vertical-align: top;
 }
 
@@ -380,6 +353,7 @@ tr.joinchat--focus .joinchat_vars_help {
 #joinchatprev {
   display: none;
   position: fixed;
+  z-index: 6;
   top: 0;
   right: 0;
   bottom: 0;
@@ -451,4 +425,28 @@ body.jcpreview-resize #joinchatprev__resize {
 [dir=rtl] #joinchatprev__resize {
   left: auto;
   right: 0;
+}
+
+@media screen and (max-width: 782px) {
+  :root {
+    --preview-width: 0 !important;
+  }
+
+  #joinchatprev {
+    width: 100%;
+  }
+
+  #joinchat_preview_show {
+    margin-top: 20px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .joinchat_preview_control {
+    top: 0;
+  }
+
+  #joinchat_preview_show {
+    margin-top: 10px;
+  }
 }
