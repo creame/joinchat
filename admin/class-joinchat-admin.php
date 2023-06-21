@@ -35,55 +35,56 @@ class JoinchatAdmin {
 	 * Validate settings, clean and set defaults before save
 	 *
 	 * @since    5.0.0 (before on JoinchatAdminPage->settings_validate())
-	 * @param    array $input  contain keys 'id', 'title' and 'callback'.
+	 * @param    array $value  contain keys 'id', 'title' and 'callback'.
 	 * @return   array
 	 */
-	public function setting_validate( $input ) {
+	public function setting_validate( $value ) {
 
 		// Prevent bad behavior when validate twice on first save
 		// bug (view https://core.trac.wordpress.org/ticket/21989).
 		if ( count( get_settings_errors( JOINCHAT_SLUG ) ) ) {
-			return $input;
+			return $value;
 		}
 
 		$util = new JoinchatUtil(); // Shortcut.
 
 		$util::maybe_encode_emoji();
 
-		$input['telephone']     = $util::clean_input( $input['telephone'] );
-		$input['mobile_only']   = isset( $input['mobile_only'] ) ? 'yes' : 'no';
-		$input['button_image']  = intval( $input['button_image'] );
-		$input['button_tip']    = $util::substr( $util::clean_input( $input['button_tip'] ), 0, 40 );
-		$input['button_delay']  = intval( $input['button_delay'] );
-		$input['whatsapp_web']  = isset( $input['whatsapp_web'] ) ? 'yes' : 'no';
-		$input['qr']            = isset( $input['qr'] ) ? 'yes' : 'no';
-		$input['message_text']  = $util::clean_input( $input['message_text'] );
-		$input['message_badge'] = isset( $input['message_badge'] ) ? 'yes' : 'no';
-		$input['message_send']  = $util::clean_input( $input['message_send'] );
-		$input['message_start'] = $util::substr( $util::clean_input( $input['message_start'] ), 0, 40 );
-		$input['message_delay'] = intval( $input['message_delay'] );
-		$input['message_views'] = intval( $input['message_views'] ) ? intval( $input['message_views'] ) : 1;
-		$input['position']      = 'left' !== $input['position'] ? 'right' : 'left';
-		$input['color']         = preg_match( '/^#[a-f0-9]{6}$/i', $input['color'] ) ? $input['color'] : '#25d366';
-		$input['dark_mode']     = in_array( $input['dark_mode'], array( 'no', 'yes', 'auto' ), true ) ? $input['dark_mode'] : 'no';
-		$input['header']        = in_array( $input['header'], array( '__jc__', '__wa__' ), true ) ? $input['header'] : $util::substr( $util::clean_input( $input['header_custom'] ), 0, 40 );
-		$input['optin_check']   = isset( $input['optin_check'] ) ? 'yes' : 'no';
-		$input['optin_text']    = wp_kses(
-			$input['optin_text'],
+		$value['telephone']     = $util::clean_input( $value['telephone'] );
+		$value['mobile_only']   = isset( $value['mobile_only'] ) ? 'yes' : 'no';
+		$value['button_image']  = intval( $value['button_image'] );
+		$value['button_tip']    = $util::substr( $util::clean_input( $value['button_tip'] ), 0, 40 );
+		$value['button_delay']  = intval( $value['button_delay'] );
+		$value['whatsapp_web']  = isset( $value['whatsapp_web'] ) ? 'yes' : 'no';
+		$value['qr']            = isset( $value['qr'] ) ? 'yes' : 'no';
+		$value['message_text']  = $util::clean_input( $value['message_text'] );
+		$value['message_badge'] = isset( $value['message_badge'] ) ? 'yes' : 'no';
+		$value['message_send']  = $util::clean_input( $value['message_send'] );
+		$value['message_start'] = $util::substr( $util::clean_input( $value['message_start'] ), 0, 40 );
+		$value['message_delay'] = intval( $value['message_delay'] );
+		$value['message_views'] = intval( $value['message_views'] ) ? intval( $value['message_views'] ) : 1;
+		$value['position']      = 'left' !== $value['position'] ? 'right' : 'left';
+		$value['color']         = preg_match( '/^#[a-f0-9]{6}$/i', $value['color'] ) ? $value['color'] : '#25d366';
+		$value['dark_mode']     = in_array( $value['dark_mode'], array( 'no', 'yes', 'auto' ), true ) ? $value['dark_mode'] : 'no';
+		$value['header']        = in_array( $value['header'], array( '__jc__', '__wa__' ), true ) ? $value['header'] : $util::substr( $util::clean_input( $value['header_custom'] ), 0, 40 );
+		$value['optin_check']   = isset( $value['optin_check'] ) ? 'yes' : 'no';
+		$value['optin_text']    = wp_kses(
+			$value['optin_text'],
 			array(
 				'em'     => true,
 				'strong' => true,
 				'a'      => array( 'href' => true ),
 			)
 		);
-		$input['gads']          = is_array( $input['gads'] ) ? sprintf( 'AW-%s/%s', $util::substr( $util::clean_input( $input['gads'][0] ), 0, 11 ), $util::substr( $util::clean_input( $input['gads'][1] ), 0, 20 ) ) : '';
-		$input['gads']          = 'AW-/' !== $input['gads'] ? $input['gads'] : '';
-		$input['custom_css']    = $input['custom_css'] !== jc_common()->defaults( 'custom_css' ) ? trim( $input['custom_css'] ) : '';
-		$input['clear']         = isset( $input['clear'] ) ? 'yes' : 'no';
+		$value['gads']          = is_array( $value['gads'] ) ? sprintf( 'AW-%s/%s', $util::substr( $util::clean_input( $value['gads'][0] ), 0, 11 ), $util::substr( $util::clean_input( $value['gads'][1] ), 0, 20 ) ) : '';
+		$value['gads']          = 'AW-/' !== $value['gads'] ? $value['gads'] : '';
+		$value['custom_css']    = trim( str_replace( "\r\n", "\n", $value['custom_css'] ) );
+		$value['custom_css']    = $value['custom_css'] !== jc_common()->defaults( 'custom_css' ) ? $value['custom_css'] : '';
+		$value['clear']         = isset( $value['clear'] ) ? 'yes' : 'no';
 
-		if ( isset( $input['view'] ) ) {
-			$input['visibility'] = array_filter(
-				$input['view'],
+		if ( isset( $value['view'] ) ) {
+			$value['visibility'] = array_filter(
+				$value['view'],
 				function( $v ) {
 					return 'yes' === $v || 'no' === $v;
 				}
@@ -91,22 +92,22 @@ class JoinchatAdmin {
 		}
 
 		// Clean input items that are not in settings.
-		$input = array_intersect_key( $input, jc_common()->settings );
+		$value = array_intersect_key( $value, jc_common()->settings );
 
 		// Filter for other validations or extra settings.
-		$input = apply_filters( 'joinchat_settings_validate', $input, jc_common()->settings );
+		$value = apply_filters( 'joinchat_settings_validate', $value, jc_common()->settings );
 
 		add_settings_error( JOINCHAT_SLUG, 'settings_updated', __( 'Settings saved', 'creame-whatsapp-me' ), 'updated' );
 
 		// Delete notice option.
-		if ( $input['telephone'] ) {
+		if ( $value['telephone'] ) {
 			delete_option( 'joinchat_notice_dismiss' );
 		}
 
 		// Extra actions on save.
-		do_action( 'joinchat_settings_validation', $input, jc_common()->settings );
+		do_action( 'joinchat_settings_validation', $value, jc_common()->settings );
 
-		return $input;
+		return $value;
 
 	}
 
