@@ -233,10 +233,10 @@ class Joinchat_i18n {
 
 			$img = '<img src="' . esc_url( $language['country_flag_url'] ) . '" alt="' . esc_attr( $language['language_code'] ) . '" height="12" width="18" />';
 		} else {
-			$languages = pll_the_languages( array( 'raw' => 1 ) );
+			$languages = pll_the_languages( array( 'raw' => 1, 'show_flags' => 1 ) ); // phpcs:ignore WordPress.Arrays.ArrayDeclarationSpacing.AssociativeArrayFound
 			$language  = $languages[ pll_default_language() ];
 
-			$img = '<img src="' . esc_url( $language['flag'] ) . '" alt="' . esc_attr( $language['slug'] ) . '" height="11" width="16" />';
+			$img = $language['flag'];
 		}
 
 		return $img;
