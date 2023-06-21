@@ -413,9 +413,9 @@
       tinymce.get('joinchat_optin_text').on('change', update_optin);
       $('#joinchat_optin_check').on('change', update_optin);
 
-      // Custom CSS
+      // Custom CSS (strip tags)
       custom_css_editor.codemirror.on('change', function (ed) {
-        $('#joinchat_preview')[0].contentDocument.getElementById('joinchat-inline-css').innerHTML = ed.getValue();
+        $('#joinchat_preview')[0].contentDocument.getElementById('joinchat-inline-css').innerHTML = ed.getValue().replace(/(<([^>]+)>)/gi, "");
       });
 
       // Trigger change to force updated settings on preview
