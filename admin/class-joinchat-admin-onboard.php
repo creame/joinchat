@@ -167,7 +167,7 @@ class JoinchatAdminOnboard {
 		);
 
 		$l10n = array(
-			'step_hi'         => sprintf(
+			'step_hi'         => sprintf( /* translators: %s: User display name. */
 				__( "Hey, <em>%s</em>. Let's set up <strong>Joinchat</strong> in less than 2 minutes.", 'creame-whatsapp-me' ),
 				$user->display_name
 			),
@@ -185,7 +185,7 @@ class JoinchatAdminOnboard {
 			'step_cta_yes'    => __( 'Continue with this text', 'creame-whatsapp-me' ),
 			'step_cta_no'     => __( "I don't want a CTA", 'creame-whatsapp-me' ),
 			'step_news'       => __( 'Finally, do you want us to send you tips to improve conversion with <strong>Joinchat</strong>?', 'creame-whatsapp-me' ),
-			'step_news_terms' => sprintf(
+			'step_news_terms' => sprintf( /* translators: %s: Terms of Use link. */
 				__( 'I accept the <a href="%s" target="_blank">terms of use and privacy policy</a>', 'creame-whatsapp-me' ),
 				esc_url( JoinchatUtil::link( 'terms', 'onboard' ) )
 			),

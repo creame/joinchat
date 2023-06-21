@@ -28,7 +28,7 @@ defined( 'WPINC' ) || exit;
 				<div class="row-actions visible"></div>
 			</td>
 			<td class="column-description desc">
-				<div class="plugin-description"><?php echo esc_html( $addon['description'] ); ?></div>
+				<div class="plugin-description"><?php echo wp_kses( $addon['description'], array( 'strong' => array() ) ); ?></div>
 				<div class="inactive second plugin-version-author-uri">
 					<?php printf( __( 'Version: %s' ), $addon['ver'] ); ?> |
 					<a href="<?php echo esc_url( $addon['info'] ); ?>" target="_blank"><?php _e( 'View details' ); ?></a> |

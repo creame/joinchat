@@ -284,7 +284,7 @@ class JoinchatAdminPage {
 
 			case 'joinchat_tab_general__chat_open':
 				$output = '<div class="joinchat__chat_open__wrapper">' .
-					'<h2 class="title">Show automatically</h2>' .
+					'<h2 class="title">' . __( 'Show automatically', 'creame-whatsapp-me' ) . '</h2>' .
 					'<p>' .
 						__( 'If a "Call to Action" is defined, the Chat Window can be displayed automatically to capture the user\'s attention.', 'creame-whatsapp-me' ) .
 						' <a class="joinchat-show-help" href="#tab-link-triggers" title="' . __( 'Show Help', 'creame-whatsapp-me' ) . '">?</a>' .

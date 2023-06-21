@@ -102,27 +102,27 @@ class JoinchatPremium {
 		$addons = array(
 			'cta-extras'     => array(
 				'name'        => _x( 'CTA Extras', 'Add-on name', 'creame-whatsapp-me' ),
-				'description' => _x( 'Use our embed tool to beautifully design the content that appears in the chat window. Drive your leads from landings to sales and conversion pages. Add links, images, animated GIFs, buttons or even embedded content from other platforms, surveys, chatbots, forms…', 'Add-on description', 'creame-whatsapp-me' ),
+				'description' => _x( '<strong>Enhance your Calls to Action.</strong> Create more engaging content in the chat window for better conversion. Add links, videos, images, animated GIFs, buttons or even embedded content from other platforms such as Calendly, surveys, forms…', 'Add-on description', 'creame-whatsapp-me' ),
 				'ver'         => '3.0',
 			),
 			'support-agents' => array(
 				'name'        => _x( 'Support Agents', 'Add-on name', 'creame-whatsapp-me' ),
-				'description' => _x( 'Managing multiple WhatsApp accounts has never been easier. Add multiple phone numbers and monitor their availability, even if your employees are out of the office, your website users will know how long it will be before they are back up and running!', 'Add-on description', 'creame-whatsapp-me' ),
+				'description' => _x( '<strong>A contact button with multiple WhatsApp numbers.</strong> Avoid collapsing your support, pre-sales or orders chat. Add as many WhatsApp numbers as you have support or sales staff. Your customers will randomly access each of them distributing the workload evenly.', 'Add-on description', 'creame-whatsapp-me' ),
 				'ver'         => '4.0',
 			),
 			'random-phone'   => array(
 				'name'        => _x( 'Random Phone', 'Add-on name', 'creame-whatsapp-me' ),
-				'description' => _x( 'Avoid delays in support chats. Joinchat allows you to add as many phone numbers as you want. We distribute customer chats evenly among each of your support agents, so you never have to worry about bottlenecks or dropped calls again.', 'Add-on description', 'creame-whatsapp-me' ),
+				'description' => _x( '<strong>Contact buttons for each agent with availability times.</strong> Manage multiple WhatsApp accounts with their name, department and working hours. Your visitors will be able to contact the agent of their choice and know how long it will be until the agents are available.', 'Add-on description', 'creame-whatsapp-me' ),
 				'ver'         => '4.0',
 			),
 			'omnichannel'    => array(
 				'name'        => _x( 'OmniChannel', 'Add-on name', 'creame-whatsapp-me' ),
-				'description' => _x( 'This feature will allow you to add more chat apps to the basic plugin, in addition to WhatsApp. You can now add Telegram, Facebook Messenger, SMS, phone call, Skype and FaceTime.', 'Add-on description', 'creame-whatsapp-me' ),
+				'description' => _x( '<strong>Add more contact channels.</strong> Allows you to add more contact channels (from more than 10 apps) in addition to WhatsApp. Now you can add Telegram, Facebook Messenger, Tiktok, Snapchat, SMS, phone calls, Skype, FaceTime and more.', 'Add-on description', 'creame-whatsapp-me' ),
 				'ver'         => '3.0',
 			),
 			'chat-funnels'   => array(
 				'name'        => _x( 'Chat Funnels', 'Add-on name', 'creame-whatsapp-me' ),
-				'description' => _x( 'Nullam sagittis. Quisque libero metus, condimentum nec, tempor a, commodo mollis, magna. In ac felis quis tortor malesuada pretium.', 'Add-on description', 'creame-whatsapp-me' ), // TODO: Chat Funnels description.
+				'description' => _x( '<strong>Simple funnels like a messaging chatbot.</strong> Create lead capture, qualification or support funnels by simulating conversations with a chatbot.', 'Add-on description', 'creame-whatsapp-me' ),
 				'ver'         => '1.0',
 			),
 		);
