@@ -1,7 +1,12 @@
 <?php
+/**
+ * The admin common functionality of the plugin.
+ *
+ * @package    Joinchat
+ */
 
 /**
- * The admin-specific functionality of the plugin.
+ * The admin common functionality of the plugin.
  *
  * @since      1.0.0
  * @since      2.0.0      Added visibility settings
@@ -10,7 +15,7 @@
  * @subpackage Joinchat/admin
  * @author     Creame <hola@crea.me>
  */
-class JoinchatAdmin {
+class Joinchat_Admin {
 
 	/**
 	 * Initialize the settings for WordPress admin
@@ -46,7 +51,7 @@ class JoinchatAdmin {
 			return $value;
 		}
 
-		$util = new JoinchatUtil(); // Shortcut.
+		$util = new Joinchat_Util(); // Shortcut.
 
 		$util::maybe_encode_emoji();
 
@@ -177,15 +182,15 @@ class JoinchatAdmin {
 
 		// If no phone number defined.
 		if ( empty( jc_common()->settings['telephone'] )
-			&& current_user_can( JoinchatUtil::capability() )
-			&& ! JoinchatUtil::is_admin_screen()
+			&& current_user_can( Joinchat_Util::capability() )
+			&& ! Joinchat_Util::is_admin_screen()
 			&& time() >= (int) get_option( 'joinchat_notice_dismiss' )
 		) {
 
 			printf(
 				'<div class="notice notice-info is-dismissible" id="joinchat-empty-phone"><p><strong>Joinchat</strong>&nbsp;&nbsp;%s %s</p></div>',
 				esc_html__( 'You only need to add your WhatsApp number to contact with your users.', 'creame-whatsapp-me' ),
-				sprintf( '<a href="%s"><strong>%s</strong></a>', esc_url( JoinchatUtil::admin_url() ), esc_html__( 'Go to settings', 'creame-whatsapp-me' ) )
+				sprintf( '<a href="%s"><strong>%s</strong></a>', esc_url( Joinchat_Util::admin_url() ), esc_html__( 'Go to settings', 'creame-whatsapp-me' ) )
 			);
 
 			printf(
@@ -223,7 +228,7 @@ class JoinchatAdmin {
 	 */
 	public function settings_link( $links ) {
 
-		$settings_link = sprintf( '<a href="%s">%s</a>', JoinchatUtil::admin_url(), __( 'Settings', 'creame-whatsapp-me' ) );
+		$settings_link = sprintf( '<a href="%s">%s</a>', Joinchat_Util::admin_url(), __( 'Settings', 'creame-whatsapp-me' ) );
 
 		array_unshift( $links, $settings_link );
 
@@ -243,8 +248,8 @@ class JoinchatAdmin {
 	public function plugin_links( $plugin_meta, $plugin_file ) {
 
 		if ( JOINCHAT_BASENAME === $plugin_file ) {
-			$plugin_meta[] = sprintf( '<a href="%1$s" target="_blank">%2$s</a>', esc_url( JoinchatUtil::link( 'docs', 'plugins' ) ), __( 'Documentation', 'creame-whatsapp-me' ) );
-			$plugin_meta[] = sprintf( '<a href="%1$s" target="_blank">%2$s</a>', esc_url( JoinchatUtil::link( 'support', 'plugins' ) ), __( 'Support', 'creame-whatsapp-me' ) );
+			$plugin_meta[] = sprintf( '<a href="%1$s" target="_blank">%2$s</a>', esc_url( Joinchat_Util::link( 'docs', 'plugins' ) ), __( 'Documentation', 'creame-whatsapp-me' ) );
+			$plugin_meta[] = sprintf( '<a href="%1$s" target="_blank">%2$s</a>', esc_url( Joinchat_Util::link( 'support', 'plugins' ) ), __( 'Support', 'creame-whatsapp-me' ) );
 		}
 
 		return $plugin_meta;
@@ -262,7 +267,7 @@ class JoinchatAdmin {
 	public function add_meta_boxes() {
 
 		$post_types  = jc_common()->get_public_post_types();
-		$back_compat = apply_filters( 'joinchat_gutenberg_sidebar', JoinchatUtil::can_gutenberg() );
+		$back_compat = apply_filters( 'joinchat_gutenberg_sidebar', Joinchat_Util::can_gutenberg() );
 
 		foreach ( $post_types as $post_type ) {
 			add_meta_box(
@@ -341,11 +346,11 @@ class JoinchatAdmin {
 			return;
 		}
 
-		JoinchatUtil::maybe_encode_emoji();
+		Joinchat_Util::maybe_encode_emoji();
 
 		// Clean and delete empty/false fields.
 		$metadata = array_filter(
-			JoinchatUtil::clean_input(
+			Joinchat_Util::clean_input(
 				array(
 					'telephone'    => $_POST['joinchat_telephone'],
 					'message_text' => $_POST['joinchat_message'],

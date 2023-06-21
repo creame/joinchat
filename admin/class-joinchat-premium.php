@@ -1,4 +1,9 @@
 <?php
+/**
+ * The Joinchat Premium upsell functionality of the plugin.
+ *
+ * @package    Joinchat
+ */
 
 /**
  * The Joinchat Premium upsell functionality of the plugin.
@@ -8,7 +13,7 @@
  * @subpackage Joinchat/admin
  * @author     Creame <hola@crea.me>
  */
-class JoinchatPremium {
+class Joinchat_Premium {
 
 	/**
 	 * Add link to options page on plugins page
@@ -22,7 +27,7 @@ class JoinchatPremium {
 
 		$links['premium'] = sprintf(
 			'<a href="%1$s" target="_blank" style="font-weight:bold;color:#f9603a;">%2$s</a>',
-			esc_url( JoinchatUtil::link( 'premium', 'action' ) ),
+			esc_url( Joinchat_Util::link( 'premium', 'action' ) ),
 			esc_html__( 'Premium', 'creame-whatsapp-me' )
 		);
 
@@ -78,7 +83,7 @@ class JoinchatPremium {
 						__( 'In addition, you will receive specialized technical support to solve any questions or issues you may have.', 'creame-whatsapp-me' ) .
 					'</p>' .
 					'<p>' . __( 'Take your customer service to the next level with <b>Joinchat Premium</b>!', 'creame-whatsapp-me' ) . '</p>' .
-					'<p><a class="button" href="' . esc_url( JoinchatUtil::link( 'pricing', 'cta' ) ) . '" target="_blank">' . __( 'Go Premium', 'creame-whatsapp-me' ) . '</a></p>';
+					'<p><a class="button" href="' . esc_url( Joinchat_Util::link( 'pricing', 'cta' ) ) . '" target="_blank">' . __( 'Go Premium', 'creame-whatsapp-me' ) . '</a></p>';
 				break;
 
 			case 'joinchat_tab_premium__addons':
@@ -128,8 +133,8 @@ class JoinchatPremium {
 		);
 
 		foreach ( $addons as $slug => $addon ) {
-			$addon['info']   = JoinchatUtil::link( "addons/$slug", 'upselltab' );
-			$addon['docs']   = JoinchatUtil::link( "docs/setting-up-$slug", 'upselltab' );
+			$addon['info']   = Joinchat_Util::link( "addons/$slug", 'upselltab' );
+			$addon['docs']   = Joinchat_Util::link( "docs/setting-up-$slug", 'upselltab' );
 			$addons[ $slug ] = $addon;
 		}
 

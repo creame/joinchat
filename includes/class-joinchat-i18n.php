@@ -1,4 +1,9 @@
 <?php
+/**
+ * Internationalization functionality.
+ *
+ * @package    Joinchat
+ */
 
 /**
  * Define the internationalization functionality.
@@ -19,7 +24,7 @@ class Joinchat_I18n {
 	 * Initialize the class.
 	 *
 	 * @since    4.2.0
-	 * @param  JoinchatLoader $loader loader instance.
+	 * @param  Joinchat_Loader $loader loader instance.
 	 * @return void
 	 */
 	public function __construct( $loader ) {
@@ -86,7 +91,7 @@ class Joinchat_I18n {
 	 */
 	public function settings_notice() {
 
-		if ( ! JoinchatUtil::is_admin_screen() || count( get_settings_errors( 'joinchat' ) ) ) {
+		if ( ! Joinchat_Util::is_admin_screen() || count( get_settings_errors( 'joinchat' ) ) ) {
 			return;
 		}
 

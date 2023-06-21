@@ -1,4 +1,9 @@
 <?php
+/**
+ * Onboard page of the plugin.
+ *
+ * @package    Joinchat
+ */
 
 /**
  * Onboard page of the plugin.
@@ -8,7 +13,7 @@
  * @subpackage Joinchat/admin
  * @author     Creame <hola@crea.me>
  */
-class JoinchatAdminOnboard {
+class Joinchat_Admin_Onboard {
 
 	/**
 	 * Add onboard submenu in the WordPress admin
@@ -21,10 +26,10 @@ class JoinchatAdminOnboard {
 
 		$title = __( 'Welcome to Joinchat', 'creame-whatsapp-me' );
 
-		if ( JoinchatUtil::options_submenu() ) {
-			add_options_page( $title, $title, JoinchatUtil::capability(), 'joinchat-onboard', array( $this, 'options_page' ) );
+		if ( Joinchat_Util::options_submenu() ) {
+			add_options_page( $title, $title, Joinchat_Util::capability(), 'joinchat-onboard', array( $this, 'options_page' ) );
 		} else {
-			add_submenu_page( JOINCHAT_SLUG, $title, $title, JoinchatUtil::capability(), 'joinchat-onboard', array( $this, 'options_page' ) );
+			add_submenu_page( JOINCHAT_SLUG, $title, $title, Joinchat_Util::capability(), 'joinchat-onboard', array( $this, 'options_page' ) );
 		}
 
 	}
@@ -40,7 +45,7 @@ class JoinchatAdminOnboard {
 	 */
 	public function remove_menu() {
 
-		if ( JoinchatUtil::options_submenu() ) {
+		if ( Joinchat_Util::options_submenu() ) {
 			remove_submenu_page( 'options-general.php', 'joinchat-onboard' );
 		} else {
 			remove_submenu_page( JOINCHAT_SLUG, JOINCHAT_SLUG );
@@ -81,7 +86,7 @@ class JoinchatAdminOnboard {
 
 				<div>
 					<?php _e( 'Exit the wizard and', 'creame-whatsapp-me' ); ?>
-					<a href="<?php echo esc_url( add_query_arg( 'onboard', 'no', JoinchatUtil::admin_url() ) ); ?>"><?php _e( 'go to Joinchat Settings', 'creame-whatsapp-me' ); ?></a>
+					<a href="<?php echo esc_url( add_query_arg( 'onboard', 'no', Joinchat_Util::admin_url() ) ); ?>"><?php _e( 'go to Joinchat Settings', 'creame-whatsapp-me' ); ?></a>
 				</div>
 
 				<div id="joinchat_onboard">
@@ -160,7 +165,7 @@ class JoinchatAdminOnboard {
 		$user = wp_get_current_user();
 
 		$config = array(
-			'settings_url' => add_query_arg( 'onboard', 'no', JoinchatUtil::admin_url() ),
+			'settings_url' => add_query_arg( 'onboard', 'no', Joinchat_Util::admin_url() ),
 			'img_base'     => plugins_url( 'img/', __FILE__ ),
 			'user_email'   => $user->user_email,
 			'nonce'        => wp_create_nonce( 'joinchat_onboard' ),
@@ -187,7 +192,7 @@ class JoinchatAdminOnboard {
 			'step_news'       => __( 'Finally, do you want us to send you tips to improve conversion with <strong>Joinchat</strong>?', 'creame-whatsapp-me' ),
 			'step_news_terms' => sprintf( /* translators: %s: Terms of Use link. */
 				__( 'I accept the <a href="%s" target="_blank">terms of use and privacy policy</a>', 'creame-whatsapp-me' ),
-				esc_url( JoinchatUtil::link( 'terms', 'onboard' ) )
+				esc_url( Joinchat_Util::link( 'terms', 'onboard' ) )
 			),
 			'step_news_yes'   => __( 'OK, keep me posted', 'creame-whatsapp-me' ),
 			'step_news_no'    => __( 'No, thanks', 'creame-whatsapp-me' ),

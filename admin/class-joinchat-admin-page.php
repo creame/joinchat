@@ -1,4 +1,9 @@
 <?php
+/**
+ * The admin settings page of the plugin.
+ *
+ * @package    Joinchat
+ */
 
 /**
  * The admin settings page of the plugin.
@@ -8,7 +13,7 @@
  * @subpackage Joinchat/admin
  * @author     Creame <hola@crea.me>
  */
-class JoinchatAdminPage {
+class Joinchat_Admin_Page {
 
 	/**
 	 * Admin page tabs
@@ -30,12 +35,12 @@ class JoinchatAdminPage {
 
 		$title = 'Joinchat';
 
-		if ( JoinchatUtil::options_submenu() ) {
+		if ( Joinchat_Util::options_submenu() ) {
 			$icon = '<span class="dashicons dashicons-whatsapp" aria-hidden="true" style="height:18px;font-size:18px;margin:0 8px;"></span>';
 
-			add_options_page( $title, $title . $icon, JoinchatUtil::capability(), JOINCHAT_SLUG, array( $this, 'options_page' ) );
+			add_options_page( $title, $title . $icon, Joinchat_Util::capability(), JOINCHAT_SLUG, array( $this, 'options_page' ) );
 		} else {
-			add_menu_page( $title, $title, JoinchatUtil::capability(), JOINCHAT_SLUG, array( $this, 'options_page' ), 'dashicons-whatsapp', 81 );
+			add_menu_page( $title, $title, Joinchat_Util::capability(), JOINCHAT_SLUG, array( $this, 'options_page' ), 'dashicons-whatsapp', 81 );
 		}
 
 	}
@@ -368,7 +373,7 @@ class JoinchatAdminPage {
 					break;
 
 				case 'button_image':
-					$thumb = JoinchatUtil::thumb( $value, 116, 116 );
+					$thumb = Joinchat_Util::thumb( $value, 116, 116 );
 					$image = is_array( $thumb ) ? $thumb['url'] : false;
 
 					$output = '<div id="joinchat_button_image_wrapper">' .
@@ -520,7 +525,7 @@ class JoinchatAdminPage {
 						'<p><label for="joinchat_custom_css">' . __( 'Add your own CSS code here to customize the appearance of Joinchat.', 'creame-whatsapp-me' ) . ' ' .
 						sprintf( /* translators: %s: CSS tricks link. */
 							__( 'You can find examples and more tricks <a href="%s" target="_blank">here</a>.', 'creame-whatsapp-me' ),
-							esc_url( JoinchatUtil::link( 'css', 'help' ) )
+							esc_url( Joinchat_Util::link( 'css', 'help' ) )
 						) . '</label></p>' .
 						'<textarea id="joinchat_custom_css" name="joinchat[custom_css]" rows="3" class="regular-text autofill" placeholder="">' . esc_textarea( $value ) . '</textarea>' .
 						'</fieldset>';
@@ -626,9 +631,9 @@ class JoinchatAdminPage {
 					'<p>' . sprintf(
 						/* translators: 1: docs url, 2: wordpress.org plugin support url, 3: premium support url. */
 						__( 'If you need help, first review our <a href="%1$s" target="_blank">documentation</a> and if you don\'t find a solution check the <a href="%2$s" target="_blank">free plugin support forum</a> or buy our <a href="%3$s" target="_blank">premium support</a>.', 'creame-whatsapp-me' ),
-						esc_url( JoinchatUtil::link( 'docs', 'helptab' ) ),
+						esc_url( Joinchat_Util::link( 'docs', 'helptab' ) ),
 						esc_url( 'https://wordpress.org/support/plugin/creame-whatsapp-me/' ),
-						esc_url( JoinchatUtil::link( 'premium-support', 'helptab' ) )
+						esc_url( Joinchat_Util::link( 'premium-support', 'helptab' ) )
 					) . '</p>' .
 					'<p>' . __( 'If you like Joinchat 😍', 'creame-whatsapp-me' ) . '</p>' .
 					'<ul>' .
@@ -640,7 +645,7 @@ class JoinchatAdminPage {
 					'<li>' . sprintf(
 						/* translators: %s: Joinchat page link. */
 						__( 'Subscribe to our newsletter and visit our blog at %s.', 'creame-whatsapp-me' ),
-						'<a href="' . esc_url( JoinchatUtil::link( '', 'helptab' ) ) . '" target="_blank">join.chat</a>'
+						'<a href="' . esc_url( Joinchat_Util::link( '', 'helptab' ) ) . '" target="_blank">join.chat</a>'
 					) . '</li>' .
 					'<li>' . sprintf(
 						/* translators: %s: Joinchat twitter link. */
@@ -675,7 +680,7 @@ class JoinchatAdminPage {
 				<div class="wp-header-end"></div>
 
 				<?php
-				if ( ! JoinchatUtil::options_submenu() ) {
+				if ( ! Joinchat_Util::options_submenu() ) {
 					settings_errors();
 				}
 				?>

@@ -5,7 +5,7 @@
     $(this).height(0).height(this.scrollHeight);
   }
 
-  // View JoinchatUtil::clean_whatsapp() for regex clean info
+  // View Joinchat_Util::clean_whatsapp() for regex clean info
   function phone_to_whatsapp(phone) {
     return phone.replace(/^0+|\D/, '')
       .replace(/^54(0|1|2|3|4|5|6|7|8)/, '549$1')
@@ -101,7 +101,6 @@
         });
       }
 
-      // View JoinchatUtil::clean_whatsapp() for regex clean info
       $('#joinchat_phone_test').on('click', function () {
         var phone = has_iti ? intlTelInputGlobals.getInstance($('#joinchat_phone')[0]).getNumber() : $('#joinchat_phone').val();
         window.open('https://wa.me/' + encodeURIComponent(phone_to_whatsapp(phone)), 'joinchat', 'noopener');

@@ -1,4 +1,9 @@
 <?php
+/**
+ * The public-facing functionality of the plugin.
+ *
+ * @package    Joinchat
+ */
 
 /**
  * The public-facing functionality of the plugin.
@@ -12,7 +17,7 @@
  * @subpackage Joinchat/public
  * @author     Creame <hola@crea.me>
  */
-class JoinchatPublic {
+class Joinchat_Public {
 
 	/**
 	 * Show WhatsApp button in front.
@@ -44,7 +49,7 @@ class JoinchatPublic {
 	 * @since    2.2.0   Post settings can also change "telephone". Added 'whastapp_web' setting
 	 * @since    2.3.0   Fix global $post incorrect post id on loops. WPML integration.
 	 * @since    3.0.0   New filters.
-	 * @since    5.0.0   Work as a filter for JoinchatCommon->load_settings()
+	 * @since    5.0.0   Work as a filter for Joinchat_Common->load_settings()
 	 * @param    array $settings    Raw settings.
 	 * @return   array   Front prepared settings for current page
 	 */
@@ -73,7 +78,7 @@ class JoinchatPublic {
 		$settings['message_send'] = preg_replace( '/^\{\s*\}$/', '', $settings['message_send'] );
 
 		// Prepare settings ('message_send' delay replace variables until they are used).
-		$settings['telephone']     = JoinchatUtil::clean_whatsapp( $settings['telephone'] );
+		$settings['telephone']     = Joinchat_Util::clean_whatsapp( $settings['telephone'] );
 		$settings['mobile_only']   = 'yes' === $settings['mobile_only'];
 		$settings['whatsapp_web']  = 'yes' === $settings['whatsapp_web'];
 		$settings['qr']            = 'yes' === $settings['qr'];
@@ -147,7 +152,7 @@ class JoinchatPublic {
 
 			if ( ! empty( $settings['custom_css'] ) && jc_common()->defaults( 'custom_css' ) !== $settings['custom_css'] ) {
 				// Note that esc_html() cannot be used because `div &gt; span`.
-				$inline_css .= strip_tags( $settings['custom_css'] );
+				$inline_css .= wp_strip_all_tags( $settings['custom_css'] );
 			}
 
 			$inline_css = apply_filters( 'joinchat_inline_style', $inline_css, $settings );
@@ -207,7 +212,7 @@ class JoinchatPublic {
 
 			$data = array_intersect_key( jc_common()->settings, array_flip( apply_filters( 'joinchat_script_lite_fields', $fields ) ) );
 
-			$data['message_send'] = JoinchatUtil::replace_variables( $data['message_send'] );
+			$data['message_send'] = Joinchat_Util::replace_variables( $data['message_send'] );
 
 			// Enqueue lite script.
 			wp_enqueue_script( 'joinchat-lite', plugins_url( "js/joinchat-lite{$min}.js", __FILE__ ), $deps, JOINCHAT_VERSION, true );
@@ -283,7 +288,7 @@ class JoinchatPublic {
 
 		$data = array_diff_key( $settings, array_flip( $excluded_fields ) );
 
-		$data['message_send'] = JoinchatUtil::replace_variables( $data['message_send'] );
+		$data['message_send'] = Joinchat_Util::replace_variables( $data['message_send'] );
 
 		if ( '__jc__' === $settings['header'] || $is_preview ) {
 			$powered_args = array(
@@ -300,12 +305,12 @@ class JoinchatPublic {
 		if ( is_null( $image ) && $settings['button_image'] ) {
 			$img_id = $settings['button_image'];
 
-			if ( apply_filters( 'joinchat_image_original', JoinchatUtil::is_animated_gif( $img_id ), $img_id, 'button' ) ) {
+			if ( apply_filters( 'joinchat_image_original', Joinchat_Util::is_animated_gif( $img_id ), $img_id, 'button' ) ) {
 				$image = '<img src="' . wp_get_attachment_url( $img_id ) . '" alt="" loading="lazy">';
-			} elseif ( is_array( JoinchatUtil::thumb( $img_id, 58, 58 ) ) ) {
-				$thumb  = JoinchatUtil::thumb( $img_id, 58, 58 );
-				$thumb2 = JoinchatUtil::thumb( $img_id, 116, 116 );
-				$thumb3 = JoinchatUtil::thumb( $img_id, 174, 174 );
+			} elseif ( is_array( Joinchat_Util::thumb( $img_id, 58, 58 ) ) ) {
+				$thumb  = Joinchat_Util::thumb( $img_id, 58, 58 );
+				$thumb2 = Joinchat_Util::thumb( $img_id, 116, 116 );
+				$thumb3 = Joinchat_Util::thumb( $img_id, 174, 174 );
 				$image  = "<img src=\"{$thumb['url']}\" srcset=\"{$thumb2['url']} 2x, {$thumb3['url']} 3x\" alt=\"\" loading=\"lazy\">";
 			}
 		}
@@ -333,7 +338,7 @@ class JoinchatPublic {
 		}
 
 		if ( $settings['message_text'] ) {
-			$box_content = '<div class="joinchat__message">' . JoinchatUtil::formated_message( $settings['message_text'] ) . '</div>';
+			$box_content = '<div class="joinchat__message">' . Joinchat_Util::formated_message( $settings['message_text'] ) . '</div>';
 		} elseif ( $is_preview ) {
 			$box_content .= '<div class="joinchat__message"></div>';
 		}

@@ -1,14 +1,19 @@
 <?php
+/**
+ * The admin functionality of the Elementor integration.
+ *
+ * @package    Joinchat
+ */
 
 /**
- * The admin-specific functionality of the Elementor integration.
+ * The admin functionality of the Elementor integration.
  *
  * @since      4.1.10
  * @package    Joinchat
  * @subpackage Joinchat/admin
  * @author     Creame <hola@crea.me>
  */
-class JoinchatElementorAdmin {
+class Joinchat_Elementor_Admin {
 
 	/**
 	 * Initialize all hooks

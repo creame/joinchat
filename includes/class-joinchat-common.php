@@ -1,4 +1,9 @@
 <?php
+/**
+ * Front and back common functionality.
+ *
+ * @package    Joinchat
+ */
 
 /**
  * Front and Back Common class.
@@ -8,7 +13,7 @@
  * @subpackage Joinchat/includes
  * @author     Creame <hola@crea.me>
  */
-class JoinchatCommon {
+class Joinchat_Common {
 
 	/**
 	 * International Telephone Input library version.
@@ -53,7 +58,7 @@ class JoinchatCommon {
 	 * Instantiates Manager.
 	 *
 	 * @since    4.5.0
-	 * @return JoinchatCommon
+	 * @return Joinchat_Common
 	 */
 	public static function instance() {
 
@@ -259,13 +264,13 @@ CSS;
 
 
 /**
- * Returns the One True Instance of JoinchatCommon.
+ * Returns the One True Instance of Joinchat_Common.
  *
  * @since 5.0.0
- * @return JoinchatCommon
+ * @return Joinchat_Common
  */
 function jc_common() {
 
-	return JoinchatCommon::instance();
+	return Joinchat_Common::instance();
 
 }

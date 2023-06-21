@@ -1,15 +1,20 @@
 <?php
+/**
+ * Gutenberg functionality of the plugin.
+ *
+ * @package    Joinchat
+ */
 
 /**
  * Register Gutenberg block editor plugin logic.
  * Add native sidebar for postmeta and register blocks and patterns.
  *
  * @since      1.0.0
- * @package    JoinchatGutenberg
+ * @package    Joinchat_Gutenberg
  * @subpackage Joinchat/gutenberg
  * @author     Creame <hola@crea.me>
  */
-class JoinchatGutenberg {
+class Joinchat_Gutenberg {
 
 	/**
 	 * Register the stylesheets for the gutenberg editor
@@ -87,7 +92,7 @@ class JoinchatGutenberg {
 		// Replace dynamic vars.
 		if ( ! empty( $attributes['message'] ) ) {
 			$escaped = str_replace( array( '&', '"', '>' ), array( '&amp;', '&quot;', '&gt;' ), $attributes['message'] );
-			$content = str_replace( $escaped, esc_attr( JoinchatUtil::replace_variables( $attributes['message'] ) ), $content );
+			$content = str_replace( $escaped, esc_attr( Joinchat_Util::replace_variables( $attributes['message'] ) ), $content );
 		}
 
 		// Render an empty Button Block to ensure enqueue button styles.
@@ -204,9 +209,9 @@ class JoinchatGutenberg {
 	 */
 	public function sanitize_meta( $meta_value ) {
 
-		JoinchatUtil::maybe_encode_emoji();
+		Joinchat_Util::maybe_encode_emoji();
 
-		return array_filter( JoinchatUtil::clean_input( $meta_value ) );
+		return array_filter( Joinchat_Util::clean_input( $meta_value ) );
 
 	}
 

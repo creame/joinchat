@@ -1,4 +1,9 @@
 <?php
+/**
+ * The public-facing functionality of the WooCommerce integration.
+ *
+ * @package    Joinchat
+ */
 
 /**
  * The public-facing functionality of the WooCommerce integration.
@@ -8,7 +13,7 @@
  * @subpackage Joinchat/public
  * @author     Creame <hola@crea.me>
  */
-class JoinchatWooPublic {
+class Joinchat_Woo_Public {
 
 	/**
 	 * Product Button Show

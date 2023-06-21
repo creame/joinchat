@@ -1,4 +1,9 @@
 <?php
+/**
+ * The preview functionality of the plugin.
+ *
+ * @package    Joinchat
+ */
 
 /**
  * The preview functionality of the plugin.
@@ -8,7 +13,7 @@
  * @subpackage Joinchat/public
  * @author     Creame <hola@crea.me>
  */
-class JoinchatPreview {
+class Joinchat_Preview {
 
 	/**
 	 * Initialize the class and set its properties.

@@ -1,14 +1,19 @@
 <?php
+/**
+ * The admin functionality of the WooCommerce integration.
+ *
+ * @package    Joinchat
+ */
 
 /**
- * The admin-specific functionality of the WooCommerce integration.
+ * The admin functionality of the WooCommerce integration.
  *
  * @since      3.0.0
  * @package    Joinchat
  * @subpackage Joinchat/admin
  * @author     Creame <hola@crea.me>
  */
-class JoinchatWooAdmin {
+class Joinchat_Woo_Admin {
 
 	/**
 	 * Initialize all hooks
@@ -71,11 +76,11 @@ class JoinchatWooAdmin {
 	 */
 	public function settings_validate( $input ) {
 
-		$input['message_text_product'] = JoinchatUtil::clean_input( $input['message_text_product'] );
-		$input['message_text_on_sale'] = JoinchatUtil::clean_input( $input['message_text_on_sale'] );
-		$input['message_send_product'] = JoinchatUtil::clean_input( $input['message_send_product'] );
+		$input['message_text_product'] = Joinchat_Util::clean_input( $input['message_text_product'] );
+		$input['message_text_on_sale'] = Joinchat_Util::clean_input( $input['message_text_on_sale'] );
+		$input['message_send_product'] = Joinchat_Util::clean_input( $input['message_send_product'] );
 		$input['woo_btn_position']     = array_key_exists( $input['woo_btn_position'], $this->btn_positions() ) ? $input['woo_btn_position'] : 'none';
-		$input['woo_btn_text']         = JoinchatUtil::clean_input( $input['woo_btn_text'] );
+		$input['woo_btn_text']         = Joinchat_Util::clean_input( $input['woo_btn_text'] );
 
 		return $input;
 	}
@@ -201,7 +206,7 @@ class JoinchatWooAdmin {
 		);
 
 		foreach ( $woo_sections as $key => $label ) {
-			$woo_sections[ $key ] = "<label for=\"joinchat_$key\">$label</label>" . JoinchatAdminPage::vars_help( $key );
+			$woo_sections[ $key ] = "<label for=\"joinchat_$key\">$label</label>" . Joinchat_Admin_Page::vars_help( $key );
 		}
 
 		$sections['chat']   = $woo_sections;

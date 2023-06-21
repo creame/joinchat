@@ -1,4 +1,9 @@
 <?php
+/**
+ * Utility class.
+ *
+ * @package    Joinchat
+ */
 
 /**
  * Utility class.
@@ -10,7 +15,7 @@
  * @subpackage Joinchat/includes
  * @author     Creame <hola@crea.me>
  */
-class JoinchatUtil {
+class Joinchat_Util {
 
 	/**
 	 * Encode emojis if utf8mb4 not supported by DB
@@ -294,7 +299,7 @@ class JoinchatUtil {
 			JSON_HEX_APOS | JSON_HEX_QUOT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES :
 			JSON_HEX_APOS | JSON_HEX_QUOT;
 
-		return json_encode( $data, apply_filters( 'joinchat_json_options', $json_options ) );
+		return wp_json_encode( $data, apply_filters( 'joinchat_json_options', $json_options ) );
 
 	}
 

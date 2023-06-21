@@ -1,4 +1,9 @@
 <?php
+/**
+ * Register all actions and filters for the plugin.
+ *
+ * @package    Joinchat
+ */
 
 /**
  * Register all actions and filters for the plugin.
@@ -12,7 +17,7 @@
  * @subpackage Joinchat/includes
  * @author     Creame <hola@crea.me>
  */
-class JoinchatLoader {
+class Joinchat_Loader {
 
 	/**
 	 * The array of actions registered with WordPress.

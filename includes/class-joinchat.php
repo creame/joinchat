@@ -1,4 +1,9 @@
 <?php
+/**
+ * The core plugin class.
+ *
+ * @package    Joinchat
+ */
 
 /**
  * The core plugin class.
@@ -22,7 +27,7 @@ class Joinchat {
 	 *
 	 * @since    1.0.0
 	 * @access   protected
-	 * @var      JoinchatLoader    $loader    Maintains and registers all hooks for the plugin.
+	 * @var      Joinchat_Loader    $loader    Maintains and registers all hooks for the plugin.
 	 */
 	protected $loader;
 
@@ -57,10 +62,10 @@ class Joinchat {
 	 *
 	 * Include the following files that make up the plugin:
 	 *
-	 * - JoinchatLoader. Orchestrates the hooks of the plugin.
+	 * - Joinchat_Loader. Orchestrates the hooks of the plugin.
 	 * - Joinchat_i18n. Defines internationalization functionality.
-	 * - JoinchatIntegrations. Defines thrid party integrations.
-	 * - JoinchatUtil. Defines common utilities.
+	 * - Joinchat_Integrations. Defines thrid party integrations.
+	 * - Joinchat_Util. Defines common utilities.
 	 *
 	 * Create an instance of the loader which will be used to register the hooks
 	 * with WordPress.
@@ -77,8 +82,8 @@ class Joinchat {
 		require_once JOINCHAT_DIR . 'includes/class-joinchat-integrations.php';
 		require_once JOINCHAT_DIR . 'includes/class-joinchat-util.php';
 
-		$this->loader = new JoinchatLoader();
-		jc_common(); // Instance JoinchatCommon.
+		$this->loader = new Joinchat_Loader();
+		jc_common(); // Instance Joinchat_Common.
 
 	}
 
@@ -107,7 +112,7 @@ class Joinchat {
 	 */
 	private function load_integrations() {
 
-		$plugin_integrations = new JoinchatIntegrations();
+		$plugin_integrations = new Joinchat_Integrations();
 
 		// No delegate to $this->loader, use WordPress add_action.
 		// At 'plugins_loaded' hook can determine if other plugins are present.
@@ -125,13 +130,13 @@ class Joinchat {
 	 */
 	private function define_gutenberg_hooks() {
 
-		if ( ! JoinchatUtil::can_gutenberg() ) {
+		if ( ! Joinchat_Util::can_gutenberg() ) {
 			return;
 		}
 
 		require_once JOINCHAT_DIR . 'gutenberg/class-joinchat-gutenberg.php';
 
-		$plugin_gutenberg = new JoinchatGutenberg();
+		$plugin_gutenberg = new Joinchat_Gutenberg();
 
 		$this->loader->add_action( 'init', $plugin_gutenberg, 'register_meta', 11 );
 		$this->loader->add_action( 'init', $plugin_gutenberg, 'register_blocks', 11 );
@@ -161,9 +166,9 @@ class Joinchat {
 		require_once JOINCHAT_DIR . 'admin/class-joinchat-admin-page.php';
 		require_once JOINCHAT_DIR . 'admin/class-joinchat-admin-onboard.php';
 
-		$this->loader->add_filter( 'option_page_capability_joinchat', 'JoinchatUtil', 'capability' );
+		$this->loader->add_filter( 'option_page_capability_joinchat', 'Joinchat_Util', 'capability' );
 
-		$plugin_admin = new JoinchatAdmin();
+		$plugin_admin = new Joinchat_Admin();
 
 		$this->loader->add_action( 'admin_init', $plugin_admin, 'register_setting' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'register_styles' );
@@ -178,14 +183,14 @@ class Joinchat {
 		$this->loader->add_filter( 'plugin_action_links_' . JOINCHAT_BASENAME, $plugin_admin, 'settings_link' );
 		$this->loader->add_filter( 'plugin_row_meta', $plugin_admin, 'plugin_links', 10, 2 );
 
-		$plugin_page = new JoinchatAdminPage();
+		$plugin_page = new Joinchat_Admin_Page();
 
 		$this->loader->add_action( 'admin_menu', $plugin_page, 'add_menu' );
 		$this->loader->add_action( 'admin_init', $plugin_page, 'setting_fields' );
 		$this->loader->add_action( 'load-settings_page_joinchat', $plugin_page, 'page_hooks' ); // Settings submenu.
 		$this->loader->add_action( 'load-toplevel_page_joinchat', $plugin_page, 'page_hooks' ); // Joinchat menu.
 
-		$plugin_onboard = new JoinchatAdminOnboard();
+		$plugin_onboard = new Joinchat_Admin_Onboard();
 
 		$this->loader->add_action( 'admin_menu', $plugin_onboard, 'add_menu' );
 		$this->loader->add_action( 'admin_head', $plugin_onboard, 'remove_menu' );
@@ -213,7 +218,7 @@ class Joinchat {
 
 		require_once JOINCHAT_DIR . 'public/class-joinchat-public.php';
 
-		$plugin_public = new JoinchatPublic();
+		$plugin_public = new Joinchat_Public();
 
 		$this->loader->add_filter( 'joinchat_settings', $plugin_public, 'get_settings' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
@@ -238,17 +243,17 @@ class Joinchat {
 	 */
 	public function define_preview_hooks() {
 
-		if ( ! isset( $_GET['joinchat-preview'] ) ) {
+		if ( ! isset( $_GET['joinchat-preview'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			return;
 		}
 
-		if ( ! current_user_can( JoinchatUtil::capability() ) ) {
+		if ( ! current_user_can( Joinchat_Util::capability() ) ) {
 			return;
 		}
 
 		require_once JOINCHAT_DIR . 'public/class-joinchat-preview.php';
 
-		$plugin_preview = new JoinchatPreview();
+		$plugin_preview = new Joinchat_Preview();
 
 		$this->loader->add_filter( 'template_include', $plugin_preview, 'blank_template', PHP_INT_MAX );
 		$this->loader->add_filter( 'get_post_metadata', $plugin_preview, 'disable_postmeta', 1000, 3 );
@@ -280,7 +285,7 @@ class Joinchat {
 
 		require_once JOINCHAT_DIR . 'admin/class-joinchat-premium.php';
 
-		$plugin_premium = new JoinchatPremium();
+		$plugin_premium = new Joinchat_Premium();
 
 		$this->loader->add_filter( 'plugin_action_links_' . JOINCHAT_BASENAME, $plugin_premium, 'action_link' );
 		$this->loader->add_filter( 'joinchat_admin_tabs', $plugin_premium, 'admin_tab', 1000 );
@@ -310,7 +315,7 @@ class Joinchat {
 	 * The reference to the class that orchestrates the hooks with the plugin.
 	 *
 	 * @since     1.0.0
-	 * @return    JoinchatLoader    Orchestrates the hooks of the plugin.
+	 * @return    Joinchat_Loader    Orchestrates the hooks of the plugin.
 	 */
 	public function get_loader() {
 		return $this->loader;
