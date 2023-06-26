@@ -89,6 +89,9 @@ class Joinchat_Public {
 			unset( $settings['gads'] );
 		}
 
+		// Apply filters to final settings after site and post settings.
+		$settings = apply_filters( 'joinchat_get_settings', $settings, $obj );
+
 		// Only show if there is a phone number.
 		if ( empty( $settings['telephone'] ) ) {
 			$show = false;
@@ -100,8 +103,6 @@ class Joinchat_Public {
 		// Unset post 'view' setting.
 		unset( $settings['view'] );
 
-		// Apply filters to final settings after site and post settings.
-		$settings = apply_filters( 'joinchat_get_settings', $settings, $obj );
 		// Apply filters to alter 'show' value.
 		$this->show = apply_filters( 'joinchat_show', $show, $settings, $obj );
 
