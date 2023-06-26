@@ -45,11 +45,16 @@ class Joinchat_Admin_Onboard {
 	 */
 	public function remove_menu() {
 
+		global $submenu;
+
 		if ( Joinchat_Util::options_submenu() ) {
 			remove_submenu_page( 'options-general.php', 'joinchat-onboard' );
 		} else {
-			remove_submenu_page( JOINCHAT_SLUG, JOINCHAT_SLUG );
 			remove_submenu_page( JOINCHAT_SLUG, 'joinchat-onboard' );
+
+			if ( 1 === count( $submenu[ JOINCHAT_SLUG ] ) ) {
+				remove_submenu_page( JOINCHAT_SLUG, JOINCHAT_SLUG );
+			}
 		}
 
 	}
