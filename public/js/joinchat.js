@@ -203,7 +203,8 @@
     // Stored values
     var has_pageviews = parseInt(joinchat_obj.store.getItem('joinchat_views') || 1) >= joinchat_obj.settings.message_views;
     var saved_hashes = (joinchat_obj.store.getItem('joinchat_hashes') || '').split(',').filter(Boolean);
-    var is_viewed = saved_hashes.indexOf(joinchat_obj.settings.message_hash || 'none') !== -1;
+    var is_viewed = joinchat_obj.settings.is_viewed !== undefined ? joinchat_obj.settings.is_viewed :
+      saved_hashes.indexOf(joinchat_obj.settings.message_hash || 'none') !== -1;
 
     function clear_and_show() {
       clearTimeout(timeoutCTA);
