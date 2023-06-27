@@ -19,7 +19,7 @@ class Joinchat_Woo_Admin {
 	 * Initialize all hooks
 	 *
 	 * @since    3.0.0
-	 * @param    array $joinchat       Joinchat object.
+	 * @param    Joinchat $joinchat       Joinchat object.
 	 * @return   void
 	 */
 	public function init( $joinchat ) {

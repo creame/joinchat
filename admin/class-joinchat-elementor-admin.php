@@ -19,7 +19,7 @@ class Joinchat_Elementor_Admin {
 	 * Initialize all hooks
 	 *
 	 * @since    4.1.10
-	 * @param    array $joinchat       Joinchat object.
+	 * @param    Joinchat $joinchat       Joinchat object.
 	 * @return   void
 	 */
 	public function init( $joinchat ) {

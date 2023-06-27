@@ -11,6 +11,7 @@
  * Include static methods.
  *
  * @since      3.1.0
+ * @since      5.0.0     Renamed from JoinchatUtil.
  * @package    Joinchat
  * @subpackage Joinchat/includes
  * @author     Creame <hola@crea.me>
@@ -390,6 +391,37 @@ class Joinchat_Util {
 		);
 
 		return add_query_arg( $args, "https://join.chat/$lang/$path" );
+
+	}
+}
+
+
+/**
+ * Utility class.
+ *
+ * For old add-ons compatibily and prevent fatal errors.
+ * This class will be removed in the future.
+ *
+ * @since       3.1.0
+ * @deprecated  Will be removed in the future
+ * @package     Joinchat
+ * @subpackage  Joinchat/includes
+ * @author      Creame <hola@crea.me>
+ */
+class JoinchatUtil {
+
+	/**
+	 * __callStatic
+	 *
+	 * @param  strind $method  Method name.
+	 * @param  mixed  $args    Method arguments.
+	 * @return mixed
+	 */
+	public static function __callStatic( $method, $args ) {
+
+		_deprecated_function( "JoinchatUtil::$method", '5.0.0', "Joinchat_Util::$method" );
+
+		return Joinchat_Util::$method( ...$args );
 
 	}
 }
