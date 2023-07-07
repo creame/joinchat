@@ -336,11 +336,13 @@ class Joinchat_Util {
 	 * Plugin admin page url
 	 *
 	 * @since    4.2.0
+	 * @since    5.0.0 added $page param.
+	 * @param  string $page  page slug.
 	 * @return string
 	 */
-	public static function admin_url() {
+	public static function admin_url( $page = JOINCHAT_SLUG ) {
 
-		return admin_url( self::options_submenu() ? 'options-general.php' : 'admin.php' ) . '?page=joinchat';
+		return add_query_arg( 'page', $page, admin_url( self::options_submenu() ? 'options-general.php' : 'admin.php' ) );
 
 	}
 
