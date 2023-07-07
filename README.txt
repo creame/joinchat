@@ -2,10 +2,10 @@
 Contributors: creapuntome, pacotole, davidlillo, monillo
 Donate link: https://join.chat/donate/
 Tags: Chat, Click to Chat, Facebook Messenger, WhatsApp, Telegram, Whatsapp Business, button, support chat, support, contact, directly message WhatsApp, floating WhatsApp, WhatsApp chat
-Requires at least: 4.4.0
-Tested up to: 6.1
+Requires at least: 4.5.0
+Tested up to: 6.2
 Requires PHP: 5.5
-Stable tag: 4.5.20
+Stable tag: 5.0.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -16,7 +16,7 @@ WhatsApp, Messenger, Telegram, Phone call… capture users through their favorit
 
 **🎉 Chat with your website visitors through their favorite chat applications. Place a floating button at the bottom of your site and give the best support to your customers.**
 
-> The best WordPress plugin for WhatsApp, with more than 400,000 installations worldwide.
+> The best WordPress plugin for WhatsApp, with more than **600,000 installations** worldwide.
 
 https://www.youtube.com/watch?v=Ad2ZpPnX_3Q
 
@@ -27,7 +27,7 @@ https://www.youtube.com/watch?v=Ad2ZpPnX_3Q
 #### 🛎 Insert a contact button for WhatsApp on your website.
 Set your ‘WhatsApp’ or ‘WhatsApp Business’ number and let your visitors contact you easily:
 
-🧩 **NEW!! WhatsApp Contact Button Block** with optional QR Code
+🧩 **WhatsApp Contact Button Block** with optional QR Code
 
 📱 On mobile, launch WhatsApp mobile app
 
@@ -40,6 +40,13 @@ Customize your logo, profile picture or even an animated gif.
 Define in which pages or zones it should appear, the delay time, if you want it to the right or to the left, only on mobile phones or also on the desktop.
 
 You can define a tooltip or a call to action to capture the user's interest, the limit is set by your creativity.
+
+#### 📢 New on Joinchat 5
+
+* **Onboarding:** Set up Joinchat from a chat.
+* **Preview:** Visualize the appearance of Joinchat before publishing it.
+* **Custom CSS:** Add your custom CSS from the plugin's own dashboard and only load when needed.
+* **Multi-language:** Better access to manage translations.
 
 #### 📝 Settings at page or archive level.
 You can **change main settings on every Post, Page, Product or CPT and for Tag or Category archive pages**.
@@ -162,6 +169,11 @@ Use our embed tool to beautifully design the content that appears in the chat wi
 
 ### 🧪 Try Joinchat
 Do you want to test the Joinchat configuration panel without installing it? You can try it in a [WordPress on the fly demo](https://demo.tastewp.com/creame-whatsapp-me)
+
+### 🎨 "Business Chat" is our WordPress theme recommended
+**Business Chat** is a versatile WordPress theme designed for businesses seeking a professional online presence. It offers a fully responsive design, built-in SEO tools, extensive customization options, and a chat integration through Joinchat. It's compatible with popular page builders and backed by dedicated customer support. Also it's the ultimate solution for a high-performing, user-friendly business website.
+
+**Business Chat** offers both a [free](https://wordpress.org/themes/business-chat/) and a [premium version](https://superbthemes.com/business-chat/), catering to businesses with varying budgets and requirements. This flexibility makes it an ideal choice for businesses looking for a comprehensive and versatile solution to establish their online presence.
 
 ### ⌁ If you like Joinchat 😍
 1. Please leave us a [★★★★★](https://wordpress.org/support/plugin/creame-whatsapp-me/reviews/#new-post) rating. We'll thank you.
@@ -369,9 +381,9 @@ Joinchat save two localStorage variables for proper operation:
 * **NEW:** Multi-language notice to inform about to set settings in main language.
 * CHANGE Replace QR generator library (reduces 13.9kB, 4.8kB gzipped).
 * CHANGE Optimized, only load translations in admin pages.
-* CHANGE All PHP class names replaced "JoinChat" with "Joinchat".
 * CHANGE Better styles when chatbox has scroll.
 * UPDATED International Telephone Input library (18.1.6).
+* **BREAK** Changed all PHP class names to follow WordPress Coding Standards.
 
 = 4.5.20 =
 * **NEW:** WooCommerce product variable {SKU} now works with variable products.
@@ -632,6 +644,10 @@ See [changelog.txt](https://plugins.svn.wordpress.org/creame-whatsapp-me/trunk/c
 
 
 == Upgrade Notice ==
+
+== 5.0.0 ==
+**BREAK for developers:** changed all PHP class names to follow WordPress Coding Standards.
+Custom plugins or code snippets that call Joinchat classes older than version 5.0 may return a fatal error.
 
 = 4.4.0 =
 Google Analytics 4 custom "JoinChat" event replaced with recommended "generate_lead" event.
