@@ -444,5 +444,7 @@
       }
       view_chatbox();
     }
+
+    $('.nav-tab-active').trigger('click');
   });
 })(jQuery);

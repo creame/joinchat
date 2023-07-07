@@ -675,6 +675,7 @@ class Joinchat_Admin_Page {
 	public function options_page() {
 
 		$active_tab = isset( $_GET['tab'] ) && in_array( $_GET['tab'], array_keys( $this->tabs ), true ) ? wp_unslash( $_GET['tab'] ) : 'general'; // phpcs:ignore WordPress.Security.NonceVerification
+		$prev_satus = in_array( $active_tab, array( 'general', 'advanced' ) ) ? 'button' : 'button disabled';
 		?>
 			<div class="wrap">
 				<div class="wp-header-end"></div>
@@ -698,7 +699,7 @@ class Joinchat_Admin_Page {
 						}
 						?>
 					</h2>
-					<div class="joinchat_preview_control"><a id="joinchat_preview_show" href="#" class="button dashicons-before"><?php _e( 'Preview', 'creame-whatsapp-me' ); ?></a></div>
+					<div class="joinchat_preview_control"><a id="joinchat_preview_show" href="#" class="<?php echo $prev_satus; ?> dashicons-before"><?php _e( 'Preview', 'creame-whatsapp-me' ); ?></a></div>
 					<div class="joinchat-tabs">
 						<?php do_settings_sections( JOINCHAT_SLUG ); ?>
 					</div><!-- end tabs -->
