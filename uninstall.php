@@ -17,7 +17,7 @@ $option = get_option( 'joinchat' );
 /**
  * Delete all plugin data if 'clear' is true.
  */
-if ( isset( $option['clear'] ) && $option['clear'] ) {
+if ( isset( $option['clear'] ) && 'yes' === $option['clear'] ) {
 
 	global $wpdb;
 
