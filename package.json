@@ -19,7 +19,7 @@
     "postcss-strip-inline-comments": "^0.1.5",
     "postcss-svgo": "^5.1.0",
     "precss": "^4.0.0",
-    "stylelint": "^15.3.0",
+    "stylelint": "^15.10.1",
     "stylelint-config-standard": "^31.0.0"
   },
   "browserslist": [
