@@ -178,31 +178,31 @@ class Joinchat_Admin_Onboard {
 
 		$l10n = array(
 			'step_hi'         => sprintf( /* translators: %s: User display name. */
-				__( "Hey, <em>%s</em>. Let's set up <strong>Joinchat</strong> in less than 2 minutes.", 'creame-whatsapp-me' ),
+				_x( "Hey, <em>%s</em>. Let's set up <strong>Joinchat</strong> in less than 2 minutes.", 'onboard', 'creame-whatsapp-me' ),
 				$user->display_name
 			),
-			'step_hi_next'    => __( "👌 OK, let's start.", 'creame-whatsapp-me' ),
-			'step_phone'      => __( 'Please tell me your WhatsApp number', 'creame-whatsapp-me' ),
-			'step_phone_next' => __( "Done, let's continue", 'creame-whatsapp-me' ),
-			'step_msg'        => __( 'Add the text for the first message that users will send you via WhatsApp.', 'creame-whatsapp-me' ),
+			'step_hi_next'    => _x( "👌 OK, let's start.", 'onboard', 'creame-whatsapp-me' ),
+			'step_phone'      => _x( 'Please tell me your WhatsApp number', 'onboard', 'creame-whatsapp-me' ),
+			'step_phone_next' => _x( "Done, let's continue", 'onboard', 'creame-whatsapp-me' ),
+			'step_msg'        => _x( 'Add the text for the first message that users will send you via WhatsApp.', 'onboard', 'creame-whatsapp-me' ),
 			'step_msg_field'  => __( 'Message', 'creame-whatsapp-me' ),
 			'step_msg_value'  => esc_textarea( __( 'Hi *{SITE}*! I need more info about {TITLE} {URL}', 'creame-whatsapp-me' ) ),
-			'step_msg_yes'    => __( 'Continue with this text', 'creame-whatsapp-me' ),
-			'step_msg_no'     => __( "I don't want a message", 'creame-whatsapp-me' ),
-			'step_cta'        => __( 'Define a Call to Action message to prompt users to interact.', 'creame-whatsapp-me' ),
+			'step_msg_yes'    => _x( 'Continue with this text', 'onboard', 'creame-whatsapp-me' ),
+			'step_msg_no'     => _x( "I don't want a message", 'onboard', 'creame-whatsapp-me' ),
+			'step_cta'        => _x( 'Define a Call to Action message to prompt users to interact.', 'onboard', 'creame-whatsapp-me' ),
 			'step_cta_field'  => __( 'Call to Action', 'creame-whatsapp-me' ),
 			'step_cta_value'  => esc_textarea( __( "Hello 👋\nCan we help you?", 'creame-whatsapp-me' ) ),
-			'step_cta_yes'    => __( 'Continue with this text', 'creame-whatsapp-me' ),
-			'step_cta_no'     => __( "I don't want a CTA", 'creame-whatsapp-me' ),
-			'step_news'       => __( 'Finally, do you want us to send you tips to improve conversion with <strong>Joinchat</strong>?', 'creame-whatsapp-me' ),
+			'step_cta_yes'    => _x( 'Continue with this text', 'onboard', 'creame-whatsapp-me' ),
+			'step_cta_no'     => _x( "I don't want a CTA", 'onboard', 'creame-whatsapp-me' ),
+			'step_news'       => _x( 'Finally, do you want us to send you tips to improve conversion with <strong>Joinchat</strong>?', 'onboard', 'creame-whatsapp-me' ),
 			'step_news_terms' => sprintf( /* translators: %s: Terms of Use link. */
-				__( 'I accept the <a href="%s" target="_blank">terms of use and privacy policy</a>', 'creame-whatsapp-me' ),
+				_x( 'I accept the <a href="%s" target="_blank">terms of use and privacy policy</a>', 'onboard', 'creame-whatsapp-me' ),
 				esc_url( Joinchat_Util::link( 'terms', 'onboard' ) )
 			),
-			'step_news_yes'   => __( 'OK, keep me posted', 'creame-whatsapp-me' ),
-			'step_news_no'    => __( 'No, thanks', 'creame-whatsapp-me' ),
-			'step_success'    => __( '🥳 Great, <strong>Joinchat</strong> is up and running.', 'creame-whatsapp-me' ),
-			'step_fail'       => __( '😖 Sorry, something went wrong.', 'creame-whatsapp-me' ),
+			'step_news_yes'   => _x( 'OK, keep me posted', 'onboard', 'creame-whatsapp-me' ),
+			'step_news_no'    => _x( 'No, thanks', 'onboard', 'creame-whatsapp-me' ),
+			'step_success'    => _x( '🥳 Great, <strong>Joinchat</strong> is up and running.', 'onboard', 'creame-whatsapp-me' ),
+			'step_fail'       => _x( '😖 Sorry, something went wrong.', 'onboard', 'creame-whatsapp-me' ),
 			'step_settings'   => ucfirst( __( 'go to Joinchat Settings', 'creame-whatsapp-me' ) ),
 		);
 
