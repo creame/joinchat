@@ -415,15 +415,21 @@ class JoinchatUtil {
 	/**
 	 * __callStatic
 	 *
-	 * @param  strind $method  Method name.
-	 * @param  mixed  $args    Method arguments.
+	 * @param  string $name       Method name.
+	 * @param  array  $arguments  Method arguments.
 	 * @return mixed
 	 */
-	public static function __callStatic( $method, $args ) {
+	public static function __callStatic( $name, $arguments ) {
 
-		_deprecated_function( "JoinchatUtil::$method", '5.0.0', "Joinchat_Util::$method" );
+		if ( method_exists( 'Joinchat_Util', $name ) ) {
 
-		return Joinchat_Util::$method( ...$args );
+			_deprecated_function( "JoinchatUtil::$name", '5.0.0', "Joinchat_Util::$name" );
+
+			return call_user_func_array( array( 'Joinchat_Util', $name ), $arguments );
+
+		}
+
+		return false;
 
 	}
 }
