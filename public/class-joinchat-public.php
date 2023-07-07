@@ -26,20 +26,7 @@ class Joinchat_Public {
 	 * @access   private
 	 * @var      bool     $show    Show button on front.
 	 */
-	private $show;
-
-	/**
-	 * Initialize the class and set its properties.
-	 *
-	 * @since    1.0.0
-	 * @since    2.0.0     Added visibility setting
-	 * @since    2.1.0     Added message_badge
-	 * @since    2.3.0     Added button_delay and whatsapp_web settings, message_delay in seconds
-	 * @return   void
-	 */
-	public function __construct() {
-		$this->show = false;
-	}
+	private $show = false;
 
 	/**
 	 * Get global settings and current post settings and prepare
