@@ -102,7 +102,7 @@ class Joinchat_Admin_Page {
 	public function page_hooks() {
 
 		if ( isset( $_GET['onboard'] ) ) {
-			$is_onboard = true === filter_var( $_GET['onboard'], FILTER_VALIDATE_BOOL );
+			$is_onboard = true === filter_var( $_GET['onboard'], FILTER_VALIDATE_BOOLEAN );
 		} else {
 			$is_onboard = jc_common()->settings === jc_common()->defaults();
 		}
