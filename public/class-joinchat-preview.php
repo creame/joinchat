@@ -141,7 +141,7 @@ class Joinchat_Preview {
 	 */
 	public function inline_style( string $css ) {
 
-		return empty( $css ) ? '/* preview */' : $css;
+		return empty( $css ) ? 'body{}' : $css;
 
 	}
 
