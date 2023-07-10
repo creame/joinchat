@@ -5,7 +5,7 @@ Tags: Chat, Click to Chat, Facebook Messenger, WhatsApp, Telegram, Whatsapp Busi
 Requires at least: 4.5.0
 Tested up to: 6.2
 Requires PHP: 5.5
-Stable tag: 5.0.0
+Stable tag: 5.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -45,7 +45,7 @@ You can define a tooltip or a call to action to capture the user's interest, the
 
 * **Onboarding:** Set up Joinchat from a chat.
 * **Preview:** Visualize the appearance of Joinchat before publishing it.
-* **Custom CSS:** Add your custom CSS from the plugin's own dashboard and only load when needed.
+* **Custom CSS:** Add your custom CSS from the plugin's own settings and only load when needed.
 * **Multi-language:** Better access to manage translations.
 
 #### 📝 Settings at page or archive level.
@@ -373,6 +373,9 @@ Joinchat save two localStorage variables for proper operation:
 
 == Changelog ==
 
+= 5.0.1 =
+* FIX undefined constant on PHP < 8.
+
 = 5.0.0 =
 * **NEW:** Live Preview Panel on wp-admin settings page.
 * **NEW:** Onboarding page.
@@ -645,7 +648,7 @@ See [changelog.txt](https://plugins.svn.wordpress.org/creame-whatsapp-me/trunk/c
 
 == Upgrade Notice ==
 
-== 5.0.0 ==
+== 5.0.1 ==
 **BREAK for developers:** changed all PHP class names to follow WordPress Coding Standards.
 Custom plugins or code snippets that call Joinchat classes older than version 5.0 may return a fatal error.
 
