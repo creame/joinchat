@@ -151,9 +151,9 @@
     },
 
     doOptionPhone: function (option) {
-      var iti = intlTelInputGlobals.getInstance($('#joinchat_phone')[0]);
-      this.saved['telephone'] = iti.getNumber();
-      iti.telInput.readOnly = true;
+      var input = $('#joinchat_phone').get(0);
+      this.saved['telephone'] = intlTelInputGlobals.getInstance(input).getNumber();
+      input.readOnly = true;
       this.doOptionGoto(option);
     },
 
@@ -189,7 +189,7 @@
 
         if (typeof intlTelInput === 'function') {
           var $phone = $('#joinchat_phone');
-          var iti = intlTelInput($phone[0], {
+          intlTelInput($phone[0], {
             hiddenInput: $phone.data('name') || 'joinchat[telephone]',
             separateDialCode: true,
             initialCountry: 'auto',
@@ -201,8 +201,7 @@
 
           $phone.on('input countrychange', function () {
             var $this = $(this);
-            var iti = intlTelInputGlobals.getInstance(this);
-            var is_valid = iti.isValidNumber();
+            var is_valid = intlTelInputGlobals.getInstance(this).isValidNumber();
 
             $this.css('color', $this.val().trim() && !is_valid ? '#ca4a1f' : '');
             joinchat_obj.$('.joinchat__option--phone').toggleClass('joinchat__option--disabled', !is_valid);
@@ -217,7 +216,7 @@
         $msg.html(msg.replace('{INPUT cta}', '<textarea id="joinchat_message_text" name="joinchat[message_text]" rows="4" class="regular-text">' + joinchat_l10n.step_cta_value + '</textarea>'));
       } else if (msg.includes('{INPUT newsletter}')) {
         $msg.html(msg.replace('{INPUT newsletter}', '<input id="joinchat_email" name="joinchat[button_tip]" value="' + joinchat_settings.user_email + '" type="email" maxlength="60" class="regular-text" placeholder="john@example.com"></input>\n' +
-          '<div class="joinchat__optin"><input type="checkbox" id="joinchat_optin"><label for="joinchat_optin">' + joinchat_l10n.step_news_terms+ '</label></div>'));
+          '<div class="joinchat__optin"><input type="checkbox" id="joinchat_optin"><label for="joinchat_optin">' + joinchat_l10n.step_news_terms + '</label></div>'));
 
         $msg.find('#joinchat_email,#joinchat_optin').on('input change', function () {
           var $email = $msg.find('#joinchat_email');

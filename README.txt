@@ -374,6 +374,7 @@ Joinchat save two localStorage variables for proper operation:
 == Changelog ==
 
 = 5.0.2 =
+* FIX onboard phone error with minified scripts.
 * UPDATED International Telephone Input library (18.1.8).
 
 = 5.0.1 =
