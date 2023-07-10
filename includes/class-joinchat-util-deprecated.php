@@ -1,9 +1,4 @@
 <?php
-/**
- * Utility class.
- *
- * @package    Joinchat
- */
 
 /**
  * Utility class.
@@ -11,12 +6,11 @@
  * Include static methods.
  *
  * @since      3.1.0
- * @since      5.0.0     Renamed from JoinchatUtil.
- * @package    Joinchat
- * @subpackage Joinchat/includes
+ * @package    JoinChat
+ * @subpackage JoinChat/includes
  * @author     Creame <hola@crea.me>
  */
-class Joinchat_Util {
+class JoinChatUtil {
 
 	/**
 	 * Encode emojis if utf8mb4 not supported by DB
@@ -28,6 +22,8 @@ class Joinchat_Util {
 	public static function maybe_encode_emoji() {
 
 		global $wpdb;
+
+		_deprecated_function( 'JoinchatUtil::maybe_encode_emoji', '5.0.0', 'Joinchat_Util::maybe_encode_emoji' );
 
 		if ( function_exists( 'wp_encode_emoji' )
 				&& 'utf8mb4' !== $wpdb->get_col_charset( $wpdb->options, 'option_value' )
@@ -45,6 +41,9 @@ class Joinchat_Util {
 	 * @return   mixed $value cleaned
 	 */
 	public static function clean_input( $value ) {
+
+		_deprecated_function( 'JoinchatUtil::clean_input', '5.0.0', 'Joinchat_Util::clean_input' );
+
 		if ( is_array( $value ) ) {
 			return array_map( 'self::clean_input', $value );
 		} elseif ( is_string( $value ) ) {
@@ -66,6 +65,8 @@ class Joinchat_Util {
 	 * @return   string number cleaned
 	 */
 	public static function clean_whatsapp( $number ) {
+
+		_deprecated_function( 'JoinchatUtil::clean_whatsapp', '5.0.0', 'Joinchat_Util::clean_whatsapp' );
 
 		// Remove any leading 0s or special calling codes.
 		$clean = preg_replace( '/^0+|\D/', '', $number );
@@ -93,7 +94,11 @@ class Joinchat_Util {
 	 * @return   string     The portion of str specified by the start and length parameters
 	 */
 	public static function substr( $str, $start, $length = null ) {
+
+		_deprecated_function( 'JoinchatUtil::substr', '5.0.0', 'Joinchat_Util::substr' );
+
 		return function_exists( 'mb_substr' ) ? mb_substr( $str, $start, $length ) : substr( $str, $start, $length );
+
 	}
 
 	/**
@@ -110,6 +115,8 @@ class Joinchat_Util {
 	 * @return   array  With thumbnail info (url, width, height)
 	 */
 	public static function thumb( $img, $width, $height, $crop = true ) {
+
+		_deprecated_function( 'JoinchatUtil::thumb', '5.0.0', 'Joinchat_Util::thumb' );
 
 		$img_path = intval( $img ) > 0 ? get_attached_file( $img ) : $img;
 
@@ -177,9 +184,13 @@ class Joinchat_Util {
 	 * @return   bool  true if is an animated gif, false otherwise
 	 */
 	public static function is_animated_gif( $img ) {
+
+		_deprecated_function( 'JoinchatUtil::is_animated_gif', '5.0.0', 'Joinchat_Util::is_animated_gif' );
+
 		$img_path = intval( $img ) > 0 ? get_attached_file( $img ) : $img;
 
 		return $img_path && file_exists( $img_path ) ? (bool) preg_match( '#(\x00\x21\xF9\x04.{4}\x00\x2C.*){2,}#s', file_get_contents( $img_path ) ) : false;
+
 	}
 
 	/**
@@ -192,6 +203,8 @@ class Joinchat_Util {
 	 * @return   string     string formated
 	 */
 	public static function formated_message( $string ) {
+
+		_deprecated_function( 'JoinchatUtil::formated_message', '5.0.0', 'Joinchat_Util::formated_message' );
 
 		$replacements = apply_filters(
 			'joinchat_format_replacements',
@@ -230,6 +243,8 @@ class Joinchat_Util {
 	 * @return   string     string with replaced variables
 	 */
 	public static function replace_variables( $string ) {
+
+		_deprecated_function( 'JoinchatUtil::replace_variables', '5.0.0', 'Joinchat_Util::replace_variables' );
 
 		// If empty or don't has vars return early.
 		if ( empty( $string ) || false === strpos( $string, '{' ) ) {
@@ -271,6 +286,8 @@ class Joinchat_Util {
 	 */
 	public static function get_title() {
 
+		_deprecated_function( 'JoinchatUtil::get_title', '5.0.0', 'Joinchat_Util::get_title' );
+
 		$filter = function ( $parts ) {
 			return empty( $parts['title'] ) ? $parts : array( 'title' => $parts['title'] );
 		};
@@ -296,11 +313,13 @@ class Joinchat_Util {
 	 */
 	public static function to_json( $data ) {
 
+		_deprecated_function( 'JoinchatUtil::to_json', '5.0.0', 'Joinchat_Util::to_json' );
+
 		$json_options = defined( 'JSON_UNESCAPED_UNICODE' ) ?
 			JSON_HEX_APOS | JSON_HEX_QUOT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES :
 			JSON_HEX_APOS | JSON_HEX_QUOT;
 
-		return wp_json_encode( $data, apply_filters( 'joinchat_json_options', $json_options ) );
+		return json_encode( $data, apply_filters( 'joinchat_json_options', $json_options ) );
 
 	}
 
@@ -315,6 +334,8 @@ class Joinchat_Util {
 	 */
 	public static function capability( $capability = '' ) {
 
+		_deprecated_function( 'JoinchatUtil::capability', '5.0.0', 'Joinchat_Util::capability' );
+
 		return apply_filters( 'joinchat_capability', $capability ?: 'manage_options' ); //phpcs:ignore WordPress.PHP.DisallowShortTernary
 
 	}
@@ -328,6 +349,8 @@ class Joinchat_Util {
 	 */
 	public static function options_submenu() {
 
+		_deprecated_function( 'JoinchatUtil::options_submenu', '5.0.0', 'Joinchat_Util::options_submenu' );
+
 		return 'manage_options' === self::capability() && apply_filters( 'joinchat_submenu', false );
 
 	}
@@ -336,13 +359,13 @@ class Joinchat_Util {
 	 * Plugin admin page url
 	 *
 	 * @since    4.2.0
-	 * @since    5.0.0 added $page param.
-	 * @param  string $page  page slug.
 	 * @return string
 	 */
-	public static function admin_url( $page = JOINCHAT_SLUG ) {
+	public static function admin_url() {
 
-		return add_query_arg( 'page', $page, admin_url( self::options_submenu() ? 'options-general.php' : 'admin.php' ) );
+		_deprecated_function( 'JoinchatUtil::admin_url', '5.0.0', 'Joinchat_Util::admin_url' );
+
+		return admin_url( self::options_submenu() ? 'options-general.php' : 'admin.php' ) . '?page=joinchat';
 
 	}
 
@@ -356,43 +379,9 @@ class Joinchat_Util {
 	 */
 	public static function can_gutenberg() {
 
+		_deprecated_function( 'JoinchatUtil::can_gutenberg', '5.0.0', 'Joinchat_Util::can_gutenberg' );
+
 		return function_exists( 'register_block_type' ) && version_compare( get_bloginfo( 'version' ), '5.9', '>=' );
-
-	}
-
-	/**
-	 * Is Joinchat admin screen
-	 *
-	 * @since    5.0.0
-	 * @return bool
-	 */
-	public static function is_admin_screen() {
-
-		$current_screen = get_current_screen();
-
-		return null !== $current_screen && false !== strpos( $current_screen->id, '_joinchat' );
-
-	}
-
-	/**
-	 * Return link to https://join.chat with utm
-	 *
-	 * @since    5.0.0
-	 * @param  string $path        URL path after join.chat/lang/.
-	 * @param  string $utm_source  utm_source param.
-	 * @return string
-	 */
-	public static function link( $path = '', $utm_source = '' ) {
-
-		$lang = false !== strpos( strtolower( get_locale() ), 'es' ) ? 'es' : 'en';
-		$path = empty( $path ) ? '' : trim( $path, '/' ) . '/';
-		$args = array(
-			'utm_source'   => $utm_source,
-			'utm_medium'   => 'wpadmin',
-			'utm_campaign' => 'v' . str_replace( '.', '_', JOINCHAT_VERSION ),
-		);
-
-		return add_query_arg( $args, "https://join.chat/$lang/$path" );
 
 	}
 }

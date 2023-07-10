@@ -81,6 +81,7 @@ class Joinchat {
 		require_once JOINCHAT_DIR . 'includes/class-joinchat-i18n.php';
 		require_once JOINCHAT_DIR . 'includes/class-joinchat-integrations.php';
 		require_once JOINCHAT_DIR . 'includes/class-joinchat-util.php';
+		require_once JOINCHAT_DIR . 'includes/class-joinchat-util-deprecated.php'; // TODO: deprecation to be deleted.
 
 		$this->loader = new Joinchat_Loader();
 		jc_common(); // Instance Joinchat_Common.
