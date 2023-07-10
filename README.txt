@@ -5,7 +5,7 @@ Tags: Chat, Click to Chat, Facebook Messenger, WhatsApp, Telegram, Whatsapp Busi
 Requires at least: 4.5.0
 Tested up to: 6.2
 Requires PHP: 5.5
-Stable tag: 5.0.1
+Stable tag: 5.0.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -652,9 +652,9 @@ See [changelog.txt](https://plugins.svn.wordpress.org/creame-whatsapp-me/trunk/c
 
 == Upgrade Notice ==
 
-== 5.0.1 ==
+== 5.0.2 ==
 **BREAK for developers:** changed all PHP class names to follow WordPress Coding Standards.
-Custom plugins or code snippets that call Joinchat classes older than version 5.0 may return a fatal error.
+Custom plugins or code snippets that call Joinchat classes lower than 5.0 may return a fatal error.
 
 = 4.4.0 =
 Google Analytics 4 custom "JoinChat" event replaced with recommended "generate_lead" event.
