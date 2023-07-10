@@ -5,7 +5,7 @@ Tags: Chat, Click to Chat, Facebook Messenger, WhatsApp, Telegram, Whatsapp Busi
 Requires at least: 4.5.0
 Tested up to: 6.2
 Requires PHP: 5.5
-Stable tag: 5.0.2
+Stable tag: 5.0.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -373,6 +373,10 @@ Joinchat save two localStorage variables for proper operation:
 
 == Changelog ==
 
+= 5.0.3 =
+* FIX fatal error with missing class JoinchatUtil.
+* FIX preview custom CSS.
+
 = 5.0.2 =
 * FIX onboard phone error with minified scripts.
 * UPDATED International Telephone Input library (18.1.8).
@@ -652,7 +656,7 @@ See [changelog.txt](https://plugins.svn.wordpress.org/creame-whatsapp-me/trunk/c
 
 == Upgrade Notice ==
 
-== 5.0.2 ==
+== 5.0.3 ==
 **BREAK for developers:** changed all PHP class names to follow WordPress Coding Standards.
 Custom plugins or code snippets that call Joinchat classes lower than 5.0 may return a fatal error.
 
