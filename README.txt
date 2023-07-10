@@ -373,6 +373,9 @@ Joinchat save two localStorage variables for proper operation:
 
 == Changelog ==
 
+= 5.0.2 =
+* UPDATED International Telephone Input library (18.1.8).
+
 = 5.0.1 =
 * FIX undefined constant on PHP < 8.
 
