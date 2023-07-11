@@ -523,7 +523,8 @@ class Joinchat_Admin_Page {
 
 					$output = '<fieldset><legend class="screen-reader-text"><span>' . __( 'Custom CSS', 'creame-whatsapp-me' ) . '</span></legend>' .
 						'<p><label for="joinchat_custom_css">' . __( 'Add your own CSS code here to customize the appearance of Joinchat.', 'creame-whatsapp-me' ) . ' ' .
-						sprintf( /* translators: %s: CSS tricks link. */
+						sprintf(
+							/* translators: %s: CSS tricks link. */
 							__( 'You can find examples and more tricks <a href="%s" target="_blank">here</a>.', 'creame-whatsapp-me' ),
 							esc_url( Joinchat_Util::link( 'css', 'help' ) )
 						) . '</label></p>' .
@@ -614,7 +615,8 @@ class Joinchat_Admin_Page {
 						'<li>class <code>joinchat_show</code> ' . __( 'only show if it\'s an not seen CTA.', 'creame-whatsapp-me' ) . '</li>' .
 						'<li>class <code>joinchat_force_show</code> ' . __( 'to show always.', 'creame-whatsapp-me' ) . '</li>' .
 					'</ul>' .
-					'<p>' . sprintf( /* translators: 1: attribute phone, 2: attribute message. */
+					'<p>' . sprintf(
+						/* translators: 1: attribute phone, 2: attribute message. */
 						__( 'You can set <strong>custom phone and initial message</strong> for direct WhatsApp triggers with attributes %1$s and %2$s.', 'creame-whatsapp-me' ),
 						'<code>data-phone</code>',
 						'<code>data-message</code>'
@@ -628,25 +630,30 @@ class Joinchat_Admin_Page {
 				'title'    => esc_html__( 'Help & Support', 'creame-whatsapp-me' ),
 				'priority' => 100, // At the end.
 				'content'  =>
-					'<p>' . sprintf( /* translators: 1: docs url, 2: wordpress.org plugin support url. */
+					'<p>' . sprintf(
+						/* translators: 1: docs url, 2: wordpress.org plugin support url. */
 						__( 'If you need help, first check the <a href="%1$s" target="_blank">documentation</a> and if you don\'t find the solution you can consult the <a href="%2$s" target="_blank">plugin\'s free support forum</a>.', 'creame-whatsapp-me' ),
 						esc_url( Joinchat_Util::link( 'docs', 'helptab' ) ),
 						esc_url( 'https://wordpress.org/support/plugin/creame-whatsapp-me/' )
-					) . ' ' . sprintf( /* translators: %s: premium url. */
+					) . ' ' . sprintf(
+						/* translators: %s: premium url. */
 						__( 'You can also buy <strong><a href="%s" target="_blank">Joinchat Premium</a></strong> with one year of support service included.', 'creame-whatsapp-me' ),
 						esc_url( Joinchat_Util::link( 'premium', 'helptab' ) )
 					) . '</p>' .
 					'<p>' . __( 'If you like Joinchat 😍', 'creame-whatsapp-me' ) . '</p>' .
 					'<ul>' .
-					'<li>' . sprintf( /* translators: %s: Add review link. */
+					'<li>' . sprintf(
+						/* translators: %s: Add review link. */
 						__( "Please leave us a %s rating. We'll thank you.", 'creame-whatsapp-me' ),
 						'<a href="https://wordpress.org/support/plugin/creame-whatsapp-me/reviews/#new-post" target="_blank">★★★★★</a>'
 					) . '</li>' .
-					'<li>' . sprintf( /* translators: %s: Joinchat page link. */
+					'<li>' . sprintf(
+						/* translators: %s: Joinchat page link. */
 						__( 'Subscribe to our newsletter and visit our blog at %s.', 'creame-whatsapp-me' ),
 						'<a href="' . esc_url( Joinchat_Util::link( '', 'helptab' ) ) . '" target="_blank">join.chat</a>'
 					) . '</li>' .
-					'<li>' . sprintf( /* translators: %s: Joinchat twitter link. */
+					'<li>' . sprintf(
+						/* translators: %s: Joinchat twitter link. */
 						__( 'Follow %s on twitter.', 'creame-whatsapp-me' ),
 						'<a href="https://twitter.com/joinchatnow" target="_blank">@joinchatnow</a>'
 					) . '</li>' .
