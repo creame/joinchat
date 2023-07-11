@@ -631,7 +631,7 @@ class Joinchat_Admin_Page {
 					'<p>' . sprintf( /* translators: 1: docs url, 2: wordpress.org plugin support url. */
 						__( 'If you need help, first check the <a href="%1$s" target="_blank">documentation</a> and if you don\'t find the solution you can consult the <a href="%2$s" target="_blank">plugin\'s free support forum</a>.', 'creame-whatsapp-me' ),
 						esc_url( Joinchat_Util::link( 'docs', 'helptab' ) ),
-						esc_url( 'https://wordpress.org/support/plugin/creame-whatsapp-me/' ),
+						esc_url( 'https://wordpress.org/support/plugin/creame-whatsapp-me/' )
 					) . ' ' . sprintf( /* translators: %s: premium url. */
 						__( 'You can also buy <strong><a href="%s" target="_blank">Joinchat Premium</a></strong> with one year of support service included.', 'creame-whatsapp-me' ),
 						esc_url( Joinchat_Util::link( 'premium', 'helptab' ) )
