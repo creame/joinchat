@@ -373,6 +373,9 @@ Joinchat save two localStorage variables for proper operation:
 
 == Changelog ==
 
+= 5.0.6 =
+* Fix onboard undefined submenu error.
+
 = 5.0.5 =
 * FIX bad formed sprintf() function.
 

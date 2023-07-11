@@ -52,7 +52,7 @@ class Joinchat_Admin_Onboard {
 		} else {
 			remove_submenu_page( JOINCHAT_SLUG, 'joinchat-onboard' );
 
-			if ( 1 === count( $submenu[ JOINCHAT_SLUG ] ) ) {
+			if ( isset( $submenu[ JOINCHAT_SLUG ] ) && 1 === count( $submenu[ JOINCHAT_SLUG ] ) ) {
 				remove_submenu_page( JOINCHAT_SLUG, JOINCHAT_SLUG );
 			}
 		}
