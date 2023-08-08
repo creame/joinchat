@@ -5,7 +5,7 @@ Tags: Chat, Click to Chat, Facebook Messenger, WhatsApp, Telegram, Whatsapp Busi
 Requires at least: 4.5.0
 Tested up to: 6.2
 Requires PHP: 5.5
-Stable tag: 5.0.6
+Stable tag: 5.0.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -377,6 +377,10 @@ Joinchat save two localStorage variables for proper operation:
 
 == Changelog ==
 
+= 5.0.7 =
+* **NEW:** Added url triggers hash `#joinchat` or query param `?joinchat`.
+* FIX PHP warning "$script undefinned".
+
 = 5.0.6 =
 * Fix onboard undefined submenu error.
 
@@ -411,21 +415,6 @@ See [changelog.txt](https://plugins.svn.wordpress.org/creame-whatsapp-me/trunk/c
 
 == Upgrade Notice ==
 
-== 5.0.7 ==
-* **NEW:** Added url triggers hash `#joinchat` or query param `?joinchat`.
-
-== 5.0.6 ==
+= 5.0.0 =
 **BREAK for developers:** changed all PHP class names to follow WordPress Coding Standards.
 Custom plugins or code snippets that call Joinchat classes lower than 5.0 may return a fatal error.
-
-= 4.4.0 =
-Google Analytics 4 custom "JoinChat" event replaced with recommended "generate_lead" event.
-
-= 4.0.0 =
-**Join.chat rebrand!!** Analytics events change from `WhatsAppMe` to `JoinChat` and classes, actions and filters change from `wame` or `whatsappme` to `joinchat`.
-
-= 2.3.0 =
-WPML and Polylang integration.
-Added new settings to control delay and launch WhatsApp Web on desktop.
-Dynamic variables {SITE}, {URL} and {TITLE} now also works on Call To Action.
-Fixed incorrect WAme post settings on loops.
