@@ -15,12 +15,12 @@
     "postcss-hexrgba": "^2.1.0",
     "postcss-inline-svg": "^6.0.0",
     "postcss-scss": "^4.0.6",
-    "postcss-sort-media-queries": "^5.1.0",
+    "postcss-sort-media-queries": "^5.2.0",
     "postcss-strip-inline-comments": "^0.1.5",
     "postcss-svgo": "^6.0.0",
     "precss": "^4.0.0",
-    "stylelint": "^15.6.2",
-    "stylelint-config-standard": "^33.0.0"
+    "stylelint": "^15.10.2",
+    "stylelint-config-standard": "^34.0.0"
   },
   "browserslist": [
     "defaults"
