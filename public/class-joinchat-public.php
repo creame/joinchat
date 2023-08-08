@@ -223,6 +223,7 @@ class Joinchat_Public {
 			return;
 		}
 
+		$script = false;
 		if ( wp_script_is( 'joinchat' ) ) {
 			$script = wp_scripts()->query( 'joinchat', 'registered' );
 		} elseif ( wp_script_is( 'joinchat-lite', 'enqueued' ) ) {
