@@ -108,6 +108,16 @@
     return link + (message ? (wa_web ? '&text=' : '?text=') + encodeURIComponent(message) : '');
   };
 
+  // Show Joinchat button
+  joinchat_obj.show = function (tooltip) {
+    this.$div.addClass('joinchat--show' + (!!tooltip ? ' joinchat--tooltip' : ''));
+  };
+
+  // Hide Joinchat button
+  joinchat_obj.hide = function () {
+    this.$div.removeClass('joinchat--show');
+  };
+
   // Open Chatbox and trigger event
   joinchat_obj.chatbox_show = function () {
     if (!this.chatbox) {
@@ -226,9 +236,8 @@
     }
 
     // Show button (and tooltip)
-    var classes = 'joinchat--show';
-    if (!is_viewed && (joinchat_obj.settings.message_badge || !has_cta || !chat_delay || !has_pageviews)) classes += ' joinchat--tooltip';
-    setTimeout(function () { joinchat_obj.$div.addClass(classes); }, button_delay);
+    var has_tooltip = !is_viewed && (joinchat_obj.settings.message_badge || !has_cta || !chat_delay || !has_pageviews);
+    setTimeout(function () { joinchat_obj.show(has_tooltip); }, button_delay);
 
     // Show badge or chatbox
     if (has_cta && chat_delay && !is_viewed) {
@@ -272,12 +281,12 @@
         if (['date', 'datetime', 'email', 'month', 'number', 'password', 'search', 'tel', 'text', 'textarea', 'time', 'url', 'week'].indexOf(type) >= 0) {
           if (joinchat_obj.chatbox) {
             joinchat_obj.chatbox_hide();
-            setTimeout(function () { joinchat_obj.$div.removeClass('joinchat--show'); }, 400);
+            setTimeout(function () { joinchat_obj.hide(); }, 400);
           } else {
-            joinchat_obj.$div.removeClass('joinchat--show');
+            joinchat_obj.hide();
           }
         } else {
-          joinchat_obj.$div.addClass('joinchat--show');
+          joinchat_obj.show();
         }
       }
 
@@ -294,6 +303,18 @@
         clearTimeout(timeoutResize);
         timeoutResize = setTimeout(function () { joinchat_obj.$div[0].style.setProperty('--vh', window.innerHeight + 'px'); }, 200);
       }).trigger('resize');
+    }
+
+    // Triggers: open chatbox on load if query or anchor "joinchat" exists
+    var location_url = new URL(window.location);
+    if (location_url.hash == '#joinchat') {
+      joinchat_obj.show();
+      setTimeout(clear_and_show, 700); // 500ms animation + 200ms extra delay
+    }
+    if (location_url.searchParams.has('joinchat')) {
+      var query_delay = (parseInt(location_url.searchParams.get('joinchat')) || 0) * 1000;
+      setTimeout(function () { joinchat_obj.show(); }, query_delay);
+      setTimeout(clear_and_show, query_delay + 700);
     }
 
     // Triggers: open chatbox or launch WhatsApp on click
@@ -391,7 +412,7 @@
         joinchat_magic();
       } else {
         // Ensure don't show
-        joinchat_obj.$div.removeClass('joinchat--show');
+        joinchat_obj.hide();
 
         // Triggers: launch WhatsApp on click
         $(document).on('click', '.joinchat_open, .joinchat_app, a[href="#joinchat"], a[href="#whatsapp"]', function (e) {

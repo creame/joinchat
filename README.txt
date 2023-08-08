@@ -114,6 +114,10 @@ You can also **create your own custom events or add event parameters**. [View FA
 #### 🍾 Chat Triggers.
 Any element in your page can be a chat trigger, eg: it can launch WhatsApp from a link or show the Joinchat CTA when the user scrolls to the footer.
 
+**On page load (by url):**
+* url query param `joinchat` to show chat window. Can set delay in seconds, default is 0 *(e.g. example.com/page/?joinchat=5)*.
+* url query hash `#joinchat` to show chat window *(e.g. example.com/page/#joinchat)*.
+
 **On click:**
 
 * class `"joinchat_app"` direct launch WhatsApp
@@ -121,15 +125,15 @@ Any element in your page can be a chat trigger, eg: it can launch WhatsApp from 
 * link href `"#whatsapp"` direct launch WhatsApp
 * link href `"#joinchat"` opens Joinchat CTA
 
-**On scroll (when element appears on screen):**
-
-* class `"joinchat_show"` opens Joinchat CTA (first time)
-* class `"joinchat_force_show"` opens Joinchat CTA (always)
-
 Set **custom phone and initial message** for direct WhatsApp triggers:
 
 * `data-phone="99999999"`
 * `data-message="Only for this trigger message"`.
+
+**On scroll (when element appears on screen):**
+
+* class `"joinchat_show"` opens Joinchat CTA (first time)
+* class `"joinchat_force_show"` opens Joinchat CTA (always)
 
 #### 💱 Multi-Language & RTL Support.
 To be able to support all your users, wherever they are. Our plugin is **compatible with WPML and Polylang** and also **RTL languages** are supported.
@@ -661,6 +665,9 @@ See [changelog.txt](https://plugins.svn.wordpress.org/creame-whatsapp-me/trunk/c
 
 
 == Upgrade Notice ==
+
+== 5.0.7 ==
+* **NEW:** Added url triggers hash `#joinchat` or query param `?joinchat`.
 
 == 5.0.6 ==
 **BREAK for developers:** changed all PHP class names to follow WordPress Coding Standards.
