@@ -1,21 +1,26 @@
 <?php
+/**
+ * Front and back common functionality.
+ *
+ * @package    Joinchat
+ */
 
 /**
  * Front and Back Common class.
  *
  * @since      4.2.0
- * @package    JoinChat
- * @subpackage JoinChat/includes
+ * @package    Joinchat
+ * @subpackage Joinchat/includes
  * @author     Creame <hola@crea.me>
  */
-class JoinChatCommon {
+class Joinchat_Common {
 
 	/**
 	 * International Telephone Input library version.
 	 *
 	 * @since    4.5.10
 	 */
-	const INTL_TEL_INPUT_VERSION = '17.0.19';
+	const INTL_TEL_INPUT_VERSION = '18.1.8';
 
 	/**
 	 * Singleton instance.
@@ -42,10 +47,18 @@ class JoinChatCommon {
 	public $qr = false;
 
 	/**
+	 * Is joinchat preview
+	 *
+	 * @since    5.0.0
+	 * @var bool
+	 */
+	public $preview = false;
+
+	/**
 	 * Instantiates Manager.
 	 *
 	 * @since    4.5.0
-	 * @return JoinChatCommon
+	 * @return Joinchat_Common
 	 */
 	public static function instance() {
 
@@ -61,16 +74,42 @@ class JoinChatCommon {
 	 * Initialize the class.
 	 *
 	 * @since    4.2.0
+	 * @since    5.0.0 Ensure load settings only once.
 	 */
-	private function __construct() {}
+	private function __construct() {
+
+		add_action( 'admin_init', array( $this, 'load_settings' ), 5 );
+		add_action( 'wp', array( $this, 'load_settings' ) );
+
+	}
 
 	/**
 	 * Return the default settings.
 	 *
-	 * @since    4.2.0
-	 * @return array
+	 * @since    4.2.0  default_settings()
+	 * @since    5.0.0  renamed to defaults() & added $key param.
+	 * @param  string|false $key  Setting key or false.
+	 * @return mixed
 	 */
-	public function default_settings() {
+	public function defaults( $key = false ) {
+
+		$default_css = <<<CSS
+/* Joinchat styles (default values) */
+.joinchat {
+	/* z-index: 9999;  /* (9000) */
+	/* --s: 50px;      /* button size: (60px) */
+	/* --bottom: 80px; /* bottom separation (20px) */
+	/* --sep: 20px;    /* right/left separation (20px) */
+	/* --header: 60px; /* chatbox header height (70px) */
+}
+
+/* Joinchat mobile styles */
+@media (max-width: 480px), (orientation: landscape) and (max-width: 767px) {
+	.joinchat {
+		/* mobile rules */
+	}
+}
+CSS;
 
 		$defaults = array(
 			'telephone'     => '',
@@ -80,6 +119,7 @@ class JoinChatCommon {
 			'button_delay'  => 3,
 			'whatsapp_web'  => 'no',
 			'qr'            => 'no',
+			'qr_text'       => __( 'Scan the code', 'creame-whatsapp-me' ),
 			'message_text'  => '',
 			'message_views' => 2,
 			'message_delay' => 10,
@@ -94,9 +134,17 @@ class JoinChatCommon {
 			'optin_text'    => '',
 			'optin_check'   => 'no',
 			'gads'          => '',
+			'custom_css'    => $default_css,
+			'clear'         => 'no',
 		);
 
-		return array_merge( $defaults, apply_filters( 'joinchat_extra_settings', array() ) );
+		$defaults = array_merge( $defaults, apply_filters( 'joinchat_extra_settings', array() ) );
+
+		if ( empty( $key ) ) {
+			return $defaults;
+		}
+
+		return isset( $defaults[ $key ] ) ? $defaults[ $key ] : false;
 
 	}
 
@@ -105,11 +153,16 @@ class JoinChatCommon {
 	 *
 	 * @since    4.2.0
 	 * @since    4.5.7  Intitialize intltel.
+	 * @since    5.0.0  Only run once and add filter 'joinchat_settings'
 	 * @return array
 	 */
 	public function load_settings() {
 
-		$default_settings = $this->default_settings();
+		if ( ! is_null( $this->settings ) ) {
+			return $this->settings;
+		}
+
+		$default_settings = $this->defaults();
 
 		// Can hook 'option_joinchat' and 'default_option_joinchat' filters.
 		$settings = array_merge( $default_settings, (array) get_option( 'joinchat', $default_settings ) );
@@ -121,7 +174,9 @@ class JoinChatCommon {
 		}
 
 		// Clean unused saved settings.
-		$this->settings = array_intersect_key( $settings, $default_settings );
+		$settings = array_intersect_key( $settings, $default_settings );
+
+		$this->settings = apply_filters( 'joinchat_settings', $settings );
 
 		return $this->settings;
 
@@ -205,5 +260,17 @@ class JoinChatCommon {
 		return apply_filters( 'joinchat_metabox_vars', array( 'SITE', 'TITLE', 'URL', 'HREF' ), $obj );
 
 	}
+}
+
+
+/**
+ * Returns the One True Instance of Joinchat_Common.
+ *
+ * @since 5.0.0
+ * @return Joinchat_Common
+ */
+function jc_common() {
+
+	return Joinchat_Common::instance();
 
 }

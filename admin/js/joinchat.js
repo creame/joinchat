@@ -1,15 +1,11 @@
 (function ($) {
   'use strict';
 
-  // Compatibility with old addons (to be removed)
-  window.intl_tel_input_version = window.intlTelConf && intlTelConf.version;
-
   function textarea_autoheight() {
     $(this).height(0).height(this.scrollHeight);
   }
 
   $(function () {
-    var media_frame;
     var has_iti = typeof intlTelInput === 'function';
 
     if (has_iti && $('#joinchat_phone').length) {
@@ -64,173 +60,6 @@
         var iti = intlTelInputGlobals.getInstance(this);
         iti.setNumber(iti.getNumber());
       });
-    }
-
-    if ($('#joinchat_form').length === 1) {
-      // Tabs
-      $('.nav-tab').on('click', function (e) {
-        e.preventDefault();
-        var $navtab = $(this);
-        var href = $navtab.attr('href');
-        var $referer = $('input[name=_wp_http_referer]');
-        var ref_val = $referer.val();
-
-        // Update form referer to open same tab on submit
-        $referer.val(ref_val.substr(0, ref_val.indexOf('page=joinchat')) + 'page=joinchat&tab=' + href.substr(14));
-
-        $('.nav-tab').removeClass('nav-tab-active').attr('aria-selected', 'false');
-        $navtab.addClass('nav-tab-active').attr('aria-selected', 'true').get(0).blur();
-        $('.joinchat-tab').removeClass('joinchat-tab-active');
-        $(href).addClass('joinchat-tab-active').find('textarea').each(textarea_autoheight);
-      });
-
-      // Test phone number
-      if ($('#joinchat_phone').length) {
-        // Enable/disable phone test
-        if (!has_iti) {
-          $('#joinchat_phone').on('input change', function () {
-            $('#joinchat_phone_test').attr('disabled', this.value.length < 7);
-          });
-        }
-
-        // View JoinChatUtil::clean_whatsapp() for regex clean info
-        $('#joinchat_phone_test').on('click', function () {
-          var phone = has_iti ? intlTelInputGlobals.getInstance($('#joinchat_phone')[0]).getNumber() : $('#joinchat_phone').val();
-          phone = phone.replace(/^0+|\D/, '')
-            .replace(/^54(0|1|2|3|4|5|6|7|8)/, '549$1')
-            .replace(/^(54\d{5})15(\d{6})/, '$1$2')
-            .replace(/^52(0|2|3|4|5|6|7|8|9)/, '521$1');
-          window.open('https://wa.me/' + encodeURIComponent(phone), 'joinchat', 'noopener');
-        });
-      }
-
-      // Toggle WhatsApp web option
-      $('#joinchat_mobile_only').on('change', function () {
-        $('#joinchat_whatsapp_web, #joinchat_qr').closest('tr').toggleClass('joinchat-hidden', this.checked);
-      }).trigger('change');
-
-      // Toggle badge option
-      $('#joinchat_message_delay').on('change input', function () {
-        $('#joinchat_message_badge, #joinchat_message_views').closest('tr').toggleClass('joinchat-hidden', this.value == '0');
-      }).trigger('change');
-
-      // Show help
-      $('.joinchat-show-help').on('click', function (e) {
-        e.preventDefault();
-        var help_tab = $(this).attr('href');
-        if ($('#contextual-help-wrap').is(':visible')) {
-          $("html, body").animate({ scrollTop: 0 });
-        } else {
-          $('#contextual-help-link').trigger('click');
-        }
-        $(help_tab != '#' ? help_tab : '#tab-link-styles-and-vars').find('a').trigger('click');
-      });
-
-      // Texarea focus and auto height
-      $('textarea', '#joinchat_form')
-        .on('focus', function () { $(this).closest('tr').addClass('joinchat--focus'); })
-        .on('blur', function () { $(this).closest('tr').removeClass('joinchat--focus'); })
-        .on('input', textarea_autoheight)
-        .each(textarea_autoheight);
-
-      // Show title when placeholder
-      $('#joinchat_form').find('.autofill')
-        .on('change', function () { this.title = this.value == '' ? joinchat_admin.example : ''; })
-        .on('dblclick', function () { if (this.value == '') { this.value = this.placeholder; this.title = ''; } })
-        .trigger('change');
-
-      // Visibility view inheritance
-      var $tab_visibility = $('#joinchat_tab_visibility');
-      var inheritance = $('.joinchat_view_all').data('inheritance') || {
-        'all': ['front_page', 'blog_page', '404_page', 'search', 'archive', 'singular', 'cpts'],
-        'archive': ['date', 'author'],
-        'singular': ['page', 'post'],
-      };
-
-      function propagate_inheritance(field, show) {
-        field = field || 'all';
-        show = show || $('input[name="joinchat[view][' + field + ']"]:checked').val();
-
-        $('.view_inheritance_' + field)
-          .toggleClass('dashicons-visibility', show == 'yes')
-          .toggleClass('dashicons-hidden', show == 'no');
-
-        if (field == 'cpts') {
-          $('[class*=view_inheritance_cpt_]')
-            .toggleClass('dashicons-visibility', show == 'yes')
-            .toggleClass('dashicons-hidden', show == 'no');
-        } else if (field in inheritance) {
-          var value = $('input[name="joinchat[view][' + field + ']"]:checked').val();
-          value = value === '' ? show : value;
-
-          $.each(inheritance[field], function () { propagate_inheritance(this, value); });
-        }
-      }
-
-      $('input', $tab_visibility).on('change', function () {
-        propagate_inheritance();
-      });
-
-      $('.joinchat_view_reset').on('click', function (e) {
-        e.preventDefault();
-        $('input[value=""]', $tab_visibility).prop('checked', true);
-        $('.joinchat_view_all input', $tab_visibility).first().prop('checked', true);
-        propagate_inheritance();
-      });
-
-      propagate_inheritance();
-
-      $('#joinchat_button_image_add').on('click', function (e) {
-        e.preventDefault();
-
-        if (!media_frame) {
-          // Define media_frame as wp.media object
-          media_frame = wp.media({
-            title: $(this).data('title') || 'Select button image',
-            button: { text: $(this).data('button') || 'Use Image' },
-            library: { type: 'image' },
-            multiple: false,
-          });
-
-          // When an image is selected in the media library...
-          media_frame.on('select', function () {
-            // Get media attachment details from the frame state
-            var attachment = media_frame.state().get('selection').first().toJSON();
-            var url = attachment.sizes && attachment.sizes.thumbnail && attachment.sizes.thumbnail.url || attachment.url;
-
-            $('#joinchat_button_image_holder').css({ 'background-size': 'cover', 'background-image': 'url(' + url + ')' });
-            $('#joinchat_button_image').val(attachment.id);
-            $('#joinchat_button_image_remove').removeClass('joinchat-hidden');
-          });
-
-          media_frame.on('open', function () {
-            // Pre-selected attachment
-            var attachment = wp.media.attachment($('#joinchat_button_image').val());
-            media_frame.state().get('selection').add(attachment ? [attachment] : []);
-          });
-        }
-
-        media_frame.open();
-      });
-
-      $('#joinchat_button_image_remove').on('click', function (e) {
-        e.preventDefault();
-
-        $('#joinchat_button_image_holder').removeAttr('style');
-        $('#joinchat_button_image').val('');
-        $(this).addClass('joinchat-hidden');
-      });
-
-      $('#joinchat_color').wpColorPicker();
-
-      $('#joinchat_header_custom').on('click', function () {
-        $(this).prev().find('input').prop('checked', true);
-      });
-
-      // Toggle Woo Product Button text
-      $('#joinchat_woo_btn_position').on('change', function () {
-        $('#joinchat_woo_btn_text').closest('tr').toggleClass('joinchat-hidden', $(this).val() == 'none');
-      }).trigger('change');
     }
 
     if ($('.joinchat-metabox').length) {

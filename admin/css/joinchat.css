@@ -1,4 +1,7 @@
 /* Joinchat settings page */
+#joinchat_form {
+  --joinchat-ico: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="36" height="36"><path fill="%23fff" d="M3.516 3.516c4.686-4.686 12.284-4.686 16.97 0 4.686 4.686 4.686 12.283 0 16.97a12.004 12.004 0 01-13.754 2.299l-5.814.735a.392.392 0 01-.438-.44l.748-5.788A12.002 12.002 0 013.517 3.517zm3.61 17.043l.3.158a9.846 9.846 0 0011.534-1.758c3.843-3.843 3.843-10.074 0-13.918-3.843-3.843-10.075-3.843-13.918 0a9.846 9.846 0 00-1.747 11.554l.16.303-.51 3.942a.196.196 0 00.219.22l3.961-.501zm6.534-7.003l-.933 1.164a9.843 9.843 0 01-3.497-3.495l1.166-.933a.792.792 0 00.23-.94L9.561 6.96a.793.793 0 00-.924-.445 1291.6 1291.6 0 00-2.023.524.797.797 0 00-.588.88 11.754 11.754 0 0010.005 10.005.797.797 0 00.88-.587l.525-2.023a.793.793 0 00-.445-.923L14.6 13.327a.792.792 0 00-.94.23z"/></svg>');
+}
 
 .joinchat-hidden {
   display: none !important;
@@ -15,6 +18,10 @@
 
 .joinchat-tab-active {
   display: block !important;
+}
+
+#navtab_premium {
+  color: #f9603a;
 }
 
 #joinchat_tab_visibility tr:hover {
@@ -93,7 +100,7 @@
   height: 60px;
   border: 1px solid #25d366;
   border-radius: 50%;
-  background: #25d366 url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="36" height="36"><path fill="%23fff" d="M3.516 3.516c4.686-4.686 12.284-4.686 16.97 0 4.686 4.686 4.686 12.283 0 16.97a12.004 12.004 0 01-13.754 2.299l-5.814.735a.392.392 0 01-.438-.44l.748-5.788A12.002 12.002 0 013.517 3.517zm3.61 17.043l.3.158a9.846 9.846 0 0011.534-1.758c3.843-3.843 3.843-10.074 0-13.918-3.843-3.843-10.075-3.843-13.918 0a9.846 9.846 0 00-1.747 11.554l.16.303-.51 3.942a.196.196 0 00.219.22l3.961-.501zm6.534-7.003l-.933 1.164a9.843 9.843 0 01-3.497-3.495l1.166-.933a.792.792 0 00.23-.94L9.561 6.96a.793.793 0 00-.924-.445 1291.6 1291.6 0 00-2.023.524.797.797 0 00-.588.88 11.754 11.754 0 0010.005 10.005.797.797 0 00.88-.587l.525-2.023a.793.793 0 00-.445-.923L14.6 13.327a.792.792 0 00-.94.23z"/></svg>') no-repeat center;
+  background: #25d366 var(--joinchat-ico) no-repeat center;
   box-shadow: 1px 6px 24px 0 rgba(7, 94, 84, .24);
   overflow: hidden;
 }
@@ -125,7 +132,6 @@ tr.joinchat--focus .joinchat_vars_help {
 .joinchat_vars_help code {
   -webkit-user-select: all;
   -moz-user-select: all;
-  -ms-user-select: all;
   user-select: all;
   padding: 2px 1px;
   font-size: inherit;
@@ -201,7 +207,6 @@ tr.joinchat--focus .joinchat_vars_help {
 .settings_page_joinchat .help-tab-content code {
   -webkit-user-select: all;
   -moz-user-select: all;
-  -ms-user-select: all;
   user-select: all;
 }
 
@@ -216,7 +221,6 @@ tr.joinchat--focus .joinchat_vars_help {
 .joinchat-metabox code {
   -webkit-user-select: all;
   -moz-user-select: all;
-  -ms-user-select: all;
   user-select: all;
   padding: 2px 1px;
   font-size: smaller;
@@ -225,6 +229,10 @@ tr.joinchat--focus .joinchat_vars_help {
 
 .joinchat-metabox .dashicons {
   opacity: .5;
+}
+
+.joinchat-metabox input::-moz-placeholder {
+  color: #dedfe0;
 }
 
 .joinchat-metabox input::placeholder {
@@ -266,4 +274,179 @@ tr.joinchat--focus .joinchat_vars_help {
 
 .form-field.joinchat-metabox input[type=radio]+span {
   margin-right: 15px;
+}
+
+/* Joinchat adminbar */
+
+#jcadminbar {
+  position: relative;
+  min-height: 50px;
+  background: #fff;
+  filter: drop-shadow(0 0px 2px #0003);
+}
+
+#jcadminbar:before {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -200px;
+  width: 200px;
+  background: inherit;
+}
+
+.joinchat-header {
+  padding-top: 5px;
+  padding-bottom: 1px;
+}
+
+#jcadminbar h1 {
+  margin: 0;
+}
+
+#jcadminbar~#wpbody .wrap {
+  margin-top: 30px;
+}
+
+#jcadminbar~#wpbody .wp-header-end+.notice {
+  margin-top: 40px;
+}
+
+[dir=rtl] #jcadminbar:before {
+  left: auto;
+  right: -200px;
+}
+
+@media screen and (max-width: 600px) {
+  #jcadminbar {
+    top: 46px;
+  }
+}
+
+/* Preview */
+
+.joinchat_preview_control {
+  position: -webkit-sticky;
+  position: sticky;
+  z-index: 10;
+  top: 30px;
+  height: 0;
+  text-align: right;
+}
+
+#joinchat_preview_show {
+  margin-top: 10px;
+  vertical-align: top;
+}
+
+#joinchat_preview_show:before {
+  content: "\f115";
+  margin-right: 5px;
+  vertical-align: -27%;
+}
+
+:root {
+  --preview-width: 380px;
+}
+
+#joinchatprev {
+  display: none;
+  position: fixed;
+  z-index: 6;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: var(--preview-width);
+  padding-top: 32px;
+  background: #fff;
+  border-left: 1px solid #dcdcde;
+}
+
+.jcpreview #joinchatprev {
+  display: block;
+}
+
+.jcpreview #wpcontent,
+.jcpreview #wpfooter {
+  margin-right: var(--preview-width);
+}
+
+#joinchatprev__resize {
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 5px;
+  cursor: ew-resize;
+}
+
+#joinchat_preview {
+  width: 100%;
+  height: 100%;
+}
+
+body.jcpreview-resize {
+  cursor: ew-resize !important;
+}
+
+body.jcpreview-resize #joinchatprev__resize {
+  width: 100%;
+}
+
+[dir=rtl] .joinchat_preview_control {
+  text-align: left;
+}
+
+[dir=rtl] #joinchat_preview_show:before {
+  margin-right: 0;
+  margin-left: 5px;
+}
+
+[dir=rtl] #joinchatprev {
+  left: 0;
+  right: auto;
+  border-left: none;
+  border-right: 1px solid #dcdcde;
+}
+
+[dir=rtl] .jcpreview #wpcontent,
+[dir=rtl] .jcpreview #wpfooter {
+  margin-right: 160px;
+  margin-left: var(--preview-width);
+}
+
+[dir=rtl] .folded.jcpreview #wpcontent,
+[dir=rtl] .folded.jcpreview #wpfooter {
+  margin-right: 36px;
+}
+
+[dir=rtl] #joinchatprev__resize {
+  left: auto;
+  right: 0;
+}
+
+@media screen and (max-width: 782px) {
+  :root {
+    --preview-width: 0 !important;
+  }
+
+  #joinchatprev {
+    width: 100%;
+  }
+
+  #joinchat_preview_show {
+    margin-top: 20px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .joinchat_preview_control {
+    top: 0;
+  }
+
+  #joinchat_preview_show {
+    margin-top: 10px;
+  }
 }

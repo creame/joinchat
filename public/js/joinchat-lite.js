@@ -4,7 +4,7 @@
   joinchat_obj = $.extend({
     settings: null,
     is_mobile: !!navigator.userAgent.match(/Android|iPhone|BlackBerry|IEMobile|Opera Mini/i),
-    can_qr: typeof kjua == 'function',
+    can_qr: window.QrCreator && typeof QrCreator.render == 'function',
   }, joinchat_obj);
   window.joinchat_obj = joinchat_obj; // Save global
 
@@ -128,11 +128,14 @@
 
   // Generate QR canvas
   joinchat_obj.qr = function (text, options) {
-    return kjua($.extend({
+    var canvas = document.createElement('CANVAS');
+    QrCreator.render($.extend({
       text: text,
-      render: 'canvas',
-      rounded: 80,
-    }, joinchat_obj.settings.qr || {}, options || {}));
+      radius: 0.4,
+      background: '#FFF',
+      size: 200,
+    }, joinchat_obj.settings.qr || {}, options || {}), canvas);
+    return canvas;
   }
 
   // Triggers: launch WhatsApp on click
