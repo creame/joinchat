@@ -153,7 +153,7 @@ class Joinchat_I18n {
 			__( 'Manage translations', 'creame-whatsapp-me' )
 		);
 
-		add_settings_error( 'joinchat', 'review_i18n', $message, 'warning' );
+		add_settings_error( JOINCHAT_SLUG, 'review_i18n', $message, 'warning' );
 
 	}
 
