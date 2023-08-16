@@ -3,7 +3,7 @@ Contributors: creapuntome, pacotole, davidlillo, monillo
 Donate link: https://join.chat/donate/
 Tags: Chat, Click to Chat, Facebook Messenger, WhatsApp, Telegram, Whatsapp Business, button, support chat, support, contact, directly message WhatsApp, floating WhatsApp, WhatsApp chat
 Requires at least: 4.5.0
-Tested up to: 6.2
+Tested up to: 6.3
 Requires PHP: 5.5
 Stable tag: 5.0.7
 License: GPLv2 or later
@@ -115,8 +115,9 @@ You can also **create your own custom events or add event parameters**. [View FA
 Any element in your page can be a chat trigger, eg: it can launch WhatsApp from a link or show the Joinchat CTA when the user scrolls to the footer.
 
 **On page load (by url):**
-* url query param `joinchat` to show chat window. Can set delay in seconds, default is 0 *(e.g. example.com/page/?joinchat=5)*.
-* url query hash `#joinchat` to show chat window *(e.g. example.com/page/#joinchat)*.
+
+* url query param `joinchat` to show chat window. Can set delay in seconds, default is 0 *(e.g. example.com/page/?joinchat=5)*
+* url query hash `#joinchat` to show chat window *(e.g. example.com/page/#joinchat)*
 
 **On click:**
 
@@ -157,17 +158,20 @@ Fully extensible, with lots of filters and actions to extend its functionality o
 ### ⌁ PREMIUM ADD-ONS 🍡
 Extend Joinchat with awesome features:
 
+#### 🤖 [**NEW!!** Chat Funnels](https://join.chat/en/chatfunnel/?utm_source=wporg&utm_medium=web).
+**Simple funnels like a messaging chatbot.** Create lead capture, qualification or support funnels by simulating conversations with a chatbot.
+
 #### 🤹🏻‍♂️ [Create Support Agents](https://join.chat/en/addons/support-agents/?utm_source=wporg&utm_medium=web).
-Managing multiple WhatsApp accounts has never been easier. Add multiple phone numbers and monitor their availability, even if your employees are out of the office, your website users will know how long it will be before they are back up and running!
+**A contact button with multiple WhatsApp numbers.** Avoid collapsing your support, pre-sales or orders chat. Add as many WhatsApp numbers as you have support or sales staff. Your customers will randomly access each of them distributing the workload evenly.
 
-#### 🎲 [Avoid Overloading](https://join.chat/en/addons/random-phone/?utm_source=wporg&utm_medium=web).
-Avoid delays in support chats. Joinchat allows you to add as many phone numbers as you want. We distribute customer chats evenly among each of your support agents, so you never have to worry about bottlenecks or dropped calls again.
+#### 🎲 [Random Phone](https://join.chat/en/addons/random-phone/?utm_source=wporg&utm_medium=web).
+**Contact buttons for each agent with availability times.** Manage multiple WhatsApp accounts with their name, department and working hours. Your visitors will be able to contact the agent of their choice and know how long it will be until the agents are available.
 
-#### 📡 [Don’t Miss a Chat](https://join.chat/en/addons/omnichannel/?utm_source=wporg&utm_medium=web).
-This feature will allow you to add more chat apps to the basic plugin, in addition to WhatsApp. You can now add Telegram, Facebook Messenger, SMS, phone call, Skype and FaceTime.
+#### 📡 [OmniChannel](https://join.chat/en/addons/omnichannel/?utm_source=wporg&utm_medium=web).
+**Add more contact channels.** Allows you to add more contact channels (from more than 10 apps) in addition to WhatsApp. Now you can add Telegram, Facebook Messenger, Tiktok, Snapchat, SMS, phone calls, Skype, FaceTime and more.
 
 #### 🥁 [Convincing Calls to Action](https://join.chat/en/addons/cta-extras/?utm_source=wporg&utm_medium=web).
-Use our embed tool to beautifully design the content that appears in the chat window. Drive your leads from landings to sales and conversion pages. Add links, images, animated GIFs, buttons or even embedded content from other platforms, surveys, chatbots, forms...
+**Enhance your Calls to Action.** Create more engaging content in the chat window for better conversion. Add links, videos, images, animated GIFs, buttons or even embedded content from other platforms such as Calendly, surveys, forms…
 
 [**👉 Upgrade Joinchat Now**](https://join.chat/en/premium/?utm_source=wporg&utm_medium=web)
 
