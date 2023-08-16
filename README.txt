@@ -381,6 +381,10 @@ Joinchat save two localStorage variables for proper operation:
 
 == Changelog ==
 
+= 5.0.8 =
+* CHANGED Tested up to WordPress 6.3.
+* NEW: For developers: added filter 'joinchat_enqueue_qr'.
+
 = 5.0.7 =
 * **NEW:** Added url triggers hash `#joinchat` or query param `?joinchat`.
 * FIX PHP warning "$script undefinned".

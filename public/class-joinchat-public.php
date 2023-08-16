@@ -173,9 +173,8 @@ class Joinchat_Public {
 		// Register QR script.
 		wp_register_script( 'joinchat-qr', plugins_url( 'js/qr-creator.min.js', __FILE__ ), array(), '1.0.0', true );
 
-		// Note: caution with cache plugins and wp_is_mobile()
 		// If QR script is missing it fails silently and don't shows QR Code :).
-		if ( jc_common()->qr && ! wp_is_mobile() ) {
+		if ( $this->need_enqueue_qr_script() ) {
 			$deps[] = 'joinchat-qr';
 		}
 
@@ -219,7 +218,7 @@ class Joinchat_Public {
 	 */
 	public function enqueue_qr_script() {
 
-		if ( ! jc_common()->qr || wp_script_is( 'joinchat-qr', 'enqueued' ) || wp_is_mobile() ) {
+		if ( wp_script_is( 'joinchat-qr' ) || ! $this->need_enqueue_qr_script() ) {
 			return;
 		}
 
@@ -451,4 +450,14 @@ class Joinchat_Public {
 		return $global;
 	}
 
+	/**
+	 * Need enqueue QR script
+	 *
+	 * Note: caution with cache plugins and wp_is_mobile()
+	 *
+	 * @return bool
+	 */
+	private function need_enqueue_qr_script() {
+		return apply_filters( 'joinchat_enqueue_qr', jc_common()->qr && ! wp_is_mobile() );
+	}
 }
