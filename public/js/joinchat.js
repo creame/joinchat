@@ -189,6 +189,10 @@
     return !this.$div.hasClass('joinchat--optout');
   };
 
+  joinchat_obj.use_qr = function () {
+    return !!this.settings.qr && this.can_qr && !this.is_mobile;
+  }
+
   // Generate QR canvas
   joinchat_obj.qr = function (text, options) {
     var canvas = document.createElement('CANVAS');
@@ -197,7 +201,7 @@
       radius: 0.4,
       background: '#FFF',
       size: 200,
-    }, joinchat_obj.settings.qr || {}, options || {}), canvas);
+    }, this.settings.qr || {}, options || {}), canvas);
     return canvas;
   }
 
@@ -351,7 +355,7 @@
     }
 
     // Add QR Code
-    if (joinchat_obj.settings.qr && joinchat_obj.can_qr && !joinchat_obj.is_mobile) {
+    if (joinchat_obj.use_qr()) {
       joinchat_obj.$('.joinchat__qr').append(joinchat_obj.qr(joinchat_obj.whatsapp_link(undefined, undefined, false)));
     } else {
       joinchat_obj.$('.joinchat__qr').remove();
