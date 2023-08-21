@@ -605,7 +605,7 @@ class Joinchat_Admin_Page {
 					'<p>' . __( 'Any element in your pages can be a chat trigger:', 'creame-whatsapp-me' ) . '</p>' .
 					'<p><strong>' . __( 'On page load, by url:', 'creame-whatsapp-me' ) . '</strong></p>' .
 					'<ul>' .
-						'<li>url query param <code>joinchat</code> ' . __( 'to show chat window.', 'creame-whatsapp-me' ) . ' '. __( 'Can set delay in seconds, default is 0.', 'creame-whatsapp-me' ) .
+						'<li>url query param <code>joinchat</code> ' . __( 'to show chat window.', 'creame-whatsapp-me' ) . ' ' . __( 'Can set delay in seconds, default is 0.', 'creame-whatsapp-me' ) .
 						' <em>' . __( 'e.g.', 'creame-whatsapp-me' ) . ' <code>example.com/page/?joinchat=5</code></em></li>' .
 						'<li>url query hash <code>#joinchat</code> ' . __( 'to show chat window.', 'creame-whatsapp-me' ) .
 						' <em>' . __( 'e.g.', 'creame-whatsapp-me' ) . ' <code>example.com/page/#joinchat</code></em></li>' .
