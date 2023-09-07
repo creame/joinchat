@@ -38,7 +38,6 @@ class Joinchat_Integrations {
 				require_once JOINCHAT_DIR . 'admin/class-joinchat-woo-admin.php';
 
 				$plugin_woo_admin = new Joinchat_Woo_Admin();
-
 				add_action( 'joinchat_run_pre', array( $plugin_woo_admin, 'init' ) );
 
 			} else {
@@ -46,7 +45,6 @@ class Joinchat_Integrations {
 				require_once JOINCHAT_DIR . 'public/class-joinchat-woo-public.php';
 
 				$plugin_woo_public = new Joinchat_Woo_Public();
-
 				add_action( 'joinchat_run_pre', array( $plugin_woo_public, 'init' ) );
 
 			}
@@ -64,7 +62,6 @@ class Joinchat_Integrations {
 				require_once JOINCHAT_DIR . 'admin/class-joinchat-elementor-admin.php';
 
 				$plugin_elementor_admin = new Joinchat_Elementor_Admin();
-
 				add_action( 'joinchat_run_pre', array( $plugin_elementor_admin, 'init' ) );
 
 			}
@@ -74,6 +71,10 @@ class Joinchat_Integrations {
 			add_action( $hook, array( $this, 'elementor_finder_integration' ) );
 		}
 
+		/**
+		 * WP Rocket
+		 */
+		add_filter( 'rocket_rucss_external_exclusions', array( $this, 'rocket_rucss_external_exclusions' ) );
 	}
 
 	/**
@@ -145,4 +146,31 @@ class Joinchat_Integrations {
 
 	}
 
+	/**
+	 * Exclude CSS Files styles from being removed by WP Rocket’s Remove Unused CSS optimization.
+	 *
+	 * @since    5.0.9
+	 * @param  array $external_exclusions List of excluded CSS files.
+	 * @return array
+	 */
+	public function rocket_rucss_external_exclusions( $external_exclusions = array() ) {
+
+		$min = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
+
+		$files = array(
+			plugins_url( "css/joinchat{$min}.css", __FILE__ ),
+			plugins_url( "css/joinchat-btn{$min}.css", __FILE__ ),
+			plugins_url( "css/joinchat-woo{$min}.css", __FILE__ ),
+		);
+
+		$parts       = explode( '/', WP_CONTENT_URL );
+		$content_dir = '/' . trailingslashit( end( $parts ) );
+
+		foreach ( $files as $file ) {
+			$external_exclusions[] = substr( $file, strpos( $file, $content_dir ) );
+		}
+
+		return $external_exclusions;
+
+	}
 }

@@ -381,6 +381,9 @@ Joinchat save two localStorage variables for proper operation:
 
 == Changelog ==
 
+= 5.0.9 =
+* NEW Prevent WP Rocket remove styles.
+
 = 5.0.8 =
 * CHANGED Tested up to WordPress 6.3.
 * NEW: For developers: added filter 'joinchat_enqueue_qr'.
