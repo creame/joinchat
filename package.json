@@ -8,7 +8,7 @@
   "devDependencies": {
     "autoprefixer": "^10.4.15",
     "cssnano-cli": "^1.0.5",
-    "del-cli": "^5.0.0",
+    "del-cli": "^5.1.0",
     "postcss-calc": "^9.0.1",
     "postcss-cli": "^10.1.0",
     "postcss-discard-duplicates": "^6.0.0",
