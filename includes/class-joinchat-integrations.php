@@ -158,9 +158,9 @@ class Joinchat_Integrations {
 		$min = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
 
 		$files = array(
-			plugins_url( "css/joinchat{$min}.css", __FILE__ ),
-			plugins_url( "css/joinchat-btn{$min}.css", __FILE__ ),
-			plugins_url( "css/joinchat-woo{$min}.css", __FILE__ ),
+			plugins_url( "public/css/joinchat{$min}.css", JOINCHAT_FILE ),
+			plugins_url( "public/css/joinchat-btn{$min}.css", JOINCHAT_FILE ),
+			plugins_url( "public/css/joinchat-woo{$min}.css", JOINCHAT_FILE ),
 		);
 
 		$parts       = explode( '/', WP_CONTENT_URL );
