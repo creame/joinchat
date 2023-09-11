@@ -382,7 +382,8 @@ Joinchat save two localStorage variables for proper operation:
 == Changelog ==
 
 = 5.0.9 =
-* NEW Prevent WP Rocket remove styles.
+* FIX Term custom Joinchat settings not saved (introduced on v5.0).
+* NEW Prevent WP Rocket remove Joinchat styles.
 
 = 5.0.8 =
 * CHANGED Tested up to WordPress 6.3.

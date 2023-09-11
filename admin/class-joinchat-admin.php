@@ -378,13 +378,27 @@ class Joinchat_Admin {
 	 */
 	public function add_term_meta_boxes() {
 
-		$taxonomies = apply_filters( 'joinchat_taxonomies_meta_box', array( 'category', 'post_tag' ) );
+		$taxonomies = jc_common()->get_taxonomies_meta_box();
 
-		foreach ( $taxonomies as $tax ) {
-			add_action( "{$tax}_edit_form_fields", array( $this, 'term_meta_box' ), 10, 2 );
-			add_action( "edited_{$tax}", array( $this, 'save_meta' ), 10, 2 );
+		foreach ( $taxonomies as $taxonomy ) {
+			add_action( "{$taxonomy}_edit_form_fields", array( $this, 'term_meta_box' ), 10, 2 );
 		}
+	}
 
+	/**
+	 * Add term save meta fields
+	 *
+	 * @since    5.0.9
+	 * @access   public
+	 * @return void
+	 */
+	public function add_term_save_meta() {
+
+		$taxonomies = jc_common()->get_taxonomies_meta_box();
+
+		foreach ( $taxonomies as $taxonomy ) {
+			add_action( "edited_{$taxonomy}", array( $this, 'save_meta' ), 10, 2 );
+		}
 	}
 
 	/**

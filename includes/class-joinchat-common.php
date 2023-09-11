@@ -227,6 +227,18 @@ CSS;
 	}
 
 	/**
+	 * Get taxonomies to include Joinchat meta box
+	 *
+	 * @since    5.0.9
+	 * @return array
+	 */
+	public function get_taxonomies_meta_box() {
+
+		return apply_filters( 'joinchat_taxonomies_meta_box', array( 'category', 'post_tag' ) );
+
+	}
+
+	/**
 	 * Get post/term form placeholders
 	 *
 	 * @since 4.5.0

@@ -176,9 +176,12 @@ class Joinchat {
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'register_scripts' );
 		$this->loader->add_action( 'admin_notices', $plugin_admin, 'notices' );
 		$this->loader->add_action( 'wp_ajax_joinchat_notice_dismiss', $plugin_admin, 'ajax_notice_dismiss' );
+		// Post meta.
 		$this->loader->add_action( 'add_meta_boxes', $plugin_admin, 'add_meta_boxes' );
-		$this->loader->add_action( 'load-term.php', $plugin_admin, 'add_term_meta_boxes' );
 		$this->loader->add_action( 'save_post', $plugin_admin, 'save_meta', 10, 2 );
+		// Term meta.
+		$this->loader->add_action( 'load-term.php', $plugin_admin, 'add_term_meta_boxes' );
+		$this->loader->add_action( 'load-edit-tags.php', $plugin_admin, 'add_term_save_meta' );
 		$this->loader->add_action( 'update_option_joinchat', $plugin_admin, 'clear_cache', 100 );
 		// Plugins page.
 		$this->loader->add_filter( 'plugin_action_links_' . JOINCHAT_BASENAME, $plugin_admin, 'settings_link' );
