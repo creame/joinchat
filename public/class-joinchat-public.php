@@ -130,29 +130,26 @@ class Joinchat_Public {
 
 		wp_enqueue_style( JOINCHAT_SLUG, plugins_url( "css/{$file}{$min}.css", __FILE__ ), array(), JOINCHAT_VERSION, 'all' );
 
-		if ( JOINCHAT_SLUG === $file ) {
-			$inline_css = '';
+		$inline_css = '';
 
-			if ( jc_common()->defaults( 'color' ) !== $settings['color'] ) {
-				list($r, $g, $b) = sscanf( $settings['color'], '#%02x%02x%02x' );
-				$inline_css     .= ".joinchat{ --red:$r; --green:$g; --blue:$b; }";
-			}
-
-			if ( ! empty( $settings['custom_css'] ) && jc_common()->defaults( 'custom_css' ) !== $settings['custom_css'] ) {
-				// Note that esc_html() cannot be used because `div &gt; span`.
-				$inline_css .= wp_strip_all_tags( $settings['custom_css'] );
-			}
-
-			$inline_css = apply_filters( 'joinchat_inline_style', $inline_css, $settings );
-
-			// Remove spaces & comments.
-			if ( ! defined( 'SCRIPT_DEBUG' ) || ! SCRIPT_DEBUG ) {
-				$inline_css = preg_replace( array( '/(\s*)([{|}|:|;|,])(\s+)/', '/\/\*.*?\*\/|\n|\t/' ), array( '$2', '' ), $inline_css );
-			}
-
-			wp_add_inline_style( JOINCHAT_SLUG, $inline_css );
+		if ( jc_common()->defaults( 'color' ) !== $settings['color'] ) {
+			list($r, $g, $b) = sscanf( $settings['color'], '#%02x%02x%02x' );
+			$inline_css     .= ".joinchat{ --red:$r; --green:$g; --blue:$b; }";
 		}
 
+		if ( ! empty( $settings['custom_css'] ) && jc_common()->defaults( 'custom_css' ) !== $settings['custom_css'] ) {
+			// Note that esc_html() cannot be used because `div &gt; span`.
+			$inline_css .= wp_strip_all_tags( $settings['custom_css'] );
+		}
+
+		$inline_css = apply_filters( 'joinchat_inline_style', $inline_css, $settings );
+
+		// Remove spaces & comments.
+		if ( ! defined( 'SCRIPT_DEBUG' ) || ! SCRIPT_DEBUG ) {
+			$inline_css = preg_replace( array( '/(\s*)([{|}|:|;|,])(\s+)/', '/\/\*.*?\*\/|\n|\t/' ), array( '$2', '' ), $inline_css );
+		}
+
+		wp_add_inline_style( JOINCHAT_SLUG, $inline_css );
 	}
 
 	/**

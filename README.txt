@@ -382,6 +382,7 @@ Joinchat save two localStorage variables for proper operation:
 == Changelog ==
 
 = 5.0.10 =
+* FIX load customs CSS when use button only styles.
 * CHANGE small optimization, no need jquery-migrate.
 
 = 5.0.9 =
