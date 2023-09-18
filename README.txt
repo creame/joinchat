@@ -381,6 +381,9 @@ Joinchat save two localStorage variables for proper operation:
 
 == Changelog ==
 
+= 5.0.10 =
+* CHANGE small optimization, no need jquery-migrate.
+
 = 5.0.9 =
 * FIX Term custom Joinchat settings not saved (introduced on v5.0).
 * NEW Prevent WP Rocket remove Joinchat styles.

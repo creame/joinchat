@@ -168,7 +168,7 @@ class Joinchat_Public {
 	public function enqueue_scripts() {
 
 		$min  = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
-		$deps = array( 'jquery' );
+		$deps = array( 'jquery-core' ); // Don't need jquery-migrate.
 
 		// Register QR script.
 		wp_register_script( 'joinchat-qr', plugins_url( 'js/qr-creator.min.js', __FILE__ ), array(), '1.0.0', true );
