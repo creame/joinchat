@@ -5,7 +5,7 @@ Tags: Chat, Click to Chat, Facebook Messenger, WhatsApp, Telegram, Whatsapp Busi
 Requires at least: 4.5.0
 Tested up to: 6.3
 Requires PHP: 5.5
-Stable tag: 5.0.10
+Stable tag: 5.0.11
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -380,6 +380,10 @@ Joinchat save two localStorage variables for proper operation:
 
 
 == Changelog ==
+
+= 5.0.11 =
+* FIX Update inline CSS minifier.
+* CHANGE Custom CSS not prefill example CSS by default.
 
 = 5.0.10 =
 * FIX load customs CSS when use button only styles.

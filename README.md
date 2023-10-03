@@ -2,6 +2,9 @@
 # Joinchat
 Wordpress plugin
 
+[![WP compatibility](https://plugintests.com/plugins/wporg/creame-whatsapp-me/wp-badge.svg)](https://plugintests.com/plugins/wporg/creame-whatsapp-me/latest)
+[![PHP compatibility](https://plugintests.com/plugins/wporg/creame-whatsapp-me/php-badge.svg)](https://plugintests.com/plugins/wporg/creame-whatsapp-me/latest)
+
 ## Description [EN]
 Include a direct link to your WhatsApp profile on the web to support your users.
 
