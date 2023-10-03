@@ -94,13 +94,15 @@ class Joinchat_Common {
 	public function defaults( $key = false ) {
 
 		$default_css = <<<CSS
-/* Joinchat styles (default values) */
+/* Joinchat default styles
+z-index: 9000;   put above or below other objects
+--s: 60px;       button size
+--bottom: 20px;  bottom separation (mobile 6px)
+--sep: 20px;     right/left separation (mobile 6px)
+--header: 70px;  chatbox header height (mobile 55px)
+*/
 .joinchat {
-	/* z-index: 9999;  /* (9000) */
-	/* --s: 50px;      /* button size: (60px) */
-	/* --bottom: 80px; /* bottom separation (20px) */
-	/* --sep: 20px;    /* right/left separation (20px) */
-	/* --header: 60px; /* chatbox header height (70px) */
+	/* css rules */
 }
 
 /* Joinchat mobile styles */

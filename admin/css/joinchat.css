@@ -191,6 +191,10 @@ tr.joinchat--focus .joinchat_vars_help {
   background: transparent;
 }
 
+#joinchat_form .CodeMirror {
+  font-size: 13px;
+}
+
 /* Help */
 
 .toplevel_page_joinchat .help-tab-content li ul,

@@ -517,19 +517,16 @@ class Joinchat_Admin_Page {
 					break;
 
 				case 'custom_css':
-					if ( empty( $value ) ) {
-						$value = jc_common()->defaults( 'custom_css' );
-					}
-
 					$output = '<fieldset><legend class="screen-reader-text"><span>' . __( 'Custom CSS', 'creame-whatsapp-me' ) . '</span></legend>' .
 						'<p><label for="joinchat_custom_css">' . __( 'Add your own CSS code here to customize the appearance of Joinchat.', 'creame-whatsapp-me' ) . ' ' .
-						sprintf(
-							/* translators: %s: CSS tricks link. */
+						'<a href="#" class="joinchat_custom_css_prefill">' . __( 'Fill with example code', 'creame-whatsapp-me' ) . '</a>' .
+						'</label></p>' .
+						'<textarea id="joinchat_custom_css" name="joinchat[custom_css]" rows="3" class="regular-text autofill" placeholder="' . esc_attr__( 'Your custom CSS...', 'creame-whatsapp-me' ) . '">' . esc_textarea( $value ) . '</textarea>' .
+						'<p class="description">' .
+						sprintf( /* translators: %s: CSS tricks link. */
 							__( 'You can find examples and more tricks <a href="%s" target="_blank">here</a>.', 'creame-whatsapp-me' ),
 							esc_url( Joinchat_Util::link( 'css', 'help' ) )
-						) . '</label></p>' .
-						'<textarea id="joinchat_custom_css" name="joinchat[custom_css]" rows="3" class="regular-text autofill" placeholder="">' . esc_textarea( $value ) . '</textarea>' .
-						'</fieldset>';
+						) . '</p></fieldset>';
 					break;
 
 				case 'clear':
@@ -769,8 +766,9 @@ class Joinchat_Admin_Page {
 
 		// Enqueue scripts.
 		$config = array(
-			'home'    => home_url(),
-			'example' => __( 'is an example, double click to use it', 'creame-whatsapp-me' ),
+			'home'       => home_url(),
+			'example'    => __( 'is an example, double click to use it', 'creame-whatsapp-me' ),
+			'custom_css' => jc_common()->defaults( 'custom_css' ),
 		);
 
 		wp_deregister_script( $handle );
