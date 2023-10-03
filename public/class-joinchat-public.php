@@ -144,12 +144,7 @@ class Joinchat_Public {
 
 		$inline_css = apply_filters( 'joinchat_inline_style', $inline_css, $settings );
 
-		// Remove spaces & comments.
-		if ( ! defined( 'SCRIPT_DEBUG' ) || ! SCRIPT_DEBUG ) {
-			$inline_css = preg_replace( array( '/(\s*)([{|}|:|;|,])(\s+)/', '/\/\*.*?\*\/|\n|\t/' ), array( '$2', '' ), $inline_css );
-		}
-
-		wp_add_inline_style( JOINCHAT_SLUG, $inline_css );
+		wp_add_inline_style( JOINCHAT_SLUG, Joinchat_Util::min_css( $inline_css ) );
 	}
 
 	/**

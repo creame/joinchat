@@ -395,4 +395,34 @@ class Joinchat_Util {
 		return add_query_arg( $args, "https://join.chat/$lang/$path" );
 
 	}
+
+	/**
+	 * Simple CSS minifier
+	 *
+	 * View (https://gist.github.com/MeanEYE/36d4abe94ea99014284628a50f5a6d9b).
+	 *
+	 * @since  5.0.11
+	 * @param  string $css CSS string.
+	 * @return string      minified CSS string.
+	 */
+	public static function min_css( $css ) {
+
+		if ( ! defined( 'SCRIPT_DEBUG' ) || ! SCRIPT_DEBUG ) {
+
+			$rules = array(
+				'/\/\*.*?(?=\*\/)\*\//imus'         => '',
+				'/([^\d])-?(0+)(px|pt|rem|em|vw|vh|vmax|vmin|cm|mm|m\%)/imus' => '\1\2',
+				'/\s*([>~:;,\[\]\{\}])\s*/imus'     => '\1',
+				'/\s*([\(\)])\s*([^+-\/\*\^])/imus' => '\1\2',
+				'/([\+])\s*([^\d])/imus'            => '\1\2',
+				'/#([\dabcdef])\1([\dabcdef])\2([\dabcdef])\3/imus' => '#\1\2\3',
+				'/;\}/imus'                         => '}',
+			);
+
+			$css = preg_replace( array_keys( $rules ), $rules, $css );
+		}
+
+		return $css;
+
+	}
 }
