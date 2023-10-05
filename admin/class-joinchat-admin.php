@@ -56,14 +56,14 @@ class Joinchat_Admin {
 		$util::maybe_encode_emoji();
 
 		$value['telephone']     = $util::clean_input( $value['telephone'] );
-		$value['mobile_only']   = isset( $value['mobile_only'] ) ? 'yes' : 'no';
+		$value['mobile_only']   = $util::yes_no( $value, 'mobile_only' );
 		$value['button_image']  = intval( $value['button_image'] );
 		$value['button_tip']    = $util::substr( $util::clean_input( $value['button_tip'] ), 0, 40 );
 		$value['button_delay']  = intval( $value['button_delay'] );
-		$value['whatsapp_web']  = isset( $value['whatsapp_web'] ) ? 'yes' : 'no';
-		$value['qr']            = isset( $value['qr'] ) ? 'yes' : 'no';
+		$value['whatsapp_web']  = $util::yes_no( $value, 'whatsapp_web' );
+		$value['qr']            = $util::yes_no( $value, 'qr' );
 		$value['message_text']  = $util::clean_input( $value['message_text'] );
-		$value['message_badge'] = isset( $value['message_badge'] ) ? 'yes' : 'no';
+		$value['message_badge'] = $util::yes_no( $value, 'message_badge' );
 		$value['message_send']  = $util::clean_input( $value['message_send'] );
 		$value['message_start'] = $util::substr( $util::clean_input( $value['message_start'] ), 0, 40 );
 		$value['message_delay'] = intval( $value['message_delay'] );
@@ -72,7 +72,7 @@ class Joinchat_Admin {
 		$value['color']         = preg_match( '/^#[a-f0-9]{6}$/i', $value['color'] ) ? $value['color'] : '#25d366';
 		$value['dark_mode']     = in_array( $value['dark_mode'], array( 'no', 'yes', 'auto' ), true ) ? $value['dark_mode'] : 'no';
 		$value['header']        = in_array( $value['header'], array( '__jc__', '__wa__' ), true ) ? $value['header'] : $util::substr( $util::clean_input( $value['header_custom'] ), 0, 40 );
-		$value['optin_check']   = isset( $value['optin_check'] ) ? 'yes' : 'no';
+		$value['optin_check']   = $util::yes_no( $value, 'optin_check' );
 		$value['optin_text']    = wp_kses(
 			$value['optin_text'],
 			array(
@@ -85,7 +85,7 @@ class Joinchat_Admin {
 		$value['gads']          = 'AW-/' !== $value['gads'] ? $value['gads'] : '';
 		$value['custom_css']    = trim( str_replace( "\r\n", "\n", $value['custom_css'] ) );
 		$value['custom_css']    = $value['custom_css'] !== jc_common()->defaults( 'custom_css' ) ? $value['custom_css'] : '';
-		$value['clear']         = isset( $value['clear'] ) ? 'yes' : 'no';
+		$value['clear']         = $util::yes_no( $value, 'clear' );
 
 		if ( isset( $value['view'] ) ) {
 			$value['visibility'] = array_filter(

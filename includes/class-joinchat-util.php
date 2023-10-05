@@ -56,6 +56,18 @@ class Joinchat_Util {
 	}
 
 	/**
+	 * Check if value is set and is 'yes'
+	 *
+	 * @since  5.0.12
+	 * @param  string $values array of values.
+	 * @param  string $key    value key to check.
+	 * @return string 'yes' or 'no'
+	 */
+	public static function yes_no( $values, $key ) {
+		return isset( $values[ $key ] ) && 'yes' === $values[ $key ] ? 'yes' : 'no';
+	}
+
+	/**
 	 * Clean WhatsApp number
 	 *
 	 * View (https://faq.whatsapp.com/general/contacts/how-to-add-an-international-phone-number)

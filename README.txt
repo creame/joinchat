@@ -381,6 +381,9 @@ Joinchat save two localStorage variables for proper operation:
 
 == Changelog ==
 
+= 5.0.12 =
+* FIX False positive on un unmarked checkbox settings on first save.
+
 = 5.0.11 =
 * FIX Update inline CSS minifier.
 * CHANGE Custom CSS not prefill example CSS by default.
