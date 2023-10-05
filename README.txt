@@ -382,6 +382,8 @@ Joinchat save two localStorage variables for proper operation:
 == Changelog ==
 
 = 5.0.12 =
+* CHANGE RTL show message bubble peak on right.
+* FIX Clean new lines to ensure "\n" format.
 * FIX False positive on un unmarked checkbox settings on first save.
 
 = 5.0.11 =

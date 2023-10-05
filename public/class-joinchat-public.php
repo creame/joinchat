@@ -137,7 +137,7 @@ class Joinchat_Public {
 			$inline_css     .= ".joinchat{ --red:$r; --green:$g; --blue:$b; }";
 		}
 
-		if ( ! empty( $settings['custom_css'] ) && jc_common()->defaults( 'custom_css' ) !== $settings['custom_css'] ) {
+		if ( ! empty( $settings['custom_css'] ) ) {
 			// Note that esc_html() cannot be used because `div &gt; span`.
 			$inline_css .= wp_strip_all_tags( $settings['custom_css'] );
 		}

@@ -48,11 +48,23 @@ class Joinchat_Util {
 		if ( is_array( $value ) ) {
 			return array_map( 'self::clean_input', $value );
 		} elseif ( is_string( $value ) ) {
+			$value = self::clean_nl( $value );
 			// Split lines, clean and re-join lines.
 			return implode( "\n", array_map( 'sanitize_text_field', explode( "\n", trim( $value ) ) ) );
 		} else {
 			return $value;
 		}
+	}
+
+	/**
+	 * Clean new line format
+	 *
+	 * @since  5.0.12
+	 * @param  string $value string to clean.
+	 * @return string string with "\n" new lines.
+	 */
+	public static function clean_nl( $value ) {
+		return str_replace( array( "\r\n", "\r" ), array( "\n", "\n" ), $value );
 	}
 
 	/**
@@ -215,7 +227,7 @@ class Joinchat_Util {
 		);
 
 		// Split text into lines and apply replacements line by line.
-		$lines = explode( "\n", $string );
+		$lines = explode( "\n", self::clean_nl( $string ) );
 		foreach ( $lines as $key => $line ) {
 			$escaped_line = esc_html( $line );
 

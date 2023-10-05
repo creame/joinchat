@@ -83,8 +83,7 @@ class Joinchat_Admin {
 		);
 		$value['gads']          = is_array( $value['gads'] ) ? sprintf( 'AW-%s/%s', $util::substr( $util::clean_input( $value['gads'][0] ), 0, 11 ), $util::substr( $util::clean_input( $value['gads'][1] ), 0, 20 ) ) : '';
 		$value['gads']          = 'AW-/' !== $value['gads'] ? $value['gads'] : '';
-		$value['custom_css']    = trim( str_replace( "\r\n", "\n", $value['custom_css'] ) );
-		$value['custom_css']    = $value['custom_css'] !== jc_common()->defaults( 'custom_css' ) ? $value['custom_css'] : '';
+		$value['custom_css']    = trim( $util::clean_nl( $value['custom_css'] ) );
 		$value['clear']         = $util::yes_no( $value, 'clear' );
 
 		if ( isset( $value['view'] ) ) {
