@@ -169,7 +169,7 @@ class Joinchat_I18n {
 		$settings_i18n = $this->settings_i18n( $settings );
 
 		foreach ( $settings_i18n as $key => $label ) {
-			if ( isset( $settings[ $key ] ) && '' !== $settings[ $key ] ) {
+			if ( ! empty( $settings[ $key ] ) ) {
 				$settings[ $key ] = apply_filters( 'wpml_translate_single_string', $settings[ $key ], self::DOMAIN_GROUP, $label );
 			}
 		}
