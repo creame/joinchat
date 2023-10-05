@@ -203,9 +203,6 @@ defined( 'WPINC' ) || exit;
 					joinchat_obj.$('.joinchat__qr').append(joinchat_obj.qr(joinchat_obj.whatsapp_link(undefined, undefined, false)));
 				}
 
-				// Fix message clip-path style broken by some CSS optimizers
-				joinchat_obj.$div.css('--peak', 'ur' + 'l(#joinchat__message__peak)');
-
 				$(document).trigger('joinchat:start');
 				joinchat_obj.is_ready = true;
 			}

@@ -645,10 +645,18 @@
   color: #d8d8d8;
 }
 
+.joinchat {
+  --peak: url("#joinchat__peak_l");
+}
+
+[dir="rtl"] .joinchat {
+  --peak: url("#joinchat__peak_r");
+}
+
 .joinchat__message {
   position: relative;
-  min-height: 60px;
-  padding: 17px 20px;
+  min-height: 56px;
+  padding: 15px 20px;
   margin: 0 26px 26px;
   border-radius: 32px;
   background: #fff;
@@ -662,13 +670,18 @@
   content: '';
   display: block;
   position: absolute;
-  bottom: 20px;
+  bottom: 19px;
   left: -15px;
   width: 17px;
   height: 25px;
   background: inherit;
-  -webkit-clip-path: var(--peak, url("#joinchat__message__peak"));
-  clip-path: var(--peak, url("#joinchat__message__peak"));
+  -webkit-clip-path: var(--peak);
+  clip-path: var(--peak);
+}
+
+[dir="rtl"] .joinchat__message::before {
+  left: auto;
+  right: -15px;
 }
 
 .joinchat--dark .joinchat__message {

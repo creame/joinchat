@@ -115,8 +115,8 @@
   width: 17px;
   height: 25px;
   background: inherit;
-  -webkit-clip-path: var(--peak, url("#joinchat__message__peak"));
-  clip-path: var(--peak, url("#joinchat__message__peak"));
+  -webkit-clip-path: url(#joinchat__peak_l);
+  clip-path: url(#joinchat__peak_l);
 }
 
 .joinchat__dialog .joinchat__message--loading {
@@ -157,7 +157,8 @@
 .joinchat__dialog .joinchat__message--reply:before {
   left: auto;
   right: -13px;
-  transform: rotateY(180deg);
+  -webkit-clip-path: url(#joinchat__peak_r);
+  clip-path: url(#joinchat__peak_r);
 }
 
 .joinchat__dialog .joinchat__message--options {

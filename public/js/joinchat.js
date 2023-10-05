@@ -363,7 +363,7 @@
 
     // Fix message clip-path style broken by some CSS optimizers
     if (has_chatbox) {
-      joinchat_obj.$div.css('--peak', 'ur' + 'l(#joinchat__message__peak)');
+      joinchat_obj.$div.css('--peak', 'ur' + 'l(#joinchat__peak_' + ( joinchat_obj.$div.closest('[dir=rtl]').length ? 'r' : 'l' ) + ')');
     }
 
     $(document).trigger('joinchat:start');

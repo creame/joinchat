@@ -107,9 +107,6 @@
     // Append user reply message
     reply: function (reply) {
       this.addMessage(reply, 'joinchat__message--reply');
-      // Force redraw
-      this.$dialog[0].style.overflow = 'hidden';
-      this.delay(function () { this.$dialog[0].style.overflow = ''; }, 10);
     },
 
     // Scroll chat box to message position
