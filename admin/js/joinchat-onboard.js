@@ -173,8 +173,8 @@
       this.loading();
       $.post(ajaxurl, { action: 'joinchat_onboard', nonce: joinchat_settings.nonce, data: this.saved }, null, 'json')
         .always(function () { that.$last_msg.remove(); })
-        .done(function () { that.loadStep(that.step_number + 1); })
-        .fail(function () { that.loadStep(that.step_number + 2); });
+        .done(function () { that.loadStep(that.step_number + (!!that.saved['newsletter'] ? 1 : 2)); })
+        .fail(function () { that.loadStep(that.step_number + 3); });
     },
 
     addInput: function ($msg, msg) {
@@ -314,6 +314,17 @@
           'class': 'joinchat__option--skip',
           'action': 'skip',
           'field': '#joinchat_email,#joinchat_optin',
+        },
+      ]
+    },
+    {
+      'content': [
+        joinchat_l10n.step_inbox
+      ],
+      'options': [
+        {
+          'type': 'goto',
+          'text': joinchat_l10n.step_inbox_next,
         },
       ]
     },
