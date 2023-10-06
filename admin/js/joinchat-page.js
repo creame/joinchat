@@ -247,7 +247,7 @@
     var custom_css_editor = wp.codeEditor.initialize($('#joinchat_custom_css'), custom_css_settings);
     $(document).on('navtabchange', function (e, $tab, id) { if (id == '#joinchat_tab_advanced') custom_css_editor.codemirror.refresh(); });
     $('label[for="joinchat_custom_css"]').on('click', function () { custom_css_editor.codemirror.focus(); });
-    $('.joinchat_custom_css_prefill').on('click', function (e) { e.preventDefault(); custom_css_editor.codemirror.setValue(joinchat_admin.custom_css); });
+    $('.joinchat_custom_css_prefill').on('click', function (e) { e.preventDefault(); custom_css_editor.codemirror.setValue(joinchat_admin.example_css); });
 
 
     /*************************************

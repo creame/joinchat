@@ -93,26 +93,6 @@ class Joinchat_Common {
 	 */
 	public function defaults( $key = false ) {
 
-		$default_css = <<<CSS
-/* Joinchat default styles
-z-index: 9000;   put above or below other objects
---s: 60px;       button size
---bottom: 20px;  bottom separation (mobile 6px)
---sep: 20px;     right/left separation (mobile 6px)
---header: 70px;  chatbox header height (mobile 55px)
-*/
-.joinchat {
-	/* css rules */
-}
-
-/* Joinchat mobile styles */
-@media (max-width: 480px), (orientation: landscape) and (max-width: 767px) {
-	.joinchat {
-		/* mobile rules */
-	}
-}
-CSS;
-
 		$defaults = array(
 			'telephone'     => '',
 			'mobile_only'   => 'no',
@@ -136,7 +116,7 @@ CSS;
 			'optin_text'    => '',
 			'optin_check'   => 'no',
 			'gads'          => '',
-			'custom_css'    => $default_css,
+			'custom_css'    => '',
 			'clear'         => 'no',
 		);
 

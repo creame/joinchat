@@ -764,11 +764,31 @@ class Joinchat_Admin_Page {
 			wp_enqueue_style( 'intl-tel-input' );
 		}
 
+		$example_css = <<<CSS
+/* Joinchat default styles
+z-index: 9000;   put above or below other objects
+--s: 60px;       button size
+--bottom: 20px;  bottom separation (mobile 6px)
+--sep: 20px;     right/left separation (mobile 6px)
+--header: 70px;  chatbox header height (mobile 55px)
+*/
+.joinchat {
+	/* css rules */
+}
+
+/* Joinchat mobile styles */
+@media (max-width: 480px), (orientation: landscape) and (max-width: 767px) {
+	.joinchat {
+		/* mobile rules */
+	}
+}
+CSS;
+
 		// Enqueue scripts.
 		$config = array(
-			'home'       => home_url(),
-			'example'    => __( 'is an example, double click to use it', 'creame-whatsapp-me' ),
-			'custom_css' => jc_common()->defaults( 'custom_css' ),
+			'home'        => home_url(),
+			'example'     => __( 'is an example, double click to use it', 'creame-whatsapp-me' ),
+			'example_css' => $example_css,
 		);
 
 		wp_deregister_script( $handle );
