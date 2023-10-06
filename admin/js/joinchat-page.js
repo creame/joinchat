@@ -228,7 +228,7 @@
     // Init ColorPicker with "changecolor" trigger event on change
     $('#joinchat_color').wpColorPicker({ change: function (e, ui) { $(this).trigger('changecolor', [ui.color.toRgb()]); } });
 
-    $('#joinchat_header_custom').on('click', function () { $(this).prev().find('input').prop('checked', true); });
+    $('#joinchat_header_custom').on('click', function () { $(this).prev().find('input').trigger('click'); });
 
     // Focus Opt-in editor
     $('label[for="joinchat_optin_text"]').on('click', function () { tinymce.get('joinchat_optin_text').focus(); });
