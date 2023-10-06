@@ -296,6 +296,8 @@ class Joinchat {
 		$this->loader->add_filter( 'joinchat_tab_premium_sections', $plugin_premium, 'tab_sections' );
 		$this->loader->add_filter( 'joinchat_section_output', $plugin_premium, 'section_ouput', 10, 2 );
 
+		$this->loader->add_action( 'joinchat_admin_header', $plugin_premium, 'header_coupon' );
+
 	}
 
 	/**
@@ -324,5 +326,4 @@ class Joinchat {
 	public function get_loader() {
 		return $this->loader;
 	}
-
 }

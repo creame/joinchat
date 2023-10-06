@@ -385,6 +385,7 @@ Joinchat save two localStorage variables for proper operation:
 * CHANGE RTL show message bubble peak on right.
 * FIX Clean new lines to ensure "\n" format.
 * FIX False positive on un unmarked checkbox settings on first save.
+* NEW Joinchat settings header added Premium discount coupon.
 
 = 5.0.11 =
 * FIX Update inline CSS minifier.

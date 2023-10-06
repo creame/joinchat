@@ -820,6 +820,7 @@ CSS;
 	 * Custom admin header with Joinchat logo
 	 *
 	 * @since 5.0.0
+	 * @since 5.0.12 Added action 'joinchat_admin_header'.
 	 * @return void
 	 */
 	public function admin_header() {
@@ -827,6 +828,7 @@ CSS;
 		<div id="jcadminbar">
 			<div class="joinchat-header">
 				<h1><img src="<?php echo esc_url( plugin_dir_url( JOINCHAT_FILE ) . '/admin/img/joinchat.svg' ); ?>" width="159" height="40" alt="Joinchat"></h1>
+				<?php do_action( 'joinchat_admin_header' ); ?>
 			</div>
 		</div>
 		<?php

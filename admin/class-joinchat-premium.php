@@ -141,4 +141,24 @@ class Joinchat_Premium {
 
 	}
 
+	/**
+	 * Show header coupon
+	 *
+	 * @since  5.0.12
+	 * @return void
+	 */
+	public function header_coupon() {
+
+		$discount = '33%';
+		$coupon   = 'WPJOINCHAT';
+
+		printf(
+			'<div class="joinchat-coupon">%s <span>%s</span> %s</div>',
+			/* translators: %s: coupon discount. */
+			esc_html( sprintf( __( '🔥 %s discount on Premium!', 'creame-whatsapp-me' ), $discount ) ),
+			esc_html( $coupon ),
+			sprintf( '<a href="%s" target="_blank">%s</a>', esc_url( Joinchat_Util::link( 'wp-coupon', 'coupon' ) ), esc_html__( 'Claim Coupon', 'creame-whatsapp-me' ) )
+		);
+	}
+
 }

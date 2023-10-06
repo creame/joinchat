@@ -301,11 +301,12 @@ tr.joinchat--focus .joinchat_vars_help {
 }
 
 .joinchat-header {
-  padding-top: 5px;
-  padding-bottom: 1px;
+  padding: 5px 30px 1px 0;
+  overflow: auto;
 }
 
 #jcadminbar h1 {
+  float: left;
   margin: 0;
 }
 
@@ -325,6 +326,33 @@ tr.joinchat--focus .joinchat_vars_help {
 @media screen and (max-width: 600px) {
   #jcadminbar {
     top: 46px;
+  }
+}
+
+/* Coupon */
+
+.joinchat-coupon {
+  float: right;
+  margin: 10px 0;
+  color: #000;
+}
+
+.joinchat-coupon span {
+  display: inline-block;
+  padding: 0 10px;
+  margin: 0 10px;
+  border: 2px dashed #F9603A;
+  border-radius: 4px;
+  background: rgba(249, 96, 58, 0.15);
+}
+
+.joinchat-coupon a {
+  white-space: nowrap;
+}
+
+@media screen and (max-width: 600px) {
+  .joinchat-coupon {
+    display: none;
   }
 }
 
