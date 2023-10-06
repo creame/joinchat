@@ -201,7 +201,7 @@ class Joinchat_Admin_Onboard {
 			),
 			'step_news_yes'   => _x( 'OK, keep me posted', 'onboard', 'creame-whatsapp-me' ),
 			'step_news_no'    => _x( 'No, thanks', 'onboard', 'creame-whatsapp-me' ),
-			'step_inbox'      => _x( '👌 Perfect, we have just sent you an email to your account, visit your mailbox to confirm your subscription.', 'onboard', 'creame-whatsapp-me' ),
+			'step_inbox'      => _x( '👍 Perfect, we have just sent you an email to your account, visit your mailbox to confirm your subscription.', 'onboard', 'creame-whatsapp-me' ),
 			'step_inbox_next' => _x( 'Done!', 'onboard', 'creame-whatsapp-me' ),
 			'step_success'    => _x( '🥳 Great, <strong>Joinchat</strong> is up and running.', 'onboard', 'creame-whatsapp-me' ),
 			'step_fail'       => _x( '😖 Sorry, something went wrong.', 'onboard', 'creame-whatsapp-me' ),

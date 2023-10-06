@@ -2,20 +2,20 @@
 # This file is distributed under the GPL-2.0+.
 msgid ""
 msgstr ""
-"Project-Id-Version: Joinchat 5.0.11\n"
+"Project-Id-Version: Joinchat 5.0.12\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/creame-whatsapp-me\n"
 "Last-Translator: Pacotole <pacotole@crea.me>\n"
 "Language-Team: Creame <hola@crea.me>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2023-10-03T09:07:39+00:00\n"
+"POT-Creation-Date: 2023-10-06T09:10:00+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.8.1\n"
 "X-Domain: creame-whatsapp-me\n"
 
 #. Plugin Name of the plugin
-#: admin/class-joinchat-admin.php:275
+#: admin/class-joinchat-admin.php:274
 #: admin/partials/term-meta-box.php:15
 #: gutenberg/build/index.js:1
 msgid "Joinchat"
@@ -48,7 +48,7 @@ msgid "Exit the wizard and"
 msgstr ""
 
 #: admin/class-joinchat-admin-onboard.php:94
-#: admin/class-joinchat-admin-onboard.php:206
+#: admin/class-joinchat-admin-onboard.php:208
 msgid "go to Joinchat Settings"
 msgstr ""
 
@@ -150,10 +150,20 @@ msgstr ""
 
 #: admin/class-joinchat-admin-onboard.php:204
 msgctxt "onboard"
-msgid "🥳 Great, <strong>Joinchat</strong> is up and running."
+msgid "👍 Perfect, we have just sent you an email to your account, visit your mailbox to confirm your subscription."
 msgstr ""
 
 #: admin/class-joinchat-admin-onboard.php:205
+msgctxt "onboard"
+msgid "Done!"
+msgstr ""
+
+#: admin/class-joinchat-admin-onboard.php:206
+msgctxt "onboard"
+msgid "🥳 Great, <strong>Joinchat</strong> is up and running."
+msgstr ""
+
+#: admin/class-joinchat-admin-onboard.php:207
 msgctxt "onboard"
 msgid "😖 Sorry, something went wrong."
 msgstr ""
@@ -463,7 +473,7 @@ msgid "Predefined text for the first message the user will send you"
 msgstr ""
 
 #: admin/class-joinchat-admin-page.php:422
-#: includes/class-joinchat-common.php:130
+#: includes/class-joinchat-common.php:110
 msgid "Open chat"
 msgstr ""
 
@@ -598,7 +608,7 @@ msgstr ""
 #: admin/class-joinchat-admin-page.php:619
 #: admin/class-joinchat-admin-page.php:622
 #: admin/class-joinchat-admin-page.php:629
-#: admin/class-joinchat-admin.php:157
+#: admin/class-joinchat-admin.php:156
 msgid "e.g."
 msgstr ""
 
@@ -683,40 +693,40 @@ msgstr ""
 msgid "You can use vars"
 msgstr ""
 
-#: admin/class-joinchat-admin-page.php:770
+#: admin/class-joinchat-admin-page.php:790
 msgid "is an example, double click to use it"
 msgstr ""
 
-#: admin/class-joinchat-admin-page.php:795
+#: admin/class-joinchat-admin-page.php:815
 msgid "Joinchat Settings"
 msgstr ""
 
 #. translators: 1: Joinchat, 2: Add review link.
-#: admin/class-joinchat-admin-page.php:827
+#: admin/class-joinchat-admin-page.php:849
 msgid "Do you like %1$s? Please help us with a %2$s rating."
 msgstr ""
 
-#: admin/class-joinchat-admin.php:105
+#: admin/class-joinchat-admin.php:104
 msgid "Settings saved"
 msgstr ""
 
-#: admin/class-joinchat-admin.php:192
+#: admin/class-joinchat-admin.php:191
 msgid "You only need to add your WhatsApp number to contact with your users."
 msgstr ""
 
-#: admin/class-joinchat-admin.php:193
+#: admin/class-joinchat-admin.php:192
 msgid "Go to settings"
 msgstr ""
 
-#: admin/class-joinchat-admin.php:231
+#: admin/class-joinchat-admin.php:230
 msgid "Settings"
 msgstr ""
 
-#: admin/class-joinchat-admin.php:251
+#: admin/class-joinchat-admin.php:250
 msgid "Documentation"
 msgstr ""
 
-#: admin/class-joinchat-admin.php:252
+#: admin/class-joinchat-admin.php:251
 msgid "Support"
 msgstr ""
 
@@ -760,44 +770,53 @@ msgctxt "Add-on description"
 msgid "<strong>Enhance your Calls to Action.</strong> Create more engaging content in the chat window for better conversion. Add links, videos, images, animated GIFs, buttons or even embedded content from other platforms such as Calendly, surveys, forms…"
 msgstr ""
 
-#: admin/class-joinchat-premium.php:114
+#: admin/class-joinchat-premium.php:113
 msgctxt "Add-on name"
 msgid "Support Agents"
 msgstr ""
 
-#: admin/class-joinchat-premium.php:115
+#: admin/class-joinchat-premium.php:114
 msgctxt "Add-on description"
 msgid "<strong>A contact button with multiple WhatsApp numbers.</strong> Avoid collapsing your support, pre-sales or orders chat. Add as many WhatsApp numbers as you have support or sales staff. Your customers will randomly access each of them distributing the workload evenly."
 msgstr ""
 
-#: admin/class-joinchat-premium.php:119
+#: admin/class-joinchat-premium.php:117
 msgctxt "Add-on name"
 msgid "Random Phone"
 msgstr ""
 
-#: admin/class-joinchat-premium.php:120
+#: admin/class-joinchat-premium.php:118
 msgctxt "Add-on description"
 msgid "<strong>Contact buttons for each agent with availability times.</strong> Manage multiple WhatsApp accounts with their name, department and working hours. Your visitors will be able to contact the agent of their choice and know how long it will be until the agents are available."
 msgstr ""
 
-#: admin/class-joinchat-premium.php:124
+#: admin/class-joinchat-premium.php:121
 msgctxt "Add-on name"
 msgid "OmniChannel"
 msgstr ""
 
-#: admin/class-joinchat-premium.php:125
+#: admin/class-joinchat-premium.php:122
 msgctxt "Add-on description"
 msgid "<strong>Add more contact channels.</strong> Allows you to add more contact channels (from more than 10 apps) in addition to WhatsApp. Now you can add Telegram, Facebook Messenger, Tiktok, Snapchat, SMS, phone calls, Skype, FaceTime and more."
 msgstr ""
 
-#: admin/class-joinchat-premium.php:129
+#: admin/class-joinchat-premium.php:125
 msgctxt "Add-on name"
 msgid "Chat Funnels"
 msgstr ""
 
-#: admin/class-joinchat-premium.php:130
+#: admin/class-joinchat-premium.php:126
 msgctxt "Add-on description"
 msgid "<strong>Simple funnels like a messaging chatbot.</strong> Create lead capture, qualification or support funnels by simulating conversations with a chatbot."
+msgstr ""
+
+#. translators: %s: coupon discount.
+#: admin/class-joinchat-premium.php:158
+msgid "🔥 %s discount on Premium!"
+msgstr ""
+
+#: admin/class-joinchat-premium.php:160
+msgid "Claim Coupon"
 msgstr ""
 
 #: admin/class-joinchat-woo-admin.php:149
@@ -984,11 +1003,11 @@ msgid "Default visibility"
 msgstr ""
 
 #: admin/partials/premium.php:18
-#: admin/partials/premium.php:45
+#: admin/partials/premium.php:44
 msgid "Add-on"
 msgstr ""
 
-#: includes/class-joinchat-common.php:124
+#: includes/class-joinchat-common.php:104
 #: gutenberg/build/index.js:1
 msgid "Scan the code"
 msgstr ""
