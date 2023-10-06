@@ -5,7 +5,7 @@ Tags: Chat, Click to Chat, Facebook Messenger, WhatsApp, Telegram, Whatsapp Busi
 Requires at least: 4.5.0
 Tested up to: 6.3
 Requires PHP: 5.5
-Stable tag: 5.0.11
+Stable tag: 5.0.12
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -382,7 +382,7 @@ Joinchat save two localStorage variables for proper operation:
 == Changelog ==
 
 = 5.0.12 =
-* CHANGE RTL show message bubble peak on right.
+* CHANGE RTL languages show message bubble peak on right.
 * FIX Clean new lines to ensure "\n" format.
 * FIX False positive on un unmarked checkbox settings on first save.
 * NEW Joinchat settings header added Premium discount coupon.
