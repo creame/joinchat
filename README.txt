@@ -381,6 +381,10 @@ Joinchat save two localStorage variables for proper operation:
 
 == Changelog ==
 
+= 5.0.13 =
+* FIX Unclosed SVGs.
+* CHANGE Front minor styles improvements.
+
 = 5.0.12 =
 * CHANGE RTL languages show message bubble peak on right.
 * FIX Clean new lines to ensure "\n" format.

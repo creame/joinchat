@@ -403,7 +403,7 @@
   max-width: 400px;
   max-height: calc(var(--vh) - var(--bottom) - var(--sep));
   border-radius: calc(var(--s)/2 + 2px);
-  background: #fff linear-gradient(0deg, var(--bg), var(--bg));
+  background: #fff linear-gradient(180deg, var(--color),var(--color) var(--header),var(--bg) var(--header),var(--bg));
   box-shadow: 0 2px 6px 0 rgba(0,0,0, 0.5);
   text-align: left;
   overflow: hidden;
@@ -427,6 +427,10 @@
   left: 0;
 }
 
+.joinchat--dark .joinchat__box {
+  background: #1a1a1a linear-gradient(180deg, var(--dark),var(--dark) var(--header),var(--bg) var(--header),var(--bg));
+}
+
 .joinchat__header {
   display: flex;
   flex-flow: row;
@@ -437,15 +441,10 @@
   min-height: 50px;
   padding: 0 70px 0 26px;
   margin: 0;
-  background: var(--color);
 }
 
 [dir="rtl"] .joinchat__header {
   padding: 0 26px 0 70px;
-}
-
-.joinchat--dark .joinchat__header {
-  background: var(--dark);
 }
 
 .joinchat__header__text {
@@ -518,8 +517,7 @@
 }
 
 .joinchat__box__scroll {
-  overflow-x: hidden;
-  overflow-y: scroll;
+  overflow: hidden scroll;
   overscroll-behavior-y: contain;
   -webkit-overflow-scrolling: touch;
 }
@@ -538,10 +536,6 @@
   background: rgba(var(--rgb) / 2%);
   -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
-}
-
-.joinchat--dark .joinchat__box__scroll {
-  background: #1a1a1a;
 }
 
 .joinchat__box__scroll:hover::-webkit-scrollbar-thumb {
@@ -658,7 +652,7 @@
   min-height: 56px;
   padding: 15px 20px;
   margin: 0 26px 26px;
-  border-radius: 32px;
+  border-radius: 26px;
   background: #fff;
   color: #4a4a4a;
   word-break: break-word;
@@ -670,7 +664,7 @@
   content: '';
   display: block;
   position: absolute;
-  bottom: 19px;
+  bottom: 18px;
   left: -15px;
   width: 17px;
   height: 25px;
@@ -868,12 +862,8 @@
   .joinchat--dark-auto {
     --msg: var(--dark);
   }
-  .joinchat--dark-auto .joinchat__box__scroll {
-    background: #1a1a1a;
-  }
-
-  .joinchat--dark-auto .joinchat__header {
-    background: var(--dark);
+  .joinchat--dark-auto .joinchat__box {
+    background: #1a1a1a linear-gradient(180deg, var(--dark),var(--dark) var(--header),var(--bg) var(--header),var(--bg));
   }
   .joinchat--dark-auto .joinchat__optin label::before {
     background: #000;
