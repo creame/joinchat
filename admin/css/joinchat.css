@@ -24,33 +24,33 @@
   color: #f9603a;
 }
 
-#joinchat_tab_visibility tr:hover {
+.joinchat__visibility__wrapper tr:hover {
   background: rgba(0, 0, 0, .05);
 }
 
-#joinchat_tab_visibility th,
-#joinchat_tab_visibility td {
+.joinchat__visibility__wrapper th,
+.joinchat__visibility__wrapper td {
   padding: 7px 15px;
 }
 
-#joinchat_tab_visibility label {
+.joinchat__visibility__wrapper label {
   margin-right: 15px;
 }
 
-#joinchat_tab_visibility .dashicons {
+.joinchat__visibility__wrapper .dashicons {
   opacity: .5;
 }
 
-#joinchat_tab_visibility input[type=radio]+span {
+.joinchat__visibility__wrapper input[type=radio]+span {
   transition: all 200ms;
 }
 
-#joinchat_tab_visibility input[type=radio]:checked+span {
+.joinchat__visibility__wrapper input[type=radio]:checked+span {
   color: #79ba49;
   opacity: 1;
 }
 
-#joinchat_tab_visibility input[type=radio]:checked+.dashicons-hidden {
+.joinchat__visibility__wrapper input[type=radio]:checked+.dashicons-hidden {
   color: #ca4a1f;
 }
 

@@ -178,16 +178,22 @@ class Joinchat_Woo_Admin {
 			unset( $sections['cpt'] );
 		}
 
-		$sections['woo'] = array(
-			'view__woocommerce'  => __( 'Shop', 'creame-whatsapp-me' ),
-			'view__product'      => '— ' . __( 'Product Page', 'creame-whatsapp-me' ),
-			'view__cart'         => '— ' . __( 'Cart', 'creame-whatsapp-me' ),
-			'view__checkout'     => '— ' . __( 'Checkout', 'creame-whatsapp-me' ),
-			'view__thankyou'     => '— ' . __( 'Thank You', 'creame-whatsapp-me' ),
-			'view__account_page' => '— ' . __( 'My Account', 'creame-whatsapp-me' ),
-		);
+		$pos = array_search( 'global_end', array_keys( $sections ), true );
 
-		return $sections;
+		return array_merge(
+			array_slice( $sections, 0, $pos ),
+			array(
+				'woo' => array(
+					'view__woocommerce'  => __( 'Shop', 'creame-whatsapp-me' ),
+					'view__product'      => '— ' . __( 'Product Page', 'creame-whatsapp-me' ),
+					'view__cart'         => '— ' . __( 'Cart', 'creame-whatsapp-me' ),
+					'view__checkout'     => '— ' . __( 'Checkout', 'creame-whatsapp-me' ),
+					'view__thankyou'     => '— ' . __( 'Thank You', 'creame-whatsapp-me' ),
+					'view__account_page' => '— ' . __( 'My Account', 'creame-whatsapp-me' ),
+				),
+			),
+			array_slice( $sections, $pos )
+		);
 	}
 
 	/**
