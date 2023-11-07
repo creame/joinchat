@@ -19,7 +19,7 @@
   --bg: rgb(var(--rgb) / 4%);
   --tolerance: 210;
   --bw: calc((var(--red)*0.2126 + var(--green)*0.7152 + var(--blue)*0.0722 - var(--tolerance))*-10000000);
-  --text: hsl(0deg 0% calc(var(--bw)*1%) / clamp(70%, calc(var(--bw)*1%), 100%));
+  --text: hsl(0deg 0% calc(var(--bw)*1%) / clamp(70%, var(--bw)*1%, 100%));
   --msg: var(--color);
 
   color: var(--text);
