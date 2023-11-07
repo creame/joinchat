@@ -803,10 +803,8 @@ CSS;
 		wp_add_inline_script( $handle, 'var joinchat_admin = ' . wp_json_encode( $config ) . ';' );
 
 		// Enqueue Custom CSS editor.
-		if ( function_exists( 'wp_enqueue_code_editor' ) ) {
-			$editor_settings = wp_enqueue_code_editor( array( 'type' => 'text/css' ) );
-			wp_add_inline_script( 'code-editor', 'var custom_css_settings = ' . wp_json_encode( $editor_settings ) . ';' );
-		}
+		$editor_settings = wp_enqueue_code_editor( array( 'type' => 'text/css' ) );
+		wp_add_inline_script( 'code-editor', 'var custom_css_settings = ' . wp_json_encode( $editor_settings ) . ';' );
 
 	}
 

@@ -29,9 +29,7 @@ class Joinchat_Util {
 
 		global $wpdb;
 
-		if ( function_exists( 'wp_encode_emoji' )
-				&& 'utf8mb4' !== $wpdb->get_col_charset( $wpdb->options, 'option_value' )
-				&& ! has_filter( 'sanitize_text_field', 'wp_encode_emoji' ) ) {
+		if ( 'utf8mb4' !== $wpdb->get_col_charset( $wpdb->options, 'option_value' ) && ! has_filter( 'sanitize_text_field', 'wp_encode_emoji' ) ) {
 			add_filter( 'sanitize_text_field', 'wp_encode_emoji' );
 		}
 	}

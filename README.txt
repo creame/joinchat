@@ -2,7 +2,7 @@
 Contributors: creapuntome, pacotole, davidlillo, monillo
 Donate link: https://join.chat/donate/
 Tags: Chat, Click to Chat, Facebook Messenger, WhatsApp, Telegram, Whatsapp Business, button, support chat, support, contact, directly message WhatsApp, floating WhatsApp, WhatsApp chat
-Requires at least: 4.5.0
+Requires at least: 4.9.0
 Tested up to: 6.3
 Requires PHP: 5.5
 Stable tag: 5.0.13
@@ -380,6 +380,9 @@ Joinchat save two localStorage variables for proper operation:
 
 
 == Changelog ==
+
+= 5.0.14 =
+* Bump WordPress required at least to 4.9.0.
 
 = 5.0.13 =
 * FIX Unclosed SVGs.
