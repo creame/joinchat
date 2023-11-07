@@ -99,11 +99,11 @@ class Joinchat_I18n {
 		$message = sprintf(
 			"<strong>%s$spaces%s (%s)</strong>$spaces%s$spaces<a href=\"%s\">%s</a>",
 			$this->default_language_flag(), // Flag <img>.
-			__( 'Default site language', 'creame-whatsapp-me' ),
+			esc_html__( 'Default site language', 'creame-whatsapp-me' ),
 			esc_html( $this->default_language_name() ),
-			__( 'Settings are defined in the main language', 'creame-whatsapp-me' ),
+			esc_html__( 'Settings are defined in the main language', 'creame-whatsapp-me' ),
 			esc_url( $this->translations_link() ),
-			__( 'Manage translations', 'creame-whatsapp-me' )
+			esc_html__( 'Manage translations', 'creame-whatsapp-me' )
 		);
 
 		echo '<div class="notice notice-info"><p>' . $message . '</p></div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
@@ -146,11 +146,11 @@ class Joinchat_I18n {
 		$message = sprintf(
 			"%s$spaces%s (%s)$spaces%s$spaces<a href=\"%s\" class=\"button\">%s</a>",
 			$this->default_language_flag(), // Flag <img>.
-			__( 'Default site language', 'creame-whatsapp-me' ),
+			esc_html__( 'Default site language', 'creame-whatsapp-me' ),
 			esc_html( $this->default_language_name() ),
-			__( 'There are changes in fields that can be translated', 'creame-whatsapp-me' ),
+			esc_html__( 'There are changes in fields that can be translated', 'creame-whatsapp-me' ),
 			esc_url( $this->translations_link() ),
-			__( 'Manage translations', 'creame-whatsapp-me' )
+			esc_html__( 'Manage translations', 'creame-whatsapp-me' )
 		);
 
 		add_settings_error( JOINCHAT_SLUG, 'review_i18n', $message, 'warning' );

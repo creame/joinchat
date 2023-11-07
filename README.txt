@@ -383,6 +383,7 @@ Joinchat save two localStorage variables for proper operation:
 
 = 5.0.14 =
 * Bump WordPress required at least to 4.9.0.
+* **SECURE** Escape translations (thanks to @davidperez at [#WCMAD](https://madrid.wordcamp.org/2023/)).
 
 = 5.0.13 =
 * FIX Unclosed SVGs.

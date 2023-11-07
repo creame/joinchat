@@ -44,7 +44,7 @@ class Joinchat_Premium {
 	 */
 	public function admin_tab( $tabs ) {
 
-		$tabs['premium'] = __( 'Premium', 'creame-whatsapp-me' );
+		$tabs['premium'] = esc_html__( 'Premium', 'creame-whatsapp-me' );
 
 		return $tabs;
 	}
@@ -77,18 +77,18 @@ class Joinchat_Premium {
 
 		switch ( $section_id ) {
 			case 'joinchat_tab_premium__info':
-				$output = '<h2 class="title">' . __( 'Premium', 'creame-whatsapp-me' ) . '</h2>' .
+				$output = '<h2 class="title">' . esc_html__( 'Premium', 'creame-whatsapp-me' ) . '</h2>' .
 					'<p>' .
-						__( 'With <b>Joinchat Premium</b> you can enjoy exclusive features such as advanced Call to Action customization, multiple agents with scheduling of service hours, add other contact channels and much more.', 'creame-whatsapp-me' ) . ' ' .
-						__( 'In addition, you will receive specialized technical support to solve any questions or issues you may have.', 'creame-whatsapp-me' ) .
+						wp_kses( __( 'With <b>Joinchat Premium</b> you can enjoy exclusive features such as advanced Call to Action customization, multiple agents with scheduling of service hours, add other contact channels and much more.', 'creame-whatsapp-me' ), array( 'b' => array() ) ) . ' ' .
+						esc_html__( 'In addition, you will receive specialized technical support to solve any questions or issues you may have.', 'creame-whatsapp-me' ) .
 					'</p>' .
-					'<p>' . __( 'Take your customer service to the next level with <b>Joinchat Premium</b>!', 'creame-whatsapp-me' ) . '</p>' .
-					'<p><a class="button" href="' . esc_url( Joinchat_Util::link( 'pricing', 'cta' ) ) . '" target="_blank">' . __( 'Go Premium', 'creame-whatsapp-me' ) . '</a></p>';
+					'<p>' . esc_html__( 'Take your customer service to the next level with <b>Joinchat Premium</b>!', 'creame-whatsapp-me' ) . '</p>' .
+					'<p><a class="button" href="' . esc_url( Joinchat_Util::link( 'pricing', 'cta' ) ) . '" target="_blank">' . esc_html__( 'Go Premium', 'creame-whatsapp-me' ) . '</a></p>';
 				break;
 
 			case 'joinchat_tab_premium__addons':
-				$output  = '<hr><h2 class="title">' . __( 'Add-ons', 'creame-whatsapp-me' ) . '</h2>' .
-					'<p>' . __( 'Enable only the features you need to optimize resource load and improve your user experience.', 'creame-whatsapp-me' ) . '</p>';
+				$output  = '<hr><h2 class="title">' . esc_html__( 'Add-ons', 'creame-whatsapp-me' ) . '</h2>' .
+					'<p>' . esc_html__( 'Enable only the features you need to optimize resource load and improve your user experience.', 'creame-whatsapp-me' ) . '</p>';
 				$output .= $this->premium_addons();
 				break;
 		}
@@ -100,7 +100,7 @@ class Joinchat_Premium {
 	 * Premium add-ons table list
 	 *
 	 * @since    5.0.0
-	 * @return   void
+	 * @return   string
 	 */
 	private function premium_addons() {
 

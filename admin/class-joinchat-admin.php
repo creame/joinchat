@@ -17,6 +17,13 @@
  */
 class Joinchat_Admin {
 
+	const KSES_LINK = array(
+		'a' => array(
+			'href'   => true,
+			'target' => array( 'values' => array( '_blank' ) ),
+		),
+	);
+
 	/**
 	 * Initialize the settings for WordPress admin
 	 *
@@ -76,8 +83,8 @@ class Joinchat_Admin {
 		$value['optin_text']    = wp_kses(
 			$value['optin_text'],
 			array(
-				'em'     => true,
-				'strong' => true,
+				'em'     => array(),
+				'strong' => array(),
 				'a'      => array( 'href' => true ),
 			)
 		);
@@ -101,7 +108,7 @@ class Joinchat_Admin {
 		// Filter for other validations or extra settings.
 		$value = apply_filters( 'joinchat_settings_validate', $value, jc_common()->settings );
 
-		add_settings_error( JOINCHAT_SLUG, 'settings_updated', __( 'Settings saved', 'creame-whatsapp-me' ), 'updated' );
+		add_settings_error( JOINCHAT_SLUG, 'settings_updated', esc_html__( 'Settings saved', 'creame-whatsapp-me' ), 'updated' );
 
 		// Delete notice option.
 		if ( $value['telephone'] ) {
@@ -153,7 +160,7 @@ class Joinchat_Admin {
 		if ( $intltel ) {
 			$deps[] = 'intl-tel-input';
 			$config = array(
-				'placeholder' => __( 'e.g.', 'creame-whatsapp-me' ),
+				'placeholder' => esc_attr__( 'e.g.', 'creame-whatsapp-me' ),
 				'version'     => $intltel,
 				'utils_js'    => plugins_url( 'js/utils.js', __FILE__ ),
 			);
@@ -227,7 +234,7 @@ class Joinchat_Admin {
 	 */
 	public function settings_link( $links ) {
 
-		$settings_link = sprintf( '<a href="%s">%s</a>', Joinchat_Util::admin_url(), __( 'Settings', 'creame-whatsapp-me' ) );
+		$settings_link = sprintf( '<a href="%s">%s</a>', Joinchat_Util::admin_url(), esc_html__( 'Settings', 'creame-whatsapp-me' ) );
 
 		array_unshift( $links, $settings_link );
 
@@ -247,8 +254,8 @@ class Joinchat_Admin {
 	public function plugin_links( $plugin_meta, $plugin_file ) {
 
 		if ( JOINCHAT_BASENAME === $plugin_file ) {
-			$plugin_meta[] = sprintf( '<a href="%1$s" target="_blank">%2$s</a>', esc_url( Joinchat_Util::link( 'docs', 'plugins' ) ), __( 'Documentation', 'creame-whatsapp-me' ) );
-			$plugin_meta[] = sprintf( '<a href="%1$s" target="_blank">%2$s</a>', esc_url( Joinchat_Util::link( 'support', 'plugins' ) ), __( 'Support', 'creame-whatsapp-me' ) );
+			$plugin_meta[] = sprintf( '<a href="%1$s" target="_blank">%2$s</a>', esc_url( Joinchat_Util::link( 'docs', 'plugins' ) ), esc_html__( 'Documentation', 'creame-whatsapp-me' ) );
+			$plugin_meta[] = sprintf( '<a href="%1$s" target="_blank">%2$s</a>', esc_url( Joinchat_Util::link( 'support', 'plugins' ) ), esc_html__( 'Support', 'creame-whatsapp-me' ) );
 		}
 
 		return $plugin_meta;

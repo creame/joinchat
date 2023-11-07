@@ -14,9 +14,9 @@ defined( 'WPINC' ) || exit;
 <table class="wp-list-table widefat plugins">
 	<thead>
 		<tr>
-			<td class="manage-column column-cb check-column"><label class="screen-reader-text" for="cb-select-all-1"><?php _e( 'Select All' ); ?></label><input id="cb-select-all-1" type="checkbox" disabled></td>
-			<th scope="col" id="name" class="manage-column column-name column-primary"><?php _e( 'Add-on', 'creame-whatsapp-me' ); ?></th>
-			<th scope="col" id="description" class="manage-column column-description"><?php _e( 'Description' ); ?></th>
+			<td class="manage-column column-cb check-column"><label class="screen-reader-text" for="cb-select-all-1"><?php esc_html_e( 'Select All' ); ?></label><input id="cb-select-all-1" type="checkbox" disabled></td>
+			<th scope="col" id="name" class="manage-column column-name column-primary"><?php esc_html_e( 'Add-on', 'creame-whatsapp-me' ); ?></th>
+			<th scope="col" id="description" class="manage-column column-description"><?php esc_html_e( 'Description' ); ?></th>
 		</tr>
 	</thead>
 
@@ -30,8 +30,8 @@ defined( 'WPINC' ) || exit;
 			<td class="column-description desc">
 				<div class="plugin-description"><?php echo wp_kses( $addon['description'], array( 'strong' => array() ) ); ?></div>
 				<div class="inactive second plugin-version-author-uri">
-					<a href="<?php echo esc_url( $addon['info'] ); ?>" target="_blank"><?php _e( 'View details' ); ?></a> |
-					<a href="<?php echo esc_url( $addon['docs'] ); ?>" target="_blank"><?php _e( 'Documentation' ); ?></a>
+					<a href="<?php echo esc_url( $addon['info'] ); ?>" target="_blank"><?php esc_html_e( 'View details' ); ?></a> |
+					<a href="<?php echo esc_url( $addon['docs'] ); ?>" target="_blank"><?php esc_html_e( 'Documentation' ); ?></a>
 				</div>
 			</td>
 		</tr>
@@ -40,9 +40,9 @@ defined( 'WPINC' ) || exit;
 
 	<tfoot>
 		<tr>
-			<td class="manage-column column-cb check-column"><label class="screen-reader-text" for="cb-select-all-2"><?php _e( 'Select All' ); ?></label><input id="cb-select-all-2" type="checkbox" disabled></td>
-			<th scope="col" class="manage-column column-name column-primary"><?php _e( 'Add-on', 'creame-whatsapp-me' ); ?></th>
-			<th scope="col" class="manage-column column-description"><?php _e( 'Description' ); ?></th>
+			<td class="manage-column column-cb check-column"><label class="screen-reader-text" for="cb-select-all-2"><?php esc_html_e( 'Select All' ); ?></label><input id="cb-select-all-2" type="checkbox" disabled></td>
+			<th scope="col" class="manage-column column-name column-primary"><?php esc_html_e( 'Add-on', 'creame-whatsapp-me' ); ?></th>
+			<th scope="col" class="manage-column column-description"><?php esc_html_e( 'Description' ); ?></th>
 		</tr>
 	</tfoot>
 

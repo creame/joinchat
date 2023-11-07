@@ -24,7 +24,7 @@ class Joinchat_Admin_Onboard {
 	 */
 	public function add_menu() {
 
-		$title = __( 'Welcome to Joinchat', 'creame-whatsapp-me' );
+		$title = esc_html__( 'Welcome to Joinchat', 'creame-whatsapp-me' );
 
 		if ( Joinchat_Util::options_submenu() ) {
 			add_options_page( $title, $title, Joinchat_Util::capability(), 'joinchat-onboard', array( $this, 'options_page' ) );
@@ -90,8 +90,8 @@ class Joinchat_Admin_Onboard {
 				<div class="wp-header-end"></div>
 
 				<div>
-					<?php _e( 'Exit the wizard and', 'creame-whatsapp-me' ); ?>
-					<a href="<?php echo esc_url( add_query_arg( 'onboard', 'no', Joinchat_Util::admin_url() ) ); ?>"><?php _e( 'go to Joinchat Settings', 'creame-whatsapp-me' ); ?></a>
+					<?php esc_html_e( 'Exit the wizard and', 'creame-whatsapp-me' ); ?>
+					<a href="<?php echo esc_url( add_query_arg( 'onboard', 'no', Joinchat_Util::admin_url() ) ); ?>"><?php esc_html_e( 'go to Joinchat Settings', 'creame-whatsapp-me' ); ?></a>
 				</div>
 
 				<div id="joinchat_onboard">
@@ -112,7 +112,7 @@ class Joinchat_Admin_Onboard {
 	 */
 	public static function admin_title( $admin_title ) {
 
-		return sprintf( '%s &lsaquo; %s', __( 'Welcome to Joinchat', 'creame-whatsapp-me' ), get_bloginfo( 'name' ) );
+		return sprintf( '%s &lsaquo; %s', esc_html__( 'Welcome to Joinchat', 'creame-whatsapp-me' ), esc_html( get_bloginfo( 'name' ) ) );
 
 	}
 
@@ -177,35 +177,41 @@ class Joinchat_Admin_Onboard {
 		);
 
 		$l10n = array(
-			'step_hi'         => sprintf( /* translators: %s: User display name. */
-				_x( "Hey, <em>%s</em>. Let's set up <strong>Joinchat</strong> in less than 2 minutes.", 'onboard', 'creame-whatsapp-me' ),
-				$user->display_name
+			'step_hi'         => sprintf(
+				wp_kses( /* translators: %s: User display name. */
+					_x( "Hey, <em>%s</em>. Let's set up <strong>Joinchat</strong> in less than 2 minutes.", 'onboard', 'creame-whatsapp-me' ),
+					array(
+						'em'     => array(),
+						'strong' => array(),
+					)
+				),
+				esc_html( $user->display_name )
 			),
-			'step_hi_next'    => _x( "👌 OK, let's start.", 'onboard', 'creame-whatsapp-me' ),
-			'step_phone'      => _x( 'Please tell me your WhatsApp number', 'onboard', 'creame-whatsapp-me' ),
-			'step_phone_next' => _x( "Done, let's continue", 'onboard', 'creame-whatsapp-me' ),
-			'step_msg'        => _x( 'Add the text for the first message that users will send you via WhatsApp.', 'onboard', 'creame-whatsapp-me' ),
-			'step_msg_field'  => __( 'Message', 'creame-whatsapp-me' ),
+			'step_hi_next'    => esc_html_x( "👌 OK, let's start.", 'onboard', 'creame-whatsapp-me' ),
+			'step_phone'      => esc_html_x( 'Please tell me your WhatsApp number', 'onboard', 'creame-whatsapp-me' ),
+			'step_phone_next' => esc_html_x( "Done, let's continue", 'onboard', 'creame-whatsapp-me' ),
+			'step_msg'        => esc_html_x( 'Add the text for the first message that users will send you via WhatsApp.', 'onboard', 'creame-whatsapp-me' ),
+			'step_msg_field'  => esc_html__( 'Message', 'creame-whatsapp-me' ),
 			'step_msg_value'  => esc_textarea( __( 'Hi *{SITE}*! I need more info about {TITLE} {URL}', 'creame-whatsapp-me' ) ),
-			'step_msg_yes'    => _x( 'Continue with this text', 'onboard', 'creame-whatsapp-me' ),
-			'step_msg_no'     => _x( "I don't want a message", 'onboard', 'creame-whatsapp-me' ),
-			'step_cta'        => _x( 'Define a Call to Action message to prompt users to interact.', 'onboard', 'creame-whatsapp-me' ),
-			'step_cta_field'  => __( 'Call to Action', 'creame-whatsapp-me' ),
+			'step_msg_yes'    => esc_html_x( 'Continue with this text', 'onboard', 'creame-whatsapp-me' ),
+			'step_msg_no'     => esc_html_x( "I don't want a message", 'onboard', 'creame-whatsapp-me' ),
+			'step_cta'        => esc_html_x( 'Define a Call to Action message to prompt users to interact.', 'onboard', 'creame-whatsapp-me' ),
+			'step_cta_field'  => esc_html__( 'Call to Action', 'creame-whatsapp-me' ),
 			'step_cta_value'  => esc_textarea( __( "Hello 👋\nCan we help you?", 'creame-whatsapp-me' ) ),
-			'step_cta_yes'    => _x( 'Continue with this text', 'onboard', 'creame-whatsapp-me' ),
-			'step_cta_no'     => _x( "I don't want a CTA", 'onboard', 'creame-whatsapp-me' ),
-			'step_news'       => _x( 'Finally, do you want us to send you tips to improve conversion with <strong>Joinchat</strong>?', 'onboard', 'creame-whatsapp-me' ),
+			'step_cta_yes'    => esc_html_x( 'Continue with this text', 'onboard', 'creame-whatsapp-me' ),
+			'step_cta_no'     => esc_html_x( "I don't want a CTA", 'onboard', 'creame-whatsapp-me' ),
+			'step_news'       => esc_html_x( 'Finally, do you want us to send you tips to improve conversion with <strong>Joinchat</strong>?', 'onboard', 'creame-whatsapp-me' ),
 			'step_news_terms' => sprintf( /* translators: %s: Terms of Use link. */
-				_x( 'I accept the <a href="%s" target="_blank">terms of use and privacy policy</a>', 'onboard', 'creame-whatsapp-me' ),
+				wp_kses( _x( 'I accept the <a href="%s" target="_blank">terms of use and privacy policy</a>', 'onboard', 'creame-whatsapp-me' ), Joinchat_Admin::KSES_LINK ),
 				esc_url( Joinchat_Util::link( 'terms', 'onboard' ) )
 			),
-			'step_news_yes'   => _x( 'OK, keep me posted', 'onboard', 'creame-whatsapp-me' ),
-			'step_news_no'    => _x( 'No, thanks', 'onboard', 'creame-whatsapp-me' ),
-			'step_inbox'      => _x( '👍 Perfect, we have just sent you an email to your account, visit your mailbox to confirm your subscription.', 'onboard', 'creame-whatsapp-me' ),
-			'step_inbox_next' => _x( 'Done!', 'onboard', 'creame-whatsapp-me' ),
-			'step_success'    => _x( '🥳 Great, <strong>Joinchat</strong> is up and running.', 'onboard', 'creame-whatsapp-me' ),
-			'step_fail'       => _x( '😖 Sorry, something went wrong.', 'onboard', 'creame-whatsapp-me' ),
-			'step_settings'   => ucfirst( __( 'go to Joinchat Settings', 'creame-whatsapp-me' ) ),
+			'step_news_yes'   => esc_html_x( 'OK, keep me posted', 'onboard', 'creame-whatsapp-me' ),
+			'step_news_no'    => esc_html_x( 'No, thanks', 'onboard', 'creame-whatsapp-me' ),
+			'step_inbox'      => esc_html_x( '👍 Perfect, we have just sent you an email to your account, visit your mailbox to confirm your subscription.', 'onboard', 'creame-whatsapp-me' ),
+			'step_inbox_next' => esc_html_x( 'Done!', 'onboard', 'creame-whatsapp-me' ),
+			'step_success'    => esc_html_x( '🥳 Great, <strong>Joinchat</strong> is up and running.', 'onboard', 'creame-whatsapp-me' ),
+			'step_fail'       => esc_html_x( '😖 Sorry, something went wrong.', 'onboard', 'creame-whatsapp-me' ),
+			'step_settings'   => ucfirst( esc_html__( 'go to Joinchat Settings', 'creame-whatsapp-me' ) ),
 		);
 
 		// Enqueue scripts.
