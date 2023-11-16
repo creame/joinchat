@@ -5,7 +5,7 @@ Tags: Chat, Click to Chat, Facebook Messenger, WhatsApp, Telegram, Whatsapp Busi
 Requires at least: 4.9.0
 Tested up to: 6.4
 Requires PHP: 5.5
-Stable tag: 5.0.14
+Stable tag: 5.0.15
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -381,9 +381,12 @@ Joinchat save two localStorage variables for proper operation:
 
 == Changelog ==
 
+= 5.0.15 =
+* FIX PHP typo (thanks to [@kent-brockman](https://profiles.wordpress.org/kent-brockman/) [topic](https://wordpress.org/support/topic/typo-in-class-joinchat-woo-admin-php-lines-157-160/)).
+
 = 5.0.14 =
 * Bump WordPress required at least to 4.9.0.
-* **SECURE** Escape translations (thanks to @davidperez at [#WCMAD](https://madrid.wordcamp.org/2023/)).
+* **SECURE** Escape translations (thanks to [@davidperez](https://profiles.wordpress.org/davidperez/) at [#WCMAD](https://madrid.wordcamp.org/2023/)).
 
 = 5.0.13 =
 * FIX Unclosed SVGs.

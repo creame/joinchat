@@ -154,10 +154,10 @@ class Joinchat_Woo_Admin {
 			'woocommerce_single_product_summary__40'     => __( 'After meta info', 'creame-whatsapp-me' ),
 			'woocommerce_single_product_summary__50'     => __( 'After share links', 'creame-whatsapp-me' ),
 			'woocommerce_product_additional_information' => __( 'After "Additional information"', 'creame-whatsapp-me' ),
-			'woocommerce_before_add_to_cart_form'        => sprintf( $has_price, __( 'Before "Add To Cart" form', 'creame-whatsapp-me' ), ),
-			'woocommerce_before_add_to_cart_button'      => sprintf( $has_price, __( 'Before "Add To Cart" button', 'creame-whatsapp-me' ), ),
-			'woocommerce_after_add_to_cart_button'       => sprintf( $has_price, __( 'After "Add To Cart" button', 'creame-whatsapp-me' ), ),
-			'woocommerce_after_add_to_cart_form'         => sprintf( $has_price, __( 'After "Add To Cart" form', 'creame-whatsapp-me' ), ),
+			'woocommerce_before_add_to_cart_form'        => sprintf( $has_price, __( 'Before "Add To Cart" form', 'creame-whatsapp-me' ) ),
+			'woocommerce_before_add_to_cart_button'      => sprintf( $has_price, __( 'Before "Add To Cart" button', 'creame-whatsapp-me' ) ),
+			'woocommerce_after_add_to_cart_button'       => sprintf( $has_price, __( 'After "Add To Cart" button', 'creame-whatsapp-me' ) ),
+			'woocommerce_after_add_to_cart_form'         => sprintf( $has_price, __( 'After "Add To Cart" form', 'creame-whatsapp-me' ) ),
 		);
 
 		return array( 'none' => __( "Don't show", 'creame-whatsapp-me' ) ) + apply_filters( 'joinchat_woo_btn_positions', $positions );
