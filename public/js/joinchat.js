@@ -21,7 +21,6 @@
    * Trigger Analytics events
    *
    * Available customizations via joinchat_obj.settings:
-   *  - 'ga_tracker' for custom UA tracker name (default 'ga' or GADP by MonsterInsights '__gaTracker')
    *  - 'data_layer' for custom data layer name (default 'dataLayer' or GTM4WP custom DataLayer name)
    *  - 'ga_event'   for GA4 custom event       (default 'generate_lead' recommended event)
    *
@@ -47,20 +46,15 @@
     // Trigger event (params can be edited by third party scripts or cancel if return false)
     if (false === $(document).triggerHandler('joinchat:event', [params])) return;
 
-    var ga_tracker = window[this.settings.ga_tracker] || window['ga'] || window['__gaTracker'];
     var data_layer = window[this.settings.data_layer] || window[window.gtm4wp_datalayer_name] || window['dataLayer'];
 
-    // Send Google Analytics custom event (Universal Analytics - analytics.js)
-    if (typeof ga_tracker == 'function' && typeof ga_tracker.getAll == 'function') {
-      ga_tracker('set', 'transport', 'beacon');
-      var trackers = ga_tracker.getAll();
-      trackers.forEach(function (tracker) {
-        tracker.send('event', params.event_category, params.event_action, params.event_label);
-      });
-    }
-
-    // GA4 param max_length of 100 chars (https://support.google.com/analytics/answer/9267744)
-    $.each(params, function (k, v) { params[k] = typeof v == 'string' ? v.substring(0, 100) : v; });
+    // GA4 params max_length (https://support.google.com/analytics/answer/9267744)
+    $.each(params, function (k, v) {
+      if (k == 'page_location') params[k] = v.substring(0, 1000);
+      else if (k == 'page_referrer') params[k] = v.substring(0, 420);
+      else if (k == 'page_title') params[k] = v.substring(0, 300);
+      else if (typeof v == 'string') params[k] = v.substring(0, 100);
+    });
 
     // gtag.js
     if (typeof gtag == 'function' && typeof data_layer == 'object') {
@@ -185,6 +179,7 @@
     }
   };
 
+  // Opt-in accepted or no needed
   joinchat_obj.optin = function () {
     return !this.$div.hasClass('joinchat--optout');
   };
@@ -363,7 +358,7 @@
 
     // Fix message clip-path style broken by some CSS optimizers
     if (has_chatbox) {
-      joinchat_obj.$div.css('--peak', 'ur' + 'l(#joinchat__peak_' + ( joinchat_obj.$div.closest('[dir=rtl]').length ? 'r' : 'l' ) + ')');
+      joinchat_obj.$div.css('--peak', 'ur' + 'l(#joinchat__peak_' + (joinchat_obj.$div.closest('[dir=rtl]').length ? 'r' : 'l') + ')');
     }
 
     $(document).trigger('joinchat:start');
