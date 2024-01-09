@@ -137,7 +137,9 @@ class Joinchat_Integrations {
 			|| isset( $_GET['ct_builder'] )                                                     // Oxygen Builder.
 			|| isset( $_GET['siteorigin_panels_live_editor'] )                                  // Page Builder by SiteOrigin.
 			|| isset( $_GET['vcv-editable'] )                                                   // Visual Composer.
-			|| ( isset( $_GET['load_for'] ) && 'wppb_editor_iframe' === $_GET['load_for'] );    // WP Page Builder.
+			|| ( isset( $_GET['load_for'] ) && 'wppb_editor_iframe' === $_GET['load_for'] )     // WP Page Builder.
+			|| ( function_exists( 'bricks_is_builder' ) && bricks_is_builder() )                // Bricks Builder.
+			|| isset( $_GET['et_fb'] );                                                         // Divi.
 		// phpcs:enable
 
 		$builder_show = apply_filters( 'joinchat_page_builder_show', false );

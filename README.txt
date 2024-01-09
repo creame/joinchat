@@ -382,6 +382,7 @@ Joinchat save two localStorage variables for proper operation:
 == Changelog ==
 
 = 5.0.16 =
+* NEW Detects Bricks Builder & Divi editors.
 * CHANGE Remove old Universal Analytics event.
 
 = 5.0.15 =
