@@ -5,7 +5,7 @@ Tags: Chat, Click to Chat, Facebook Messenger, WhatsApp, Telegram, Whatsapp Busi
 Requires at least: 4.9.0
 Tested up to: 6.4
 Requires PHP: 5.5
-Stable tag: 5.0.15
+Stable tag: 5.0.16
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -293,14 +293,9 @@ If Google Analytics 4 (gtag.js) is detected, use the recommended `'generate_lead
     is_mobile: 'yes' | 'no',
 });`
 
-If Universal Analtics (analytics.js) is detected:
-
-`ga('send', 'event', 'JoinChat', 'whatsapp: 99999999999', destination_url);`
-
-If your site don't have standard names for UA tracker ('ga') or data layer ('dataLayer') you can set your custom names with this PHP filter. Also can set a different event name for GA4:
+If your site don't have standard names for data layer ('dataLayer') you can set your custom names with this PHP filter. Also can set a different event name for GA4:
 
 `add_filter( 'joinchat_get_settings', function( $settings ){
-    $settings['ga_tracker'] = 'gaCustom';
     $settings['ga_event'] = 'myGA4Event';
     $settings['data_layer'] = 'dataLayerCustom';
     return $settings;
