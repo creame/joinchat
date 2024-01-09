@@ -381,6 +381,9 @@ Joinchat save two localStorage variables for proper operation:
 
 == Changelog ==
 
+= 5.0.16 =
+* CHANGE Remove old Universal Analytics event.
+
 = 5.0.15 =
 * FIX PHP typo (thanks to [@kent-brockman](https://profiles.wordpress.org/kent-brockman/) [topic](https://wordpress.org/support/topic/typo-in-class-joinchat-woo-admin-php-lines-157-160/)).
 
