@@ -378,6 +378,7 @@ Joinchat save two localStorage variables for proper operation:
 
 = 5.0.17 =
 * FIX Not escaped strong tag.
+* FIX Blurry SVGs in Chrome on Mac.
 
 = 5.0.16 =
 * NEW Detects Bricks Builder & Divi editors.
