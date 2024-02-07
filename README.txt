@@ -5,7 +5,7 @@ Tags: Chat, Click to Chat, Facebook Messenger, WhatsApp, Telegram, Whatsapp Busi
 Requires at least: 4.9.0
 Tested up to: 6.4
 Requires PHP: 5.5
-Stable tag: 5.0.16
+Stable tag: 5.0.17
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -379,6 +379,7 @@ Joinchat save two localStorage variables for proper operation:
 = 5.0.17 =
 * FIX Not escaped strong tag.
 * FIX Blurry SVGs in Chrome on Mac.
+* CHANGE Better enqueue script if jQuery is deregistered.
 
 = 5.0.16 =
 * NEW Detects Bricks Builder & Divi editors.
