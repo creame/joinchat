@@ -75,6 +75,11 @@ class Joinchat_Integrations {
 		 * WP Rocket
 		 */
 		add_filter( 'rocket_rucss_external_exclusions', array( $this, 'rocket_rucss_external_exclusions' ) );
+
+		/**
+		 * Thrive Architect
+		 */
+		add_filter( 'tcb_lp_strip_css_whitelist', array( $this, 'tcb_lp_strip_css_whitelist' ) );
 	}
 
 	/**
@@ -139,7 +144,8 @@ class Joinchat_Integrations {
 			|| isset( $_GET['vcv-editable'] )                                                   // Visual Composer.
 			|| ( isset( $_GET['load_for'] ) && 'wppb_editor_iframe' === $_GET['load_for'] )     // WP Page Builder.
 			|| ( function_exists( 'bricks_is_builder' ) && bricks_is_builder() )                // Bricks Builder.
-			|| isset( $_GET['et_fb'] );                                                         // Divi.
+			|| isset( $_GET['et_fb'] )                                                          // Divi.
+			|| ( isset( $_GET['tve']) && 'true' === $_GET['tve'] );                             // Thrive Architect.
 		// phpcs:enable
 
 		$builder_show = apply_filters( 'joinchat_page_builder_show', false );
@@ -173,6 +179,21 @@ class Joinchat_Integrations {
 		}
 
 		return $external_exclusions;
+
+	}
+
+	/**
+	 * Filter list of CSS classes / DOM attributes for style nodes that should be kept
+	 *
+	 * @since    5.0.18
+	 * @param  array $tcb_style_classes List of excluded <style> tags.
+	 * @return array
+	 */
+	public function tcb_lp_strip_css_whitelist( $tcb_style_classes ) {
+
+		$tcb_style_classes[] = 'joinchat-';
+
+		return $tcb_style_classes;
 
 	}
 }

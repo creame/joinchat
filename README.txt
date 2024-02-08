@@ -376,13 +376,17 @@ Joinchat save two localStorage variables for proper operation:
 
 == Changelog ==
 
+= 5.0.18 =
+* NEW Detects **Thrive Architect** editor.
+* NEW Prevent **Thrive Architect** remove Joinchat inline styles.
+
 = 5.0.17 =
 * FIX Not escaped strong tag.
 * FIX Blurry SVGs in Chrome on Mac.
 * CHANGE Better enqueue script if jQuery is deregistered.
 
 = 5.0.16 =
-* NEW Detects Bricks Builder & Divi editors.
+* NEW Detects **Bricks Builder** & **Divi** editors.
 * CHANGE Remove old Universal Analytics event.
 
 = 5.0.15 =
