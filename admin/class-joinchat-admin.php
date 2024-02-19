@@ -73,7 +73,7 @@ class Joinchat_Admin {
 		$value['message_badge'] = $util::yes_no( $value, 'message_badge' );
 		$value['message_send']  = $util::clean_input( $value['message_send'] );
 		$value['message_start'] = $util::substr( $util::clean_input( $value['message_start'] ), 0, 40 );
-		$value['message_delay'] = intval( $value['message_delay'] );
+		$value['message_delay'] = intval( $value['message_delay'] ) * ( $util::yes_no( $value, 'message_delay_on' ) === 'yes' ? 1 : -1 );
 		$value['message_views'] = intval( $value['message_views'] ) ? intval( $value['message_views'] ) : 1;
 		$value['position']      = 'left' !== $value['position'] ? 'right' : 'left';
 		$value['color']         = preg_match( '/^#[a-f0-9]{6}$/i', $value['color'] ) ? $value['color'] : '#25d366';
@@ -488,6 +488,33 @@ class Joinchat_Admin {
 				call_user_func_array( 'do_action', $callable );
 			}
 		}
+
+	}
+
+	/**
+	 * Adds the privacy message.
+	 *
+	 * @since    5.1.0
+	 * @return void
+	 */
+	public function add_privacy_message() {
+
+		if ( jc_common()->settings['message_delay'] < 0 ) {
+
+			$message = '<p class="privacy-policy-tutorial">' . esc_html__( "With the current Joinchat's settings, no user data is collected and no cookies are used.", 'creame-whatsapp-me' ) . '</p>';
+
+		} else {
+			$message = '' .
+				'<h2>' . esc_html__( 'Cookies' ) . '</h2>' .
+				'<p class="privacy-policy-tutorial">' . esc_html__( 'Joinchat uses cookies to control when the chat window should be automatically displayed.', 'creame-whatsapp-me' ) . '</p>' .
+				'<p><strong class="privacy-policy-tutorial">' . esc_html__( 'Suggested text:' ) . '</strong> ' .
+					esc_html__( 'Cookies can be used to control when the WhatsApp floating button chat window should be automatically displayed.', 'creame-whatsapp-me' ) . ' ' .
+					/* translators: %s: cookies names. */
+					sprintf( esc_html__( 'These cookies (%s) do not contain personal data, are of type HTML LocalStorage and do not expire.', 'creame-whatsapp-me' ), '"joinchat_views", "joinchat_hashes"' ) .
+				'</p>';
+		}
+
+		wp_add_privacy_policy_content( 'Joinchat', apply_filters( 'joinchat_privacy_message', $message ) );
 
 	}
 }
