@@ -138,12 +138,13 @@
   };
 
   // Save CTA hash
-  joinchat_obj.save_hash = function () {
-    var hash = this.settings.message_hash || 'none';
+  joinchat_obj.save_hash = function (force) {
+    if (!this.settings.message_hash) return; // No hash
+    if (this.settings.message_delay < 0 && !force) return; // No delay & no forced
     var saved_hashes = (this.store.getItem('joinchat_hashes') || '').split(',').filter(Boolean);
 
-    if (saved_hashes.indexOf(hash) === -1) {
-      saved_hashes.push(hash);
+    if (saved_hashes.indexOf(this.settings.message_hash) === -1) {
+      saved_hashes.push(this.settings.message_hash);
       this.store.setItem('joinchat_hashes', saved_hashes.join(','));
     }
   };
@@ -200,7 +201,7 @@
     $(document).trigger('joinchat:starting');
 
     var button_delay = joinchat_obj.settings.button_delay * 1000;
-    var chat_delay = joinchat_obj.settings.message_delay * 1000;
+    var chat_delay = Math.max(0, joinchat_obj.settings.message_delay * 1000);
     var has_cta = !!joinchat_obj.settings.message_hash;
     var has_chatbox = !!joinchat_obj.$('.joinchat__box').length;
     var timeoutHover, timeoutCTA;
@@ -326,23 +327,21 @@
     });
 
     // Triggers: open chatbox on scroll (when node on viewport)
-    if (has_chatbox && 'IntersectionObserver' in window) {
-      var $show_on_scroll = $('.joinchat_show, .joinchat_force_show');
-
-      function joinchat_observed(objs) {
+    var $show_on_scroll = $('.joinchat_show, .joinchat_force_show');
+    if (has_cta && $show_on_scroll.length && 'IntersectionObserver' in window) {
+      var observer = new IntersectionObserver(function (objs) {
         $.each(objs, function () {
-          if (this.intersectionRatio > 0 && (!is_viewed || $(this.target).hasClass('joinchat_force_show'))) {
-            clear_and_show();
-            observer.disconnect(); // Only one show for visit
-            return false;
-          }
-        });
-      }
+          if (this.intersectionRatio <= 0) return;
+          var is_forced = this.target.classList.contains('joinchat_force_show');
+          if (is_viewed && !is_forced) return;
 
-      if ($show_on_scroll.length > 0) {
-        var observer = new IntersectionObserver(joinchat_observed);
-        $show_on_scroll.each(function () { observer.observe(this); });
-      }
+          observer.disconnect(); // Only one show for visit
+          joinchat_obj.save_hash(!is_forced);
+          clear_and_show();
+          return false;
+        });
+      });
+      $show_on_scroll.each(function () { observer.observe(this); });
     }
 
     // Add QR Code
@@ -355,6 +354,11 @@
     // Fix message clip-path style broken by some CSS optimizers
     if (has_chatbox) {
       joinchat_obj.$div.css('--peak', 'ur' + 'l(#joinchat__peak_' + (joinchat_obj.$div.closest('[dir=rtl]').length ? 'r' : 'l') + ')');
+    }
+
+    // Count visits (if needed)
+    if (chat_delay && !has_pageviews) {
+      joinchat_obj.store.setItem('joinchat_views', parseInt(joinchat_obj.store.getItem('joinchat_views') || 0) + 1);
     }
 
     $(document).trigger('joinchat:start');
@@ -435,8 +439,6 @@
         });
       }
     }
-
-    joinchat_obj.store.setItem('joinchat_views', parseInt(joinchat_obj.store.getItem('joinchat_views') || 0) + 1);
   }
 
   // Ready!! (in some scenarios jQuery.ready doesn't fire, this try to ensure Joinchat initialization)
