@@ -2,10 +2,10 @@
 Contributors: creapuntome, pacotole, davidlillo, monillo
 Donate link: https://join.chat/donate/
 Tags: Chat, Click to Chat, Facebook Messenger, WhatsApp, Telegram, Whatsapp Business, button, support chat, support, contact, directly message WhatsApp, floating WhatsApp, WhatsApp chat
-Requires at least: 4.4.0
-Tested up to: 6.1
+Requires at least: 4.9.0
+Tested up to: 6.4
 Requires PHP: 5.5
-Stable tag: 4.5.14
+Stable tag: 5.0.17
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -16,7 +16,7 @@ WhatsApp, Messenger, Telegram, Phone call… capture users through their favorit
 
 **🎉 Chat with your website visitors through their favorite chat applications. Place a floating button at the bottom of your site and give the best support to your customers.**
 
-> The best WordPress plugin for WhatsApp, with more than 400,000 installations worldwide.
+> The best WordPress plugin for WhatsApp, with more than **600,000 installations** worldwide.
 
 https://www.youtube.com/watch?v=Ad2ZpPnX_3Q
 
@@ -27,7 +27,7 @@ https://www.youtube.com/watch?v=Ad2ZpPnX_3Q
 #### 🛎 Insert a contact button for WhatsApp on your website.
 Set your ‘WhatsApp’ or ‘WhatsApp Business’ number and let your visitors contact you easily:
 
-🧩 **NEW!! WhatsApp Contact Button Block** with optional QR Code
+🧩 **WhatsApp Contact Button Block** with optional QR Code
 
 📱 On mobile, launch WhatsApp mobile app
 
@@ -40,6 +40,13 @@ Customize your logo, profile picture or even an animated gif.
 Define in which pages or zones it should appear, the delay time, if you want it to the right or to the left, only on mobile phones or also on the desktop.
 
 You can define a tooltip or a call to action to capture the user's interest, the limit is set by your creativity.
+
+#### 📢 New on Joinchat 5
+
+* **Onboarding:** Set up Joinchat from a chat.
+* **Preview:** Visualize the appearance of Joinchat before publishing it.
+* **Custom CSS:** Add your custom CSS from the plugin's own settings and only load when needed.
+* **Multi-language:** Better access to manage translations.
 
 #### 📝 Settings at page or archive level.
 You can **change main settings on every Post, Page, Product or CPT and for Tag or Category archive pages**.
@@ -71,7 +78,7 @@ You can make it mandatory and disable contact until the user accepts it.
 #### 🛒 Integration with WooCommerce.
 Define CTAs and Custom Start Messages for shop page, product pages and for products on sale.
 
-Add a **WhatsApp Contact Button** directly on your product page next to the "Add to cart" button.
+Add a **WhatsApp Contact Button** directly on your product page next to the "Add to cart" button or choose the best position, even on products without a price.
 
 #### 🧩 WhatsApp Contact Button Block (min WP 5.9).
 Add beautiful and customizable WhatsApp contact buttons in the Block Editor.
@@ -107,6 +114,11 @@ You can also **create your own custom events or add event parameters**. [View FA
 #### 🍾 Chat Triggers.
 Any element in your page can be a chat trigger, eg: it can launch WhatsApp from a link or show the Joinchat CTA when the user scrolls to the footer.
 
+**On page load (by url):**
+
+* url query param `joinchat` to show chat window. Can set delay in seconds, default is 0 *(e.g. example.com/page/?joinchat=5)*
+* url query hash `#joinchat` to show chat window *(e.g. example.com/page/#joinchat)*
+
 **On click:**
 
 * class `"joinchat_app"` direct launch WhatsApp
@@ -114,15 +126,15 @@ Any element in your page can be a chat trigger, eg: it can launch WhatsApp from 
 * link href `"#whatsapp"` direct launch WhatsApp
 * link href `"#joinchat"` opens Joinchat CTA
 
-**On scroll (when element appears on screen):**
-
-* class `"joinchat_show"` opens Joinchat CTA (first time)
-* class `"joinchat_force_show"` opens Joinchat CTA (always)
-
 Set **custom phone and initial message** for direct WhatsApp triggers:
 
 * `data-phone="99999999"`
 * `data-message="Only for this trigger message"`.
+
+**On scroll (when element appears on screen):**
+
+* class `"joinchat_show"` opens Joinchat CTA (first time)
+* class `"joinchat_force_show"` opens Joinchat CTA (always)
 
 #### 💱 Multi-Language & RTL Support.
 To be able to support all your users, wherever they are. Our plugin is **compatible with WPML and Polylang** and also **RTL languages** are supported.
@@ -135,34 +147,47 @@ You choose a color and we customize the entire visual theme of the widget. With 
 #### ⚡ Fast & Light.
 Only load what need when needed. Joinchat is lightweight and follow best coding practices. [See tests report](https://wphive.com/plugins/creame-whatsapp-me/)
 
+#### 🔕 No distractions.
+Joinchat integrates with all major Visual Editors and Page Builders and will not appear when editing a page.
+
+Supported editors: **Beaver Builder**, **Brizy Page Builder**, **Elementor**, **Oxygen Builder**, **Page Builder by SiteOrigin**, **Visual Composer** and **WP Page Builder**.
+
 #### 👨‍💻 Developer friendly.
 Fully extensible, with lots of filters and actions to extend its functionality or change behavior.
 
 ### ⌁ PREMIUM ADD-ONS 🍡
 Extend Joinchat with awesome features:
 
+#### 🤖 [**NEW!!** Chat Funnels](https://join.chat/en/chatfunnel/?utm_source=wporg&utm_medium=web).
+**Simple funnels like a messaging chatbot.** Create lead capture, qualification or support funnels by simulating conversations with a chatbot.
+
 #### 🤹🏻‍♂️ [Create Support Agents](https://join.chat/en/addons/support-agents/?utm_source=wporg&utm_medium=web).
-Managing multiple WhatsApp accounts has never been easier. Add multiple phone numbers and monitor their availability, even if your employees are out of the office, your website users will know how long it will be before they are back up and running!
+**Contact buttons for each agent with availability times.** Manage multiple WhatsApp accounts with their name, department and working hours. Your visitors will be able to contact the agent of their choice and know how long it will be until the agents are available.
 
-#### 🎲 [Avoid Overloading](https://join.chat/en/addons/random-phone/?utm_source=wporg&utm_medium=web).
-Avoid delays in support chats. Joinchat allows you to add as many phone numbers as you want. We distribute customer chats evenly among each of your support agents, so you never have to worry about bottlenecks or dropped calls again.
+#### 🎲 [Random Phone](https://join.chat/en/addons/random-phone/?utm_source=wporg&utm_medium=web).
+**A contact button with multiple WhatsApp numbers.** Avoid collapsing your support, pre-sales or orders chat. Add as many WhatsApp numbers as you have support or sales staff. Your customers will randomly access each of them distributing the workload evenly.
 
-#### 📡 [Don’t Miss a Chat](https://join.chat/en/addons/omnichannel/?utm_source=wporg&utm_medium=web).
-This feature will allow you to add more chat apps to the basic plugin, in addition to WhatsApp. You can now add Telegram, Facebook Messenger, SMS, phone call, Skype and FaceTime.
+#### 📡 [OmniChannel](https://join.chat/en/addons/omnichannel/?utm_source=wporg&utm_medium=web).
+**Add more contact channels.** Allows you to add more contact channels (from more than 10 apps) in addition to WhatsApp. Now you can add Telegram, Facebook Messenger, Tiktok, Snapchat, SMS, phone calls, Skype, FaceTime and more.
 
 #### 🥁 [Convincing Calls to Action](https://join.chat/en/addons/cta-extras/?utm_source=wporg&utm_medium=web).
-Use our embed tool to beautifully design the content that appears in the chat window. Drive your leads from landings to sales and conversion pages. Add links, images, animated GIFs, buttons or even embedded content from other platforms, surveys, chatbots, forms...
+**Enhance your Calls to Action.** Create more engaging content in the chat window for better conversion. Add links, videos, images, animated GIFs, buttons or even embedded content from other platforms such as Calendly, surveys, forms…
 
 [**👉 Upgrade Joinchat Now**](https://join.chat/en/premium/?utm_source=wporg&utm_medium=web)
 
 ### 🧪 Try Joinchat
 Do you want to test the Joinchat configuration panel without installing it? You can try it in a [WordPress on the fly demo](https://demo.tastewp.com/creame-whatsapp-me)
 
+### 🎨 "Business Chat" is our WordPress theme recommended
+**Business Chat** is a versatile WordPress theme designed for businesses seeking a professional online presence. It offers a fully responsive design, built-in SEO tools, extensive customization options, and a chat integration through Joinchat. It's compatible with popular page builders and backed by dedicated customer support. Also it's the ultimate solution for a high-performing, user-friendly business website.
+
+**Business Chat** offers both a [free](https://wordpress.org/themes/business-chat/) and a [premium version](https://superbthemes.com/business-chat/), catering to businesses with varying budgets and requirements. This flexibility makes it an ideal choice for businesses looking for a comprehensive and versatile solution to establish their online presence.
+
 ### ⌁ If you like Joinchat 😍
 1. Please leave us a [★★★★★](https://wordpress.org/support/plugin/creame-whatsapp-me/reviews/#new-post) rating. We'll thank you.
 2. Help us with the [translation in your language](https://translate.wordpress.org/projects/wp-plugins/creame-whatsapp-me)
 3. Visit our blog and find tips and tricks at [join.chat](https://join.chat/en/blog/?utm_source=wporg&utm_medium=web).
-4. Follow [@joinchatnow](https://twitter.com/joinchatnow) on twitter.
+4. Follow [@joinchatnow](https://twitter.com/joinchatnow) on twitter. Join chat now!
 
 
 == Installation ==
@@ -268,14 +293,9 @@ If Google Analytics 4 (gtag.js) is detected, use the recommended `'generate_lead
     is_mobile: 'yes' | 'no',
 });`
 
-If Universal Analtics (analytics.js) is detected:
-
-`ga('send', 'event', 'JoinChat', 'whatsapp: 99999999999', destination_url);`
-
-If your site don't have standard names for UA tracker ('ga') or data layer ('dataLayer') you can set your custom names with this PHP filter. Also can set a different event name for GA4:
+If your site don't have standard names for data layer ('dataLayer') you can set your custom names with this PHP filter. Also can set a different event name for GA4:
 
 `add_filter( 'joinchat_get_settings', function( $settings ){
-    $settings['ga_tracker'] = 'gaCustom';
     $settings['ga_event'] = 'myGA4Event';
     $settings['data_layer'] = 'dataLayerCustom';
     return $settings;
@@ -356,248 +376,90 @@ Joinchat save two localStorage variables for proper operation:
 
 == Changelog ==
 
-= 4.5.14 =
-* CHANGE Delay 'message_send' replace variables until used (fix conflict with Rank Math).
-* CHANGE Optimized variable replacement, runs only when needed.
+= 5.0.18 =
+* NEW Detects **Thrive Architect** editor.
+* NEW Prevent **Thrive Architect** remove Joinchat inline styles.
 
-= 4.5.13 =
-* FIX Tooltip text is cut off when there is an image emoji.
-* FIX PHP notice undefined 'title' introduced in v4.5.12.
+= 5.0.17 =
+* FIX Not escaped strong tag.
+* FIX Blurry SVGs in Chrome on Mac.
+* CHANGE Better enqueue script if jQuery is deregistered.
 
-= 4.5.12 =
-* FIX Unescape help dynamic vars on post/term metabox.
-* CHANGED Better get title for dynamic var {TITLE}.
+= 5.0.16 =
+* NEW Detects **Bricks Builder** & **Divi** editors.
+* CHANGE Remove old Universal Analytics event.
 
-= 4.5.11 =
-* CHANGED Better Joinchat script initialization for deferred or async load by optimizers.
+= 5.0.15 =
+* FIX PHP typo (thanks to [@kent-brockman](https://profiles.wordpress.org/kent-brockman/) [topic](https://wordpress.org/support/topic/typo-in-class-joinchat-woo-admin-php-lines-157-160/)).
 
-= 4.5.10 =
-+ **NEW:** GA4 "generate_lead" event can now be changed to a custom event.
-* CHANGED default z-index to `9000` for compatibility with major cookies plugins.
+= 5.0.14 =
+* Bump WordPress required at least to 4.9.0.
+* **SECURE** Escape translations (thanks to [@davidperez](https://profiles.wordpress.org/davidperez/) at [#WCMAD](https://madrid.wordcamp.org/2023/)).
 
-= 4.5.9 =
-* FIX Product Button should not appear on related products.
+= 5.0.13 =
+* FIX Unclosed SVGs.
+* CHANGE Front minor styles improvements.
 
-= 4.5.8 =
-* Unify all occurrences of the plugin name to "Joinchat".
+= 5.0.12 =
+* CHANGE RTL languages show message bubble peak on right.
+* FIX Clean new lines to ensure "\n" format.
+* FIX False positive on un unmarked checkbox settings on first save.
+* NEW Joinchat settings header added Premium discount coupon.
 
-= 4.5.7 =
-* **NEW:** Added "Test Number" button for phone input.
-* CHANGED Reduded delay for QR tooltip.
-* UPDATED International Telephone Input library.
-* Reduce size of QR generator script.
+= 5.0.11 =
+* FIX Update inline CSS minifier.
+* CHANGE Custom CSS not prefill example CSS by default.
 
-= 4.5.6 =
-* FIX Joinchat sidebar for Gutenberg only must be loaded on public CPTs.
+= 5.0.10 =
+* FIX load customs CSS when use button only styles.
+* CHANGE small optimization, no need jquery-migrate.
 
-= 4.5.5 =
-* FIX WhatsApp Web always deactivated in frontend.
+= 5.0.9 =
+* FIX Term custom Joinchat settings not saved (introduced on v5.0).
+* NEW Prevent WP Rocket remove Joinchat styles.
 
-= 4.5.4 =
-* FIX Allows Google Ads conversion ID of 11 characters.
+= 5.0.8 =
+* CHANGED Tested up to WordPress 6.3.
+* NEW for developers: added filter 'joinchat_enqueue_qr'.
 
-= 4.5.3 =
-* FIX PHP warning introduced in v4.5.2.
+= 5.0.7 =
+* **NEW** Added url triggers hash `#joinchat` or query param `?joinchat`.
+* FIX PHP warning "$script undefinned".
 
-= 4.5.2 =
-* FIX Joinchat integration with Gutenberg only loads for WordPress 5.9 or higher.
+= 5.0.6 =
+* Fix onboard undefined submenu error.
 
-= 4.5.1 =
-* FIX PHP error introduced in v4.5
-* CHANGED Bump min PHP version to 5.5.
+= 5.0.5 =
+* FIX bad formed sprintf() function.
 
-= 4.5 =
-* **NEW: Added Gutenberg native support.**
-* **NEW:** WhastApp Contact Button Block.
-* **NEW:** Native Joinchat sidebar on Block Editor.
-* **NEW:** Direct WhatsApp triggers can use custom phone and initial message.
-* **NEW:** Triggers also fire analytics events even without the Joinchat floating button.
-* CHANGED Bump min WordPress version to 4.4 and tested up to 6.0.
-* CHANGED Can change default "JoinChat" event name via javascript event.
-* CHANGED Improved interface to enter phone with country code and Google Ads conversion ID.
+= 5.0.4 =
+* FIX fatal error with missing class JoinchatUtil.
+* FIX preview custom CSS.
 
-= 4.4.3 =
-* Minor CSS fixes and optimizations.
+= 5.0.2 =
+* FIX onboard phone error with minified scripts.
+* UPDATED International Telephone Input library (18.1.8).
 
-= 4.4.2 =
-* **NEW Optimized CSS** for only button without Call to Action (only 2.5kB).
-* **NEW** Compatible with **Perfect Brands for WooCommerce** for brand custom settings.
-* **NEW** Compatible with **Google Tag Manager for WordPress** custom DataLayer name.
-* **NEW** Don't load on Elementor Site Builder previews.
-* FIX badge animation don't show error introduced in v4.4.0.
-* CHANGED optimized render without unused elements.
+= 5.0.1 =
+* FIX undefined constant on PHP < 8.
 
-= 4.4.1 =
-* FIX Google Ads conversion field is too short.
-
-= 4.4 =
-* **NEW: Display QR Code on desktop** to scan with phone.
-* **NEW: Opt-in** text for user consent (optional or required).
-* **NEW: WooCommerce Product Button** for product pages.
-* **NEW:** Dynamic variable `{HREF}` for full URL with query params.
-* **NEW:** Google Ads conversion.
-* **NEW:** Better analytics events with more info.
-* **NEW:** Allow direct show button without animation setting Button Delay as "-1".
-* **TIP:** Easier configuration, double click to apply the example settings in placeholders.
-* CHANGED default z-index is `9999`.
-* CHANGED allow set empty CTA for products with `{}` in main settings.
-* **CHANGED** GA4 custom 'JoinChat' event now is 'generate_lead' recommended event.
-
-= 4.3.2 =
-* Styles minor improvements, fix tooltip align.
-
-= 4.3.1 =
-* FIX empty phone notice dismiss.
-
-= 4.3 =
-* **NEW:** Customize in category/tag archive page.
-* UPDATED styles for better browsers support.
-* UPDATED International Telephone Input library.
-
-= 4.2 =
-* **NEW:** Now can change default role allowed to configure Join.chat global settings.
-* **NEW:** Now can show Join.chat as a direct menu in wp-admin.
-* **NEW:** link to update translatable settings when changed.
-* **NEW:** Accessibility: disable animations for devices with Reduced Motion preference.
-* FIX Elementor 3.5 Finder deprecation message.
-* FIX WPML ensure translations are registered in default site language.
-* Styles minor improvements.
-
-= 4.1.15 =
-* **NEW:** WordPress 5.8 tested & updated.
-* FIX RTL text align right.
-* FIX Send event to all GA4 properties.
-* Prevent faux WhatsApp clicks when chat window is showed automatically
-
-= 4.1.14 =
-* **NEW:** Enhanced telephone input scripts now are included in plugin and self-hosted.
-
-= 4.1.13 =
-* **NEW:** Add Thank you page in WooCommerce visibility options.
-* **SECURE** frontend escape html output.
-
-= 4.1.12 =
-* **NEW:** Add integration with Elementor Finder.
-* **NEW:** Add compatibility with Storefront theme mobile toolbar.
-* Better dependency loading.
-
-= 4.1.11 =
-* FIX some CSS optimizers break message bubble style.
-* FIX PHP notice undefined 'telephone'.
-
-= 4.1.10 =
-* **NEW:** Add support to new Elementor landing pages.
-* FIX fallback for browsers that don't support CSS "clamp()" (i.e Edge for Android)
-
-= 4.1.9 =
-* **SECURE** escape input values on wp-admin (thanks to Camilo @camilo517)
-* NEW can pass custom data layer name for gtag.js and GTM with filter `joinchat_get_settings`
-* FIX also send Google Analytics 4 event when Universal Analytics and GA4 are present
-
-= 4.1.8 =
-* Front script better settings validation
-* FIX error with some prices on variable replacement
-* Bump required minimun WordPress version to 3.5
-
-= 4.1.7 =
-* FIX jQuery 3 deprecation warnings for event shorthands
-* FIX JSON error with "&quot;" on variable replacement
-* FIX Don't load public hooks on wp-login.php page
-
-= 4.1.6 =
-* FIX minor css error introduced in v4.1.5
-
-= 4.1.5 =
-* **NEW:** Add links to WhastApp with `#joinchat` or `#whatsapp` in your href. CSS triggers and links work on all pages, **even without Join.chat visible**.
-* **NEW:** Analytics event compatible with Google Analytics Dashboard Plugin for WordPress by MonsterInsights custom tracker name
-* Load images when show button for better Page speed.
-
-= 4.1.4 =
-* **NEW:** PHP 8 & WordPress 5.6 tested & updated
-* Cleaner placeholder on telephone field
-* Added lazy loading attribute for image
-
-= 4.1.3 =
-* **NEW:** Ensure chatbox header is allways visible on mobile with better height control
-* **NEW:** WooCommerce, use custom Join.chat settings on shop page for all shop catalog pages
-
-= 4.1.2 =
-* SECURE window.open with 'noopener'
-* FIX PHP error undefined get_col_charset() on old WordPress versions
-
-= 4.1.1 =
-* FIX error on prices with '$'
-
-= 4.1 =
-* **NEW:** Use custom text on chat window header
-* Added 'joinchat_app' class trigger that opens WhatsApp
-* Added Telephone to translatable fields
-* Added 'joinchat_disable_thumbs' filter
-* FIX updated style regex patterns
-* FIX hide on mobile when user fill forms
-
-= 4.0.10 =
-* **NEW:** show tooltip on hover button
-* **NEW:** hide on mobile when user fill forms
-* CHANGED by default clear all plugin data on uninstall.
-* FIX remove unnecessary get option 'whatsappme'
-
-= 4.0.9 =
-* FIX notification balloon text color white
-* New js event 'joinchat:starting'
-
-= 4.0.8 =
-* FIX WP Super Cache clear cache error on save
-* Image thumbnail fallback if possible
-
-= 4.0.7 =
-* FIX WP Super Cache clear cache error on save
-
-= 4.0.6 =
-* Minor changes: better encode emoji detection, check WooCommerce version, css fixes and improvements
-
-= 4.0.5 =
-* **NEW:** Clear third party cache plugins on settings save.
-* FIX php error on image resize.
-* UPDATED International Telephone Input library to v.17.
-
-= 4.0.4 =
-* Better public settings JSON output
-* Re-fix WAme deactivate
-
-= 4.0.3 =
-* Fix WAme deactivate
-
-= 4.0.2 =
-* Encode emojis if DB not support utf8mb4.
-* Better update from WAme (no manual activation required).
-
-= 4.0.1 =
-* minor fixes.
-
-= 4.0.0 =
-* **NEW:** Join.chat brand.
-* **NEW:** Widget theme color.
-* **NEW:** CSS class triggers to open chat window.
-* Lighter, reduced assets size and deleted images.
-
-**CHANGED for SEO:** All analytics events change from `WhatsAppMe` to `JoinChat`.
-
-**CHANGED for Devs:** All css classes, actions and filters change from `wame` or `whatsappme` to `joinchat`.
+= 5.0.0 =
+* **NEW** Live Preview Panel on wp-admin settings page.
+* **NEW** Onboarding page.
+* **NEW** Custom CSS advanced field.
+* **NEW** Added setting to clear all Joinchat data on uninstall.
+* **NEW** Multi-language notice to inform about to set settings in main language.
+* CHANGE Replace QR generator library (reduces 13.9kB, 4.8kB gzipped).
+* CHANGE Optimized, only load translations in admin pages.
+* CHANGE Better styles when chatbox has scroll.
+* UPDATED International Telephone Input library (18.1.6).
+* **BREAK** Changed all PHP class names to follow WordPress Coding Standards.
 
 See [changelog.txt](https://plugins.svn.wordpress.org/creame-whatsapp-me/trunk/changelog.txt) for older changelog
 
 
 == Upgrade Notice ==
 
-= 4.4.0 =
-Google Analytics 4 custom "JoinChat" event replaced with recommended "generate_lead" event.
-
-= 4.0.0 =
-**Join.chat rebrand!!** Analytics events change from `WhatsAppMe` to `JoinChat` and classes, actions and filters change from `wame` or `whatsappme` to `joinchat`.
-
-= 2.3.0 =
-WPML and Polylang integration.
-Added new settings to control delay and launch WhatsApp Web on desktop.
-Dynamic variables {SITE}, {URL} and {TITLE} now also works on Call To Action.
-Fixed incorrect WAme post settings on loops.
+= 5.0.0 =
+**BREAK for developers:** changed all PHP class names to follow WordPress Coding Standards.
+Custom plugins or code snippets that call Joinchat classes lower than 5.0 may return a fatal error.

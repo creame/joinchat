@@ -1,58 +1,20 @@
 <?php
+/**
+ * Gutenberg functionality of the plugin.
+ *
+ * @package    Joinchat
+ */
 
 /**
  * Register Gutenberg block editor plugin logic.
  * Add native sidebar for postmeta and register blocks and patterns.
  *
  * @since      1.0.0
- * @package    JoinChatGutenberg
- * @subpackage JoinChat/gutenberg
+ * @package    Joinchat_Gutenberg
+ * @subpackage Joinchat/gutenberg
  * @author     Creame <hola@crea.me>
  */
-class JoinChatGutenberg {
-
-	/**
-	 * The ID of this plugin.
-	 *
-	 * @since    4.5.0
-	 * @access   private
-	 * @var      string    $plugin_name    The ID of this plugin.
-	 */
-	private $plugin_name;
-
-	/**
-	 * The version of this plugin.
-	 *
-	 * @since    4.5.0
-	 * @access   private
-	 * @var      string    $version    The current version of this plugin.
-	 */
-	private $version;
-
-	/**
-	 * Common class for admin and front methods.
-	 *
-	 * @since    4.5.0
-	 * @access   private
-	 * @var      JoinChatCommon    $common    instance.
-	 */
-	private $common;
-
-	/**
-	 * Initialize the class and set its properties.
-	 *
-	 * @since    4.5.0
-	 * @param    string $plugin_name       The name of the plugin.
-	 * @param    string $version    The version of this plugin.
-	 * @return   void
-	 */
-	public function __construct( $plugin_name, $version ) {
-
-		$this->plugin_name = $plugin_name;
-		$this->version     = $version;
-		$this->common      = JoinChatCommon::instance();
-
-	}
+class Joinchat_Gutenberg {
 
 	/**
 	 * Register the stylesheets for the gutenberg editor
@@ -66,8 +28,8 @@ class JoinChatGutenberg {
 
 		$joinchat_data = array(
 			'image_qr'     => plugins_url( 'admin/img/qr.png', JOINCHAT_FILE ),
-			'defaults'     => $this->common->get_obj_placeholders( get_post() ),
-			'message_vars' => $this->common->get_obj_vars( get_post() ),
+			'defaults'     => jc_common()->get_obj_placeholders( get_post() ),
+			'message_vars' => jc_common()->get_obj_vars( get_post() ),
 		);
 
 		wp_enqueue_script( 'joinchat-gutenberg', plugins_url( 'gutenberg/build/index.js', JOINCHAT_FILE ), $asset_file['dependencies'], $asset_file['version'], true );
@@ -79,9 +41,9 @@ class JoinChatGutenberg {
 		 */
 
 		$conditions = array(
-			$this->show_sidebar(),                                                     // Is enabled sidebar?
-			in_array( get_post_type(), $this->common->get_public_post_types(), true ), // CPT is plubic (with '_joinchat' meta registered)?
-			post_type_supports( get_post_type(), 'custom-fields' ),                    // CPT supports 'custom-fields' for Gutenberg access to postmeta?
+			$this->show_sidebar(),                                                   // Is enabled sidebar?
+			in_array( get_post_type(), jc_common()->get_public_post_types(), true ), // CPT is plubic (with '_joinchat' meta registered)?
+			post_type_supports( get_post_type(), 'custom-fields' ),                  // CPT supports 'custom-fields' for Gutenberg access to postmeta?
 		);
 
 		if ( count( array_filter( $conditions ) ) < count( $conditions ) ) {
@@ -124,13 +86,13 @@ class JoinChatGutenberg {
 
 		// Need render QR code.
 		if ( isset( $attributes['qr_code'] ) && 'no' !== $attributes['qr_code'] ) {
-			$this->common->qr = true;
+			jc_common()->qr = true;
 		}
 
 		// Replace dynamic vars.
 		if ( ! empty( $attributes['message'] ) ) {
 			$escaped = str_replace( array( '&', '"', '>' ), array( '&amp;', '&quot;', '&gt;' ), $attributes['message'] );
-			$content = str_replace( $escaped, esc_attr( JoinChatUtil::replace_variables( $attributes['message'] ) ), $content );
+			$content = str_replace( $escaped, esc_attr( Joinchat_Util::replace_variables( $attributes['message'] ) ), $content );
 		}
 
 		// Render an empty Button Block to ensure enqueue button styles.
@@ -204,7 +166,7 @@ class JoinChatGutenberg {
 			return;
 		}
 
-		$post_types = $this->common->get_public_post_types();
+		$post_types = jc_common()->get_public_post_types();
 
 		foreach ( $post_types as $post_type ) {
 			register_meta(
@@ -247,9 +209,9 @@ class JoinChatGutenberg {
 	 */
 	public function sanitize_meta( $meta_value ) {
 
-		JoinChatUtil::maybe_encode_emoji();
+		Joinchat_Util::maybe_encode_emoji();
 
-		return array_filter( JoinChatUtil::clean_input( $meta_value ) );
+		return array_filter( Joinchat_Util::clean_input( $meta_value ) );
 
 	}
 

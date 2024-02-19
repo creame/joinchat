@@ -1,5 +1,5 @@
 :root {
-  --joinchat-ico: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23fff' d='M3.516 3.516c4.686-4.686 12.284-4.686 16.97 0 4.686 4.686 4.686 12.283 0 16.97a12.004 12.004 0 0 1-13.754 2.299l-5.814.735a.392.392 0 0 1-.438-.44l.748-5.788A12.002 12.002 0 0 1 3.517 3.517zm3.61 17.043.3.158a9.846 9.846 0 0 0 11.534-1.758c3.843-3.843 3.843-10.074 0-13.918-3.843-3.843-10.075-3.843-13.918 0a9.846 9.846 0 0 0-1.747 11.554l.16.303-.51 3.942a.196.196 0 0 0 .219.22l3.961-.501zm6.534-7.003-.933 1.164a9.843 9.843 0 0 1-3.497-3.495l1.166-.933a.792.792 0 0 0 .23-.94L9.561 6.96a.793.793 0 0 0-.924-.445 1291.6 1291.6 0 0 0-2.023.524.797.797 0 0 0-.588.88 11.754 11.754 0 0 0 10.005 10.005.797.797 0 0 0 .88-.587l.525-2.023a.793.793 0 0 0-.445-.923L14.6 13.327a.792.792 0 0 0-.94.23z'/%3E%3C/svg%3E");
+  --joinchat-ico: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23fff' d='M3.516 3.516c4.686-4.686 12.284-4.686 16.97 0s4.686 12.283 0 16.97a12 12 0 0 1-13.754 2.299l-5.814.735a.392.392 0 0 1-.438-.44l.748-5.788A12 12 0 0 1 3.517 3.517zm3.61 17.043.3.158a9.85 9.85 0 0 0 11.534-1.758c3.843-3.843 3.843-10.074 0-13.918s-10.075-3.843-13.918 0a9.85 9.85 0 0 0-1.747 11.554l.16.303-.51 3.942a.196.196 0 0 0 .219.22zm6.534-7.003-.933 1.164a9.84 9.84 0 0 1-3.497-3.495l1.166-.933a.79.79 0 0 0 .23-.94L9.561 6.96a.79.79 0 0 0-.924-.445l-2.023.524a.797.797 0 0 0-.588.88 11.754 11.754 0 0 0 10.005 10.005.797.797 0 0 0 .88-.587l.525-2.023a.79.79 0 0 0-.445-.923L14.6 13.327a.79.79 0 0 0-.94.23z'/%3E%3C/svg%3E");
   --joinchat-font: -apple-system, blinkmacsystemfont, "Segoe UI", roboto, oxygen-sans, ubuntu, cantarell, "Helvetica Neue", sans-serif;
 }
 
@@ -53,7 +53,6 @@
   right: 8px;
   height: var(--s);
   min-width: var(--s);
-  max-width: 95vw;
   background: #25d366;
   color: inherit;
   border-radius: calc(var(--s)/2);
@@ -133,7 +132,7 @@
 }
 
 .joinchat__tooltip::after {
-  content: "";
+  content: '';
   display: block;
   position: absolute;
   top: 10px;
@@ -184,12 +183,12 @@
   text-align: center;
   white-space: nowrap;
   filter: drop-shadow(0 1px 4px rgba(0,0,0, 0.4));
-  animation: joinchat_badge_in 400ms cubic-bezier(0.11, 0.84, 0.83, 1.01) 300ms both;
+  animation: joinchat_badge_in 400ms cubic-bezier(0.11, 0.84, 0.83, 1.01) 500ms both;
   pointer-events: none;
 }
 
 .joinchat__qr::after {
-  content: "";
+  content: '';
   display: block;
   position: absolute;
   bottom: -6px;
@@ -312,19 +311,19 @@
   background-color: #128c7e;
 }
 
-@media (orientation: portrait) and (min-width: 481px), (orientation: landscape) and (min-height: 481px) {
+@media (orientation: portrait) and (width >= 481px), (orientation: landscape) and (height >= 481px) {
   .joinchat--mobile {
     display: none !important;
   }
 }
 
-@media (max-width: 767px) {
+@media (width <= 767px) {
   .joinchat--footer-bar {
     --bottom: 76px !important;
   }
 }
 
-@media (max-width: 480px), (orientation: landscape) and (max-height: 480px) {
+@media (width <= 480px), (orientation: landscape) and (height <= 480px) {
   .joinchat {
     --bottom: 6px;
     --sep: 6px;

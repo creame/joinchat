@@ -1,14 +1,19 @@
 <?php
+/**
+ * Joinchat category for Elementor Finder.
+ *
+ * @package    Joinchat
+ */
 
 /**
  * Joinchat category for Elementor Finder.
  *
  * @since      4.1.12
- * @package    JoinChat
- * @subpackage JoinChat/includes
+ * @package    Joinchat
+ * @subpackage Joinchat/includes
  * @author     Creame <hola@crea.me>
  */
-class JoinChatElementorFinder extends \Elementor\Core\Common\Modules\Finder\Base_Category {
+class Joinchat_Elementor_Finder extends \Elementor\Core\Common\Modules\Finder\Base_Category {
 
 	/**
 	 * Get category title.
@@ -46,14 +51,14 @@ class JoinChatElementorFinder extends \Elementor\Core\Common\Modules\Finder\Base
 		$items = array(
 			'general'    => array(
 				'title'       => _x( 'General Settings', 'Title in Elementor Finder', 'creame-whatsapp-me' ),
-				'url'         => JoinChatUtil::admin_url(),
+				'url'         => Joinchat_Util::admin_url(),
 				'icon'        => 'settings',
 				'keywords'    => explode( ',', 'joinchat,whatsapp,' . _x( 'settings,phone', 'Keywords in Elementor Finder', 'creame-whatsapp-me' ) ),
 				'description' => __( 'Joinchat settings page', 'creame-whatsapp-me' ),
 			),
 			'visibility' => array(
 				'title'       => _x( 'Visibility Settings', 'Title in Elementor Finder', 'creame-whatsapp-me' ),
-				'url'         => add_query_arg( 'tab', 'visibility', JoinChatUtil::admin_url() ),
+				'url'         => add_query_arg( 'tab', 'visibility', Joinchat_Util::admin_url() ),
 				'icon'        => 'eye',
 				'keywords'    => explode( ',', 'joinchat,whatsapp,' . _x( 'visibility,show,hide', 'Keywords in Elementor Finder', 'creame-whatsapp-me' ) ),
 				'description' => __( 'Joinchat settings page', 'creame-whatsapp-me' ),

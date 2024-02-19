@@ -1,7 +1,9 @@
 {
-  "extends": "stylelint-config-standard",
+  "extends": ["stylelint-config-standard"],
   "rules": {
     "at-rule-no-unknown": null,
-    "color-function-notation": "modern"
+    "color-function-notation": "modern",
+    "indentation": 2,
+    "declaration-block-trailing-semicolon": "always"
   }
 }

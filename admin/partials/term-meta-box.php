@@ -3,8 +3,8 @@
  * Joinchat admin term edit from fields
  *
  * @since      4.3.0
- * @package    JoinChat
- * @subpackage JoinChat/admin
+ * @package    Joinchat
+ * @subpackage Joinchat/admin
  * @author     Creame <hola@crea.me>
  */
 
@@ -17,7 +17,7 @@ defined( 'WPINC' ) || exit;
 </tr>
 <tr class="form-field joinchat-metabox">
 	<th scope="row"><label for="joinchat_phone"><?php esc_html_e( 'Telephone', 'creame-whatsapp-me' ); ?></label></th>
-	<td><input id="joinchat_phone" <?php echo $this->common->get_intltel() ? 'data-' : ''; ?>name="joinchat_telephone" value="<?php echo esc_attr( $metadata['telephone'] ); ?>" type="text" placeholder="<?php echo esc_attr( $placeholders['telephone'] ); ?>"></td>
+	<td><input id="joinchat_phone" <?php echo jc_common()->get_intltel() ? 'data-' : ''; ?>name="joinchat_telephone" value="<?php echo esc_attr( $metadata['telephone'] ); ?>" type="text" placeholder="<?php echo esc_attr( $placeholders['telephone'] ); ?>"></td>
 </tr>
 <tr class="form-field joinchat-metabox">
 	<th scope="row"><label for="joinchat_message"><?php esc_html_e( 'Call to Action', 'creame-whatsapp-me' ); ?></label></th>

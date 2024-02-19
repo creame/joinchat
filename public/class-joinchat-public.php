@@ -1,4 +1,9 @@
 <?php
+/**
+ * The public-facing functionality of the plugin.
+ *
+ * @package    Joinchat
+ */
 
 /**
  * The public-facing functionality of the plugin.
@@ -8,39 +13,11 @@
  *
  * @since      1.0.0
  * @since      3.0.0      Added $show property and more hooks
- * @package    JoinChat
- * @subpackage JoinChat/public
+ * @package    Joinchat
+ * @subpackage Joinchat/public
  * @author     Creame <hola@crea.me>
  */
-class JoinChatPublic {
-
-	/**
-	 * The ID of this plugin.
-	 *
-	 * @since    1.0.0
-	 * @access   private
-	 * @var      string    $plugin_name    The ID of this plugin.
-	 */
-	private $plugin_name;
-
-	/**
-	 * The version of this plugin.
-	 *
-	 * @since    1.0.0
-	 * @access   private
-	 * @var      string    $version    The current version of this plugin.
-	 */
-	private $version;
-
-	/**
-	 * Common class for admin and front methods.
-	 *
-	 * @since    4.2.0
-	 * @since    4.5.0  Store $settings globally
-	 * @access   private
-	 * @var      JoinChatCommon    $common    instance.
-	 */
-	private $common;
+class Joinchat_Public {
 
 	/**
 	 * Show WhatsApp button in front.
@@ -49,28 +26,7 @@ class JoinChatPublic {
 	 * @access   private
 	 * @var      bool     $show    Show button on front.
 	 */
-	private $show;
-
-	/**
-	 * Initialize the class and set its properties.
-	 *
-	 * @since    1.0.0
-	 * @since    2.0.0     Added visibility setting
-	 * @since    2.1.0     Added message_badge
-	 * @since    2.3.0     Added button_delay and whatsapp_web settings, message_delay in seconds
-	 * @param    string $plugin_name       The name of the plugin.
-	 * @param    string $version    The version of this plugin.
-	 * @return   void
-	 */
-	public function __construct( $plugin_name, $version ) {
-
-		$this->plugin_name = $plugin_name;
-		$this->version     = $version;
-		$this->common      = JoinChatCommon::instance();
-
-		$this->show = false;
-
-	}
+	private $show = false;
 
 	/**
 	 * Get global settings and current post settings and prepare
@@ -80,12 +36,11 @@ class JoinChatPublic {
 	 * @since    2.2.0   Post settings can also change "telephone". Added 'whastapp_web' setting
 	 * @since    2.3.0   Fix global $post incorrect post id on loops. WPML integration.
 	 * @since    3.0.0   New filters.
-	 * @return   void
+	 * @since    5.0.0   Work as a filter for Joinchat_Common->load_settings()
+	 * @param    array $settings    Raw settings.
+	 * @return   array   Front prepared settings for current page
 	 */
-	public function get_settings() {
-
-		// Load settings.
-		$settings = $this->common->load_settings();
+	public function get_settings( $settings ) {
 
 		// If use "global $post;" take first post in loop on archive pages.
 		$obj = get_queried_object();
@@ -110,7 +65,7 @@ class JoinChatPublic {
 		$settings['message_send'] = preg_replace( '/^\{\s*\}$/', '', $settings['message_send'] );
 
 		// Prepare settings ('message_send' delay replace variables until they are used).
-		$settings['telephone']     = JoinChatUtil::clean_whatsapp( $settings['telephone'] );
+		$settings['telephone']     = Joinchat_Util::clean_whatsapp( $settings['telephone'] );
 		$settings['mobile_only']   = 'yes' === $settings['mobile_only'];
 		$settings['whatsapp_web']  = 'yes' === $settings['whatsapp_web'];
 		$settings['qr']            = 'yes' === $settings['qr'];
@@ -120,6 +75,9 @@ class JoinChatPublic {
 		if ( empty( $settings['gads'] ) ) {
 			unset( $settings['gads'] );
 		}
+
+		// Apply filters to final settings after site and post settings.
+		$settings = apply_filters( 'joinchat_get_settings', $settings, $obj );
 
 		// Only show if there is a phone number.
 		if ( empty( $settings['telephone'] ) ) {
@@ -132,8 +90,6 @@ class JoinChatPublic {
 		// Unset post 'view' setting.
 		unset( $settings['view'] );
 
-		// Apply filters to final settings after site and post settings.
-		$settings = apply_filters( 'joinchat_get_settings', $settings, $obj );
 		// Apply filters to alter 'show' value.
 		$this->show = apply_filters( 'joinchat_show', $show, $settings, $obj );
 
@@ -142,10 +98,10 @@ class JoinChatPublic {
 
 		// Need render QR codes.
 		if ( ! $settings['mobile_only'] && $settings['qr'] ) {
-			$this->common->qr = true;
+			jc_common()->qr = true;
 		}
 
-		$this->common->settings = $settings;
+		return $settings;
 
 	}
 
@@ -159,24 +115,36 @@ class JoinChatPublic {
 	 */
 	public function enqueue_styles() {
 
-		if ( $this->show ) {
-			$settings = $this->common->settings;
-			$file     = $this->plugin_name;
-			$min      = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
-
-			// If not chatbox use lighter only button styles.
-			if ( empty( $settings['message_text'] ) && empty( $settings['optin_text'] ) && ! has_filter( 'joinchat_content' ) ) {
-				$file .= '-btn';
-			}
-
-			wp_enqueue_style( $this->plugin_name, plugins_url( "css/{$file}{$min}.css", __FILE__ ), array(), $this->version, 'all' );
-
-			if ( $file === $this->plugin_name ) {
-				list($r, $g, $b) = sscanf( $settings['color'], '#%02x%02x%02x' );
-
-				wp_add_inline_style( $this->plugin_name, apply_filters( 'joinchat_inline_style', ".joinchat{ --red:$r; --green:$g; --blue:$b; }", $settings ) );
-			}
+		if ( ! $this->show ) {
+			return;
 		}
+
+		$settings = jc_common()->settings;
+		$file     = JOINCHAT_SLUG;
+		$min      = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
+
+		// If not chatbox use lighter only button styles.
+		if ( empty( $settings['message_text'] ) && empty( $settings['optin_text'] ) && ! has_filter( 'joinchat_content' ) ) {
+			$file .= '-btn';
+		}
+
+		wp_enqueue_style( JOINCHAT_SLUG, plugins_url( "css/{$file}{$min}.css", __FILE__ ), array(), JOINCHAT_VERSION, 'all' );
+
+		$inline_css = '';
+
+		if ( jc_common()->defaults( 'color' ) !== $settings['color'] ) {
+			list($r, $g, $b) = sscanf( $settings['color'], '#%02x%02x%02x' );
+			$inline_css     .= ".joinchat{ --red:$r; --green:$g; --blue:$b; }";
+		}
+
+		if ( ! empty( $settings['custom_css'] ) ) {
+			// Note that esc_html() cannot be used because `div &gt; span`.
+			$inline_css .= wp_strip_all_tags( $settings['custom_css'] );
+		}
+
+		$inline_css = apply_filters( 'joinchat_inline_style', $inline_css, $settings );
+
+		wp_add_inline_style( JOINCHAT_SLUG, Joinchat_Util::min_css( $inline_css ) );
 	}
 
 	/**
@@ -186,35 +154,55 @@ class JoinChatPublic {
 	 * @since    2.2.2     minified
 	 * @since    4.4.0     added kjua script
 	 * @since    4.5.0     added joinchat-lite script
+	 * @since    4.5.20    abstract QR script
 	 * @return   void
 	 */
 	public function enqueue_scripts() {
 
-		$min  = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
-		$deps = array( 'jquery' );
+		$min = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
+
+		if ( wp_script_is( 'jquery-core', 'registered' ) ) {
+			$deps = array( 'jquery-core' ); // Don't need jquery-migrate.
+		} else {
+			if ( ! wp_script_is( 'jquery', 'registered' ) ) {
+				wp_register_script( 'jquery', "/wp-includes/js/jquery/jquery$min.js", array(), '3.7.1' );
+			}
+			$deps = array( 'jquery' );
+		}
 
 		// Register QR script.
-		wp_register_script( 'joinchat-kjua', plugins_url( 'js/kjua.min.js', __FILE__ ), array(), '0.9.0', true );
+		wp_register_script( 'joinchat-qr', plugins_url( 'js/qr-creator.min.js', __FILE__ ), array(), '1.0.0', true );
 
-		// Note: caution with cache plugins and wp_is_mobile()
-		// If kjua script is missing it fails silently and don't shows QR Code :).
-		if ( $this->common->qr && ! wp_is_mobile() ) {
-			$deps[] = 'joinchat-kjua';
+		// If QR script is missing it fails silently and don't shows QR Code :).
+		if ( $this->need_enqueue_qr_script() ) {
+			$deps[] = 'joinchat-qr';
 		}
 
 		if ( $this->show ) {
 
 			// Enqueue default full script.
-			wp_enqueue_script( 'joinchat', plugins_url( "js/joinchat{$min}.js", __FILE__ ), $deps, $this->version, true );
+			wp_enqueue_script( 'joinchat', plugins_url( "js/joinchat{$min}.js", __FILE__ ), $deps, JOINCHAT_VERSION, true );
+			// Do action.
+			do_action( 'joinchat_enqueue_script' );
 
-		} elseif ( apply_filters( 'joinchat_script_lite', ! empty( $this->common->settings['telephone'] ) ) ) {
+		} elseif ( apply_filters( 'joinchat_script_lite', ! empty( jc_common()->settings['telephone'] ) ) ) {
 
-			$data = array_intersect_key( $this->common->settings, array_flip( array( 'telephone', 'whatsapp_web', 'message_send', 'gads', 'ga_tracker', 'data_layer' ) ) );
+			$fields = array(
+				'telephone',    // Joinchat settings.
+				'whatsapp_web',
+				'message_send',
+				'gads',
+				'ga_tracker',   // Event customize.
+				'ga_event',
+				'data_layer',
+			);
 
-			$data['message_send'] = JoinChatUtil::replace_variables( $data['message_send'] );
+			$data = array_intersect_key( jc_common()->settings, array_flip( apply_filters( 'joinchat_script_lite_fields', $fields ) ) );
+
+			$data['message_send'] = Joinchat_Util::replace_variables( $data['message_send'] );
 
 			// Enqueue lite script.
-			wp_enqueue_script( 'joinchat-lite', plugins_url( "js/joinchat-lite{$min}.js", __FILE__ ), $deps, $this->version, true );
+			wp_enqueue_script( 'joinchat-lite', plugins_url( "js/joinchat-lite{$min}.js", __FILE__ ), $deps, JOINCHAT_VERSION, true );
 			wp_localize_script( 'joinchat-lite', 'joinchat_obj', array( 'settings' => $data ) );
 		}
 	}
@@ -230,11 +218,12 @@ class JoinChatPublic {
 	 */
 	public function enqueue_qr_script() {
 
-		if ( ! $this->common->qr || wp_script_is( 'joinchat-kjua', 'enqueued' ) || wp_is_mobile() ) {
+		if ( wp_script_is( 'joinchat-qr' ) || ! $this->need_enqueue_qr_script() ) {
 			return;
 		}
 
-		if ( wp_script_is( 'joinchat', 'enqueued' ) ) {
+		$script = false;
+		if ( wp_script_is( 'joinchat' ) ) {
 			$script = wp_scripts()->query( 'joinchat', 'registered' );
 		} elseif ( wp_script_is( 'joinchat-lite', 'enqueued' ) ) {
 			$script = wp_scripts()->query( 'joinchat-lite', 'registered' );
@@ -242,7 +231,7 @@ class JoinChatPublic {
 
 		// Add dependency.
 		if ( $script ) {
-			$script->deps[] = 'joinchat-kjua';
+			$script->deps[] = 'joinchat-qr';
 		}
 	}
 
@@ -261,7 +250,8 @@ class JoinChatPublic {
 
 		global $wp;
 
-		$settings = $this->common->settings;
+		$settings   = jc_common()->settings;
+		$is_preview = jc_common()->preview;
 
 		// Clean unnecessary settings on front.
 		$excluded_fields = apply_filters(
@@ -278,14 +268,17 @@ class JoinChatPublic {
 				'header',
 				'optin_text',
 				'optin_check',
+				'qr_text',
+				'custom_css',
+				'clear',
 			)
 		);
 
 		$data = array_diff_key( $settings, array_flip( $excluded_fields ) );
 
-		$data['message_send'] = JoinChatUtil::replace_variables( $data['message_send'] );
+		$data['message_send'] = Joinchat_Util::replace_variables( $data['message_send'] );
 
-		if ( '__jc__' === $settings['header'] ) {
+		if ( '__jc__' === $settings['header'] || $is_preview ) {
 			$powered_args = array(
 				'site' => rawurlencode( get_bloginfo( 'name' ) ),
 				'url'  => rawurlencode( home_url( $wp->request ) ),
@@ -300,12 +293,12 @@ class JoinChatPublic {
 		if ( is_null( $image ) && $settings['button_image'] ) {
 			$img_id = $settings['button_image'];
 
-			if ( apply_filters( 'joinchat_image_original', JoinChatUtil::is_animated_gif( $img_id ), $img_id, 'button' ) ) {
+			if ( apply_filters( 'joinchat_image_original', Joinchat_Util::is_animated_gif( $img_id ), $img_id, 'button' ) ) {
 				$image = '<img src="' . wp_get_attachment_url( $img_id ) . '" alt="" loading="lazy">';
-			} elseif ( is_array( JoinChatUtil::thumb( $img_id, 58, 58 ) ) ) {
-				$thumb  = JoinChatUtil::thumb( $img_id, 58, 58 );
-				$thumb2 = JoinChatUtil::thumb( $img_id, 116, 116 );
-				$thumb3 = JoinChatUtil::thumb( $img_id, 174, 174 );
+			} elseif ( is_array( Joinchat_Util::thumb( $img_id, 58, 58 ) ) ) {
+				$thumb  = Joinchat_Util::thumb( $img_id, 58, 58 );
+				$thumb2 = Joinchat_Util::thumb( $img_id, 116, 116 );
+				$thumb3 = Joinchat_Util::thumb( $img_id, 174, 174 );
 				$image  = "<img src=\"{$thumb['url']}\" srcset=\"{$thumb2['url']} 2x, {$thumb3['url']} 3x\" alt=\"\" loading=\"lazy\">";
 			}
 		}
@@ -333,7 +326,9 @@ class JoinChatPublic {
 		}
 
 		if ( $settings['message_text'] ) {
-			$box_content = '<div class="joinchat__message">' . JoinChatUtil::formated_message( $settings['message_text'] ) . '</div>';
+			$box_content = '<div class="joinchat__message">' . Joinchat_Util::formated_message( $settings['message_text'] ) . '</div>';
+		} elseif ( $is_preview ) {
+			$box_content .= '<div class="joinchat__message"></div>';
 		}
 
 		if ( $settings['optin_text'] ) {
@@ -346,6 +341,8 @@ class JoinChatPublic {
 			}
 
 			$box_content .= '<div class="joinchat__optin">' . $optin . '</div>';
+		} elseif ( $is_preview ) {
+			$box_content .= '<div class="joinchat__optin"></div>';
 		}
 
 		$box_content = apply_filters( 'joinchat_content', $box_content, $settings );
@@ -355,13 +352,16 @@ class JoinChatPublic {
 			$joinchat_classes[] = 'joinchat--btn';
 		}
 
-		$joinchat_classes = apply_filters( 'joinchat_classes', $joinchat_classes, $settings );
+		$joinchat_classes  = apply_filters( 'joinchat_classes', $joinchat_classes, $settings );
+		$joinchat_template = apply_filters( 'joinchat_template', __DIR__ . '/partials/html.php' );
 
 		ob_start();
-		include __DIR__ . '/partials/html.php';
+		include $joinchat_template;
 		$html_output = ob_get_clean();
 
 		echo apply_filters( 'joinchat_html_output', $html_output, $settings ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+
+		do_action( 'joinchat_after_html' );
 
 	}
 
@@ -450,4 +450,14 @@ class JoinChatPublic {
 		return $global;
 	}
 
+	/**
+	 * Need enqueue QR script
+	 *
+	 * Note: caution with cache plugins and wp_is_mobile()
+	 *
+	 * @return bool
+	 */
+	private function need_enqueue_qr_script() {
+		return apply_filters( 'joinchat_enqueue_qr', jc_common()->qr && ! wp_is_mobile() );
+	}
 }

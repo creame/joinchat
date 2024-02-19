@@ -1,4 +1,9 @@
 <?php
+/**
+ * Utility class.
+ *
+ * @package    Joinchat
+ */
 
 /**
  * Utility class.
@@ -6,11 +11,12 @@
  * Include static methods.
  *
  * @since      3.1.0
- * @package    JoinChat
- * @subpackage JoinChat/includes
+ * @since      5.0.0     Renamed from JoinchatUtil.
+ * @package    Joinchat
+ * @subpackage Joinchat/includes
  * @author     Creame <hola@crea.me>
  */
-class JoinChatUtil {
+class Joinchat_Util {
 
 	/**
 	 * Encode emojis if utf8mb4 not supported by DB
@@ -23,9 +29,7 @@ class JoinChatUtil {
 
 		global $wpdb;
 
-		if ( function_exists( 'wp_encode_emoji' )
-				&& 'utf8mb4' !== $wpdb->get_col_charset( $wpdb->options, 'option_value' )
-				&& ! has_filter( 'sanitize_text_field', 'wp_encode_emoji' ) ) {
+		if ( 'utf8mb4' !== $wpdb->get_col_charset( $wpdb->options, 'option_value' ) && ! has_filter( 'sanitize_text_field', 'wp_encode_emoji' ) ) {
 			add_filter( 'sanitize_text_field', 'wp_encode_emoji' );
 		}
 	}
@@ -42,11 +46,35 @@ class JoinChatUtil {
 		if ( is_array( $value ) ) {
 			return array_map( 'self::clean_input', $value );
 		} elseif ( is_string( $value ) ) {
+			$value = self::clean_nl( $value );
 			// Split lines, clean and re-join lines.
 			return implode( "\n", array_map( 'sanitize_text_field', explode( "\n", trim( $value ) ) ) );
 		} else {
 			return $value;
 		}
+	}
+
+	/**
+	 * Clean new line format
+	 *
+	 * @since  5.0.12
+	 * @param  string $value string to clean.
+	 * @return string string with "\n" new lines.
+	 */
+	public static function clean_nl( $value ) {
+		return str_replace( array( "\r\n", "\r" ), array( "\n", "\n" ), $value );
+	}
+
+	/**
+	 * Check if value is set and is 'yes'
+	 *
+	 * @since  5.0.12
+	 * @param  string $values array of values.
+	 * @param  string $key    value key to check.
+	 * @return string 'yes' or 'no'
+	 */
+	public static function yes_no( $values, $key ) {
+		return isset( $values[ $key ] ) && 'yes' === $values[ $key ] ? 'yes' : 'no';
 	}
 
 	/**
@@ -197,7 +225,7 @@ class JoinChatUtil {
 		);
 
 		// Split text into lines and apply replacements line by line.
-		$lines = explode( "\n", $string );
+		$lines = explode( "\n", self::clean_nl( $string ) );
 		foreach ( $lines as $key => $line ) {
 			$escaped_line = esc_html( $line );
 
@@ -294,7 +322,7 @@ class JoinChatUtil {
 			JSON_HEX_APOS | JSON_HEX_QUOT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES :
 			JSON_HEX_APOS | JSON_HEX_QUOT;
 
-		return json_encode( $data, apply_filters( 'joinchat_json_options', $json_options ) );
+		return wp_json_encode( $data, apply_filters( 'joinchat_json_options', $json_options ) );
 
 	}
 
@@ -330,11 +358,13 @@ class JoinChatUtil {
 	 * Plugin admin page url
 	 *
 	 * @since    4.2.0
+	 * @since    5.0.0 added $page param.
+	 * @param  string $page  page slug.
 	 * @return string
 	 */
-	public static function admin_url() {
+	public static function admin_url( $page = JOINCHAT_SLUG ) {
 
-		return admin_url( self::options_submenu() ? 'options-general.php' : 'admin.php' ) . '?page=joinchat';
+		return add_query_arg( 'page', $page, admin_url( self::options_submenu() ? 'options-general.php' : 'admin.php' ) );
 
 	}
 
@@ -349,6 +379,72 @@ class JoinChatUtil {
 	public static function can_gutenberg() {
 
 		return function_exists( 'register_block_type' ) && version_compare( get_bloginfo( 'version' ), '5.9', '>=' );
+
+	}
+
+	/**
+	 * Is Joinchat admin screen
+	 *
+	 * @since    5.0.0
+	 * @return bool
+	 */
+	public static function is_admin_screen() {
+
+		$current_screen = get_current_screen();
+
+		return null !== $current_screen && false !== strpos( $current_screen->id, '_joinchat' );
+
+	}
+
+	/**
+	 * Return link to https://join.chat with utm
+	 *
+	 * @since    5.0.0
+	 * @param  string $path        URL path after join.chat/lang/.
+	 * @param  string $utm_source  utm_source param.
+	 * @return string
+	 */
+	public static function link( $path = '', $utm_source = '' ) {
+
+		$lang = false !== strpos( strtolower( get_locale() ), 'es' ) ? 'es' : 'en';
+		$path = empty( $path ) ? '' : trim( $path, '/' ) . '/';
+		$args = array(
+			'utm_source'   => $utm_source,
+			'utm_medium'   => 'wpadmin',
+			'utm_campaign' => 'v' . str_replace( '.', '_', JOINCHAT_VERSION ),
+		);
+
+		return add_query_arg( $args, "https://join.chat/$lang/$path" );
+
+	}
+
+	/**
+	 * Simple CSS minifier
+	 *
+	 * View (https://gist.github.com/MeanEYE/36d4abe94ea99014284628a50f5a6d9b).
+	 *
+	 * @since  5.0.11
+	 * @param  string $css CSS string.
+	 * @return string      minified CSS string.
+	 */
+	public static function min_css( $css ) {
+
+		if ( ! defined( 'SCRIPT_DEBUG' ) || ! SCRIPT_DEBUG ) {
+
+			$rules = array(
+				'/\/\*.*?(?=\*\/)\*\//imus'         => '',
+				'/([^\d])-?(0+)(px|pt|rem|em|vw|vh|vmax|vmin|cm|mm|m\%)/imus' => '\1\2',
+				'/\s*([>~:;,\[\]\{\}])\s*/imus'     => '\1',
+				'/\s*([\(\)])\s*([^+-\/\*\^])/imus' => '\1\2',
+				'/([\+])\s*([^\d])/imus'            => '\1\2',
+				'/#([\dabcdef])\1([\dabcdef])\2([\dabcdef])\3/imus' => '#\1\2\3',
+				'/;\}/imus'                         => '}',
+			);
+
+			$css = preg_replace( array_keys( $rules ), $rules, $css );
+		}
+
+		return $css;
 
 	}
 }

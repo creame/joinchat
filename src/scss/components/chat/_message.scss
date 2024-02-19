@@ -1,9 +1,17 @@
+#{$class} {
+  --peak: url(##{$name}__peak_l);
+
+  #{$rtl} & {
+    --peak: url(##{$name}__peak_r);
+  }
+}
+
 #{$class}__message {
   position: relative;
-  min-height: 60px;
-  padding: 17px 20px;
+  min-height: 56px;
+  padding: 15px 20px;
   margin: 0 26px 26px;
-  border-radius: 32px;
+  border-radius: 26px;
   background: $chat_bg;
   color: $chat_color;
   word-break: break-word;
@@ -14,12 +22,17 @@
     content: '';
     display: block;
     position: absolute;
-    bottom: 20px;
+    bottom: 18px;
     left: -15px;
     width: 17px;
     height: 25px;
     background: inherit;
-    clip-path: var(--peak, url(##{$name}__message__peak));
+    clip-path: var(--peak);
+
+    #{$rtl} & {
+      left: auto;
+      right: -15px;
+    }
   }
 
   #{$class}--dark & {

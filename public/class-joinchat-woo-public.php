@@ -1,14 +1,19 @@
 <?php
+/**
+ * The public-facing functionality of the WooCommerce integration.
+ *
+ * @package    Joinchat
+ */
 
 /**
  * The public-facing functionality of the WooCommerce integration.
  *
  * @since      3.0.0
- * @package    JoinChat
- * @subpackage JoinChat/admin
+ * @package    Joinchat
+ * @subpackage Joinchat/public
  * @author     Creame <hola@crea.me>
  */
-class JoinChatWooPublic {
+class Joinchat_Woo_Public {
 
 	/**
 	 * Product Button Show
@@ -23,7 +28,7 @@ class JoinChatWooPublic {
 	 * Initialize all hooks
 	 *
 	 * @since    3.0.0
-	 * @param    array $joinchat       JoinChat object.
+	 * @param    Joinchat $joinchat       Joinchat object.
 	 * @return   void
 	 */
 	public function init( $joinchat ) {
@@ -33,9 +38,11 @@ class JoinChatWooPublic {
 		$loader->add_filter( 'joinchat_extra_settings', $this, 'woo_settings' );
 		$loader->add_filter( 'joinchat_settings_i18n', $this, 'settings_i18n' );
 		$loader->add_filter( 'joinchat_get_settings_site', $this, 'shop_settings' );
+		$loader->add_filter( 'joinchat_get_settings', $this, 'product_settings' );
 		$loader->add_filter( 'joinchat_visibility', $this, 'visibility', 10, 2 );
 		$loader->add_filter( 'joinchat_variable_replacements', $this, 'replacements' );
 		$loader->add_filter( 'joinchat_excluded_fields', $this, 'excluded_fields' );
+		$loader->add_filter( 'joinchat_script_lite_fields', $this, 'lite_fields' );
 
 		$loader->add_filter( 'storefront_handheld_footer_bar_links', $this, 'storefront_footer_bar' );
 
@@ -123,6 +130,33 @@ class JoinChatWooPublic {
 	}
 
 	/**
+	 * Add SKU for variable products
+	 *
+	 * @since    4.5.20
+	 * @param    array $settings       current Joinchat settings.
+	 * @return   array
+	 */
+	public function product_settings( $settings ) {
+
+		if ( ! is_product() ) {
+			return $settings;
+		}
+
+		$product = wc_get_product();
+
+		if ( ! $product->is_type( 'variable' ) ) {
+			return $settings;
+		}
+
+		if ( false !== strpos( $settings['message_text'], '{SKU}' ) || false !== strpos( $settings['message_send'], '{SKU}' ) ) {
+			$settings['sku'] = $product->get_sku();
+		}
+
+		return $settings;
+
+	}
+
+	/**
 	 * Return visibility for Woocommerce pages
 	 *
 	 * @since    3.0.0
@@ -189,6 +223,10 @@ class JoinChatWooPublic {
 				'DISCOUNT' => $this->get_discount( $product ),
 			);
 
+			if ( $product->is_type( 'variable' ) ) {
+				$woo_replacements['SKU'] = '<sku>' . $woo_replacements['SKU'] . '</sku>';
+			}
+
 			$replacements = array_merge( $replacements, $woo_replacements );
 		}
 
@@ -216,6 +254,19 @@ class JoinChatWooPublic {
 	}
 
 	/**
+	 * Add "sku" field for script lite
+	 *
+	 * @since    4.5.20
+	 * @param    array $fields       current script lite fields.
+	 * @return   array
+	 */
+	public function lite_fields( $fields ) {
+
+		return array_merge( $fields, array( 'sku' ) );
+
+	}
+
+	/**
 	 * Return text formated price.
 	 * Follow WooCommerce settings for show included/excluded taxes
 	 *
@@ -226,7 +277,7 @@ class JoinChatWooPublic {
 	 */
 	public function format_price( $product, $price ) {
 
-		$string = wp_strip_all_tags( wc_price( wc_get_price_to_display( $product, array( 'price' => $price ) ) ) );
+		$string = html_entity_decode( wp_strip_all_tags( wc_price( wc_get_price_to_display( $product, array( 'price' => $price ) ) ) ) );
 
 		// Escape $ for regex replacement.
 		return str_replace( '$', '\$', $string );
@@ -315,7 +366,7 @@ class JoinChatWooPublic {
 	public function product_button() {
 
 		// Only for main single product.
-		if ( '' !== wc_get_loop_prop( 'name' ) ) {
+		if ( ! is_main_query() ) {
 			return;
 		}
 
@@ -323,7 +374,7 @@ class JoinChatWooPublic {
 
 		printf(
 			'<div class="joinchat__woo-btn__wrapper"><div class="joinchat__woo-btn joinchat_app">%s</div></div>',
-			esc_html( JoinChatCommon::instance()->settings['woo_btn_text'] )
+			esc_html( jc_common()->settings['woo_btn_text'] )
 		);
 
 	}

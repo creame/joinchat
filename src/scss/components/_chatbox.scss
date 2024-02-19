@@ -7,10 +7,9 @@
   z-index: 1;
   width: calc(100vw - var(--sep) * 2);
   max-width: 400px;
-  min-height: 170px;
   max-height: calc(var(--vh) - var(--bottom) - var(--sep));
   border-radius: calc((var(--s) / 2) + 2px);
-  background: transparent;
+  background: $white linear-gradient(180deg, var(--color),var(--color) var(--header),var(--bg) var(--header),var(--bg));
   box-shadow: 0 2px 6px 0 rgba($black, 0.5);
   text-align: left;
   overflow: hidden;
@@ -32,6 +31,10 @@
     right: auto;
     left: 0;
   }
+
+  #{$class}--dark & {
+    background: #1a1a1a linear-gradient(180deg, var(--dark),var(--dark) var(--header),var(--bg) var(--header),var(--bg));
+  }
 }
 
 #{$class}__header {
@@ -44,14 +47,9 @@
   min-height: 50px;
   padding: 0 70px 0 26px;
   margin: 0;
-  background: var(--color);
 
   #{$rtl} & {
     padding: 0 26px 0 70px;
-  }
-
-  #{$class}--dark & {
-    background: var(--dark);
   }
 
   &__text {
@@ -124,21 +122,19 @@
 }
 
 #{$class}__box__scroll {
-  padding: 20px 0 70px 0;
-  padding-bottom: calc(var(--s) + 10px);
-  background: $white linear-gradient(0deg, var(--bg), var(--bg));
   overflow-x: hidden;
-  overflow-y: auto;
+  overflow-y: scroll;
   overscroll-behavior-y: contain;
+  -webkit-overflow-scrolling: touch;
   // will-change: scroll-position;
 
   &::-webkit-scrollbar {
-    width: 5px;
+    width: 4px;
     background: $transparent;
   }
 
   &::-webkit-scrollbar-thumb {
-    border-radius: 3px;
+    border-radius: 2px;
     background: $transparent;
   }
 
@@ -147,18 +143,14 @@
     backdrop-filter: blur(10px);
   }
 
-  #{$class}--dark & {
-    background: #1a1a1a;
-  }
-
   &:hover::-webkit-scrollbar-thumb {
     background: rgba($black, 0.2);
   }
+}
 
-  @include ios {
-    overflow-y: scroll;
-    -webkit-overflow-scrolling: touch;
-  }
+#{$class}__box__content {
+  width: calc(100% + 4px); // 100% + scrollbar width
+  padding: 20px 0 calc(var(--s) + 16px);
 }
 
 @include mobile {
@@ -177,12 +169,9 @@
 
 @include dark {
   #{$class}--dark-auto {
-    #{$class}__box__scroll {
-      background: #1a1a1a;
-    }
 
-    #{$class}__header {
-      background: var(--dark);
+    #{$class}__box {
+      background: #1a1a1a linear-gradient(180deg, var(--dark),var(--dark) var(--header),var(--bg) var(--header),var(--bg));
     }
   }
 }

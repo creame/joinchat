@@ -3,13 +3,13 @@
     display: flex;
     flex-direction: row;
   }
+
   position: absolute;
   z-index: 2;
   bottom: 8px;
   right: 8px;
   height: var(--s);
   min-width: var(--s);
-  max-width: 95vw;
   background: $WA;
   color: inherit;
   border-radius: calc(var(--s) / 2);
@@ -25,6 +25,7 @@
 
   &:hover {
     background: $WAdark;
+
     @if $type == full {
       transition-duration: 1.5s;
     }
@@ -49,6 +50,10 @@
   }
 
   @if $type == full {
+    #{$class}--btn &:hover {
+      transition-duration: 0.2s;
+    }
+
     #{$class}--chatbox & {
       background: var(--color);
       transition-duration: 0.2s;
@@ -63,7 +68,6 @@
     // Opt-in disabled
     #{$class}--optout#{$class}--chatbox & {
       background-color: #999;
-      opacity: .5;
       pointer-events: none;
 
       #{$class}_svg__plain {
@@ -180,11 +184,12 @@
     white-space: nowrap;
     opacity: 0;
     overflow: hidden;
+    text-overflow: ellipsis;
     transition: none;
 
     #{$class}--chatbox & {
       padding: 0 4px 0 24px;
-      max-width: 200px;
+      max-width: min(400px - 16px - var(--s), 100vw - 16px - var(--s) - 2*var(--sep)); // box - space - btn or 100vw - space - btn - 2sep
       opacity: 1;
       transition: max-width 0.2s linear, opacity 0.4s ease-out 0.2s;
     }
