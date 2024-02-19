@@ -618,33 +618,39 @@ class Joinchat_Admin_Page {
 				'title'   => esc_html__( 'Triggers', 'creame-whatsapp-me' ),
 				'content' =>
 					'<p>' . esc_html__( 'Any element in your pages can be a chat trigger:', 'creame-whatsapp-me' ) . '</p>' .
-					'<p><strong>' . esc_html__( 'On page load, by url:', 'creame-whatsapp-me' ) . '</strong></p>' .
+					'<p>' . sprintf( '<strong>%s</strong>, %s:', esc_html__( 'On page load, by url', 'creame-whatsapp-me' ), esc_html__( 'show Chat Window', 'creame-whatsapp-me' ) ) . '</p>' .
 					'<ul>' .
-						'<li>url query param <code>joinchat</code> ' . esc_html__( 'to show chat window.', 'creame-whatsapp-me' ) . ' ' . esc_html__( 'Can set delay in seconds, default is 0.', 'creame-whatsapp-me' ) .
+						'<li>url query param <code>joinchat</code> ' . esc_html__( 'Can set delay in seconds, default is 0.', 'creame-whatsapp-me' ) .
 						' <em>' . esc_html__( 'e.g.', 'creame-whatsapp-me' ) . ' <code>example.com/page/?joinchat=5</code></em></li>' .
-						'<li>url query hash <code>#joinchat</code> ' . esc_html__( 'to show chat window.', 'creame-whatsapp-me' ) .
+						'<li>url query hash <code>#joinchat</code> ' .
 						' <em>' . esc_html__( 'e.g.', 'creame-whatsapp-me' ) . ' <code>example.com/page/#joinchat</code></em></li>' .
 					'</ul>' .
-					'<p><strong>' . esc_html__( 'On click:', 'creame-whatsapp-me' ) . '</strong></p>' .
+					'<p>' . sprintf( '<strong>%s</strong>, %s:', esc_html__( 'On click', 'creame-whatsapp-me' ), esc_html__( 'open WhatsApp', 'creame-whatsapp-me' ) ) . '</p>' .
 					'<p>' . sprintf(
 						/* translators: 1: attribute phone, 2: attribute message. */
-						wp_kses( __( 'You can set <strong>custom phone and initial message</strong> for direct WhatsApp triggers with attributes %1$s and %2$s.', 'creame-whatsapp-me' ), array( 'strong' => array() ) ),
+						wp_kses( __( 'You can set <strong>custom phone and initial message</strong> with attributes %1$s and %2$s.', 'creame-whatsapp-me' ), array( 'strong' => array() ) ),
 						'<code>data-phone</code>',
 						'<code>data-message</code>'
 					) . '</p>' .
 					'<ul>' .
-						'<li>class <code>joinchat_app</code> ' . esc_html__( 'to open WhatsApp directly.', 'creame-whatsapp-me' ) .
-						' <em>' . esc_html__( 'e.g.', 'creame-whatsapp-me' ) . ' <code>&lt;img src="contact.jpg" class="joinchat_app" alt="' . esc_html__( 'Contact us', 'creame-whatsapp-me' ) . '"&gt;</code></em></li>' .
-						'<li>class <code>joinchat_open</code> ' . esc_html__( 'to show chat window (or open WhatsApp if there is no CTA).', 'creame-whatsapp-me' ) . '</li>' .
-						'<li>href <code>#whatsapp</code> ' . esc_html__( 'to open WhatsApp directly.', 'creame-whatsapp-me' ) .
+						'<li>href <code>#whatsapp</code> ' .
 						' <em>' . esc_html__( 'e.g.', 'creame-whatsapp-me' ) . ' <code>&lt;a href="#whatsapp" data-phone="99999999"&gt;' . esc_html__( 'Contact us', 'creame-whatsapp-me' ) . '&lt;/a&gt;</code></em></li>' .
-						'<li>href <code>#joinchat</code> ' . esc_html__( 'to show chat window (or open WhatsApp if there is no CTA).', 'creame-whatsapp-me' ) . '</li>' .
+						'<li>class <code>joinchat_app</code> ' .
+						' <em>' . esc_html__( 'e.g.', 'creame-whatsapp-me' ) . ' <code>&lt;img src="contact.jpg" class="joinchat_app" alt="' . esc_html__( 'Contact us', 'creame-whatsapp-me' ) . '"&gt;</code></em></li>' .
 					'</ul>' .
-					'<p><strong>' . esc_html__( 'On scroll (when element appears on screen):', 'creame-whatsapp-me' ) . '</strong></p>' .
+					'<p>' . sprintf( '<strong>%s</strong>, %s:', esc_html__( 'On click', 'creame-whatsapp-me' ), esc_html__( 'show Chat Window', 'creame-whatsapp-me' ) ) . '</p>' .
+					'<p>' . esc_html__( 'If there is no chat window (no CTA and no Opt-in required) WhatsApp will open directly.', 'creame-whatsapp-me' ) . '</p>' .
+					'<ul>' .
+						'<li>href <code>#joinchat</code> ' .
+						' <em>' . esc_html__( 'e.g.', 'creame-whatsapp-me' ) . ' <code>&lt;a href="#joinchat"&gt;' . esc_html__( 'Contact us', 'creame-whatsapp-me' ) . '&lt;/a&gt;</code></em></li>' .
+						'<li>class <code>joinchat_open</code> ' .
+						' <em>' . esc_html__( 'e.g.', 'creame-whatsapp-me' ) . ' <code>&lt;img src="contact.jpg" class="joinchat_open" alt="' . esc_html__( 'Contact us', 'creame-whatsapp-me' ) . '"&gt;</code></em></li>' .
+					'</ul>' .
+					'<p>' . sprintf( '<strong>%s</strong>, %s:', esc_html__( 'On scroll (when element appears on screen)', 'creame-whatsapp-me' ), esc_html__( 'show Chat Window', 'creame-whatsapp-me' ) ) . '</p>' .
 					'<ul>' .
 						'<li>class <code>joinchat_show</code> ' . esc_html__( 'only show if it\'s an not seen CTA.', 'creame-whatsapp-me' ) . '</li>' .
 						'<li>class <code>joinchat_force_show</code> ' . esc_html__( 'to show always.', 'creame-whatsapp-me' ) .
-						' <em>' . esc_html__( 'e.g.', 'creame-whatsapp-me' ) . ' <code>&lt;section class="joinchat_force_show"&gt;…</code></em></li>' .
+						' <em>' . esc_html__( 'e.g.', 'creame-whatsapp-me' ) . ' <code>&lt;footer class="joinchat_force_show"&gt;…</code></em></li>' .
 					'</ul>',
 			),
 			array(
