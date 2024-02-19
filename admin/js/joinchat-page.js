@@ -112,9 +112,9 @@
       $('#joinchat_whatsapp_web, #joinchat_qr').closest('tr').toggleClass('joinchat-hidden', this.checked);
     }).trigger('change');
 
-    // Toggle badge option
-    $('#joinchat_message_delay').on('change input', function () {
-      $('#joinchat_message_badge, #joinchat_message_views').closest('tr').toggleClass('joinchat-hidden', this.value == '0');
+    // Toggle cookies notice
+    $('#joinchat_message_delay_on').on('change', function () {
+      $('.joinchat-cookies-notice').toggleClass('joinchat-hidden', !this.checked);
     }).trigger('change');
 
     // Show help
@@ -232,11 +232,6 @@
 
     // Focus Opt-in editor
     $('label[for="joinchat_optin_text"]').on('click', function () { tinymce.get('joinchat_optin_text').focus(); });
-
-    // Toggle Show Chat Window if CTA
-    $('#joinchat_message_text').on('change', function () {
-      $('.joinchat__chat_open__wrapper').toggleClass('joinchat-hidden', this.value.trim() == '');
-    }).trigger('change');
 
     // Toggle Woo Product Button text
     $('#joinchat_woo_btn_position').on('change', function () {

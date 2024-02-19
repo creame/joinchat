@@ -104,7 +104,7 @@ class Joinchat_Common {
 			'qr_text'       => __( 'Scan the code', 'creame-whatsapp-me' ),
 			'message_text'  => '',
 			'message_views' => 2,
-			'message_delay' => 10,
+			'message_delay' => 10, // Disabled on negative values.
 			'message_badge' => 'no',
 			'message_send'  => '',
 			'message_start' => __( 'Open chat', 'creame-whatsapp-me' ),
@@ -153,6 +153,11 @@ class Joinchat_Common {
 		if ( isset( $settings['remove_brand'] ) ) {
 			$remove             = $settings['remove_brand'];
 			$settings['header'] = 'wa' === $remove ? '__wa__' : ( 'no' === $remove ? '__jc__' : '' );
+		}
+
+		// Since v5.1 use negative values for disabled.
+		if ( 0 === $settings['message_delay'] ) {
+			$settings['message_delay'] = -1;
 		}
 
 		// Clean unused saved settings.

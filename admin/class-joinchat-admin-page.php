@@ -136,7 +136,7 @@ class Joinchat_Admin_Page {
 
 			case 'general':
 				$sections = array(
-					'button'        => array(
+					'button' => array(
 						'telephone'    => '<label for="joinchat_phone">' . esc_html__( 'Telephone', 'creame-whatsapp-me' ) . '</label>',
 						'message_send' => '<label for="joinchat_message_send">' . esc_html__( 'Message', 'creame-whatsapp-me' ) . '</label>' . self::vars_help( 'message_send' ),
 						'button_image' => esc_html__( 'Image', 'creame-whatsapp-me' ),
@@ -147,23 +147,21 @@ class Joinchat_Admin_Page {
 						'whatsapp_web' => esc_html__( 'WhatsApp Web', 'creame-whatsapp-me' ),
 						'qr'           => esc_html__( 'QR Code', 'creame-whatsapp-me' ),
 					),
-					'chat'          => array(
+					'chat'   => array(
 						'message_text'  => '<label for="joinchat_message_text">' . esc_html__( 'Call to Action', 'creame-whatsapp-me' ) . '</label>' . self::vars_help( 'message_text' ),
 						'message_start' => '<label for="joinchat_message_start">' . esc_html__( 'Button Text', 'creame-whatsapp-me' ) . '</label>',
 						'color'         => esc_html__( 'Theme Color', 'creame-whatsapp-me' ),
 						'dark_mode'     => esc_html__( 'Dark Mode', 'creame-whatsapp-me' ),
 						'header'        => esc_html__( 'Header', 'creame-whatsapp-me' ),
+						'optin'         => array(
+							'label'    => esc_html__( 'Opt-in', 'creame-whatsapp-me' ),
+							'callback' => array( $this, 'field_optin' ),
+						),
+						'show_auto'     => array(
+							'label'    => esc_html__( 'Show automatically', 'creame-whatsapp-me' ),
+							'callback' => array( $this, 'field_show_auto' ),
+						),
 					),
-					'optin'         => array(
-						'optin_text'  => esc_html__( 'Opt-in Text', 'creame-whatsapp-me' ),
-						'optin_check' => esc_html__( 'Opt-in Required', 'creame-whatsapp-me' ),
-					),
-					'chat_open'     => array(
-						'message_delay' => '<label for="joinchat_message_delay">' . esc_html__( 'Chat Delay', 'creame-whatsapp-me' ) . '</label>',
-						'message_views' => '<label for="joinchat_message_views">' . esc_html__( 'Page Views', 'creame-whatsapp-me' ) . '</label>',
-						'message_badge' => esc_html__( 'Notification Balloon', 'creame-whatsapp-me' ),
-					),
-					'chat_open_end' => array(), // Close wrapper for chat_open settings.
 				);
 				break;
 
@@ -287,19 +285,6 @@ class Joinchat_Admin_Page {
 						esc_html__( 'If you define a "Call to Action" a window will be displayed simulating a chat before launching WhatsApp.', 'creame-whatsapp-me' ) . ' ' .
 						esc_html__( 'You can introduce yourself, offer help or even make promotions to your users.', 'creame-whatsapp-me' ) .
 					'</p>';
-				break;
-
-			case 'joinchat_tab_general__chat_open':
-				$output = '<div class="joinchat__chat_open__wrapper">' .
-					'<h2 class="title">' . esc_html__( 'Show automatically', 'creame-whatsapp-me' ) . '</h2>' .
-					'<p>' .
-						esc_html__( 'If a "Call to Action" is defined, the Chat Window can be displayed automatically to capture the user\'s attention.', 'creame-whatsapp-me' ) .
-						' <a class="joinchat-show-help" href="#tab-link-triggers" title="' . esc_html__( 'Show Help', 'creame-whatsapp-me' ) . '">?</a>' .
-					'</p>';
-				break;
-
-			case 'joinchat_tab_general__chat_open_end':
-				$output = '</div><!-- .joinchat__chat_open__wrapper -->';
 				break;
 
 			case 'joinchat_tab_visibility__global':
@@ -430,23 +415,6 @@ class Joinchat_Admin_Page {
 						'<p class="description">' . esc_html__( 'Text to open chat on Chat Window button', 'creame-whatsapp-me' ) . '</p>';
 					break;
 
-				case 'message_delay':
-					$output = '<input id="joinchat_message_delay" name="joinchat[message_delay]" value="' . intval( $value ) . '" type="number" min="0" max="120" style="width:5em"> ' .
-					esc_html__( 'seconds', 'creame-whatsapp-me' ) . ' (' . esc_html__( '0 to disable', 'creame-whatsapp-me' ) . ')' .
-					'<p class="description">' . esc_html__( 'Chat Window auto displays after delay', 'creame-whatsapp-me' ) . '</p>';
-					break;
-
-				case 'message_views':
-					$output = '<input id="joinchat_message_views" name="joinchat[message_views]" value="' . intval( $value ) . '" type="number" min="1" max="120" style="width:5em"> ' .
-						'<p class="description">' . esc_html__( 'Chat Window auto displays from this number of page views', 'creame-whatsapp-me' ) . '</p>';
-					break;
-
-				case 'message_badge':
-					$output = '<fieldset><legend class="screen-reader-text"><span>' . esc_html__( 'Notification Balloon', 'creame-whatsapp-me' ) . '</span></legend>' .
-						'<label><input id="joinchat_message_badge" name="joinchat[message_badge]" value="yes" type="checkbox"' . checked( 'yes', $value, false ) . '> ' .
-						esc_html__( 'Display a notification balloon instead of opening the Chat Window for a "less intrusive" mode', 'creame-whatsapp-me' ) . '</label></fieldset>';
-					break;
-
 				case 'color':
 					$output = '<input id="joinchat_color" name="joinchat[color]" value="' . esc_attr( $value ) . '" type="text" data-default-color="#25d366"> ';
 					break;
@@ -474,43 +442,6 @@ class Joinchat_Admin_Page {
 						esc_html__( 'Custom:', 'creame-whatsapp-me' ) . '</label> ' .
 						'<input id="joinchat_header_custom" name="joinchat[header_custom]" value="' . esc_attr( $value ) . '" type="text" maxlength="40" class="regular-text">' .
 						'</fieldset>';
-					break;
-
-				case 'optin_text':
-					$editor_settings = array(
-						'textarea_name' => 'joinchat[optin_text]',
-						'textarea_rows' => 4,
-						'teeny'         => true,
-						'media_buttons' => false,
-						'tinymce'       => array( 'statusbar' => false ),
-						'quicktags'     => false,
-					);
-
-					// phpcs:disable
-					add_filter( 'teeny_mce_plugins', function( $filters, $editor_id ) {
-						return 'joinchat_optin_text' === $editor_id ? array( 'wordpress', 'wplink' ) : $filters;
-					}, 10, 2 );
-
-					add_filter( 'teeny_mce_buttons', function( $mce_buttons, $editor_id ) {
-						return 'joinchat_optin_text' === $editor_id ? array( 'bold', 'italic', 'link' ) : $mce_buttons;
-					}, 10, 2 );
-					// phpcs:enable
-
-					ob_start();
-					wp_editor( $value, 'joinchat_optin_text', $editor_settings );
-					$editor_output = ob_get_clean();
-
-					$output = '<fieldset><legend class="screen-reader-text"><span>' . esc_html__( 'Opt-in Text', 'creame-whatsapp-me' ) . '</span></legend>' .
-						'<p><label for="joinchat_optin_text">' . esc_html__( 'Opt-in is a users’ consent to receive messages from a business.', 'creame-whatsapp-me' ) . ' ' .
-						esc_html__( "Here you can include legal text about how you will use the user's contact and the conditions they accept, or other important information.", 'creame-whatsapp-me' ) . '</label></p>' .
-						$editor_output .
-						'</fieldset>';
-					break;
-
-				case 'optin_check':
-					$output = '<fieldset><legend class="screen-reader-text"><span>' . esc_html__( 'Opt-in Required', 'creame-whatsapp-me' ) . '</span></legend>' .
-						'<label><input id="joinchat_optin_check" name="joinchat[optin_check]" value="yes" type="checkbox"' . checked( 'yes', $value, false ) . '> ' .
-						esc_html__( 'User approval is required to enable the contact button', 'creame-whatsapp-me' ) . '</label></fieldset>';
 					break;
 
 				case 'gads':
@@ -576,6 +507,79 @@ class Joinchat_Admin_Page {
 			'<span class="dashicons dashicons-visibility" title="' . esc_attr__( 'Show', 'creame-whatsapp-me' ) . '"></span></label>' .
 			'<label><input type="radio" name="joinchat[view][all]" value="no"' . checked( 'no', $value, false ) . '> ' .
 			'<span class="dashicons dashicons-hidden" title="' . esc_attr__( 'Hide', 'creame-whatsapp-me' ) . '"></span></label></div>';
+
+	}
+
+	/**
+	 * Field 'optin' output
+	 *
+	 * @since    5.1.0
+	 * @return void
+	 */
+	public function field_optin() {
+
+		$text  = jc_common()->settings['optin_text'];
+		$check = jc_common()->settings['optin_check'];
+
+		$editor_settings = array(
+			'textarea_name' => 'joinchat[optin_text]',
+			'textarea_rows' => 4,
+			'teeny'         => true,
+			'media_buttons' => false,
+			'tinymce'       => array( 'statusbar' => false ),
+			'quicktags'     => false,
+		);
+
+		// phpcs:disable
+		add_filter( 'teeny_mce_plugins', function( $filters, $editor_id ) {
+			return 'joinchat_optin_text' === $editor_id ? array( 'wordpress', 'wplink' ) : $filters;
+		}, 10, 2 );
+
+		add_filter( 'teeny_mce_buttons', function( $mce_buttons, $editor_id ) {
+			return 'joinchat_optin_text' === $editor_id ? array( 'bold', 'italic', 'link' ) : $mce_buttons;
+		}, 10, 2 );
+		// phpcs:enable
+
+		ob_start();
+		wp_editor( $text, 'joinchat_optin_text', $editor_settings );
+		$editor_output = ob_get_clean();
+
+		$output = '<fieldset><legend class="screen-reader-text"><span>' . esc_html__( 'Opt-in Text', 'creame-whatsapp-me' ) . '</span></legend>' .
+			'<p><label for="joinchat_optin_text">' . esc_html__( 'Opt-in is a users’ consent to receive messages from a business.', 'creame-whatsapp-me' ) . ' ' .
+			esc_html__( "Here you can include legal text about how you will use the user's contact and the conditions they accept, or other important information.", 'creame-whatsapp-me' ) . '</label></p>' .
+			$editor_output .
+			'<label><input id="joinchat_optin_check" name="joinchat[optin_check]" value="yes" type="checkbox"' . checked( 'yes', $check, false ) . '> ' .
+			esc_html__( 'User approval is required to enable the contact button', 'creame-whatsapp-me' ) . '</label>' .
+			'</fieldset>';
+
+		echo apply_filters( 'joinchat_field_output', $output, 'optin', jc_common()->settings ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+
+	}
+
+	/**
+	 * Field 'show_auto' output
+	 *
+	 * @since    5.1.0
+	 * @return void
+	 */
+	public function field_show_auto() {
+
+		$delay = jc_common()->settings['message_delay'];
+		$pages = jc_common()->settings['message_views'];
+		$badge = jc_common()->settings['message_badge'];
+
+		$output = '<fieldset><legend class="screen-reader-text"><span>' . esc_html__( 'Show automatically', 'creame-whatsapp-me' ) . '</span></legend>' .
+			'<label><input id="joinchat_message_delay_on" name="joinchat[message_delay_on]" value="yes" type="checkbox"' . checked( 'yes', $delay > 0 ? 'yes' : '', false ) . '> ' . esc_html__( 'If a "Call to Action" is defined, display Chat Window after', 'creame-whatsapp-me' ) . '</label> ' .
+			'<label><input id="joinchat_message_delay" name="joinchat[message_delay]" value="' . abs( intval( $delay ) ) . '" type="number" min="1" max="120" style="width:5em"> ' . esc_html__( 'seconds', 'creame-whatsapp-me' ) . '</label> ' .
+			'<label>and user has visited at least <input id="joinchat_message_views" name="joinchat[message_views]" value="' . intval( $pages ) . '" type="number" min="1" max="120" style="width:5em"> ' . esc_html__( 'pages', 'creame-whatsapp-me' ) . '</label><br>' .
+			'<label><input id="joinchat_message_badge" name="joinchat[message_badge]" value="yes" type="checkbox"' . checked( 'yes', $badge, false ) . '> ' .
+			esc_html__( 'Display a notification balloon instead of opening the Chat Window for a "less intrusive" mode', 'creame-whatsapp-me' ) . '</label></fieldset>' .
+			'<p class="description">' . esc_html__( 'You can also use other triggers to show Chat Window', 'creame-whatsapp-me' ) . ' ' .
+			' <a class="joinchat-show-help" href="#tab-link-triggers" title="' . esc_html__( 'Show Help', 'creame-whatsapp-me' ) . '">?</a>' .
+			'&nbsp;&nbsp;&nbsp;<span class="joinchat-cookies-notice">' . esc_html__( 'This feature requires the use of cookies', 'creame-whatsapp-me' ) . ' ' .
+			sprintf( '<a href="%s" target="_blank">%s</a>', esc_url_raw( admin_url( 'options-privacy.php?tab=policyguide' ) ), esc_html__( 'Privacy Policy Guide' ) ) . '</span></p>';
+
+		echo apply_filters( 'joinchat_field_output', $output, 'show_auto', jc_common()->settings ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 
 	}
 
