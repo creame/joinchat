@@ -62,6 +62,9 @@ class Joinchat_Admin {
 
 		$util::maybe_encode_emoji();
 
+		$color = preg_match( '/^#[a-f0-9]{6}$/i', $value['color']['bg'] ) ? $value['color']['bg'] : '#25d366';
+		$text  = '0' === $value['color']['text'] ? '0' : '100'; // '0' => black, '100' => white.
+
 		$value['telephone']     = $util::clean_input( $value['telephone'] );
 		$value['mobile_only']   = $util::yes_no( $value, 'mobile_only' );
 		$value['button_image']  = intval( $value['button_image'] );
@@ -76,7 +79,7 @@ class Joinchat_Admin {
 		$value['message_delay'] = intval( $value['message_delay'] ) * ( $util::yes_no( $value, 'message_delay_on' ) === 'yes' ? 1 : -1 );
 		$value['message_views'] = intval( $value['message_views'] ) ? intval( $value['message_views'] ) : 1;
 		$value['position']      = 'left' !== $value['position'] ? 'right' : 'left';
-		$value['color']         = preg_match( '/^#[a-f0-9]{6}$/i', $value['color'] ) ? $value['color'] : '#25d366';
+		$value['color']         = "$color/$text";
 		$value['dark_mode']     = in_array( $value['dark_mode'], array( 'no', 'yes', 'auto' ), true ) ? $value['dark_mode'] : 'no';
 		$value['header']        = in_array( $value['header'], array( '__jc__', '__wa__' ), true ) ? $value['header'] : $util::substr( $util::clean_input( $value['header_custom'] ), 0, 40 );
 		$value['optin_check']   = $util::yes_no( $value, 'optin_check' );

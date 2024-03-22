@@ -17,8 +17,7 @@
     --hover: rgb(calc(var(--red) + 50), calc(var(--green) + 50), calc(var(--blue) + 50)); // lighter color
     --bg: rgb(var(--rgb) / 4%);
     // Black or white color based on https://css-tricks.com/switch-font-color-for-different-backgrounds-with-css/
-    --tolerance: 210; // [0-255] Greater tolerance allow lighter colors with white text
-    --bw: calc((var(--red)*0.2126 + var(--green)*0.7152 + var(--blue)*0.0722 - var(--tolerance)) * -10000000);
+    --bw: 100; // 0 Black text / 100 White text
     --text: hsl(0 0% clamp(0%, var(--bw)*1%, 100%) / clamp(70%, var(--bw)*1%, 100%)); // White hsl(0 0% 100% / 100%) / Black hsl(0 0% 0% / 70%)
     --msg: var(--color);
 

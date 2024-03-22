@@ -416,7 +416,13 @@ class Joinchat_Admin_Page {
 					break;
 
 				case 'color':
-					$output = '<input id="joinchat_color" name="joinchat[color]" value="' . esc_attr( $value ) . '" type="text" data-default-color="#25d366"> ';
+					list($color, $text) = explode( '/', $value . '/100' );
+
+					$output = '<input id="joinchat_color" name="joinchat[color][bg]" value="' . esc_attr( $color ) . '" type="text" data-default-color="#25d366"> ' .
+						'<div class="button-group joinchat_color_text">' .
+						'<label class="button white" title="' . esc_attr__( 'White Text', 'creame-whatsapp-me' ) . '"><input class="ui-helper-hidden-accessible" name="joinchat[color][text]" type="radio" value="100"' . checked( '100', $text, false ) . '><span class="screen-reader-text">' . esc_html__( 'White Text', 'creame-whatsapp-me' ) . '</span></label>' .
+						'<label class="button black" title="' . esc_attr__( 'Black Text', 'creame-whatsapp-me' ) . '"><input class="ui-helper-hidden-accessible" name="joinchat[color][text]" type="radio" value="0"' . checked( '0', $text, false ) . '><span class="screen-reader-text">' . esc_html__( 'Black Text', 'creame-whatsapp-me' ) . '</span></label>' .
+						'</div>';
 					break;
 
 				case 'dark_mode':

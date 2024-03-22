@@ -115,6 +115,7 @@
     // Toggle cookies notice
     $('#joinchat_message_delay_on').on('change', function () {
       $('.joinchat-cookies-notice').toggleClass('joinchat-hidden', !this.checked);
+      $('#joinchat_message_badge').parent().toggleClass('joinchat-dimmed', !this.checked);
     }).trigger('change');
 
     // Show help
@@ -363,7 +364,7 @@
       });
 
       // Chatbox show (if available)
-      $('#joinchat_message_text,#joinchat_message_start,input[name="joinchat[dark_mode]"],input[name="joinchat[header]"],#joinchat_header_custom').on('focus', view_chatbox);
+      $('#joinchat_message_text,#joinchat_message_start,input[name="joinchat[color][text]"],input[name="joinchat[dark_mode]"],input[name="joinchat[header]"],#joinchat_header_custom').on('focus', view_chatbox);
 
       $('#joinchat_message_text').on('input change', function (e) {
         prev_jc.has_cta = $(this).val().trim() != '';
@@ -380,6 +381,10 @@
         style.setProperty('--red', rgb.r);
         style.setProperty('--green', rgb.g);
         style.setProperty('--blue', rgb.b);
+        view_chatbox();
+      });
+      $('input[name="joinchat[color][text]"]').on('change', function () {
+        prev_jc.$div.get(0).style.setProperty('--bw', this.value);
         view_chatbox();
       });
       $('input[name="joinchat[dark_mode]"]').on('change', function () {

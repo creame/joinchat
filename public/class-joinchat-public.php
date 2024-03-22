@@ -133,8 +133,9 @@ class Joinchat_Public {
 		$inline_css = '';
 
 		if ( jc_common()->defaults( 'color' ) !== $settings['color'] ) {
-			list($r, $g, $b) = sscanf( $settings['color'], '#%02x%02x%02x' );
-			$inline_css     .= ".joinchat{ --red:$r; --green:$g; --blue:$b; }";
+			list($color, $text) = explode( '/', $settings['color'] . '/100' );
+			list($r, $g, $b)    = sscanf( $color, '#%02x%02x%02x' );
+			$inline_css        .= ".joinchat{ --red:$r; --green:$g; --blue:$b; --bw:$text }";
 		}
 
 		if ( ! empty( $settings['custom_css'] ) ) {

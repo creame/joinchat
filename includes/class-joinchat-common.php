@@ -110,7 +110,7 @@ class Joinchat_Common {
 			'message_start' => __( 'Open chat', 'creame-whatsapp-me' ),
 			'position'      => 'right',
 			'visibility'    => array( 'all' => 'yes' ),
-			'color'         => '#25d366',
+			'color'         => '#25d366/100', // hexcolor/0|100 (black or white text).
 			'dark_mode'     => 'no',     // values: 'no', 'yes' or 'auto'.
 			'header'        => '__jc__', // values: '__jc__', '__wa__' or other custom text.
 			'optin_text'    => '',
