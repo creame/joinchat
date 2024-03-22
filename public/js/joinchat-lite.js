@@ -12,8 +12,9 @@
    * Trigger Analytics events
    *
    * Available customizations via joinchat_obj.settings:
-   *  - 'data_layer' for custom data layer name (default 'dataLayer' or GTM4WP custom DataLayer name)
-   *  - 'ga_event'   for GA4 custom event       (default 'generate_lead' recommended event)
+   *  - 'legacy_events' set as true to send event as previous version (find 'config' on dataLayer)
+   *  - 'data_layer'    for custom data layer name (default 'dataLayer' or GTM4WP custom DataLayer name)
+   *  - 'ga_event'      for GA4 custom event       (default 'generate_lead' recommended event)
    *
    * All params can be edited with document event 'joinchat:event' or cancel if returns false.
    * e.g.: $(document).on('joinchat:event', function(){ return false; });
@@ -64,7 +65,7 @@
       // gtag.js (New "Google Tag" find destinations)
       if (window.google_tag_data && google_tag_data.tidr && !!google_tag_data.tidr.destination) {
         for (const tag in google_tag_data.tidr.destination) {
-          if (tag.substring(0, 2) == 'G-') gtag('event', ga4_event, $.extend({ send_to: tag }, ga4_params)); // Send GA4 event
+          if (tag.substring(0, 2) == 'G-' || tag.substring(0, 3) == 'GT-') gtag('event', ga4_event, $.extend({ send_to: tag }, ga4_params)); // Send GA4 event
           else if (tag.substring(0, 4) == 'GTM-') has_gtm = true;
           else if (tag.substring(0, 3) == 'AW-') has_gads = true;
         }
