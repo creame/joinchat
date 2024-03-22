@@ -145,7 +145,7 @@ class Joinchat_Integrations {
 			|| ( isset( $_GET['load_for'] ) && 'wppb_editor_iframe' === $_GET['load_for'] )     // WP Page Builder.
 			|| ( function_exists( 'bricks_is_builder' ) && bricks_is_builder() )                // Bricks Builder.
 			|| isset( $_GET['et_fb'] )                                                          // Divi.
-			|| ( isset( $_GET['tve']) && 'true' === $_GET['tve'] );                             // Thrive Architect.
+			|| ( isset( $_GET['tve'] ) && 'true' === $_GET['tve'] );                            // Thrive Architect.
 		// phpcs:enable
 
 		$builder_show = apply_filters( 'joinchat_page_builder_show', false );
