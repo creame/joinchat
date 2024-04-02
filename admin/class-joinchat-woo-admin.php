@@ -103,7 +103,7 @@ class Joinchat_Woo_Admin {
 	}
 
 	/**
-	 * Add WooCommerce admin tab
+	 * Add WooCommerce admin tab before Advanced tab
 	 *
 	 * @since    3.0.0
 	 * @param    array $tabs       current admin tabs.
@@ -111,9 +111,14 @@ class Joinchat_Woo_Admin {
 	 */
 	public function admin_tab( $tabs ) {
 
-		$tabs['woocommerce'] = 'WooCommerce';
+		$pos = array_search( 'advanced', array_keys( $tabs ), true );
 
-		return $tabs;
+		return array_merge(
+			array_slice( $tabs, 0, $pos ),
+			array( 'woocommerce' => 'WooCommerce' ),
+			array_slice( $tabs, $pos )
+		);
+
 	}
 
 	/**
