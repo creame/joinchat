@@ -62,6 +62,9 @@ class Joinchat_Admin {
 
 		$util::maybe_encode_emoji();
 
+		$color = preg_match( '/^#[a-f0-9]{6}$/i', $value['color']['bg'] ) ? $value['color']['bg'] : '#25d366';
+		$text  = '0' === $value['color']['text'] ? '0' : '100'; // '0' => black, '100' => white.
+
 		$value['telephone']     = $util::clean_input( $value['telephone'] );
 		$value['mobile_only']   = $util::yes_no( $value, 'mobile_only' );
 		$value['button_image']  = intval( $value['button_image'] );
@@ -73,10 +76,10 @@ class Joinchat_Admin {
 		$value['message_badge'] = $util::yes_no( $value, 'message_badge' );
 		$value['message_send']  = $util::clean_input( $value['message_send'] );
 		$value['message_start'] = $util::substr( $util::clean_input( $value['message_start'] ), 0, 40 );
-		$value['message_delay'] = intval( $value['message_delay'] );
+		$value['message_delay'] = intval( $value['message_delay'] ) * ( $util::yes_no( $value, 'message_delay_on' ) === 'yes' ? 1 : -1 );
 		$value['message_views'] = intval( $value['message_views'] ) ? intval( $value['message_views'] ) : 1;
 		$value['position']      = 'left' !== $value['position'] ? 'right' : 'left';
-		$value['color']         = preg_match( '/^#[a-f0-9]{6}$/i', $value['color'] ) ? $value['color'] : '#25d366';
+		$value['color']         = "$color/$text";
 		$value['dark_mode']     = in_array( $value['dark_mode'], array( 'no', 'yes', 'auto' ), true ) ? $value['dark_mode'] : 'no';
 		$value['header']        = in_array( $value['header'], array( '__jc__', '__wa__' ), true ) ? $value['header'] : $util::substr( $util::clean_input( $value['header_custom'] ), 0, 40 );
 		$value['optin_check']   = $util::yes_no( $value, 'optin_check' );
@@ -90,6 +93,7 @@ class Joinchat_Admin {
 		);
 		$value['gads']          = is_array( $value['gads'] ) ? sprintf( 'AW-%s/%s', $util::substr( $util::clean_input( $value['gads'][0] ), 0, 11 ), $util::substr( $util::clean_input( $value['gads'][1] ), 0, 20 ) ) : '';
 		$value['gads']          = 'AW-/' !== $value['gads'] ? $value['gads'] : '';
+		$value['gtag']          = $util::yes_no( $value, 'gtag' );
 		$value['custom_css']    = trim( $util::clean_nl( $value['custom_css'] ) );
 		$value['clear']         = $util::yes_no( $value, 'clear' );
 
@@ -488,6 +492,33 @@ class Joinchat_Admin {
 				call_user_func_array( 'do_action', $callable );
 			}
 		}
+
+	}
+
+	/**
+	 * Adds the privacy message.
+	 *
+	 * @since    5.1.0
+	 * @return void
+	 */
+	public function add_privacy_message() {
+
+		if ( jc_common()->settings['message_delay'] < 0 ) {
+
+			$message = '<p class="privacy-policy-tutorial">' . esc_html__( "With the current Joinchat's settings, no user data is collected and no cookies are used.", 'creame-whatsapp-me' ) . '</p>';
+
+		} else {
+			$message = '' .
+				'<h2>' . esc_html__( 'Cookies' ) . '</h2>' .
+				'<p class="privacy-policy-tutorial">' . esc_html__( 'Joinchat uses cookies to control when the chat window should be automatically displayed.', 'creame-whatsapp-me' ) . '</p>' .
+				'<p><strong class="privacy-policy-tutorial">' . esc_html__( 'Suggested text:' ) . '</strong> ' .
+					esc_html__( 'Cookies can be used to control when the WhatsApp floating button chat window should be automatically displayed.', 'creame-whatsapp-me' ) . ' ' .
+					/* translators: %s: cookies names. */
+					sprintf( esc_html__( 'These cookies (%s) do not contain personal data, are of type HTML LocalStorage and do not expire.', 'creame-whatsapp-me' ), '"joinchat_views", "joinchat_hashes"' ) .
+				'</p>';
+		}
+
+		wp_add_privacy_policy_content( 'Joinchat', apply_filters( 'joinchat_privacy_message', $message ) );
 
 	}
 }

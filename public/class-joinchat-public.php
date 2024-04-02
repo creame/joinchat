@@ -71,6 +71,7 @@ class Joinchat_Public {
 		$settings['qr']            = 'yes' === $settings['qr'];
 		$settings['message_badge'] = 'yes' === $settings['message_badge'] && '' !== $settings['message_text'];
 		$settings['optin_check']   = 'yes' === $settings['optin_check'];
+		$settings['gtag']          = 'yes' === $settings['gtag'];
 
 		if ( empty( $settings['gads'] ) ) {
 			unset( $settings['gads'] );
@@ -133,8 +134,9 @@ class Joinchat_Public {
 		$inline_css = '';
 
 		if ( jc_common()->defaults( 'color' ) !== $settings['color'] ) {
-			list($r, $g, $b) = sscanf( $settings['color'], '#%02x%02x%02x' );
-			$inline_css     .= ".joinchat{ --red:$r; --green:$g; --blue:$b; }";
+			list($color, $text) = explode( '/', $settings['color'] . '/100' );
+			list($r, $g, $b)    = sscanf( $color, '#%02x%02x%02x' );
+			$inline_css        .= ".joinchat{ --red:$r; --green:$g; --blue:$b; --bw:$text }";
 		}
 
 		if ( ! empty( $settings['custom_css'] ) ) {
@@ -192,6 +194,7 @@ class Joinchat_Public {
 				'whatsapp_web',
 				'message_send',
 				'gads',
+				'gtag',
 				'ga_tracker',   // Event customize.
 				'ga_event',
 				'data_layer',

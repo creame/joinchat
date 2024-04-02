@@ -109,12 +109,17 @@
 
     // Toggle WhatsApp web option
     $('#joinchat_mobile_only').on('change', function () {
-      $('#joinchat_whatsapp_web, #joinchat_qr').closest('tr').toggleClass('joinchat-hidden', this.checked);
+      $('#joinchat_whatsapp_web').closest('tr').toggleClass('joinchat-dimmed', this.checked);
     }).trigger('change');
 
-    // Toggle badge option
-    $('#joinchat_message_delay').on('change input', function () {
-      $('#joinchat_message_badge, #joinchat_message_views').closest('tr').toggleClass('joinchat-hidden', this.value == '0');
+    $('input[name="joinchat[header]"]').on('change', function () {
+      $('#joinchat_header_custom').toggleClass('joinchat-dimmed', this.value != '__custom__');
+    }).trigger('change');
+
+    // Toggle cookies notice
+    $('#joinchat_message_delay_on').on('change', function () {
+      $('#joinchat_message_badge').parent().toggleClass('joinchat-dimmed', !this.checked);
+      $('.joinchat-cookies-notice').toggleClass('joinchat-hidden', !this.checked);
     }).trigger('change');
 
     // Show help
@@ -232,11 +237,6 @@
 
     // Focus Opt-in editor
     $('label[for="joinchat_optin_text"]').on('click', function () { tinymce.get('joinchat_optin_text').focus(); });
-
-    // Toggle Show Chat Window if CTA
-    $('#joinchat_message_text').on('change', function () {
-      $('.joinchat__chat_open__wrapper').toggleClass('joinchat-hidden', this.value.trim() == '');
-    }).trigger('change');
 
     // Toggle Woo Product Button text
     $('#joinchat_woo_btn_position').on('change', function () {
@@ -368,7 +368,7 @@
       });
 
       // Chatbox show (if available)
-      $('#joinchat_message_text,#joinchat_message_start,input[name="joinchat[dark_mode]"],input[name="joinchat[header]"],#joinchat_header_custom').on('focus', view_chatbox);
+      $('#joinchat_message_text,#joinchat_message_start,input[name="joinchat[color][text]"],input[name="joinchat[dark_mode]"],input[name="joinchat[header]"],#joinchat_header_custom').on('focus', view_chatbox);
 
       $('#joinchat_message_text').on('input change', function (e) {
         prev_jc.has_cta = $(this).val().trim() != '';
@@ -385,6 +385,10 @@
         style.setProperty('--red', rgb.r);
         style.setProperty('--green', rgb.g);
         style.setProperty('--blue', rgb.b);
+        view_chatbox();
+      });
+      $('input[name="joinchat[color][text]"]').on('change', function () {
+        prev_jc.$div.get(0).style.setProperty('--bw', this.value);
         view_chatbox();
       });
       $('input[name="joinchat[dark_mode]"]').on('change', function () {

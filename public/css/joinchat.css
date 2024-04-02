@@ -17,8 +17,7 @@
   --dark: rgb(calc(var(--red) - 75) calc(var(--green) - 75) calc(var(--blue) - 75));
   --hover: rgb(calc(var(--red) + 50) calc(var(--green) + 50) calc(var(--blue) + 50));
   --bg: rgb(var(--rgb) / 4%);
-  --tolerance: 210;
-  --bw: calc((var(--red)*0.2126 + var(--green)*0.7152 + var(--blue)*0.0722 - var(--tolerance))*-10000000);
+  --bw: 100;
   --text: hsl(0deg 0% clamp(0%, var(--bw)*1%, 100%) / clamp(70%, var(--bw)*1%, 100%));
   --msg: var(--color);
 

@@ -7,6 +7,10 @@
   display: none !important;
 }
 
+.joinchat-dimmed {
+  opacity: .33;
+}
+
 .js #joinchat_form textarea {
   overflow: hidden;
   min-height: 100px;
@@ -161,6 +165,32 @@ tr.joinchat--focus .joinchat_vars_help {
   visibility: visible;
 }
 
+#joinchat_form .joinchat_color_text {
+  vertical-align: top;
+}
+
+#joinchat_form .joinchat_color_text .button::after {
+  content: 'T';
+  display: inline-block;
+  color: #fff;
+  text-shadow: 0 1px 2px #0008;
+  font-size: 22px;
+  font-weight: bold;
+  line-height: 1;
+  vertical-align: -10%;
+}
+
+#joinchat_form .joinchat_color_text .button.black::after {
+  color: rgba(0, 0, 0, 0.7);
+}
+
+#joinchat_form .joinchat_color_text .button:has(input:checked) {
+  background-color: #dcdcde;
+  color: #135e96;
+  border-color: #0a4b78;
+  box-shadow: inset 0 2px 5px -3px #0a4b78;
+}
+
 #wp-joinchat_optin_text-editor-container {
   max-width: 800px;
 }
@@ -235,15 +265,18 @@ tr.joinchat--focus .joinchat_vars_help {
   opacity: .5;
 }
 
-.joinchat-metabox input::-moz-placeholder {
+.joinchat-metabox input::-moz-placeholder,
+.joinchat-metabox textarea::-moz-placeholder {
   color: #dedfe0;
 }
 
-.joinchat-metabox input::placeholder {
+.joinchat-metabox input::placeholder,
+.joinchat-metabox textarea::placeholder {
   color: #dedfe0;
 }
 
-.joinchat-metabox input::-ms-input-placeholder {
+.joinchat-metabox input::-ms-input-placeholder,
+.joinchat-metabox textarea::-ms-input-placeholder {
   color: #dedfe0;
 }
 
@@ -460,6 +493,12 @@ body.jcpreview-resize #joinchatprev__resize {
 }
 
 @media screen and (max-width: 782px) {
+
+  #joinchat_form .joinchat_color_text .button {
+    min-height: 30px;
+    line-height: 2.15384615;
+  }
+
   :root {
     --preview-width: 0 !important;
   }

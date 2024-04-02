@@ -186,6 +186,8 @@ class Joinchat {
 		// Plugins page.
 		$this->loader->add_filter( 'plugin_action_links_' . JOINCHAT_BASENAME, $plugin_admin, 'settings_link' );
 		$this->loader->add_filter( 'plugin_row_meta', $plugin_admin, 'plugin_links', 10, 2 );
+		// Privacy Policy Guide.
+		$this->loader->add_action( 'admin_init', $plugin_admin, 'add_privacy_message' );
 
 		$plugin_page = new Joinchat_Admin_Page();
 

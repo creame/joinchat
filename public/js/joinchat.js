@@ -21,8 +21,8 @@
    * Trigger Analytics events
    *
    * Available customizations via joinchat_obj.settings:
-   *  - 'data_layer' for custom data layer name (default 'dataLayer' or GTM4WP custom DataLayer name)
-   *  - 'ga_event'   for GA4 custom event       (default 'generate_lead' recommended event)
+   *  - 'data_layer'    for custom data layer name (default 'dataLayer' or GTM4WP custom DataLayer name)
+   *  - 'ga_event'      for GA4 custom event       (default 'generate_lead' recommended event)
    *
    * All params can be edited with document event 'joinchat:event' or cancel if returns false.
    * e.g.: $(document).on('joinchat:event', function(){ return false; });
@@ -47,39 +47,50 @@
     if (false === $(document).triggerHandler('joinchat:event', [params])) return;
 
     var data_layer = window[this.settings.data_layer] || window[window.gtm4wp_datalayer_name] || window['dataLayer'];
+    var has_gtm = false;
+    var has_gads = false;
 
-    // gtag.js
-    if (typeof gtag == 'function' && typeof data_layer == 'object') {
-      // GA4 send recomended event "generate_lead"
-      var ga4_event = this.settings.ga_event || 'generate_lead';
-      var ga4_params = $.extend({ transport_type: 'beacon' }, params);
-      // GA4 params max_length (https://support.google.com/analytics/answer/9267744)
-      $.each(ga4_params, function (k, v) {
-        if (k == 'page_location') ga4_params[k] = v.substring(0, 1000);
-        else if (k == 'page_referrer') ga4_params[k] = v.substring(0, 420);
-        else if (k == 'page_title') ga4_params[k] = v.substring(0, 300);
-        else if (typeof v == 'string') ga4_params[k] = v.substring(0, 100);
-      });
+    // GA4 send recomended event "generate_lead"
+    var ga4_event = this.settings.ga_event || 'generate_lead';
+    var ga4_params = $.extend({ transport_type: 'beacon' }, params);
+    // Params already collected by GA4 (https://support.google.com/analytics/answer/9234069)
+    delete ga4_params.page_location;
+    delete ga4_params.page_title;
+    // GA4 params max_length (https://support.google.com/analytics/answer/9267744)
+    $.each(ga4_params, function (k, v) { if (typeof v == 'string') ga4_params[k] = v.substring(0, 100); });
 
-      data_layer.forEach(function (item) {
-        if (item[0] == 'config' && item[1] && item[1].substring(0, 2) == 'G-') {
-          ga4_params.send_to = item[1];
-          gtag('event', ga4_event, ga4_params);
+    if (this.settings.gtag) {
+      // gtag.js (New "Google Tag" find destinations)
+      if (window.google_tag_data && google_tag_data.tidr && !!google_tag_data.tidr.destination) {
+        for (const tag in google_tag_data.tidr.destination) {
+          if (tag.substring(0, 2) == 'G-' || tag.substring(0, 3) == 'GT-') gtag('event', ga4_event, $.extend({ send_to: tag }, ga4_params)); // Send GA4 event
+          else if (tag.substring(0, 4) == 'GTM-') has_gtm = true;
+          else if (tag.substring(0, 3) == 'AW-') has_gads = true;
         }
-      });
-
-      // Send Google Ads conversion
-      if (this.settings.gads) {
-        gtag('event', 'conversion', { send_to: this.settings.gads });
+      }
+    } else {
+      // gtag.js (Old method, traverse dataLayer and find 'config')
+      if (typeof gtag == 'function' && typeof data_layer == 'object') {
+        data_layer.forEach(function (item) {
+          if (item[0] == 'config' && item[1] && item[1].substring(0, 2) == 'G-')
+            gtag('event', ga4_event, $.extend({ send_to: tag }, ga4_params));
+        });
+        has_gtm = true;
+        has_gads = true;
       }
     }
 
-    // Store category in var and delete from params
+    // Send Google Ads conversion
+    if (has_gads && this.settings.gads) {
+      gtag('event', 'conversion', { send_to: this.settings.gads });
+    }
+
+    // Store category and delete from params
     var event_category = params.event_category;
     delete params.event_category;
 
     // Send Google Tag Manager custom event
-    if (typeof data_layer == 'object') {
+    if (has_gtm && typeof data_layer == 'object') {
       data_layer.push($.extend({ event: event_category }, params));
     }
 
@@ -138,12 +149,13 @@
   };
 
   // Save CTA hash
-  joinchat_obj.save_hash = function () {
-    var hash = this.settings.message_hash || 'none';
+  joinchat_obj.save_hash = function (force) {
+    if (!this.settings.message_hash) return; // No hash
+    if (this.settings.message_delay < 0 && !force) return; // No delay & no forced
     var saved_hashes = (this.store.getItem('joinchat_hashes') || '').split(',').filter(Boolean);
 
-    if (saved_hashes.indexOf(hash) === -1) {
-      saved_hashes.push(hash);
+    if (saved_hashes.indexOf(this.settings.message_hash) === -1) {
+      saved_hashes.push(this.settings.message_hash);
       this.store.setItem('joinchat_hashes', saved_hashes.join(','));
     }
   };
@@ -200,7 +212,7 @@
     $(document).trigger('joinchat:starting');
 
     var button_delay = joinchat_obj.settings.button_delay * 1000;
-    var chat_delay = joinchat_obj.settings.message_delay * 1000;
+    var chat_delay = Math.max(0, joinchat_obj.settings.message_delay * 1000);
     var has_cta = !!joinchat_obj.settings.message_hash;
     var has_chatbox = !!joinchat_obj.$('.joinchat__box').length;
     var timeoutHover, timeoutCTA;
@@ -326,23 +338,21 @@
     });
 
     // Triggers: open chatbox on scroll (when node on viewport)
-    if (has_chatbox && 'IntersectionObserver' in window) {
-      var $show_on_scroll = $('.joinchat_show, .joinchat_force_show');
-
-      function joinchat_observed(objs) {
+    var $show_on_scroll = $('.joinchat_show, .joinchat_force_show');
+    if (has_cta && $show_on_scroll.length && 'IntersectionObserver' in window) {
+      var observer = new IntersectionObserver(function (objs) {
         $.each(objs, function () {
-          if (this.intersectionRatio > 0 && (!is_viewed || $(this.target).hasClass('joinchat_force_show'))) {
-            clear_and_show();
-            observer.disconnect(); // Only one show for visit
-            return false;
-          }
-        });
-      }
+          if (this.intersectionRatio <= 0) return;
+          var is_forced = this.target.classList.contains('joinchat_force_show');
+          if (is_viewed && !is_forced) return;
 
-      if ($show_on_scroll.length > 0) {
-        var observer = new IntersectionObserver(joinchat_observed);
-        $show_on_scroll.each(function () { observer.observe(this); });
-      }
+          observer.disconnect(); // Only one show for visit
+          joinchat_obj.save_hash(!is_forced);
+          clear_and_show();
+          return false;
+        });
+      });
+      $show_on_scroll.each(function () { observer.observe(this); });
     }
 
     // Add QR Code
@@ -355,6 +365,11 @@
     // Fix message clip-path style broken by some CSS optimizers
     if (has_chatbox) {
       joinchat_obj.$div.css('--peak', 'ur' + 'l(#joinchat__peak_' + (joinchat_obj.$div.closest('[dir=rtl]').length ? 'r' : 'l') + ')');
+    }
+
+    // Count visits (if needed)
+    if (chat_delay && !has_pageviews) {
+      joinchat_obj.store.setItem('joinchat_views', parseInt(joinchat_obj.store.getItem('joinchat_views') || 0) + 1);
     }
 
     $(document).trigger('joinchat:start');
@@ -435,8 +450,6 @@
         });
       }
     }
-
-    joinchat_obj.store.setItem('joinchat_views', parseInt(joinchat_obj.store.getItem('joinchat_views') || 0) + 1);
   }
 
   // Ready!! (in some scenarios jQuery.ready doesn't fire, this try to ensure Joinchat initialization)
