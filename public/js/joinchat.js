@@ -21,7 +21,6 @@
    * Trigger Analytics events
    *
    * Available customizations via joinchat_obj.settings:
-   *  - 'legacy_events' set as true to send event as previous version (find 'config' on dataLayer)
    *  - 'data_layer'    for custom data layer name (default 'dataLayer' or GTM4WP custom DataLayer name)
    *  - 'ga_event'      for GA4 custom event       (default 'generate_lead' recommended event)
    *
@@ -60,7 +59,16 @@
     // GA4 params max_length (https://support.google.com/analytics/answer/9267744)
     $.each(ga4_params, function (k, v) { if (typeof v == 'string') ga4_params[k] = v.substring(0, 100); });
 
-    if (!!this.settings.legacy_events) {
+    if (this.settings.gtag) {
+      // gtag.js (New "Google Tag" find destinations)
+      if (window.google_tag_data && google_tag_data.tidr && !!google_tag_data.tidr.destination) {
+        for (const tag in google_tag_data.tidr.destination) {
+          if (tag.substring(0, 2) == 'G-' || tag.substring(0, 3) == 'GT-') gtag('event', ga4_event, $.extend({ send_to: tag }, ga4_params)); // Send GA4 event
+          else if (tag.substring(0, 4) == 'GTM-') has_gtm = true;
+          else if (tag.substring(0, 3) == 'AW-') has_gads = true;
+        }
+      }
+    } else {
       // gtag.js (Old method, traverse dataLayer and find 'config')
       if (typeof gtag == 'function' && typeof data_layer == 'object') {
         data_layer.forEach(function (item) {
@@ -69,15 +77,6 @@
         });
         has_gtm = true;
         has_gads = true;
-      }
-    } else {
-      // gtag.js (New "Google Tag" find destinations)
-      if (window.google_tag_data && google_tag_data.tidr && !!google_tag_data.tidr.destination) {
-        for (const tag in google_tag_data.tidr.destination) {
-          if (tag.substring(0, 2) == 'G-' || tag.substring(0, 3) == 'GT-') gtag('event', ga4_event, $.extend({ send_to: tag }, ga4_params)); // Send GA4 event
-          else if (tag.substring(0, 4) == 'GTM-') has_gtm = true;
-          else if (tag.substring(0, 3) == 'AW-') has_gads = true;
-        }
       }
     }
 
