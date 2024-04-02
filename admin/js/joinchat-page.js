@@ -109,13 +109,17 @@
 
     // Toggle WhatsApp web option
     $('#joinchat_mobile_only').on('change', function () {
-      $('#joinchat_whatsapp_web, #joinchat_qr').closest('tr').toggleClass('joinchat-hidden', this.checked);
+      $('#joinchat_whatsapp_web').closest('tr').toggleClass('joinchat-dimmed', this.checked);
+    }).trigger('change');
+
+    $('input[name="joinchat[header]"]').on('change', function () {
+      $('#joinchat_header_custom').toggleClass('joinchat-dimmed', this.value != '__custom__');
     }).trigger('change');
 
     // Toggle cookies notice
     $('#joinchat_message_delay_on').on('change', function () {
-      $('.joinchat-cookies-notice').toggleClass('joinchat-hidden', !this.checked);
       $('#joinchat_message_badge').parent().toggleClass('joinchat-dimmed', !this.checked);
+      $('.joinchat-cookies-notice').toggleClass('joinchat-hidden', !this.checked);
     }).trigger('change');
 
     // Show help

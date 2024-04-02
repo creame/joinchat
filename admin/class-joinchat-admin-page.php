@@ -144,8 +144,10 @@ class Joinchat_Admin_Page {
 						'position'     => esc_html__( 'Position on Screen', 'creame-whatsapp-me' ),
 						'button_delay' => '<label for="joinchat_button_delay">' . esc_html__( 'Button Delay', 'creame-whatsapp-me' ) . '</label>',
 						'mobile_only'  => esc_html__( 'Mobile Only', 'creame-whatsapp-me' ),
-						'whatsapp_web' => esc_html__( 'WhatsApp Web', 'creame-whatsapp-me' ),
-						'qr'           => esc_html__( 'QR Code', 'creame-whatsapp-me' ),
+						'desktop'      => array(
+							'label'    => esc_html__( 'On Desktop', 'creame-whatsapp-me' ),
+							'callback' => array( $this, 'field_desktop' ),
+						),
 					),
 					'chat'   => array(
 						'message_text'  => '<label for="joinchat_message_text">' . esc_html__( 'Call to Action', 'creame-whatsapp-me' ) . '</label>' . self::vars_help( 'message_text' ),
@@ -388,18 +390,6 @@ class Joinchat_Admin_Page {
 						'<p class="description">' . esc_html__( 'Time since the page is opened until the button is displayed', 'creame-whatsapp-me' ) . '</p>';
 					break;
 
-				case 'whatsapp_web':
-					$output = '<fieldset><legend class="screen-reader-text"><span>' . esc_html__( 'WhatsApp Web', 'creame-whatsapp-me' ) . '</span></legend>' .
-						'<label><input id="joinchat_whatsapp_web" name="joinchat[whatsapp_web]" value="yes" type="checkbox"' . checked( 'yes', $value, false ) . '> ' .
-						wp_kses( __( 'Open <em>WhatsApp Web</em> directly on desktop', 'creame-whatsapp-me' ), array( 'em' => array() ) ) . '</label></fieldset>';
-					break;
-
-				case 'qr':
-					$output = '<fieldset><legend class="screen-reader-text"><span>' . esc_html__( 'QR Code', 'creame-whatsapp-me' ) . '</span></legend>' .
-						'<label><input id="joinchat_qr" name="joinchat[qr]" value="yes" type="checkbox"' . checked( 'yes', $value, false ) . '> ' .
-						esc_html__( 'Display QR code on desktop to scan with phone', 'creame-whatsapp-me' ) . '</label></fieldset>';
-					break;
-
 				case 'message_text':
 					$output = '<textarea id="joinchat_message_text" name="joinchat[message_text]" rows="4" class="regular-text autofill" placeholder="' . esc_attr__( "Hello 👋\nCan we help you?", 'creame-whatsapp-me' ) . '">' . esc_textarea( $value ) . '</textarea>' .
 						'<p class="description">' . esc_html__( 'Define a text to encourage users to contact by WhatsApp', 'creame-whatsapp-me' ) . '</p>';
@@ -513,6 +503,27 @@ class Joinchat_Admin_Page {
 			'<span class="dashicons dashicons-visibility" title="' . esc_attr__( 'Show', 'creame-whatsapp-me' ) . '"></span></label>' .
 			'<label><input type="radio" name="joinchat[view][all]" value="no"' . checked( 'no', $value, false ) . '> ' .
 			'<span class="dashicons dashicons-hidden" title="' . esc_attr__( 'Hide', 'creame-whatsapp-me' ) . '"></span></label></div>';
+
+	}
+
+	/**
+	 * Field 'desktop' output
+	 *
+	 * @since    5.1.0
+	 * @return void
+	 */
+	public function field_desktop() {
+
+		$qr = jc_common()->settings['qr'];
+		$ww = jc_common()->settings['whatsapp_web'];
+
+		$output = '<fieldset><legend class="screen-reader-text"><span>' . esc_html__( 'On Desktop', 'creame-whatsapp-me' ) . '</span></legend>' .
+			'<label><input id="joinchat_qr" name="joinchat[qr]" value="yes" type="checkbox"' . checked( 'yes', $qr, false ) . '> ' .
+			esc_html__( 'Display QR code to scan with phone', 'creame-whatsapp-me' ) . '</label><br>' .
+			'<label><input id="joinchat_whatsapp_web" name="joinchat[whatsapp_web]" value="yes" type="checkbox"' . checked( 'yes', $ww, false ) . '> ' .
+			wp_kses( __( 'Open directly <em>WhatsApp Web</em>', 'creame-whatsapp-me' ), array( 'em' => array() ) ) . '</label></fieldset>';
+
+		echo apply_filters( 'joinchat_field_output', $output, 'desktop', jc_common()->settings ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 
 	}
 
