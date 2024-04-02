@@ -1,11 +1,11 @@
 === Joinchat ===
 Contributors: creapuntome, pacotole, davidlillo, monillo
 Donate link: https://join.chat/donate/
-Tags: Chat, Click to Chat, Facebook Messenger, WhatsApp, Telegram, Whatsapp Business, button, support chat, support, contact, directly message WhatsApp, floating WhatsApp, WhatsApp chat
-Requires at least: 4.9.0
-Tested up to: 6.4
+Tags: WhatsApp, Chat, Floating Button, Facebook Messenger, Telegram
+Requires at least: 4.9.6
+Tested up to: 6.5
 Requires PHP: 5.5
-Stable tag: 5.0.17
+Stable tag: 5.1.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -41,12 +41,11 @@ Define in which pages or zones it should appear, the delay time, if you want it 
 
 You can define a tooltip or a call to action to capture the user's interest, the limit is set by your creativity.
 
-#### 📢 New on Joinchat 5
+#### 📢 New on Joinchat 5.1
 
-* **Onboarding:** Set up Joinchat from a chat.
-* **Preview:** Visualize the appearance of Joinchat before publishing it.
-* **Custom CSS:** Add your custom CSS from the plugin's own settings and only load when needed.
-* **Multi-language:** Better access to manage translations.
+* Send events to **Google Tag** with multiple destinations support.
+* Added **Private Policy Guide** text.
+* Set theme **black or white text**.
 
 #### 📝 Settings at page or archive level.
 You can **change main settings on every Post, Page, Product or CPT and for Tag or Category archive pages**.
@@ -105,6 +104,8 @@ Use variables in your CTAs and Start Messages that change dynamically for each p
 #### 📈 Analytics Integration.
 Automatically send events to **Google Analytics, Google Tag Manager and Facebook Pixel** when the user opens WhatsApp.
 
+Now can **send events to multiple destinations** on Google Tag!
+
 **Google Analytics 4** integration with the recommended `"generate_lead"` event.
 
 **Google Ads** conversion, just add your Conversion ID and Conversion Label.
@@ -150,7 +151,7 @@ Only load what need when needed. Joinchat is lightweight and follow best coding 
 #### 🔕 No distractions.
 Joinchat integrates with all major Visual Editors and Page Builders and will not appear when editing a page.
 
-Supported editors: **Beaver Builder**, **Brizy Page Builder**, **Elementor**, **Oxygen Builder**, **Page Builder by SiteOrigin**, **Visual Composer** and **WP Page Builder**.
+Supported editors: **Beaver Builder**, **Brizy Page Builder**, **Elementor**, **Oxygen Builder**, **Page Builder by SiteOrigin**, **Thrive Architect**, **Visual Composer** and **WP Page Builder**.
 
 #### 👨‍💻 Developer friendly.
 Fully extensible, with lots of filters and actions to extend its functionality or change behavior.
@@ -158,8 +159,10 @@ Fully extensible, with lots of filters and actions to extend its functionality o
 ### ⌁ PREMIUM ADD-ONS 🍡
 Extend Joinchat with awesome features:
 
-#### 🤖 [**NEW!!** Chat Funnels](https://join.chat/en/chatfunnel/?utm_source=wporg&utm_medium=web).
+#### 🤖 [**Chat Funnels**](https://join.chat/en/chatfunnel/?utm_source=wporg&utm_medium=web).
 **Simple funnels like a messaging chatbot.** Create lead capture, qualification or support funnels by simulating conversations with a chatbot.
+
+**NEW** Capture input fields and send webhooks to better lead generation and endless possibilities.
 
 #### 🤹🏻‍♂️ [Create Support Agents](https://join.chat/en/addons/support-agents/?utm_source=wporg&utm_medium=web).
 **Contact buttons for each agent with availability times.** Manage multiple WhatsApp accounts with their name, department and working hours. Your visitors will be able to contact the agent of their choice and know how long it will be until the agents are available.
@@ -200,7 +203,7 @@ Do you want to test the Joinchat configuration panel without installing it? You 
 
 = I can't see the button or it's over / under another thing =
 
-You can change the position of the button so that nothing covers it by adding this CSS in *Appearance > Customize > Custom CSS*:
+You can change the position of the button so that nothing covers it by adding this CSS in *Joinchat Settings > Advanced > Custom CSS*:
 
 `.joinchat { z-index:999999; }`
 
@@ -218,7 +221,7 @@ If you need to move up:
 
 = Change button size =
 
-You can change the button size by adding this CSS in *Appearance > Customize > Custom CSS*:
+You can change the button size by adding this CSS in *Joinchat Settings > Advanced > Custom CSS*:
 
 `/* always */
 .joinchat { --s: 50px; }
@@ -277,6 +280,12 @@ If you have any errors with Gutenberg and Joinchat or simply prefer the old Join
 = WPML/Polylang translations =
 
 Joinchat settings are saved in your site's main language. For other languages translation go to *WPML/Polylang Settings > String translations*, filter strings group by "Joinchat" and update the strings for each language.
+
+= Google Tag with multiple destinations =
+
+Joinchat since 5.1 can detect multiple destinations in Google Tag and send events to all of them.
+
+To try check option "Google Tag Events" in *Joinchat Settings > Advanced*.
 
 = Google Analytics integration =
 
@@ -376,9 +385,15 @@ Joinchat save two localStorage variables for proper operation:
 
 == Changelog ==
 
-= 5.0.18 =
+= 5.1.0 =
+* **NEW** Support for **Google Tag** with multiple destinations.
+* **NEW** Added Private Policy Guide text.
+* **NEW** Allow to set theme black or white text color.
+* CHANGE Only use cookies if needed.
+* CHANGE Simplified Chat Window admin settings.
 * NEW Detects **Thrive Architect** editor.
 * NEW Prevent **Thrive Architect** remove Joinchat inline styles.
+* Bump WordPress required at least to 4.9.6.
 
 = 5.0.17 =
 * FIX Not escaped strong tag.
@@ -460,6 +475,3 @@ See [changelog.txt](https://plugins.svn.wordpress.org/creame-whatsapp-me/trunk/c
 
 == Upgrade Notice ==
 
-= 5.0.0 =
-**BREAK for developers:** changed all PHP class names to follow WordPress Coding Standards.
-Custom plugins or code snippets that call Joinchat classes lower than 5.0 may return a fatal error.
