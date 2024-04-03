@@ -385,6 +385,9 @@ Joinchat save two localStorage variables for proper operation:
 
 == Changelog ==
 
+= 5.1.1 =
+* FIX javascript error on send events.
+
 = 5.1.0 =
 * **NEW** Support for **Google Tag** with multiple destinations.
 * **NEW** Added Private Policy Guide text.

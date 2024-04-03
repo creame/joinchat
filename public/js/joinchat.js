@@ -62,7 +62,7 @@
     if (this.settings.gtag) {
       // gtag.js (New "Google Tag" find destinations)
       if (window.google_tag_data && google_tag_data.tidr && !!google_tag_data.tidr.destination) {
-        for (const tag in google_tag_data.tidr.destination) {
+        for (var tag in google_tag_data.tidr.destination) {
           if (tag.substring(0, 2) == 'G-' || tag.substring(0, 3) == 'GT-') gtag('event', ga4_event, $.extend({ send_to: tag }, ga4_params)); // Send GA4 event
           else if (tag.substring(0, 4) == 'GTM-') has_gtm = true;
           else if (tag.substring(0, 3) == 'AW-') has_gads = true;
@@ -72,8 +72,8 @@
       // gtag.js (Old method, traverse dataLayer and find 'config')
       if (typeof gtag == 'function' && typeof data_layer == 'object') {
         data_layer.forEach(function (item) {
-          if (item[0] == 'config' && item[1] && item[1].substring(0, 2) == 'G-')
-            gtag('event', ga4_event, $.extend({ send_to: tag }, ga4_params));
+          if (item[0] == 'config' && item[1] && (item[1].substring(0, 2) == 'G-' || item[1].substring(0, 3) == 'GT-'))
+            gtag('event', ga4_event, $.extend({ send_to: item[1] }, ga4_params));
         });
         has_gtm = true;
         has_gads = true;
