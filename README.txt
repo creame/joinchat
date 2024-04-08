@@ -385,6 +385,9 @@ Joinchat save two localStorage variables for proper operation:
 
 == Changelog ==
 
+= 5.1.2 =
+* FIX recover GA4 params removed on v5.1.
+
 = 5.1.1 =
 * FIX javascript error on send events.
 

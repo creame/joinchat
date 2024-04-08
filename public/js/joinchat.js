@@ -53,11 +53,13 @@
     // GA4 send recomended event "generate_lead"
     var ga4_event = this.settings.ga_event || 'generate_lead';
     var ga4_params = $.extend({ transport_type: 'beacon' }, params);
-    // Params already collected by GA4 (https://support.google.com/analytics/answer/9234069)
-    delete ga4_params.page_location;
-    delete ga4_params.page_title;
-    // GA4 params max_length (https://support.google.com/analytics/answer/9267744)
-    $.each(ga4_params, function (k, v) { if (typeof v == 'string') ga4_params[k] = v.substring(0, 100); });
+    // GA4 params max_length (https://support.google.com/analytics/answer/9234069 https://support.google.com/analytics/answer/9267744)
+    $.each(ga4_params, function (k, v) {
+      if (k == 'page_location') ga4_params[k] = v.substring(0, 1000);
+      else if (k == 'page_referrer') ga4_params[k] = v.substring(0, 420);
+      else if (k == 'page_title') ga4_params[k] = v.substring(0, 300);
+      else if (typeof v == 'string') ga4_params[k] = v.substring(0, 100);
+    });
 
     if (this.settings.gtag) {
       // gtag.js (New "Google Tag" find destinations)
