@@ -127,6 +127,14 @@ class Joinchat_I18n {
 		$default_language = apply_filters( 'wpml_default_language', null );
 		$translate_notice = false;
 
+		// Clear WPML cache to ensure new strings registration.
+		if ( class_exists( 'WPML_WP_Cache' ) ) {
+			$string_cache = new WPML_WP_Cache( 'WPML_Register_String_Filter' );
+			$string_cache->flush_group_cache();
+			$domain_cache = new WPML_WP_Cache( 'WPML_Register_String_Filter::' . self::DOMAIN_GROUP );
+			$domain_cache->flush_group_cache();
+		}
+
 		foreach ( $settings_i18n as $key => $label ) {
 			$value = isset( $settings[ $key ] ) ? $settings[ $key ] : '';
 			do_action( 'wpml_register_single_string', self::DOMAIN_GROUP, $label, $value, false, $default_language );
