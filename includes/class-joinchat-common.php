@@ -116,7 +116,6 @@ class Joinchat_Common {
 			'optin_text'    => '',
 			'optin_check'   => 'no',
 			'gads'          => '',
-			'gtag'          => 'no',
 			'custom_css'    => '',
 			'clear'         => 'no',
 		);

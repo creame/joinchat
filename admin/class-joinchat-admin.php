@@ -100,7 +100,6 @@ class Joinchat_Admin {
 		$value['optin_text']    = wp_kses( $value['optin_text'], $optin_tags );
 		$value['gads']          = is_array( $value['gads'] ) ? sprintf( 'AW-%s/%s', $util::substr( $util::clean_input( $value['gads'][0] ), 0, 11 ), $util::substr( $util::clean_input( $value['gads'][1] ), 0, 20 ) ) : '';
 		$value['gads']          = 'AW-/' !== $value['gads'] ? $value['gads'] : '';
-		$value['gtag']          = $util::yes_no( $value, 'gtag' );
 		$value['custom_css']    = trim( $util::clean_nl( $value['custom_css'] ) );
 		$value['clear']         = $util::yes_no( $value, 'clear' );
 

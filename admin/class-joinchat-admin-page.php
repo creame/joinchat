@@ -217,7 +217,6 @@ class Joinchat_Admin_Page {
 				$sections = array(
 					'global' => array(
 						'gads'       => '<label for="joinchat_gads">' . esc_html__( 'Google Ads Conversion', 'creame-whatsapp-me' ) . '</label>',
-						'gtag'       => esc_html__( 'Google Tag Events', 'creame-whatsapp-me' ),
 						'custom_css' => esc_html__( 'Custom CSS', 'creame-whatsapp-me' ),
 						'clear'      => esc_html__( 'Clear on uninstall', 'creame-whatsapp-me' ),
 					),
@@ -449,12 +448,6 @@ class Joinchat_Admin_Page {
 						'<input name="joinchat[gads][]" value="' . esc_attr( $parts[1] ) . '" type="text" maxlength="20" style="width:13em;" placeholder="ABCDEFGHIJ0123456789" title="' . esc_attr__( 'Conversion label', 'creame-whatsapp-me' ) . '"> ' .
 						'</label> <span style="white-space:nowrap">AW-<em>CONVERSION_ID</em>/<em>CONVERSION_LABEL</em></span>' .
 						'<p class="description">' . esc_html__( 'Send the conversion automatically at the chat start', 'creame-whatsapp-me' ) . '</p>';
-					break;
-
-				case 'gtag':
-					$output = '<fieldset><legend class="screen-reader-text"><span>' . esc_html__( 'Google Tag Events', 'creame-whatsapp-me' ) . '</span></legend>' .
-						'<label><input id="joinchat_gtag" name="joinchat[gtag]" value="yes" type="checkbox"' . checked( 'yes', $value, false ) . '> ' .
-						esc_html__( 'Use new events method compatible with Google Tag with multiple destinations', 'creame-whatsapp-me' ) . '</label></fieldset>';
 					break;
 
 				case 'custom_css':
