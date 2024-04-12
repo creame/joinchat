@@ -5,7 +5,7 @@ Tags: WhatsApp, Chat, Floating Button, Facebook Messenger, Telegram
 Requires at least: 4.9.6
 Tested up to: 6.5
 Requires PHP: 5.5
-Stable tag: 5.1.4
+Stable tag: 5.1.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -384,6 +384,9 @@ Joinchat save two localStorage variables for proper operation:
 
 
 == Changelog ==
+
+= 5.1.5 =
+* FIX updated minified scripts 😓
 
 = 5.1.4 =
 * FIX refactor send GA4 events detects multiple destinations and old "config" implementations without any option.
