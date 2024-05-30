@@ -89,6 +89,8 @@ class Joinchat_Util {
 	 */
 	public static function clean_whatsapp( $number ) {
 
+		$number = is_string( $number ) ? $number : '';
+
 		// Remove any leading 0s or special calling codes.
 		$clean = preg_replace( '/^0+|\D/', '', $number );
 
