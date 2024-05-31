@@ -35,7 +35,7 @@ class Joinchat_I18n {
 
 			$loader->add_action( 'admin_notices', $this, 'settings_notice' );
 			$loader->add_action( 'joinchat_settings_validation', $this, 'settings_save', 10, 2 );
-			$loader->add_filter( 'joinchat_get_settings_site', $this, 'settings_load' );
+			$loader->add_filter( 'joinchat_get_settings_site', $this, 'settings_load', 20 );
 
 		}
 	}
@@ -159,6 +159,11 @@ class Joinchat_I18n {
 			return;
 		}
 
+		// Prevent add notice twice.
+		if ( ! empty( wp_list_filter( get_settings_errors( JOINCHAT_SLUG ), array( 'code' => 'review_i18n' ) ) ) ) {
+			return;
+		}
+
 		// Note: message is wrapped with <strong>...</strong> tags.
 		$message = $this->language_notice( '</strong>' . esc_html__( 'There are changes in fields that can be translated', 'creame-whatsapp-me' ) . '<strong>' );
 
@@ -170,6 +175,7 @@ class Joinchat_I18n {
 	 * Get settings translations for current language
 	 *
 	 * @since  4.2
+	 * @since  5.1.6 Allow settings in array in format 'key__subkey'
 	 * @param  array $settings list of settings.
 	 * @return array
 	 */
@@ -177,9 +183,15 @@ class Joinchat_I18n {
 
 		$settings_i18n = $this->settings_i18n( $settings );
 
-		foreach ( $settings_i18n as $key => $label ) {
-			if ( ! empty( $settings[ $key ] ) ) {
-				$settings[ $key ] = apply_filters( 'wpml_translate_single_string', $settings[ $key ], self::DOMAIN_GROUP, $label );
+		foreach ( $settings_i18n as $setting => $label ) {
+			list( $key, $subkey ) = explode( '__', $setting . '__' );
+
+			if ( empty( $subkey ) ) {
+				if ( ! empty( $settings[ $key ] ) ) {
+					$settings[ $key ] = apply_filters( 'wpml_translate_single_string', $settings[ $key ], self::DOMAIN_GROUP, $label );
+				}
+			} elseif ( ! empty( $settings[ $key ][ $subkey ] ) ) {
+				$settings[ $key ][ $subkey ] = apply_filters( 'wpml_translate_single_string', $settings[ $key ][ $subkey ], self::DOMAIN_GROUP, $label );
 			}
 		}
 

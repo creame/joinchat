@@ -126,7 +126,8 @@ class Joinchat_Admin {
 		}
 
 		// Extra actions on save.
-		do_action( 'joinchat_settings_validation', $value, jc_common()->settings );
+		// @since 5.1.6 add third param $option_name.
+		do_action( 'joinchat_settings_validation', $value, jc_common()->settings, JOINCHAT_SLUG );
 
 		return $value;
 
