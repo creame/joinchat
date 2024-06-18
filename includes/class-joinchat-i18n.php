@@ -35,7 +35,7 @@ class Joinchat_I18n {
 
 			$loader->add_action( 'admin_notices', $this, 'settings_notice' );
 			$loader->add_action( 'joinchat_settings_validation', $this, 'settings_save', 10, 2 );
-			$loader->add_filter( 'joinchat_get_settings_site', $this, 'settings_load' );
+			$loader->add_filter( 'joinchat_get_settings_site', $this, 'settings_load', 20 );
 
 		}
 	}
@@ -95,18 +95,28 @@ class Joinchat_I18n {
 			return;
 		}
 
-		$spaces  = '&nbsp;&nbsp;';
-		$message = sprintf(
-			"<strong>%s$spaces%s (%s)</strong>$spaces%s$spaces<a href=\"%s\">%s</a>",
-			$this->default_language_flag(), // Flag <img>.
-			esc_html__( 'Default site language', 'creame-whatsapp-me' ),
-			esc_html( $this->default_language_name() ),
-			esc_html__( 'Settings are defined in the main language', 'creame-whatsapp-me' ),
-			esc_url( $this->translations_link() ),
-			esc_html__( 'Manage translations', 'creame-whatsapp-me' )
-		);
+		$need_translation = false;
 
-		echo '<div class="notice notice-info"><p>' . $message . '</p></div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		// Find untranslated strings on WPML.
+		if ( function_exists( 'icl_get_string_translations' ) && defined( 'ICL_TM_COMPLETE' ) ) {
+			$strings = wp_list_filter( icl_get_string_translations(), array( 'context' => self::DOMAIN_GROUP ) );
+
+			foreach ( $strings as $string ) {
+				if ( $string['status'] !== ICL_TM_COMPLETE ) {
+					$need_translation = true;
+					break;
+				}
+			}
+		}
+
+		$msg  = esc_html__( 'Settings are defined in the main language', 'creame-whatsapp-me' );
+		$msg .= $need_translation ? ' <strong>(' . esc_html__( 'there are untranslated strings', 'creame-whatsapp-me' ) . ')</strong>' : '';
+
+		printf(
+			'<div class="notice notice-%s"><p>%s</p></div>',
+			$need_translation ? 'warning' : 'info', // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			$this->language_notice( $msg ) // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		);
 
 	}
 
@@ -127,6 +137,14 @@ class Joinchat_I18n {
 		$default_language = apply_filters( 'wpml_default_language', null );
 		$translate_notice = false;
 
+		// Clear WPML cache to ensure new strings registration.
+		if ( class_exists( 'WPML_WP_Cache' ) ) {
+			$string_cache = new WPML_WP_Cache( 'WPML_Register_String_Filter' );
+			$string_cache->flush_group_cache();
+			$domain_cache = new WPML_WP_Cache( 'WPML_Register_String_Filter::' . self::DOMAIN_GROUP );
+			$domain_cache->flush_group_cache();
+		}
+
 		foreach ( $settings_i18n as $key => $label ) {
 			$value = isset( $settings[ $key ] ) ? $settings[ $key ] : '';
 			do_action( 'wpml_register_single_string', self::DOMAIN_GROUP, $label, $value, false, $default_language );
@@ -141,17 +159,13 @@ class Joinchat_I18n {
 			return;
 		}
 
+		// Prevent add notice twice.
+		if ( ! empty( wp_list_filter( get_settings_errors( JOINCHAT_SLUG ), array( 'code' => 'review_i18n' ) ) ) ) {
+			return;
+		}
+
 		// Note: message is wrapped with <strong>...</strong> tags.
-		$spaces  = '&nbsp;&nbsp;';
-		$message = sprintf(
-			"%s$spaces%s (%s)$spaces%s$spaces<a href=\"%s\" class=\"button\">%s</a>",
-			$this->default_language_flag(), // Flag <img>.
-			esc_html__( 'Default site language', 'creame-whatsapp-me' ),
-			esc_html( $this->default_language_name() ),
-			esc_html__( 'There are changes in fields that can be translated', 'creame-whatsapp-me' ),
-			esc_url( $this->translations_link() ),
-			esc_html__( 'Manage translations', 'creame-whatsapp-me' )
-		);
+		$message = $this->language_notice( '</strong>' . esc_html__( 'There are changes in fields that can be translated', 'creame-whatsapp-me' ) . '<strong>' );
 
 		add_settings_error( JOINCHAT_SLUG, 'review_i18n', $message, 'warning' );
 
@@ -161,6 +175,7 @@ class Joinchat_I18n {
 	 * Get settings translations for current language
 	 *
 	 * @since  4.2
+	 * @since  5.1.6 Allow settings in array in format 'key__subkey'
 	 * @param  array $settings list of settings.
 	 * @return array
 	 */
@@ -168,9 +183,15 @@ class Joinchat_I18n {
 
 		$settings_i18n = $this->settings_i18n( $settings );
 
-		foreach ( $settings_i18n as $key => $label ) {
-			if ( ! empty( $settings[ $key ] ) ) {
-				$settings[ $key ] = apply_filters( 'wpml_translate_single_string', $settings[ $key ], self::DOMAIN_GROUP, $label );
+		foreach ( $settings_i18n as $setting => $label ) {
+			list( $key, $subkey ) = explode( '__', $setting . '__' );
+
+			if ( empty( $subkey ) ) {
+				if ( ! empty( $settings[ $key ] ) ) {
+					$settings[ $key ] = apply_filters( 'wpml_translate_single_string', $settings[ $key ], self::DOMAIN_GROUP, $label );
+				}
+			} elseif ( ! empty( $settings[ $key ][ $subkey ] ) ) {
+				$settings[ $key ][ $subkey ] = apply_filters( 'wpml_translate_single_string', $settings[ $key ][ $subkey ], self::DOMAIN_GROUP, $label );
 			}
 		}
 
@@ -245,6 +266,32 @@ class Joinchat_I18n {
 		}
 
 		return $img;
+
+	}
+
+	/**
+	 * Return language notice content
+	 *
+	 * @since 5.1.2
+	 * @param  mixed $msg Message content.
+	 * @return string
+	 */
+	private function language_notice( $msg ) {
+
+		$ds   = '&nbsp;&nbsp;';
+		$lang = sprintf(
+			"<strong>%s$ds%s (%s)</strong>",
+			$this->default_language_flag(),
+			esc_html__( 'Default site language', 'creame-whatsapp-me' ),
+			esc_html( $this->default_language_name() )
+		);
+		$link = sprintf(
+			'<a href="%s">%s</a>',
+			esc_url( $this->translations_link() ),
+			esc_html__( 'Manage translations', 'creame-whatsapp-me' )
+		);
+
+		return "{$lang}{$ds}{$msg}{$ds}{$link}";
 
 	}
 }

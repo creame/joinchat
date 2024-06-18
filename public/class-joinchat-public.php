@@ -71,7 +71,6 @@ class Joinchat_Public {
 		$settings['qr']            = 'yes' === $settings['qr'];
 		$settings['message_badge'] = 'yes' === $settings['message_badge'] && '' !== $settings['message_text'];
 		$settings['optin_check']   = 'yes' === $settings['optin_check'];
-		$settings['gtag']          = 'yes' === $settings['gtag'];
 
 		if ( empty( $settings['gads'] ) ) {
 			unset( $settings['gads'] );
@@ -194,7 +193,6 @@ class Joinchat_Public {
 				'whatsapp_web',
 				'message_send',
 				'gads',
-				'gtag',
 				'ga_tracker',   // Event customize.
 				'ga_event',
 				'data_layer',

@@ -62,8 +62,22 @@ class Joinchat_Admin {
 
 		$util::maybe_encode_emoji();
 
-		$color = preg_match( '/^#[a-f0-9]{6}$/i', $value['color']['bg'] ) ? $value['color']['bg'] : '#25d366';
-		$text  = '0' === $value['color']['text'] ? '0' : '100'; // '0' => black, '100' => white.
+		if ( is_array( $value['color'] ) ) {
+			$bg   = preg_match( '/^#[a-f0-9]{6}$/i', $value['color']['bg'] ) ? $value['color']['bg'] : '#25d366';
+			$text = '0' === $value['color']['text'] ? '0' : '100'; // '0' => black, '100' => white.
+		} elseif ( preg_match( '/^(?<bg>#[a-f0-9]{6})(?:\/(?<text>0|100))?$/i', $value['color'], $color ) ) {
+			$bg   = $color['bg'];
+			$text = isset( $color['text'] ) ? $color['text'] : '100';
+		} else {
+			$bg   = '#25d366';
+			$text = '100';
+		}
+
+		$optin_tags = array(
+			'em'     => array(),
+			'strong' => array(),
+			'a'      => array( 'href' => true ),
+		);
 
 		$value['telephone']     = $util::clean_input( $value['telephone'] );
 		$value['mobile_only']   = $util::yes_no( $value, 'mobile_only' );
@@ -79,21 +93,13 @@ class Joinchat_Admin {
 		$value['message_delay'] = intval( $value['message_delay'] ) * ( $util::yes_no( $value, 'message_delay_on' ) === 'yes' ? 1 : -1 );
 		$value['message_views'] = intval( $value['message_views'] ) ? intval( $value['message_views'] ) : 1;
 		$value['position']      = 'left' !== $value['position'] ? 'right' : 'left';
-		$value['color']         = "$color/$text";
+		$value['color']         = "$bg/$text";
 		$value['dark_mode']     = in_array( $value['dark_mode'], array( 'no', 'yes', 'auto' ), true ) ? $value['dark_mode'] : 'no';
 		$value['header']        = in_array( $value['header'], array( '__jc__', '__wa__' ), true ) ? $value['header'] : $util::substr( $util::clean_input( $value['header_custom'] ), 0, 40 );
 		$value['optin_check']   = $util::yes_no( $value, 'optin_check' );
-		$value['optin_text']    = wp_kses(
-			$value['optin_text'],
-			array(
-				'em'     => array(),
-				'strong' => array(),
-				'a'      => array( 'href' => true ),
-			)
-		);
+		$value['optin_text']    = wp_kses( $value['optin_text'], $optin_tags );
 		$value['gads']          = is_array( $value['gads'] ) ? sprintf( 'AW-%s/%s', $util::substr( $util::clean_input( $value['gads'][0] ), 0, 11 ), $util::substr( $util::clean_input( $value['gads'][1] ), 0, 20 ) ) : '';
 		$value['gads']          = 'AW-/' !== $value['gads'] ? $value['gads'] : '';
-		$value['gtag']          = $util::yes_no( $value, 'gtag' );
 		$value['custom_css']    = trim( $util::clean_nl( $value['custom_css'] ) );
 		$value['clear']         = $util::yes_no( $value, 'clear' );
 
@@ -120,7 +126,8 @@ class Joinchat_Admin {
 		}
 
 		// Extra actions on save.
-		do_action( 'joinchat_settings_validation', $value, jc_common()->settings );
+		// @since 5.1.6 add third param $option_name.
+		do_action( 'joinchat_settings_validation', $value, jc_common()->settings, JOINCHAT_SLUG );
 
 		return $value;
 
