@@ -44,7 +44,7 @@ class Joinchat_Util {
 	 */
 	public static function clean_input( $value ) {
 		if ( is_array( $value ) ) {
-			return array_map( 'self::clean_input', $value );
+			return array_map( self::class . '::clean_input', $value );
 		} elseif ( is_string( $value ) ) {
 			$value = self::clean_nl( $value );
 			// Split lines, clean and re-join lines.

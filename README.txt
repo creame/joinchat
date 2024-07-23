@@ -388,6 +388,9 @@ You can view in your *Settings > Privacy > Policy Guide* the suggested text by J
 
 == Changelog ==
 
+= 5.1.7 =
+* Fix PHP 8.2 deprecation message.
+
 = 5.1.6 =
 * Minor fixes and better support for internationalization in add-ons settings.
 
