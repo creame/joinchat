@@ -46,7 +46,7 @@ class Joinchat_Util {
 		if ( is_array( $value ) ) {
 			return array_map( self::class . '::clean_input', $value );
 		} elseif ( is_string( $value ) ) {
-			$value = self::clean_nl( $value );
+			$value = self::clean_nl( wp_unslash( $value ) );
 			// Split lines, clean and re-join lines.
 			return implode( "\n", array_map( 'sanitize_text_field', explode( "\n", trim( $value ) ) ) );
 		} else {
