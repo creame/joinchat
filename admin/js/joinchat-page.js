@@ -1,4 +1,4 @@
-(function ($) {
+(function ($, document) {
   'use strict';
 
   function textarea_autoheight() {
@@ -452,4 +452,4 @@
 
     $('.nav-tab-active').trigger('click');
   });
-})(jQuery);
+})(jQuery, document);

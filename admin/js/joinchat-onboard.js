@@ -1,4 +1,4 @@
-(function ($, window, document) {
+(function ($, window) {
   'use strict';
 
   // Random number
@@ -362,4 +362,4 @@
     setTimeout(function () { joinchat_dialog.startDialog(); }, 700);
   });
 
-}(jQuery, window, document));
+}(jQuery, window));

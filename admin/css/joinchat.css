@@ -11,6 +11,14 @@
   opacity: .33;
 }
 
+#joinchat_form ::-moz-placeholder {
+  opacity: .5;
+}
+
+#joinchat_form ::placeholder {
+  opacity: .5;
+}
+
 .js #joinchat_form textarea {
   overflow: hidden;
   min-height: 100px;
@@ -265,19 +273,12 @@ tr.joinchat--focus .joinchat_vars_help {
   opacity: .5;
 }
 
-.joinchat-metabox input::-moz-placeholder,
-.joinchat-metabox textarea::-moz-placeholder {
-  color: #dedfe0;
+.joinchat-metabox ::-moz-placeholder {
+  opacity: .5;
 }
 
-.joinchat-metabox input::placeholder,
-.joinchat-metabox textarea::placeholder {
-  color: #dedfe0;
-}
-
-.joinchat-metabox input::-ms-input-placeholder,
-.joinchat-metabox textarea::-ms-input-placeholder {
-  color: #dedfe0;
+.joinchat-metabox ::placeholder {
+  opacity: .5;
 }
 
 .joinchat-metabox input[type=radio] {

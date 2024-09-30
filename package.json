@@ -6,26 +6,31 @@
   "author": "Creame",
   "license": "ISC",
   "devDependencies": {
-    "autoprefixer": "^10.4.19",
+    "autoprefixer": "^10.4.20",
     "cssnano-cli": "^1.0.5",
     "del-cli": "^5.1.0",
-    "postcss-calc": "^9.0.1",
-    "postcss-cli": "^10.1.0",
-    "postcss-discard-duplicates": "^6.0.3",
+    "postcss-calc": "^10.0.2",
+    "postcss-cli": "^11.0.0",
+    "postcss-discard-duplicates": "^7.0.1",
     "postcss-hexrgba": "^2.1.0",
     "postcss-inline-svg": "^6.0.0",
     "postcss-scss": "^4.0.9",
     "postcss-sort-media-queries": "^5.2.0",
     "postcss-strip-inline-comments": "^0.1.5",
-    "postcss-svgo": "^6.0.3",
+    "postcss-svgo": "^7.0.1",
     "precss": "^4.0.0",
-    "stylelint": "^15.11.0",
-    "stylelint-config-standard": "^34.0.0"
+    "stylelint": "^16.9.0",
+    "stylelint-config-standard": "^36.0.1",
+    "uglify-js": "^3.19.3"
   },
   "browserslist": [
     "defaults"
   ],
   "scripts": {
+    "css:admin": "cssnano admin/css/joinchat.css admin/css/joinchat.min.css --no-svgo --safe && cssnano admin/css/joinchat-onboard.css admin/css/joinchat-onboard.min.css --no-svgo --safe",
+    "js:admin": "find admin/js -iname 'joinchat*.js' ! -iname '*.min.js' -exec sh -c 'uglifyjs \"$0\" -cm -o \"admin/js/$(basename \"$0\" .js).min.js\"' {} \\;",
+    "js:public": "find public/js -iname '*.js' ! -iname '*.min.js' -exec sh -c 'uglifyjs \"$0\" -cm -o \"public/js/$(basename \"$0\" .js).min.js\"' {} \\;",
+    "js": "npm run js:admin && npm run js:public",
     "watch": "postcss src/scss/styles.scss -o public/css/joinchat.css -w",
     "lint": "stylelint \"src/**/*.{css,sass,scss,sss,less}\" --fix",
     "css": "postcss src/scss/styles.scss -o public/css/joinchat.css -m",
@@ -37,7 +42,7 @@
     "btn:css": "postcss src/scss/btn.scss -o public/css/joinchat-btn.css -m",
     "btn:minify": "cssnano public/css/joinchat-btn.css public/css/joinchat-btn.min.css --no-svgo --safe",
     "btn:build": "npm run btn:css && npm run btn:minify",
-    "build-all": "npm run build && npm run woo:build && npm run btn:build",
+    "build-all": "npm run build && npm run woo:build && npm run btn:build && npm run css:admin && npm run js",
     "clean": "del dist/css/*"
   }
 }
