@@ -5,7 +5,7 @@ Tags: WhatsApp, Chat, Floating Button, Facebook Messenger, Telegram
 Requires at least: 4.9.6
 Tested up to: 6.6
 Requires PHP: 5.6
-Stable tag: 5.1.7
+Stable tag: 5.1.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -387,6 +387,10 @@ You can view in your *Settings > Privacy > Policy Guide* the suggested text by J
 
 
 == Changelog ==
+
+= 5.1.8 =
+* Minor CSS fixes and updated minified assets.
+* **SECURE** Unslash on clean fields input.
 
 = 5.1.7 =
 * Bump WordPress tested at 6.6.
