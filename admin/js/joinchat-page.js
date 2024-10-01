@@ -118,7 +118,7 @@
 
     // Toggle cookies notice
     $('#joinchat_message_delay_on').on('change', function () {
-      $('#joinchat_message_badge').parent().toggleClass('joinchat-dimmed', !this.checked);
+      $('#joinchat_message_delay, #joinchat_message_views, #joinchat_message_badge').parent().toggleClass('joinchat-dimmed', !this.checked);
       $('.joinchat-cookies-notice').toggleClass('joinchat-hidden', !this.checked);
     }).trigger('change');
 

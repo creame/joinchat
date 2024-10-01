@@ -388,6 +388,9 @@ You can view in your *Settings > Privacy > Policy Guide* the suggested text by J
 
 == Changelog ==
 
+= 5.1.9 =
+* CHANGE Chat window auto-open settings to be clearer.
+
 = 5.1.8 =
 * Minor CSS fixes and updated minified assets.
 * **SECURE** Unslash on clean fields input.

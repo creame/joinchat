@@ -9,6 +9,7 @@
 
 .joinchat-dimmed {
   opacity: .33;
+  transition: opacity 0.2s;
 }
 
 #joinchat_form ::-moz-placeholder {
@@ -84,6 +85,10 @@
 .joinchat-show-help:focus {
   background: #444;
   color: #fff;
+}
+
+.joinchat-cookies-notice {
+  font-style: italic;
 }
 
 #tab-panel-styles-and-vars span {

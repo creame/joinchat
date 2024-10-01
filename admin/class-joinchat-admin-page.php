@@ -159,9 +159,9 @@ class Joinchat_Admin_Page {
 							'label'    => esc_html__( 'Opt-in', 'creame-whatsapp-me' ),
 							'callback' => array( $this, 'field_optin' ),
 						),
-						'show_auto'     => array(
-							'label'    => esc_html__( 'Show automatically', 'creame-whatsapp-me' ),
-							'callback' => array( $this, 'field_show_auto' ),
+						'auto_open'     => array(
+							'label'    => esc_html__( 'Auto Open', 'creame-whatsapp-me' ),
+							'callback' => array( $this, 'field_auto_open' ),
 						),
 					),
 				);
@@ -574,29 +574,34 @@ class Joinchat_Admin_Page {
 	}
 
 	/**
-	 * Field 'show_auto' output
+	 * Field 'auto_open' output
 	 *
 	 * @since    5.1.0
+	 * @since    5.1.9 renamed from 'field_show_auto' to 'field_auto_open'
+	 *
 	 * @return void
 	 */
-	public function field_show_auto() {
+	public function field_auto_open() {
 
 		$delay = jc_common()->settings['message_delay'];
 		$pages = jc_common()->settings['message_views'];
 		$badge = jc_common()->settings['message_badge'];
 
-		$output = '<fieldset><legend class="screen-reader-text"><span>' . esc_html__( 'Show automatically', 'creame-whatsapp-me' ) . '</span></legend>' .
-			'<label><input id="joinchat_message_delay_on" name="joinchat[message_delay_on]" value="yes" type="checkbox"' . checked( 'yes', $delay > 0 ? 'yes' : '', false ) . '> ' . esc_html__( 'If a "Call to Action" is defined, display Chat Window after', 'creame-whatsapp-me' ) . '</label> ' .
-			'<label><input id="joinchat_message_delay" name="joinchat[message_delay]" value="' . abs( intval( $delay ) ) . '" type="number" min="1" max="120" style="width:5em"> ' . esc_html__( 'seconds', 'creame-whatsapp-me' ) . '</label> ' .
-			'<label>and user has visited at least <input id="joinchat_message_views" name="joinchat[message_views]" value="' . intval( $pages ) . '" type="number" min="1" max="120" style="width:5em"> ' . esc_html__( 'pages', 'creame-whatsapp-me' ) . '</label><br>' .
+		$output = '<fieldset><legend class="screen-reader-text"><span>' . esc_html__( 'Auto open', 'creame-whatsapp-me' ) . '</span></legend>' .
+			'<label><input id="joinchat_message_delay_on" name="joinchat[message_delay_on]" value="yes" type="checkbox"' . checked( 'yes', $delay > 0 ? 'yes' : '', false ) . '> ' . esc_html__( 'Automatically show Chat Window', 'creame-whatsapp-me' ) . '</label> ' .
+			/* translators: %s: input for seconds delay */
+			'<label>' . sprintf( esc_html__( 'after %s seconds', 'creame-whatsapp-me' ), '<input id="joinchat_message_delay" name="joinchat[message_delay]" value="' . abs( intval( $delay ) ) . '" type="number" min="1" max="120" style="width:5em">' ) . '</label> ' .
+			/* translators: %s: input for number of pages */
+			'<label>' . sprintf( esc_html__( 'and user has visited at least %s pages', 'creame-whatsapp-me' ), '<input id="joinchat_message_views" name="joinchat[message_views]" value="' . intval( $pages ) . '" type="number" min="1" max="120" style="width:5em">' ) . '</label><br>' .
 			'<label><input id="joinchat_message_badge" name="joinchat[message_badge]" value="yes" type="checkbox"' . checked( 'yes', $badge, false ) . '> ' .
 			esc_html__( 'Display a notification balloon instead of opening the Chat Window for a "less intrusive" mode', 'creame-whatsapp-me' ) . '</label></fieldset>' .
-			'<p class="description">' . esc_html__( 'You can also use other triggers to show Chat Window', 'creame-whatsapp-me' ) . ' ' .
+			'<p class="description">' . esc_html__( 'Only if "Call to Action" is defined.', 'creame-whatsapp-me' ) . ' ' .
+			esc_html__( 'You can also use other triggers to show Chat Window', 'creame-whatsapp-me' ) . ' ' .
 			' <a class="joinchat-show-help" href="#tab-link-triggers" title="' . esc_html__( 'Show Help', 'creame-whatsapp-me' ) . '">?</a>' .
-			'&nbsp;&nbsp;&nbsp;<span class="joinchat-cookies-notice">' . esc_html__( 'This feature requires the use of cookies', 'creame-whatsapp-me' ) . ' ' .
+			'&nbsp;&nbsp;<span class="joinchat-cookies-notice">' . esc_html__( 'This feature requires the use of cookies', 'creame-whatsapp-me' ) . ' ' .
 			sprintf( '<a href="%s" target="_blank">%s</a>', esc_url_raw( admin_url( 'options-privacy.php?tab=policyguide' ) ), esc_html__( 'Privacy Policy Guide' ) ) . '</span></p>';
 
-		echo apply_filters( 'joinchat_field_output', $output, 'show_auto', jc_common()->settings ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo apply_filters( 'joinchat_field_output', $output, 'auto_open', jc_common()->settings ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 
 	}
 
