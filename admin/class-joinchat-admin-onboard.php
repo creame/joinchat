@@ -232,7 +232,8 @@ class Joinchat_Admin_Onboard {
 
 		check_ajax_referer( 'joinchat_onboard', 'nonce', true );
 
-		$data = $_POST['data'];
+		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.MissingUnslash,WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+		$data = isset( $_POST['data'] ) ? Joinchat_Util::clean_input( (array) $_POST['data'] ) : array();
 
 		// Save settings.
 		$settings = array_merge( jc_common()->settings, $data );

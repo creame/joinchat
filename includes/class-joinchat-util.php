@@ -43,10 +43,12 @@ class Joinchat_Util {
 	 * @return   mixed $value cleaned
 	 */
 	public static function clean_input( $value ) {
+		$value = wp_unslash( $value );
+
 		if ( is_array( $value ) ) {
 			return array_map( self::class . '::clean_input', $value );
 		} elseif ( is_string( $value ) ) {
-			$value = self::clean_nl( wp_unslash( $value ) );
+			$value = self::clean_nl( $value );
 			// Split lines, clean and re-join lines.
 			return implode( "\n", array_map( 'sanitize_text_field', explode( "\n", trim( $value ) ) ) );
 		} else {

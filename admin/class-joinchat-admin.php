@@ -353,7 +353,7 @@ class Joinchat_Admin {
 	 */
 	public function save_meta( $id, $arg ) {
 
-		if ( ! isset( $_POST['joinchat_nonce'] ) || ! wp_verify_nonce( $_POST['joinchat_nonce'], 'joinchat_data' ) ) {
+		if ( ! isset( $_POST['joinchat_nonce'] ) || ! wp_verify_nonce( sanitize_key( $_POST['joinchat_nonce'] ), 'joinchat_data' ) ) {
 			return;
 		}
 
@@ -365,17 +365,17 @@ class Joinchat_Admin {
 
 		Joinchat_Util::maybe_encode_emoji();
 
-		// Clean and delete empty/false fields.
-		$metadata = array_filter(
-			Joinchat_Util::clean_input(
-				array(
-					'telephone'    => $_POST['joinchat_telephone'],
-					'message_text' => $_POST['joinchat_message'],
-					'message_send' => $_POST['joinchat_message_send'],
-					'view'         => $_POST['joinchat_view'],
-				)
-			)
+		// phpcs:disable WordPress.Security.ValidatedSanitizedInput.MissingUnslash,WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+		$metadata = array(
+			'telephone'    => isset( $_POST['joinchat_telephone'] ) ? $_POST['joinchat_telephone'] : '',
+			'message_text' => isset( $_POST['joinchat_message'] ) ? $_POST['joinchat_message'] : '',
+			'message_send' => isset( $_POST['joinchat_message_send'] ) ? $_POST['joinchat_message_send'] : '',
+			'view'         => isset( $_POST['joinchat_view'] ) ? $_POST['joinchat_view'] : '',
 		);
+		// phpcs:enable
+
+		// Clean and delete empty/false fields.
+		$metadata = array_filter( Joinchat_Util::clean_input( $metadata ) );
 
 		$metadata = apply_filters( 'joinchat_metabox_save', $metadata, $id, $type );
 

@@ -101,8 +101,8 @@ class Joinchat_Admin_Page {
 	 */
 	public function page_hooks() {
 
-		if ( isset( $_GET['onboard'] ) ) {
-			$is_onboard = true === filter_var( $_GET['onboard'], FILTER_VALIDATE_BOOLEAN );
+		if ( isset( $_GET['onboard'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			$is_onboard = true === filter_var( wp_unslash( $_GET['onboard'] ), FILTER_VALIDATE_BOOLEAN ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		} else {
 			$is_onboard = jc_common()->settings === jc_common()->defaults();
 		}
@@ -241,8 +241,9 @@ class Joinchat_Admin_Page {
 	 */
 	public function settings_tab_open( $args ) {
 
+		// phpcs:ignore WordPress.Security.NonceVerification,WordPress.Security.ValidatedSanitizedInput
+		$active_tab = isset( $_GET['tab'] ) && in_array( $_GET['tab'], array_keys( $this->tabs ), true ) ? $_GET['tab'] : 'general';
 		$tab_id     = str_replace( array( 'joinchat_tab_', '_open' ), '', $args['id'] );
-		$active_tab = isset( $_GET['tab'] ) && in_array( $_GET['tab'], array_keys( $this->tabs ), true ) ? wp_unslash( $_GET['tab'] ) : 'general'; // phpcs:ignore WordPress.Security.NonceVerification
 
 		printf(
 			'<div id="joinchat_tab_%1$s" class="joinchat-tab %2$s" role="tabpanel" aria-labelledby="navtab_%1$s">',
@@ -733,7 +734,8 @@ class Joinchat_Admin_Page {
 	 */
 	public function options_page() {
 
-		$active_tab = isset( $_GET['tab'] ) && in_array( $_GET['tab'], array_keys( $this->tabs ), true ) ? wp_unslash( $_GET['tab'] ) : 'general'; // phpcs:ignore WordPress.Security.NonceVerification
+		// phpcs:ignore WordPress.Security.NonceVerification,WordPress.Security.ValidatedSanitizedInput
+		$active_tab = isset( $_GET['tab'] ) && in_array( $_GET['tab'], array_keys( $this->tabs ), true ) ? $_GET['tab'] : 'general';
 		$prev_satus = in_array( $active_tab, array( 'general', 'advanced' ), true ) ? 'button' : 'button disabled';
 		?>
 			<div class="wrap">
