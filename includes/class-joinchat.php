@@ -193,15 +193,13 @@ class Joinchat {
 
 		$this->loader->add_action( 'admin_menu', $plugin_page, 'add_menu' );
 		$this->loader->add_action( 'admin_init', $plugin_page, 'setting_fields' );
-		$this->loader->add_action( 'load-settings_page_joinchat', $plugin_page, 'page_hooks' ); // Settings submenu.
-		$this->loader->add_action( 'load-toplevel_page_joinchat', $plugin_page, 'page_hooks' ); // Joinchat menu.
+		$this->loader->add_action( 'load_joinchat_settings_page', $plugin_page, 'page_hooks' );
 
 		$plugin_onboard = new Joinchat_Admin_Onboard();
 
 		$this->loader->add_action( 'admin_menu', $plugin_onboard, 'add_menu' );
 		$this->loader->add_action( 'admin_head', $plugin_onboard, 'remove_menu' );
-		$this->loader->add_action( 'load-settings_page_joinchat-onboard', $plugin_onboard, 'page_hooks' ); // Settings submenu.
-		$this->loader->add_action( 'load-joinchat_page_joinchat-onboard', $plugin_onboard, 'page_hooks' ); // Joinchat submenu.
+		$this->loader->add_action( 'load_joinchat_onboard_page', $plugin_onboard, 'page_hooks' );
 		$this->loader->add_action( 'wp_ajax_joinchat_onboard', $plugin_onboard, 'save' );
 
 	}

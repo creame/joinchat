@@ -27,10 +27,12 @@ class Joinchat_Admin_Onboard {
 		$title = esc_html__( 'Welcome to Joinchat', 'creame-whatsapp-me' );
 
 		if ( Joinchat_Util::options_submenu() ) {
-			add_options_page( $title, $title, Joinchat_Util::capability(), 'joinchat-onboard', array( $this, 'options_page' ) );
+			$page_hook = add_options_page( $title, $title, Joinchat_Util::capability(), 'joinchat-onboard', array( $this, 'options_page' ) );
 		} else {
-			add_submenu_page( JOINCHAT_SLUG, $title, $title, Joinchat_Util::capability(), 'joinchat-onboard', array( $this, 'options_page' ) );
+			$page_hook = add_submenu_page( JOINCHAT_SLUG, $title, $title, Joinchat_Util::capability(), 'joinchat-onboard', array( $this, 'options_page' ) );
 		}
+
+		add_action( "load-{$page_hook}", function() { do_action( 'load_joinchat_onboard_page' ); } ); // phpcs:ignore
 
 	}
 

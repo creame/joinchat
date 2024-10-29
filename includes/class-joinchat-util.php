@@ -387,16 +387,14 @@ class Joinchat_Util {
 	}
 
 	/**
-	 * Is Joinchat admin screen
+	 * Is Joinchat settings admin screen
 	 *
 	 * @since    5.0.0
 	 * @return bool
 	 */
 	public static function is_admin_screen() {
 
-		$current_screen = get_current_screen();
-
-		return null !== $current_screen && false !== strpos( $current_screen->id, '_joinchat' );
+		return did_action( 'load_joinchat_settings_page' );
 
 	}
 
