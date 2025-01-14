@@ -1,22 +1,22 @@
-# Copyright (C) 2024 Creame
+# Copyright (C) 2025 Creame
 # This file is distributed under the GPL-2.0+.
 msgid ""
 msgstr ""
-"Project-Id-Version: Joinchat 5.1.2\n"
+"Project-Id-Version: Joinchat 5.2.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/creame-whatsapp-me\n"
 "Last-Translator: Pacotole <pacotole@crea.me>\n"
 "Language-Team: Creame <hola@crea.me>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-04-08T09:50:12+00:00\n"
+"POT-Creation-Date: 2025-01-14T18:16:05+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.10.0\n"
 "X-Domain: creame-whatsapp-me\n"
 
 #. Plugin Name of the plugin
 #: joinchat.php
-#: admin/class-joinchat-admin.php:285
+#: admin/class-joinchat-admin.php:292
 #: admin/partials/term-meta-box.php:15
 #: gutenberg/build/index.js:1
 msgid "Joinchat"
@@ -43,16 +43,16 @@ msgid "https://crea.me"
 msgstr ""
 
 #: admin/class-joinchat-admin-onboard.php:27
-#: admin/class-joinchat-admin-onboard.php:115
-#: admin/class-joinchat-admin-page.php:716
+#: admin/class-joinchat-admin-onboard.php:117
+#: admin/class-joinchat-admin-page.php:721
 msgid "Welcome to Joinchat"
 msgstr ""
 
-#: admin/class-joinchat-admin-onboard.php:93
+#: admin/class-joinchat-admin-onboard.php:95
 msgid "Exit the wizard and"
 msgstr ""
 
-#: admin/class-joinchat-admin-onboard.php:94
+#: admin/class-joinchat-admin-onboard.php:96
 #: admin/class-joinchat-admin-onboard.php:214
 msgid "go to Joinchat Settings"
 msgstr ""
@@ -84,7 +84,7 @@ msgid "Add the text for the first message that users will send you via WhatsApp.
 msgstr ""
 
 #: admin/class-joinchat-admin-onboard.php:194
-#: admin/class-joinchat-admin-page.php:141
+#: admin/class-joinchat-admin-page.php:143
 #: admin/partials/post-meta-box.php:25
 #: admin/partials/term-meta-box.php:27
 #: gutenberg/build/index.js:1
@@ -92,7 +92,7 @@ msgid "Message"
 msgstr ""
 
 #: admin/class-joinchat-admin-onboard.php:195
-#: admin/class-joinchat-admin-page.php:400
+#: admin/class-joinchat-admin-page.php:406
 msgid "Hi *{SITE}*! I need more info about {TITLE} {URL}"
 msgstr ""
 
@@ -113,7 +113,7 @@ msgid "Define a Call to Action message to prompt users to interact."
 msgstr ""
 
 #: admin/class-joinchat-admin-onboard.php:199
-#: admin/class-joinchat-admin-page.php:153
+#: admin/class-joinchat-admin-page.php:155
 #: admin/partials/post-meta-box.php:21
 #: admin/partials/term-meta-box.php:23
 #: gutenberg/build/index.js:1
@@ -121,7 +121,7 @@ msgid "Call to Action"
 msgstr ""
 
 #: admin/class-joinchat-admin-onboard.php:200
-#: admin/class-joinchat-admin-page.php:395
+#: admin/class-joinchat-admin-page.php:401
 msgid ""
 "Hello 👋\n"
 "Can we help you?"
@@ -173,186 +173,180 @@ msgctxt "onboard"
 msgid "😖 Sorry, something went wrong."
 msgstr ""
 
-#: admin/class-joinchat-admin-page.php:61
+#: admin/class-joinchat-admin-page.php:63
 msgid "General"
 msgstr ""
 
-#: admin/class-joinchat-admin-page.php:62
+#: admin/class-joinchat-admin-page.php:64
 #: admin/partials/term-meta-box.php:39
 #: gutenberg/build/index.js:1
 msgid "Visibility"
 msgstr ""
 
-#: admin/class-joinchat-admin-page.php:63
+#: admin/class-joinchat-admin-page.php:65
 msgid "Advanced"
 msgstr ""
 
-#: admin/class-joinchat-admin-page.php:140
+#: admin/class-joinchat-admin-page.php:142
 #: admin/partials/post-meta-box.php:17
 #: admin/partials/term-meta-box.php:19
 #: gutenberg/build/index.js:1
 msgid "Telephone"
 msgstr ""
 
-#: admin/class-joinchat-admin-page.php:142
+#: admin/class-joinchat-admin-page.php:144
 msgid "Image"
 msgstr ""
 
-#: admin/class-joinchat-admin-page.php:143
+#: admin/class-joinchat-admin-page.php:145
 msgid "Tooltip"
 msgstr ""
 
-#: admin/class-joinchat-admin-page.php:144
-#: admin/class-joinchat-admin-page.php:363
+#: admin/class-joinchat-admin-page.php:146
+#: admin/class-joinchat-admin-page.php:365
 msgid "Position on Screen"
 msgstr ""
 
-#: admin/class-joinchat-admin-page.php:145
+#: admin/class-joinchat-admin-page.php:147
 msgid "Button Delay"
 msgstr ""
 
-#: admin/class-joinchat-admin-page.php:146
-#: admin/class-joinchat-admin-page.php:357
+#: admin/class-joinchat-admin-page.php:148
+#: admin/class-joinchat-admin-page.php:359
 msgid "Mobile Only"
 msgstr ""
 
-#: admin/class-joinchat-admin-page.php:148
+#: admin/class-joinchat-admin-page.php:150
 #: admin/class-joinchat-admin-page.php:527
 msgid "On Desktop"
 msgstr ""
 
-#: admin/class-joinchat-admin-page.php:154
+#: admin/class-joinchat-admin-page.php:156
 #: admin/class-joinchat-woo-admin.php:228
 msgid "Button Text"
 msgstr ""
 
-#: admin/class-joinchat-admin-page.php:155
+#: admin/class-joinchat-admin-page.php:157
 msgid "Theme Color"
 msgstr ""
 
-#: admin/class-joinchat-admin-page.php:156
-#: admin/class-joinchat-admin-page.php:420
+#: admin/class-joinchat-admin-page.php:158
+#: admin/class-joinchat-admin-page.php:426
 msgid "Dark Mode"
 msgstr ""
 
-#: admin/class-joinchat-admin-page.php:157
-#: admin/class-joinchat-admin-page.php:433
+#: admin/class-joinchat-admin-page.php:159
+#: admin/class-joinchat-admin-page.php:439
 msgid "Header"
 msgstr ""
 
-#: admin/class-joinchat-admin-page.php:159
+#: admin/class-joinchat-admin-page.php:161
 msgid "Opt-in"
 msgstr ""
 
-#: admin/class-joinchat-admin-page.php:163
-#: admin/class-joinchat-admin-page.php:595
-msgid "Show automatically"
+#: admin/class-joinchat-admin-page.php:165
+msgid "Auto Open"
 msgstr ""
 
-#: admin/class-joinchat-admin-page.php:174
+#: admin/class-joinchat-admin-page.php:176
 msgid "Global"
 msgstr ""
 
-#: admin/class-joinchat-admin-page.php:179
+#: admin/class-joinchat-admin-page.php:181
 msgid "Front Page"
 msgstr ""
 
-#: admin/class-joinchat-admin-page.php:180
+#: admin/class-joinchat-admin-page.php:182
 msgid "Blog Page"
 msgstr ""
 
-#: admin/class-joinchat-admin-page.php:181
+#: admin/class-joinchat-admin-page.php:183
 msgid "404 Page"
 msgstr ""
 
-#: admin/class-joinchat-admin-page.php:182
+#: admin/class-joinchat-admin-page.php:184
 msgid "Search Results"
 msgstr ""
 
-#: admin/class-joinchat-admin-page.php:183
+#: admin/class-joinchat-admin-page.php:185
 msgid "Archives"
 msgstr ""
 
-#: admin/class-joinchat-admin-page.php:184
+#: admin/class-joinchat-admin-page.php:186
 msgid "Date Archives"
 msgstr ""
 
-#: admin/class-joinchat-admin-page.php:185
+#: admin/class-joinchat-admin-page.php:187
 msgid "Author Archives"
 msgstr ""
 
-#: admin/class-joinchat-admin-page.php:186
+#: admin/class-joinchat-admin-page.php:188
 msgid "Singular"
 msgstr ""
 
-#: admin/class-joinchat-admin-page.php:187
+#: admin/class-joinchat-admin-page.php:189
 msgid "Page"
 msgstr ""
 
-#: admin/class-joinchat-admin-page.php:188
+#: admin/class-joinchat-admin-page.php:190
 msgid "Post"
 msgstr ""
 
-#: admin/class-joinchat-admin-page.php:219
+#: admin/class-joinchat-admin-page.php:221
 msgid "Google Ads Conversion"
 msgstr ""
 
-#: admin/class-joinchat-admin-page.php:220
-#: admin/class-joinchat-admin-page.php:455
-msgid "Google Tag Events"
-msgstr ""
-
-#: admin/class-joinchat-admin-page.php:221
+#: admin/class-joinchat-admin-page.php:222
 #: admin/class-joinchat-admin-page.php:461
 msgid "Custom CSS"
 msgstr ""
 
-#: admin/class-joinchat-admin-page.php:222
+#: admin/class-joinchat-admin-page.php:223
 #: admin/class-joinchat-admin-page.php:474
 msgid "Clear on uninstall"
 msgstr ""
 
-#: admin/class-joinchat-admin-page.php:281
+#: admin/class-joinchat-admin-page.php:283
 msgid "Button"
 msgstr ""
 
-#: admin/class-joinchat-admin-page.php:282
+#: admin/class-joinchat-admin-page.php:284
 msgid "Set the contact number and the appearance of the WhatsApp button."
 msgstr ""
 
-#: admin/class-joinchat-admin-page.php:286
+#: admin/class-joinchat-admin-page.php:288
 msgid "Chat Window"
 msgstr ""
 
-#: admin/class-joinchat-admin-page.php:288
+#: admin/class-joinchat-admin-page.php:290
 msgid "If you define a \"Call to Action\" a window will be displayed simulating a chat before launching WhatsApp."
 msgstr ""
 
-#: admin/class-joinchat-admin-page.php:289
+#: admin/class-joinchat-admin-page.php:291
 msgid "You can introduce yourself, offer help or even make promotions to your users."
 msgstr ""
 
-#: admin/class-joinchat-admin-page.php:295
+#: admin/class-joinchat-admin-page.php:297
 msgid "Visibility Settings"
 msgstr ""
 
-#: admin/class-joinchat-admin-page.php:296
+#: admin/class-joinchat-admin-page.php:298
 msgid "From here you can configure on which pages the WhatsApp button will be visible."
 msgstr ""
 
-#: admin/class-joinchat-admin-page.php:297
+#: admin/class-joinchat-admin-page.php:299
 msgid "Restore default visibility"
 msgstr ""
 
-#: admin/class-joinchat-admin-page.php:305
+#: admin/class-joinchat-admin-page.php:307
 msgid "Custom Post Types"
 msgstr ""
 
-#: admin/class-joinchat-admin-page.php:313
+#: admin/class-joinchat-admin-page.php:315
 msgid "Advanced Settings"
 msgstr ""
 
-#: admin/class-joinchat-admin-page.php:339
+#: admin/class-joinchat-admin-page.php:341
 #: admin/class-joinchat-admin-page.php:510
 #: admin/partials/post-meta-box.php:34
 #: admin/partials/term-meta-box.php:42
@@ -360,7 +354,7 @@ msgstr ""
 msgid "Show"
 msgstr ""
 
-#: admin/class-joinchat-admin-page.php:341
+#: admin/class-joinchat-admin-page.php:343
 #: admin/class-joinchat-admin-page.php:512
 #: admin/partials/post-meta-box.php:36
 #: admin/partials/term-meta-box.php:44
@@ -368,134 +362,129 @@ msgstr ""
 msgid "Hide"
 msgstr ""
 
-#: admin/class-joinchat-admin-page.php:343
+#: admin/class-joinchat-admin-page.php:345
 msgid "Inherit"
 msgstr ""
 
-#: admin/class-joinchat-admin-page.php:352
+#: admin/class-joinchat-admin-page.php:354
 msgid "Test Number"
 msgstr ""
 
-#: admin/class-joinchat-admin-page.php:353
+#: admin/class-joinchat-admin-page.php:355
 msgid "Contact WhatsApp number <strong>(the button will not be shown if it's empty)</strong>"
 msgstr ""
 
-#: admin/class-joinchat-admin-page.php:359
+#: admin/class-joinchat-admin-page.php:361
 msgid "Only display the button on mobile devices"
 msgstr ""
 
-#: admin/class-joinchat-admin-page.php:365
+#: admin/class-joinchat-admin-page.php:367
 msgid "Left"
 msgstr ""
 
-#: admin/class-joinchat-admin-page.php:367
+#: admin/class-joinchat-admin-page.php:369
 msgid "Right"
 msgstr ""
 
-#: admin/class-joinchat-admin-page.php:377
+#: admin/class-joinchat-admin-page.php:383
 msgid "Select an image"
 msgstr ""
 
-#: admin/class-joinchat-admin-page.php:378
+#: admin/class-joinchat-admin-page.php:384
 msgid "Select button image"
 msgstr ""
 
-#: admin/class-joinchat-admin-page.php:378
+#: admin/class-joinchat-admin-page.php:384
 msgid "Use image"
 msgstr ""
 
-#: admin/class-joinchat-admin-page.php:379
+#: admin/class-joinchat-admin-page.php:385
 msgid "Remove"
 msgstr ""
 
-#: admin/class-joinchat-admin-page.php:380
+#: admin/class-joinchat-admin-page.php:386
 msgid "The image will alternate with button icon"
 msgstr ""
 
-#: admin/class-joinchat-admin-page.php:384
+#: admin/class-joinchat-admin-page.php:390
 msgid "💬 Need help?"
 msgstr ""
 
-#: admin/class-joinchat-admin-page.php:385
+#: admin/class-joinchat-admin-page.php:391
 msgid "Short text shown next to button"
 msgstr ""
 
-#: admin/class-joinchat-admin-page.php:390
-#: admin/class-joinchat-admin-page.php:597
+#: admin/class-joinchat-admin-page.php:396
 msgid "seconds"
 msgstr ""
 
-#: admin/class-joinchat-admin-page.php:390
+#: admin/class-joinchat-admin-page.php:396
 msgid "-1 to display directly without animation"
 msgstr ""
 
-#: admin/class-joinchat-admin-page.php:391
+#: admin/class-joinchat-admin-page.php:397
 msgid "Time since the page is opened until the button is displayed"
 msgstr ""
 
-#: admin/class-joinchat-admin-page.php:396
+#: admin/class-joinchat-admin-page.php:402
 msgid "Define a text to encourage users to contact by WhatsApp"
 msgstr ""
 
-#: admin/class-joinchat-admin-page.php:401
+#: admin/class-joinchat-admin-page.php:407
 msgid "Predefined text for the first message the user will send you"
 msgstr ""
 
-#: admin/class-joinchat-admin-page.php:405
+#: admin/class-joinchat-admin-page.php:411
 #: includes/class-joinchat-common.php:110
 msgid "Open chat"
 msgstr ""
 
-#: admin/class-joinchat-admin-page.php:406
+#: admin/class-joinchat-admin-page.php:412
 msgid "Text to open chat on Chat Window button"
 msgstr ""
 
-#: admin/class-joinchat-admin-page.php:414
+#: admin/class-joinchat-admin-page.php:420
 msgid "White Text"
 msgstr ""
 
-#: admin/class-joinchat-admin-page.php:415
+#: admin/class-joinchat-admin-page.php:421
 msgid "Black Text"
 msgstr ""
 
-#: admin/class-joinchat-admin-page.php:422
+#: admin/class-joinchat-admin-page.php:428
 msgid "No"
 msgstr ""
 
-#: admin/class-joinchat-admin-page.php:424
+#: admin/class-joinchat-admin-page.php:430
 msgid "Yes"
 msgstr ""
 
-#: admin/class-joinchat-admin-page.php:426
+#: admin/class-joinchat-admin-page.php:432
 msgid "Auto (detects device dark mode)"
 msgstr ""
 
-#: admin/class-joinchat-admin-page.php:435
+#: admin/class-joinchat-admin-page.php:441
 msgid "Powered by Joinchat"
 msgstr ""
 
-#: admin/class-joinchat-admin-page.php:437
+#: admin/class-joinchat-admin-page.php:443
 msgid "WhatsApp Logo"
 msgstr ""
 
-#: admin/class-joinchat-admin-page.php:439
+#: admin/class-joinchat-admin-page.php:445
 msgid "Custom:"
 msgstr ""
 
-#: admin/class-joinchat-admin-page.php:448
+#: admin/class-joinchat-admin-page.php:454
 msgid "Conversion ID"
 msgstr ""
 
-#: admin/class-joinchat-admin-page.php:449
+#: admin/class-joinchat-admin-page.php:455
 msgid "Conversion label"
 msgstr ""
 
-#: admin/class-joinchat-admin-page.php:451
-msgid "Send the conversion automatically at the chat start"
-msgstr ""
-
 #: admin/class-joinchat-admin-page.php:457
-msgid "Use new events method compatible with Google Tag with multiple destinations"
+msgid "Send the conversion automatically at the chat start"
 msgstr ""
 
 #: admin/class-joinchat-admin-page.php:462
@@ -543,213 +532,227 @@ msgstr ""
 msgid "User approval is required to enable the contact button"
 msgstr ""
 
-#: admin/class-joinchat-admin-page.php:596
-msgid "If a \"Call to Action\" is defined, display Chat Window after"
+#: admin/class-joinchat-admin-page.php:597
+msgid "Auto open"
 msgstr ""
 
 #: admin/class-joinchat-admin-page.php:598
-msgid "pages"
+msgid "Automatically show Chat Window"
 msgstr ""
 
+#. translators: %s: input for seconds delay
 #: admin/class-joinchat-admin-page.php:600
+msgid "after %s seconds"
+msgstr ""
+
+#. translators: %s: input for number of pages
+#: admin/class-joinchat-admin-page.php:602
+msgid "and user has visited at least %s pages"
+msgstr ""
+
+#: admin/class-joinchat-admin-page.php:604
 msgid "Display a notification balloon instead of opening the Chat Window for a \"less intrusive\" mode"
 msgstr ""
 
-#: admin/class-joinchat-admin-page.php:601
+#: admin/class-joinchat-admin-page.php:605
+msgid "Only if \"Call to Action\" is defined."
+msgstr ""
+
+#: admin/class-joinchat-admin-page.php:606
 msgid "You can also use other triggers to show Chat Window"
 msgstr ""
 
-#: admin/class-joinchat-admin-page.php:602
-#: admin/class-joinchat-admin-page.php:786
+#: admin/class-joinchat-admin-page.php:607
+#: admin/class-joinchat-admin-page.php:792
 msgid "Show Help"
 msgstr ""
 
-#: admin/class-joinchat-admin-page.php:603
+#: admin/class-joinchat-admin-page.php:608
 msgid "This feature requires the use of cookies"
 msgstr ""
 
-#: admin/class-joinchat-admin-page.php:622
+#: admin/class-joinchat-admin-page.php:627
 msgid "Styles and Variables"
 msgstr ""
 
-#: admin/class-joinchat-admin-page.php:625
+#: admin/class-joinchat-admin-page.php:630
 msgid "You can use formatting styles like in WhatsApp: _<em>italic</em>_ *<strong>bold</strong>* ~<del>strikethrough</del>~."
 msgstr ""
 
-#: admin/class-joinchat-admin-page.php:632
+#: admin/class-joinchat-admin-page.php:637
 msgid "You can use dynamic variables that will be replaced by the values of the page the user visits:"
 msgstr ""
 
-#: admin/class-joinchat-admin-page.php:635
+#: admin/class-joinchat-admin-page.php:640
 msgid "Page Title"
 msgstr ""
 
-#: admin/class-joinchat-admin-page.php:642
+#: admin/class-joinchat-admin-page.php:647
 msgid "Triggers"
 msgstr ""
 
-#: admin/class-joinchat-admin-page.php:644
+#: admin/class-joinchat-admin-page.php:649
 msgid "Any element in your pages can be a chat trigger:"
 msgstr ""
 
-#: admin/class-joinchat-admin-page.php:645
+#: admin/class-joinchat-admin-page.php:650
 msgid "On page load, by url"
 msgstr ""
 
-#: admin/class-joinchat-admin-page.php:645
-#: admin/class-joinchat-admin-page.php:665
-#: admin/class-joinchat-admin-page.php:673
+#: admin/class-joinchat-admin-page.php:650
+#: admin/class-joinchat-admin-page.php:670
+#: admin/class-joinchat-admin-page.php:678
 msgid "show Chat Window"
 msgstr ""
 
-#: admin/class-joinchat-admin-page.php:647
+#: admin/class-joinchat-admin-page.php:652
 msgid "Can set delay in seconds, default is 0."
 msgstr ""
 
-#: admin/class-joinchat-admin-page.php:648
-#: admin/class-joinchat-admin-page.php:650
-#: admin/class-joinchat-admin-page.php:661
-#: admin/class-joinchat-admin-page.php:663
-#: admin/class-joinchat-admin-page.php:669
-#: admin/class-joinchat-admin-page.php:671
-#: admin/class-joinchat-admin-page.php:677
-#: admin/class-joinchat-admin.php:167
+#: admin/class-joinchat-admin-page.php:653
+#: admin/class-joinchat-admin-page.php:655
+#: admin/class-joinchat-admin-page.php:666
+#: admin/class-joinchat-admin-page.php:668
+#: admin/class-joinchat-admin-page.php:674
+#: admin/class-joinchat-admin-page.php:676
+#: admin/class-joinchat-admin-page.php:682
+#: admin/class-joinchat-admin.php:174
 msgid "e.g."
 msgstr ""
 
-#: admin/class-joinchat-admin-page.php:652
-#: admin/class-joinchat-admin-page.php:665
+#: admin/class-joinchat-admin-page.php:657
+#: admin/class-joinchat-admin-page.php:670
 msgid "On click"
 msgstr ""
 
-#: admin/class-joinchat-admin-page.php:652
+#: admin/class-joinchat-admin-page.php:657
 msgid "open WhatsApp"
 msgstr ""
 
 #. translators: 1: attribute phone, 2: attribute message.
-#: admin/class-joinchat-admin-page.php:655
+#: admin/class-joinchat-admin-page.php:660
 msgid "You can set <strong>custom phone and initial message</strong> with attributes %1$s and %2$s."
 msgstr ""
 
-#: admin/class-joinchat-admin-page.php:661
-#: admin/class-joinchat-admin-page.php:663
-#: admin/class-joinchat-admin-page.php:669
-#: admin/class-joinchat-admin-page.php:671
+#: admin/class-joinchat-admin-page.php:666
+#: admin/class-joinchat-admin-page.php:668
+#: admin/class-joinchat-admin-page.php:674
+#: admin/class-joinchat-admin-page.php:676
 msgid "Contact us"
 msgstr ""
 
-#: admin/class-joinchat-admin-page.php:666
+#: admin/class-joinchat-admin-page.php:671
 msgid "If there is no chat window (no CTA and no Opt-in required) WhatsApp will open directly."
 msgstr ""
 
-#: admin/class-joinchat-admin-page.php:673
+#: admin/class-joinchat-admin-page.php:678
 msgid "On scroll (when element appears on screen)"
 msgstr ""
 
-#: admin/class-joinchat-admin-page.php:675
+#: admin/class-joinchat-admin-page.php:680
 msgid "only show if it's an not seen CTA."
 msgstr ""
 
-#: admin/class-joinchat-admin-page.php:676
+#: admin/class-joinchat-admin-page.php:681
 msgid "to show always."
 msgstr ""
 
-#: admin/class-joinchat-admin-page.php:682
+#: admin/class-joinchat-admin-page.php:687
 msgid "Help & Support"
 msgstr ""
 
 #. translators: 1: docs url, 2: wordpress.org plugin support url.
-#: admin/class-joinchat-admin-page.php:688
+#: admin/class-joinchat-admin-page.php:693
 msgid "If you need help, first check the <a href=\"%1$s\" target=\"_blank\">documentation</a> and if you don't find the solution you can consult the <a href=\"%2$s\" target=\"_blank\">plugin's free support forum</a>."
 msgstr ""
 
 #. translators: %s: premium url.
-#: admin/class-joinchat-admin-page.php:694
+#: admin/class-joinchat-admin-page.php:699
 msgid "You can also buy <strong><a href=\"%s\" target=\"_blank\">Joinchat Premium</a></strong> with one year of support service included."
 msgstr ""
 
-#: admin/class-joinchat-admin-page.php:697
+#: admin/class-joinchat-admin-page.php:702
 msgid "If you like Joinchat 😍"
 msgstr ""
 
 #. translators: %s: Add review link.
-#: admin/class-joinchat-admin-page.php:701
+#: admin/class-joinchat-admin-page.php:706
 msgid "Please leave us a %s rating. We'll thank you."
 msgstr ""
 
 #. translators: %s: Joinchat page link.
-#: admin/class-joinchat-admin-page.php:706
+#: admin/class-joinchat-admin-page.php:711
 msgid "Subscribe to our newsletter and visit our blog at %s."
 msgstr ""
 
 #. translators: %s: Joinchat twitter link.
-#: admin/class-joinchat-admin-page.php:711
+#: admin/class-joinchat-admin-page.php:716
 msgid "Follow %s on twitter."
 msgstr ""
 
-#: admin/class-joinchat-admin-page.php:715
+#: admin/class-joinchat-admin-page.php:720
 msgid "If you need to access the setup wizard again, please click on the button below:"
 msgstr ""
 
-#: admin/class-joinchat-admin-page.php:763
+#: admin/class-joinchat-admin-page.php:769
 msgid "Preview"
 msgstr ""
 
-#: admin/class-joinchat-admin-page.php:785
+#: admin/class-joinchat-admin-page.php:791
 msgid "You can use vars"
 msgstr ""
 
-#: admin/class-joinchat-admin-page.php:840
+#: admin/class-joinchat-admin-page.php:846
 msgid "is an example, double click to use it"
 msgstr ""
 
-#: admin/class-joinchat-admin-page.php:863
+#: admin/class-joinchat-admin-page.php:869
 msgid "Joinchat Settings"
 msgstr ""
 
 #. translators: 1: Joinchat, 2: Add review link.
-#: admin/class-joinchat-admin-page.php:897
+#: admin/class-joinchat-admin-page.php:903
 msgid "Do you like %1$s? Please help us with a %2$s rating."
 msgstr ""
 
-#: admin/class-joinchat-admin.php:115
+#: admin/class-joinchat-admin.php:121
 msgid "Settings saved"
 msgstr ""
 
-#: admin/class-joinchat-admin.php:202
+#: admin/class-joinchat-admin.php:209
 msgid "You only need to add your WhatsApp number to contact with your users."
 msgstr ""
 
-#: admin/class-joinchat-admin.php:203
+#: admin/class-joinchat-admin.php:210
 msgid "Go to settings"
 msgstr ""
 
-#: admin/class-joinchat-admin.php:241
+#: admin/class-joinchat-admin.php:248
 msgid "Settings"
 msgstr ""
 
-#: admin/class-joinchat-admin.php:261
+#: admin/class-joinchat-admin.php:268
 msgid "Documentation"
 msgstr ""
 
-#: admin/class-joinchat-admin.php:262
+#: admin/class-joinchat-admin.php:269
 msgid "Support"
 msgstr ""
 
-#: admin/class-joinchat-admin.php:508
+#: admin/class-joinchat-admin.php:515
 msgid "With the current Joinchat's settings, no user data is collected and no cookies are used."
 msgstr ""
 
-#: admin/class-joinchat-admin.php:513
+#: admin/class-joinchat-admin.php:520
 msgid "Joinchat uses cookies to control when the chat window should be automatically displayed."
 msgstr ""
 
-#: admin/class-joinchat-admin.php:515
+#: admin/class-joinchat-admin.php:522
 msgid "Cookies can be used to control when the WhatsApp floating button chat window should be automatically displayed."
 msgstr ""
 
 #. translators: %s: cookies names.
-#: admin/class-joinchat-admin.php:517
+#: admin/class-joinchat-admin.php:524
 msgid "These cookies (%s) do not contain personal data, are of type HTML LocalStorage and do not expire."
 msgstr ""
 
@@ -1066,15 +1069,15 @@ msgstr ""
 msgid "there are untranslated strings"
 msgstr ""
 
-#: includes/class-joinchat-i18n.php:163
+#: includes/class-joinchat-i18n.php:168
 msgid "There are changes in fields that can be translated"
 msgstr ""
 
-#: includes/class-joinchat-i18n.php:273
+#: includes/class-joinchat-i18n.php:285
 msgid "Default site language"
 msgstr ""
 
-#: includes/class-joinchat-i18n.php:279
+#: includes/class-joinchat-i18n.php:291
 msgid "Manage translations"
 msgstr ""
 
