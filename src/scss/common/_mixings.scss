@@ -20,7 +20,7 @@
 
 // iOS devices
 @mixin ios {
-  @supports (-webkit-overflow-scrolling: touch) {
+  @supports (-webkit-touch-callout: touch) {
     @content;
   }
 }
