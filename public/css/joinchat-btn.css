@@ -20,7 +20,7 @@
   transform-origin: calc(var(--s)/-2) calc(var(--s)/-4);
   -webkit-user-select: none;
      -moz-user-select: none;
-  user-select: none;
+          user-select: none;
   touch-action: manipulation;
   -webkit-font-smoothing: antialiased;
   -webkit-tap-highlight-color: rgb(0 0 0 / 0%);
@@ -95,12 +95,15 @@
   opacity: 0;
 }
 
-.joinchat__button__image img {
+.joinchat__button__image img,
+.joinchat__button__image video {
   display: block;
   width: 100%;
   height: 100%;
   -o-object-fit: cover;
-  object-fit: cover;
+      object-fit: cover;
+  -o-object-position: center;
+      object-position: center;
 }
 
 .joinchat--show .joinchat__button__image {
