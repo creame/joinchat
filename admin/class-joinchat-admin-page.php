@@ -370,11 +370,15 @@ class Joinchat_Admin_Page {
 					break;
 
 				case 'button_image':
-					$thumb = Joinchat_Util::thumb( $value, 116, 116 );
-					$image = is_array( $thumb ) ? $thumb['url'] : false;
+					if ( Joinchat_Util::is_video( $value ) ) {
+						$image = '<video autoplay loop muted playsinline src="' . esc_url( wp_get_attachment_url( $value ) ) . '"></video>';
+					} else {
+						$thumb = Joinchat_Util::thumb( $value, 116, 116 );
+						$image = is_array( $thumb ) ? '<img src="' . esc_url( $thumb['url'] ) . '" width="' . intval( $thumb['width'] ) . '" height="' . intval( $thumb['height'] ) . '" alt="">' : '';
+					}
 
 					$output = '<div id="joinchat_button_image_wrapper">' .
-						'<div id="joinchat_button_image_holder" ' . ( $image ? "style=\"background-size:cover; background-image:url('$image');\"" : '' ) . '></div>' .
+						'<div id="joinchat_button_image_holder">' . $image . '</div>' .
 						'<input id="joinchat_button_image" name="joinchat[button_image]" type="hidden" value="' . intval( $value ) . '">' .
 						'<input id="joinchat_button_image_add" type="button" value="' . esc_attr__( 'Select an image', 'creame-whatsapp-me' ) . '" class="button-primary" ' .
 						'data-title="' . esc_attr__( 'Select button image', 'creame-whatsapp-me' ) . '" data-button="' . esc_attr__( 'Use image', 'creame-whatsapp-me' ) . '"> ' .

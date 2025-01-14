@@ -122,6 +122,14 @@
   overflow: hidden;
 }
 
+#joinchat_button_image_holder img,
+#joinchat_button_image_holder video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
 [dir=rtl] #joinchat_button_image_wrapper {
   padding: 8px 80px 0 0;
 }

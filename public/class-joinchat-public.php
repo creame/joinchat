@@ -294,13 +294,15 @@ class Joinchat_Public {
 		if ( is_null( $image ) && $settings['button_image'] ) {
 			$img_id = $settings['button_image'];
 
-			if ( apply_filters( 'joinchat_image_original', Joinchat_Util::is_animated_gif( $img_id ), $img_id, 'button' ) ) {
-				$image = '<img src="' . wp_get_attachment_url( $img_id ) . '" alt="" loading="lazy">';
+			if ( Joinchat_Util::is_video( $img_id ) ) {
+				$image = '<video autoplay loop muted playsinline src="' . esc_url( wp_get_attachment_url( $img_id ) ) . '"></video>';
+			} elseif ( apply_filters( 'joinchat_image_original', Joinchat_Util::is_animated_gif( $img_id ), $img_id, 'button' ) ) {
+				$image = '<img src="' . esc_url( wp_get_attachment_url( $img_id ) ) . '" alt="" loading="lazy">';
 			} elseif ( is_array( Joinchat_Util::thumb( $img_id, 58, 58 ) ) ) {
 				$thumb  = Joinchat_Util::thumb( $img_id, 58, 58 );
 				$thumb2 = Joinchat_Util::thumb( $img_id, 116, 116 );
 				$thumb3 = Joinchat_Util::thumb( $img_id, 174, 174 );
-				$image  = "<img src=\"{$thumb['url']}\" srcset=\"{$thumb2['url']} 2x, {$thumb3['url']} 3x\" alt=\"\" loading=\"lazy\">";
+				$image  = '<img src="' . esc_url( $thumb['url'] ) . '" srcset="' . esc_url( $thumb2['url'] ) . ' 2x, ' . esc_url( $thumb3['url'] ) . ' 3x" alt="" loading="lazy">';
 			}
 		}
 

@@ -195,7 +195,7 @@
         media_frame = wp.media({
           title: $(this).data('title') || 'Select button image',
           button: { text: $(this).data('button') || 'Use Image' },
-          library: { type: 'image' },
+          library: { type: 'image,video' },
           multiple: false,
         });
 
@@ -204,11 +204,12 @@
           // Get media attachment details from the frame state
           var attachment = media_frame.state().get('selection').first().toJSON();
           var url = attachment.sizes && attachment.sizes.thumbnail && attachment.sizes.thumbnail.url || attachment.url;
+          var tag = attachment.type == 'video' ? '<video autoplay loop muted playsinline src="' + url + '"></video>' : '<img src="' + url + '">';
 
-          $('#joinchat_button_image_holder').css({ 'background-size': 'cover', 'background-image': 'url(' + url + ')' });
+          $('#joinchat_button_image_holder').html(tag);
           $('#joinchat_button_image').val(attachment.id);
           $('#joinchat_button_image_remove').removeClass('joinchat-hidden');
-          if (prev_jc) prev_jc.$('.joinchat__button__image').html('<img src="' + url + '">');
+          if (prev_jc) prev_jc.$('.joinchat__button__image').html(tag);
         });
 
         media_frame.on('open', function () {
@@ -224,10 +225,10 @@
     $('#joinchat_button_image_remove').on('click', function (e) {
       e.preventDefault();
 
-      $('#joinchat_button_image_holder').removeAttr('style');
+      $('#joinchat_button_image_holder').empty();
       $('#joinchat_button_image').val('');
       $(this).addClass('joinchat-hidden');
-      if (prev_jc) prev_jc.$('.joinchat__button__image').html('');
+      if (prev_jc) prev_jc.$('.joinchat__button__image').empty();
     });
 
     // Init ColorPicker with "changecolor" trigger event on change

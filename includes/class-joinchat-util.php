@@ -195,6 +195,26 @@ class Joinchat_Util {
 	}
 
 	/**
+	 * Return if attachment is video.
+	 *
+	 * @since    5.1.9
+	 * @access   public
+	 * @param    mixed $id attachment ID or null or empty.
+	 * @return   bool  true if is video, false otherwise
+	 */
+	public static function is_video( $id ) {
+
+		if ( intval( $id ) > 0 ) {
+			$attachment_mime = get_post_mime_type( $id );
+
+			return strpos( $attachment_mime, 'video/' ) === 0;
+		}
+
+		return false;
+
+	}
+
+	/**
 	 * Return if image is animated gif.
 	 *
 	 * @since    3.1.0
