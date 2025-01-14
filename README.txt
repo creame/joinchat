@@ -390,6 +390,7 @@ You can view in your *Settings > Privacy > Policy Guide* the suggested text by J
 
 = 5.1.9 =
 * **NEW** Allow to use video on button image.
+* CHANGE Better QR code generation and rendering.
 * CHANGE Chat window auto-open settings to be clearer.
 
 = 5.1.8 =

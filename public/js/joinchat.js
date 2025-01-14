@@ -204,7 +204,7 @@
       text: text,
       radius: 0.4,
       background: '#FFF',
-      size: 200,
+      size: 200 * (window.devicePixelRatio || 1),
     }, this.settings.qr || {}, options || {}), canvas);
     return canvas;
   }
