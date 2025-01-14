@@ -197,7 +197,7 @@ class Joinchat_Util {
 	/**
 	 * Return if attachment is video.
 	 *
-	 * @since    5.1.9
+	 * @since    5.2.0
 	 * @access   public
 	 * @param    mixed $id attachment ID or null or empty.
 	 * @return   bool  true if is video, false otherwise

@@ -3,9 +3,9 @@ Contributors: creapuntome, pacotole, davidlillo, monillo
 Donate link: https://join.chat/donate/
 Tags: WhatsApp, Chat, Floating Button, Facebook Messenger, Telegram
 Requires at least: 4.9.6
-Tested up to: 6.6
+Tested up to: 6.7
 Requires PHP: 5.6
-Stable tag: 5.1.8
+Stable tag: 5.2.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -40,12 +40,6 @@ Customize your logo, profile picture or even an animated gif.
 Define in which pages or zones it should appear, the delay time, if you want it to the right or to the left, only on mobile phones or also on the desktop.
 
 You can define a tooltip or a call to action to capture the user's interest, the limit is set by your creativity.
-
-### 📢 New on Joinchat 5.1
-
-* Send events to **Google Tag with multiple destinations** support.
-* Added **Private Policy Guide** text.
-* Set theme **black or white text**.
 
 ### 📝 Settings at page or archive level.
 You can **change main settings on every Post, Page, Product or CPT and for Tag or Category archive pages**.
@@ -388,10 +382,12 @@ You can view in your *Settings > Privacy > Policy Guide* the suggested text by J
 
 == Changelog ==
 
-= 5.1.9 =
+= 5.2.0 =
 * **NEW** Allow to use video on button image.
 * CHANGE Better QR code generation and rendering.
 * CHANGE Chat window auto-open settings to be clearer.
+* **SECURE** Added some missing sanitization and URL escaping.
+* Bump WordPress tested at 6.7.
 
 = 5.1.8 =
 * Minor CSS fixes and updated minified assets.

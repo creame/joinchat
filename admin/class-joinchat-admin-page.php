@@ -584,7 +584,7 @@ class Joinchat_Admin_Page {
 	 * Field 'auto_open' output
 	 *
 	 * @since    5.1.0
-	 * @since    5.1.9 renamed from 'field_show_auto' to 'field_auto_open'
+	 * @since    5.2.0 renamed from 'field_show_auto' to 'field_auto_open'
 	 *
 	 * @return void
 	 */
