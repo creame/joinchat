@@ -200,7 +200,7 @@ class Joinchat_Admin {
 		// If no phone number defined.
 		if ( empty( jc_common()->settings['telephone'] )
 			&& current_user_can( Joinchat_Util::capability() )
-			&& ! Joinchat_Util::is_admin_screen()
+			&& ! Joinchat_Util::is_admin_screen( true )
 			&& time() >= (int) get_option( 'joinchat_notice_dismiss' )
 		) {
 

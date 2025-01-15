@@ -410,11 +410,19 @@ class Joinchat_Util {
 	 * Is Joinchat settings admin screen
 	 *
 	 * @since    5.0.0
+	 * @since    5.2.1 added $include_onboard param.
+	 * @param bool $include_onboard Include onboard page.
 	 * @return bool
 	 */
-	public static function is_admin_screen() {
+	public static function is_admin_screen( $include_onboard = false ) {
 
-		return did_action( 'load_joinchat_settings_page' );
+		if ( did_action( 'load_joinchat_settings_page' ) ) {
+			return true;
+		} elseif ( $include_onboard && did_action( 'load_joinchat_onboard_page' ) ) {
+			return true;
+		}
+
+		return false;
 
 	}
 
