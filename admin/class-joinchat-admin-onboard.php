@@ -169,6 +169,8 @@ class Joinchat_Admin_Onboard {
 			wp_enqueue_style( 'intl-tel-input' );
 		}
 
+		$user = wp_get_current_user();
+
 		$config = array(
 			'settings_url' => add_query_arg( 'onboard', 'no', Joinchat_Util::admin_url() ),
 			'img_base'     => plugins_url( 'img/', __FILE__ ),
