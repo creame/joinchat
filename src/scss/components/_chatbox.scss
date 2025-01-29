@@ -122,8 +122,7 @@
 }
 
 #{$class}__box__scroll {
-  overflow-x: hidden;
-  overflow-y: scroll;
+  overflow: hidden scroll;
   overscroll-behavior-y: contain;
   -webkit-overflow-scrolling: touch;
   // will-change: scroll-position;
@@ -149,8 +148,10 @@
 }
 
 #{$class}__box__content {
+  display: flex;
+  flex-direction: column;
   width: calc(100% + 4px); // 100% + scrollbar width
-  padding: 20px 0 calc(var(--s) + 16px);
+  padding: 20px 0 8px;
 }
 
 @include mobile {
