@@ -292,7 +292,7 @@ class Joinchat_Public {
 		$image = apply_filters( 'joinchat_image', null );
 
 		if ( is_null( $image ) && $settings['button_image'] ) {
-			$img_id = $settings['button_image'];
+			$img_id = absint( $settings['button_image'] );
 
 			if ( Joinchat_Util::is_video( $img_id ) ) {
 				$image = '<video autoplay loop muted playsinline src="' . esc_url( wp_get_attachment_url( $img_id ) ) . '"></video>';
@@ -315,6 +315,11 @@ class Joinchat_Public {
 		// class dark mode.
 		if ( 'no' !== $settings['dark_mode'] ) {
 			$joinchat_classes[] = 'auto' === $settings['dark_mode'] ? 'joinchat--dark-auto' : 'joinchat--dark';
+		}
+
+		// class for fixed button image.
+		if ( (int) $settings['button_image'] < 0 ) {
+			$joinchat_classes[] = 'joinchat--img';
 		}
 
 		// class direct display (w/o animation).

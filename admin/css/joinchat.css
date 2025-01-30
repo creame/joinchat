@@ -107,7 +107,25 @@
 
 #joinchat_button_image_wrapper {
   position: relative;
-  padding: 8px 0 0 80px;
+  min-height: 60px;
+  padding: 2px 0 0 80px;
+}
+
+#joinchat_button_image_wrapper p {
+  margin-top: 8px;
+  transition: opacity 0.2s;
+}
+
+#joinchat_button_image_wrapper p label+label {
+  margin-left: 10px;
+}
+
+#joinchat_button_image_wrapper.no-image #joinchat_button_image_remove {
+  display: none;
+}
+
+#joinchat_button_image_wrapper.no-image p {
+  opacity: .33;
 }
 
 #joinchat_button_image_holder {

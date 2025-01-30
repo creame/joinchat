@@ -370,20 +370,25 @@ class Joinchat_Admin_Page {
 					break;
 
 				case 'button_image':
+					$fixed = (int) $value < 0 ? 'yes' : 'no';
+					$value = absint( $value );
+
 					if ( Joinchat_Util::is_video( $value ) ) {
 						$image = '<video autoplay loop muted playsinline src="' . esc_url( wp_get_attachment_url( $value ) ) . '"></video>';
 					} else {
 						$thumb = Joinchat_Util::thumb( $value, 116, 116 );
-						$image = is_array( $thumb ) ? '<img src="' . esc_url( $thumb['url'] ) . '" width="' . intval( $thumb['width'] ) . '" height="' . intval( $thumb['height'] ) . '" alt="">' : '';
+						$image = is_array( $thumb ) ? '<img src="' . esc_url( $thumb['url'] ) . '" width="' . (int) $thumb['width'] . '" height="' . (int) $thumb['height'] . '" alt="">' : '';
 					}
 
-					$output = '<div id="joinchat_button_image_wrapper">' .
+					$output = '<div id="joinchat_button_image_wrapper" class="' . ( $image ? '' : 'no-image' ) . '">' .
 						'<div id="joinchat_button_image_holder">' . $image . '</div>' .
-						'<input id="joinchat_button_image" name="joinchat[button_image]" type="hidden" value="' . intval( $value ) . '">' .
+						'<input id="joinchat_button_image" name="joinchat[button_image]" type="hidden" value="' . (int) $value . '">' .
 						'<input id="joinchat_button_image_add" type="button" value="' . esc_attr__( 'Select an image', 'creame-whatsapp-me' ) . '" class="button-primary" ' .
 						'data-title="' . esc_attr__( 'Select button image', 'creame-whatsapp-me' ) . '" data-button="' . esc_attr__( 'Use image', 'creame-whatsapp-me' ) . '"> ' .
-						'<input id="joinchat_button_image_remove" type="button" value="' . esc_attr__( 'Remove', 'creame-whatsapp-me' ) . '" class="button-secondary' . ( $image ? '' : ' joinchat-hidden' ) . '">' .
-						'<p class="description">' . esc_html__( 'The image will alternate with button icon', 'creame-whatsapp-me' ) . '</p></div>';
+						'<input id="joinchat_button_image_remove" type="button" value="' . esc_attr__( 'Remove', 'creame-whatsapp-me' ) . '" class="button-secondary">' .
+						'<p><label><input name="joinchat[button_image_fixed]" value="no" type="radio"' . checked( 'no', $fixed, false ) . '> ' . esc_html__( 'Toggle with icon', 'creame-whatsapp-me' ) . '</label> ' .
+						'<label><input name="joinchat[button_image_fixed]" value="yes" type="radio"' . checked( 'yes', $fixed, false ) . '> ' . esc_html__( 'Fixed image', 'creame-whatsapp-me' ) . '</label>' .
+						'</p></div>';
 					break;
 
 				case 'button_tip':

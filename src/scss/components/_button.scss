@@ -61,7 +61,7 @@
   }
 
   // Always show image
-  #{$class}--image & {
+  #{$class}--img & {
     opacity: 1;
     animation: none;
   }

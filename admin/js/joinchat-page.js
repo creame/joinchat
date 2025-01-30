@@ -208,7 +208,7 @@
 
           $('#joinchat_button_image_holder').html(tag);
           $('#joinchat_button_image').val(attachment.id);
-          $('#joinchat_button_image_remove').removeClass('joinchat-hidden');
+          $('#joinchat_button_image_wrapper').removeClass('no-image');
           if (prev_jc) prev_jc.$('.joinchat__button__image').html(tag);
         });
 
@@ -227,7 +227,7 @@
 
       $('#joinchat_button_image_holder').empty();
       $('#joinchat_button_image').val('');
-      $(this).addClass('joinchat-hidden');
+      $('#joinchat_button_image_wrapper').addClass('no-image');
       if (prev_jc) prev_jc.$('.joinchat__button__image').empty();
     });
 

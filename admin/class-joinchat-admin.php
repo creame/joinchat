@@ -81,7 +81,7 @@ class Joinchat_Admin {
 
 		$value['telephone']     = $util::clean_input( $value['telephone'] );
 		$value['mobile_only']   = $util::yes_no( $value, 'mobile_only' );
-		$value['button_image']  = intval( $value['button_image'] );
+		$value['button_image']  = (int) $value['button_image'] * ( $util::yes_no( $value, 'button_image_fixed' ) === 'yes' ? -1 : 1 );
 		$value['button_tip']    = $util::substr( $util::clean_input( $value['button_tip'] ), 0, 40 );
 		$value['button_delay']  = intval( $value['button_delay'] );
 		$value['whatsapp_web']  = $util::yes_no( $value, 'whatsapp_web' );
