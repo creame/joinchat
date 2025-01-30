@@ -397,13 +397,13 @@ class Joinchat_Admin_Page {
 					break;
 
 				case 'button_delay':
-					$output = '<input id="joinchat_button_delay" name="joinchat[button_delay]" value="' . intval( $value ) . '" type="number" min="-1" max="120" style="width:5em"> ' .
+					$output = '<input id="joinchat_button_delay" name="joinchat[button_delay]" value="' . (int) $value . '" type="number" min="-1" max="120" class="tiny-text"> ' .
 						esc_html__( 'seconds', 'creame-whatsapp-me' ) . ' (' . esc_html__( '-1 to display directly without animation', 'creame-whatsapp-me' ) . ')' .
 						'<p class="description">' . esc_html__( 'Time since the page is opened until the button is displayed', 'creame-whatsapp-me' ) . '</p>';
 					break;
 
 				case 'message_text':
-					$output = '<textarea id="joinchat_message_text" name="joinchat[message_text]" rows="4" class="regular-text autofill" placeholder="' . esc_attr__( "Hello 👋\nCan we help you?", 'creame-whatsapp-me' ) . '">' . esc_textarea( $value ) . '</textarea>' .
+					$output = '<textarea id="joinchat_message_text" name="joinchat[message_text]" rows="4" class="large-text autofill" placeholder="' . esc_attr__( "Hello 👋\nCan we help you?", 'creame-whatsapp-me' ) . '">' . esc_textarea( $value ) . '</textarea>' .
 						'<p class="description">' . esc_html__( 'Define a text to encourage users to contact by WhatsApp', 'creame-whatsapp-me' ) . '</p>';
 					break;
 
@@ -467,7 +467,7 @@ class Joinchat_Admin_Page {
 						'<p><label for="joinchat_custom_css">' . esc_html__( 'Add your own CSS code here to customize the appearance of Joinchat.', 'creame-whatsapp-me' ) . ' ' .
 						'<a href="#" class="joinchat_custom_css_prefill">' . esc_html__( 'Fill with example code', 'creame-whatsapp-me' ) . '</a>' .
 						'</label></p>' .
-						'<textarea id="joinchat_custom_css" name="joinchat[custom_css]" rows="3" class="regular-text autofill" placeholder="' . esc_attr__( 'Your custom CSS...', 'creame-whatsapp-me' ) . '">' . esc_textarea( $value ) . '</textarea>' .
+						'<textarea id="joinchat_custom_css" name="joinchat[custom_css]" rows="3" class="large-text autofill" placeholder="' . esc_attr__( 'Your custom CSS...', 'creame-whatsapp-me' ) . '">' . esc_textarea( $value ) . '</textarea>' .
 						'<p class="description">' .
 						sprintf( /* translators: %s: CSS tricks link. */
 							wp_kses( __( 'You can find examples and more tricks <a href="%s" target="_blank">here</a>.', 'creame-whatsapp-me' ), Joinchat_Admin::KSES_LINK ),
@@ -602,9 +602,9 @@ class Joinchat_Admin_Page {
 		$output = '<fieldset><legend class="screen-reader-text"><span>' . esc_html__( 'Auto open', 'creame-whatsapp-me' ) . '</span></legend>' .
 			'<label><input id="joinchat_message_delay_on" name="joinchat[message_delay_on]" value="yes" type="checkbox"' . checked( 'yes', $delay > 0 ? 'yes' : '', false ) . '> ' . esc_html__( 'Automatically show Chat Window', 'creame-whatsapp-me' ) . '</label> ' .
 			/* translators: %s: input for seconds delay */
-			'<label>' . sprintf( esc_html__( 'after %s seconds', 'creame-whatsapp-me' ), '<input id="joinchat_message_delay" name="joinchat[message_delay]" value="' . abs( intval( $delay ) ) . '" type="number" min="1" max="120" style="width:5em">' ) . '</label> ' .
+			'<label>' . sprintf( esc_html__( 'after %s seconds', 'creame-whatsapp-me' ), '<input id="joinchat_message_delay" name="joinchat[message_delay]" value="' . absint( $delay ) . '" type="number" min="1" max="120" class="tiny-text">' ) . '</label> ' .
 			/* translators: %s: input for number of pages */
-			'<label>' . sprintf( esc_html__( 'and user has visited at least %s pages', 'creame-whatsapp-me' ), '<input id="joinchat_message_views" name="joinchat[message_views]" value="' . intval( $pages ) . '" type="number" min="1" max="120" style="width:5em">' ) . '</label><br>' .
+			'<label>' . sprintf( esc_html__( 'and user has visited at least %s pages', 'creame-whatsapp-me' ), '<input id="joinchat_message_views" name="joinchat[message_views]" value="' . (int) $pages . '" type="number" min="1" max="120" class="tiny-text">' ) . '</label><br>' .
 			'<label><input id="joinchat_message_badge" name="joinchat[message_badge]" value="yes" type="checkbox"' . checked( 'yes', $badge, false ) . '> ' .
 			esc_html__( 'Display a notification balloon instead of opening the Chat Window for a "less intrusive" mode', 'creame-whatsapp-me' ) . '</label></fieldset>' .
 			'<p class="description">' . esc_html__( 'Only if "Call to Action" is defined.', 'creame-whatsapp-me' ) . ' ' .

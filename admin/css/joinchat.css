@@ -202,9 +202,8 @@ tr.joinchat--focus .joinchat_vars_help {
   }
 }
 
-#joinchat_form input[type=number] {
-  padding-right: 0;
-  text-align: center;
+#joinchat_form .large-text {
+  max-width: 800px;
 }
 
 #joinchat_form .iris-picker {
