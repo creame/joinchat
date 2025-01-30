@@ -137,7 +137,7 @@ class Joinchat_Util {
 	 */
 	public static function thumb( $img, $width, $height, $crop = true ) {
 
-		$img_path = intval( $img ) > 0 ? get_attached_file( $img ) : $img;
+		$img_path = (int) $img > 0 ? get_attached_file( $img ) : $img;
 
 		// Try fallback if file don't exists (filter to true to skip thumbnail generation).
 		if ( apply_filters( 'joinchat_disable_thumbs', ! $img_path || ! file_exists( $img_path ) ) ) {
@@ -204,7 +204,7 @@ class Joinchat_Util {
 	 */
 	public static function is_video( $id ) {
 
-		if ( intval( $id ) > 0 ) {
+		if ( (int) $id > 0 ) {
 			$attachment_mime = get_post_mime_type( $id );
 
 			return strpos( $attachment_mime, 'video/' ) === 0;
@@ -223,7 +223,7 @@ class Joinchat_Util {
 	 * @return   bool  true if is an animated gif, false otherwise
 	 */
 	public static function is_animated_gif( $img ) {
-		$img_path = intval( $img ) > 0 ? get_attached_file( $img ) : $img;
+		$img_path = (int) $img > 0 ? get_attached_file( $img ) : $img;
 
 		return $img_path && file_exists( $img_path ) ? (bool) preg_match( '#(\x00\x21\xF9\x04.{4}\x00\x2C.*){2,}#s', file_get_contents( $img_path ) ) : false; // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
 	}

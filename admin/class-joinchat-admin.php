@@ -83,15 +83,15 @@ class Joinchat_Admin {
 		$value['mobile_only']   = $util::yes_no( $value, 'mobile_only' );
 		$value['button_image']  = (int) $value['button_image'] * ( $util::yes_no( $value, 'button_image_fixed' ) === 'yes' ? -1 : 1 );
 		$value['button_tip']    = $util::substr( $util::clean_input( $value['button_tip'] ), 0, 40 );
-		$value['button_delay']  = intval( $value['button_delay'] );
+		$value['button_delay']  = (int) $value['button_delay'];
 		$value['whatsapp_web']  = $util::yes_no( $value, 'whatsapp_web' );
 		$value['qr']            = $util::yes_no( $value, 'qr' );
 		$value['message_text']  = $util::clean_input( $value['message_text'] );
 		$value['message_badge'] = $util::yes_no( $value, 'message_badge' );
 		$value['message_send']  = $util::clean_input( $value['message_send'] );
 		$value['message_start'] = $util::substr( $util::clean_input( $value['message_start'] ), 0, 40 );
-		$value['message_delay'] = intval( $value['message_delay'] ) * ( $util::yes_no( $value, 'message_delay_on' ) === 'yes' ? 1 : -1 );
-		$value['message_views'] = intval( $value['message_views'] ) ? intval( $value['message_views'] ) : 1;
+		$value['message_delay'] = (int) $value['message_delay'] * ( $util::yes_no( $value, 'message_delay_on' ) === 'yes' ? 1 : -1 );
+		$value['message_views'] = (int) $value['message_views'] ? (int) $value['message_views'] : 1;
 		$value['position']      = 'left' !== $value['position'] ? 'right' : 'left';
 		$value['color']         = "$bg/$text";
 		$value['dark_mode']     = in_array( $value['dark_mode'], array( 'no', 'yes', 'auto' ), true ) ? $value['dark_mode'] : 'no';

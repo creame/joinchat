@@ -122,7 +122,7 @@ class Joinchat_Woo_Public {
 		// Add Product Button.
 		if ( is_product() && 'none' !== $settings['woo_btn_position'] ) {
 			list( $hook, $priority ) = explode( '__', "{$settings['woo_btn_position']}__10" );
-			add_action( $hook, array( $this, 'product_button' ), (int) apply_filters( 'joinchat_woo_btn_priority', intval( $priority ) ) );
+			add_action( $hook, array( $this, 'product_button' ), (int) apply_filters( 'joinchat_woo_btn_priority', (int) $priority ) );
 		}
 
 		return $settings;
