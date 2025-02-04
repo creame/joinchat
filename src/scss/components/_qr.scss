@@ -1,7 +1,8 @@
 #{$class}__qr {
   position: absolute;
-  bottom: calc(var(--s) + 16px);
-  right: 0;
+  z-index: 2;
+  bottom: calc(var(--s) + 24px);
+  right: 8px;
   display: none; // flex;
   flex-direction: column-reverse;
   width: 228px;
@@ -28,7 +29,7 @@
   }
 
   #{$class}--left & {
-    left: 0;
+    left: 8px;
     right: auto;
 
     &::after {
@@ -54,12 +55,12 @@
 
   @include hover {
     @if $type == full {
-      #{$class}--btn #{$class}__button:hover &,
-      #{$class}--chatbox #{$class}__button:hover & {
+      #{$class}--btn #{$class}__button:hover~&,
+      #{$class}--chatbox:has(#{$class}__contact:hover) & {
         display: flex;
       }
     } @else {
-      #{$class}--btn #{$class}__button:hover & {
+      #{$class}--btn #{$class}__button:hover~& {
         display: flex;
       }
     }
