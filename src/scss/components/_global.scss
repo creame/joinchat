@@ -13,8 +13,8 @@
     --blue: 102;
     --rgb: var(--red) var(--green) var(--blue);
     --color: rgb(var(--rgb));
-    --dark: rgb(calc(var(--red) - 75), calc(var(--green) - 75), calc(var(--blue) - 75)); // darker color
-    --hover: rgb(calc(var(--red) + 50), calc(var(--green) + 50), calc(var(--blue) + 50)); // lighter color
+    --dark: rgb(max(0, var(--red) - 75), max(0, var(--green) - 75), max(0, var(--blue) - 75)); // darker color
+    --hover: rgb(min(255, var(--red) + 50), min(255, var(--green) + 50), min(255, var(--blue) + 50)); // lighter color
     --bg: rgb(var(--rgb) / 4%);
     // Black or white color based on https://css-tricks.com/switch-font-color-for-different-backgrounds-with-css/
     --bw: 100; // 0 Black text / 100 White text
