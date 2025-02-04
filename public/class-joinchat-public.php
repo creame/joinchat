@@ -156,33 +156,27 @@ class Joinchat_Public {
 	 * @since    4.4.0     added kjua script
 	 * @since    4.5.0     added joinchat-lite script
 	 * @since    4.5.20    abstract QR script
+	 * @since    6.0.0     remove jQuery dependency & defer strategy
 	 * @return   void
 	 */
 	public function enqueue_scripts() {
 
-		$min = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
-
-		if ( wp_script_is( 'jquery-core', 'registered' ) ) {
-			$deps = array( 'jquery-core' ); // Don't need jquery-migrate.
-		} else {
-			if ( ! wp_script_is( 'jquery', 'registered' ) ) {
-				wp_register_script( 'jquery', "/wp-includes/js/jquery/jquery$min.js", array(), '3.7.1' );
-			}
-			$deps = array( 'jquery' );
-		}
+		$min  = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
+		$args = is_wp_version_compatible( '6.3' ) ? array(
+			'strategy'  => 'defer',
+			'in_footer' => true,
+		) : true;
 
 		// Register QR script.
-		wp_register_script( 'joinchat-qr', plugins_url( 'js/qr-creator.min.js', __FILE__ ), array(), '1.0.0', true );
+		wp_register_script( 'joinchat-qr', plugins_url( 'js/qr-creator.min.js', __FILE__ ), array(), '1.0.0', $args );
 
 		// If QR script is missing it fails silently and don't shows QR Code :).
-		if ( $this->need_enqueue_qr_script() ) {
-			$deps[] = 'joinchat-qr';
-		}
+		$deps = $this->need_enqueue_qr_script() ? array( 'joinchat-qr' ) : array();
 
 		if ( $this->show ) {
 
 			// Enqueue default full script.
-			wp_enqueue_script( 'joinchat', plugins_url( "js/joinchat{$min}.js", __FILE__ ), $deps, JOINCHAT_VERSION, true );
+			wp_enqueue_script( 'joinchat', plugins_url( "js/joinchat{$min}.js", __FILE__ ), $deps, JOINCHAT_VERSION, $args );
 			// Do action.
 			do_action( 'joinchat_enqueue_script' );
 
@@ -203,7 +197,7 @@ class Joinchat_Public {
 			$data['message_send'] = Joinchat_Util::replace_variables( $data['message_send'] );
 
 			// Enqueue lite script.
-			wp_enqueue_script( 'joinchat-lite', plugins_url( "js/joinchat-lite{$min}.js", __FILE__ ), $deps, JOINCHAT_VERSION, true );
+			wp_enqueue_script( 'joinchat-lite', plugins_url( "js/joinchat-lite{$min}.js", __FILE__ ), $deps, JOINCHAT_VERSION, $args );
 			wp_localize_script( 'joinchat-lite', 'joinchat_obj', array( 'settings' => $data ) );
 		}
 	}
