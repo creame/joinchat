@@ -182,7 +182,7 @@ class Joinchat_Formatter {
 			$blank = 'target="_blank"';
 		}
 
-		$output = sprintf( '<a href="%s" %s %s %s>%s</a>', esc_url_raw( $href ), $class, $rel, $blank, esc_html( $text ) );
+		$output = sprintf( '<a href="%s" %s %s %s>%s</a>', esc_url_raw( $href ), $class, $rel, $blank, $text );
 		$output = preg_replace( '/\s+/', ' ', $output );
 
 		return $output;
