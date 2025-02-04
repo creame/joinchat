@@ -328,9 +328,9 @@ class Joinchat_Public {
 		}
 
 		if ( $settings['message_text'] ) {
-			$box_content = '<div class="joinchat__message">' . Joinchat_Util::formated_message( $settings['message_text'] ) . '</div>';
+			$box_content = '<div class="joinchat__dialog">' . Joinchat_Util::formatted_message( $settings['message_text'] ) . '</div>';
 		} elseif ( $is_preview ) {
-			$box_content .= '<div class="joinchat__message"></div>';
+			$box_content = '<div class="joinchat__dialog"><div class="joinchat__message"></div></div>';
 		}
 
 		if ( $settings['optin_text'] ) {

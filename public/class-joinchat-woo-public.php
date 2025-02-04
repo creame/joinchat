@@ -224,7 +224,7 @@ class Joinchat_Woo_Public {
 			);
 
 			if ( $product->is_type( 'variable' ) ) {
-				$woo_replacements['SKU'] = '<sku>' . $woo_replacements['SKU'] . '</sku>';
+				$woo_replacements['SKU'] = '<jc-sku>' . $woo_replacements['SKU'] . '</jc-sku>';
 			}
 
 			$replacements = array_merge( $replacements, $woo_replacements );
