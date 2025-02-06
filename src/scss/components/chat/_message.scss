@@ -1,15 +1,13 @@
-#{$class} {
+#{$class}__dialog {
   --peak: url(##{$name}__peak_l);
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 
   #{$rtl} & {
     --peak: url(##{$name}__peak_r);
   }
-}
-
-#{$class}__dialog {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
 }
 
 #{$class}__message {
