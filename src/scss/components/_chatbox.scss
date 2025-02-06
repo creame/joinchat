@@ -1,4 +1,5 @@
 #{$class}__box {
+  content-visibility: hidden;
   display: flex;
   flex-direction: column;
   position: absolute;
@@ -22,6 +23,7 @@
   }
 
   #{$class}--chatbox & {
+    content-visibility: visible;
     opacity: 1;
     transform: scale3d(1, 1, 1);
     transition: max-height 0.2s ease-out, opacity 0.2s ease-out, transform 0s linear;
