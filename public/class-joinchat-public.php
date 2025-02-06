@@ -29,6 +29,15 @@ class Joinchat_Public {
 	private $show = false;
 
 	/**
+	 * Chatbox content.
+	 *
+	 * @since    6.0.0
+	 * @access   private
+	 * @var      string     $chatbox_content    Chatbox content (messages & opt-in).
+	 */
+	private $chatbox_content = '';
+
+	/**
 	 * Get global settings and current post settings and prepare
 	 *
 	 * @since    1.0.0
@@ -231,6 +240,42 @@ class Joinchat_Public {
 	}
 
 	/**
+	 * Set chatbox content (messages & opt-in)
+	 *
+	 * @since    6.0.0
+	 * @return void
+	 */
+	public function set_chatbox_content() {
+
+		$settings   = jc_common()->settings;
+		$is_preview = jc_common()->preview;
+		$content    = '';
+
+		if ( $settings['message_text'] ) {
+			$content = '<div class="joinchat__dialog">' . Joinchat_Util::formatted_message( $settings['message_text'] ) . '</div>';
+		} elseif ( $is_preview ) {
+			$content = '<div class="joinchat__dialog"><div class="joinchat__message"></div></div>';
+		}
+
+		if ( $settings['optin_text'] ) {
+			$optin = nl2br( $settings['optin_text'] );
+			$optin = str_replace( '<a ', '<a target="_blank" rel="nofollow noopener" ', $optin );
+
+			if ( $settings['optin_check'] ) {
+				$optin              = '<input type="checkbox" id="joinchat_optin"><label for="joinchat_optin">' . $optin . '</label>';
+				$joinchat_classes[] = 'joinchat--optout';
+			}
+
+			$content .= '<div class="joinchat__optin">' . $optin . '</div>';
+		} elseif ( $is_preview ) {
+			$content .= '<div class="joinchat__optin"></div>';
+		}
+
+		$this->chatbox_content = apply_filters( 'joinchat_content', $content, $settings );
+
+	}
+
+	/**
 	 * Outputs WhatsApp button html and his settings on footer
 	 *
 	 * @since    1.0.0
@@ -301,7 +346,7 @@ class Joinchat_Public {
 		}
 
 		$joinchat_classes = array();
-		$box_content      = '';
+		$box_content      = $this->chatbox_content;
 
 		// class position.
 		$joinchat_classes[] = 'joinchat--' . $settings['position'];
@@ -326,28 +371,6 @@ class Joinchat_Public {
 				$joinchat_classes[] = 'joinchat--mobile';
 			}
 		}
-
-		if ( $settings['message_text'] ) {
-			$box_content = '<div class="joinchat__dialog">' . Joinchat_Util::formatted_message( $settings['message_text'] ) . '</div>';
-		} elseif ( $is_preview ) {
-			$box_content = '<div class="joinchat__dialog"><div class="joinchat__message"></div></div>';
-		}
-
-		if ( $settings['optin_text'] ) {
-			$optin = nl2br( $settings['optin_text'] );
-			$optin = str_replace( '<a ', '<a target="_blank" rel="nofollow noopener" ', $optin );
-
-			if ( $settings['optin_check'] ) {
-				$optin              = '<input type="checkbox" id="joinchat_optin"><label for="joinchat_optin">' . $optin . '</label>';
-				$joinchat_classes[] = 'joinchat--optout';
-			}
-
-			$box_content .= '<div class="joinchat__optin">' . $optin . '</div>';
-		} elseif ( $is_preview ) {
-			$box_content .= '<div class="joinchat__optin"></div>';
-		}
-
-		$box_content = apply_filters( 'joinchat_content', $box_content, $settings );
 
 		// class only button.
 		if ( empty( $box_content ) ) {
