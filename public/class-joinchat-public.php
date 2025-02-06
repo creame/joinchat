@@ -115,11 +115,46 @@ class Joinchat_Public {
 	}
 
 	/**
-	 * Enqueue the stylesheets for the public-facing side of the site.
+	 * Register the stylesheets for the public-facing side of the site.
+	 *
+	 * Can defer styles if button delay > 0:
+	 *  - move stylesheet to footer
+	 *  - add 'media="print"' view(https://www.filamentgroup.com/lab/load-css-simpler/)
+	 *
+	 * @since    6.0.0
+	 * @return   void
+	 */
+	public function register_styles() {
+
+		if ( ! $this->show ) {
+			return;
+		}
+
+		$file = JOINCHAT_SLUG;
+		$min  = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
+
+		// If show delay > 0 can defer styles.
+		$defer = apply_filters( 'joinchat_defer_styles', jc_common()->settings['button_delay'] > 0 );
+
+		// If not chatbox use lighter only button styles.
+		if ( empty( $this->chatbox_content ) ) {
+			$file .= '-btn';
+		}
+
+		wp_register_style( JOINCHAT_SLUG, plugins_url( "public/css/{$file}{$min}.css", JOINCHAT_FILE ), array(), JOINCHAT_VERSION, $defer ? 'print' : 'all' );
+
+		if ( ! $defer ) {
+			$this->enqueue_styles();
+		}
+	}
+
+	/**
+	 * Enqueue front stylesheets and adds inline CSS.
 	 *
 	 * @since    1.0.0
 	 * @since    2.2.2     minified
 	 * @since    4.4.2     use "only button stylesheet" if no chatbox
+	 * @since    6.0.0     Only enqueue, register is on register_styles()
 	 * @return   void
 	 */
 	public function enqueue_styles() {
@@ -128,18 +163,14 @@ class Joinchat_Public {
 			return;
 		}
 
-		$settings = jc_common()->settings;
-		$file     = JOINCHAT_SLUG;
-		$min      = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
-
-		// If not chatbox use lighter only button styles.
-		if ( empty( $settings['message_text'] ) && empty( $settings['optin_text'] ) && ! has_filter( 'joinchat_content' ) ) {
-			$file .= '-btn';
+		if ( wp_style_is( JOINCHAT_SLUG, 'done' ) ) {
+			return;
 		}
 
-		wp_enqueue_style( JOINCHAT_SLUG, plugins_url( "css/{$file}{$min}.css", __FILE__ ), array(), JOINCHAT_VERSION, 'all' );
+		wp_enqueue_style( JOINCHAT_SLUG );
 
 		$inline_css = '';
+		$settings   = jc_common()->settings;
 
 		if ( jc_common()->defaults( 'color' ) !== $settings['color'] ) {
 			list($color, $text) = explode( '/', $settings['color'] . '/100' );
@@ -155,6 +186,27 @@ class Joinchat_Public {
 		$inline_css = apply_filters( 'joinchat_inline_style', $inline_css, $settings );
 
 		wp_add_inline_style( JOINCHAT_SLUG, Joinchat_Util::min_css( $inline_css ) );
+	}
+
+	/**
+	 * Defer styles if needed
+	 *
+	 * @since 6.0.0
+	 * @param string $tag    The link tag.
+	 * @param string $handle The handle of the enqueued style.
+	 * @param string $href   The source URL of the enqueued style.
+	 * @param string $media  The media for which the stylesheet has been defined.
+	 * @return string
+	 */
+	public function defer_styles( $tag, $handle, $href, $media ) {
+		if ( JOINCHAT_SLUG !== $handle || 'print' !== $media ) {
+			return $tag;
+		}
+
+		$tag = str_replace( "'", '"', $tag );
+		$tag = str_replace( 'media="print"', 'media="print" onload="this.media=\'all\'"', $tag );
+
+		return $tag;
 	}
 
 	/**
@@ -185,7 +237,7 @@ class Joinchat_Public {
 		if ( $this->show ) {
 
 			// Enqueue default full script.
-			wp_enqueue_script( 'joinchat', plugins_url( "js/joinchat{$min}.js", __FILE__ ), $deps, JOINCHAT_VERSION, $args );
+			wp_enqueue_script( JOINCHAT_SLUG, plugins_url( "js/joinchat{$min}.js", __FILE__ ), $deps, JOINCHAT_VERSION, $args );
 			// Do action.
 			do_action( 'joinchat_enqueue_script' );
 
@@ -207,7 +259,7 @@ class Joinchat_Public {
 
 			// Enqueue lite script.
 			wp_enqueue_script( 'joinchat-lite', plugins_url( "js/joinchat-lite{$min}.js", __FILE__ ), $deps, JOINCHAT_VERSION, $args );
-			wp_localize_script( 'joinchat-lite', 'joinchat_obj', array( 'settings' => $data ) );
+			wp_add_inline_script( 'joinchat-lite', 'var joinchat_obj = ' . wp_json_encode( array( 'settings' => $data ) ) . ';', 'before' );
 		}
 	}
 
@@ -227,8 +279,8 @@ class Joinchat_Public {
 		}
 
 		$script = false;
-		if ( wp_script_is( 'joinchat' ) ) {
-			$script = wp_scripts()->query( 'joinchat', 'registered' );
+		if ( wp_script_is( JOINCHAT_SLUG ) ) {
+			$script = wp_scripts()->query( JOINCHAT_SLUG, 'registered' );
 		} elseif ( wp_script_is( 'joinchat-lite', 'enqueued' ) ) {
 			$script = wp_scripts()->query( 'joinchat-lite', 'registered' );
 		}
@@ -356,7 +408,7 @@ class Joinchat_Public {
 			$joinchat_classes[] = 'auto' === $settings['dark_mode'] ? 'joinchat--dark-auto' : 'joinchat--dark';
 		}
 
-		// class for fixed button image.
+		// class for button fixed image.
 		if ( (int) $settings['button_image'] < 0 ) {
 			$joinchat_classes[] = 'joinchat--img';
 		}
