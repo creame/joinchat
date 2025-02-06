@@ -387,11 +387,12 @@ class Joinchat_Woo_Public {
 	 */
 	public function enqueue_styles() {
 
-		if ( $this->btn_show && ! wp_style_is( 'joinchat', 'done' ) ) {
+		if ( $this->btn_show && ! wp_style_is( JOINCHAT_SLUG, 'done' ) ) {
 
 			$min = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
 
-			wp_enqueue_style( 'joinchat-woo', plugins_url( "css/joinchat-woo{$min}.css", __FILE__ ), array(), JOINCHAT_VERSION, 'all' );
+			wp_enqueue_style( 'joinchat-woo', plugins_url( "public/css/joinchat-woo{$min}.css", JOINCHAT_FILE ), array(), JOINCHAT_VERSION, 'all' );
+			wp_style_add_data( 'joinchat-woo', 'path', JOINCHAT_DIR . "public/css/joinchat-woo{$min}.css" );
 
 		}
 
