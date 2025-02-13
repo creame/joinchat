@@ -314,8 +314,7 @@ class Joinchat_Public {
 			$optin = str_replace( '<a ', '<a target="_blank" rel="nofollow noopener" ', $optin );
 
 			if ( $settings['optin_check'] ) {
-				$optin              = '<input type="checkbox" id="joinchat_optin"><label for="joinchat_optin">' . $optin . '</label>';
-				$joinchat_classes[] = 'joinchat--optout';
+				$optin = '<input type="checkbox" id="joinchat_optin"><label for="joinchat_optin">' . $optin . '</label>';
 			}
 
 			$content .= '<div class="joinchat__optin">' . $optin . '</div>';
@@ -422,6 +421,11 @@ class Joinchat_Public {
 			if ( $settings['mobile_only'] ) {
 				$joinchat_classes[] = 'joinchat--mobile';
 			}
+		}
+
+		// class for required opt-in (initially opt-out).
+		if ( ! empty( $settings['optin_text'] ) && $settings['optin_check'] ) {
+			$joinchat_classes[] = 'joinchat--optout';
 		}
 
 		// class only button.
