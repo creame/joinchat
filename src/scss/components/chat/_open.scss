@@ -1,4 +1,4 @@
-#{$class}__contact {
+#{$class}__open {
   align-self: flex-end;
   display: flex;
   flex-direction: row;
@@ -40,7 +40,7 @@
   }
 }
 
-#{$class}__button__send {
+#{$class}__open__icon {
   flex-shrink: 0;
   width: var(--s);
   height: var(--s);
@@ -97,7 +97,7 @@
   }
 }
 
-#{$class}__button__sendtext {
+#{$class}__open__text {
   max-width: 0;
   padding: 0;
   border-radius: var(--s);

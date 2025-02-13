@@ -22,7 +22,7 @@
     @include pseudo;
 
     bottom: -6px;
-    right: calc(var(--s)/2 - 6px);
+    right: calc(var(--h) - 6px);
     border: 8px solid transparent;
     border-width: 8px 6px 0 6px;
     border-top-color: $white;
@@ -33,7 +33,7 @@
     right: auto;
 
     &::after {
-      left: calc(var(--s)/2 - 6px);
+      left: calc(var(--h) - 6px);
       right: auto;
     }
   }
@@ -56,7 +56,7 @@
   @include hover {
     @if $type == full {
       #{$class}--btn #{$class}__button:hover~&,
-      #{$class}--chatbox:has(#{$class}__contact:hover) & {
+      #{$class}--chatbox:has(#{$class}__open:hover) & {
         display: flex;
       }
     } @else {

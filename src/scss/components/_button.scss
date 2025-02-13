@@ -39,10 +39,7 @@
 
 #{$class}__button__image {
   position: absolute;
-  top: 1px;
-  right: 1px;
-  width: calc(100% - 2px);
-  height: calc(100% - 2px);
+  inset: 1px;
   border-radius: 50%;
   overflow: hidden;
   opacity: 0;
