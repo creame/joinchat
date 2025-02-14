@@ -16,7 +16,9 @@
     background-color: $WAdark;
 
     @if $type == full {
-      transition-duration: 1.5s;
+      #{$class}:has(#{$class}__box) & {
+        transition-duration: 1.5s;
+      }
     }
   }
 
