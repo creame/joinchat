@@ -1,4 +1,4 @@
-(function (window, document, joinchat_obj) {
+((window, document, joinchat_obj) => {
   'use strict';
 
   joinchat_obj = {
@@ -98,7 +98,7 @@
   };
 
   // Return WhatsApp link with optional message
-  joinchat_obj.whatsapp_link = function (phone, message, wa_web) {
+  joinchat_obj.get_wa_link = function (phone, message, wa_web) {
     message = message !== undefined ? message : this.settings.message_send || '';
     wa_web = wa_web !== undefined ? wa_web : this.settings.whatsapp_web && !this.is_mobile;
 
@@ -115,7 +115,7 @@
     message = message !== undefined ? message : this.settings.message_send || '';
 
     let params = {
-      link: this.whatsapp_link(phone, message),
+      link: this.get_wa_link(phone, message),
       chat_channel: 'whatsapp',
       chat_id: phone,
       chat_message: message,
@@ -153,7 +153,7 @@
 
     // Gutenberg buttons add QR
     if (joinchat_obj.can_qr && !joinchat_obj.is_mobile) {
-      document.querySelectorAll('.joinchat-button__qr').forEach(el => el.appendChild(joinchat_obj.qr(joinchat_obj.whatsapp_link(el.dataset.phone, el.dataset.message, false))));
+      document.querySelectorAll('.joinchat-button__qr').forEach(el => el.appendChild(joinchat_obj.qr(joinchat_obj.get_wa_link(el.dataset.phone, el.dataset.message, false))));
     } else {
       document.querySelectorAll('.wp-block-joinchat-button figure').forEach(el => el.remove());
     }
@@ -173,4 +173,4 @@
   if (document.readyState !== 'loading') on_page_ready();
   else document.addEventListener('DOMContentLoaded', on_page_ready);
 
-}(window, document, window.joinchat_obj || {}));
+})(window, document, window.joinchat_obj || {});

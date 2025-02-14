@@ -1,4 +1,4 @@
-(function (window, document, joinchat_obj) {
+((window, document, joinchat_obj) => {
   'use strict';
 
   joinchat_obj = {
@@ -9,7 +9,7 @@
     showed_at: 0,
     is_ready: false, // Change to true when Joinchat ends initialization
     is_mobile: /Mobile|Android|iPhone|iPad/i.test(navigator.userAgent),
-    can_qr: window.QrCreator && typeof QrCreator.render == 'function',
+    can_qr: window.QrCreator && typeof QrCreator.render === 'function',
     ...joinchat_obj
   };
   window.joinchat_obj = joinchat_obj; // Save global
@@ -113,7 +113,7 @@
   };
 
   // Return WhatsApp link with optional message
-  joinchat_obj.whatsapp_link = function (phone, message, wa_web) {
+  joinchat_obj.get_wa_link = function (phone, message, wa_web) {
     message = message !== undefined ? message : this.settings.message_send || '';
     wa_web = wa_web !== undefined ? wa_web : this.settings.whatsapp_web && !this.is_mobile;
 
@@ -142,14 +142,13 @@
     if (this.chatbox) return;
 
     this.chatbox = true;
-    this.showed_at = Date.now();
+    this.showed_at = Date.now(); // Avoid faux clicks
     this.$div.classList.add('joinchat--chatbox');
 
     if (this.settings.message_badge) {
       this.$('.joinchat__badge').classList.replace('joinchat__badge--in', 'joinchat__badge--out');
     }
 
-    // Trigger custom event
     document.dispatchEvent(new CustomEvent('joinchat:show'));
   };
 
@@ -168,9 +167,9 @@
   };
 
   // Save CTA hash
-  joinchat_obj.save_hash = function (force) {
+  joinchat_obj.save_hash = function () {
     if (!this.settings.message_hash) return; // No hash
-    if (this.settings.message_delay < 0 && !force) return; // No delay & no forced
+    if (this.settings.message_delay < 0) return; // No delay
 
     let saved_hashes = (this.store.getItem('joinchat_hashes') || '').split(',').filter(Boolean);
 
@@ -186,7 +185,7 @@
     message = message !== undefined ? message : this.settings.message_send || '';
 
     let params = {
-      link: this.whatsapp_link(phone, message),
+      link: this.get_wa_link(phone, message),
       chat_channel: 'whatsapp',
       chat_id: phone,
       chat_message: message,
@@ -201,14 +200,41 @@
     window.open(params.link, 'joinchat', 'noopener');
   };
 
-  // Opt-in accepted or no needed
-  joinchat_obj.optin = function () {
-    return !this.$div.classList.contains('joinchat--optout');
+  // Opt-in needed
+  joinchat_obj.need_optin = function () {
+    return this.$div.classList.contains('joinchat--optout');
   };
 
+  // QR is in use
   joinchat_obj.use_qr = function () {
     return !!this.settings.qr && this.can_qr && !this.is_mobile;
   }
+
+  // Show Chatbox or open WhatsApp
+  joinchat_obj.open = function (direct, phone, message) {
+    if ((direct && !this.need_optin()) || !joinchat_obj.$('.joinchat__box')) {
+      if (Date.now() < joinchat_obj.showed_at + 600) return; // Avoid trigger WA on auto show chatbox
+      this.save_hash();
+      this.open_whatsapp(phone, message);
+    } else {
+      this.chatbox_show();
+    }
+  }
+
+  // Close Chatbox (saving hash)
+  joinchat_obj.close = function () {
+    this.save_hash();
+    this.chatbox_hide();
+  }
+
+  // Random text (<jc-rand><jc-opt>A</jc-opt><jc-opt>B</jc-opt>...</jc-rand>)
+  joinchat_obj.rand_text = function (node) {
+    node.querySelectorAll('jc-rand').forEach(rand => {
+      const options = rand.children;
+      rand.replaceWith(options[Math.floor(Math.random() * options.length)].innerHTML);
+    });
+  }
+
 
   // Generate QR canvas
   joinchat_obj.qr = function (text, options) {
@@ -228,9 +254,6 @@
     const button_delay = joinchat_obj.settings.button_delay * 1000;
     const chat_delay = Math.max(0, joinchat_obj.settings.message_delay * 1000);
     const has_cta = !!joinchat_obj.settings.message_hash;
-    const has_chatbox = !!joinchat_obj.$('.joinchat__box');
-
-    let timeoutCTA;
 
     // Stored values (views counter & CTA hashes)
     const has_pageviews = parseInt(joinchat_obj.store.getItem('joinchat_views') || 1) >= joinchat_obj.settings.message_views;
@@ -238,121 +261,135 @@
     const cta_viewed = joinchat_obj.settings.cta_viewed !== undefined ?
       joinchat_obj.settings.cta_viewed : saved_hashes.indexOf(joinchat_obj.settings.message_hash || 'none') !== -1;
 
+    // Show button (and tooltip auto)
     const has_tooltip = !cta_viewed && (joinchat_obj.settings.message_badge || !has_cta || !chat_delay || !has_pageviews);
-
-    // Show button (and tooltip)
     setTimeout(() => joinchat_obj.show(has_tooltip), button_delay);
 
-    const showChatbox = () => {
-      clearTimeout(timeoutCTA);
-      joinchat_obj.chatbox_show();
-    };
-
-    const hideChatbox = () => {
-      joinchat_obj.save_hash();
-      joinchat_obj.chatbox_hide();
-    };
+    const joinchatOpen = () => joinchat_obj.open(); // shortcut
 
     // Show badge or chatbox
     if (has_cta && !cta_viewed && chat_delay) {
+      let timeout_auto_show;
+
       if (joinchat_obj.settings.message_badge) {
-        timeoutCTA = setTimeout(() => joinchat_obj.$('.joinchat__badge').classList.add('joinchat__badge--in'), button_delay + chat_delay);
+        timeout_auto_show = setTimeout(() => joinchat_obj.$('.joinchat__badge').classList.add('joinchat__badge--in'), button_delay + chat_delay);
       } else if (has_pageviews) {
-        timeoutCTA = setTimeout(showChatbox, button_delay + chat_delay);
+        timeout_auto_show = setTimeout(joinchatOpen, button_delay + chat_delay);
       }
+      document.addEventListener('joinchat:show', () => clearTimeout(timeout_auto_show));
     }
 
-    if (has_chatbox) {
-      // Open Chatbox on mouse over
-      if (!joinchat_obj.is_mobile) {
-        let timeoutHover;
-        const button = joinchat_obj.$('.joinchat__button');
-        button.addEventListener('mouseenter', () => { timeoutHover = setTimeout(showChatbox, 1500); });
-        button.addEventListener('mouseleave', () => { clearTimeout(timeoutHover); });
-      }
+    const jc_button = joinchat_obj.$('.joinchat__button');
 
-      // Open|close Chatbox on click
-      joinchat_obj.$('.joinchat__button').addEventListener('click', showChatbox);
-      joinchat_obj.$('.joinchat__close').addEventListener('click', hideChatbox);
-      joinchat_obj.$('.joinchat__contact')?.addEventListener('click', () => joinchat_obj.open_whatsapp());
+    // Open Chatbox on mouse over
+    if (!joinchat_obj.is_mobile) {
+      let timeout_on_hover;
+      jc_button.addEventListener('mouseenter', () => { if (joinchat_obj.$('.joinchat__box')) timeout_on_hover = setTimeout(joinchatOpen, 1500); });
+      jc_button.addEventListener('mouseleave', () => { clearTimeout(timeout_on_hover); });
+    }
 
-      // Opt-in toggle
-      joinchat_obj.$('#joinchat_optin')?.addEventListener('change', function () {
-        joinchat_obj.$div.classList.toggle('joinchat--optout', !this.checked);
-      });
+    // Open|close Chatbox on click
+    jc_button.addEventListener('click', joinchatOpen);
+    joinchat_obj.$('.joinchat__close')?.addEventListener('click', () => joinchat_obj.close());
+    joinchat_obj.$('.joinchat__open')?.addEventListener('click', () => joinchat_obj.open(true));
 
-      // Only scroll Joinchat message box (no all body)
-      joinchat_obj.$('.joinchat__box__scroll').addEventListener('wheel', function (e) {
-        e.preventDefault();
-        const delta = e.deltaY || -e.detail;
-        this.scrollTop += (delta < 0 ? 1 : -1) * 30;
-      }, { passive: false });
+    // Opt-in toggle
+    joinchat_obj.$('#joinchat_optin')?.addEventListener('change', function () {
+      joinchat_obj.$div.classList.toggle('joinchat--optout', !this.checked);
+    });
 
-      // Mobile enhancements
-      if (joinchat_obj.is_mobile) {
-        let timeoutKB, timeoutResize;
+    // Only scroll Joinchat message box (no all body)
+    joinchat_obj.$('.joinchat__box__scroll')?.addEventListener('wheel', function (e) {
+      e.preventDefault();
+      const delta = e.deltaY || -e.detail;
+      this.scrollTop += (delta < 0 ? 1 : -1) * 30;
+    }, { passive: false });
 
-        const toggleOnFormFocus = () => {
-          const type = (document.activeElement.type || '').toLowerCase();
+    // Mobile enhancements
+    if (joinchat_obj.is_mobile) {
+      let timeout_kb, timeout_resize;
 
-          if (['date', 'datetime', 'email', 'month', 'number', 'password', 'search', 'tel', 'text', 'textarea', 'time', 'url', 'week'].includes(type)) {
-            if (joinchat_obj.chatbox) {
-              joinchat_obj.chatbox_hide();
-              setTimeout(() => joinchat_obj.hide(), 400);
-            } else {
-              joinchat_obj.hide();
-            }
+      const toggleOnFormFocus = () => {
+        const type = (document.activeElement.type || '').toLowerCase();
+
+        if ([
+          'date',
+          'datetime',
+          'email',
+          'month',
+          'number',
+          'password',
+          'search',
+          'tel',
+          'text',
+          'textarea',
+          'time',
+          'url',
+          'week',
+        ].includes(type)) {
+          if (joinchat_obj.chatbox) {
+            joinchat_obj.chatbox_hide();
+            setTimeout(() => joinchat_obj.hide(), 400);
           } else {
-            joinchat_obj.show();
+            joinchat_obj.hide();
           }
+        } else {
+          joinchat_obj.show();
         }
-
-        // Hide on mobile when virtual keyboard is open (on fill forms)
-        ['focusin', 'focusout'].forEach(event => document.addEventListener(event, e => {
-          if (e.target.matches('input, textarea') && !joinchat_obj.$div.contains(e.target)) {
-            clearTimeout(timeoutKB);
-            timeoutKB = setTimeout(toggleOnFormFocus, 200);
-          }
-        }));
-
-        // Ensure header is visible
-        window.addEventListener('resize', () => {
-          clearTimeout(timeoutResize);
-          timeoutResize = setTimeout(() => { joinchat_obj.$div.style.setProperty('--vh', `${window.innerHeight}px`); }, 200);
-        });
-        window.dispatchEvent(new Event('resize'));
       }
-    } else {
 
-      joinchat_obj.$('.joinchat__button').addEventListener('click', () => joinchat_obj.open_whatsapp());
+      // Hide on mobile when virtual keyboard is open (on fill forms)
+      ['focusin', 'focusout'].forEach(event => document.addEventListener(event, e => {
+        if (e.target.matches('input, textarea') && !joinchat_obj.$div.contains(e.target)) {
+          clearTimeout(timeout_kb);
+          timeout_kb = setTimeout(toggleOnFormFocus, 200);
+        }
+      }));
+
+      // Ensure header is visible
+      window.addEventListener('resize', () => {
+        clearTimeout(timeout_resize);
+        timeout_resize = setTimeout(() => { joinchat_obj.$div.style.setProperty('--vh', `${window.innerHeight}px`); }, 200);
+      });
+      window.dispatchEvent(new Event('resize'));
     }
+
+    // Add QR Code
+    if (joinchat_obj.use_qr()) {
+      joinchat_obj.$('.joinchat__qr').appendChild(joinchat_obj.qr(joinchat_obj.get_wa_link(undefined, undefined, false)));
+    } else {
+      joinchat_obj.$('.joinchat__qr').remove();
+    }
+
+    // Count visits (if needed)
+    if (chat_delay && !has_pageviews) {
+      joinchat_obj.store.setItem('joinchat_views', parseInt(joinchat_obj.store.getItem('joinchat_views') || 0) + 1);
+    }
+
+    // Random text
+    if (has_cta) joinchat_obj.rand_text(joinchat_obj.$('.joinchat__dialog'));
 
     // TRIGGERS: open chatbox on load if query or anchor "joinchat" exists
     const location_url = new URL(window.location);
     if (location_url.hash === '#joinchat' || location_url.searchParams.has('joinchat')) {
       const query_delay = (parseInt(location_url.searchParams.get('joinchat')) || 0) * 1000;
       setTimeout(() => joinchat_obj.show(), query_delay);
-      setTimeout(showChatbox, query_delay + 700); // 500ms animation + 200ms extra delay
+      setTimeout(() => joinchat_obj.chatbox_show(), query_delay + 700); // 500ms animation + 200ms extra delay
     }
 
     // TRIGGERS: open chatbox or launch WhatsApp on click
     document.addEventListener('click', e => {
-      if (e.target.closest('.joinchat_open, .joinchat_app, a[href="#joinchat"], a[href="#whatsapp"]')) {
-        e.preventDefault();
-        if (has_chatbox && (!joinchat_obj.optin() || e.target.closest('.joinchat_open, a[href="#joinchat"]'))) {
-          showChatbox();
-        } else {
-          joinchat_obj.open_whatsapp(e.target.dataset.phone, e.target.dataset.message); // WhatsApp direct
-        }
-      }
+      if (!e.target.closest('.joinchat_open, .joinchat_app, a[href="#joinchat"], a[href="#whatsapp"]')) return;
+      e.preventDefault();
+      const direct = !!e.target.closest('.joinchat_app, a[href="#whatsapp"]');
+      joinchat_obj.open(direct, e.target.dataset.phone, e.target.dataset.message);
     });
 
     // TRIGGERS: close chatbox when click on nodes with class "joinchat_close"
     document.addEventListener('click', e => {
-      if (e.target.closest('.joinchat_close')) {
-        e.preventDefault();
-        hideChatbox();
-      }
+      if (!e.target.closest('.joinchat_close')) return;
+      e.preventDefault();
+      joinchat_obj.close();
     });
 
     // TRIGGERS: open chatbox on scroll (when node on viewport)
@@ -361,30 +398,17 @@
       const observer = new IntersectionObserver(entries => {
         entries.forEach(entry => {
           if (entry.intersectionRatio <= 0) return;
-          const is_forced = entry.target.classList.contains('joinchat_force_show');
-          if (cta_viewed && !is_forced) return;
+          if (cta_viewed && !entry.target.classList.contains('joinchat_force_show')) return;
 
           observer.disconnect(); // Only one show per visit
-          joinchat_obj.save_hash(!is_forced);
-          showChatbox();
+          joinchatOpen();
         });
       });
       show_on_scroll.forEach(element => observer.observe(element));
     }
 
-    // Add QR Code
-    if (joinchat_obj.use_qr()) {
-      joinchat_obj.$('.joinchat__qr').appendChild(joinchat_obj.qr(joinchat_obj.whatsapp_link(undefined, undefined, false)));
-    } else {
-      joinchat_obj.$('.joinchat__qr').remove();
-    }
-    // Count visits (if needed)
-    if (chat_delay && !has_pageviews) {
-      joinchat_obj.store.setItem('joinchat_views', parseInt(joinchat_obj.store.getItem('joinchat_views') || 0) + 1);
-    }
-
-    document.dispatchEvent(new CustomEvent('joinchat:start'));
     joinchat_obj.is_ready = true;
+    document.dispatchEvent(new CustomEvent('joinchat:start'));
   }
 
   const on_page_ready = () => {
@@ -418,16 +442,15 @@
 
         // TRIGGERS: launch WhatsApp on click
         document.addEventListener('click', e => {
-          if (e.target.closest('.joinchat_open, .joinchat_app, a[href="#joinchat"], a[href="#whatsapp"]')) {
-            e.preventDefault();
-            joinchat_obj.open_whatsapp(e.target.dataset.phone, e.target.dataset.message);
-          }
+          if (!e.target.closest('.joinchat_open, .joinchat_app, a[href="#joinchat"], a[href="#whatsapp"]')) return;
+          e.preventDefault();
+          joinchat_obj.open_whatsapp(e.target.dataset.phone, e.target.dataset.message);
         });
       }
 
       // Gutenberg buttons add QR
       if (joinchat_obj.can_qr && !joinchat_obj.is_mobile) {
-        document.querySelectorAll('.joinchat-button__qr').forEach(el => el.appendChild(joinchat_obj.qr(joinchat_obj.whatsapp_link(el.dataset.phone, el.dataset.message, false))));
+        document.querySelectorAll('.joinchat-button__qr').forEach(el => el.appendChild(joinchat_obj.qr(joinchat_obj.get_wa_link(el.dataset.phone, el.dataset.message, false))));
       } else {
         document.querySelectorAll('.wp-block-joinchat-button figure').forEach(el => el.remove());
       }
@@ -448,4 +471,4 @@
   if (document.readyState !== 'loading') on_page_ready();
   else document.addEventListener('DOMContentLoaded', on_page_ready);
 
-}(window, document, window.joinchat_obj || {}));
+})(window, document, window.joinchat_obj || {});

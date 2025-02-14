@@ -218,9 +218,6 @@ class Joinchat_Formatter {
 	 */
 	public function random( $groups ) {
 
-		// TODO: view script.
-		// $this->enqueue_scripts();
-
 		$texts = explode( '||', $groups['text'] );
 		foreach ( $texts as $key => $text ) {
 			$texts[ $key ] = '<jc-opt>' . trim( $text ) . '</jc-opt>';
