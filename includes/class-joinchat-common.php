@@ -147,7 +147,7 @@ class Joinchat_Common {
 		$default_settings = $this->defaults();
 
 		// Can hook 'option_joinchat' and 'default_option_joinchat' filters.
-		$settings = array_merge( $default_settings, (array) get_option( 'joinchat', $default_settings ) );
+		$settings = array_merge( $default_settings, (array) get_option( JOINCHAT_SLUG, $default_settings ) );
 
 		// Migrate addons 'remove_brand' setting to 'header' (v. < 4.1).
 		if ( isset( $settings['remove_brand'] ) ) {

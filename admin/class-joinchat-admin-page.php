@@ -599,7 +599,7 @@ class Joinchat_Admin_Page {
 		$pages = jc_common()->settings['message_views'];
 		$badge = jc_common()->settings['message_badge'];
 
-		$output = '<fieldset><legend class="screen-reader-text"><span>' . esc_html__( 'Auto open', 'creame-whatsapp-me' ) . '</span></legend>' .
+		$output = '<fieldset><legend class="screen-reader-text"><span>' . esc_html__( 'Auto Open', 'creame-whatsapp-me' ) . '</span></legend>' .
 			'<label><input id="joinchat_message_delay_on" name="joinchat[message_delay_on]" value="yes" type="checkbox"' . checked( 'yes', $delay > 0 ? 'yes' : '', false ) . '> ' . esc_html__( 'Automatically show Chat Window', 'creame-whatsapp-me' ) . '</label> ' .
 			/* translators: %s: input for seconds delay */
 			'<label>' . sprintf( esc_html__( 'after %s seconds', 'creame-whatsapp-me' ), '<input id="joinchat_message_delay" name="joinchat[message_delay]" value="' . absint( $delay ) . '" type="number" min="1" max="120" class="tiny-text">' ) . '</label> ' .
