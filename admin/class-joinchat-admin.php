@@ -54,7 +54,7 @@ class Joinchat_Admin {
 
 		// Prevent bad behavior when validate twice on first save
 		// bug (view https://core.trac.wordpress.org/ticket/21989).
-		if ( count( get_settings_errors( JOINCHAT_SLUG ) ) ) {
+		if ( count( wp_list_filter( get_settings_errors( JOINCHAT_SLUG ), array( 'code' => 'settings_updated' ) ) ) ) {
 			return $value;
 		}
 
