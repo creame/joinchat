@@ -91,7 +91,7 @@ class Joinchat_I18n {
 	 */
 	public function settings_notice() {
 
-		if ( ! Joinchat_Util::is_admin_screen() || count( get_settings_errors( 'joinchat' ) ) ) {
+		if ( ! Joinchat_Util::is_admin_screen() || count( get_settings_errors( JOINCHAT_SLUG ) ) ) {
 			return;
 		}
 

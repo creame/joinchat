@@ -110,7 +110,7 @@ class Joinchat_Gutenberg {
 	 */
 	public function root_styles() {
 
-		if ( has_block( 'joinchat/button' ) && ! wp_script_is( 'joinchat', 'done' ) && ! wp_script_is( 'joinchat-woo', 'done' ) ) {
+		if ( has_block( 'joinchat/button' ) && ! wp_script_is( JOINCHAT_SLUG, 'done' ) && ! wp_script_is( 'joinchat-woo', 'done' ) ) {
 
 			ob_start();
 			?>

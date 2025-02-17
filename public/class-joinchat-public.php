@@ -182,7 +182,7 @@ class Joinchat_Public {
 		if ( $this->show ) {
 
 			// Enqueue default full script.
-			wp_enqueue_script( 'joinchat', plugins_url( "js/joinchat{$min}.js", __FILE__ ), $deps, JOINCHAT_VERSION, true );
+			wp_enqueue_script( JOINCHAT_SLUG, plugins_url( "js/joinchat{$min}.js", __FILE__ ), $deps, JOINCHAT_VERSION, true );
 			// Do action.
 			do_action( 'joinchat_enqueue_script' );
 
@@ -224,9 +224,9 @@ class Joinchat_Public {
 		}
 
 		$script = false;
-		if ( wp_script_is( 'joinchat' ) ) {
-			$script = wp_scripts()->query( 'joinchat', 'registered' );
-		} elseif ( wp_script_is( 'joinchat-lite', 'enqueued' ) ) {
+		if ( wp_script_is( JOINCHAT_SLUG ) ) {
+			$script = wp_scripts()->query( JOINCHAT_SLUG, 'registered' );
+		} elseif ( wp_script_is( 'joinchat-lite' ) ) {
 			$script = wp_scripts()->query( 'joinchat-lite', 'registered' );
 		}
 
