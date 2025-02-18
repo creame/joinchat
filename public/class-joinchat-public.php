@@ -191,6 +191,8 @@ class Joinchat_Public {
 	/**
 	 * Defer styles if needed
 	 *
+	 * If handle starts with 'joinchat' and media is 'print' add onload.
+	 *
 	 * @since 6.0.0
 	 * @param string $tag    The link tag.
 	 * @param string $handle The handle of the enqueued style.
@@ -199,7 +201,7 @@ class Joinchat_Public {
 	 * @return string
 	 */
 	public function defer_styles( $tag, $handle, $href, $media ) {
-		if ( JOINCHAT_SLUG !== $handle || 'print' !== $media ) {
+		if ( 'print' !== $media || strpos( $handle, JOINCHAT_SLUG ) !== 0 ) {
 			return $tag;
 		}
 
