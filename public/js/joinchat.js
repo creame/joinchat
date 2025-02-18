@@ -212,7 +212,7 @@
 
   // Show Chatbox or open WhatsApp
   joinchat_obj.open = function (direct, phone, message) {
-    if ((direct && !this.need_optin()) || !joinchat_obj.$('.joinchat__box')) {
+    if ((direct && !this.need_optin()) || !joinchat_obj.$('.joinchat__chatbox')) {
       if (Date.now() < joinchat_obj.showed_at + 600) return; // Avoid trigger WA on auto show chatbox
       this.save_hash();
       this.open_whatsapp(phone, message);
@@ -234,7 +234,6 @@
       rand.replaceWith(options[Math.floor(Math.random() * options.length)].innerHTML);
     });
   }
-
 
   // Generate QR canvas
   joinchat_obj.qr = function (text, options) {
@@ -284,7 +283,7 @@
     // Open Chatbox on mouse over
     if (!joinchat_obj.is_mobile) {
       let timeout_on_hover;
-      jc_button.addEventListener('mouseenter', () => { if (joinchat_obj.$('.joinchat__box')) timeout_on_hover = setTimeout(joinchatOpen, 1500); });
+      jc_button.addEventListener('mouseenter', () => { if (joinchat_obj.$('.joinchat__chatbox')) timeout_on_hover = setTimeout(joinchatOpen, 1500); });
       jc_button.addEventListener('mouseleave', () => { clearTimeout(timeout_on_hover); });
     }
 
@@ -299,7 +298,7 @@
     });
 
     // Only scroll Joinchat message box (no all body)
-    joinchat_obj.$('.joinchat__box__scroll')?.addEventListener('wheel', function (e) {
+    joinchat_obj.$('.joinchat__scroll')?.addEventListener('wheel', function (e) {
       e.preventDefault();
       const delta = e.deltaY || -e.detail;
       this.scrollTop += (delta < 0 ? 1 : -1) * 30;
@@ -460,7 +459,7 @@
         const message = joinchat_obj.settings.message_send;
         jQuery('form.variations_form').on('found_variation reset_data', function (e, variation) {
           const sku = variation && variation.sku || joinchat_obj.settings.sku;
-          joinchat_obj.$('.joinchat__box jc-sku').textContent = sku;
+          joinchat_obj.$('.joinchat__chat jc-sku').textContent = sku;
           joinchat_obj.settings.message_send = message.replace(/<jc-sku>.*<\/jc-sku>/g, sku);
         });
       }

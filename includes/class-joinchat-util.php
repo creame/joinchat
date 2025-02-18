@@ -282,13 +282,13 @@ class Joinchat_Util {
 			$class = '';
 
 			if ( substr( $msg, 0, 3 ) === '>>>' ) {
-				$class = ' joinchat__message--note';
+				$class = ' joinchat__bubble--note';
 				$msg   = substr( $msg, 3 );
 			} elseif ( wp_strip_all_tags( $msg ) === '' ) {
-				$class = ' joinchat__message--media';
+				$class = ' joinchat__bubble--media';
 			}
 
-			$messages[ $key ] = sprintf( '<div class="joinchat__message%s">%s</div>', $class, $msg );
+			$messages[ $key ] = sprintf( '<div class="joinchat__bubble%s">%s</div>', $class, $msg );
 		}
 
 		return join( "\n", $messages );

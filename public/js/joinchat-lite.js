@@ -163,7 +163,6 @@
       const message = joinchat_obj.settings.message_send;
       jQuery('form.variations_form').on('found_variation reset_data', function (e, variation) {
         const sku = variation && variation.sku || joinchat_obj.settings.sku;
-        joinchat_obj.$('.joinchat__box jc-sku').textContent = sku;
         joinchat_obj.settings.message_send = message.replace(/<jc-sku>.*<\/jc-sku>/g, sku);
       });
     }

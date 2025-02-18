@@ -1,4 +1,4 @@
-#{$class}__box {
+#{$class}__chatbox {
   content-visibility: hidden;
   display: flex;
   flex-direction: column;
@@ -123,7 +123,7 @@
   }
 }
 
-#{$class}__box__scroll {
+#{$class}__scroll {
   overflow: hidden scroll;
   overscroll-behavior-y: contain;
   -webkit-overflow-scrolling: touch;
@@ -149,7 +149,7 @@
   }
 }
 
-#{$class}__box__content {
+#{$class}__content {
   display: flex;
   flex-direction: column;
   width: calc(100% + 4px); // 100% + scrollbar width
@@ -165,7 +165,7 @@
     --size: 28px;
   }
 
-  #{$class}__box__scroll {
+  #{$class}__scroll {
     padding-top: 15px;
   }
 }
@@ -173,7 +173,7 @@
 @include dark {
   #{$class}--dark-auto {
 
-    #{$class}__box {
+    #{$class}__chatbox {
       background: #1a1a1a linear-gradient(180deg, var(--dark),var(--dark) var(--header),var(--bg) var(--header),var(--bg));
     }
   }

@@ -27,7 +27,7 @@ defined( 'WPINC' ) || exit;
 		<div class="joinchat__qr"><div><?php echo esc_html( $settings['qr_text'] ); ?></div></div>
 	<?php endif; ?>
 	<?php if ( $box_content ) : ?>
-		<div class="joinchat__box" role="dialog" aria-labelledby="joinchat__label" aria-modal="true">
+		<div class="joinchat__chatbox" role="dialog" aria-labelledby="joinchat__label" aria-modal="true">
 			<div class="joinchat__header">
 				<div id="joinchat__label">
 					<?php if ( '__jc__' === $settings['header'] ) : ?>
@@ -42,8 +42,8 @@ defined( 'WPINC' ) || exit;
 				</div>
 				<div class="joinchat__close" role="button" tabindex="0" aria-label="<?php esc_attr_e( 'Close' ); // phpcs:ignore WordPress.WP.I18n.MissingArgDomain ?>"></div>
 			</div>
-			<div class="joinchat__box__scroll">
-				<div class="joinchat__box__content">
+			<div class="joinchat__scroll">
+				<div class="joinchat__content">
 					<?php echo $box_content; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 
 					<div class="joinchat__open" role="button" tabindex="0">

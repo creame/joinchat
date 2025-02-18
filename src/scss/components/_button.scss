@@ -16,7 +16,7 @@
     background-color: $WAdark;
 
     @if $type == full {
-      #{$class}:has(#{$class}__box) & {
+      #{$class}:has(#{$class}__chatbox) & {
         transition-duration: 1.5s;
       }
     }

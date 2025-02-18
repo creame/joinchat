@@ -1,4 +1,4 @@
-#{$class}__dialog {
+#{$class}__chat {
   --peak: url(##{$name}__peak_l);
 
   display: flex;
@@ -10,7 +10,7 @@
   }
 }
 
-#{$class}__message {
+#{$class}__bubble {
   position: relative;
   min-width: 60px;
   max-width: calc(100% - 52px);
