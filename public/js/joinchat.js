@@ -365,8 +365,44 @@
       joinchat_obj.store.setItem('joinchat_views', parseInt(joinchat_obj.store.getItem('joinchat_views') || 0) + 1);
     }
 
+    const jc_scroll = joinchat_obj.$('.joinchat__scroll');
+    const jc_chat = joinchat_obj.$('.joinchat__chat')
+    const jc_bubbles = joinchat_obj.$$('.joinchat__bubble');
+
     // Random text
-    if (has_cta) joinchat_obj.rand_text(joinchat_obj.$('.joinchat__dialog'));
+    if (has_cta) joinchat_obj.rand_text(jc_chat);
+
+    // Bubbles animated (show one by one)
+    if (jc_bubbles.length > 1 && !window.matchMedia('(prefers-reduced-motion)').matches) {
+      let index = 0;
+
+      const random = (min, max) => Math.round(Math.random() * (max - min) + min);
+      const showBubble = (bubble, next_delay) => {
+        joinchat_obj.$('.joinchat__bubble--loading')?.remove();
+        bubble.classList.remove('joinchat--hidden');
+        jc_scroll.scrollTop = jc_scroll.scrollHeight;
+        setTimeout(nextBubble, next_delay);
+      }
+      const nextBubble = () => {
+        if (index >= jc_bubbles.length) {
+          jc_chat.dispatchEvent(new Event('joinchat:messages_end'));
+          return;
+        }
+
+        const bubble = jc_bubbles[index++];
+
+        if (bubble.classList.contains('joinchat__bubble--note')) {
+          showBubble(bubble, 100);
+        } else {
+          jc_chat.insertAdjacentHTML('beforeend', '<div class="joinchat__bubble joinchat__bubble--loading"></div>');
+          jc_scroll.scrollTop = jc_scroll.scrollHeight;
+          setTimeout(() => showBubble(bubble, random(400, 600)), (bubble.textContent.split(/\s+/).length * 60) + random(100, 200)); // Delay (word count * time) + random delay
+        }
+      };
+
+      jc_bubbles.forEach(bubble => bubble.classList.add('joinchat--hidden'));
+      document.addEventListener('joinchat:show', nextBubble, { once: true });
+    }
 
     // TRIGGERS: open chatbox on load if query or anchor "joinchat" exists
     const location_url = new URL(window.location);
