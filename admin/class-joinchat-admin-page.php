@@ -152,7 +152,7 @@ class Joinchat_Admin_Page {
 						),
 					),
 					'chat'   => array(
-						'message_text'  => '<label for="joinchat_message_text">' . esc_html__( 'Call to Action', 'creame-whatsapp-me' ) . '</label>' . self::vars_help( 'message_text' ),
+						'message_text'  => '<label for="joinchat_message_text">' . esc_html__( 'Call to Action', 'creame-whatsapp-me' ) . '</label>' . self::vars_help( 'message_text' ) . self::rich_chat_help(),
 						'message_start' => '<label for="joinchat_message_start">' . esc_html__( 'Button Text', 'creame-whatsapp-me' ) . '</label>',
 						'color'         => esc_html__( 'Theme Color', 'creame-whatsapp-me' ),
 						'dark_mode'     => esc_html__( 'Dark Mode', 'creame-whatsapp-me' ),
@@ -606,7 +606,7 @@ class Joinchat_Admin_Page {
 			/* translators: %s: input for number of pages */
 			'<label>' . sprintf( esc_html__( 'and user has visited at least %s pages', 'creame-whatsapp-me' ), '<input id="joinchat_message_views" name="joinchat[message_views]" value="' . (int) $pages . '" type="number" min="1" max="120" class="tiny-text">' ) . '</label><br>' .
 			'<label><input id="joinchat_message_badge" name="joinchat[message_badge]" value="yes" type="checkbox"' . checked( 'yes', $badge, false ) . '> ' .
-			esc_html__( 'Display a notification balloon instead of opening the Chat Window for a "less intrusive" mode', 'creame-whatsapp-me' ) . '</label></fieldset>' .
+			esc_html__( 'Display a notification bubble instead of opening the Chat Window for a "less intrusive" mode', 'creame-whatsapp-me' ) . '</label></fieldset>' .
 			'<p class="description">' . esc_html__( 'Only if "Call to Action" is defined.', 'creame-whatsapp-me' ) . ' ' .
 			esc_html__( 'You can also use other triggers to show Chat Window', 'creame-whatsapp-me' ) . ' ' .
 			' <a class="joinchat-show-help" href="#tab-link-triggers" title="' . esc_html__( 'Show Help', 'creame-whatsapp-me' ) . '">?</a>' .
@@ -628,24 +628,59 @@ class Joinchat_Admin_Page {
 
 		$help_tabs = array(
 			array(
-				'id'      => 'styles-and-vars',
-				'title'   => esc_html__( 'Styles and Variables', 'creame-whatsapp-me' ),
+				'id'      => 'dynamic-vars',
+				'title'   => esc_html__( 'Dynamic Variables', 'creame-whatsapp-me' ),
 				'content' =>
-					'<p>' . wp_kses(
-						__( 'You can use formatting styles like in WhatsApp: _<em>italic</em>_ *<strong>bold</strong>* ~<del>strikethrough</del>~.', 'creame-whatsapp-me' ),
-						array(
-							'em'     => array(),
-							'strong' => array(),
-							'del'    => array(),
-						)
-					) . '</p>' .
 					'<p>' . esc_html__( 'You can use dynamic variables that will be replaced by the values of the page the user visits:', 'creame-whatsapp-me' ) .
 					'<p>' .
 					'<span><code>{SITE}</code> ➜ ' . esc_html( get_bloginfo( 'name', 'display' ) ) . '</span><br> ' .
 					'<span><code>{TITLE}</code> ➜ ' . esc_html__( 'Page Title', 'creame-whatsapp-me' ) . '</span><br>' .
+					'<span><code>{HOME}</code> ➜ ' . esc_url( home_url( '/' ) ) . '</span><br> ' .
 					'<span><code>{URL}</code> ➜ ' . esc_url( home_url( 'awesome/' ) ) . '</span><br> ' .
-					'<span><code>{HREF}</code> ➜ ' . esc_url( home_url( 'awesome/' ) ) . '?utm_source=twitter&utm_medium=social&utm_campaign=XXX</span> ' .
+					'<span><code>{HREF}</code> ➜ ' . esc_url( home_url( 'awesome/' ) ) . '?utm_source=twitter&utm_medium=social&utm_campaign=XXX</span>' .
 					'</p>',
+			),
+			array(
+				'id'      => 'rich-chat',
+				'title'   => esc_html__( 'Rich Chat', 'creame-whatsapp-me' ),
+				'content' =>
+				'<p>' . esc_html__( 'Enhance your Calls to Action with a rich chat.', 'creame-whatsapp-me' ) . ' ' . esc_html__( 'Add multiple chat bubbles, links, images, and more to improve engagement.', 'creame-whatsapp-me' ) . '</p>' .
+				'<p><strong>📌 ' . esc_html__( 'Text Formatting', 'creame-whatsapp-me' ) . '</strong></p>' .
+				'<p style="line-height:1.8em;">' .
+					'<span><em>' . esc_html__( 'Italic', 'creame-whatsapp-me' ) . '</em> ➜ <code>_text_</code></span><br>' .
+					'<span><strong>' . esc_html__( 'Bold', 'creame-whatsapp-me' ) . '</strong> ➜ <code>*text*</code> ' .
+						esc_html__( 'or', 'creame-whatsapp-me' ) . ' <code>**text**</code> ' .
+						esc_html__( 'or', 'creame-whatsapp-me' ) . ' <code>__text__</code></span><br>' .
+					'<span><del>' . esc_html__( 'Strikethrough', 'creame-whatsapp-me' ) . '</del> ➜ <code>~text~</code></span><br>' .
+					'<span><code>' . esc_html__( 'Monospaced', 'creame-whatsapp-me' ) . '</code> ➜ <code>`text`</code></span>' .
+				'</p>' .
+				'<p><strong>💬 ' . esc_html__( 'Message Structure', 'creame-whatsapp-me' ) . '</strong></p>' .
+				'<p style="line-height:1.8em;">' .
+					/* translators: %s: the code. */
+					'<span>' . sprintf( esc_html__( 'Split text into bubbles using %s', 'creame-whatsapp-me' ), '<code>===</code>' ) . '</span><br>' .
+					/* translators: %s: the code. */
+					'<span>' . sprintf( esc_html__( 'Add notes outside the chat with %s', 'creame-whatsapp-me' ), '<code>&gt;&gt;&gt;</code>' ) . '</span>' .
+				'</p>' .
+				'<p><strong>🔗 ' . esc_html__( 'Links, Images and More', 'creame-whatsapp-me' ) . '</strong> (' . esc_html__( 'Markdown supported', 'creame-whatsapp-me' ) . ')</p>' .
+				'<p style="line-height:1.8em;">' .
+					'<span><strong>' . esc_html__( 'Link', 'creame-whatsapp-me' ) . '</strong> ➜ <code>[title](https://www.example.com)</code> ' .
+						esc_html__( 'or', 'creame-whatsapp-me' ) . ' <code>{LINK https://www.example.com title}</code></span><br>' .
+					'<span><strong>' . esc_html__( 'Button', 'creame-whatsapp-me' ) . '</strong> ➜ <code>{BTN https://www.example.com title}</code></span><br>' .
+					'<span><strong>' . esc_html__( 'Image', 'creame-whatsapp-me' ) . '</strong> ➜ <code>![alt_text](image.jpg width)</code> ' .
+						esc_html__( 'or', 'creame-whatsapp-me' ) . ' <code>{IMG image.jpg width alt_text}</code></span><br>' .
+					'<span><strong>' . esc_html__( 'Horizontal Rule', 'creame-whatsapp-me' ) . '</strong> ➜ <code>---</code></span><br>' .
+					'<span><strong>' . esc_html__( 'Random Text', 'creame-whatsapp-me' ) . '</strong> ➜ <code>{RAND text_1||text_2||...||text_n}</code> (' . esc_html__( 'show a random option', 'creame-whatsapp-me' ) . ')</span>' .
+				'</p>' .
+				'<p>' . esc_html__( 'Elements can be combined. For example, for an image with link:', 'creame-whatsapp-me' ) . ' <code>{LINK https://www.example.com {IMG image.jpg}}</code></p>' .
+				'<p>' .
+					esc_html__( 'On images you can use the image url or the image ID of your Media Library.', 'creame-whatsapp-me' ) . ' ' .
+					wp_kses( __( '<strong>We recommend</strong> to use the ID that resizes the image to the exact size of the chatbox.', 'creame-whatsapp-me' ), array( 'strong' => array() ) ) .
+				'</p>' .
+				'<p>' .
+					/* translators: 1: FEATURED, 2: THUMB. */
+					sprintf( __( 'Can use %1$s or %2$s as image url to use current post Featured Image.', 'creame-whatsapp-me' ), '<strong>FEATURED</strong>', '<strong>THUMB</strong>' ) . ' ' .
+					esc_html__( 'e.g.', 'creame-whatsapp-me' ) . ' <code>{IMG THUMB}</code> ' . esc_html__( 'or', 'creame-whatsapp-me' ) . ' <code>![{PRODUCT}](FEATURED)</code>' .
+				'</p>',
 			),
 			array(
 				'id'      => 'triggers',
@@ -796,6 +831,20 @@ class Joinchat_Admin_Page {
 		return count( $vars ) ? '<div class="joinchat_vars_help">' . esc_html__( 'You can use vars', 'creame-whatsapp-me' ) . ' ' .
 			'<a class="joinchat-show-help" href="#" title="' . esc_attr__( 'Show Help', 'creame-whatsapp-me' ) . '">?</a><br> ' .
 			'<code>{' . join( '}</code> <code>{', $vars ) . '}</code></div>' : '';
+
+	}
+
+	/**
+	 * Return html for rich chat help next to field label
+	 *
+	 * @since 6.0.0
+	 * @access public
+	 * @return string
+	 */
+	public static function rich_chat_help() {
+
+		return '<div class="joinchat_vars_help">' . esc_html__( 'Rich Chat', 'creame-whatsapp-me' ) .
+		' <a class="joinchat-show-help" href="#tab-link-rich-chat" title="' . esc_attr__( 'Show Help', 'creame-whatsapp-me' ) . '">?</a></div>';
 
 	}
 

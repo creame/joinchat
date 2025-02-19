@@ -220,6 +220,10 @@ class Joinchat_Woo_Admin {
 
 		foreach ( $woo_sections as $key => $label ) {
 			$woo_sections[ $key ] = sprintf( '<label for="joinchat_%s">%s</label>', $key, esc_html( $label ) ) . Joinchat_Admin_Page::vars_help( $key );
+
+			if ( strpos( $key, 'message_text_' ) === 0 ) {
+				$woo_sections[ $key ] .= Joinchat_Admin_Page::rich_chat_help();
+			}
 		}
 
 		$sections['chat']   = $woo_sections;
