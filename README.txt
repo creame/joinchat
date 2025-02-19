@@ -87,6 +87,7 @@ Use variables in your CTAs and Start Messages that change dynamically for each p
 
 **{SITE}** ➡ Website title
 **{TITLE}** ➡ Current page title
+**{HOME}** ➡ Website home url
 **{URL}** ➡ Current page url
 **{HREF}** ➡ Current page url (full with query params)
 **{PRODUCT}** ➡ Product name (Woo)

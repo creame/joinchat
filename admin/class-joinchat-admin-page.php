@@ -791,7 +791,7 @@ class Joinchat_Admin_Page {
 	 */
 	public static function vars_help( $field ) {
 
-		$vars = apply_filters( 'joinchat_vars_help', array( 'SITE', 'TITLE', 'URL', 'HREF' ), $field );
+		$vars = apply_filters( 'joinchat_vars_help', array( 'SITE', 'TITLE', 'HOME', 'URL', 'HREF' ), $field );
 
 		return count( $vars ) ? '<div class="joinchat_vars_help">' . esc_html__( 'You can use vars', 'creame-whatsapp-me' ) . ' ' .
 			'<a class="joinchat-show-help" href="#" title="' . esc_attr__( 'Show Help', 'creame-whatsapp-me' ) . '">?</a><br> ' .

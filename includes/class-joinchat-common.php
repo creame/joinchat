@@ -256,7 +256,7 @@ class Joinchat_Common {
 	 */
 	public function get_obj_vars( $obj ) {
 
-		return apply_filters( 'joinchat_metabox_vars', array( 'SITE', 'TITLE', 'URL', 'HREF' ), $obj );
+		return apply_filters( 'joinchat_metabox_vars', array( 'SITE', 'TITLE', 'HOME', 'URL', 'HREF' ), $obj );
 
 	}
 }
