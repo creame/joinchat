@@ -91,7 +91,7 @@
   background: #25d366;
   color: inherit;
   border-radius: calc(var(--s)/2);
-  box-shadow: 1px 6px 24px 0 rgba(7,94,84, 0.24);
+  box-shadow: 1px 6px 24px 0 rgba(7, 94, 84, 0.24);
   cursor: pointer;
   transition: background-color 0.2s linear;
 }
@@ -127,7 +127,7 @@
 .joinchat--chatbox .joinchat__button {
   background: var(--color);
   transition-duration: 0.2s;
-  box-shadow: 0 1px 2px 0 rgba(0,0,0, 0.3);
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
 }
 
 .joinchat--chatbox .joinchat__button:hover,
@@ -290,12 +290,12 @@
   border: none;
   border-radius: 16px;
   background: #fff;
-  color: rgba(0,0,0, 0.8);
+  color: rgba(0, 0, 0, 0.8);
   line-height: 31px;
   white-space: nowrap;
   opacity: 0;
   transition: opacity 0.3s ease-out 0.4s;
-  filter: drop-shadow(0 1px 4px rgba(0,0,0, 0.4));
+  filter: drop-shadow(0 1px 4px rgba(0, 0, 0, 0.4));
   pointer-events: none;
 }
 
@@ -351,10 +351,10 @@
   border: none;
   border-radius: 16px;
   background: #fff;
-  color: rgba(0,0,0, 0.8);
+  color: rgba(0, 0, 0, 0.8);
   text-align: center;
   white-space: nowrap;
-  filter: drop-shadow(0 1px 4px rgba(0,0,0, 0.4));
+  filter: drop-shadow(0 1px 4px rgba(0, 0, 0, 0.4));
   animation: joinchat_badge_in 400ms cubic-bezier(0.11, 0.84, 0.83, 1.01) 500ms both;
   pointer-events: none;
 }
@@ -406,8 +406,8 @@
   max-width: 400px;
   max-height: calc(var(--vh) - var(--bottom) - var(--sep));
   border-radius: calc(var(--s)/2 + 2px);
-  background: #fff linear-gradient(180deg, var(--color),var(--color) var(--header),var(--bg) var(--header),var(--bg));
-  box-shadow: 0 2px 6px 0 rgba(0,0,0, 0.5);
+  background: #fff linear-gradient(180deg, var(--color), var(--color) var(--header), var(--bg) var(--header), var(--bg));
+  box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.5);
   text-align: left;
   overflow: hidden;
   transform: scale3d(0, 0, 0);
@@ -431,7 +431,7 @@
 }
 
 .joinchat--dark .joinchat__box {
-  background: #1a1a1a linear-gradient(180deg, var(--dark),var(--dark) var(--header),var(--bg) var(--header),var(--bg));
+  background: #1a1a1a linear-gradient(180deg, var(--dark), var(--dark) var(--header), var(--bg) var(--header), var(--bg));
 }
 
 .joinchat__header {
@@ -481,7 +481,7 @@
   color: inherit !important;
   text-decoration: none !important;
   opacity: 0.9;
-  filter: drop-shadow(0 1px 3px rgba(0,0,0, 0.3));
+  filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.3));
 }
 
 .joinchat__wa {
@@ -500,18 +500,18 @@
   width: var(--size);
   height: var(--size);
   border-radius: 50%;
-  background: rgba(0,0,0, 0.4) url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23fff' viewBox='0 0 24 24'%3E%3Cpath d='M24 2.4 21.6 0 12 9.6 2.4 0 0 2.4 9.6 12 0 21.6 2.4 24l9.6-9.6 9.6 9.6 2.4-2.4-9.6-9.6z'/%3E%3C/svg%3E") center no-repeat;
+  background: rgba(0, 0, 0, 0.4) url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23fff' viewBox='0 0 24 24'%3E%3Cpath d='M24 2.4 21.6 0 12 9.6 2.4 0 0 2.4 9.6 12 0 21.6 2.4 24l9.6-9.6 9.6 9.6 2.4-2.4-9.6-9.6z'/%3E%3C/svg%3E") center no-repeat;
   background-size: 12px;
   cursor: pointer;
   transition: background-color 0.3s ease-out;
 }
 
 .joinchat__close:hover {
-  background-color: rgba(0,0,0, 0.6);
+  background-color: rgba(0, 0, 0, 0.6);
 }
 
 .joinchat__close:active {
-  background-color: rgba(0,0,0, 0.7);
+  background-color: rgba(0, 0, 0, 0.7);
 }
 
 [dir="rtl"] .joinchat__close {
@@ -542,7 +542,7 @@
 }
 
 .joinchat__box__scroll:hover::-webkit-scrollbar-thumb {
-  background: rgba(0,0,0, 0.2);
+  background: rgba(0, 0, 0, 0.2);
 }
 
 .joinchat__box__content {
@@ -659,7 +659,7 @@
   background: #fff;
   color: #4a4a4a;
   word-break: break-word;
-  filter: drop-shadow(0 1px 2px rgba(0,0,0, 0.3));
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3));
   transform: translateZ(0);
 }
 
@@ -720,6 +720,7 @@
 }
 
 @keyframes joinchat_plain {
+
   0%,
   50%,
   100% {
@@ -733,6 +734,7 @@
 }
 
 @keyframes joinchat_chat {
+
   0%,
   50%,
   100% {
@@ -830,6 +832,7 @@
     --sep: 6px;
     --header: calc(var(--s)*0.91667);
   }
+
   .joinchat__header__text {
     font-size: 17px;
   }
@@ -841,6 +844,7 @@
   .joinchat__box__scroll {
     padding-top: 15px;
   }
+
   .joinchat__message {
     padding: 18px 16px;
     line-height: 24px;
@@ -854,6 +858,7 @@
     animation: none;
     transition: opacity 0.2s;
   }
+
   .joinchat--btn .joinchat__button:hover .joinchat__qr,
   .joinchat--chatbox .joinchat__button:hover .joinchat__qr {
     display: flex;
@@ -864,15 +869,19 @@
   .joinchat--dark-auto {
     --msg: var(--dark);
   }
+
   .joinchat--dark-auto .joinchat__box {
-    background: #1a1a1a linear-gradient(180deg, var(--dark),var(--dark) var(--header),var(--bg) var(--header),var(--bg));
+    background: #1a1a1a linear-gradient(180deg, var(--dark), var(--dark) var(--header), var(--bg) var(--header), var(--bg));
   }
+
   .joinchat--dark-auto .joinchat__optin label::before {
     background: #000;
   }
+
   .joinchat--dark-auto .joinchat__optin {
     color: #d8d8d8;
   }
+
   .joinchat--dark-auto .joinchat__message {
     background: #505050;
     color: #d8d8d8;
@@ -883,6 +892,7 @@
   .joinchat {
     animation: none;
   }
+
   .joinchat__button__send .joinchat_svg__plain {
     stroke-dasharray: 0;
     animation: none;
@@ -891,6 +901,7 @@
   .joinchat__button__send .joinchat_svg__chat {
     animation: none;
   }
+
   .joinchat__button__sendtext {
     transition: none !important;
   }

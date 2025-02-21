@@ -56,7 +56,7 @@
   background: #25d366;
   color: inherit;
   border-radius: calc(var(--s)/2);
-  box-shadow: 1px 6px 24px 0 rgba(7,94,84, 0.24);
+  box-shadow: 1px 6px 24px 0 rgba(7, 94, 84, 0.24);
   cursor: pointer;
   transition: background-color 0.2s linear;
 }
@@ -125,12 +125,12 @@
   border: none;
   border-radius: 16px;
   background: #fff;
-  color: rgba(0,0,0, 0.8);
+  color: rgba(0, 0, 0, 0.8);
   line-height: 31px;
   white-space: nowrap;
   opacity: 0;
   transition: opacity 0.3s ease-out 0.4s;
-  filter: drop-shadow(0 1px 4px rgba(0,0,0, 0.4));
+  filter: drop-shadow(0 1px 4px rgba(0, 0, 0, 0.4));
   pointer-events: none;
 }
 
@@ -182,10 +182,10 @@
   border: none;
   border-radius: 16px;
   background: #fff;
-  color: rgba(0,0,0, 0.8);
+  color: rgba(0, 0, 0, 0.8);
   text-align: center;
   white-space: nowrap;
-  filter: drop-shadow(0 1px 4px rgba(0,0,0, 0.4));
+  filter: drop-shadow(0 1px 4px rgba(0, 0, 0, 0.4));
   animation: joinchat_badge_in 400ms cubic-bezier(0.11, 0.84, 0.83, 1.01) 500ms both;
   pointer-events: none;
 }
@@ -223,6 +223,7 @@
   width: 200px;
   height: 200px;
   margin: 0;
+  image-rendering: pixelated;
 }
 
 @keyframes joinchat_show {
@@ -339,6 +340,7 @@
     animation: none;
     transition: opacity 0.2s;
   }
+
   .joinchat--btn .joinchat__button:hover .joinchat__qr {
     display: flex;
   }
