@@ -5,7 +5,7 @@ Tags: WhatsApp, Chat, Floating Button, Facebook Messenger, Telegram
 Requires at least: 4.9.6
 Tested up to: 6.7
 Requires PHP: 5.6
-Stable tag: 5.2.1
+Stable tag: 5.2.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -14,9 +14,9 @@ WhatsApp, Messenger, Telegram, Phone call… capture users through their favorit
 
 == Description ==
 
-**🎉 Chat with your website visitors through their favorite chat applications. Place a floating button at the bottom of your site and give the best support to your customers.**
+> **Turn conversations into conversions**
 
-> The best WordPress plugin for WhatsApp, with more than **700,000 installations** worldwide.
+**🎉 Chat with your website visitors through their favorite chat applications. Place a floating button at the bottom of your site and give the best support to your customers.**
 
 https://www.youtube.com/watch?v=Ad2ZpPnX_3Q
 
@@ -381,6 +381,9 @@ You can view in your *Settings > Privacy > Policy Guide* the suggested text by J
 
 
 == Changelog ==
+
+= 5.2.2 =
+* Fix prevent premium or third party plugin can cancel settings validation.
 
 = 5.2.1 =
 * Fix PHP notices in onboard page.
