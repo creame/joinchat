@@ -117,8 +117,7 @@
     message = message !== undefined ? message : this.settings.message_send || '';
     wa_web = wa_web !== undefined ? wa_web : this.settings.whatsapp_web && !this.is_mobile;
 
-    const url = new URL(wa_web ? 'https://web.whatsapp.com/send' : 'https://wa.me/');
-    url.searchParams.set('phone', phone || this.settings.telephone);
+    const url = new URL(`${wa_web ? 'https://web.whatsapp.com/send?phone=' : 'https://wa.me/'}${phone || this.settings.telephone}`);
     if (message) url.searchParams.set('text', message);
 
     return url.toString();
