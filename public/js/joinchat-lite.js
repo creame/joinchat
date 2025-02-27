@@ -37,7 +37,7 @@
     delete params.link;
 
     // Trigger event (params can be edited by third party scripts or cancel if return false)
-    if (!document.dispatchEvent(new CustomEvent('joinchat:event', { detail: params }))) return;
+    if (!document.dispatchEvent(new CustomEvent('joinchat:event', { detail: params, cancelable: true }))) return;
 
     const data_layer = window[this.settings.data_layer] || window[window.gtm4wp_datalayer_name] || window['dataLayer'];
 
@@ -121,7 +121,7 @@
     };
 
     // Trigger event (params can be edited by third party scripts or cancel if return false)
-    if (!document.dispatchEvent(new CustomEvent('joinchat:open', { detail: params }))) return;
+    if (!document.dispatchEvent(new CustomEvent('joinchat:open', { detail: params, cancelable: true }))) return;
 
     // Send analytics events
     this.send_event(params);

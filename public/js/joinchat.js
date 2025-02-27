@@ -52,7 +52,7 @@
     delete params.link;
 
     // Trigger event (params can be edited by third party scripts or cancel if return false)
-    if (!document.dispatchEvent(new CustomEvent('joinchat:event', { detail: params }))) return;
+    if (!document.dispatchEvent(new CustomEvent('joinchat:event', { detail: params, cancelable: true }))) return;
 
     const data_layer = window[this.settings.data_layer] || window[window.gtm4wp_datalayer_name] || window['dataLayer'];
 
@@ -148,7 +148,7 @@
       this.$('.joinchat__badge').classList.replace('joinchat__badge--in', 'joinchat__badge--out');
     }
 
-    document.dispatchEvent(new CustomEvent('joinchat:show'));
+    document.dispatchEvent(new Event('joinchat:show'));
   };
 
   // Close Chatbox and trigger event
@@ -162,7 +162,7 @@
       this.$('.joinchat__badge').classList.remove('joinchat__badge--out');
     }
 
-    document.dispatchEvent(new CustomEvent('joinchat:hide'));
+    document.dispatchEvent(new Event('joinchat:hide'));
   };
 
   // Save CTA hash
@@ -191,7 +191,7 @@
     };
 
     // Trigger event (params can be edited by third party scripts or cancel if return false)
-    if (!document.dispatchEvent(new CustomEvent('joinchat:open', { detail: params }))) return;
+    if (!document.dispatchEvent(new CustomEvent('joinchat:open', { detail: params, cancelable: true }))) return;
 
     // Send analytics events
     this.send_event(params);
@@ -247,7 +247,7 @@
   }
 
   function joinchat_magic() {
-    document.dispatchEvent(new CustomEvent('joinchat:starting'));
+    document.dispatchEvent(new Event('joinchat:starting'));
 
     const button_delay = joinchat_obj.settings.button_delay * 1000;
     const chat_delay = Math.max(0, joinchat_obj.settings.message_delay * 1000);
@@ -274,7 +274,7 @@
       } else if (has_pageviews) {
         timeout_auto_show = setTimeout(joinchatOpen, button_delay + chat_delay);
       }
-      document.addEventListener('joinchat:show', () => clearTimeout(timeout_auto_show));
+      document.addEventListener('joinchat:show', () => clearTimeout(timeout_auto_show), { once: true });
     }
 
     const jc_button = joinchat_obj.$('.joinchat__button');
@@ -364,17 +364,22 @@
       joinchat_obj.store.setItem('joinchat_views', parseInt(joinchat_obj.store.getItem('joinchat_views') || 0) + 1);
     }
 
-    const jc_scroll = joinchat_obj.$('.joinchat__scroll');
-    const jc_chat = joinchat_obj.$('.joinchat__chat')
-    const jc_bubbles = joinchat_obj.$$('.joinchat__bubble');
+    // On first show
+    document.addEventListener('joinchat:show', () => {
+      const jc_scroll = joinchat_obj.$('.joinchat__scroll');
+      const jc_chat = joinchat_obj.$('.joinchat__chat');
+      const jc_bubbles = joinchat_obj.$$('.joinchat__bubble');
 
-    // Random text
-    if (has_cta) joinchat_obj.rand_text(jc_chat);
+      // Random text
+      if (has_cta) joinchat_obj.rand_text(jc_chat);
 
-    // Bubbles animated (show one by one)
-    if (jc_bubbles.length > 1 && !window.matchMedia('(prefers-reduced-motion)').matches) {
+      // Bubbles animated (show one by one)
+      if (jc_bubbles.length <= 1 || window.matchMedia('(prefers-reduced-motion)').matches) return;
+
+      jc_bubbles.forEach(bubble => bubble.classList.add('joinchat--hidden'));
+      joinchat_obj.$('.joinchat__optin')?.classList.add('joinchat--hidden');
+
       let index = 0;
-
       const random = (min, max) => Math.round(Math.random() * (max - min) + min);
       const showBubble = (bubble, next_delay) => {
         joinchat_obj.$('.joinchat__bubble--loading')?.remove();
@@ -384,12 +389,12 @@
       }
       const nextBubble = () => {
         if (index >= jc_bubbles.length) {
-          jc_chat.dispatchEvent(new Event('joinchat:messages_end'));
+          joinchat_obj.$('.joinchat__optin')?.classList.remove('joinchat--hidden');
+          jc_chat.dispatchEvent(new Event('joinchat:bubbles')); // All bubbles shown
           return;
         }
 
         const bubble = jc_bubbles[index++];
-
         if (bubble.classList.contains('joinchat__bubble--note')) {
           showBubble(bubble, 100);
         } else {
@@ -398,10 +403,8 @@
           setTimeout(() => showBubble(bubble, random(400, 600)), (bubble.textContent.split(/\s+/).length * 60) + random(100, 200)); // Delay (word count * time) + random delay
         }
       };
-
-      jc_bubbles.forEach(bubble => bubble.classList.add('joinchat--hidden'));
-      document.addEventListener('joinchat:show', nextBubble, { once: true });
-    }
+      nextBubble();
+    }, { once: true });
 
     // TRIGGERS: open chatbox on load if query or anchor "joinchat" exists
     const location_url = new URL(window.location);
@@ -442,7 +445,7 @@
     }
 
     joinchat_obj.is_ready = true;
-    document.dispatchEvent(new CustomEvent('joinchat:start'));
+    document.dispatchEvent(new Event('joinchat:start'));
   }
 
   const on_page_ready = () => {
