@@ -264,7 +264,7 @@ class Joinchat_Formatter {
 		$is_video = false;
 		$sizes    = array();
 		$width    = $w < $chat_max ? "width=\"$w\"" : '';
-		$class    = $w < $chat_max ? 'class="joinchat-inline"' : '';
+		$class    = $w < $chat_max ? 'class="joinchat--inline"' : '';
 
 		if ( is_numeric( $src ) && (int) $src > 0 ) {
 			if ( wp_attachment_is( 'image', $src ) ) {
@@ -274,7 +274,7 @@ class Joinchat_Formatter {
 					if ( 0 === $info[1] ) {
 						$sizes[1] = $info[0];
 					} else {
-						$class = min( $w, $info[1] ) < $chat_max ? 'class="joinchat-inline"' : '';
+						$class = min( $w, $info[1] ) < $chat_max ? 'class="joinchat--inline"' : '';
 
 						if ( apply_filters( 'joinchat_image_original', Joinchat_Util::is_animated_gif( $src ), $src, 'cta' ) ) {
 							$sizes[1] = $info[0];

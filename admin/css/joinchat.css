@@ -146,8 +146,10 @@
 #joinchat_button_image_holder video {
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  object-position: center;
+  -o-object-fit: cover;
+     object-fit: cover;
+  -o-object-position: center;
+     object-position: center;
 }
 
 [dir=rtl] #joinchat_button_image_wrapper {
@@ -451,6 +453,7 @@ tr.joinchat--focus .joinchat_vars_help {
 
 :root {
   --preview-width: 380px;
+  --preview-top: 46px;
 }
 
 #joinchatprev {
@@ -485,9 +488,20 @@ tr.joinchat--focus .joinchat_vars_help {
   cursor: ew-resize;
 }
 
+#joinchatprev__devices {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: var(--preview-top);
+}
+
+#joinchatprev__devices .dashicons {
+  vertical-align: sub;
+}
+
 #joinchat_preview {
   width: 100%;
-  height: 100%;
+  height: calc(100% - var(--preview-top));
 }
 
 body.jcpreview-resize {
@@ -538,11 +552,16 @@ body.jcpreview-resize #joinchatprev__resize {
   }
 
   :root {
-    --preview-width: 0 !important;
+    --preview-width: 0px !important;
+    --preview-top: 0px;
   }
 
   #joinchatprev {
     width: 100%;
+  }
+
+  #joinchatprev__devices {
+    display: none;
   }
 
   #joinchat_preview_show {

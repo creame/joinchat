@@ -143,7 +143,7 @@ class Joinchat_Public {
 
 		wp_register_style( JOINCHAT_SLUG, plugins_url( "public/css/{$file}{$min}.css", JOINCHAT_FILE ), array(), JOINCHAT_VERSION, $defer ? 'print' : 'all' );
 
-		if ( ! $defer ) {
+		if ( ! $defer || jc_common()->preview ) {
 			$this->enqueue_styles();
 		}
 	}

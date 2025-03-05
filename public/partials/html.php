@@ -19,7 +19,7 @@ defined( 'WPINC' ) || exit;
 		<?php if ( $settings['button_tip'] ) : ?>
 			<div class="joinchat__tooltip"><div><?php echo esc_html( $settings['button_tip'] ); ?></div></div>
 		<?php endif; ?>
-		</div>
+	</div>
 	<?php if ( $box_content && $settings['message_badge'] ) : ?>
 		<div class="joinchat__badge">1</div>
 	<?php endif; ?>

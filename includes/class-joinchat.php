@@ -269,7 +269,6 @@ class Joinchat {
 		$this->loader->add_filter( 'show_admin_bar', $plugin_preview, 'hide_admin_bar', 1000 );
 		$this->loader->add_filter( 'joinchat_show', $plugin_preview, 'always_show', 1000 );
 		$this->loader->add_filter( 'joinchat_classes', $plugin_preview, 'preview_classes', 10, 2 );
-		$this->loader->add_filter( 'joinchat_content', $plugin_preview, 'preview_content' );
 		$this->loader->add_filter( 'joinchat_template', $plugin_preview, 'preview_template' );
 		$this->loader->add_filter( 'joinchat_inline_style', $plugin_preview, 'inline_style' );
 
