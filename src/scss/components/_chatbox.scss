@@ -10,7 +10,7 @@
   max-width: 400px;
   max-height: calc(var(--vh) - var(--bottom) - var(--sep));
   border-radius: calc((var(--s) / 2) + 2px);
-  background: $white linear-gradient(180deg, var(--color),var(--color) var(--header),var(--bg) var(--header),var(--bg));
+  background: $white linear-gradient(180deg, var(--color), var(--color) var(--header), var(--bg) var(--header), var(--bg));
   box-shadow: 0 2px 6px 0 rgba($black, 0.5);
   text-align: left;
   overflow: hidden;
@@ -35,7 +35,7 @@
   }
 
   #{$class}--dark & {
-    background: #1a1a1a linear-gradient(180deg, var(--dark),var(--dark) var(--header),var(--bg) var(--header),var(--bg));
+    background: #1a1a1a linear-gradient(180deg, var(--dark), var(--dark) var(--header), var(--bg) var(--header), var(--bg));
   }
 }
 
@@ -46,7 +46,6 @@
   position: relative;
   flex-shrink: 0;
   height: var(--header);
-  min-height: 50px;
   padding: 0 70px 0 26px;
   margin: 0;
 
@@ -90,6 +89,7 @@
 }
 
 #{$class}__wa {
+  display: block;
   height: 28px;
   width: auto;
   fill: currentColor;
@@ -154,6 +154,22 @@
   flex-direction: column;
   width: calc(100% + 4px); // 100% + scrollbar width
   padding: 20px 0 8px;
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 4px;
+    height: calc(var(--s) + 20px);
+    background: #fff linear-gradient(180deg, var(--bg), var(--bg));
+    mask-image: linear-gradient(rgb(0 0 0 / 0%) 0, rgb(0 0 0 / 60%) 25%, rgb(0 0 0 / 92%) 70%, rgb(0 0 0 / 100%) 95%, rgb(0 0 0 / 100%));
+    pointer-events: none;
+
+    #{$class}--dark & {
+      background-color: #1a1a1a;
+    }
+  }
 }
 
 @include mobile {
@@ -164,17 +180,17 @@
   #{$class}__close {
     --size: 28px;
   }
-
-  #{$class}__scroll {
-    padding-top: 15px;
-  }
 }
 
 @include dark {
   #{$class}--dark-auto {
 
     #{$class}__chatbox {
-      background: #1a1a1a linear-gradient(180deg, var(--dark),var(--dark) var(--header),var(--bg) var(--header),var(--bg));
+      background: #1a1a1a linear-gradient(180deg, var(--dark), var(--dark) var(--header), var(--bg) var(--header), var(--bg));
+    }
+
+    #{$class}__content::after {
+      background-color: #1a1a1a;
     }
   }
 }

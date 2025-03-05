@@ -1,4 +1,7 @@
 #{$class}__open {
+  position: sticky;
+  z-index: 2;
+  bottom: 8px;
   align-self: flex-end;
   display: flex;
   flex-direction: row;
