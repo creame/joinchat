@@ -155,7 +155,7 @@ class Joinchat_Admin_Page {
 						'message_text'  => '<label for="joinchat_message_text">' . esc_html__( 'Call to Action', 'creame-whatsapp-me' ) . '</label>' . self::vars_help( 'message_text' ) . self::rich_chat_help(),
 						'message_start' => '<label for="joinchat_message_start">' . esc_html__( 'Button Text', 'creame-whatsapp-me' ) . '</label>',
 						'color'         => esc_html__( 'Theme Color', 'creame-whatsapp-me' ),
-						'dark_mode'     => esc_html__( 'Dark Mode', 'creame-whatsapp-me' ),
+						'dark_mode'     => esc_html__( 'Theme Style', 'creame-whatsapp-me' ),
 						'header'        => esc_html__( 'Header', 'creame-whatsapp-me' ),
 						'optin'         => array(
 							'label'    => esc_html__( 'Opt-in', 'creame-whatsapp-me' ),
@@ -430,9 +430,9 @@ class Joinchat_Admin_Page {
 				case 'dark_mode':
 					$output = '<fieldset><legend class="screen-reader-text"><span>' . esc_html__( 'Dark Mode', 'creame-whatsapp-me' ) . '</span></legend>' .
 						'<label><input name="joinchat[dark_mode]" value="no" type="radio"' . checked( 'no', $value, false ) . '> ' .
-						esc_html__( 'No', 'creame-whatsapp-me' ) . '</label><br>' .
+						esc_html__( 'Light', 'creame-whatsapp-me' ) . '</label><br>' .
 						'<label><input name="joinchat[dark_mode]" value="yes" type="radio"' . checked( 'yes', $value, false ) . '> ' .
-						esc_html__( 'Yes', 'creame-whatsapp-me' ) . '</label><br>' .
+						esc_html__( 'Dark', 'creame-whatsapp-me' ) . '</label><br>' .
 						'<label><input name="joinchat[dark_mode]" value="auto" type="radio"' . checked( 'auto', $value, false ) . '> ' .
 						esc_html__( 'Auto (detects device dark mode)', 'creame-whatsapp-me' ) . '</label></fieldset>';
 					break;
@@ -632,12 +632,12 @@ class Joinchat_Admin_Page {
 				'title'   => esc_html__( 'Dynamic Variables', 'creame-whatsapp-me' ),
 				'content' =>
 					'<p>' . esc_html__( 'You can use dynamic variables that will be replaced by the values of the page the user visits:', 'creame-whatsapp-me' ) .
-					'<p>' .
-					'<span><code>{SITE}</code> ➜ ' . esc_html( get_bloginfo( 'name', 'display' ) ) . '</span><br> ' .
-					'<span><code>{TITLE}</code> ➜ ' . esc_html__( 'Page Title', 'creame-whatsapp-me' ) . '</span><br>' .
-					'<span><code>{HOME}</code> ➜ ' . esc_url( home_url( '/' ) ) . '</span><br> ' .
-					'<span><code>{URL}</code> ➜ ' . esc_url( home_url( 'awesome/' ) ) . '</span><br> ' .
-					'<span><code>{HREF}</code> ➜ ' . esc_url( home_url( 'awesome/' ) ) . '?utm_source=twitter&utm_medium=social&utm_campaign=XXX</span>' .
+					'<p style="line-height:1.8em;">' .
+						'<span><code>{SITE}</code> ➜ ' . esc_html( get_bloginfo( 'name', 'display' ) ) . '</span><br> ' .
+						'<span><code>{TITLE}</code> ➜ ' . esc_html__( 'Page Title', 'creame-whatsapp-me' ) . '</span><br>' .
+						'<span><code>{HOME}</code> ➜ ' . esc_url( home_url( '/' ) ) . '</span><br> ' .
+						'<span><code>{URL}</code> ➜ ' . esc_url( home_url( 'awesome/' ) ) . '</span><br> ' .
+						'<span><code>{HREF}</code> ➜ ' . esc_url( home_url( 'awesome/' ) ) . '?utm_source=twitter&utm_medium=social&utm_campaign=XXX</span>' .
 					'</p>',
 			),
 			array(

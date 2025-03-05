@@ -273,6 +273,7 @@ class Joinchat_Util {
 		// Split message in bubbles.
 		$messages = preg_split( '/<br>={3,}<br>/u', $formatted );
 
+		// Return array of messages.
 		if ( $as_array ) {
 			return $messages;
 		}
