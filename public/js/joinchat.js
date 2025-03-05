@@ -1,6 +1,7 @@
 ((window, document, joinchat_obj) => {
   'use strict';
 
+  // MARK: joinchat_obj
   joinchat_obj = {
     $div: null,
     settings: null,
@@ -246,6 +247,7 @@
     return canvas;
   }
 
+  // MARK: Magic
   function joinchat_magic() {
     document.dispatchEvent(new Event('joinchat:starting'));
 
@@ -288,19 +290,16 @@
 
     // Open|close Chatbox on click
     jc_button.addEventListener('click', joinchatOpen);
-    joinchat_obj.$('.joinchat__close')?.addEventListener('click', () => joinchat_obj.close());
     joinchat_obj.$('.joinchat__open')?.addEventListener('click', () => joinchat_obj.open(true));
+    joinchat_obj.$('.joinchat__close')?.addEventListener('click', () => joinchat_obj.close());
 
     // Opt-in toggle
-    joinchat_obj.$('#joinchat_optin')?.addEventListener('change', function () {
-      joinchat_obj.$div.classList.toggle('joinchat--optout', !this.checked);
-    });
+    joinchat_obj.$('#joinchat_optin')?.addEventListener('change', e => joinchat_obj.$div.classList.toggle('joinchat--optout', !e.target.checked));
 
     // Only scroll Joinchat message box (no all body)
     joinchat_obj.$('.joinchat__scroll')?.addEventListener('wheel', function (e) {
       e.preventDefault();
-      const delta = e.deltaY || -e.detail;
-      this.scrollTop += (delta < 0 ? 1 : -1) * 30;
+      this.scrollTop += e.deltaY;
     }, { passive: false });
 
     // Mobile enhancements
@@ -406,6 +405,8 @@
       nextBubble();
     }, { once: true });
 
+    // MARK: Triggers
+
     // TRIGGERS: open chatbox on load if query or anchor "joinchat" exists
     const location_url = new URL(window.location);
     if (location_url.hash === '#joinchat' || location_url.searchParams.has('joinchat')) {
@@ -448,6 +449,8 @@
     document.dispatchEvent(new Event('joinchat:start'));
   }
 
+
+  // MARK: Page Ready
   const on_page_ready = () => {
     joinchat_obj.$div = document.querySelector('.joinchat');
 
