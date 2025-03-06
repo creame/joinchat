@@ -35,9 +35,13 @@ class Joinchat_Admin {
 
 		// Register WordPress 'joinchat' setting.
 		$args = array(
+			'type'              => 'array',
+			'label'             => esc_html__( 'Joinchat', 'creame-whatsapp-me' ),
+			'description'       => esc_html__( 'Joinchat settings', 'creame-whatsapp-me' ),
 			'default'           => jc_common()->defaults(),
 			'sanitize_callback' => array( $this, 'setting_validate' ),
 		);
+
 		register_setting( JOINCHAT_SLUG, JOINCHAT_SLUG, $args );
 
 	}
