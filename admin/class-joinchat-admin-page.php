@@ -611,7 +611,7 @@ class Joinchat_Admin_Page {
 			esc_html__( 'You can also use other triggers to show Chat Window', 'creame-whatsapp-me' ) . ' ' .
 			' <a class="joinchat-show-help" href="#tab-link-triggers" title="' . esc_html__( 'Show Help', 'creame-whatsapp-me' ) . '">?</a>' .
 			'&nbsp;&nbsp;<span class="joinchat-cookies-notice">' . esc_html__( 'This feature requires the use of cookies', 'creame-whatsapp-me' ) . ' ' .
-			sprintf( '<a href="%s" target="_blank">%s</a>', esc_url_raw( admin_url( 'options-privacy.php?tab=policyguide' ) ), esc_html__( 'Privacy Policy Guide' ) ) . '</span></p>';
+			sprintf( '<a href="%s" target="_blank">%s</a>', esc_url_raw( admin_url( 'options-privacy.php?tab=policyguide' ) ), esc_html__( 'Privacy Policy Guide' ) ) . '</span></p>'; // phpcs:ignore WordPress.WP.I18n.MissingArgDomain
 
 		echo apply_filters( 'joinchat_field_output', $output, 'auto_open', jc_common()->settings ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 
@@ -874,12 +874,12 @@ class Joinchat_Admin_Page {
 			wp_enqueue_style( 'intl-tel-input' );
 		}
 
-		$example_css = <<<CSS
-/* .joinchat some default styles
+		$example_css = '' .
+		'/* .joinchat some default styles
 z-index: 9000;   put above or below other objects
 --s: 60px;       button size
---bottom: 20px;  bottom separation (mobile 6px)
 --sep: 20px;     right/left separation (mobile 6px)
+--bottom: 20px;  bottom separation (same as --sep)
 --header: 70px;  chatbox header height (mobile 55px)
 */
 .joinchat {
@@ -891,8 +891,7 @@ z-index: 9000;   put above or below other objects
 	.joinchat {
 		/* your mobile rules */
 	}
-}
-CSS;
+}';
 
 		// Enqueue scripts.
 		$config = array(
