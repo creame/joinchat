@@ -147,14 +147,16 @@ class Joinchat_Admin {
 	 */
 	public function register_styles( $hook ) {
 
-		$min = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
-
-		wp_register_style( 'joinchat-admin', plugins_url( "css/joinchat{$min}.css", __FILE__ ), array(), JOINCHAT_VERSION, 'all' );
+		$min  = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
+		$deps = array();
 
 		$intltel = jc_common()->get_intltel();
 		if ( $intltel ) {
+			$deps[] = 'intl-tel-input';
 			wp_register_style( 'intl-tel-input', plugins_url( "css/intlTelInput{$min}.css", __FILE__ ), array(), $intltel, 'all' );
 		}
+
+		wp_register_style( 'joinchat-admin', plugins_url( "css/joinchat{$min}.css", __FILE__ ), $deps, JOINCHAT_VERSION, 'all' );
 
 	}
 
@@ -173,18 +175,54 @@ class Joinchat_Admin {
 
 		$intltel = jc_common()->get_intltel();
 		if ( $intltel ) {
-			$deps[] = 'intl-tel-input';
-			$config = array(
-				'placeholder' => esc_attr__( 'e.g.', 'creame-whatsapp-me' ),
-				'version'     => $intltel,
-				'utils_js'    => plugins_url( 'js/utils.js', __FILE__ ),
-			);
+			$deps[]              = 'intl-tel-input';
+			$l10n                = $this->load_intltel_lang();
+			$l10n['placeholder'] = esc_attr__( 'e.g.', 'creame-whatsapp-me' );
 
-			wp_register_script( 'intl-tel-input', plugins_url( "js/intlTelInput{$min}.js", __FILE__ ), array(), $intltel, true );
-			wp_add_inline_script( 'intl-tel-input', 'var intlTelConf = ' . wp_json_encode( $config ) . ';', 'before' );
+			wp_register_script( 'intl-tel-input', plugins_url( "js/intlTelInputWithUtils{$min}.js", __FILE__ ), array(), $intltel, true );
+			wp_localize_script( 'intl-tel-input', 'intl_tel_l10n', $l10n );
 		}
 
 		wp_register_script( 'joinchat-admin', plugins_url( "js/joinchat{$min}.js", __FILE__ ), $deps, JOINCHAT_VERSION, true );
+
+	}
+
+	/**
+	 * Load intlTelInput language files
+	 *
+	 * @since 6.0.0
+	 * @return array
+	 */
+	private function load_intltel_lang() {
+
+		$lang = strtolower( substr( get_user_locale(), 0, 2 ) );
+
+		if ( 'en' === $lang ) {
+			return array();
+		}
+
+		$i18n = get_transient( "joinchat_intltel_lang_{$lang}" );
+
+		if ( false === $i18n ) {
+			$i18n = array();
+
+			// Convert javascript files to JSON.
+			foreach ( array( 'interface', 'countries' ) as $file ) {
+				if ( file_exists( JOINCHAT_DIR . "admin/js/i18n/$lang/$file.js" ) ) {
+					$str = file_get_contents( JOINCHAT_DIR . "admin/js/i18n/$lang/$file.js" );           // Load javascript.
+					$str = preg_replace( '#[ \t]*//.*[ \t]*[\r\n]#u', '', $str );                        // Remove comments.
+					$str = substr( $str, strpos( $str, '{' ) );                                          // Object open.
+					$str = substr( $str, 0, strrpos( $str, ':' ) ) . '}';                                // Object last ":".
+					$str = preg_replace( '/(\s*?)([\'"])?([a-zA-Z0-9_]+)([\'"])?:/u', '$1"$3":', $str ); // Quoted keys.
+
+					$i18n += json_decode( $str, true );
+				}
+			}
+
+			set_transient( "joinchat_intltel_lang_{$lang}", $i18n );
+		}
+
+		return $i18n;
 
 	}
 
@@ -321,10 +359,6 @@ class Joinchat_Admin {
 		wp_enqueue_script( 'joinchat-admin' );
 		wp_enqueue_style( 'joinchat-admin' );
 
-		if ( jc_common()->get_intltel() ) {
-			wp_enqueue_style( 'intl-tel-input' );
-		}
-
 		$metadata = get_post_meta( $post->ID, '_joinchat', true ) ?: array(); //phpcs:ignore WordPress.PHP.DisallowShortTernary
 		$metadata = array_merge(
 			array(
@@ -436,10 +470,6 @@ class Joinchat_Admin {
 		// Enqueue assets.
 		wp_enqueue_script( 'joinchat-admin' );
 		wp_enqueue_style( 'joinchat-admin' );
-
-		if ( jc_common()->get_intltel() ) {
-			wp_enqueue_style( 'intl-tel-input' );
-		}
 
 		$metadata = get_term_meta( $term->term_id, '_joinchat', true ) ?: array(); //phpcs:ignore WordPress.PHP.DisallowShortTernary
 		$metadata = array_merge(

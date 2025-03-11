@@ -202,6 +202,11 @@ tr.joinchat--focus .joinchat_vars_help {
   .iti {
     width: 18em;
   }
+
+  .iti--fullscreen-popup {
+    width: auto;
+    z-index: 99999;
+  }
 }
 
 #joinchat_form .large-text {
@@ -351,6 +356,12 @@ tr.joinchat--focus .joinchat_vars_help {
 
 .form-field.joinchat-metabox input[type=radio]+span {
   margin-right: 15px;
+}
+
+.form-field.joinchat-metabox .iti__search-input {
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
 }
 
 /* Joinchat adminbar */

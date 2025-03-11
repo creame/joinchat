@@ -149,7 +149,7 @@
 
     doOptionPhone: function (option) {
       var input = $('#joinchat_phone').get(0);
-      this.saved['telephone'] = intlTelInputGlobals.getInstance(input).getNumber();
+      this.saved['telephone'] = intlTelInput.getInstance(input).getNumber();
       input.readOnly = true;
       this.doOptionGoto(option);
     },
@@ -181,30 +181,24 @@
       if (!msg.includes('{INPUT')) return;
 
       if (msg.includes('{INPUT phone}')) {
-        $msg.html(msg.replace('{INPUT phone}', '<input id="joinchat_phone" data-name="joinchat[telephone]" value="" type="text">'));
+        $msg.html(msg.replace('{INPUT phone}', '<input id="joinchat_phone" value="" type="text">'));
         $msg.css('z-index', 1); // Flag dropdown over option buttons.
 
         if (typeof intlTelInput === 'function') {
           var $phone = $('#joinchat_phone');
-          intlTelInput($phone[0], {
-            hiddenInput: $phone.data('name') || 'joinchat[telephone]',
-            separateDialCode: true,
-            initialCountry: 'auto',
-            preferredCountries: [country_code || ''],
-            geoIpLookup: function (callback) { if (country_code) callback(country_code); },
-            customPlaceholder: function (placeholder) { return intlTelConf.placeholder + ' ' + placeholder; },
-            utilsScript: intlTelConf.utils_js,
+          var iti = intlTelInput($phone[0], {
+            hiddenInput: () => { return { phone: 'joinchat[telephone]' }; },
+            strictMode: true,
+            showSelectedDialCode: true,
+            initialCountry: country_code || 'auto',
+            customPlaceholder: (country_ph) => `${intl_tel_l10n.placeholder} ${country_ph}`,
+            i18n: intl_tel_l10n,
           });
 
           $phone.on('input countrychange', function () {
-            var $this = $(this);
-            var is_valid = intlTelInputGlobals.getInstance(this).isValidNumber();
-
-            $this.css('color', $this.val().trim() && !is_valid ? '#ca4a1f' : '');
+            var is_valid = iti.isValidNumber(true);
+            $(this).css('color', this.value.trim() && !is_valid ? '#ca4a1f' : '');
             joinchat_obj.$('.joinchat__option--phone').toggleClass('joinchat__option--disabled', !is_valid);
-          }).on('blur', function () {
-            var iti = intlTelInputGlobals.getInstance(this);
-            iti.setNumber(iti.getNumber());
           });
         }
       } else if (msg.includes('{INPUT message}')) {
