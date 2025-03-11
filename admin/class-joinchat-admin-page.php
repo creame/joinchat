@@ -857,22 +857,23 @@ class Joinchat_Admin_Page {
 	 */
 	public function enqueue_assets( $hook ) {
 
-		$handle = 'joinchat-admin';
-		$min    = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
-		$deps   = array( 'jquery', 'wp-color-picker' );
+		$handle   = 'joinchat-admin';
+		$min      = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
+		$js_deps  = array( 'jquery', 'wp-color-picker' );
+		$css_deps = array( 'wp-color-picker' );
 
 		// Enqueue WordPress media scripts.
 		wp_enqueue_media();
 
-		// Enqueue styles.
-		wp_deregister_style( $handle );
-		wp_enqueue_style( $handle, plugins_url( "css/joinchat{$min}.css", __FILE__ ), array( 'wp-color-picker' ), JOINCHAT_VERSION, 'all' );
-
 		// Enqueue IntlTelInput assets.
 		if ( jc_common()->get_intltel() ) {
-			$deps[] = 'intl-tel-input';
-			wp_enqueue_style( 'intl-tel-input' );
+			$js_deps[]  = 'intl-tel-input';
+			$css_deps[] = 'intl-tel-input';
 		}
+
+		// Enqueue styles.
+		wp_deregister_style( $handle );
+		wp_enqueue_style( $handle, plugins_url( "css/joinchat{$min}.css", __FILE__ ), $css_deps, JOINCHAT_VERSION, 'all' );
 
 		$example_css = '' .
 		'/* .joinchat some default styles
@@ -901,7 +902,7 @@ z-index: 9000;   put above or below other objects
 		);
 
 		wp_deregister_script( $handle );
-		wp_enqueue_script( $handle, plugins_url( "js/joinchat-page{$min}.js", __FILE__ ), $deps, JOINCHAT_VERSION, true );
+		wp_enqueue_script( $handle, plugins_url( "js/joinchat-page{$min}.js", __FILE__ ), $js_deps, JOINCHAT_VERSION, true );
 		wp_add_inline_script( $handle, 'var joinchat_admin = ' . wp_json_encode( $config ) . ';' );
 
 		// Enqueue Custom CSS editor.
