@@ -211,15 +211,19 @@ class Joinchat_Admin {
 				if ( file_exists( JOINCHAT_DIR . "admin/js/i18n/$lang/$file.js" ) ) {
 					$str = file_get_contents( JOINCHAT_DIR . "admin/js/i18n/$lang/$file.js" );           // Load javascript.
 					$str = preg_replace( '#[ \t]*//.*[ \t]*[\r\n]#u', '', $str );                        // Remove comments.
-					$str = substr( $str, strpos( $str, '{' ) );                                          // Object open.
-					$str = substr( $str, 0, strrpos( $str, ':' ) ) . '}';                                // Object last ":".
+					$str = substr( $str, strpos( $str, '{' ) );                                          // From {.
+					$str = substr( $str, 0, strrpos( $str, '}' ) + 1 );                                  // To }.
 					$str = preg_replace( '/(\s*?)([\'"])?([a-zA-Z0-9_]+)([\'"])?:/u', '$1"$3":', $str ); // Quoted keys.
 
-					$i18n += json_decode( $str, true );
+					$strings = json_decode( $str, true );
+
+					if ( is_array( $strings ) ) {
+						$i18n += $strings;
+					}
 				}
 			}
 
-			set_transient( "joinchat_intltel_lang_{$lang}", $i18n );
+			set_transient( "joinchat_intltel_lang_{$lang}", $i18n, DAY_IN_SECONDS );
 		}
 
 		return $i18n;
