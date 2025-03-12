@@ -156,7 +156,7 @@ class Joinchat_Admin {
 			wp_register_style( 'intl-tel-input', plugins_url( "css/intlTelInput{$min}.css", __FILE__ ), array(), $intltel, 'all' );
 		}
 
-		wp_register_style( 'joinchat-admin', plugins_url( "css/joinchat{$min}.css", __FILE__ ), $deps, JOINCHAT_VERSION, 'all' );
+		wp_register_style( JOINCHAT_SLUG, plugins_url( "css/joinchat{$min}.css", __FILE__ ), $deps, JOINCHAT_VERSION, 'all' );
 
 	}
 
@@ -183,7 +183,7 @@ class Joinchat_Admin {
 			wp_localize_script( 'intl-tel-input', 'intl_tel_l10n', $l10n );
 		}
 
-		wp_register_script( 'joinchat-admin', plugins_url( "js/joinchat{$min}.js", __FILE__ ), $deps, JOINCHAT_VERSION, true );
+		wp_register_script( JOINCHAT_SLUG, plugins_url( "js/joinchat{$min}.js", __FILE__ ), $deps, JOINCHAT_VERSION, true );
 
 	}
 
@@ -360,8 +360,8 @@ class Joinchat_Admin {
 	public function meta_box( $post ) {
 
 		// Enqueue assets.
-		wp_enqueue_script( 'joinchat-admin' );
-		wp_enqueue_style( 'joinchat-admin' );
+		wp_enqueue_script( JOINCHAT_SLUG );
+		wp_enqueue_style( JOINCHAT_SLUG );
 
 		$metadata = get_post_meta( $post->ID, '_joinchat', true ) ?: array(); //phpcs:ignore WordPress.PHP.DisallowShortTernary
 		$metadata = array_merge(
@@ -472,8 +472,8 @@ class Joinchat_Admin {
 	public function term_meta_box( $term, $taxonomy ) {
 
 		// Enqueue assets.
-		wp_enqueue_script( 'joinchat-admin' );
-		wp_enqueue_style( 'joinchat-admin' );
+		wp_enqueue_script( JOINCHAT_SLUG );
+		wp_enqueue_style( JOINCHAT_SLUG );
 
 		$metadata = get_term_meta( $term->term_id, '_joinchat', true ) ?: array(); //phpcs:ignore WordPress.PHP.DisallowShortTernary
 		$metadata = array_merge(

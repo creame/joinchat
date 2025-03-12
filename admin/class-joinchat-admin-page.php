@@ -857,7 +857,7 @@ class Joinchat_Admin_Page {
 	 */
 	public function enqueue_assets( $hook ) {
 
-		$handle   = 'joinchat-admin';
+		$handle   = JOINCHAT_SLUG;
 		$min      = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
 		$js_deps  = array( 'jquery', 'wp-color-picker' );
 		$css_deps = array( 'wp-color-picker' );
