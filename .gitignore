@@ -28,3 +28,7 @@ node_modules/
 
 # dotenv environment variables file
 .env
+
+# minified assets
+joinchat*.min.js
+joinchat*.min.css
