@@ -355,7 +355,7 @@
     if (joinchat_obj.use_qr()) {
       joinchat_obj.$('.joinchat__qr').appendChild(joinchat_obj.qr(joinchat_obj.get_wa_link(undefined, undefined, false)));
     } else {
-      joinchat_obj.$('.joinchat__qr').remove();
+      joinchat_obj.$('.joinchat__qr')?.remove();
     }
 
     // Count visits (if needed)
