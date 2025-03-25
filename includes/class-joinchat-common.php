@@ -193,7 +193,7 @@ class Joinchat_Common {
 	 */
 	public function get_custom_post_types() {
 
-		return apply_filters( 'joinchat_custom_post_types', array_keys( get_post_types( array( 'has_archive' => true ), 'names' ) ) );
+		return (array) apply_filters( 'joinchat_custom_post_types', array_keys( get_post_types( array( 'has_archive' => true ), 'names' ) ) );
 
 	}
 
@@ -209,7 +209,7 @@ class Joinchat_Common {
 		$custom_post_types  = $this->get_custom_post_types(); // Custom post types with public url.
 
 		// Add/remove posts types for "Joinchat" meta box.
-		return apply_filters( 'joinchat_post_types_meta_box', array_merge( $builtin_post_types, $custom_post_types ) );
+		return (array) apply_filters( 'joinchat_post_types_meta_box', array_merge( $builtin_post_types, $custom_post_types ) );
 
 	}
 
@@ -221,7 +221,7 @@ class Joinchat_Common {
 	 */
 	public function get_taxonomies_meta_box() {
 
-		return apply_filters( 'joinchat_taxonomies_meta_box', array( 'category', 'post_tag' ) );
+		return (array) apply_filters( 'joinchat_taxonomies_meta_box', array( 'category', 'post_tag' ) );
 
 	}
 
@@ -234,7 +234,7 @@ class Joinchat_Common {
 	 */
 	public function get_obj_placeholders( $obj ) {
 
-		return apply_filters(
+		return (array) apply_filters(
 			'joinchat_metabox_placeholders',
 			array(
 				'telephone'    => $this->settings['telephone'],
@@ -256,7 +256,7 @@ class Joinchat_Common {
 	 */
 	public function get_obj_vars( $obj ) {
 
-		return apply_filters( 'joinchat_metabox_vars', array( 'SITE', 'TITLE', 'HOME', 'URL', 'HREF' ), $obj );
+		return (array) apply_filters( 'joinchat_metabox_vars', array( 'SITE', 'TITLE', 'HOME', 'URL', 'HREF' ), $obj );
 
 	}
 }
