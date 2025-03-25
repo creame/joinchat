@@ -795,6 +795,7 @@ class Joinchat_Admin_Page {
 
 				<form method="post" id="joinchat_form" action="options.php" autocomplete="off">
 					<?php settings_fields( JOINCHAT_SLUG ); ?>
+					<input type="submit" class="hidden" name="submit" value="Save">
 					<h2 class="nav-tab-wrapper wp-clearfix" role="tablist">
 						<?php
 						foreach ( $this->tabs as $tab => $name ) {
