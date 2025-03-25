@@ -209,6 +209,11 @@ tr.joinchat--focus .joinchat_vars_help {
   }
 }
 
+#joinchat_form .button.dashicons-before::before {
+  vertical-align: -27%;
+  margin-right: 6px;
+}
+
 #joinchat_form .large-text {
   max-width: 800px;
 }
@@ -458,8 +463,6 @@ tr.joinchat--focus .joinchat_vars_help {
 
 #joinchat_preview_show:before {
   content: "\f115";
-  margin-right: 5px;
-  vertical-align: -27%;
 }
 
 :root {
