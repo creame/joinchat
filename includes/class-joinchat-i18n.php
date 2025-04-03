@@ -21,34 +21,22 @@ class Joinchat_I18n {
 	const DOMAIN_GROUP = 'Join.chat'; // TODO: in future change to "Joinchat".
 
 	/**
-	 * Initialize the class.
+	 * Load the plugin text domain and allow settings translations.
 	 *
-	 * @since    4.2.0
-	 * @param  Joinchat_Loader $loader loader instance.
-	 * @return void
+	 * @since    5.2.4
 	 */
-	public function __construct( $loader ) {
-
-		$loader->add_action( 'init', $this, 'load_plugin_textdomain', 11 );
-
-		if ( defined( 'WPML_PLUGIN_PATH' ) || defined( 'POLYLANG_VERSION' ) ) {
-
-			$loader->add_action( 'admin_notices', $this, 'settings_notice' );
-			$loader->add_action( 'joinchat_settings_validation', $this, 'settings_save', 10, 2 );
-			$loader->add_filter( 'joinchat_get_settings_site', $this, 'settings_load', 20 );
-
-		}
-	}
-
-	/**
-	 * Load the plugin text domain for translation.
-	 *
-	 * @since    1.0.0
-	 */
-	public function load_plugin_textdomain() {
+	public function init() {
 
 		if ( is_admin() ) {
 			load_plugin_textdomain( 'creame-whatsapp-me', false, dirname( JOINCHAT_BASENAME ) . '/languages' );
+		}
+
+		if ( defined( 'WPML_PLUGIN_PATH' ) || defined( 'POLYLANG_VERSION' ) ) {
+
+			add_action( 'admin_notices', array( $this, 'settings_notice' ) );
+			add_action( 'joinchat_settings_validation', array( $this, 'settings_save' ), 10, 2 );
+			add_filter( 'joinchat_get_settings_site', array( $this, 'settings_load' ), 20 );
+
 		}
 
 	}
@@ -285,13 +273,35 @@ class Joinchat_I18n {
 			esc_html__( 'Default site language', 'creame-whatsapp-me' ),
 			esc_html( $this->default_language_name() )
 		);
-		$link = sprintf(
-			'<a href="%s">%s</a>',
-			esc_url( $this->translations_link() ),
-			esc_html__( 'Manage translations', 'creame-whatsapp-me' )
-		);
 
-		return "{$lang}{$ds}{$msg}{$ds}{$link}";
+		if ( defined( 'ICL_SITEPRESS_VERSION' ) && version_compare( ICL_SITEPRESS_VERSION, '4.7', '>=' ) ) {
+			$dashboard = sprintf(
+				'<a href="%s">%s</a>',
+				esc_url( add_query_arg( 'page', 'tm%2Fmenu%2Fmain.php', admin_url( 'admin.php' ) ) ),
+				esc_html__( 'Translation Dashboard', 'sitepress' ) // phpcs:ignore WordPress.WP.I18n.TextDomainMismatch
+			);
+
+			$strings = sprintf(
+				'<a href="%s">%s</a>',
+				esc_url( $this->translations_link() ),
+				esc_html__( 'String Translation', 'wpml-string-translation' ) // phpcs:ignore WordPress.WP.I18n.TextDomainMismatch
+			);
+
+			$translate = sprintf(
+				/* translators: %1$s: Translation Dashboard link, %2$s: String Translation link */
+				esc_html__( 'Go to %1$s or %2$s', 'creame-whatsapp-me' ),
+				$dashboard,
+				$strings
+			);
+		} else {
+			$translate = sprintf(
+				'<a href="%s">%s</a>',
+				esc_url( $this->translations_link() ),
+				esc_html__( 'Manage translations', 'creame-whatsapp-me' )
+			);
+		}
+
+		return "{$lang}{$ds}{$msg}.{$ds}{$translate}";
 
 	}
 }
