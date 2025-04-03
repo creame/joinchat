@@ -5,7 +5,7 @@ Tags: WhatsApp, Chat, Floating Button, Facebook Messenger, Telegram
 Requires at least: 4.9.6
 Tested up to: 6.7
 Requires PHP: 5.6
-Stable tag: 5.2.3
+Stable tag: 5.2.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -381,6 +381,9 @@ You can view in your *Settings > Privacy > Policy Guide* the suggested text by J
 
 
 == Changelog ==
+
+= 5.2.4 =
+* Fix detect WPML on Multi-site installation & add link to "Translation Dashboard" on WPML 4.7.
 
 = 5.2.3 =
 * Re-tag
