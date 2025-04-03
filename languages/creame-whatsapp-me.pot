@@ -2,16 +2,16 @@
 # This file is distributed under the GPL-2.0+.
 msgid ""
 msgstr ""
-"Project-Id-Version: Joinchat 5.2.0\n"
+"Project-Id-Version: Joinchat 5.2.4\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/creame-whatsapp-me\n"
 "Last-Translator: Pacotole <pacotole@crea.me>\n"
 "Language-Team: Creame <hola@crea.me>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-01-14T18:16:05+00:00\n"
+"POT-Creation-Date: 2025-04-03T10:24:51+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.10.0\n"
+"X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: creame-whatsapp-me\n"
 
 #. Plugin Name of the plugin
@@ -53,37 +53,37 @@ msgid "Exit the wizard and"
 msgstr ""
 
 #: admin/class-joinchat-admin-onboard.php:96
-#: admin/class-joinchat-admin-onboard.php:214
+#: admin/class-joinchat-admin-onboard.php:216
 msgid "go to Joinchat Settings"
 msgstr ""
 
 #. translators: %s: User display name.
-#: admin/class-joinchat-admin-onboard.php:182
+#: admin/class-joinchat-admin-onboard.php:184
 msgctxt "onboard"
 msgid "Hey, <em>%s</em>. Let's set up <strong>Joinchat</strong> in less than 2 minutes."
 msgstr ""
 
-#: admin/class-joinchat-admin-onboard.php:190
+#: admin/class-joinchat-admin-onboard.php:192
 msgctxt "onboard"
 msgid "👌 OK, let's start."
 msgstr ""
 
-#: admin/class-joinchat-admin-onboard.php:191
+#: admin/class-joinchat-admin-onboard.php:193
 msgctxt "onboard"
 msgid "Please tell me your WhatsApp number"
 msgstr ""
 
-#: admin/class-joinchat-admin-onboard.php:192
+#: admin/class-joinchat-admin-onboard.php:194
 msgctxt "onboard"
 msgid "Done, let's continue"
 msgstr ""
 
-#: admin/class-joinchat-admin-onboard.php:193
+#: admin/class-joinchat-admin-onboard.php:195
 msgctxt "onboard"
 msgid "Add the text for the first message that users will send you via WhatsApp."
 msgstr ""
 
-#: admin/class-joinchat-admin-onboard.php:194
+#: admin/class-joinchat-admin-onboard.php:196
 #: admin/class-joinchat-admin-page.php:143
 #: admin/partials/post-meta-box.php:25
 #: admin/partials/term-meta-box.php:27
@@ -91,28 +91,28 @@ msgstr ""
 msgid "Message"
 msgstr ""
 
-#: admin/class-joinchat-admin-onboard.php:195
+#: admin/class-joinchat-admin-onboard.php:197
 #: admin/class-joinchat-admin-page.php:406
 msgid "Hi *{SITE}*! I need more info about {TITLE} {URL}"
 msgstr ""
 
-#: admin/class-joinchat-admin-onboard.php:196
-#: admin/class-joinchat-admin-onboard.php:201
+#: admin/class-joinchat-admin-onboard.php:198
+#: admin/class-joinchat-admin-onboard.php:203
 msgctxt "onboard"
 msgid "Continue with this text"
 msgstr ""
 
-#: admin/class-joinchat-admin-onboard.php:197
+#: admin/class-joinchat-admin-onboard.php:199
 msgctxt "onboard"
 msgid "I don't want a message"
 msgstr ""
 
-#: admin/class-joinchat-admin-onboard.php:198
+#: admin/class-joinchat-admin-onboard.php:200
 msgctxt "onboard"
 msgid "Define a Call to Action message to prompt users to interact."
 msgstr ""
 
-#: admin/class-joinchat-admin-onboard.php:199
+#: admin/class-joinchat-admin-onboard.php:201
 #: admin/class-joinchat-admin-page.php:155
 #: admin/partials/post-meta-box.php:21
 #: admin/partials/term-meta-box.php:23
@@ -120,55 +120,55 @@ msgstr ""
 msgid "Call to Action"
 msgstr ""
 
-#: admin/class-joinchat-admin-onboard.php:200
+#: admin/class-joinchat-admin-onboard.php:202
 #: admin/class-joinchat-admin-page.php:401
 msgid ""
 "Hello 👋\n"
 "Can we help you?"
 msgstr ""
 
-#: admin/class-joinchat-admin-onboard.php:202
+#: admin/class-joinchat-admin-onboard.php:204
 msgctxt "onboard"
 msgid "I don't want a CTA"
 msgstr ""
 
-#: admin/class-joinchat-admin-onboard.php:203
+#: admin/class-joinchat-admin-onboard.php:205
 msgctxt "onboard"
 msgid "Finally, do you want us to send you tips to improve conversion with <strong>Joinchat</strong>?"
 msgstr ""
 
 #. translators: %s: Terms of Use link.
-#: admin/class-joinchat-admin-onboard.php:205
+#: admin/class-joinchat-admin-onboard.php:207
 msgctxt "onboard"
 msgid "I accept the <a href=\"%s\" target=\"_blank\">terms of use and privacy policy</a>"
 msgstr ""
 
-#: admin/class-joinchat-admin-onboard.php:208
+#: admin/class-joinchat-admin-onboard.php:210
 msgctxt "onboard"
 msgid "OK, keep me posted"
 msgstr ""
 
-#: admin/class-joinchat-admin-onboard.php:209
+#: admin/class-joinchat-admin-onboard.php:211
 msgctxt "onboard"
 msgid "No, thanks"
 msgstr ""
 
-#: admin/class-joinchat-admin-onboard.php:210
+#: admin/class-joinchat-admin-onboard.php:212
 msgctxt "onboard"
 msgid "👍 Perfect, we have just sent you an email to your account, visit your mailbox to confirm your subscription."
 msgstr ""
 
-#: admin/class-joinchat-admin-onboard.php:211
+#: admin/class-joinchat-admin-onboard.php:213
 msgctxt "onboard"
 msgid "Done!"
 msgstr ""
 
-#: admin/class-joinchat-admin-onboard.php:212
+#: admin/class-joinchat-admin-onboard.php:214
 msgctxt "onboard"
 msgid "🥳 Great, <strong>Joinchat</strong> is up and running."
 msgstr ""
 
-#: admin/class-joinchat-admin-onboard.php:213
+#: admin/class-joinchat-admin-onboard.php:215
 msgctxt "onboard"
 msgid "😖 Sorry, something went wrong."
 msgstr ""
@@ -1061,23 +1061,28 @@ msgctxt "Keywords in Elementor Finder"
 msgid "visibility,show,hide"
 msgstr ""
 
-#: includes/class-joinchat-i18n.php:112
+#: includes/class-joinchat-i18n.php:100
 msgid "Settings are defined in the main language"
 msgstr ""
 
-#: includes/class-joinchat-i18n.php:113
+#: includes/class-joinchat-i18n.php:101
 msgid "there are untranslated strings"
 msgstr ""
 
-#: includes/class-joinchat-i18n.php:168
+#: includes/class-joinchat-i18n.php:156
 msgid "There are changes in fields that can be translated"
 msgstr ""
 
-#: includes/class-joinchat-i18n.php:285
+#: includes/class-joinchat-i18n.php:273
 msgid "Default site language"
 msgstr ""
 
-#: includes/class-joinchat-i18n.php:291
+#. translators: %1$s: Translation Dashboard link, %2$s: String Translation link
+#: includes/class-joinchat-i18n.php:292
+msgid "Go to %1$s or %2$s"
+msgstr ""
+
+#: includes/class-joinchat-i18n.php:300
 msgid "Manage translations"
 msgstr ""
 
