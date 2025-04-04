@@ -14,9 +14,9 @@ WhatsApp, Messenger, Telegram, Phone call… capture users through their favorit
 
 == Description ==
 
-**🎉 Chat with your website visitors through their favorite chat applications. Place a floating button at the bottom of your site and give the best support to your customers.**
+> **Turn conversations into conversions**
 
-> The best WordPress plugin for WhatsApp, with more than **700,000 installations** worldwide.
+**🎉 Chat with your website visitors through their favorite chat applications. Place a floating button at the bottom of your site and give the best support to your customers.**
 
 https://www.youtube.com/watch?v=Ad2ZpPnX_3Q
 
@@ -385,6 +385,15 @@ You can view in your *Settings > Privacy > Policy Guide* the suggested text by J
 
 = 6.0.0 =
 // TODO: changelog
+
+= 5.2.4 =
+* Fix detect WPML on Multi-site installation & add link to "Translation Dashboard" on WPML 4.7.
+
+= 5.2.3 =
+* Re-tag
+
+= 5.2.2 =
+* Fix prevent premium or third party plugin can cancel settings validation.
 
 = 5.2.1 =
 * Fix PHP notices in onboard page.
