@@ -37,7 +37,7 @@ class Joinchat_Woo_Public {
 
 		$loader->add_filter( 'joinchat_extra_settings', $this, 'woo_settings' );
 		$loader->add_filter( 'joinchat_settings_i18n', $this, 'settings_i18n' );
-		$loader->add_filter( 'joinchat_get_settings_site', $this, 'shop_settings' );
+		$loader->add_filter( 'joinchat_get_settings_site', $this, 'shop_settings', 30 ); // After load transalations.
 		$loader->add_filter( 'joinchat_get_settings', $this, 'product_settings' );
 		$loader->add_filter( 'joinchat_visibility', $this, 'visibility', 10, 2 );
 		$loader->add_filter( 'joinchat_variable_replacements', $this, 'replacements' );
