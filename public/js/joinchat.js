@@ -373,7 +373,10 @@
       if (has_cta) joinchat_obj.rand_text(jc_chat);
 
       // Bubbles animated (show one by one)
-      if (jc_bubbles.length <= 1 || window.matchMedia('(prefers-reduced-motion)').matches) return;
+      if (jc_bubbles.length <= 1 || window.matchMedia('(prefers-reduced-motion)').matches) {
+        setTimeout(() => jc_chat.dispatchEvent(new Event('joinchat:bubbles')), 1); // Need delay (to trigger after joinchat:show)
+        return;
+      }
 
       jc_bubbles.forEach(bubble => bubble.classList.add('joinchat--hidden'));
       joinchat_obj.$('.joinchat__optin')?.classList.add('joinchat--hidden');
