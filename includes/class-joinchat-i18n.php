@@ -21,15 +21,11 @@ class Joinchat_I18n {
 	const DOMAIN_GROUP = 'Join.chat'; // TODO: in future change to "Joinchat".
 
 	/**
-	 * Load the plugin text domain and allow settings translations.
+	 * Allow settings translations.
 	 *
 	 * @since    5.2.4
 	 */
 	public function init() {
-
-		if ( is_admin() ) {
-			load_plugin_textdomain( 'creame-whatsapp-me', false, dirname( JOINCHAT_BASENAME ) . '/languages' );
-		}
 
 		if ( defined( 'WPML_PLUGIN_PATH' ) || defined( 'POLYLANG_VERSION' ) ) {
 
