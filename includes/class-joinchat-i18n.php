@@ -54,9 +54,7 @@ class Joinchat_I18n {
 	 * @param    string $option  Option name.
 	 * @return    array setting keys and string names
 	 */
-	private function settings_i18n( $settings = array(), $option = '' ) {
-
-		$option = ! empty( $option ) ? $option : JOINCHAT_SLUG;
+	private function settings_i18n( $settings = array(), $option = JOINCHAT_SLUG ) {
 
 		$localized = array(
 			'telephone'     => 'Telephone',
@@ -82,9 +80,7 @@ class Joinchat_I18n {
 	 * @param  string $option Option name.
 	 * @return string
 	 */
-	private function get_domain( $option = '' ) {
-
-		$option = '' !== $option ? $option : JOINCHAT_SLUG;
+	private function get_domain( $option = JOINCHAT_SLUG ) {
 
 		return apply_filters( 'joinchat_i18n_domain', self::DOMAIN_GROUP, $option );
 
@@ -140,7 +136,7 @@ class Joinchat_I18n {
 	 * @param  string $option option name.
 	 * @return void
 	 */
-	public function register_translations( $settings, $old_settings, $option = '' ) {
+	public function register_translations( $settings, $old_settings, $option = JOINCHAT_SLUG ) {
 
 		$settings_i18n = $this->settings_i18n( $settings, $option );
 
@@ -196,9 +192,8 @@ class Joinchat_I18n {
 	 * @param  string $option option name.
 	 * @return array
 	 */
-	public function load_translations( $settings, $option = '' ) {
+	public function load_translations( $settings, $option = JOINCHAT_SLUG ) {
 
-		$option        = is_string( $option ) && '' !== $option ? $option : JOINCHAT_SLUG;
 		$settings_i18n = $this->settings_i18n( $settings, $option );
 		$domain        = $this->get_domain( $option );
 
