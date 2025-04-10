@@ -130,7 +130,7 @@ class Joinchat_Woo_Admin {
 	 */
 	public function custom_taxonomies( $taxonomies ) {
 
-		$product_taxs = array( 'product_cat', 'product_tag' );
+		$product_taxs = array( 'product_cat', 'product_tag', 'product_brand' );
 
 		if ( defined( 'PWB_PLUGIN_FILE' ) ) {
 			$product_taxs[] = 'pwb-brand';
