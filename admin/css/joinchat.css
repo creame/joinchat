@@ -22,6 +22,10 @@
   opacity: .5;
 }
 
+#joinchat_form hr {
+  margin: 20px 0 40px;
+}
+
 .js #joinchat_form textarea {
   overflow: hidden;
   min-height: 100px;
@@ -37,6 +41,10 @@
 
 #navtab_premium {
   color: #f9603a;
+}
+
+#joinchat_form .joinchat__visibility__wrapper hr {
+  margin: 5px 0;
 }
 
 .joinchat__visibility__wrapper tr:hover {
