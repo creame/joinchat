@@ -178,7 +178,7 @@ class Joinchat_I18n {
 		// Note: message is wrapped with <strong>...</strong> tags.
 		$message = $this->language_notice( '</strong>' . esc_html__( 'There are changes in fields that can be translated', 'creame-whatsapp-me' ) . '<strong>' );
 
-		add_settings_error( JOINCHAT_SLUG, 'review_i18n', $message, 'warning' );
+		add_settings_error( $option, 'review_i18n', $message, 'warning' );
 
 	}
 
