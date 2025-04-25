@@ -40,7 +40,10 @@ class Joinchat_Admin_Page {
 
 			$page_hook = add_options_page( $title, $title . $icon, Joinchat_Util::capability(), JOINCHAT_SLUG, array( $this, 'options_page' ) );
 		} else {
-			$page_hook = add_menu_page( $title, $title, Joinchat_Util::capability(), JOINCHAT_SLUG, array( $this, 'options_page' ), 'dashicons-whatsapp', 81 );
+			$icon = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNyAxNiI+PHBhdGggZmls' .
+				'bD0iIzlDQTJBNyIgZD0iTTE0LjQgMTIuOGE4IDggMCAxIDAtMS42IDEuNkMxNC40IDE1LjUgMTcgMTYgMTcgMTZzLTEuNS0xLjYtMi42LTMuMiIvPjwvc3ZnPg==';
+
+			$page_hook = add_menu_page( $title, $title, Joinchat_Util::capability(), JOINCHAT_SLUG, array( $this, 'options_page' ), $icon, 81 );
 		}
 
 		add_action("load-{$page_hook}", function() { do_action( 'load_joinchat_settings_page' ); } ); // phpcs:ignore
