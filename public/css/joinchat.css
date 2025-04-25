@@ -350,7 +350,7 @@
   padding: 0 26px 0 70px;
 }
 
-.joinchat__header__text {
+.joinchat__header span {
   font-size: 19px;
   font-weight: 600;
   max-width: 100%;
@@ -360,7 +360,7 @@
   opacity: 0.8;
 }
 
-.joinchat__powered {
+.joinchat__header a {
   font-size: 11px;
   line-height: 18px;
   color: inherit !important;
@@ -369,15 +369,15 @@
   opacity: 0.8;
 }
 
-.joinchat__powered svg {
+.joinchat__header a svg {
   display: inline-block;
   width: auto;
   height: 18px;
   vertical-align: -30%;
 }
 
-.joinchat__powered:hover,
-.joinchat__powered:active {
+.joinchat__header a:hover,
+.joinchat__header a:active {
   color: inherit !important;
   text-decoration: none !important;
   opacity: 0.9;
@@ -386,8 +386,6 @@
 
 .joinchat__wa {
   display: block;
-  height: 28px;
-  width: auto;
   fill: currentcolor;
   opacity: 0.8;
 }
@@ -401,8 +399,7 @@
   width: var(--size);
   height: var(--size);
   border-radius: 50%;
-  background: rgba(0, 0, 0, 0.4) url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23fff' viewBox='0 0 24 24'%3E%3Cpath d='M24 2.4 21.6 0 12 9.6 2.4 0 0 2.4 9.6 12 0 21.6 2.4 24l9.6-9.6 9.6 9.6 2.4-2.4-9.6-9.6z'/%3E%3C/svg%3E") center no-repeat;
-  background-size: 12px;
+  background: rgba(0, 0, 0, 0.4) url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23fff' viewBox='0 0 24 24'%3E%3Cpath d='M24 2.4 21.6 0 12 9.6 2.4 0 0 2.4 9.6 12 0 21.6 2.4 24l9.6-9.6 9.6 9.6 2.4-2.4-9.6-9.6z'/%3E%3C/svg%3E") center / 12px no-repeat;
   cursor: pointer;
   transition: background-color 0.3s ease-out;
 }
@@ -526,15 +523,17 @@
 .joinchat__open__icon path {
   fill: none !important;
   stroke: var(--text) !important;
+  stroke-linecap: round;
+  stroke-width: 33px;
   animation: none;
 }
 
-.joinchat__open__icon .joinchat_svg__plain {
+.joinchat__open__icon .joinchat__pa {
   --stroke: 1097;
 
 }
 
-.joinchat__open__icon .joinchat_svg__chat {
+.joinchat__open__icon .joinchat__pb {
   --stroke: 1020;
 }
 
@@ -544,7 +543,7 @@
   animation: joinchat_send_svg 6s 0.2s ease-in-out infinite;
 }
 
-.joinchat--chatbox .joinchat__open__icon .joinchat_svg__chat {
+.joinchat--chatbox .joinchat__open__icon .joinchat__pb {
   animation-delay: 3.2s;
 }
 
@@ -552,7 +551,7 @@
   animation: none;
 }
 
-.joinchat--optout .joinchat__open__icon .joinchat_svg__plain {
+.joinchat--optout .joinchat__open__icon .joinchat__pa {
   stroke-dasharray: 0;
 }
 
@@ -673,7 +672,9 @@
 }
 
 .joinchat__chat {
-  --peak: url("#joinchat__peak_l");
+  --peak_l: path("M17 25V0C17 12.877 6.082 14.9 1.031 15.91c-1.559.31-1.179 2.272.004 2.272C9.609 18.182 17 18.088 17 25z");
+  --peak_r: path("M0 25.68V0c0 13.23 10.92 15.3 15.97 16.34 1.56.32 1.18 2.34 0 2.34-8.58 0-15.97-.1-15.97 7Z");
+  --peak: var(--peak_l);
 
   display: flex;
   flex-direction: column;
@@ -682,7 +683,7 @@
 }
 
 [dir="rtl"] .joinchat__chat {
-  --peak: url("#joinchat__peak_r");
+  --peak: var(--peak_r);
 }
 
 .joinchat__bubble {
@@ -730,7 +731,7 @@
 .joinchat__bubble.joinchat__bubble--loading {
   width: 70px;
   border: none;
-  background: transparent url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"><circle cx="4" cy="12" r="3"><animate id="a" begin="0;b.end+0.1s" attributeName="cy" calcMode="spline" dur="0.4s" values="12;6;12" keySplines=".33,.66,.66,1;.33,0,.66,.33"/></circle><circle cx="12" cy="12" r="3"><animate begin="a.begin+0.1s" attributeName="cy" calcMode="spline" dur="0.4s" values="12;6;12" keySplines=".33,.66,.66,1;.33,0,.66,.33"/></circle><circle cx="20" cy="12" r="3"><animate id="b" begin="a.begin+0.2s" attributeName="cy" calcMode="spline" dur="0.4s" values="12;6;12" keySplines=".33,.66,.66,1;.33,0,.66,.33"/></circle></svg>') 20px 20px no-repeat;
+  background: transparent url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24'%3E%3Ccircle cx='4' cy='12' r='3'%3E%3Canimate id='c' attributeName='cy' begin='0;a.end+0.1s' calcMode='spline' dur='0.4s' keySplines='.33,.66,.66,1;.33,0,.66,.33' values='12;6;12'/%3E%3C/circle%3E%3Ccircle cx='12' cy='12' r='3'%3E%3Canimate attributeName='cy' begin='c.begin+0.1s' calcMode='spline' dur='0.4s' keySplines='.33,.66,.66,1;.33,0,.66,.33' values='12;6;12'/%3E%3C/circle%3E%3Ccircle cx='20' cy='12' r='3'%3E%3Canimate id='a' attributeName='cy' begin='c.begin+0.2s' calcMode='spline' dur='0.4s' keySplines='.33,.66,.66,1;.33,0,.66,.33' values='12;6;12'/%3E%3C/circle%3E%3C/svg%3E") 20px 20px no-repeat;
   transform-origin: 50% !important;
   animation: joinchat_show 100ms ease-out 10ms both;
 }
@@ -1035,7 +1036,7 @@
     animation: none;
   }
 
-  .joinchat__open__icon .joinchat_svg__plain {
+  .joinchat__open__icon .joinchat__pa {
     stroke-dasharray: 0;
   }
 

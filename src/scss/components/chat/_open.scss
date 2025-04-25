@@ -54,14 +54,16 @@
   path {
     fill: none !important;
     stroke: var(--text) !important;
+    stroke-linecap: round;
+    stroke-width: 33px;
     animation: none;
   }
 
-  #{$class}_svg__plain {
+  #{$class}__pa {
     --stroke: 1097;
 
   }
-  #{$class}_svg__chat {
+  #{$class}__pb {
     --stroke: 1020;
   }
 
@@ -72,7 +74,7 @@
       animation: #{$name}_send_svg 6s 0.2s ease-in-out infinite;
     }
 
-    #{$class}_svg__chat {
+    #{$class}__pb {
       animation-delay: 3.2s;
     }
   }
@@ -83,7 +85,7 @@
       animation: none;
     }
 
-    #{$class}_svg__plain {
+    #{$class}__pa {
       stroke-dasharray: 0;
     }
   }
@@ -93,7 +95,7 @@
       animation: none;
     }
 
-    #{$class}_svg__plain {
+    #{$class}__pa {
       stroke-dasharray: 0;
     }
   }

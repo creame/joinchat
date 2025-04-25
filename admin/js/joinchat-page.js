@@ -424,13 +424,13 @@
         view_chatbox();
       });
       $('input[name="joinchat[header]"]').on('change', function () {
-        prev_jc.$('.joinchat__powered').classList.toggle('joinchat--hidden', this.value != '__jc__');
-        prev_jc.$('.joinchat__wa ').classList.toggle('joinchat--hidden', this.value != '__wa__');
-        prev_jc.$('.joinchat__header__text').classList.toggle('joinchat--hidden', this.value != '__custom__');
+        prev_jc.$('#joinchat__label a').classList.toggle('joinchat--hidden', this.value != '__jc__');
+        prev_jc.$('#joinchat__label span').classList.toggle('joinchat--hidden', this.value != '__custom__');
+        prev_jc.$('#joinchat__label .joinchat__wa').classList.toggle('joinchat--hidden', this.value != '__wa__');
         view_chatbox();
       });
       $('#joinchat_header_custom').on('input change', debounce(e => {
-        prev_jc.$('.joinchat__header__text').textContent = $(e.target).val();
+        prev_jc.$('#joinchat__label span').textContent = $(e.target).val();
         view_chatbox();
       }, 100));
 
