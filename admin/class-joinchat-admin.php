@@ -85,6 +85,7 @@ class Joinchat_Admin {
 
 		$value['telephone']     = $util::clean_input( $value['telephone'] );
 		$value['mobile_only']   = $util::yes_no( $value, 'mobile_only' );
+		$value['button_ico']    = jc_common()->get_icons( $value['button_ico'] ) ? $value['button_ico'] : 'app';
 		$value['button_image']  = (int) $value['button_image'] * ( $util::yes_no( $value, 'button_image_fixed' ) === 'yes' ? -1 : 1 );
 		$value['button_tip']    = $util::substr( $util::clean_input( $value['button_tip'] ), 0, 40 );
 		$value['button_delay']  = (int) $value['button_delay'];

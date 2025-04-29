@@ -176,6 +176,11 @@ class Joinchat_Public {
 			list($color, $text) = explode( '/', $settings['color'] . '/100' );
 			list($r, $g, $b)    = sscanf( $color, '#%02x%02x%02x' );
 			$inline_css        .= ".joinchat{ --red:$r; --green:$g; --blue:$b; --bw:$text }";
+
+			if ( empty( $this->chatbox_content ) && 'app' !== $settings['button_ico'] ) {
+				$text        = '100' === $text ? '#fff' : 'rgb(0 0 0 / 70%)';
+				$inline_css .= ".joinchat{ --text:$text; }";
+			}
 		}
 
 		if ( ! empty( $settings['custom_css'] ) ) {
@@ -352,6 +357,7 @@ class Joinchat_Public {
 			array(
 				'visibility',
 				'position',
+				'button_ico',
 				'button_tip',
 				'button_image',
 				'message_start',
@@ -379,6 +385,8 @@ class Joinchat_Public {
 			$powered_lang = false !== strpos( strtolower( get_locale() ), 'es' ) ? 'es' : 'en';
 			$powered_link = add_query_arg( $powered_args, "https://join.chat/$powered_lang/powered/" );
 		}
+
+		$ico = 'app' !== $settings['button_ico'] ? jc_common()->get_icons( $settings['button_ico'] ) : '';
 
 		// Set custom img tag and bypass default image logic.
 		$image = apply_filters( 'joinchat_image', null );

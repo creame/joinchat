@@ -144,6 +144,7 @@ class Joinchat_Admin_Page {
 					'button' => array(
 						'telephone'    => '<label for="joinchat_phone">' . esc_html__( 'Telephone', 'creame-whatsapp-me' ) . '</label>',
 						'message_send' => '<label for="joinchat_message_send">' . esc_html__( 'Message', 'creame-whatsapp-me' ) . '</label>' . self::vars_help( 'message_send' ),
+						'button_ico'   => esc_html__( 'Icon', 'creame-whatsapp-me' ),
 						'button_image' => esc_html__( 'Image', 'creame-whatsapp-me' ),
 						'button_tip'   => '<label for="joinchat_button_tip">' . esc_html__( 'Tooltip', 'creame-whatsapp-me' ) . '</label>',
 						'position'     => esc_html__( 'Position on Screen', 'creame-whatsapp-me' ),
@@ -370,6 +371,20 @@ class Joinchat_Admin_Page {
 						esc_html__( 'Left', 'creame-whatsapp-me' ) . '</label><br>' .
 						'<label><input name="joinchat[position]" value="right" type="radio"' . checked( 'right', $value, false ) . '> ' .
 						esc_html__( 'Right', 'creame-whatsapp-me' ) . '</label></fieldset>';
+					break;
+
+				case 'button_ico':
+					$output = '<fieldset class="joinchat__button_ico">' .
+					'<label><input type="radio" name="joinchat[button_ico]" value="app"' . checked( 'app', $value, false ) . '>' .
+					'<span></span></label>';
+
+					$icons = jc_common()->get_icons();
+					foreach ( $icons as $key => $icon ) {
+						$output .= '<label><input type="radio" name="joinchat[button_ico]" value="' . $key . '"' . checked( $key, $value, false ) . '><span>' . $icon . '</span></label>';
+					}
+
+					$output .= '</fieldset>' .
+						'<p class="description">' . esc_html__( 'Choose the main icon or a contact icon with background color of the Theme Color', 'creame-whatsapp-me' ) . '</p>';
 					break;
 
 				case 'button_image':
@@ -876,11 +891,14 @@ class Joinchat_Admin_Page {
 		}
 
 		// Enqueue styles.
+		list($color, $text) = explode( '/', jc_common()->settings['color'] . '/100' );
+		list($r, $g, $b)    = sscanf( $color, '#%02x%02x%02x' );
+
 		wp_deregister_style( $handle );
 		wp_enqueue_style( $handle, plugins_url( "css/joinchat{$min}.css", __FILE__ ), $css_deps, JOINCHAT_VERSION, 'all' );
+		wp_add_inline_style( $handle, "#joinchat_form { --red:$r; --green:$g; --blue:$b; --bw:$text; }" );
 
-		$example_css = '' .
-		'/* .joinchat some default styles
+		$example_css = '/* .joinchat some default styles
 z-index: 9000;   put above or below other objects
 --s: 60px;       button size
 --sep: 20px;     right/left separation (mobile 6px)

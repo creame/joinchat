@@ -230,6 +230,16 @@
 
     // Init ColorPicker with "changecolor" trigger event on change
     $('#joinchat_color').wpColorPicker({ change: function (e, ui) { $(this).trigger('changecolor', [ui.color.toRgb()]); } });
+    $('#joinchat_color').on('changecolor', function (e, rgb) {
+      var style = $('#joinchat_form').get(0).style;
+      style.setProperty('--red', rgb.r);
+      style.setProperty('--green', rgb.g);
+      style.setProperty('--blue', rgb.b);
+    });
+
+    $('input[name="joinchat[color][text]"]').on('change', function () {
+      $('#joinchat_form').get(0).style.setProperty('--bw', this.value);
+    });
 
     $('#joinchat_header_custom').on('click', function () { $(this).prev().find('input').trigger('click'); });
 
@@ -407,6 +417,11 @@
         prev_jc.$('.joinchat__open__text').textContent = $(e.target).val().trim();
         view_chatbox();
       }, 100));
+      $('input[name="joinchat[button_ico]"]').on('change', function () {
+        prev_jc.$('.joinchat__button__ico')?.remove();
+        if (this.value != 'app') prev_jc.$('.joinchat__button').insertAdjacentHTML('afterbegin', `<div class="joinchat__button__ico">${this.nextElementSibling.firstElementChild.outerHTML}</div>`);
+        prev_jc.chatbox_hide();
+      });
       $('#joinchat_color').on('changecolor', function (e, rgb) {
         var style = prev_jc.$div.style;
         style.setProperty('--red', rgb.r);

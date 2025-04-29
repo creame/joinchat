@@ -7,6 +7,7 @@
   --sep: 20px;
   --bottom: var(--sep);
   --s: 60px;
+  --h: calc(var(--s)/2);
 
   display: none;
   position: fixed;
@@ -27,24 +28,24 @@
 }
 
 .joinchat *,
-  .joinchat *::before,
-  .joinchat *::after {
-    box-sizing: border-box;
-  }
+.joinchat *::before,
+.joinchat *::after {
+  box-sizing: border-box;
+}
 
 .joinchat--show {
-    display: block;
-    transform: scale3d(1, 1, 1);
-  }
+  display: block;
+  transform: scale3d(1, 1, 1);
+}
 
 .joinchat--left {
-    right: auto;
-    left: var(--sep);
-  }
+  right: auto;
+  left: var(--sep);
+}
 
 .joinchat--noanim {
-    animation: none;
-  }
+  animation: none;
+}
 
 .joinchat__button {
   position: absolute;
@@ -55,25 +56,50 @@
   width: var(--s);
   background: #25d366 var(--joinchat-ico) center / 60% no-repeat;
   color: inherit;
-  border-radius: calc(var(--s)/2);
-  box-shadow: 1px 6px 24px 0 rgba(7,94,84, 0.24);
+  border-radius: 50%;
+  box-shadow: 1px 6px 24px 0 rgba(7, 94, 84, 0.24);
   cursor: pointer;
   transition: background-color 0.2s linear;
 }
 
 .joinchat__button:hover {
-    background-color: #128c7e
-  }
+  background-color: #128c7e
+}
 
 .joinchat__button:active {
-    background-color: #128c7e;
-    transition: none;
-  }
+  background-color: #128c7e;
+  transition: none;
+}
 
 .joinchat--left .joinchat__button {
-    right: auto;
-    left: 8px;
-  }
+  right: auto;
+  left: 8px;
+}
+
+.joinchat__button__ico {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  border-radius: 50%;
+  overflow: hidden;
+  color: var(--text) !important;
+}
+
+.joinchat__button__ico svg {
+  width: 60%;
+  height: 60%;
+  margin: auto;
+}
+
+.joinchat__button:has(.joinchat__button__ico) {
+  background: rgb(var(--red) var(--green) var(--blue));
+  box-shadow: 1px 6px 24px 0 rgb(max(0, var(--red) - 75) max(0, var(--green) - 75) max(0, var(--blue) - 75) / 24%);
+}
+
+.joinchat__button:has(.joinchat__button__ico):hover,
+.joinchat__button:has(.joinchat__button__ico):active {
+  background: rgb(min(255, var(--red) + 50) min(255, var(--green) + 50) min(255, var(--blue) + 50));
+}
 
 .joinchat__button__image {
   position: absolute;
@@ -84,24 +110,24 @@
 }
 
 .joinchat__button__image img,
-  .joinchat__button__image video {
-    display: block;
-    width: 100%;
-    height: 100%;
-    -o-object-fit: cover;
-       object-fit: cover;
-    -o-object-position: center;
-       object-position: center;
-  }
+.joinchat__button__image video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+  object-fit: cover;
+  -o-object-position: center;
+  object-position: center;
+}
 
 .joinchat--show .joinchat__button__image {
-    animation: joinchat_image_loop 20s linear 5s infinite normal both;
-  }
+  animation: joinchat_image_loop 20s linear 5s infinite normal both;
+}
 
 .joinchat--img .joinchat__button__image {
-    opacity: 1;
-    animation: none;
-  }
+  opacity: 1;
+  animation: none;
+}
 
 .joinchat__tooltip {
   position: absolute;
@@ -113,12 +139,12 @@
   border: none;
   border-radius: 16px;
   background: #fff;
-  color: rgba(0,0,0, 0.8);
+  color: rgba(0, 0, 0, 0.8);
   line-height: 31px;
   white-space: nowrap;
   opacity: 0;
   transition: opacity 0.3s ease-out 0.4s;
-  filter: drop-shadow(0 1px 4px rgba(0,0,0, 0.4));
+  filter: drop-shadow(0 1px 4px rgba(0, 0, 0, 0.4));
   pointer-events: none;
 }
 
@@ -126,37 +152,37 @@
   content: '';
   display: block;
   position: absolute;
-    top: 10px;
-    right: -6px;
-    border: 8px solid transparent;
-    border-width: 6px 0 6px 8px;
-    border-left-color: #fff;
-  }
+  top: 10px;
+  right: -6px;
+  border: 8px solid transparent;
+  border-width: 6px 0 6px 8px;
+  border-left-color: #fff;
+}
 
 .joinchat__tooltip div {
-    width: -moz-max-content;
-    width: max-content;
-    max-width: 100%;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
+  width: -moz-max-content;
+  width: max-content;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 
 .joinchat--tooltip .joinchat__tooltip {
-    animation: joinchat_tootlip 20s linear 5s 1 normal both;
-  }
+  animation: joinchat_tootlip 20s linear 5s 1 normal both;
+}
 
 .joinchat--left .joinchat__tooltip {
-    right: auto;
-    left: calc(var(--s) + 16px);
-  }
+  right: auto;
+  left: calc(var(--s) + 16px);
+}
 
 .joinchat--left .joinchat__tooltip::after {
-      left: -6px;
-      right: auto;
-      border-color: transparent;
-      border-width: 6px 8px 6px 0;
-      border-right-color: #fff;
-    }
+  left: -6px;
+  right: auto;
+  border-color: transparent;
+  border-width: 6px 8px 6px 0;
+  border-right-color: #fff;
+}
 
 .joinchat__qr {
   position: absolute;
@@ -171,10 +197,10 @@
   border: none;
   border-radius: 16px;
   background: #fff;
-  color: rgba(0,0,0, 0.8);
+  color: rgba(0, 0, 0, 0.8);
   text-align: center;
   white-space: nowrap;
-  filter: drop-shadow(0 1px 4px rgba(0,0,0, 0.4));
+  filter: drop-shadow(0 1px 4px rgba(0, 0, 0, 0.4));
   animation: joinchat_badge_in 400ms cubic-bezier(0.11, 0.84, 0.83, 1.01) 500ms both;
   pointer-events: none;
 }
@@ -183,37 +209,37 @@
   content: '';
   display: block;
   position: absolute;
-    bottom: -6px;
-    right: calc(var(--h) - 6px);
-    border: 8px solid transparent;
-    border-width: 8px 6px 0;
-    border-top-color: #fff;
-  }
+  bottom: -6px;
+  right: calc(var(--h) - 6px);
+  border: 8px solid transparent;
+  border-width: 8px 6px 0;
+  border-top-color: #fff;
+}
 
 .joinchat--left .joinchat__qr {
-    left: 8px;
-    right: auto;
-  }
+  left: 8px;
+  right: auto;
+}
 
 .joinchat--left .joinchat__qr::after {
-      left: calc(var(--h) - 6px);
-      right: auto;
-    }
+  left: calc(var(--h) - 6px);
+  right: auto;
+}
 
 .joinchat__qr div {
-    font-size: 14px;
-    color: #4a4a4a;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
+  font-size: 14px;
+  color: #4a4a4a;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 
 .joinchat__qr canvas {
-    display: block;
-    width: 200px;
-    height: 200px;
-    margin: 0;
-    image-rendering: pixelated;
-  }
+  display: block;
+  width: 200px;
+  height: 200px;
+  margin: 0;
+  image-rendering: pixelated;
+}
 
 @keyframes joinchat_show {
   from {
@@ -297,44 +323,45 @@
 }
 
 .joinchat__woo-btn:empty {
-    padding-right: 0;
-  }
-
-.joinchat__woo-btn:hover {
-    background-color: #128c7e;
-  }
-
-@media (orientation: portrait) and (width >= 481px), (orientation: landscape) and (height >= 481px) {
-    .joinchat--mobile {
-      display: none !important;
-    }
+  padding-right: 0;
 }
 
-@media (width <= 767px) {
-    .joinchat--footer-bar {
-      --bottom: 76px !important;
-    }
+.joinchat__woo-btn:hover {
+  background-color: #128c7e;
+}
+
+@media (orientation: portrait) and (width >= 481px), (orientation: landscape) and (height >= 481px) {
+  .joinchat--mobile {
+    display: none !important;
+  }
+}
+
+@media (width <=767px) {
+  .joinchat--footer-bar {
+    --bottom: 76px !important;
+  }
 }
 
 @media (width <= 480px), (orientation: landscape) and (height <= 480px) {
-.joinchat {
+  .joinchat {
     --sep: 6px
-}
+  }
 }
 
 @media (hover: hover) {
-    .joinchat__button:hover .joinchat__tooltip {
-      opacity: 1;
-      animation: none;
-      transition: opacity 0.2s;
-    }
-      .joinchat--btn .joinchat__button:hover~.joinchat__qr {
-        display: flex;
-      }
+  .joinchat__button:hover .joinchat__tooltip {
+    opacity: 1;
+    animation: none;
+    transition: opacity 0.2s;
+  }
+
+  .joinchat--btn .joinchat__button:hover~.joinchat__qr {
+    display: flex;
+  }
 }
 
 @media (prefers-reduced-motion) {
-.joinchat {
+  .joinchat {
     animation: none
-}
+  }
 }

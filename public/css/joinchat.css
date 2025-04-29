@@ -18,8 +18,8 @@
   --dark: rgb(max(0, var(--red) - 75) max(0, var(--green) - 75) max(0, var(--blue) - 75));
   --hover: rgb(min(255, var(--red) + 50) min(255, var(--green) + 50) min(255, var(--blue) + 50));
   --bg: rgb(var(--rgb) / 4%);
-  --bw: 100;
-  --text: hsl(0deg 0% clamp(0%, var(--bw)*1%, 100%) / clamp(70%, var(--bw)*1%, 100%));
+  --bw: 1;
+  --text: hsl(0deg 0% clamp(0%, var(--bw)*1000%, 100%) / clamp(70%, var(--bw)*1000%, 100%));
   --msg: var(--color);
 
   color: var(--text);
@@ -89,7 +89,7 @@
   width: var(--s);
   background: #25d366 var(--joinchat-ico) center / 60% no-repeat;
   color: inherit;
-  border-radius: calc(var(--s)/2);
+  border-radius: 50%;
   box-shadow: 1px 6px 24px 0 rgba(7, 94, 84, 0.24);
   cursor: pointer;
   transition: background-color 0.2s linear;
@@ -115,6 +115,31 @@
 
 .joinchat--chatbox .joinchat__button {
   display: none;
+}
+
+.joinchat__button__ico {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  border-radius: 50%;
+  overflow: hidden;
+  color: var(--text) !important;
+}
+
+.joinchat__button__ico svg {
+  width: 60%;
+  height: 60%;
+  margin: auto;
+}
+
+.joinchat__button:has(.joinchat__button__ico) {
+  background: var(--color);
+  box-shadow: 1px 6px 24px 0 rgb(max(0, var(--red) - 75) max(0, var(--green) - 75) max(0, var(--blue) - 75) / 24%);
+}
+
+.joinchat__button:has(.joinchat__button__ico):hover,
+.joinchat__button:has(.joinchat__button__ico):active {
+  background: var(--hover);
 }
 
 .joinchat__button__image {
@@ -305,7 +330,7 @@
   width: calc(100vw - var(--sep)*2);
   max-width: 400px;
   max-height: calc(var(--vh) - var(--bottom) - var(--sep));
-  border-radius: calc(var(--s)/2 + 2px);
+  border-radius: calc(var(--h) + 2px);
   background: #fff linear-gradient(180deg, var(--color), var(--color) var(--header), var(--bg) var(--header), var(--bg));
   box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.5);
   text-align: left;
@@ -479,7 +504,7 @@
   margin: 0 8px;
   background: var(--color);
   color: inherit;
-  border-radius: calc(var(--s)/2);
+  border-radius: var(--h);
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
   overflow: hidden;
   cursor: pointer;

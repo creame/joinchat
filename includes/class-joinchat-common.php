@@ -96,6 +96,7 @@ class Joinchat_Common {
 		$defaults = array(
 			'telephone'     => '',
 			'mobile_only'   => 'no',
+			'button_ico'    => 'app',
 			'button_image'  => '',
 			'button_tip'    => '',
 			'button_delay'  => 3,
@@ -158,6 +159,10 @@ class Joinchat_Common {
 		// Since v5.1 use negative values for disabled.
 		if ( 0 === $settings['message_delay'] ) {
 			$settings['message_delay'] = -1;
+		}
+
+		if ( ! $settings['button_ico'] ) {
+			$settings['button_ico'] = 'app';
 		}
 
 		// Clean unused saved settings.
@@ -258,6 +263,31 @@ class Joinchat_Common {
 
 		return (array) apply_filters( 'joinchat_metabox_vars', array( 'SITE', 'TITLE', 'HOME', 'URL', 'HREF' ), $obj );
 
+	}
+
+	/**
+	 * Get button alternate icons
+	 *
+	 * Return an array of ico_key => value with the SVG code or svg value if $value is passed.
+	 *
+	 * @since 6.0.0
+	 * @param string $value Icon name.
+	 * @return array|string|false
+	 */
+	public function get_icons( $value = '' ) {
+
+		$icons = array(
+			'v1' => file_get_contents( JOINCHAT_DIR . 'admin/img/ico-logo.svg' ),
+			'v2' => file_get_contents( JOINCHAT_DIR . 'admin/img/ico-contact.svg' ),
+		);
+
+		$icons = (array) apply_filters( 'joinchat_icons', $icons, $value );
+
+		if ( $value ) {
+			return array_key_exists( $value, $icons ) ? $icons[ $value ] : false;
+		} else {
+			return $icons;
+		}
 	}
 }
 

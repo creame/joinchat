@@ -7,7 +7,7 @@
   width: var(--s);
   background: $WA var(--joinchat-ico) center / 60% no-repeat;
   color: inherit;
-  border-radius: calc(var(--s) / 2);
+  border-radius: 50%;
   box-shadow: 1px 6px 24px 0 rgba($WAdarken, 0.24);
   cursor: pointer;
   transition: background-color 0.2s linear;
@@ -35,6 +35,43 @@
   @if $type == full {
     #{$class}--chatbox & {
       display: none;
+    }
+  }
+}
+
+#{$class}__button__ico {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  border-radius: 50%;
+  overflow: hidden;
+  color: var(--text) !important;
+
+  svg {
+    width: 60%;
+    height: 60%;
+    margin: auto;
+  }
+
+  @if $type == full {
+    #{$class}__button:has(&) {
+      background: var(--color);
+      box-shadow: 1px 6px 24px 0 rgb(max(0, var(--red) - 75) max(0, var(--green) - 75) max(0, var(--blue) - 75) / 24%); // --dark with alpha
+
+      &:hover,
+      &:active {
+        background: var(--hover);
+      }
+    }
+  } @else {
+    #{$class}__button:has(&) {
+      background: rgb(var(--red) var(--green) var(--blue));
+      box-shadow: 1px 6px 24px 0 rgb(max(0, var(--red) - 75) max(0, var(--green) - 75) max(0, var(--blue) - 75) / 24%); // --dark with alpha
+
+      &:hover,
+      &:active {
+        background: rgb(min(255, var(--red) + 50) min(255, var(--green) + 50) min(255, var(--blue) + 50));
+      }
     }
   }
 }

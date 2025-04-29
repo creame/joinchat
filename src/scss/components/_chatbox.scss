@@ -9,7 +9,7 @@
   width: calc(100vw - var(--sep) * 2);
   max-width: 400px;
   max-height: calc(var(--vh) - var(--bottom) - var(--sep));
-  border-radius: calc((var(--s) / 2) + 2px);
+  border-radius: calc(var(--h) + 2px);
   background: $white linear-gradient(180deg, var(--color), var(--color) var(--header), var(--bg) var(--header), var(--bg));
   box-shadow: 0 2px 6px 0 rgba($black, 0.5);
   text-align: left;
