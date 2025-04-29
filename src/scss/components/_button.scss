@@ -45,7 +45,11 @@
   display: flex;
   border-radius: 50%;
   overflow: hidden;
-  color: var(--text) !important;
+  @if $type == full {
+    color: var(--text) !important;
+  } @else {
+    color: hsl(0 0% clamp(0%, var(--bw)*1000%, 100%) / clamp(70%, var(--bw)*1000%, 100%)) !important;
+  }
 
   svg {
     width: 60%;
@@ -56,7 +60,7 @@
   @if $type == full {
     #{$class}__button:has(&) {
       background: var(--color);
-      box-shadow: 1px 6px 24px 0 rgb(max(0, var(--red) - 75) max(0, var(--green) - 75) max(0, var(--blue) - 75) / 24%); // --dark with alpha
+      box-shadow: 1px 6px 24px 0 hsl(var(--ch) var(--cs) calc(var(--cl) - 10%) / 24%); // --dark with alpha
 
       &:hover,
       &:active {
@@ -65,12 +69,12 @@
     }
   } @else {
     #{$class}__button:has(&) {
-      background: rgb(var(--red) var(--green) var(--blue));
-      box-shadow: 1px 6px 24px 0 rgb(max(0, var(--red) - 75) max(0, var(--green) - 75) max(0, var(--blue) - 75) / 24%); // --dark with alpha
+      background: hsl(var(--ch) var(--cs) var(--cl));
+      box-shadow: 1px 6px 24px 0 hsl(var(--ch) var(--cs) calc(var(--cl) - 10%) / 24%); // --dark with alpha
 
       &:hover,
       &:active {
-        background: rgb(min(255, var(--red) + 50) min(255, var(--green) + 50) min(255, var(--blue) + 50));
+        background: hsl(var(--ch) var(--cs) calc(var(--cl) + 20%));
       }
     }
   }

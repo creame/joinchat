@@ -10,14 +10,14 @@
   --h: calc(var(--s)/2);
   --header: max(50px, var(--s)*1.166667);
   --vh: 100vh;
-  --red: 37;
-  --green: 211;
-  --blue: 102;
-  --rgb: var(--red) var(--green) var(--blue);
-  --color: rgb(var(--rgb));
-  --dark: rgb(max(0, var(--red) - 75) max(0, var(--green) - 75) max(0, var(--blue) - 75));
-  --hover: rgb(min(255, var(--red) + 50) min(255, var(--green) + 50) min(255, var(--blue) + 50));
-  --bg: rgb(var(--rgb) / 4%);
+  --ch: 142;
+  --cs: 70%;
+  --cl: 49%;
+  --hsl: var(--ch) var(--cs) var(--cl);
+  --color: hsl(var(--hsl));
+  --dark: hsl(var(--ch) var(--cs) calc(var(--cl) - 10%));
+  --hover: hsl(var(--ch) var(--cs) calc(var(--cl) + 20%));
+  --bg: hsl(var(--hsl) / 4%);
   --bw: 1;
   --text: hsl(0deg 0% clamp(0%, var(--bw)*1000%, 100%) / clamp(70%, var(--bw)*1000%, 100%));
   --msg: var(--color);
@@ -134,7 +134,7 @@
 
 .joinchat__button:has(.joinchat__button__ico) {
   background: var(--color);
-  box-shadow: 1px 6px 24px 0 rgb(max(0, var(--red) - 75) max(0, var(--green) - 75) max(0, var(--blue) - 75) / 24%);
+  box-shadow: 1px 6px 24px 0 hsl(var(--ch) var(--cs) calc(var(--cl) - 10%) / 24%);
 }
 
 .joinchat__button:has(.joinchat__button__ico):hover,
@@ -459,7 +459,7 @@
 }
 
 .joinchat--blur .joinchat__scroll {
-  background: rgba(var(--rgb) / 2%);
+  background: hsl(var(--hsl) / 2%);
   -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
 }

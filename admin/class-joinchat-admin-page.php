@@ -893,10 +893,11 @@ class Joinchat_Admin_Page {
 		// Enqueue styles.
 		list($color, $text) = explode( '/', jc_common()->settings['color'] . '/100' );
 		list($r, $g, $b)    = sscanf( $color, '#%02x%02x%02x' );
+		list($h, $s, $l)    = Joinchat_Util::rgb2hsl( $r, $g, $b );
 
 		wp_deregister_style( $handle );
 		wp_enqueue_style( $handle, plugins_url( "css/joinchat{$min}.css", __FILE__ ), $css_deps, JOINCHAT_VERSION, 'all' );
-		wp_add_inline_style( $handle, "#joinchat_form { --red:$r; --green:$g; --blue:$b; --bw:$text; }" );
+		wp_add_inline_style( $handle, "#joinchat_form { --ch:$h; --cs:$s%; --cl:$l%; --bw:$text }" );
 
 		$example_css = '/* .joinchat some default styles
 z-index: 9000;   put above or below other objects

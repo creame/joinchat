@@ -175,12 +175,8 @@ class Joinchat_Public {
 		if ( jc_common()->defaults( 'color' ) !== $settings['color'] ) {
 			list($color, $text) = explode( '/', $settings['color'] . '/100' );
 			list($r, $g, $b)    = sscanf( $color, '#%02x%02x%02x' );
-			$inline_css        .= ".joinchat{ --red:$r; --green:$g; --blue:$b; --bw:$text }";
-
-			if ( empty( $this->chatbox_content ) && 'app' !== $settings['button_ico'] ) {
-				$text        = '100' === $text ? '#fff' : 'rgb(0 0 0 / 70%)';
-				$inline_css .= ".joinchat{ --text:$text; }";
-			}
+			list($h, $s, $l)    = Joinchat_Util::rgb2hsl( $r, $g, $b );
+			$inline_css        .= ".joinchat{ --ch:$h; --cs:$s%; --cl:$l%; --bw:$text }";
 		}
 
 		if ( ! empty( $settings['custom_css'] ) ) {
