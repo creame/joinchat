@@ -127,9 +127,9 @@
 }
 
 .joinchat__button__ico svg {
-  width: 60%;
-  height: 60%;
-  margin: auto;
+  width: var(--ico-size, 100%);
+  height: var(--ico-size, 100%);
+  margin: calc((100% - var(--ico-size, 100%))/2);
 }
 
 .joinchat__button:has(.joinchat__button__ico) {

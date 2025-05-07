@@ -99,10 +99,6 @@
   color: #fff;
 }
 
-.joinchat-cookies-notice {
-  font-style: italic;
-}
-
 #tab-panel-styles-and-vars span {
   white-space: nowrap;
 }
@@ -126,7 +122,7 @@
 }
 
 .joinchat__button_ico span {
-  display: flex;
+  display: block;
   width: 60px;
   height: 60px;
   border-radius: 50%;
@@ -137,9 +133,9 @@
 }
 
 .joinchat__button_ico svg {
-  width: 60%;
-  height: 60%;
-  margin: auto;
+  width: 100%;
+  height: 100%;
+  margin: 0;
 }
 
 .joinchat__button_ico label:first-child span {
