@@ -200,7 +200,7 @@ class Joinchat_Admin_Onboard {
 			'step_msg_no'     => _x( "I don't want a message", 'onboard', 'creame-whatsapp-me' ),
 			'step_cta'        => _x( 'Define a Call to Action message to prompt users to interact.', 'onboard', 'creame-whatsapp-me' ),
 			'step_cta_field'  => __( 'Call to Action', 'creame-whatsapp-me' ),
-			'step_cta_value'  => esc_textarea( __( "Hello 👋\nCan we help you?", 'creame-whatsapp-me' ) ),
+			'step_cta_value'  => esc_textarea( __( "{RAND Hi||Hello} 👋, welcome to *{SITE}*\n===\nCan we help you?", 'creame-whatsapp-me' ) ),
 			'step_cta_yes'    => _x( 'Continue with this text', 'onboard', 'creame-whatsapp-me' ),
 			'step_cta_no'     => _x( "I don't want a CTA", 'onboard', 'creame-whatsapp-me' ),
 			'step_news'       => _x( 'Finally, do you want us to send you tips to improve conversion with <strong>Joinchat</strong>?', 'onboard', 'creame-whatsapp-me' ),

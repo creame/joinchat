@@ -108,7 +108,7 @@ class Joinchat_Common {
 			'message_delay' => 10, // Disabled on negative values.
 			'message_badge' => 'no',
 			'message_send'  => '',
-			'message_start' => __( 'Open chat', 'creame-whatsapp-me' ),
+			'message_start' => __( 'Open Chat', 'creame-whatsapp-me' ),
 			'position'      => 'right',
 			'visibility'    => array( 'all' => 'yes' ),
 			'color'         => '#25d366/1', // hexcolor/0|1 (black or white text).

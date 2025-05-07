@@ -299,14 +299,14 @@ class Joinchat_Woo_Admin {
 		switch ( $field_id ) {
 			case 'message_text_product':
 				$output = '<textarea id="joinchat_message_text_product" name="joinchat[message_text_product]" rows="4" class="large-text autofill" ' .
-					'placeholder="' . esc_attr__( "This *{PRODUCT}* can be yours for only *{PRICE}*!\nIf you have any questions, ask us.", 'creame-whatsapp-me' ) . '">' .
+					'placeholder="' . esc_attr__( "This *{PRODUCT}* can be yours for only *{PRICE}*!\n===\nIf you have any questions, ask us.", 'creame-whatsapp-me' ) . '">' .
 					esc_textarea( $value ) . '</textarea>' .
 					'<p class="description">' . esc_html__( 'Define a text for your products to encourage customers to contact', 'creame-whatsapp-me' ) . '</p>';
 				break;
 
 			case 'message_text_on_sale':
 				$output = '<textarea id="joinchat_message_text_on_sale" name="joinchat[message_text_on_sale]" rows="4" class="large-text autofill" ' .
-					'placeholder="' . esc_attr__( "Save {DISCOUNT}! This *{PRODUCT}* can be yours for only ~{REGULAR}~ *{PRICE}*.\nIf you have any questions, ask us.", 'creame-whatsapp-me' ) . '">' .
+					'placeholder="' . esc_attr__( "Save {DISCOUNT}! This *{PRODUCT}* can be yours for only ~{REGULAR}~ *{PRICE}*.\n===\nIf you have any questions, ask us.", 'creame-whatsapp-me' ) . '">' .
 					esc_textarea( $value ) . '</textarea>' .
 					'<p class="description">' . esc_html__( 'Define a text for your products on sale to encourage customers to contact', 'creame-whatsapp-me' ) . '</p>';
 				break;
@@ -315,7 +315,7 @@ class Joinchat_Woo_Admin {
 				$output = '<textarea id="joinchat_message_send_product" name="joinchat[message_send_product]" rows="3" class="regular-text autofill" ' .
 					'placeholder="' . esc_attr__( "*Hi {SITE}!*\nI have a question about *{PRODUCT} ({SKU})*", 'creame-whatsapp-me' ) . '">' .
 					esc_textarea( $value ) . '</textarea>' .
-					'<p class="description">' . esc_html__( 'Predefined text for the first message the client will send you', 'creame-whatsapp-me' ) . '</p>';
+					'<p class="description">' . esc_html__( 'Pre-filled text in the first message the client will send you', 'creame-whatsapp-me' ) . '</p>';
 				break;
 
 			case 'woo_btn_position':
