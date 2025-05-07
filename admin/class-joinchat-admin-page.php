@@ -436,11 +436,11 @@ class Joinchat_Admin_Page {
 					break;
 
 				case 'color':
-					list($color, $text) = explode( '/', $value . '/100' );
+					list($color, $text) = explode( '/', $value . '/1' );
 
 					$output = '<input id="joinchat_color" name="joinchat[color][bg]" value="' . esc_attr( $color ) . '" type="text" data-default-color="#25d366"> ' .
 						'<div class="button-group joinchat_color_text">' .
-						'<label class="button white" title="' . esc_attr__( 'White Text', 'creame-whatsapp-me' ) . '"><input class="ui-helper-hidden-accessible" name="joinchat[color][text]" type="radio" value="100"' . checked( '100', $text, false ) . '><span class="screen-reader-text">' . esc_html__( 'White Text', 'creame-whatsapp-me' ) . '</span></label>' .
+						'<label class="button white" title="' . esc_attr__( 'White Text', 'creame-whatsapp-me' ) . '"><input class="ui-helper-hidden-accessible" name="joinchat[color][text]" type="radio" value="1"' . checked( '1', $text, false ) . '><span class="screen-reader-text">' . esc_html__( 'White Text', 'creame-whatsapp-me' ) . '</span></label>' .
 						'<label class="button black" title="' . esc_attr__( 'Black Text', 'creame-whatsapp-me' ) . '"><input class="ui-helper-hidden-accessible" name="joinchat[color][text]" type="radio" value="0"' . checked( '0', $text, false ) . '><span class="screen-reader-text">' . esc_html__( 'Black Text', 'creame-whatsapp-me' ) . '</span></label>' .
 						'</div>';
 					break;
@@ -891,9 +891,7 @@ class Joinchat_Admin_Page {
 		}
 
 		// Enqueue styles.
-		list($color, $text) = explode( '/', jc_common()->settings['color'] . '/100' );
-		list($r, $g, $b)    = sscanf( $color, '#%02x%02x%02x' );
-		list($h, $s, $l)    = Joinchat_Util::rgb2hsl( $r, $g, $b );
+		list($h, $s, $l, $text) = jc_common()->get_color_values();
 
 		wp_deregister_style( $handle );
 		wp_enqueue_style( $handle, plugins_url( "css/joinchat{$min}.css", __FILE__ ), $css_deps, JOINCHAT_VERSION, 'all' );

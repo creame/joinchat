@@ -111,7 +111,7 @@ class Joinchat_Common {
 			'message_start' => __( 'Open chat', 'creame-whatsapp-me' ),
 			'position'      => 'right',
 			'visibility'    => array( 'all' => 'yes' ),
-			'color'         => '#25d366/100', // hexcolor/0|100 (black or white text).
+			'color'         => '#25d366/1', // hexcolor/0|1 (black or white text).
 			'dark_mode'     => 'no',     // values: 'no', 'yes' or 'auto'.
 			'header'        => '__jc__', // values: '__jc__', '__wa__' or other custom text.
 			'optin_text'    => '',
@@ -164,6 +164,8 @@ class Joinchat_Common {
 		if ( ! $settings['button_ico'] ) {
 			$settings['button_ico'] = 'app';
 		}
+
+		$settings['color'] = str_replace( '/100', '/1', $settings['color'] );
 
 		// Clean unused saved settings.
 		$settings = array_intersect_key( $settings, $default_settings );
@@ -288,6 +290,27 @@ class Joinchat_Common {
 		} else {
 			return $icons;
 		}
+	}
+
+	/**
+	 * Get theme color values (H, S, L, text)
+	 *
+	 * Return values Hue, Saturation, Lightness and text color (0 black|1 white).
+	 *
+	 * @since 6.0.0
+	 * @param string $color Hex color code.
+	 * @return array (H, S, L, 0|1)
+	 */
+	public function get_color_values( $color = '' ) {
+
+		$color = empty( $color ) ? $this->settings['color'] : $color;
+
+		list($color, $text) = explode( '/', $color . '/1' );
+		list($r, $g, $b)    = sscanf( $color, '#%02x%02x%02x' );
+		list($h, $s, $l)    = Joinchat_Util::rgb2hsl( $r, $g, $b );
+
+		return array( $h, $s, $l, (int) $text );
+
 	}
 }
 
