@@ -369,6 +369,8 @@
       const jc_chat = joinchat_obj.$('.joinchat__chat');
       const jc_bubbles = joinchat_obj.$$('.joinchat__bubble');
 
+      if (!jc_chat) return;
+
       // Random text
       if (has_cta) joinchat_obj.rand_text(jc_chat);
 
