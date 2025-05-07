@@ -330,8 +330,8 @@ class Joinchat_Util {
 			'joinchat_variable_replacements',
 			array(
 				'SITE'  => get_bloginfo( 'name' ),
-				'HOME'  => home_url( '/' ),
-				'URL'   => home_url( $wp->request ),
+				'HOME'  => home_url(),
+				'URL'   => user_trailingslashit( home_url( $wp->request ) ),
 				'HREF'  => home_url( add_query_arg( null, null ) ),
 				'TITLE' => self::get_title(),
 			)

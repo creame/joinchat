@@ -653,9 +653,9 @@ class Joinchat_Admin_Page {
 					'<p style="line-height:1.8em;">' .
 						'<span><code>{SITE}</code> ➜ ' . esc_html( get_bloginfo( 'name', 'display' ) ) . '</span><br> ' .
 						'<span><code>{TITLE}</code> ➜ ' . esc_html__( 'Page Title', 'creame-whatsapp-me' ) . '</span><br>' .
-						'<span><code>{HOME}</code> ➜ ' . esc_url( home_url( '/' ) ) . '</span><br> ' .
-						'<span><code>{URL}</code> ➜ ' . esc_url( home_url( 'awesome/' ) ) . '</span><br> ' .
-						'<span><code>{HREF}</code> ➜ ' . esc_url( home_url( 'awesome/' ) ) . '?utm_source=twitter&utm_medium=social&utm_campaign=XXX</span>' .
+						'<span><code>{HOME}</code> ➜ ' . esc_url( home_url() ) . '</span><br> ' .
+						'<span><code>{URL}</code> ➜ ' . esc_url( user_trailingslashit( home_url( 'awesome' ) ) ) . '</span><br> ' .
+						'<span><code>{HREF}</code> ➜ ' . esc_url( user_trailingslashit( home_url( 'awesome' ) ) ) . '?utm_source=twitter&utm_medium=social&utm_campaign=XXX</span>' .
 					'</p>',
 			),
 			array(
