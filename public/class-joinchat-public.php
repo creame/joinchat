@@ -133,8 +133,8 @@ class Joinchat_Public {
 		$file = JOINCHAT_SLUG;
 		$min  = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
 
-		// If show delay > 0 can defer styles.
-		$defer = apply_filters( 'joinchat_defer_styles', jc_common()->settings['button_delay'] > 0 );
+		// Defer styles by default.
+		$defer = apply_filters( 'joinchat_defer_styles', true );
 
 		// If not chatbox use lighter only button styles.
 		if ( empty( $this->chatbox_content ) ) {
@@ -149,6 +149,30 @@ class Joinchat_Public {
 	}
 
 	/**
+	 * Inline header styles.
+	 *
+	 * If button appears directly (delay < 0) inline on <head> min required styles.
+	 *
+	 * @since    6.0.0
+	 * @return   void
+	 */
+	public function header_styles() {
+
+		if ( ! $this->show || jc_common()->settings['button_delay'] >= 0 || did_filter( 'joinchat_inline_style' ) ) {
+			return;
+		}
+
+		$handle = JOINCHAT_SLUG . '-head';
+		$css    = $this->get_inline_styles();
+		$css   .= file_get_contents( JOINCHAT_DIR . 'public/css/joinchat-head.css' );
+
+		wp_register_style( $handle, false ); // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.MissingVersion
+		wp_enqueue_style( $handle );
+		wp_add_inline_style( $handle, Joinchat_Util::min_css( $css ) );
+
+	}
+
+	/**
 	 * Enqueue front stylesheets and adds inline CSS.
 	 *
 	 * @since    1.0.0
@@ -159,15 +183,22 @@ class Joinchat_Public {
 	 */
 	public function enqueue_styles() {
 
-		if ( ! $this->show ) {
-			return;
-		}
-
-		if ( wp_style_is( JOINCHAT_SLUG, 'done' ) ) {
+		if ( ! $this->show || wp_style_is( JOINCHAT_SLUG, 'done' ) ) {
 			return;
 		}
 
 		wp_enqueue_style( JOINCHAT_SLUG );
+		wp_add_inline_style( JOINCHAT_SLUG, Joinchat_Util::min_css( $this->get_inline_styles() ) );
+
+	}
+
+	/**
+	 * Get inline styles
+	 *
+	 * @since 6.0.0
+	 * @return string
+	 */
+	private function get_inline_styles() {
 
 		$inline_css = '';
 		$settings   = jc_common()->settings;
@@ -183,9 +214,8 @@ class Joinchat_Public {
 			$inline_css .= wp_strip_all_tags( $settings['custom_css'] );
 		}
 
-		$inline_css = apply_filters( 'joinchat_inline_style', $inline_css, $settings );
+		return apply_filters( 'joinchat_inline_style', $inline_css, $settings );
 
-		wp_add_inline_style( JOINCHAT_SLUG, Joinchat_Util::min_css( $inline_css ) );
 	}
 
 	/**

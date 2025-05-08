@@ -233,6 +233,7 @@ class Joinchat {
 		$this->loader->add_action( 'wp', $plugin_public, 'set_chatbox_content', 100 );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'register_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
+		$this->loader->add_action( 'wp_print_styles', $plugin_public, 'header_styles' );
 		$this->loader->add_action( 'wp_footer', $plugin_public, 'footer_html' );
 		$this->loader->add_action( 'wp_footer', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_footer', $plugin_public, 'enqueue_qr_script' );
