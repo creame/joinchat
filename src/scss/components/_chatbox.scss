@@ -153,8 +153,7 @@
   padding: 20px 0 8px;
 
   &::after {
-    content: '';
-    position: absolute;
+    @include pseudo;
     bottom: 0;
     left: 0;
     right: 4px;

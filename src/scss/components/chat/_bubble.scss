@@ -33,9 +33,7 @@
   }
 
   &::before {
-    content: '';
-    display: block;
-    position: absolute;
+    @include pseudo;
     bottom: 18px;
     left: -15px;
     width: 17px;
