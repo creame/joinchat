@@ -5,6 +5,10 @@
 #{$class}__woo-btn {
   --s: 40px; // Size
 
+  @if $type == woo {
+    --h: calc(var(--s)/2);
+  }
+
   display: inline-block;
   box-sizing: border-box;
   height: var(--s);
