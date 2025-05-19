@@ -835,7 +835,7 @@
 
 .joinchat__bubble--media img,
 .joinchat__bubble--media video,
-.joinchat__bubble--media .joinchat-inline {
+.joinchat__bubble--media .joinchat--inline {
   display: block;
   margin: 0;
   border-radius: 21px;
