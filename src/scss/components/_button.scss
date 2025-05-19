@@ -1,94 +1,36 @@
 #{$class}__button {
-  @if $type == full {
-    display: flex;
-    flex-direction: row;
-  }
-
   position: absolute;
   z-index: 2;
   bottom: 8px;
   right: 8px;
   height: var(--s);
-  min-width: var(--s);
-  background: $WA;
+  width: var(--s);
+  background: $WA var(--joinchat-ico) center / 60% no-repeat;
   color: inherit;
-  border-radius: calc(var(--s) / 2);
+  border-radius: 50%;
   box-shadow: 1px 6px 24px 0 rgba($WAdarken, 0.24);
   cursor: pointer;
   transition: background-color 0.2s linear;
 
-  @if $type == full {
-    #{$rtl} & {
-      flex-direction: row-reverse;
-    }
-  }
-
   &:hover {
-    background: $WAdark;
+    background-color: $WAdark;
 
     @if $type == full {
-      transition-duration: 1.5s;
+      #{$class}:has(#{$class}__chatbox) & {
+        transition-duration: 1.5s;
+      }
     }
   }
 
   &:active {
-    background: $WAdark;
+    background-color: $WAdark;
     transition: none;
   }
 
   #{$class}--left & {
     right: auto;
     left: 8px;
-
-    @if $type == full {
-      flex-direction: row-reverse;
-
-      #{$rtl} & {
-        flex-direction: row;
-      }
-    }
   }
-
-  @if $type == full {
-    #{$class}--btn &:hover {
-      transition-duration: 0.2s;
-    }
-
-    #{$class}--chatbox & {
-      background: var(--color);
-      transition-duration: 0.2s;
-      box-shadow: 0 1px 2px 0 rgba($black, 0.3);
-
-      &:hover,
-      &:active {
-        background: var(--hover);
-      }
-    }
-
-    // Opt-in disabled
-    #{$class}--optout#{$class}--chatbox & {
-      background-color: #999;
-      pointer-events: none;
-
-      #{$class}_svg__plain {
-        stroke-dasharray: 0;
-        animation: none;
-      }
-
-      #{$class}_svg__chat {
-        animation: none;
-      }
-    }
-  }
-}
-
-#{$class}__button__open {
-  width: var(--s);
-  height: var(--s);
-  border-radius: 50%;
-  background: $transparent var(--joinchat-ico) center no-repeat;
-  background-size: 60%;
-  overflow: hidden;
 
   @if $type == full {
     #{$class}--chatbox & {
@@ -97,12 +39,50 @@
   }
 }
 
+#{$class}__button__ico {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  border-radius: 50%;
+  overflow: hidden;
+  @if $type == full {
+    color: var(--text) !important;
+  } @else {
+    color: hsl(0 0% clamp(0%, var(--bw)*1000%, 100%) / clamp(70%, var(--bw)*1000%, 100%)) !important;
+  }
+
+  svg {
+    width: var(--ico-size, 100%);
+    height: var(--ico-size, 100%);
+    margin: calc((100% - var(--ico-size, 100%)) / 2);
+  }
+
+  @if $type == full {
+    #{$class}__button:has(&) {
+      background: var(--color);
+      box-shadow: 1px 6px 24px 0 hsl(var(--ch) var(--cs) calc(var(--cl) - 10%) / 24%); // --dark with alpha
+
+      &:hover,
+      &:active {
+        background: var(--hover);
+      }
+    }
+  } @else {
+    #{$class}__button:has(&) {
+      background: hsl(var(--ch) var(--cs) var(--cl));
+      box-shadow: 1px 6px 24px 0 hsl(var(--ch) var(--cs) calc(var(--cl) - 10%) / 24%); // --dark with alpha
+
+      &:hover,
+      &:active {
+        background: hsl(var(--ch) var(--cs) calc(var(--cl) + 20%));
+      }
+    }
+  }
+}
+
 #{$class}__button__image {
   position: absolute;
-  top: 1px;
-  right: 1px;
-  width: calc(var(--s) - 2px);
-  height: calc(var(--s) - 2px);
+  inset: 1px;
   border-radius: 50%;
   overflow: hidden;
   opacity: 0;
@@ -121,87 +101,8 @@
   }
 
   // Always show image
-  #{$class}--image & {
+  #{$class}--img & {
     opacity: 1;
     animation: none;
-  }
-
-  @if $type == full {
-    #{$class}--chatbox & {
-      display: none;
-    }
-  }
-}
-
-@if $type == full {
-  #{$class}__button__send {
-    display: none;
-    flex-shrink: 0;
-    width: var(--s);
-    height: var(--s);
-    max-width: var(--s); // fix theme Twenty Twenty max-width: 100%;
-    padding: calc(var(--s)*0.18);
-    margin: 0;
-    overflow: hidden;
-
-    #{$class}--chatbox & {
-      display: block;
-    }
-
-    path {
-      fill: none !important;
-      stroke: var(--text) !important;
-    }
-
-    #{$class}_svg__plain {
-      stroke-dasharray: 1097;
-      stroke-dashoffset: 1097;
-      animation: #{$name}_plain 6s 0.2s ease-in-out infinite;
-    }
-
-    #{$class}_svg__chat {
-      stroke-dasharray: 1020;
-      stroke-dashoffset: 1020;
-      animation: #{$name}_chat 6s 3.2s ease-in-out infinite;
-    }
-
-    @include motionless {
-      #{$class}_svg__plain {
-        stroke-dasharray: 0;
-        animation: none;
-      }
-
-      #{$class}_svg__chat {
-        animation: none;
-      }
-    }
-  }
-
-  #{$class}__button__sendtext {
-    padding: 0;
-    max-width: 0;
-    border-radius: var(--s);
-    font-weight: 600;
-    line-height: var(--s);
-    white-space: nowrap;
-    opacity: 0;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    transition: none;
-
-    #{$class}--chatbox & {
-      padding: 0 4px 0 24px;
-      max-width: min(400px - 16px - var(--s), 100vw - 16px - var(--s) - 2*var(--sep)); // box - space - btn or 100vw - space - btn - 2sep
-      opacity: 1;
-      transition: max-width 0.2s linear, opacity 0.4s ease-out 0.2s;
-    }
-
-    #{$class}--chatbox#{$class}--left & {
-      padding: 0 24px 0 4px;
-    }
-
-    @include motionless {
-      transition: none !important;
-    }
   }
 }

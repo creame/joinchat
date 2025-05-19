@@ -34,8 +34,8 @@ defined( 'WPINC' ) || exit;
 			transition: opacity 0.2s;
 		}
 
-		.joinchat__button__sendtext:empty,
-		.joinchat__message:empty,
+		.joinchat__open__text:empty,
+		.joinchat__bubble:empty,
 		.joinchat__optin:empty {
 			display: none;
 		}
@@ -43,6 +43,10 @@ defined( 'WPINC' ) || exit;
 		.joinchat--disabled {
 			opacity: .2;
 			pointer-events: none;
+		}
+
+		.joinchat__bubble {
+			animation: none;
 		}
 
 		@media (min-width: 481px) {
@@ -73,161 +77,248 @@ defined( 'WPINC' ) || exit;
 	?>
 
 	<script>
-		(function($, window, document, joinchat_obj) {
-			'use strict';
+((window, document, joinchat_obj) => {
+	'use strict';
 
-			joinchat_obj = $.extend({
-				$div: null,
-				settings: null,
-				has_chatbox: false,
-				chatbox: false,
-				showed_at: 0,
-				is_ready: false, // Change to true when Joinchat ends initialization
-				is_mobile: !!navigator.userAgent.match(/Android|iPhone|BlackBerry|IEMobile|Opera Mini/i),
-				can_qr: window.QrCreator && typeof QrCreator.render == 'function',
-			}, joinchat_obj || {});
-			window.joinchat_obj = joinchat_obj; // Save global
+	joinchat_obj = {
+		$div: null,
+		settings: null,
+		has_chatbox: false,
+		chatbox: false,
+		showed_at: 0,
+		is_ready: false,
+		is_mobile: /Mobile|Android|iPhone|iPad/i.test(navigator.userAgent),
+		can_qr: window.QrCreator && typeof QrCreator.render === 'function',
+		...joinchat_obj
+	};
+	window.joinchat_obj = joinchat_obj; // Save global
 
-			joinchat_obj.$ = function(sel) {
-				return $(sel || this.$div, this.$div);
-			};
+	// querySelector alias
+	joinchat_obj.$ = function (selector) {
+		return this.$div.querySelector(selector);
+	};
 
-			// Trigger Analytics events
-			joinchat_obj.send_event = function(params) {};
+	// querySelectorAll alias
+	joinchat_obj.$$ = function (selector) {
+		return this.$div.querySelectorAll(selector);
+	};
 
-			// Return WhatsApp link with optional message
-			joinchat_obj.whatsapp_link = function(phone, message, wa_web) {
-				message = message !== undefined ? message : this.settings.message_send || '';
-				wa_web = wa_web !== undefined ? wa_web : this.settings.whatsapp_web && !this.is_mobile;
-				var link = (wa_web ? 'https://web.whatsapp.com/send?phone=' : 'https://wa.me/') + encodeURIComponent(phone || this.settings.telephone);
+	// Return WhatsApp link with optional message
+	joinchat_obj.get_wa_link = function (phone, message, wa_web) {
+		message = message !== undefined ? message : this.settings.message_send || '';
+		wa_web = wa_web !== undefined ? wa_web : this.settings.whatsapp_web && !this.is_mobile;
 
-				return link + (message ? (wa_web ? '&text=' : '?text=') + encodeURIComponent(message) : '');
-			};
+		const url = new URL(`${wa_web ? 'https://web.whatsapp.com/send?phone=' : 'https://wa.me/'}${phone || this.settings.telephone}`);
+		if (message) url.searchParams.set('text', message);
 
-			// Open Chatbox and trigger event
-			joinchat_obj.chatbox_show = function() {
-				if (!this.chatbox) {
-					this.chatbox = true;
-					this.showed_at = Date.now();
-					this.$div.addClass('joinchat--chatbox');
+		return url.toString();
+	};
 
-					if (this.settings.message_badge && this.$('.joinchat__badge').hasClass('joinchat__badge--in')) {
-						this.$('.joinchat__badge').toggleClass('joinchat__badge--in joinchat__badge--out');
-					}
-					// Trigger custom event
-					$(document).trigger('joinchat:show');
-				}
-			};
+	// Open Chatbox and trigger event
+	joinchat_obj.chatbox_show = function () {
+		if (this.chatbox) return;
 
-			// Close Chatbox and trigger event
-			joinchat_obj.chatbox_hide = function() {
-				if (this.chatbox) {
-					this.chatbox = false;
-					this.$div.removeClass('joinchat--chatbox joinchat--tooltip');
+		this.chatbox = true;
+		this.showed_at = Date.now(); // Avoid faux clicks
+		this.$div.classList.add('joinchat--chatbox');
 
-					if (this.settings.message_badge) {
-						this.$('.joinchat__badge').removeClass('joinchat__badge--out');
-					}
-					// Trigger custom event
-					$(document).trigger('joinchat:hide');
-				}
-			};
+		if (this.settings.message_badge) {
+			this.$('.joinchat__badge').classList.replace('joinchat__badge--in', 'joinchat__badge--out');
+		}
 
-			// Open WhatsApp link with supplied phone and message or with settings defaults
-			joinchat_obj.open_whatsapp = function(phone, message) {
-				phone = phone || this.settings.telephone;
-				message = message !== undefined ? message : this.settings.message_send || '';
+		document.dispatchEvent(new Event('joinchat:show'));
+	};
 
-				var link = this.whatsapp_link(phone, message);
-				var secure_link = new RegExp("^https?:\/\/(wa\.me|(api|web|chat)\.whatsapp\.com|" + location.hostname.replace('.', '\.') + ")\/.*", 'i');
+	// Close Chatbox and trigger event
+	joinchat_obj.chatbox_hide = function () {
+		if (!this.chatbox) return;
 
-				// Ensure the link is safe
-				if (secure_link.test(link)) {
-					// Open WhatsApp link
-					window.open(link, 'joinchat', 'noopener');
-				} else {
-					console.error("Joinchat: the link doesn't seem safe, it must point to the current domain or whatsapp.com");
-				}
-			};
+		this.chatbox = false;
+		this.$div.classList.remove('joinchat--chatbox', 'joinchat--tooltip');
 
-			joinchat_obj.optin = function() {
-				return !this.$div.hasClass('joinchat--optout');
-			};
+		if (this.settings.message_badge) {
+			this.$('.joinchat__badge').classList.remove('joinchat__badge--out');
+		}
 
-			// Generate QR canvas
-			joinchat_obj.qr = function(text, options) {
-				var canvas = document.createElement('CANVAS');
-				QrCreator.render($.extend({
-					text: text,
-					radius: 0.4,
-					background: '#FFF',
-					size: 200,
-				}, joinchat_obj.settings.qr || {}, options || {}), canvas);
-				return canvas;
+		document.dispatchEvent(new Event('joinchat:hide'));
+	};
+
+	// Open WhatsApp link with supplied phone and message or with settings defaults
+	joinchat_obj.open_whatsapp = function (phone, message) {
+		phone = phone || this.settings.telephone;
+		message = message !== undefined ? message : this.settings.message_send || '';
+
+		// Open WhatsApp link
+		window.open(this.get_wa_link(phone, message), 'joinchat', 'noopener');
+	};
+
+	// Opt-in needed
+	joinchat_obj.need_optin = function () {
+		return this.$div.classList.contains('joinchat--optout');
+	};
+
+	// Show Chatbox or open WhatsApp
+	joinchat_obj.open = function (direct, phone, message) {
+		if ((direct && !this.need_optin()) || !joinchat_obj.$('.joinchat__chatbox')) {
+			if (Date.now() < joinchat_obj.showed_at + 600) return; // Avoid trigger WA on auto show chatbox
+			this.open_whatsapp(phone, message);
+		} else {
+			this.chatbox_show();
+		}
+	};
+
+	// Close Chatbox (saving hash)
+	joinchat_obj.close = function () {
+		this.chatbox_hide();
+	};
+
+	// Generate QR canvas
+	joinchat_obj.qr = function (text, options) {
+		const canvas = document.createElement('CANVAS');
+		QrCreator.render(Object.assign({
+			text: text,
+			radius: 0.4,
+			background: '#FFF',
+			size: 200 * (window.devicePixelRatio || 1),
+		}, this.settings.qr || {}, options || {}), canvas);
+		return canvas;
+	};
+
+	// Show Chatbox or open WhatsApp
+	joinchat_obj.open = function (direct, phone, message) {
+		if ((direct && !this.need_optin()) || !joinchat_obj.$('.joinchat__chatbox')) {
+			if (Date.now() < joinchat_obj.showed_at + 600) return; // Avoid trigger WA on auto show chatbox
+			this.open_whatsapp(phone, message);
+		} else {
+			this.chatbox_show();
+		}
+	};
+
+	let images_cache = {};
+
+	const getImageTag = (src, alt, w) => {
+		if (!src) return '<code class="not-found">Image not found</code>';
+
+		const width = w ? ` width="${w}"` : '';
+		const altText = alt ? ` alt="${alt}"` : '';
+		const cls = w < 340 ? ' class="joinchat--inline"' : '';
+
+		if (src.startsWith('vid|')) return `<video${cls} autoplay loop muted playsinline src="${src.substring(4)}"${width}></video>`;
+		else return `<img${cls} src="${src}"${altText}${width}>`;
+	};
+
+	const getImage = (src, alt, w) => {
+		if (!isNaN(src)) {
+			if (images_cache[src] !== undefined){
+				return getImageTag(images_cache[src], alt, w);
 			}
 
-			joinchat_obj.update_cta = function(str) {
-				str = str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;"); // Secure
-				str = str.replace(/(^|\W)_(.+?)_(\W|$)/gu, '$1<em>$2</em>$3');           // Italic
-				str = str.replace(/(^|\W)\*(.+?)\*(\W|$)/gu, '$1<strong>$2</strong>$3'); // Bold
-				str = str.replace(/(^|\W)~(.+?)~(\W|$)/gu, '$1<del>$2</del>$3');         // Strikethrough
-				str = str.replace(/\n/g, '<br>');                                        // New lines
+			wp.apiFetch({ path: `wp/v2/media/${src}/` }).then(media => {
+				if (media.mime_type.startsWith('video')) images_cache[src] = `vid|${media.source_url}`;
+				else if (media.mime_type.startsWith('image')) images_cache[src] = media.source_url;
+				else images_cache[src] = false;
 
-				this.$('.joinchat__message').html(str);
+				document.getElementById(`img-${src}`).outerHTML = getImageTag(images_cache[src], alt, w);
+			}).catch(() => {
+				images_cache[src] = false;
+
+				document.getElementById(`img-${src}`).outerHTML = getImageTag(false, alt, w);
+			});
+
+			return `<code id="img-${src}" class="not-found">Loading...</code>`;
+		}
+
+		try {
+			new URL(src);
+		} catch (_) {
+			return '<code class="not-found">Image not found</code>';
+		}
+
+		return getImageTag(src, alt, w);
+	};
+
+	joinchat_obj.update_cta = function (str) {
+		// Secure HTML
+		str = str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+		// Transform placeholders
+		str = str.replace(/{([A-Z]+)}/g, '&lcub;$1&rcub;');
+
+		str = str.replace(/(^|\W)_(.+?)_(\W|$)/gu, '$1<em>$2</em>$3');           // Italic
+		str = str.replace(/(^|\W)\*(.+?)\*(\W|$)/gu, '$1<strong>$2</strong>$3'); // Bold
+		str = str.replace(/(^|\W)~(.+?)~(\W|$)/gu, '$1<del>$2</del>$3');         // Strikethrough
+		str = str.replace(/(^|\W)`(.+?)`(\W|$)/gu, '$1<code>$2</code>$3');       // Code
+		str = str.replace(/\n-{3,}\n/gu, '<hr>');                                // Horizontal rule
+		str = str.replace(/\n/g, '<br>');                                        // Line breaks
+
+		// Images
+		str = str.replace(/!\[(?<alt>.*?)\]\((?<src>[^\) ]*)(?: (?<w>\d+))?\)/gu, (match, alt, src, w) => getImage(src, alt, w));
+		str = str.replace(/{IMG (?<src>[^ }]+)(?: (?<w>\d+))?(?: (?<alt>[^}]+))?}/g, (match, src, w, alt) => getImage(src, alt, w));
+
+		// Links
+		str = str.replace(/\[([^\]]+)\]\((https?:\/\/[^\s]+)\)/gu, '<a href="$2" target="_blank" rel="noopener">$1</a>');
+		str = str.replace(/\{LINK\s+([^\s]+)\s+([^\}]+)\}/gu, '<a href="$1" target="_blank" rel="noopener">$2</a>');
+		str = str.replace(/\{BTN\s+([^\s]+)\s+([^\}]+)\}/gu, '<a href="$1" class="joinchat__btn" target="_blank" rel="noopener">$2</a>');
+
+		// Random text
+		str = str.replace(/{RAND (?<text>[^}]+)}/g, (match, text) => {
+			const options = text.split('||');
+			return options[Math.floor(Math.random() * options.length)].trim();
+		});
+
+		// Restore placeholders
+		str = str.replace(/&lcub;([A-Z]+)&rcub;/g, '{$1}');
+
+		// Bubbles
+		str = str.replace(/^(&gt;){3,}<br>/u, '>>>');
+		str = str.replace(/<br>(&gt;){3,}<br>/gu, '<br>===<br>>>>');
+		str = str.split(/<br>={3,}<br>/).map(bubble => {
+			let msg = bubble.trim();
+			let cls = 'joinchat__bubble';
+			if (msg.startsWith('>>>')) {
+				cls += ' joinchat__bubble--note';
+				msg = msg.slice(3);
 			}
 
-			function joinchat_magic() {
-				joinchat_obj.$div.addClass('joinchat--show');
+			return msg !== '' ? `<div class="${cls}">${msg}</div>` : '';
+		}).join('');
 
-				var chatbox_hide = joinchat_obj.chatbox_hide.bind(joinchat_obj);
+		this.$('.joinchat__chat').replaceChildren();
+		this.$('.joinchat__chat').insertAdjacentHTML('afterbegin', str);
+		this.$$('.joinchat__bubble').forEach(b => {
+			if (b.childNodes.length === 1 && (b.firstChild.className === 'not-found' || b.textContent.trim() === '')) b.classList.add('joinchat__bubble--media');
+		});
+	};
 
-				function joinchat_click() {
-					if (joinchat_obj.has_chatbox && !joinchat_obj.chatbox) {
-						joinchat_obj.chatbox_show();
-					} else if (Date.now() > joinchat_obj.showed_at + 600) { // A bit delay to prevent open WA on auto show
-						joinchat_obj.chatbox_hide();
-						joinchat_obj.open_whatsapp();
-					}
-				}
+	function joinchat_magic() {
+		joinchat_obj.$div.classList.add('joinchat--show');
 
-				joinchat_obj.$('.joinchat__button').on('click', joinchat_click);
-				joinchat_obj.$('.joinchat__close').on('click', chatbox_hide);
+		// Open|close Chatbox on click
+		joinchat_obj.$('.joinchat__button').addEventListener('click', () => joinchat_obj.open());
+		joinchat_obj.$('.joinchat__open').addEventListener('click', () => joinchat_obj.open(true));
+		joinchat_obj.$('.joinchat__close').addEventListener('click', () => joinchat_obj.close());
 
-				// Opt-in toggle
-				joinchat_obj.$('#joinchat_optin').on('change', function() {
-					joinchat_obj.$div.toggleClass('joinchat--optout', !this.checked);
-				});
+		// Opt-in toggle
+		joinchat_obj.$('#joinchat_optin')?.addEventListener('change', (e) => joinchat_obj.$div.classList.toggle('joinchat--optout', !e.target.checked));
 
-				// Add QR Code
-				if (joinchat_obj.settings.qr && joinchat_obj.can_qr && !joinchat_obj.is_mobile) {
-					joinchat_obj.$('.joinchat__qr').append(joinchat_obj.qr(joinchat_obj.whatsapp_link(undefined, undefined, false)));
-				}
+		if (joinchat_obj.settings.qr && joinchat_obj.can_qr && !joinchat_obj.is_mobile) {
+			joinchat_obj.$('.joinchat__qr').appendChild(joinchat_obj.qr(joinchat_obj.get_wa_link(undefined, undefined, false)));
+		}
 
-				$(document).trigger('joinchat:start');
-				joinchat_obj.is_ready = true;
-			}
+		joinchat_obj.is_ready = true;
+		document.dispatchEvent(new CustomEvent('joinchat:start'));
+	}
 
-			// Simple run only once wrapper
-			function once(fn) {
-				return function() {
-					fn && fn.apply(this, arguments);
-					fn = null;
-				};
-			}
+	const on_page_ready = () => {
+		joinchat_obj.$div = document.querySelector('.joinchat');
+		joinchat_obj.settings = JSON.parse(joinchat_obj.$div.dataset.settings);
+		joinchat_magic();
+	};
 
-			function on_page_ready() {
-				joinchat_obj.$div = $('.joinchat');
-				joinchat_obj.settings = joinchat_obj.$div.data('settings');
-				joinchat_magic();
-			}
+	// Ready!!
+	if (document.readyState !== 'loading') on_page_ready();
+	else document.addEventListener('DOMContentLoaded', on_page_ready);
 
-			// Ready!! (in some scenarios jQuery.ready doesn't fire, this try to ensure Joinchat initialization)
-			var once_page_ready = once(on_page_ready);
-			$(once_page_ready);
-			$(window).on('load', once_page_ready);
-			document.addEventListener('DOMContentLoaded', once_page_ready);
-
-		}(jQuery, window, document, window.joinchat_obj));
+})(window, document, window.joinchat_obj || {});
 	</script>
 </body>
 

@@ -156,18 +156,19 @@ class Joinchat_Admin_Onboard {
 	 */
 	public function enqueue_assets() {
 
-		$handle = 'joinchat-onboard';
-		$min    = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
-		$deps   = array( 'jquery' );
-
-		// Enqueue styles.
-		wp_enqueue_style( $handle, plugins_url( "css/joinchat-onboard{$min}.css", __FILE__ ), array(), JOINCHAT_VERSION, 'all' );
+		$handle   = 'joinchat-onboard';
+		$min      = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
+		$js_deps  = array( 'jquery' );
+		$css_deps = array();
 
 		// Enqueue IntlTelInput assets.
 		if ( jc_common()->get_intltel() ) {
-			$deps[] = 'intl-tel-input';
-			wp_enqueue_style( 'intl-tel-input' );
+			$js_deps[]  = 'intl-tel-input';
+			$css_deps[] = 'intl-tel-input';
 		}
+
+		// Enqueue styles.
+		wp_enqueue_style( $handle, plugins_url( "css/joinchat-onboard{$min}.css", __FILE__ ), $css_deps, JOINCHAT_VERSION, 'all' );
 
 		$user = wp_get_current_user();
 
@@ -199,7 +200,7 @@ class Joinchat_Admin_Onboard {
 			'step_msg_no'     => _x( "I don't want a message", 'onboard', 'creame-whatsapp-me' ),
 			'step_cta'        => _x( 'Define a Call to Action message to prompt users to interact.', 'onboard', 'creame-whatsapp-me' ),
 			'step_cta_field'  => __( 'Call to Action', 'creame-whatsapp-me' ),
-			'step_cta_value'  => esc_textarea( __( "Hello 👋\nCan we help you?", 'creame-whatsapp-me' ) ),
+			'step_cta_value'  => esc_textarea( __( "{RAND Hi||Hello} 👋, welcome to *{SITE}*\n===\nCan we help you?", 'creame-whatsapp-me' ) ),
 			'step_cta_yes'    => _x( 'Continue with this text', 'onboard', 'creame-whatsapp-me' ),
 			'step_cta_no'     => _x( "I don't want a CTA", 'onboard', 'creame-whatsapp-me' ),
 			'step_news'       => _x( 'Finally, do you want us to send you tips to improve conversion with <strong>Joinchat</strong>?', 'onboard', 'creame-whatsapp-me' ),
@@ -217,7 +218,7 @@ class Joinchat_Admin_Onboard {
 		);
 
 		// Enqueue scripts.
-		wp_enqueue_script( $handle, plugins_url( "js/joinchat-onboard{$min}.js", __FILE__ ), $deps, JOINCHAT_VERSION, true );
+		wp_enqueue_script( $handle, plugins_url( "js/joinchat-onboard{$min}.js", __FILE__ ), $js_deps, JOINCHAT_VERSION, true );
 		wp_add_inline_script( $handle, 'var joinchat_settings = ' . wp_json_encode( $config ) . ';', 'before' );
 		wp_localize_script( $handle, 'joinchat_l10n', $l10n );
 

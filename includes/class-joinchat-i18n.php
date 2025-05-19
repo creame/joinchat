@@ -21,14 +21,22 @@ class Joinchat_I18n {
 	const DOMAIN_GROUP = 'Join.chat'; // TODO: in future change to "Joinchat".
 
 	/**
-	 * Load the plugin text domain and allow settings translations.
+	 * Allow settings translations.
 	 *
 	 * @since    5.2.4
 	 */
 	public function init() {
 
-		if ( is_admin() ) {
-			load_plugin_textdomain( 'creame-whatsapp-me', false, dirname( JOINCHAT_BASENAME ) . '/languages' );
+		if ( defined( 'WPML_PLUGIN_PATH' ) || defined( 'POLYLANG_VERSION' ) ) {
+
+			add_action( 'admin_notices', array( $this, 'settings_notice' ) );
+			add_action( 'joinchat_settings_validation', array( $this, 'register_translations' ), 10, 3 );
+			add_filter( 'joinchat_get_settings_site', array( $this, 'load_translations' ), 20 );
+
+			// Add custom hooks for third party plugins.
+			add_action( 'joinchat_register_translations', array( $this, 'register_translations' ), 10, 3 );
+			add_filter( 'joinchat_load_translations', array( $this, 'load_translations' ), 10, 2 );
+
 		}
 
 		if ( defined( 'WPML_PLUGIN_PATH' ) || defined( 'POLYLANG_VERSION' ) ) {
@@ -48,11 +56,13 @@ class Joinchat_I18n {
 	 * public front lang is different of admin lang
 	 *
 	 * @since    4.2   (before this was in JoinchatUtil)
+	 * @since    6.0   Add $option parameter.
 	 * @access   private
-	 * @param    null|array $settings list of settings.
-	 * @return   array setting keys and string names
+	 * @param     array  $settings list of settings.
+	 * @param    string $option  Option name.
+	 * @return    array setting keys and string names
 	 */
-	private function settings_i18n( $settings = null ) {
+	private function settings_i18n( $settings = array(), $option = JOINCHAT_SLUG ) {
 
 		$localized = array(
 			'telephone'     => 'Telephone',
@@ -67,7 +77,20 @@ class Joinchat_I18n {
 			$localized['header'] = 'Header';
 		}
 
-		return apply_filters( 'joinchat_settings_i18n', $localized, $settings );
+		return (array) apply_filters( 'joinchat_settings_i18n', $localized, $settings, $option );
+
+	}
+
+	/**
+	 * Get domain for WPML/Polylang strings
+	 *
+	 * @since  6.0
+	 * @param  string $option Option name.
+	 * @return string
+	 */
+	private function get_domain( $option = JOINCHAT_SLUG ) {
+
+		return apply_filters( 'joinchat_i18n_domain', self::DOMAIN_GROUP, $option );
 
 	}
 
@@ -115,27 +138,35 @@ class Joinchat_I18n {
 	 * view: https://wpml.org/wpml-hook/wpml_register_single_string/
 	 *
 	 * @since  4.2
-	 * @param  array $settings new values of settings.
-	 * @param  array $old_settings old values of settings.
+	 * @since  6.0.0  Add $option parameter.
+	 * @param  array  $settings new values of settings.
+	 * @param  array  $old_settings old values of settings.
+	 * @param  string $option option name.
 	 * @return void
 	 */
-	public function settings_save( $settings, $old_settings ) {
+	public function register_translations( $settings, $old_settings, $option = JOINCHAT_SLUG ) {
 
-		$settings_i18n    = $this->settings_i18n( $settings );
+		$settings_i18n = $this->settings_i18n( $settings, $option );
+
+		if ( empty( $settings_i18n ) ) {
+			return;
+		}
+
 		$default_language = apply_filters( 'wpml_default_language', null );
 		$translate_notice = false;
+		$domain           = $this->get_domain( $option );
 
 		// Clear WPML cache to ensure new strings registration.
 		if ( class_exists( 'WPML_WP_Cache' ) ) {
 			$string_cache = new WPML_WP_Cache( 'WPML_Register_String_Filter' );
 			$string_cache->flush_group_cache();
-			$domain_cache = new WPML_WP_Cache( 'WPML_Register_String_Filter::' . self::DOMAIN_GROUP );
+			$domain_cache = new WPML_WP_Cache( "WPML_Register_String_Filter::$domain" );
 			$domain_cache->flush_group_cache();
 		}
 
 		foreach ( $settings_i18n as $key => $label ) {
 			$value = isset( $settings[ $key ] ) ? $settings[ $key ] : '';
-			do_action( 'wpml_register_single_string', self::DOMAIN_GROUP, $label, $value, false, $default_language );
+			do_action( 'wpml_register_single_string', $domain, $label, $value, false, $default_language );
 
 			if ( isset( $old_settings[ $key ] ) && $old_settings[ $key ] !== $value ) {
 				$translate_notice = true;
@@ -155,7 +186,7 @@ class Joinchat_I18n {
 		// Note: message is wrapped with <strong>...</strong> tags.
 		$message = $this->language_notice( '</strong>' . esc_html__( 'There are changes in fields that can be translated', 'creame-whatsapp-me' ) . '<strong>' );
 
-		add_settings_error( JOINCHAT_SLUG, 'review_i18n', $message, 'warning' );
+		add_settings_error( $option, 'review_i18n', $message, 'warning' );
 
 	}
 
@@ -164,22 +195,25 @@ class Joinchat_I18n {
 	 *
 	 * @since  4.2
 	 * @since  5.1.6 Allow settings in array in format 'key__subkey'
-	 * @param  array $settings list of settings.
+	 * @since  6.0.0 Add $option parameter.
+	 * @param  array  $settings list of settings.
+	 * @param  string $option option name.
 	 * @return array
 	 */
-	public function settings_load( $settings ) {
+	public function load_translations( $settings, $option = JOINCHAT_SLUG ) {
 
-		$settings_i18n = $this->settings_i18n( $settings );
+		$settings_i18n = $this->settings_i18n( $settings, $option );
+		$domain        = $this->get_domain( $option );
 
 		foreach ( $settings_i18n as $setting => $label ) {
 			list( $key, $subkey ) = explode( '__', $setting . '__' );
 
 			if ( empty( $subkey ) ) {
 				if ( ! empty( $settings[ $key ] ) ) {
-					$settings[ $key ] = apply_filters( 'wpml_translate_single_string', $settings[ $key ], self::DOMAIN_GROUP, $label );
+					$settings[ $key ] = apply_filters( 'wpml_translate_single_string', $settings[ $key ], $domain, $label );
 				}
 			} elseif ( ! empty( $settings[ $key ][ $subkey ] ) ) {
-				$settings[ $key ][ $subkey ] = apply_filters( 'wpml_translate_single_string', $settings[ $key ][ $subkey ], self::DOMAIN_GROUP, $label );
+				$settings[ $key ][ $subkey ] = apply_filters( 'wpml_translate_single_string', $settings[ $key ][ $subkey ], $domain, $label );
 			}
 		}
 

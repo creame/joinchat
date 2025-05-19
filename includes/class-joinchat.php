@@ -81,7 +81,6 @@ class Joinchat {
 		require_once JOINCHAT_DIR . 'includes/class-joinchat-i18n.php';
 		require_once JOINCHAT_DIR . 'includes/class-joinchat-integrations.php';
 		require_once JOINCHAT_DIR . 'includes/class-joinchat-util.php';
-		require_once JOINCHAT_DIR . 'includes/class-joinchat-util-deprecated.php'; // TODO: deprecation to be deleted.
 
 		$this->loader = new Joinchat_Loader();
 		jc_common(); // Instance Joinchat_Common.
@@ -222,15 +221,22 @@ class Joinchat {
 			return;
 		}
 
+		require_once JOINCHAT_DIR . 'includes/class-joinchat-formatter.php';
+		Joinchat_Formatter::instance();
+
 		require_once JOINCHAT_DIR . 'public/class-joinchat-public.php';
 
 		$plugin_public = new Joinchat_Public();
 
+		$this->loader->add_filter( 'style_loader_tag', $plugin_public, 'defer_styles', 10, 4 );
 		$this->loader->add_filter( 'joinchat_settings', $plugin_public, 'get_settings' );
-		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
+		$this->loader->add_action( 'wp', $plugin_public, 'set_chatbox_content', 100 );
+		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'register_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
+		$this->loader->add_action( 'wp_print_styles', $plugin_public, 'header_styles' );
 		$this->loader->add_action( 'wp_footer', $plugin_public, 'footer_html' );
-		$this->loader->add_action( 'wp_footer', $plugin_public, 'enqueue_qr_script', 5 );
+		$this->loader->add_action( 'wp_footer', $plugin_public, 'enqueue_styles' );
+		$this->loader->add_action( 'wp_footer', $plugin_public, 'enqueue_qr_script' );
 
 		// Actions (only) for preview.
 		$this->loader->add_action( 'joinchat_preview_footer', $plugin_public, 'footer_html' );
@@ -266,7 +272,6 @@ class Joinchat {
 		$this->loader->add_filter( 'show_admin_bar', $plugin_preview, 'hide_admin_bar', 1000 );
 		$this->loader->add_filter( 'joinchat_show', $plugin_preview, 'always_show', 1000 );
 		$this->loader->add_filter( 'joinchat_classes', $plugin_preview, 'preview_classes', 10, 2 );
-		$this->loader->add_filter( 'joinchat_content', $plugin_preview, 'preview_content' );
 		$this->loader->add_filter( 'joinchat_template', $plugin_preview, 'preview_template' );
 		$this->loader->add_filter( 'joinchat_inline_style', $plugin_preview, 'inline_style' );
 

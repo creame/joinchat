@@ -1,4 +1,5 @@
-#{$class}__box {
+#{$class}__chatbox {
+  content-visibility: hidden;
   display: flex;
   flex-direction: column;
   position: absolute;
@@ -8,8 +9,8 @@
   width: calc(100vw - var(--sep) * 2);
   max-width: 400px;
   max-height: calc(var(--vh) - var(--bottom) - var(--sep));
-  border-radius: calc((var(--s) / 2) + 2px);
-  background: $white linear-gradient(180deg, var(--color),var(--color) var(--header),var(--bg) var(--header),var(--bg));
+  border-radius: calc(var(--h) + 2px);
+  background: $white linear-gradient(180deg, var(--color), var(--color) var(--header), var(--bg) var(--header), var(--bg));
   box-shadow: 0 2px 6px 0 rgba($black, 0.5);
   text-align: left;
   overflow: hidden;
@@ -22,6 +23,7 @@
   }
 
   #{$class}--chatbox & {
+    content-visibility: visible;
     opacity: 1;
     transform: scale3d(1, 1, 1);
     transition: max-height 0.2s ease-out, opacity 0.2s ease-out, transform 0s linear;
@@ -33,7 +35,7 @@
   }
 
   #{$class}--dark & {
-    background: #1a1a1a linear-gradient(180deg, var(--dark),var(--dark) var(--header),var(--bg) var(--header),var(--bg));
+    background: #1a1a1a linear-gradient(180deg, var(--dark), var(--dark) var(--header), var(--bg) var(--header), var(--bg));
   }
 }
 
@@ -44,7 +46,6 @@
   position: relative;
   flex-shrink: 0;
   height: var(--header);
-  min-height: 50px;
   padding: 0 70px 0 26px;
   margin: 0;
 
@@ -52,7 +53,7 @@
     padding: 0 26px 0 70px;
   }
 
-  &__text {
+  span {
     font-size: 19px;
     font-weight: 600;
     max-width: 100%;
@@ -61,35 +62,34 @@
     text-overflow: ellipsis;
     opacity: 0.8;
   }
-}
 
-#{$class}__powered {
-  font-size: 11px;
-  line-height: 18px;
-  color: inherit !important;
-  text-decoration: none !important;
-  fill: currentColor;
-  opacity: 0.8;
-
-  svg {
-    display: inline-block;
-    width: auto;
-    height: 18px;
-    vertical-align: -30%;
-  }
-
-  &:hover,
-  &:active {
+  a {
+    font-size: 11px;
+    line-height: 18px;
     color: inherit !important;
     text-decoration: none !important;
-    opacity: 0.9;
-    filter: drop-shadow(0 1px 3px rgba($black, 0.3));
+    fill: currentColor;
+    opacity: 0.8;
+
+    svg {
+      display: inline-block;
+      width: auto;
+      height: 18px;
+      vertical-align: -30%;
+    }
+
+    &:hover,
+    &:active {
+      color: inherit !important;
+      text-decoration: none !important;
+      opacity: 0.9;
+      filter: drop-shadow(0 1px 3px rgba($black, 0.3));
+    }
   }
 }
 
 #{$class}__wa {
-  height: 28px;
-  width: auto;
+  display: block;
   fill: currentColor;
   opacity: 0.8;
 }
@@ -102,8 +102,7 @@
   width: var(--size);
   height: var(--size);
   border-radius: 50%;
-  background: rgba($black, 0.4) svg-load("../../img/close.svg", fill=$white) center no-repeat;
-  background-size: 12px;
+  background: rgba($black, 0.4) svg-load("../../img/close.svg", fill=$white) center / 12px no-repeat;
   cursor: pointer;
   transition: background-color 0.3s ease-out;
 
@@ -121,9 +120,8 @@
   }
 }
 
-#{$class}__box__scroll {
-  overflow-x: hidden;
-  overflow-y: scroll;
+#{$class}__scroll {
+  overflow: hidden scroll;
   overscroll-behavior-y: contain;
   -webkit-overflow-scrolling: touch;
   // will-change: scroll-position;
@@ -139,7 +137,7 @@
   }
 
   #{$class}--blur & {
-    background: rgba(var(--rgb) / 2%);
+    background: hsl(var(--hsl) / 2%);
     backdrop-filter: blur(10px);
   }
 
@@ -148,9 +146,26 @@
   }
 }
 
-#{$class}__box__content {
+#{$class}__content {
+  display: flex;
+  flex-direction: column;
   width: calc(100% + 4px); // 100% + scrollbar width
-  padding: 20px 0 calc(var(--s) + 16px);
+  padding: 20px 0 8px;
+
+  &::after {
+    @include pseudo;
+    bottom: 0;
+    left: 0;
+    right: 4px;
+    height: calc(var(--s) + 20px);
+    background: #fff linear-gradient(180deg, var(--bg), var(--bg));
+    mask-image: linear-gradient(rgb(0 0 0 / 0%) 0, rgb(0 0 0 / 60%) 25%, rgb(0 0 0 / 92%) 70%, rgb(0 0 0 / 100%) 95%, rgb(0 0 0 / 100%));
+    pointer-events: none;
+
+    #{$class}--dark & {
+      background-color: #1a1a1a;
+    }
+  }
 }
 
 @include mobile {
@@ -161,17 +176,17 @@
   #{$class}__close {
     --size: 28px;
   }
-
-  #{$class}__box__scroll {
-    padding-top: 15px;
-  }
 }
 
 @include dark {
   #{$class}--dark-auto {
 
-    #{$class}__box {
-      background: #1a1a1a linear-gradient(180deg, var(--dark),var(--dark) var(--header),var(--bg) var(--header),var(--bg));
+    #{$class}__chatbox {
+      background: #1a1a1a linear-gradient(180deg, var(--dark), var(--dark) var(--header), var(--bg) var(--header), var(--bg));
+    }
+
+    #{$class}__content::after {
+      background-color: #1a1a1a;
     }
   }
 }

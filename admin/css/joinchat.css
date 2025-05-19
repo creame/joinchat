@@ -1,6 +1,8 @@
 /* Joinchat settings page */
 #joinchat_form {
   --joinchat-ico: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="36" height="36"><path fill="%23fff" d="M3.516 3.516c4.686-4.686 12.284-4.686 16.97 0 4.686 4.686 4.686 12.283 0 16.97a12.004 12.004 0 01-13.754 2.299l-5.814.735a.392.392 0 01-.438-.44l.748-5.788A12.002 12.002 0 013.517 3.517zm3.61 17.043l.3.158a9.846 9.846 0 0011.534-1.758c3.843-3.843 3.843-10.074 0-13.918-3.843-3.843-10.075-3.843-13.918 0a9.846 9.846 0 00-1.747 11.554l.16.303-.51 3.942a.196.196 0 00.219.22l3.961-.501zm6.534-7.003l-.933 1.164a9.843 9.843 0 01-3.497-3.495l1.166-.933a.792.792 0 00.23-.94L9.561 6.96a.793.793 0 00-.924-.445 1291.6 1291.6 0 00-2.023.524.797.797 0 00-.588.88 11.754 11.754 0 0010.005 10.005.797.797 0 00.88-.587l.525-2.023a.793.793 0 00-.445-.923L14.6 13.327a.792.792 0 00-.94.23z"/></svg>');
+  --color: hsl(var(--ch, 142) var(--cs, 70%) var(--cl, 49%));
+  --text: hsl(0 0% clamp(0%, var(--bw, 1)*1000%, 100%) / clamp(70%, var(--bw, 1)*1000%, 100%));
 }
 
 .joinchat-hidden {
@@ -22,6 +24,10 @@
   opacity: .5;
 }
 
+#joinchat_form hr {
+  margin: 20px 0 40px;
+}
+
 .js #joinchat_form textarea {
   overflow: hidden;
   min-height: 100px;
@@ -37,6 +43,10 @@
 
 #navtab_premium {
   color: #f9603a;
+}
+
+#joinchat_form .joinchat__visibility__wrapper hr {
+  margin: 5px 0;
 }
 
 .joinchat__visibility__wrapper tr:hover {
@@ -89,10 +99,6 @@
   color: #fff;
 }
 
-.joinchat-cookies-notice {
-  font-style: italic;
-}
-
 #tab-panel-styles-and-vars span {
   white-space: nowrap;
 }
@@ -105,9 +111,71 @@
   font-size: 13px;
 }
 
+/* Button ico field */
+.form-table td .joinchat__button_ico label {
+  margin: 0 0.5em 0.25em 0 !important;
+}
+
+.joinchat__button_ico input {
+  position: absolute;
+  opacity: 0;
+}
+
+.joinchat__button_ico span {
+  display: block;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: var(--color, #25d366);
+  overflow: hidden;
+  /* for SVG fill */
+  color: var(--text, #fff);
+}
+
+.joinchat__button_ico svg {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+}
+
+.joinchat__button_ico label:first-child span {
+  background: #25d366 var(--joinchat-ico) no-repeat center;
+}
+
+.joinchat__button_ico label:hover span {
+  box-shadow: 0 0 0 3px #5b9dd9;
+}
+
+.joinchat__button_ico input:checked+span {
+  box-shadow: 0 0 0 3px #0073aa;
+}
+
+.joinchat__button_ico input:focus+span {
+  box-shadow: 0 0 0 3px #0073aa, 0 0 2px 4px rgba(30, 140, 190, 0.8);
+}
+
+/* Button image field */
 #joinchat_button_image_wrapper {
   position: relative;
-  padding: 8px 0 0 80px;
+  min-height: 60px;
+  padding: 2px 0 0 80px;
+}
+
+#joinchat_button_image_wrapper p {
+  margin-top: 8px;
+  transition: opacity 0.2s;
+}
+
+#joinchat_button_image_wrapper p label+label {
+  margin-left: 10px;
+}
+
+#joinchat_button_image_wrapper.no-image #joinchat_button_image_remove {
+  display: none;
+}
+
+#joinchat_button_image_wrapper.no-image p {
+  opacity: .33;
 }
 
 #joinchat_button_image_holder {
@@ -128,8 +196,10 @@
 #joinchat_button_image_holder video {
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  object-position: center;
+  -o-object-fit: cover;
+     object-fit: cover;
+  -o-object-position: center;
+     object-position: center;
 }
 
 [dir=rtl] #joinchat_button_image_wrapper {
@@ -182,11 +252,20 @@ tr.joinchat--focus .joinchat_vars_help {
   .iti {
     width: 18em;
   }
+
+  .iti--fullscreen-popup {
+    width: auto;
+    z-index: 99999;
+  }
 }
 
-#joinchat_form input[type=number] {
-  padding-right: 0;
-  text-align: center;
+#joinchat_form .button.dashicons-before::before {
+  vertical-align: -27%;
+  margin-right: 6px;
+}
+
+#joinchat_form .large-text {
+  max-width: 800px;
 }
 
 #joinchat_form .iris-picker {
@@ -334,6 +413,12 @@ tr.joinchat--focus .joinchat_vars_help {
   margin-right: 15px;
 }
 
+.form-field.joinchat-metabox .iti__search-input {
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+}
+
 /* Joinchat adminbar */
 
 #jcadminbar {
@@ -428,12 +513,11 @@ tr.joinchat--focus .joinchat_vars_help {
 
 #joinchat_preview_show:before {
   content: "\f115";
-  margin-right: 5px;
-  vertical-align: -27%;
 }
 
 :root {
   --preview-width: 380px;
+  --preview-top: 46px;
 }
 
 #joinchatprev {
@@ -468,9 +552,20 @@ tr.joinchat--focus .joinchat_vars_help {
   cursor: ew-resize;
 }
 
+#joinchatprev__devices {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: var(--preview-top);
+}
+
+#joinchatprev__devices .dashicons {
+  vertical-align: sub;
+}
+
 #joinchat_preview {
   width: 100%;
-  height: 100%;
+  height: calc(100% - var(--preview-top));
 }
 
 body.jcpreview-resize {
@@ -521,11 +616,16 @@ body.jcpreview-resize #joinchatprev__resize {
   }
 
   :root {
-    --preview-width: 0 !important;
+    --preview-width: 0px !important;
+    --preview-top: 0px;
   }
 
   #joinchatprev {
     width: 100%;
+  }
+
+  #joinchatprev__devices {
+    display: none;
   }
 
   #joinchat_preview_show {

@@ -107,19 +107,6 @@ class Joinchat_Preview {
 	}
 
 	/**
-	 * Don't do nothing but ensures load Joinchat styles
-	 *
-	 * @since 5.0.0
-	 * @param  string $content Joinchat html string.
-	 * @return string
-	 */
-	public function preview_content( $content ) {
-
-		return $content;
-
-	}
-
-	/**
 	 * Change Joinchat html template
 	 *
 	 * @since 5.0.0
@@ -146,16 +133,17 @@ class Joinchat_Preview {
 	}
 
 	/**
-	 * Remove all scripts (except jQuery)
+	 * Remove all scripts (except "joinchat-qr")
 	 *
 	 * @since 5.0.0
+	 * @since 6.0.0 Add "wp-api-fetch" to the queue
 	 * @return void
 	 */
 	public function remove_all_scripts() {
 
 		global $wp_scripts;
 
-		$wp_scripts->queue = array( 'jquery', 'joinchat-qr' );
+		$wp_scripts->queue = array( 'joinchat-qr', 'wp-api-fetch' );
 
 	}
 

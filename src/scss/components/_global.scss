@@ -1,24 +1,27 @@
 #{$class} {
   // Position/size
-  --bottom: 20px;
   --sep: 20px;
-  --s: 60px; // Button size (old --btn)
+  --bottom: var(--sep);
+  --s: 60px; // Button size
+  --h: calc(var(--s)/2);
 
   @if $type == full {
-    --header: calc(var(--s)*1.166667);
+    --header: max(50px, var(--s)*1.166667);
     --vh: 100vh;
+
     // Colors
-    --red: 37;
-    --green: 211;
-    --blue: 102;
-    --rgb: var(--red) var(--green) var(--blue);
-    --color: rgb(var(--rgb));
-    --dark: rgb(calc(var(--red) - 75), calc(var(--green) - 75), calc(var(--blue) - 75)); // darker color
-    --hover: rgb(calc(var(--red) + 50), calc(var(--green) + 50), calc(var(--blue) + 50)); // lighter color
-    --bg: rgb(var(--rgb) / 4%);
+    --ch: 142;
+    --cs: 70%;
+    --cl: 49%;
+    --hsl: var(--ch) var(--cs) var(--cl);
+    --color: hsl(var(--hsl));
+    --dark: hsl(var(--ch) var(--cs) calc(var(--cl) - 10%));  // darker color
+    --hover: hsl(var(--ch) var(--cs) calc(var(--cl) + 20%)); // lighter color
+    --bg: hsl(var(--hsl) / 4%);
+
     // Black or white color based on https://css-tricks.com/switch-font-color-for-different-backgrounds-with-css/
-    --bw: 100; // 0 Black text / 100 White text
-    --text: hsl(0 0% clamp(0%, var(--bw)*1%, 100%) / clamp(70%, var(--bw)*1%, 100%)); // White hsl(0 0% 100% / 100%) / Black hsl(0 0% 0% / 70%)
+    --bw: 1; // 0 Black text / 1 White text
+    --text: hsl(0 0% clamp(0%, var(--bw)*1000%, 100%) / clamp(70%, var(--bw)*1000%, 100%)); // White hsl(0 0% 100% / 100%) / Black hsl(0 0% 0% / 70%)
     --msg: var(--color);
 
     color: var(--text);
@@ -56,11 +59,10 @@
   }
 
   @include mobile {
-    --bottom: 6px;
     --sep: 6px;
 
     @if $type == full {
-      --header: calc(var(--s)*0.9166667);
+      --header: max(50px, var(--s)*0.9166667);
     }
   }
 

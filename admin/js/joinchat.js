@@ -1,4 +1,4 @@
-(function ($) {
+(function ($, window) {
   'use strict';
 
   function textarea_autoheight() {
@@ -7,59 +7,55 @@
 
   $(function () {
     var has_iti = typeof intlTelInput === 'function';
+    var $phone = $('#joinchat_phone');
 
-    if (has_iti && $('#joinchat_phone').length) {
+    if (has_iti) {
+      // Set intlTelInput config (make global)
       var country_request = JSON.parse(localStorage.joinchat_country_code || '{}');
       var country_code = (country_request.code && country_request.date == new Date().toDateString()) ? country_request.code : false;
-      var $phone = $('#joinchat_phone');
 
-      // If empty value capture placeholder and remove
-      var placeholder = $phone.val() === '' ? $phone.attr('placeholder') : null;
-      $phone.removeAttr('placeholder');
+      // Capture placeholder (global settings phone)
+      var global_phone = $phone.attr('placeholder') || '';
 
-      var iti = intlTelInput($phone[0], {
-        hiddenInput: $phone.data('name') || 'joinchat[telephone]',
+      window.joinchat_intl_tel_config = {
+        hiddenInput: () => { return { phone: $phone.data('name') || 'joinchat[telephone]' }; },
+        strictMode: true,
         separateDialCode: true,
-        initialCountry: 'auto',
-        preferredCountries: [country_code || ''],
-        geoIpLookup: function (callback) {
-          if (country_code) {
-            callback(country_code);
-          } else {
-            $.getJSON('https://ipinfo.io').always(function (resp) {
-              var countryCode = (resp && resp.country) ? resp.country : '';
-              localStorage.joinchat_country_code = JSON.stringify({ code: countryCode, date: new Date().toDateString() });
-              callback(countryCode);
-            });
-          }
+        initialCountry: country_code || 'auto',
+        geoIpLookup: country_code ? null : (success, failure) => {
+          fetch("https://ipapi.co/json")
+            .then((res) => res.json())
+            .then((data) => {
+              localStorage.joinchat_country_code = JSON.stringify({ code: data.country_code, date: new Date().toDateString() });
+              success(data.country_code);
+            }).catch(() => failure());
         },
-        customPlaceholder: function (placeholder) { return intlTelConf.placeholder + ' ' + placeholder; },
-        utilsScript: intlTelConf.utils_js,
-      });
-      // Ensures store current value
-      iti.hiddenInput.value = $phone.val();
+        autoPlaceholder: 'aggressive',
+        customPlaceholder: (country_ph) => global_phone || `${intl_tel_l10n.placeholder} ${country_ph}`,
+        i18n: intl_tel_l10n,
+      };
 
-      // Post metabox if empty value set placeholder from general settings
-      if (typeof placeholder == 'string' && placeholder != '') {
-        iti.promise.then(function () {
-          iti.setNumber(placeholder);
-          $phone.attr('placeholder', iti.getNumber(intlTelInputUtils.numberFormat.NATIONAL)).val('');
+      // Apply intlTelInput to phone input
+      if ($phone.length) {
+        var iti = intlTelInput($phone[0], joinchat_intl_tel_config);
+        // Placeholder phone format and reset to initial value
+        iti.promise.then(() => {
+          if (global_phone === '') return;
+
+          const phone = $phone.val();
+          iti.setNumber(global_phone);
+          global_phone = iti.getNumber(intlTelInput.utils.numberFormat.NATIONAL);
+          iti.setNumber(phone);
+          iti.setPlaceholderNumberType("MOBILE"); // Trigger placeholder update
+        });
+
+        $phone.on('open:countrydropdown', () => { global_phone = null; });
+        $phone.on('input countrychange', function () {
+          $(this).css('color', this.value.trim() && !iti.isValidNumber(true) ? '#ca4a1f' : '');
+          // Ensures number it's updated on AJAX save (Gutemberg)
+          iti.hiddenInput.value = iti.getNumber();
         });
       }
-
-      $phone.on('input countrychange', function () {
-        var $this = $(this);
-        var iti = intlTelInputGlobals.getInstance(this);
-
-        $this.css('color', $this.val().trim() && !iti.isValidNumber() ? '#ca4a1f' : '');
-        // Ensures number it's updated on AJAX save (Gutemberg)
-        iti.hiddenInput.value = iti.getNumber();
-        // Enable/disable phone test
-        $('#joinchat_phone_test').attr('disabled', !iti.isValidNumber());
-      }).on('blur', function () {
-        var iti = intlTelInputGlobals.getInstance(this);
-        iti.setNumber(iti.getNumber());
-      });
     }
 
     if ($('.joinchat-metabox').length) {
@@ -67,4 +63,4 @@
       $('.joinchat-metabox textarea').on('focus input', textarea_autoheight).each(textarea_autoheight);
     }
   });
-})(jQuery);
+})(jQuery, window);

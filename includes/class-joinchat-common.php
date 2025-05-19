@@ -20,7 +20,7 @@ class Joinchat_Common {
 	 *
 	 * @since    4.5.10
 	 */
-	const INTL_TEL_INPUT_VERSION = '18.1.8';
+	const INTL_TEL_INPUT_VERSION = '25.3.0';
 
 	/**
 	 * Singleton instance.
@@ -96,6 +96,7 @@ class Joinchat_Common {
 		$defaults = array(
 			'telephone'     => '',
 			'mobile_only'   => 'no',
+			'button_ico'    => 'app',
 			'button_image'  => '',
 			'button_tip'    => '',
 			'button_delay'  => 3,
@@ -107,10 +108,10 @@ class Joinchat_Common {
 			'message_delay' => 10, // Disabled on negative values.
 			'message_badge' => 'no',
 			'message_send'  => '',
-			'message_start' => __( 'Open chat', 'creame-whatsapp-me' ),
+			'message_start' => __( 'Open Chat', 'creame-whatsapp-me' ),
 			'position'      => 'right',
 			'visibility'    => array( 'all' => 'yes' ),
-			'color'         => '#25d366/100', // hexcolor/0|100 (black or white text).
+			'color'         => '#25d366/1', // hexcolor/0|1 (black or white text).
 			'dark_mode'     => 'no',     // values: 'no', 'yes' or 'auto'.
 			'header'        => '__jc__', // values: '__jc__', '__wa__' or other custom text.
 			'optin_text'    => '',
@@ -160,6 +161,12 @@ class Joinchat_Common {
 			$settings['message_delay'] = -1;
 		}
 
+		if ( ! $settings['button_ico'] ) {
+			$settings['button_ico'] = 'app';
+		}
+
+		$settings['color'] = str_replace( '/100', '/1', $settings['color'] );
+
 		// Clean unused saved settings.
 		$settings = array_intersect_key( $settings, $default_settings );
 
@@ -193,7 +200,7 @@ class Joinchat_Common {
 	 */
 	public function get_custom_post_types() {
 
-		return apply_filters( 'joinchat_custom_post_types', array_keys( get_post_types( array( 'has_archive' => true ), 'names' ) ) );
+		return (array) apply_filters( 'joinchat_custom_post_types', array_keys( get_post_types( array( 'has_archive' => true ), 'names' ) ) );
 
 	}
 
@@ -209,7 +216,7 @@ class Joinchat_Common {
 		$custom_post_types  = $this->get_custom_post_types(); // Custom post types with public url.
 
 		// Add/remove posts types for "Joinchat" meta box.
-		return apply_filters( 'joinchat_post_types_meta_box', array_merge( $builtin_post_types, $custom_post_types ) );
+		return (array) apply_filters( 'joinchat_post_types_meta_box', array_merge( $builtin_post_types, $custom_post_types ) );
 
 	}
 
@@ -221,7 +228,7 @@ class Joinchat_Common {
 	 */
 	public function get_taxonomies_meta_box() {
 
-		return apply_filters( 'joinchat_taxonomies_meta_box', array( 'category', 'post_tag' ) );
+		return (array) apply_filters( 'joinchat_taxonomies_meta_box', array( 'category', 'post_tag' ) );
 
 	}
 
@@ -234,7 +241,7 @@ class Joinchat_Common {
 	 */
 	public function get_obj_placeholders( $obj ) {
 
-		return apply_filters(
+		return (array) apply_filters(
 			'joinchat_metabox_placeholders',
 			array(
 				'telephone'    => $this->settings['telephone'],
@@ -256,7 +263,53 @@ class Joinchat_Common {
 	 */
 	public function get_obj_vars( $obj ) {
 
-		return apply_filters( 'joinchat_metabox_vars', array( 'SITE', 'TITLE', 'URL', 'HREF' ), $obj );
+		return (array) apply_filters( 'joinchat_metabox_vars', array( 'SITE', 'TITLE', 'HOME', 'URL', 'HREF' ), $obj );
+
+	}
+
+	/**
+	 * Get button alternate icons
+	 *
+	 * Return an array of ico_key => value with the SVG code or svg value if $value is passed.
+	 *
+	 * @since 6.0.0
+	 * @param string $value Icon name.
+	 * @return array|string|false
+	 */
+	public function get_icons( $value = '' ) {
+
+		$icons = array(
+			'v1' => file_get_contents( JOINCHAT_DIR . 'admin/img/ico-logo.svg' ),
+			'v2' => file_get_contents( JOINCHAT_DIR . 'admin/img/ico-contact.svg' ),
+		);
+
+		$icons = (array) apply_filters( 'joinchat_icons', $icons, $value );
+
+		if ( $value ) {
+			return array_key_exists( $value, $icons ) ? $icons[ $value ] : false;
+		} else {
+			return $icons;
+		}
+	}
+
+	/**
+	 * Get theme color values (H, S, L, text)
+	 *
+	 * Return values Hue, Saturation, Lightness and text color (0 black|1 white).
+	 *
+	 * @since 6.0.0
+	 * @param string $color Hex color code.
+	 * @return array (H, S, L, 0|1)
+	 */
+	public function get_color_values( $color = '' ) {
+
+		$color = empty( $color ) ? $this->settings['color'] : $color;
+
+		list($color, $text) = explode( '/', $color . '/1' );
+		list($r, $g, $b)    = sscanf( $color, '#%02x%02x%02x' );
+		list($h, $s, $l)    = Joinchat_Util::rgb2hsl( $r, $g, $b );
+
+		return array( $h, $s, $l, (int) $text );
 
 	}
 }

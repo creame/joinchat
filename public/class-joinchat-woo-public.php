@@ -37,7 +37,7 @@ class Joinchat_Woo_Public {
 
 		$loader->add_filter( 'joinchat_extra_settings', $this, 'woo_settings' );
 		$loader->add_filter( 'joinchat_settings_i18n', $this, 'settings_i18n' );
-		$loader->add_filter( 'joinchat_get_settings_site', $this, 'shop_settings' );
+		$loader->add_filter( 'joinchat_get_settings_site', $this, 'shop_settings', 30 ); // After load transalations.
 		$loader->add_filter( 'joinchat_get_settings', $this, 'product_settings' );
 		$loader->add_filter( 'joinchat_visibility', $this, 'visibility', 10, 2 );
 		$loader->add_filter( 'joinchat_variable_replacements', $this, 'replacements' );
@@ -122,7 +122,7 @@ class Joinchat_Woo_Public {
 		// Add Product Button.
 		if ( is_product() && 'none' !== $settings['woo_btn_position'] ) {
 			list( $hook, $priority ) = explode( '__', "{$settings['woo_btn_position']}__10" );
-			add_action( $hook, array( $this, 'product_button' ), (int) apply_filters( 'joinchat_woo_btn_priority', intval( $priority ) ) );
+			add_action( $hook, array( $this, 'product_button' ), (int) apply_filters( 'joinchat_woo_btn_priority', (int) $priority ) );
 		}
 
 		return $settings;
@@ -224,7 +224,7 @@ class Joinchat_Woo_Public {
 			);
 
 			if ( $product->is_type( 'variable' ) ) {
-				$woo_replacements['SKU'] = '<sku>' . $woo_replacements['SKU'] . '</sku>';
+				$woo_replacements['SKU'] = '<jc-sku>' . $woo_replacements['SKU'] . '</jc-sku>';
 			}
 
 			$replacements = array_merge( $replacements, $woo_replacements );
@@ -391,7 +391,8 @@ class Joinchat_Woo_Public {
 
 			$min = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
 
-			wp_enqueue_style( 'joinchat-woo', plugins_url( "css/joinchat-woo{$min}.css", __FILE__ ), array(), JOINCHAT_VERSION, 'all' );
+			wp_enqueue_style( 'joinchat-woo', plugins_url( "public/css/joinchat-woo{$min}.css", JOINCHAT_FILE ), array(), JOINCHAT_VERSION, 'all' );
+			wp_style_add_data( 'joinchat-woo', 'path', JOINCHAT_DIR . "public/css/joinchat-woo{$min}.css" );
 
 		}
 
