@@ -39,14 +39,6 @@ class Joinchat_I18n {
 
 		}
 
-		if ( defined( 'WPML_PLUGIN_PATH' ) || defined( 'POLYLANG_VERSION' ) ) {
-
-			add_action( 'admin_notices', array( $this, 'settings_notice' ) );
-			add_action( 'joinchat_settings_validation', array( $this, 'settings_save' ), 10, 2 );
-			add_filter( 'joinchat_get_settings_site', array( $this, 'settings_load' ), 20 );
-
-		}
-
 	}
 
 	/**
