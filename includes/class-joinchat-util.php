@@ -600,3 +600,31 @@ class JoinChatUtil {
 		<?php
 	}
 }
+
+/**
+ * Retrieves the number of times a filter has been applied during the current request.
+ *
+ * In WordPress since 6.1.0
+ */
+if ( ! function_exists( 'did_filter' ) ) {
+	function did_filter( $hook_name ) {
+		global $wp_filters;
+
+		if ( ! isset( $wp_filters[ $hook_name ] ) ) {
+			return 0;
+		}
+
+		return $wp_filters[ $hook_name ];
+	}
+}
+
+/**
+ * Checks compatibility with the current WordPress version.
+ *
+ * In WordPress since 5.2.0
+ */
+if ( ! function_exists( 'is_wp_version_compatible' ) ) {
+	function is_wp_version_compatible( $version ) {
+		return version_compare( get_bloginfo( 'version' ), $version, '>=' )
+	}
+}
