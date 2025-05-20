@@ -625,6 +625,6 @@ if ( ! function_exists( 'did_filter' ) ) {
  */
 if ( ! function_exists( 'is_wp_version_compatible' ) ) {
 	function is_wp_version_compatible( $version ) {
-		return version_compare( get_bloginfo( 'version' ), $version, '>=' )
+		return version_compare( get_bloginfo( 'version' ), $version, '>=' );
 	}
 }
