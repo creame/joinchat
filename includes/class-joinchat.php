@@ -228,7 +228,6 @@ class Joinchat {
 
 		$plugin_public = new Joinchat_Public();
 
-		$this->loader->add_filter( 'style_loader_tag', $plugin_public, 'defer_styles', 10, 4 );
 		$this->loader->add_filter( 'joinchat_settings', $plugin_public, 'get_settings' );
 		$this->loader->add_action( 'wp', $plugin_public, 'set_chatbox_content', 100 );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'register_styles' );

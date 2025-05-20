@@ -141,7 +141,7 @@ class Joinchat_Public {
 			$file .= '-btn';
 		}
 
-		wp_register_style( JOINCHAT_SLUG, plugins_url( "public/css/{$file}{$min}.css", JOINCHAT_FILE ), array(), JOINCHAT_VERSION, $defer ? 'print' : 'all' );
+		wp_register_style( JOINCHAT_SLUG, plugins_url( "public/css/{$file}{$min}.css", JOINCHAT_FILE ), array(), JOINCHAT_VERSION );
 
 		if ( ! $defer || jc_common()->preview ) {
 			$this->enqueue_styles();
@@ -216,29 +216,6 @@ class Joinchat_Public {
 
 		return apply_filters( 'joinchat_inline_style', $inline_css, $settings );
 
-	}
-
-	/**
-	 * Defer styles if needed
-	 *
-	 * If handle starts with 'joinchat' and media is 'print' add onload.
-	 *
-	 * @since 6.0.0
-	 * @param string $tag    The link tag.
-	 * @param string $handle The handle of the enqueued style.
-	 * @param string $href   The source URL of the enqueued style.
-	 * @param string $media  The media for which the stylesheet has been defined.
-	 * @return string
-	 */
-	public function defer_styles( $tag, $handle, $href, $media ) {
-		if ( 'print' !== $media || strpos( $handle, JOINCHAT_SLUG ) !== 0 ) {
-			return $tag;
-		}
-
-		$tag = str_replace( "'", '"', $tag );
-		$tag = str_replace( 'media="print"', 'media="print" onload="this.media=\'all\'"', $tag );
-
-		return $tag;
 	}
 
 	/**
