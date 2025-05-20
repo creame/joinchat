@@ -563,3 +563,40 @@ class Joinchat_Util {
 		return array( round( $h, 0 ), round( $s * 100, 0 ), round( $l * 100, 0 ) );
 	}
 }
+
+
+/**
+ * Joinchat Util class alias
+ *
+ * @since      3.1.0
+ * @since      5.0.0     Deprecated, use Joinchat_Util instead.
+ * @since      6.0.0     Removed
+ * @since      6.0.2     Re-added with deprecated notice.
+ */
+class JoinChatUtil {
+
+	/**
+	 * Call Joinchat_Util alias
+	 *
+	 * @param string $name       function name.
+	 * @param mixed  $arguments  function arguments.
+	 * @return mixed
+	 */
+	public static function __callStatic( $name, $arguments ) {
+
+		add_action( 'admin_notices', array( __CLASS__, 'deprecated_notice' ) );
+
+		if ( method_exists( 'Joinchat_Util', $name ) ) {
+			return call_user_func_array( array( 'Joinchat_Util', $name ), $arguments );
+		}
+		trigger_error( esc_html( 'Call to undefined method ' . __CLASS__ . "::$name()" ), E_USER_ERROR );
+	}
+
+	public static function deprecated_notice() {
+		?>
+		<div class="notice notice-warning is-dismissible">
+			<p><code>JoinChatUtil</code> class is deprecated, use <code>Joinchat_Util</code> instead.</p>
+		</div>
+		<?php
+	}
+}
