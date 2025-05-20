@@ -5,7 +5,7 @@ Tags: WhatsApp, Chat, Floating Button, Facebook Messenger, Telegram
 Requires at least: 4.9.6
 Tested up to: 6.8
 Requires PHP: 5.6
-Stable tag: 6.0.0
+Stable tag: 6.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -389,6 +389,9 @@ You can view in your *Settings > Privacy > Policy Guide* the suggested text by J
 
 
 == Changelog ==
+
+= 6.0.1 =
+* Fix hidden attribute can make button invible with some CSS resets (like Bootstrap).
 
 = 6.0.0 =
 * New **Rich Chat**: multiple chat bubbles with links, buttons, images and random texts.
