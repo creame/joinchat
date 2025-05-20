@@ -14,7 +14,7 @@
 defined( 'WPINC' ) || exit;
 ?>
 
-<div class="joinchat <?php echo esc_attr( join( ' ', $joinchat_classes ) ); ?>" data-settings='<?php echo Joinchat_Util::to_json( $data ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>' hidden aria-hidden="false">
+<div class="joinchat <?php echo esc_attr( join( ' ', $joinchat_classes ) ); ?>" data-settings='<?php echo Joinchat_Util::to_json( $data ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>'>
 	<div class="joinchat__button" role="button" tabindex="0">
 		<?php if ( $ico ) : ?>
 			<div class="joinchat__button__ico"><?php echo $ico; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></div>

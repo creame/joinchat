@@ -126,6 +126,7 @@
 
   // Show Joinchat button
   joinchat_obj.show = function (tooltip) {
+    this.$div.removeAttribute('hidden');
     this.$div.classList.add('joinchat--show');
     if (tooltip) {
       this.$div.classList.add('joinchat--tooltip');
