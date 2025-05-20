@@ -387,7 +387,7 @@ class Joinchat_Woo_Public {
 	 */
 	public function enqueue_styles() {
 
-		if ( $this->btn_show && ! wp_style_is( JOINCHAT_SLUG, 'done' ) ) {
+		if ( $this->btn_show && ! wp_style_is( JOINCHAT_SLUG ) ) {
 
 			$min = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
 
