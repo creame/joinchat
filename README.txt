@@ -5,7 +5,7 @@ Tags: WhatsApp, Chat, Floating Button, Facebook Messenger, Telegram
 Requires at least: 4.9.6
 Tested up to: 6.8
 Requires PHP: 7.0
-Stable tag: 6.0.2
+Stable tag: 6.0.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -390,6 +390,9 @@ You can view in your *Settings > Privacy > Policy Guide* the suggested text by J
 
 == Changelog ==
 
+= 6.0.3 =
+* Fix js error with variable product SKU.
+
 = 6.0.2 =
 * Bump min PHP version to 7.0.
 * Add fallback to missing functions in older WordPress versions.
@@ -411,5 +414,5 @@ See [changelog.txt](https://plugins.svn.wordpress.org/creame-whatsapp-me/trunk/c
 
 == Upgrade Notice ==
 
-**Important:** This is a mayor version that includes refactored layout, styles and JavaScript. Please check your site after updating.
-**Joinchat Premium users:** Update Premium to version 6+ for full compatibility.
+**Joinchat 6** is a mayor version that includes refactored layout, styles and JavaScript. Please check your site after updating.
+**Joinchat Premium users:** You need to upgrade to Joinchat Premium 6 for full compatibility.
