@@ -6,7 +6,7 @@
   }
 
   $(function () {
-    var has_iti = typeof intlTelInput === 'function';
+    var has_iti = typeof intlTelInput === 'function' && intl_tel_l10n;
     var $phone = $('#joinchat_phone');
 
     if (has_iti) {
