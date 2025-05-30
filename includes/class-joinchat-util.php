@@ -239,6 +239,10 @@ class Joinchat_Util {
 	 */
 	public static function formatted_message( $string, $as_array = false ) {
 
+		if ( empty( $string ) ) {
+			return $as_array ? array() : '';
+		}
+
 		// Format replacements .
 		$replacements = apply_filters( 'joinchat_format_replacements', array() );
 
