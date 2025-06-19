@@ -5,7 +5,7 @@ Tags: WhatsApp, Chat, Floating Button, Facebook Messenger, Telegram
 Requires at least: 4.9.6
 Tested up to: 6.8
 Requires PHP: 7.0
-Stable tag: 6.0.3
+Stable tag: 6.0.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -389,6 +389,9 @@ You can view in your *Settings > Privacy > Policy Guide* the suggested text by J
 
 
 == Changelog ==
+
+= 6.0.4 =
+* Fix some js conflicts in wp-admin if other plugins adds IntTelInput.
 
 = 6.0.3 =
 * Fix js error with variable product SKU.
