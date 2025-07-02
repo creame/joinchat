@@ -8,23 +8,26 @@
   @if $type == full {
     --header: max(50px, var(--s)*1.166667);
     --vh: 100vh;
+  }
 
-    // Colors
-    --ch: 142;
-    --cs: 70%;
-    --cl: 49%;
+  // Colors
+  --ch: 142;
+  --cs: 70%;
+  --cl: 49%;
+  --bw: 1; // 0 Black text / 1 White text
+  --text: hsl(0 0% clamp(0%, var(--bw)*1000%, 100%) / clamp(70%, var(--bw)*1000%, 100%)); // White hsl(0 0% 100% / 100%) / Black hsl(0 0% 0% / 70%)
+  --hover: hsl(var(--ch) var(--cs) calc(var(--cl) + 20%)); // lighter color
+
+  @if $type == full {
     --hsl: var(--ch) var(--cs) var(--cl);
     --color: hsl(var(--hsl));
     --dark: hsl(var(--ch) var(--cs) calc(var(--cl) - 10%));  // darker color
-    --hover: hsl(var(--ch) var(--cs) calc(var(--cl) + 20%)); // lighter color
     --bg: hsl(var(--hsl) / 4%);
-
-    // Black or white color based on https://css-tricks.com/switch-font-color-for-different-backgrounds-with-css/
-    --bw: 1; // 0 Black text / 1 White text
-    --text: hsl(0 0% clamp(0%, var(--bw)*1000%, 100%) / clamp(70%, var(--bw)*1000%, 100%)); // White hsl(0 0% 100% / 100%) / Black hsl(0 0% 0% / 70%)
     --msg: var(--color);
 
     color: var(--text);
+  } @else {
+    --color: hsl(var(--ch) var(--cs) var(--cl));
   }
 
   display: none;

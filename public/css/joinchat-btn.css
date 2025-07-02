@@ -8,6 +8,13 @@
   --bottom: var(--sep);
   --s: 60px;
   --h: calc(var(--s)/2);
+  --ch: 142;
+  --cs: 70%;
+  --cl: 49%;
+  --bw: 1;
+  --text: hsl(0deg 0% clamp(0%, var(--bw)*1000%, 100%) / clamp(70%, var(--bw)*1000%, 100%));
+  --hover: hsl(var(--ch) var(--cs) calc(var(--cl) + 20%));
+  --color: hsl(var(--ch) var(--cs) var(--cl));
 
   display: none;
   position: fixed;
@@ -82,7 +89,7 @@
   display: flex;
   border-radius: 50%;
   overflow: hidden;
-  color: hsl(0deg 0% clamp(0%, var(--bw)*1000%, 100%) / clamp(70%, var(--bw)*1000%, 100%)) !important;
+  color: var(--text) !important;
 }
 
 .joinchat__button__ico svg {
@@ -92,13 +99,13 @@
 }
 
 .joinchat__button:has(.joinchat__button__ico) {
-  background: hsl(var(--ch) var(--cs) var(--cl));
+  background: var(--color);
   box-shadow: 1px 6px 24px 0 hsl(var(--ch) var(--cs) calc(var(--cl) - 10%) / 24%);
 }
 
 .joinchat__button:has(.joinchat__button__ico):hover,
 .joinchat__button:has(.joinchat__button__ico):active {
-  background: hsl(var(--ch) var(--cs) calc(var(--cl) + 20%));
+  background: var(--hover);
 }
 
 .joinchat__button__image {

@@ -45,11 +45,7 @@
   display: flex;
   border-radius: 50%;
   overflow: hidden;
-  @if $type == full {
-    color: var(--text) !important;
-  } @else {
-    color: hsl(0 0% clamp(0%, var(--bw)*1000%, 100%) / clamp(70%, var(--bw)*1000%, 100%)) !important;
-  }
+  color: var(--text) !important;
 
   svg {
     width: var(--ico-size, 100%);
@@ -57,25 +53,13 @@
     margin: calc((100% - var(--ico-size, 100%)) / 2);
   }
 
-  @if $type == full {
-    #{$class}__button:has(&) {
-      background: var(--color);
-      box-shadow: 1px 6px 24px 0 hsl(var(--ch) var(--cs) calc(var(--cl) - 10%) / 24%); // --dark with alpha
+  #{$class}__button:has(&) {
+    background: var(--color);
+    box-shadow: 1px 6px 24px 0 hsl(var(--ch) var(--cs) calc(var(--cl) - 10%) / 24%); // --dark with alpha
 
-      &:hover,
-      &:active {
-        background: var(--hover);
-      }
-    }
-  } @else {
-    #{$class}__button:has(&) {
-      background: hsl(var(--ch) var(--cs) var(--cl));
-      box-shadow: 1px 6px 24px 0 hsl(var(--ch) var(--cs) calc(var(--cl) - 10%) / 24%); // --dark with alpha
-
-      &:hover,
-      &:active {
-        background: hsl(var(--ch) var(--cs) calc(var(--cl) + 20%));
-      }
+    &:hover,
+    &:active {
+      background: var(--hover);
     }
   }
 }

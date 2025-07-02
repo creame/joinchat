@@ -13,13 +13,13 @@
   --ch: 142;
   --cs: 70%;
   --cl: 49%;
+  --bw: 1;
+  --text: hsl(0deg 0% clamp(0%, var(--bw)*1000%, 100%) / clamp(70%, var(--bw)*1000%, 100%));
+  --hover: hsl(var(--ch) var(--cs) calc(var(--cl) + 20%));
   --hsl: var(--ch) var(--cs) var(--cl);
   --color: hsl(var(--hsl));
   --dark: hsl(var(--ch) var(--cs) calc(var(--cl) - 10%));
-  --hover: hsl(var(--ch) var(--cs) calc(var(--cl) + 20%));
   --bg: hsl(var(--hsl) / 4%);
-  --bw: 1;
-  --text: hsl(0deg 0% clamp(0%, var(--bw)*1000%, 100%) / clamp(70%, var(--bw)*1000%, 100%));
   --msg: var(--color);
 
   color: var(--text);
