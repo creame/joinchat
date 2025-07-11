@@ -77,6 +77,11 @@ class Joinchat_Integrations {
 		add_filter( 'rocket_rucss_external_exclusions', array( $this, 'rocket_rucss_external_exclusions' ) );
 
 		/**
+		 * LiteSpeed Cache
+		 */
+		add_filter( 'litespeed_buffer_after', array( $this, 'ensure_joinchat_assets_version' ) );
+
+		/**
 		 * Thrive Architect
 		 */
 		add_filter( 'tcb_lp_strip_css_whitelist', array( $this, 'tcb_lp_strip_css_whitelist' ) );
@@ -163,12 +168,10 @@ class Joinchat_Integrations {
 	 */
 	public function rocket_rucss_external_exclusions( $external_exclusions = array() ) {
 
-		$min = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
-
 		$files = array(
-			plugins_url( "public/css/joinchat{$min}.css", JOINCHAT_FILE ),
-			plugins_url( "public/css/joinchat-btn{$min}.css", JOINCHAT_FILE ),
-			plugins_url( "public/css/joinchat-woo{$min}.css", JOINCHAT_FILE ),
+			plugins_url( 'public/css/joinchat.min.css', JOINCHAT_FILE ),
+			plugins_url( 'public/css/joinchat-btn.min.css', JOINCHAT_FILE ),
+			plugins_url( 'public/css/joinchat-woo.min.css', JOINCHAT_FILE ),
 		);
 
 		$parts       = explode( '/', WP_CONTENT_URL );
@@ -195,5 +198,25 @@ class Joinchat_Integrations {
 
 		return $tcb_style_classes;
 
+	}
+
+	/**
+	 * Ensure Joinchat assets version is correct with LiteSpeed Cache plugin.
+	 *
+	 * @since    6.0.6
+	 * @param string $content HTML content.
+	 * @return string
+	 */
+	public function ensure_joinchat_assets_version( $content ) {
+
+		if ( ! apply_filters( 'litespeed_conf', 'optm-qs_rm' ) ) {
+			return $content;
+		}
+
+		$content = str_replace( 'joinchat.min.js', 'joinchat.min.js?ver=' . JOINCHAT_VERSION, $content );
+		$content = str_replace( 'joinchat.min.css', 'joinchat.min.css?ver=' . JOINCHAT_VERSION, $content );
+		$content = str_replace( 'joinchat-btn.min.css', 'joinchat-btn.min.css?ver=' . JOINCHAT_VERSION, $content );
+
+		return $content;
 	}
 }
