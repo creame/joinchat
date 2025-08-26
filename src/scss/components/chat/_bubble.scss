@@ -74,7 +74,7 @@
   &&--loading {
     width: 70px;
     border: none;
-    background: transparent svg-load("../../../img/loading.svg") 20px 20px no-repeat;
+    background: transparent svg-load("../../../img/loading.svg") 20px 20px no-repeat !important;
     transform-origin: 50% !important;
     animation: #{$name}_show 100ms ease-out 10ms both;
 
@@ -92,7 +92,7 @@
   &&--note {
     min-height: 0;
     padding: 0;
-    background: none;
+    background: none !important;
     font-size: 13px;
     line-height: 1.33;
     filter: none;

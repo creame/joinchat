@@ -757,7 +757,7 @@
 .joinchat__bubble.joinchat__bubble--loading {
   width: 70px;
   border: none;
-  background: transparent url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24'%3E%3Ccircle cx='4' cy='12' r='3'%3E%3Canimate id='c' attributeName='cy' begin='0;a.end+0.1s' calcMode='spline' dur='0.4s' keySplines='.33,.66,.66,1;.33,0,.66,.33' values='12;6;12'/%3E%3C/circle%3E%3Ccircle cx='12' cy='12' r='3'%3E%3Canimate attributeName='cy' begin='c.begin+0.1s' calcMode='spline' dur='0.4s' keySplines='.33,.66,.66,1;.33,0,.66,.33' values='12;6;12'/%3E%3C/circle%3E%3Ccircle cx='20' cy='12' r='3'%3E%3Canimate id='a' attributeName='cy' begin='c.begin+0.2s' calcMode='spline' dur='0.4s' keySplines='.33,.66,.66,1;.33,0,.66,.33' values='12;6;12'/%3E%3C/circle%3E%3C/svg%3E") 20px 20px no-repeat;
+  background: transparent url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24'%3E%3Ccircle cx='4' cy='12' r='3'%3E%3Canimate id='c' attributeName='cy' begin='0;a.end+0.1s' calcMode='spline' dur='0.4s' keySplines='.33,.66,.66,1;.33,0,.66,.33' values='12;6;12'/%3E%3C/circle%3E%3Ccircle cx='12' cy='12' r='3'%3E%3Canimate attributeName='cy' begin='c.begin+0.1s' calcMode='spline' dur='0.4s' keySplines='.33,.66,.66,1;.33,0,.66,.33' values='12;6;12'/%3E%3C/circle%3E%3Ccircle cx='20' cy='12' r='3'%3E%3Canimate id='a' attributeName='cy' begin='c.begin+0.2s' calcMode='spline' dur='0.4s' keySplines='.33,.66,.66,1;.33,0,.66,.33' values='12;6;12'/%3E%3C/circle%3E%3C/svg%3E") 20px 20px no-repeat !important;
   transform-origin: 50% !important;
   animation: joinchat_show 100ms ease-out 10ms both;
 }
@@ -769,7 +769,7 @@
 .joinchat__bubble.joinchat__bubble--note {
   min-height: 0;
   padding: 0;
-  background: none;
+  background: none !important;
   font-size: 13px;
   line-height: 1.33;
   filter: none;
