@@ -5,7 +5,7 @@ Tags: WhatsApp, Chat, Floating Button, Facebook Messenger, Telegram
 Requires at least: 4.9.6
 Tested up to: 6.8
 Requires PHP: 7.0
-Stable tag: 6.0.6
+Stable tag: 6.0.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -389,6 +389,11 @@ You can view in your *Settings > Privacy > Policy Guide* the suggested text by J
 
 
 == Changelog ==
+
+= 6.0.7 =
+* Fix dark styles for loading and note messages
+* Fix admin JS conflict when other plugin use IntTelInput library
+* Fix Joinchat settings don't work with HivePress
 
 = 6.0.6 =
 * Aff a filter for Litespeed Cache plugin to ensure Joinchat JS/CSS assets version. Prevent Joinchat break layout if visitor has Joinchat v5 cached assets (thanks to @tendenzeshabbychic and @qtwrk).
