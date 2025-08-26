@@ -184,7 +184,7 @@
         $msg.html(msg.replace('{INPUT phone}', '<input id="joinchat_phone" value="" type="text">'));
         $msg.css('z-index', 1); // Flag dropdown over option buttons.
 
-        if (typeof intlTelInput === 'function' && intl_tel_l10n) {
+        if (typeof intlTelInput === 'function' && window.intl_tel_l10n) {
           var $phone = $('#joinchat_phone');
           var iti = intlTelInput($phone[0], {
             hiddenInput: () => { return { phone: 'joinchat[telephone]' }; },
