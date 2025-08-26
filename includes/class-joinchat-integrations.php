@@ -85,6 +85,16 @@ class Joinchat_Integrations {
 		 * Thrive Architect
 		 */
 		add_filter( 'tcb_lp_strip_css_whitelist', array( $this, 'tcb_lp_strip_css_whitelist' ) );
+
+		/**
+		 * HivePress Integration
+		 *
+		 * Don't load HivePress assets on Joinchat settings page (fix conflixt with intlTelInput).
+		 */
+		if ( defined( 'HP_FILE' ) && is_admin() && isset( $_GET['page'] ) && JOINCHAT_SLUG === $_GET['page'] ) {
+			add_filter( 'hivepress/v1/scripts', '__return_empty_array' );
+			add_filter( 'hivepress/v1/styles', '__return_empty_array' );
+		}
 	}
 
 	/**
