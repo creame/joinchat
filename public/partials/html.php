@@ -12,7 +12,7 @@ defined( 'WPINC' ) || exit;
 ?>
 
 <div class="joinchat <?php echo esc_attr( join( ' ', $joinchat_classes ) ); ?>" data-settings='<?php echo Joinchat_Util::to_json( $data ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>' <?php echo $settings['button_delay'] > 0 ? 'hidden aria-hidden="false"' : ''; ?>>
-	<div class="joinchat__button" role="button" tabindex="0">
+	<div class="joinchat__button" role="button" tabindex="0" aria-label="<?php echo esc_attr( $button_label ); ?>">
 		<?php if ( $ico ) : ?>
 			<div class="joinchat__button__ico"><?php echo $ico; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></div>
 		<?php endif; ?>
@@ -20,7 +20,7 @@ defined( 'WPINC' ) || exit;
 			<div class="joinchat__button__image"><?php echo $image; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></div>
 		<?php endif; ?>
 		<?php if ( $settings['button_tip'] ) : ?>
-			<div class="joinchat__tooltip"><div><?php echo esc_html( $settings['button_tip'] ); ?></div></div>
+			<div class="joinchat__tooltip" aria-hidden="true"><div><?php echo esc_html( $settings['button_tip'] ); ?></div></div>
 		<?php endif; ?>
 	</div>
 	<?php if ( $box_content && $settings['message_badge'] ) : ?>
