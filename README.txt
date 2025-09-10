@@ -5,7 +5,7 @@ Tags: WhatsApp, Chat, Floating Button, Facebook Messenger, Telegram
 Requires at least: 4.9.6
 Tested up to: 6.8
 Requires PHP: 7.0
-Stable tag: 6.0.7
+Stable tag: 6.0.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -307,9 +307,16 @@ If Google Analytics 4 (gtag.js) is detected, use the recommended `'generate_lead
 
 If your site don't have standard names for data layer ('dataLayer') you can set your custom names with this PHP filter. **Also can set a different event name for GA4**:
 
-`add_filter( 'joinchat_get_settings', function( $settings ){
+`// Rename GA4 event / Rename dataLayer name
+add_filter( 'joinchat_get_settings', function( $settings ){
     $settings['ga_event'] = 'myGA4Event';
     $settings['data_layer'] = 'dataLayerCustom';
+    return $settings;
+} );
+
+// Disable GA4 event
+add_filter( 'joinchat_get_settings', function( $settings ){
+    $settings['ga_event'] = false;
     return $settings;
 } );`
 
@@ -389,6 +396,12 @@ You can view in your *Settings > Privacy > Policy Guide* the suggested text by J
 
 
 == Changelog ==
+
+= 6.0.8 =
+* New allow to disable GA4 event with filter 'joinchat_get_settings' and set 'ga_event' as false
+* Fix mask WhastApp phone number for Facebook Pixel events
+* Fix add aria-label to Joinchat floating button
+
 
 = 6.0.7 =
 * Fix dark styles for loading and note messages
