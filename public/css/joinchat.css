@@ -460,7 +460,6 @@
 
 .joinchat--blur .joinchat__scroll {
   background: hsl(var(--hsl) / 2%);
-  -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
 }
 
