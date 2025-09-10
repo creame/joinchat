@@ -55,42 +55,42 @@
     // Trigger event (params can be edited by third party scripts or cancel if return false)
     if (!document.dispatchEvent(new CustomEvent('joinchat:event', { detail: params, cancelable: true }))) return;
 
-    const data_layer = window[this.settings.data_layer] || window[window.gtm4wp_datalayer_name] || window['dataLayer'];
+    const data_layer = window[this.settings.data_layer] || window[window.gtm4wp_datalayer_name] || window.dataLayer;
 
     if (typeof data_layer === 'object') {
-      // Ensure gtag is defined
-      if (typeof gtag === 'undefined') {
-        window.gtag = function () { data_layer.push(arguments); };
-      }
+      const gtag = window.gtag || function () { data_layer.push(arguments); };
 
       // GA4 send recommended event "generate_lead"
-      const ga4_event = this.settings.ga_event || 'generate_lead';
-      const ga4_params = { transport_type: 'beacon', ...params };
-      // GA4 params max_length (https://support.google.com/analytics/answer/9234069 https://support.google.com/analytics/answer/9267744)
-      Object.keys(ga4_params).forEach(k => {
-        if (k === 'page_location') ga4_params[k] = ga4_params[k].substring(0, 1000);
-        else if (k === 'page_referrer') ga4_params[k] = ga4_params[k].substring(0, 420);
-        else if (k === 'page_title') ga4_params[k] = ga4_params[k].substring(0, 300);
-        else if (typeof ga4_params[k] === 'string') ga4_params[k] = ga4_params[k].substring(0, 100);
-      });
+      const ga4_event = this.settings.ga_event !== undefined ? this.settings.ga_event : 'generate_lead';
 
-      const ga4_tags = [];
-      const ga4_send = tag => {
-        if (ga4_tags.includes(tag)) return;
-        if (tag.startsWith('G-') || tag.startsWith('GT-')) {
-          ga4_tags.push(tag);
-          gtag('event', ga4_event, { send_to: tag, ...ga4_params }); // Send GA4 event
+      if (ga4_event) {
+        const ga4_params = { transport_type: 'beacon', ...params };
+        // GA4 params max_length (https://support.google.com/analytics/answer/9234069 https://support.google.com/analytics/answer/9267744)
+        Object.keys(ga4_params).forEach(k => {
+          if (k === 'page_location') ga4_params[k] = ga4_params[k].substring(0, 1000);
+          else if (k === 'page_referrer') ga4_params[k] = ga4_params[k].substring(0, 420);
+          else if (k === 'page_title') ga4_params[k] = ga4_params[k].substring(0, 300);
+          else if (typeof ga4_params[k] === 'string') ga4_params[k] = ga4_params[k].substring(0, 100);
+        });
+
+        const ga4_tags = [];
+        const ga4_send = tag => {
+          if (ga4_tags.includes(tag)) return;
+          if (tag.startsWith('G-') || tag.startsWith('GT-')) {
+            ga4_tags.push(tag);
+            gtag('event', ga4_event, { send_to: tag, ...ga4_params }); // Send GA4 event
+          }
+        };
+
+        // gtag.js (New "Google Tag" find destinations)
+        if (window.google_tag_data && google_tag_data.tidr && !!google_tag_data.tidr.destination) {
+          for (const tag in google_tag_data.tidr.destination) ga4_send(tag);
         }
-      };
-
-      // gtag.js (New "Google Tag" find destinations)
-      if (window.google_tag_data && google_tag_data.tidr && !!google_tag_data.tidr.destination) {
-        for (const tag in google_tag_data.tidr.destination) ga4_send(tag);
+        // gtag.js (Old method, traverse dataLayer and find 'config')
+        data_layer.forEach(item => {
+          if (item[0] === 'config' && item[1]) ga4_send(item[1]);
+        });
       }
-      // gtag.js (Old method, traverse dataLayer and find 'config')
-      data_layer.forEach(item => {
-        if (item[0] === 'config' && item[1]) ga4_send(item[1]);
-      });
 
       // Send Google Ads conversion
       if (this.settings.gads) {
@@ -107,8 +107,17 @@
       data_layer.push({ event: event_category, ...params });
     }
 
-    // Send Facebook Pixel custom event
+    // Send Facebook Pixel custom event (mask phone)
     if (typeof fbq === 'function') {
+      if (params.chat_channel === 'whatsapp') {
+        const phone = params.chat_id;
+        const masked = `${phone.substring(0, 3)}${'X'.repeat(phone.length - 5)}${phone.substring(phone.length - 2)}`;
+
+        params.chat_id = masked;
+        params.event_label = params.event_label.replace(phone, masked);
+        params.event_action = params.event_action.replace(phone, masked);
+      }
+
       fbq('trackCustom', event_category, params);
     }
   };
