@@ -27,7 +27,7 @@ class Joinchat_Gutenberg {
 		$asset_file = include JOINCHAT_DIR . '/gutenberg/build/index.asset.php';
 
 		$joinchat_data = array(
-			'image_qr'     => plugins_url( 'admin/img/qr.png', JOINCHAT_FILE ),
+			'image_qr'     => plugins_url( 'admin/img/qr.webp', JOINCHAT_FILE ),
 			'defaults'     => jc_common()->get_obj_placeholders( get_post() ),
 			'message_vars' => jc_common()->get_obj_vars( get_post() ),
 		);
