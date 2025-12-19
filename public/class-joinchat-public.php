@@ -119,7 +119,6 @@ class Joinchat_Public {
 	 *
 	 * Can defer styles if button delay > 0:
 	 *  - move stylesheet to footer
-	 *  - add 'media="print"' view(https://www.filamentgroup.com/lab/load-css-simpler/)
 	 *
 	 * @since    6.0.0
 	 * @return   void
@@ -233,8 +232,9 @@ class Joinchat_Public {
 
 		$min  = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
 		$args = is_wp_version_compatible( '6.3' ) ? array(
-			'strategy'  => 'defer',
-			'in_footer' => true,
+			'in_footer'     => true,
+			'strategy'      => 'defer',
+			'fetchpriority' => 'low',
 		) : true;
 
 		// Register QR script.
