@@ -3,9 +3,9 @@ Contributors: creapuntome, pacotole, davidlillo, monillo
 Donate link: https://join.chat/donate/
 Tags: WhatsApp, Chat, Floating Button, Facebook Messenger, Telegram
 Requires at least: 4.9.6
-Tested up to: 6.8
+Tested up to: 6.9
 Requires PHP: 7.0
-Stable tag: 6.0.8
+Stable tag: 6.0.9
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -396,6 +396,12 @@ You can view in your *Settings > Privacy > Policy Guide* the suggested text by J
 
 
 == Changelog ==
+
+= 6.0.9 =
+* New add WordPress 6.9 script enqueue option fetchpriority low
+* Bump tested up to Wordpress 6.9
+* Tweak replace png images to webp
+* Tweak Updated IntTelInput library to 25.13.3
 
 = 6.0.8 =
 * New allow to disable GA4 event with filter 'joinchat_get_settings' and set 'ga_event' as false

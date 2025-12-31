@@ -2,22 +2,22 @@
 # This file is distributed under the GPL-2.0+.
 msgid ""
 msgstr ""
-"Project-Id-Version: Joinchat 6.0.0\n"
+"Project-Id-Version: Joinchat 6.0.9\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/creame-whatsapp-me\n"
 "Last-Translator: Pacotole <pacotole@crea.me>\n"
 "Language-Team: Creame <hola@crea.me>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-03-12T09:02:54+00:00\n"
+"POT-Creation-Date: 2025-12-31T15:43:53+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.11.0\n"
+"X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: creame-whatsapp-me\n"
 
 #. Plugin Name of the plugin
 #: joinchat.php
 #: admin/class-joinchat-admin.php:39
-#: admin/class-joinchat-admin.php:339
+#: admin/class-joinchat-admin.php:337
 #: admin/partials/term-meta-box.php:15
 #: gutenberg/build/index.js:1
 msgid "Joinchat"
@@ -60,6 +60,7 @@ msgstr ""
 
 #. translators: %s: User display name.
 #: admin/class-joinchat-admin-onboard.php:185
+#, php-format
 msgctxt "onboard"
 msgid "Hey, <em>%s</em>. Let's set up <strong>Joinchat</strong> in less than 2 minutes."
 msgstr ""
@@ -141,6 +142,7 @@ msgstr ""
 
 #. translators: %s: Terms of Use link.
 #: admin/class-joinchat-admin-onboard.php:208
+#, php-format
 msgctxt "onboard"
 msgid "I accept the <a href=\"%s\" target=\"_blank\">terms of use and privacy policy</a>"
 msgstr ""
@@ -520,6 +522,7 @@ msgstr ""
 
 #. translators: %s: CSS tricks link.
 #: admin/class-joinchat-admin-page.php:491
+#, php-format
 msgid "You can find examples and more tricks <a href=\"%s\" target=\"_blank\">here</a>."
 msgstr ""
 
@@ -557,11 +560,13 @@ msgstr ""
 
 #. translators: %s: input for seconds delay
 #: admin/class-joinchat-admin-page.php:623
+#, php-format
 msgid "after %s seconds"
 msgstr ""
 
 #. translators: %s: input for number of pages
 #: admin/class-joinchat-admin-page.php:625
+#, php-format
 msgid "and user has visited at least %s pages"
 msgstr ""
 
@@ -646,11 +651,13 @@ msgstr ""
 
 #. translators: %s: the code.
 #: admin/class-joinchat-admin-page.php:678
+#, php-format
 msgid "Split text into bubbles using %s"
 msgstr ""
 
 #. translators: %s: the code.
 #: admin/class-joinchat-admin-page.php:680
+#, php-format
 msgid "Add notes outside the chat with %s"
 msgstr ""
 
@@ -696,6 +703,7 @@ msgstr ""
 
 #. translators: 1: FEATURED, 2: THUMB.
 #: admin/class-joinchat-admin-page.php:699
+#, php-format
 msgid "Can use %1$s or %2$s as image url to use current post Featured Image."
 msgstr ""
 
@@ -707,7 +715,7 @@ msgstr ""
 #: admin/class-joinchat-admin-page.php:732
 #: admin/class-joinchat-admin-page.php:734
 #: admin/class-joinchat-admin-page.php:740
-#: admin/class-joinchat-admin.php:181
+#: admin/class-joinchat-admin.php:199
 msgid "e.g."
 msgstr ""
 
@@ -744,6 +752,7 @@ msgstr ""
 
 #. translators: 1: attribute phone, 2: attribute message.
 #: admin/class-joinchat-admin-page.php:718
+#, php-format
 msgid "You can set <strong>custom phone and initial message</strong> with attributes %1$s and %2$s."
 msgstr ""
 
@@ -776,11 +785,13 @@ msgstr ""
 
 #. translators: 1: docs url, 2: wordpress.org plugin support url.
 #: admin/class-joinchat-admin-page.php:751
+#, php-format
 msgid "If you need help, first check the <a href=\"%1$s\" target=\"_blank\">documentation</a> and if you don't find the solution you can consult the <a href=\"%2$s\" target=\"_blank\">plugin's free support forum</a>."
 msgstr ""
 
 #. translators: %s: premium url.
 #: admin/class-joinchat-admin-page.php:757
+#, php-format
 msgid "You can also buy <strong><a href=\"%s\" target=\"_blank\">Joinchat Premium</a></strong> with one year of support service included."
 msgstr ""
 
@@ -790,16 +801,19 @@ msgstr ""
 
 #. translators: %s: Add review link.
 #: admin/class-joinchat-admin-page.php:764
+#, php-format
 msgid "Please leave us a %s rating. We'll thank you."
 msgstr ""
 
 #. translators: %s: Joinchat page link.
 #: admin/class-joinchat-admin-page.php:769
+#, php-format
 msgid "Subscribe to our newsletter and visit our blog at %s."
 msgstr ""
 
 #. translators: %s: Joinchat X (twitter) link.
 #: admin/class-joinchat-admin-page.php:774
+#, php-format
 msgid "Follow %s on 𝕏."
 msgstr ""
 
@@ -825,6 +839,7 @@ msgstr ""
 
 #. translators: 1: Joinchat, 2: Add review link.
 #: admin/class-joinchat-admin-page.php:978
+#, php-format
 msgid "Do you like %1$s? Please help us with a %2$s rating."
 msgstr ""
 
@@ -836,40 +851,41 @@ msgstr ""
 msgid "Settings saved"
 msgstr ""
 
-#: admin/class-joinchat-admin.php:256
+#: admin/class-joinchat-admin.php:254
 msgid "You only need to add your WhatsApp number to contact with your users."
 msgstr ""
 
-#: admin/class-joinchat-admin.php:257
+#: admin/class-joinchat-admin.php:255
 msgid "Go to settings"
 msgstr ""
 
-#: admin/class-joinchat-admin.php:295
+#: admin/class-joinchat-admin.php:293
 msgid "Settings"
 msgstr ""
 
-#: admin/class-joinchat-admin.php:315
+#: admin/class-joinchat-admin.php:313
 msgid "Documentation"
 msgstr ""
 
-#: admin/class-joinchat-admin.php:316
+#: admin/class-joinchat-admin.php:314
 msgid "Support"
 msgstr ""
 
-#: admin/class-joinchat-admin.php:554
+#: admin/class-joinchat-admin.php:552
 msgid "With the current Joinchat's settings, no user data is collected and no cookies are used."
 msgstr ""
 
-#: admin/class-joinchat-admin.php:559
+#: admin/class-joinchat-admin.php:557
 msgid "Joinchat uses cookies to control when the chat window should be automatically displayed."
 msgstr ""
 
-#: admin/class-joinchat-admin.php:561
+#: admin/class-joinchat-admin.php:559
 msgid "Cookies can be used to control when the WhatsApp floating button chat window should be automatically displayed."
 msgstr ""
 
 #. translators: %s: cookies names.
-#: admin/class-joinchat-admin.php:563
+#: admin/class-joinchat-admin.php:561
+#, php-format
 msgid "These cookies (%s) do not contain personal data, are of type HTML LocalStorage and do not expire."
 msgstr ""
 
@@ -881,6 +897,7 @@ msgstr ""
 
 #. translators: %s: Joinchat Premium.
 #: admin/class-joinchat-premium.php:82
+#, php-format
 msgid "With %s you can enjoy exclusive features such as advanced Call to Action customization, multiple agents with scheduling of service hours, add other contact channels and much more."
 msgstr ""
 
@@ -890,6 +907,7 @@ msgstr ""
 
 #. translators: %s: Joinchat Premium.
 #: admin/class-joinchat-premium.php:85
+#, php-format
 msgid "Take your customer service to the next level with %s!"
 msgstr ""
 
@@ -957,6 +975,7 @@ msgstr ""
 
 #. translators: %s: coupon discount.
 #: admin/class-joinchat-premium.php:158
+#, php-format
 msgid "🔥 %s discount on Premium!"
 msgstr ""
 
@@ -1168,7 +1187,7 @@ msgstr ""
 
 #: includes/class-joinchat-elementor-finder.php:57
 #: includes/class-joinchat-elementor-finder.php:64
-#: includes/class-joinchat-integrations.php:120
+#: includes/class-joinchat-integrations.php:135
 msgid "Joinchat settings page"
 msgstr ""
 
@@ -1200,6 +1219,7 @@ msgstr ""
 
 #. translators: %1$s: Translation Dashboard link, %2$s: String Translation link
 #: includes/class-joinchat-i18n.php:318
+#, php-format
 msgid "Go to %1$s or %2$s"
 msgstr ""
 
@@ -1207,14 +1227,22 @@ msgstr ""
 msgid "Manage translations"
 msgstr ""
 
-#: includes/class-joinchat-integrations.php:116
+#: includes/class-joinchat-integrations.php:131
 msgctxt "Title in Elementor Finder"
 msgid "WooCommerce Settings"
 msgstr ""
 
-#: includes/class-joinchat-integrations.php:119
+#: includes/class-joinchat-integrations.php:134
 msgctxt "Keywords in Elementor Finder"
 msgid "woocommerce,shop,product"
+msgstr ""
+
+#: public/class-joinchat-public.php:448
+msgid "WhatsApp contact"
+msgstr ""
+
+#: public/class-joinchat-public.php:448
+msgid "Open chat"
 msgstr ""
 
 #: gutenberg/build/index.js:1
@@ -1234,6 +1262,7 @@ msgid "Contact"
 msgstr ""
 
 #: gutenberg/build/index.js:1
+#, js-format
 msgid "Leave blank to use the %s or global Joinchat settings."
 msgstr ""
 
@@ -1262,6 +1291,7 @@ msgid "Button only"
 msgstr ""
 
 #: gutenberg/build/index.js:1
+#, js-format
 msgid "Custom Joinchat settings for this publication (%s)."
 msgstr ""
 
