@@ -176,12 +176,10 @@ class Joinchat_Admin {
 
 		$intltel = jc_common()->get_intltel();
 		if ( $intltel ) {
-			$deps[]              = 'intl-tel-input';
-			$l10n                = $this->load_intltel_lang();
-			$l10n['placeholder'] = esc_attr__( 'e.g.', 'creame-whatsapp-me' );
+			$deps[] = 'intl-tel-input';
 
 			wp_register_script( 'intl-tel-input', plugins_url( "js/intlTelInputWithUtils{$min}.js", __FILE__ ), array(), $intltel, true );
-			wp_localize_script( 'intl-tel-input', 'intl_tel_l10n', $l10n );
+			wp_add_inline_script( 'intl-tel-input', $this->load_intltel_lang() );
 		}
 
 		wp_register_script( JOINCHAT_SLUG, plugins_url( "js/joinchat{$min}.js", __FILE__ ), $deps, JOINCHAT_VERSION, true );
@@ -198,30 +196,30 @@ class Joinchat_Admin {
 
 		$lang = strtolower( substr( get_user_locale(), 0, 2 ) );
 
+		$placeholder = 'placeholder:"' . esc_attr__( 'e.g.', 'creame-whatsapp-me' ) . '"';
+
 		if ( 'en' === $lang ) {
-			return array();
+			return 'var intl_tel_l10n = { ' . $placeholder . ' };';
 		}
 
 		$i18n = get_transient( "joinchat_intltel_lang_{$lang}" );
 
 		if ( false === $i18n ) {
-			$i18n = array();
+			$i18n = '';
 
-			// Convert javascript files to JSON.
+			// Get javascript lang files.
 			foreach ( array( 'interface', 'countries' ) as $file ) {
 				if ( file_exists( JOINCHAT_DIR . "admin/js/i18n/$lang/$file.js" ) ) {
-					$str = file_get_contents( JOINCHAT_DIR . "admin/js/i18n/$lang/$file.js" );           // Load javascript.
-					$str = preg_replace( '#[ \t]*//.*[ \t]*[\r\n]#u', '', $str );                        // Remove comments.
-					$str = substr( $str, strpos( $str, '{' ) );                                          // From {.
-					$str = substr( $str, 0, strrpos( $str, '}' ) + 1 );                                  // To }.
-					$str = preg_replace( '/(\s*?)([\'"])?([a-zA-Z0-9_]+)([\'"])?:/u', '$1"$3":', $str ); // Quoted keys.
-
-					$strings = json_decode( $str, true );
-
-					if ( is_array( $strings ) ) {
-						$i18n += $strings;
-					}
+					$str   = file_get_contents( JOINCHAT_DIR . "admin/js/i18n/$lang/$file.js" ); // Load javascript.
+					$str   = substr( $str, 0, strrpos( $str, '};' ) + 2 );                       // To };.
+					$i18n .= $str . "\n";
 				}
+			}
+
+			if ( empty( $i18n ) ) {
+				$i18n = 'var intl_tel_l10n = { ' . $placeholder . ' };';
+			} else {
+				$i18n = '(() => { ' . $i18n . 'window.intl_tel_l10n = { ' . $placeholder . ', ...interfaceTranslations, ...countryTranslations }; })();';
 			}
 
 			set_transient( "joinchat_intltel_lang_{$lang}", $i18n, DAY_IN_SECONDS );

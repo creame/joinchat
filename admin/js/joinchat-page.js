@@ -58,7 +58,7 @@
 
           $(this).css('color', this.value.trim() && !is_valid ? '#ca4a1f' : '');
           // Ensures number it's updated
-          iti.hiddenInput.value = iti.getNumber();
+          iti.ui.hiddenInput.value = iti.getNumber();
           // Enable/disable phone test
           $('#joinchat_phone_test').attr('disabled', !is_valid);
         });

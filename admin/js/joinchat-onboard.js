@@ -189,7 +189,7 @@
           var iti = intlTelInput($phone[0], {
             hiddenInput: () => { return { phone: 'joinchat[telephone]' }; },
             strictMode: true,
-            showSelectedDialCode: true,
+            separateDialCode: true,
             initialCountry: country_code || 'auto',
             customPlaceholder: (country_ph) => `${intl_tel_l10n.placeholder} ${country_ph}`,
             i18n: intl_tel_l10n,

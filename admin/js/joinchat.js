@@ -53,7 +53,7 @@
         $phone.on('input countrychange', function () {
           $(this).css('color', this.value.trim() && !iti.isValidNumber(true) ? '#ca4a1f' : '');
           // Ensures number it's updated on AJAX save (Gutemberg)
-          iti.hiddenInput.value = iti.getNumber();
+          iti.ui.hiddenInput.value = iti.getNumber();
         });
       }
     }

@@ -20,7 +20,7 @@ class Joinchat_Common {
 	 *
 	 * @since    4.5.10
 	 */
-	const INTL_TEL_INPUT_VERSION = '25.3.0';
+	const INTL_TEL_INPUT_VERSION = '25.13.3';
 
 	/**
 	 * Singleton instance.

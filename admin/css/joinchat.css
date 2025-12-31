@@ -239,6 +239,14 @@ tr.joinchat--focus .joinchat_vars_help {
   background: rgba(0, 0, 0, 0.2);
 }
 
+.iti .iti__search-input {
+  width: 100%;
+  border-width: 0;
+  border-radius: 3px;
+  padding-left: 30px;
+  padding-right: 28px;
+}
+
 @media screen and (max-width: 782px) {
   .joinchat_vars_help {
     margin-top: 2px;
