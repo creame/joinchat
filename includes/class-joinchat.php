@@ -215,9 +215,7 @@ class Joinchat {
 	 */
 	private function define_public_hooks() {
 
-		global $pagenow;
-
-		if ( is_admin() || 'wp-login.php' === $pagenow ) {
+		if ( is_admin() || $this->is_login() || wp_doing_ajax() || wp_doing_cron() ) {
 			return;
 		}
 
@@ -331,5 +329,16 @@ class Joinchat {
 	 */
 	public function get_loader() {
 		return $this->loader;
+	}
+
+	/**
+	 * Check if the current request is for the login page.
+	 *
+	 * @since    6.0.9
+	 * @access   private
+	 * @return   bool    True if is login page, false otherwise.
+	 */
+	private function is_login() {
+		return function_exists( 'is_login' ) ? is_login() : false !== stripos( wp_login_url(), $_SERVER['SCRIPT_NAME'] );
 	}
 }
