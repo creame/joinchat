@@ -204,7 +204,7 @@ class Joinchat_Admin {
 
 		$i18n = get_transient( "joinchat_intltel_lang_{$lang}" );
 
-		if ( false === $i18n ) {
+		if ( ! is_string( $i18n ) ) {
 			$i18n = '';
 
 			// Get javascript lang files.
