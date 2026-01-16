@@ -5,7 +5,7 @@ Tags: WhatsApp, Chat, Floating Button, Facebook Messenger, Telegram
 Requires at least: 4.9.6
 Tested up to: 6.9
 Requires PHP: 7.0
-Stable tag: 6.0.9
+Stable tag: 6.0.10
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -396,6 +396,9 @@ You can view in your *Settings > Privacy > Policy Guide* the suggested text by J
 
 
 == Changelog ==
+
+= 6.0.10 =
+* Tweak CTA random text allow html tags (bold, italic, img...)
 
 = 6.0.9 =
 * New add WordPress 6.9 script enqueue option fetchpriority low
