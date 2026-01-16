@@ -241,7 +241,8 @@
   joinchat_obj.rand_text = function (node) {
     node.querySelectorAll('jc-rand').forEach(rand => {
       const options = rand.children;
-      rand.replaceWith(options[Math.floor(Math.random() * options.length)].innerHTML);
+      rand.insertAdjacentHTML('afterend', options[Math.floor(Math.random() * options.length)].innerHTML);
+      rand.remove();
     });
   }
 
