@@ -154,7 +154,7 @@ class Joinchat_Admin {
 		$intltel = jc_common()->get_intltel();
 		if ( $intltel ) {
 			$deps[] = 'intl-tel-input';
-			wp_register_style( 'intl-tel-input', plugins_url( "css/intlTelInput{$min}.css", __FILE__ ), array(), $intltel, 'all' );
+			wp_register_style( 'intl-tel-input', plugins_url( 'lib/intl-tel-input/css/intlTelInput.min.css', __FILE__ ), array(), $intltel, 'all' );
 		}
 
 		wp_register_style( JOINCHAT_SLUG, plugins_url( "css/joinchat{$min}.css", __FILE__ ), $deps, JOINCHAT_VERSION, 'all' );
@@ -178,7 +178,7 @@ class Joinchat_Admin {
 		if ( $intltel ) {
 			$deps[] = 'intl-tel-input';
 
-			wp_register_script( 'intl-tel-input', plugins_url( "js/intlTelInputWithUtils{$min}.js", __FILE__ ), array(), $intltel, true );
+			wp_register_script( 'intl-tel-input', plugins_url( 'lib/intl-tel-input/js/intlTelInputWithUtils.min.js', __FILE__ ), array(), $intltel, true );
 			wp_add_inline_script( 'intl-tel-input', $this->load_intltel_lang() );
 		}
 
@@ -209,9 +209,9 @@ class Joinchat_Admin {
 
 			// Get javascript lang files.
 			foreach ( array( 'interface', 'countries' ) as $file ) {
-				if ( file_exists( JOINCHAT_DIR . "admin/js/i18n/$lang/$file.js" ) ) {
-					$str   = file_get_contents( JOINCHAT_DIR . "admin/js/i18n/$lang/$file.js" ); // Load javascript.
-					$str   = substr( $str, 0, strrpos( $str, '};' ) + 2 );                       // To };.
+				if ( file_exists( JOINCHAT_DIR . "admin/lib/intl-tel-input/js/i18n/$lang/$file.js" ) ) {
+					$str   = file_get_contents( JOINCHAT_DIR . "admin/lib/intl-tel-input/js/i18n/$lang/$file.js" );
+					$str   = substr( $str, 0, strrpos( $str, '};' ) + 2 ); // To };.
 					$i18n .= $str . "\n";
 				}
 			}
