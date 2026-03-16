@@ -5,7 +5,7 @@ module.exports = {
     require('postcss-strip-inline-comments'),
     require('postcss-hexrgba'),
     require('postcss-calc'),
-    require('postcss-sort-media-queries'),
+    require('postcss-sort-media-queries')({ sort: 'mobile-first' }),
     require('autoprefixer'),
     require('stylelint')({ fix: true }),
     require('postcss-discard-duplicates'),
