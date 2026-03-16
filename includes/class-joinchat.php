@@ -81,7 +81,6 @@ class Joinchat {
 		require_once JOINCHAT_DIR . 'includes/class-joinchat-i18n.php';
 		require_once JOINCHAT_DIR . 'includes/class-joinchat-integrations.php';
 		require_once JOINCHAT_DIR . 'includes/class-joinchat-util.php';
-		require_once JOINCHAT_DIR . 'includes/class-joinchat-util-deprecated.php'; // TODO: deprecation to be deleted.
 
 		$this->loader = new Joinchat_Loader();
 		jc_common(); // Instance Joinchat_Common.
@@ -100,7 +99,9 @@ class Joinchat {
 	 */
 	private function set_locale() {
 
-		$plugin_i18n = new Joinchat_I18n( $this->loader );
+		$plugin_i18n = new Joinchat_I18n();
+
+		$this->loader->add_action( 'init', $plugin_i18n, 'init', 11 );
 
 	}
 
@@ -193,15 +194,13 @@ class Joinchat {
 
 		$this->loader->add_action( 'admin_menu', $plugin_page, 'add_menu' );
 		$this->loader->add_action( 'admin_init', $plugin_page, 'setting_fields' );
-		$this->loader->add_action( 'load-settings_page_joinchat', $plugin_page, 'page_hooks' ); // Settings submenu.
-		$this->loader->add_action( 'load-toplevel_page_joinchat', $plugin_page, 'page_hooks' ); // Joinchat menu.
+		$this->loader->add_action( 'load_joinchat_settings_page', $plugin_page, 'page_hooks' );
 
 		$plugin_onboard = new Joinchat_Admin_Onboard();
 
 		$this->loader->add_action( 'admin_menu', $plugin_onboard, 'add_menu' );
 		$this->loader->add_action( 'admin_head', $plugin_onboard, 'remove_menu' );
-		$this->loader->add_action( 'load-settings_page_joinchat-onboard', $plugin_onboard, 'page_hooks' ); // Settings submenu.
-		$this->loader->add_action( 'load-joinchat_page_joinchat-onboard', $plugin_onboard, 'page_hooks' ); // Joinchat submenu.
+		$this->loader->add_action( 'load_joinchat_onboard_page', $plugin_onboard, 'page_hooks' );
 		$this->loader->add_action( 'wp_ajax_joinchat_onboard', $plugin_onboard, 'save' );
 
 	}
@@ -216,21 +215,25 @@ class Joinchat {
 	 */
 	private function define_public_hooks() {
 
-		global $pagenow;
-
-		if ( is_admin() || 'wp-login.php' === $pagenow ) {
+		if ( is_admin() || $this->is_login() || wp_doing_ajax() || wp_doing_cron() ) {
 			return;
 		}
+
+		require_once JOINCHAT_DIR . 'includes/class-joinchat-formatter.php';
+		Joinchat_Formatter::instance();
 
 		require_once JOINCHAT_DIR . 'public/class-joinchat-public.php';
 
 		$plugin_public = new Joinchat_Public();
 
 		$this->loader->add_filter( 'joinchat_settings', $plugin_public, 'get_settings' );
-		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
+		$this->loader->add_action( 'wp', $plugin_public, 'set_chatbox_content', 100 );
+		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'register_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
+		$this->loader->add_action( 'wp_print_styles', $plugin_public, 'header_styles' );
 		$this->loader->add_action( 'wp_footer', $plugin_public, 'footer_html' );
-		$this->loader->add_action( 'wp_footer', $plugin_public, 'enqueue_qr_script', 5 );
+		$this->loader->add_action( 'wp_footer', $plugin_public, 'enqueue_styles' );
+		$this->loader->add_action( 'wp_footer', $plugin_public, 'enqueue_qr_script' );
 
 		// Actions (only) for preview.
 		$this->loader->add_action( 'joinchat_preview_footer', $plugin_public, 'footer_html' );
@@ -266,7 +269,6 @@ class Joinchat {
 		$this->loader->add_filter( 'show_admin_bar', $plugin_preview, 'hide_admin_bar', 1000 );
 		$this->loader->add_filter( 'joinchat_show', $plugin_preview, 'always_show', 1000 );
 		$this->loader->add_filter( 'joinchat_classes', $plugin_preview, 'preview_classes', 10, 2 );
-		$this->loader->add_filter( 'joinchat_content', $plugin_preview, 'preview_content' );
 		$this->loader->add_filter( 'joinchat_template', $plugin_preview, 'preview_template' );
 		$this->loader->add_filter( 'joinchat_inline_style', $plugin_preview, 'inline_style' );
 
@@ -327,5 +329,16 @@ class Joinchat {
 	 */
 	public function get_loader() {
 		return $this->loader;
+	}
+
+	/**
+	 * Check if the current request is for the login page.
+	 *
+	 * @since    6.0.9
+	 * @access   private
+	 * @return   bool    True if is login page, false otherwise.
+	 */
+	private function is_login() {
+		return function_exists( 'is_login' ) ? is_login() : false !== stripos( wp_login_url(), $_SERVER['SCRIPT_NAME'] );
 	}
 }

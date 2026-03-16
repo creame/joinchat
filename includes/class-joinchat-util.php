@@ -43,6 +43,8 @@ class Joinchat_Util {
 	 * @return   mixed $value cleaned
 	 */
 	public static function clean_input( $value ) {
+		$value = wp_unslash( $value );
+
 		if ( is_array( $value ) ) {
 			return array_map( self::class . '::clean_input', $value );
 		} elseif ( is_string( $value ) ) {
@@ -135,7 +137,7 @@ class Joinchat_Util {
 	 */
 	public static function thumb( $img, $width, $height, $crop = true ) {
 
-		$img_path = intval( $img ) > 0 ? get_attached_file( $img ) : $img;
+		$img_path = (int) $img > 0 ? get_attached_file( $img ) : $img;
 
 		// Try fallback if file don't exists (filter to true to skip thumbnail generation).
 		if ( apply_filters( 'joinchat_disable_thumbs', ! $img_path || ! file_exists( $img_path ) ) ) {
@@ -193,6 +195,26 @@ class Joinchat_Util {
 	}
 
 	/**
+	 * Return if attachment is video.
+	 *
+	 * @since    5.2.0
+	 * @access   public
+	 * @param    mixed $id attachment ID or null or empty.
+	 * @return   bool  true if is video, false otherwise
+	 */
+	public static function is_video( $id ) {
+
+		if ( (int) $id > 0 ) {
+			$attachment_mime = get_post_mime_type( $id );
+
+			return strpos( $attachment_mime, 'video/' ) === 0;
+		}
+
+		return false;
+
+	}
+
+	/**
 	 * Return if image is animated gif.
 	 *
 	 * @since    3.1.0
@@ -201,7 +223,7 @@ class Joinchat_Util {
 	 * @return   bool  true if is an animated gif, false otherwise
 	 */
 	public static function is_animated_gif( $img ) {
-		$img_path = intval( $img ) > 0 ? get_attached_file( $img ) : $img;
+		$img_path = (int) $img > 0 ? get_attached_file( $img ) : $img;
 
 		return $img_path && file_exists( $img_path ) ? (bool) preg_match( '#(\x00\x21\xF9\x04.{4}\x00\x2C.*){2,}#s', file_get_contents( $img_path ) ) : false; // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
 	}
@@ -210,40 +232,86 @@ class Joinchat_Util {
 	 * Format raw message text for html output.
 	 * Also apply styles transformations like WhatsApp app.
 	 *
+	 * @since    6.0.0
+	 * @param    string $string    string to apply format replacements.
+	 * @param    bool   $as_array  return array of messages.
+	 * @return   string|array     string formated
+	 */
+	public static function formatted_message( $string, $as_array = false ) {
+
+		if ( empty( $string ) ) {
+			return $as_array ? array() : '';
+		}
+
+		// Format replacements .
+		$replacements = apply_filters( 'joinchat_format_replacements', array() );
+
+		// Split text into lines.
+		$lines = explode( "\n", self::clean_nl( $string ) );
+
+		// Apply replacements line by line.
+		if ( count( $replacements ) ) {
+			foreach ( $lines as $key => $line ) {
+				$escaped_line = esc_html( $line );
+
+				foreach ( $replacements as $pattern => $replacement ) {
+					if ( is_callable( $replacement ) ) {
+						$escaped_line = preg_replace_callback( $pattern, $replacement, $escaped_line );
+					} else {
+						$escaped_line = preg_replace( $pattern, $replacement, $escaped_line );
+					}
+				}
+
+				$lines[ $key ] = $escaped_line;
+			}
+		}
+
+		// Join lines and replace variables.
+		$formatted = self::replace_variables( implode( '<br>', $lines ) );
+
+		// Out of bubble messages (notes).
+		$formatted = preg_replace( '/(^(?:&gt;){3,}<br>)/u', '>>>', $formatted );
+		$formatted = preg_replace( '/(<br>(?:&gt;){3,}<br>)/u', '<br>===<br>>>>', $formatted );
+		$formatted = preg_replace( '/(^(?:=){3,}<br>)/u', '', $formatted );
+
+		// Split message in bubbles.
+		$messages = preg_split( '/<br>={3,}<br>/u', $formatted );
+
+		// Return array of messages.
+		if ( $as_array ) {
+			return $messages;
+		}
+
+		// Wrap messages in divs & add classes.
+		foreach ( $messages as $key => $msg ) {
+			$class = '';
+
+			if ( substr( $msg, 0, 3 ) === '>>>' ) {
+				$class = ' joinchat__bubble--note';
+				$msg   = substr( $msg, 3 );
+			} elseif ( wp_strip_all_tags( $msg ) === '' ) {
+				$class = ' joinchat__bubble--media';
+			}
+
+			$messages[ $key ] = sprintf( '<div class="joinchat__bubble%s">%s</div>', $class, $msg );
+		}
+
+		return join( "\n", $messages );
+
+	}
+
+	/**
+	 * Format raw message text for html output.
+	 * Also apply styles transformations like WhatsApp or MarkDown.
+	 *
 	 * @since    3.1.0
 	 * @since    3.1.2      Allowed callback replecements
+	 * @since    6.0.0      Deprecated, use formatted_message() instead.
 	 * @param    string $string    string to apply format replacements.
 	 * @return   string     string formated
 	 */
 	public static function formated_message( $string ) {
-
-		$replacements = apply_filters(
-			'joinchat_format_replacements',
-			array(
-				'/(^|\W)_(.+?)_(\W|$)/u'   => '$1<em>$2</em>$3',
-				'/(^|\W)\*(.+?)\*(\W|$)/u' => '$1<strong>$2</strong>$3',
-				'/(^|\W)~(.+?)~(\W|$)/u'   => '$1<del>$2</del>$3',
-			)
-		);
-
-		// Split text into lines and apply replacements line by line.
-		$lines = explode( "\n", self::clean_nl( $string ) );
-		foreach ( $lines as $key => $line ) {
-			$escaped_line = esc_html( $line );
-
-			foreach ( $replacements as $pattern => $replacement ) {
-				if ( is_callable( $replacement ) ) {
-					$escaped_line = preg_replace_callback( $pattern, $replacement, $escaped_line );
-				} else {
-					$escaped_line = preg_replace( $pattern, $replacement, $escaped_line );
-				}
-			}
-
-			$lines[ $key ] = $escaped_line;
-		}
-
-		return self::replace_variables( implode( '<br>', $lines ) );
-
+		return self::formatted_message( $string );
 	}
 
 	/**
@@ -266,7 +334,8 @@ class Joinchat_Util {
 			'joinchat_variable_replacements',
 			array(
 				'SITE'  => get_bloginfo( 'name' ),
-				'URL'   => home_url( $wp->request ),
+				'HOME'  => home_url(),
+				'URL'   => user_trailingslashit( home_url( $wp->request ) ),
 				'HREF'  => home_url( add_query_arg( null, null ) ),
 				'TITLE' => self::get_title(),
 			)
@@ -385,16 +454,22 @@ class Joinchat_Util {
 	}
 
 	/**
-	 * Is Joinchat admin screen
+	 * Is Joinchat settings admin screen
 	 *
 	 * @since    5.0.0
+	 * @since    5.2.1 added $include_onboard param.
+	 * @param bool $include_onboard Include onboard page.
 	 * @return bool
 	 */
-	public static function is_admin_screen() {
+	public static function is_admin_screen( $include_onboard = false ) {
 
-		$current_screen = get_current_screen();
+		if ( did_action( 'load_joinchat_settings_page' ) ) {
+			return true;
+		} elseif ( $include_onboard && did_action( 'load_joinchat_onboard_page' ) ) {
+			return true;
+		}
 
-		return null !== $current_screen && false !== strpos( $current_screen->id, '_joinchat' );
+		return false;
 
 	}
 
@@ -448,5 +523,112 @@ class Joinchat_Util {
 
 		return $css;
 
+	}
+
+	/**
+	 * Convert RGB to HSL
+	 *
+	 * @since 6.0.0
+	 * @param int $r Red value.
+	 * @param int $g Green value.
+	 * @param int $b Blue value.
+	 * @return array HSL values.
+	 */
+	public static function rgb2hsl( $r, $g, $b ) {
+		$r /= 255;
+		$g /= 255;
+		$b /= 255;
+
+		$max = max( $r, $g, $b );
+		$min = min( $r, $g, $b );
+
+		$h;
+		$s;
+		$l = ( $max + $min ) / 2;
+		$d = $max - $min;
+
+		if ( $d == 0 ) {
+			$h = $s = 0;
+		} else {
+			$s = $d / ( 1 - abs( 2 * $l - 1 ) );
+
+			if ( $max == $r ) {
+				$h = 60 * fmod( ( ( $g - $b ) / $d ), 6 );
+				if ( $b > $g ) {
+					$h += 360;
+				}
+			} elseif ( $max == $g ) {
+				$h = 60 * ( ( $b - $r ) / $d + 2 );
+			} else {
+				$h = 60 * ( ( $r - $g ) / $d + 4 );
+			}
+		}
+
+		return array( round( $h, 0 ), round( $s * 100, 0 ), round( $l * 100, 0 ) );
+	}
+}
+
+
+/**
+ * Joinchat Util class alias
+ *
+ * @since      3.1.0
+ * @since      5.0.0     Deprecated, use Joinchat_Util instead.
+ * @since      6.0.0     Removed
+ * @since      6.0.2     Re-added with deprecated notice.
+ */
+class JoinChatUtil {
+
+	/**
+	 * Call Joinchat_Util alias
+	 *
+	 * @param string $name       function name.
+	 * @param mixed  $arguments  function arguments.
+	 * @return mixed
+	 */
+	public static function __callStatic( $name, $arguments ) {
+
+		add_action( 'admin_notices', array( __CLASS__, 'deprecated_notice' ) );
+
+		if ( method_exists( 'Joinchat_Util', $name ) ) {
+			return call_user_func_array( array( 'Joinchat_Util', $name ), $arguments );
+		}
+		trigger_error( esc_html( 'Call to undefined method ' . __CLASS__ . "::$name()" ), E_USER_ERROR );
+	}
+
+	public static function deprecated_notice() {
+		?>
+		<div class="notice notice-warning is-dismissible">
+			<p><code>JoinChatUtil</code> class is deprecated, use <code>Joinchat_Util</code> instead.</p>
+		</div>
+		<?php
+	}
+}
+
+/**
+ * Retrieves the number of times a filter has been applied during the current request.
+ *
+ * In WordPress since 6.1.0
+ */
+if ( ! function_exists( 'did_filter' ) ) {
+	function did_filter( $hook_name ) {
+		global $wp_filters;
+
+		if ( ! isset( $wp_filters[ $hook_name ] ) ) {
+			return 0;
+		}
+
+		return $wp_filters[ $hook_name ];
+	}
+}
+
+/**
+ * Checks compatibility with the current WordPress version.
+ *
+ * In WordPress since 5.2.0
+ */
+if ( ! function_exists( 'is_wp_version_compatible' ) ) {
+	function is_wp_version_compatible( $version ) {
+		return version_compare( get_bloginfo( 'version' ), $version, '>=' );
 	}
 }

@@ -4,9 +4,17 @@
 }
 
 .joinchat {
-  --bottom: 20px;
   --sep: 20px;
+  --bottom: var(--sep);
   --s: 60px;
+  --h: calc(var(--s)/2);
+  --ch: 142;
+  --cs: 70%;
+  --cl: 49%;
+  --bw: 1;
+  --text: hsl(0deg 0% clamp(0%, var(--bw)*1000%, 100%) / clamp(70%, var(--bw)*1000%, 100%));
+  --hover: hsl(var(--ch) var(--cs) calc(var(--cl) + 20%));
+  --color: hsl(var(--ch) var(--cs) var(--cl));
 
   display: none;
   position: fixed;
@@ -20,7 +28,7 @@
   transform-origin: calc(var(--s)/-2) calc(var(--s)/-4);
   -webkit-user-select: none;
      -moz-user-select: none;
-  user-select: none;
+          user-select: none;
   touch-action: manipulation;
   -webkit-font-smoothing: antialiased;
   -webkit-tap-highlight-color: rgb(0 0 0 / 0%);
@@ -52,21 +60,21 @@
   bottom: 8px;
   right: 8px;
   height: var(--s);
-  min-width: var(--s);
-  background: #25d366;
+  width: var(--s);
+  background: #25d366 var(--joinchat-ico) center / 60% no-repeat;
   color: inherit;
-  border-radius: calc(var(--s)/2);
-  box-shadow: 1px 6px 24px 0 rgba(7,94,84, 0.24);
+  border-radius: 50%;
+  box-shadow: 1px 6px 24px 0 rgba(7, 94, 84, 0.24);
   cursor: pointer;
   transition: background-color 0.2s linear;
 }
 
 .joinchat__button:hover {
-  background: #128c7e;
+  background-color: #128c7e
 }
 
 .joinchat__button:active {
-  background: #128c7e;
+  background-color: #128c7e;
   transition: none;
 }
 
@@ -75,46 +83,62 @@
   left: 8px;
 }
 
-.joinchat__button__open {
-  width: var(--s);
-  height: var(--s);
+.joinchat__button__ico {
+  position: absolute;
+  inset: 0;
+  display: flex;
   border-radius: 50%;
-  background: rgb(0 0 0 / 0%) var(--joinchat-ico) center no-repeat;
-  background-size: 60%;
   overflow: hidden;
+  color: var(--text) !important;
+}
+
+.joinchat__button__ico svg {
+  width: var(--ico-size, 100%);
+  height: var(--ico-size, 100%);
+  margin: calc((100% - var(--ico-size, 100%))/2);
+}
+
+.joinchat__button:has(.joinchat__button__ico) {
+  background: var(--color);
+  box-shadow: 1px 6px 24px 0 hsl(var(--ch) var(--cs) calc(var(--cl) - 10%) / 24%);
+}
+
+.joinchat__button:has(.joinchat__button__ico):hover,
+.joinchat__button:has(.joinchat__button__ico):active {
+  background: var(--hover);
 }
 
 .joinchat__button__image {
   position: absolute;
-  top: 1px;
-  right: 1px;
-  width: calc(var(--s) - 2px);
-  height: calc(var(--s) - 2px);
+  inset: 1px;
   border-radius: 50%;
   overflow: hidden;
   opacity: 0;
 }
 
-.joinchat__button__image img {
+.joinchat__button__image img,
+.joinchat__button__image video {
   display: block;
   width: 100%;
   height: 100%;
   -o-object-fit: cover;
   object-fit: cover;
+  -o-object-position: center;
+  object-position: center;
 }
 
 .joinchat--show .joinchat__button__image {
   animation: joinchat_image_loop 20s linear 5s infinite normal both;
 }
 
-.joinchat--image .joinchat__button__image {
+.joinchat--img .joinchat__button__image {
   opacity: 1;
   animation: none;
 }
 
 .joinchat__tooltip {
   position: absolute;
-  top: calc(var(--s)/2 - 16px);
+  top: calc(var(--h) - 16px);
   right: calc(var(--s) + 16px);
   max-width: calc(100vw - var(--s) - 45px);
   height: 32px;
@@ -122,12 +146,12 @@
   border: none;
   border-radius: 16px;
   background: #fff;
-  color: rgba(0,0,0, 0.8);
+  color: rgba(0, 0, 0, 0.8);
   line-height: 31px;
   white-space: nowrap;
   opacity: 0;
   transition: opacity 0.3s ease-out 0.4s;
-  filter: drop-shadow(0 1px 4px rgba(0,0,0, 0.4));
+  filter: drop-shadow(0 1px 4px rgba(0, 0, 0, 0.4));
   pointer-events: none;
 }
 
@@ -169,8 +193,9 @@
 
 .joinchat__qr {
   position: absolute;
-  bottom: calc(var(--s) + 16px);
-  right: 0;
+  z-index: 2;
+  bottom: calc(var(--s) + 24px);
+  right: 8px;
   display: none;
   flex-direction: column-reverse;
   width: 228px;
@@ -179,10 +204,10 @@
   border: none;
   border-radius: 16px;
   background: #fff;
-  color: rgba(0,0,0, 0.8);
+  color: rgba(0, 0, 0, 0.8);
   text-align: center;
   white-space: nowrap;
-  filter: drop-shadow(0 1px 4px rgba(0,0,0, 0.4));
+  filter: drop-shadow(0 1px 4px rgba(0, 0, 0, 0.4));
   animation: joinchat_badge_in 400ms cubic-bezier(0.11, 0.84, 0.83, 1.01) 500ms both;
   pointer-events: none;
 }
@@ -192,19 +217,19 @@
   display: block;
   position: absolute;
   bottom: -6px;
-  right: calc(var(--s)/2 - 6px);
+  right: calc(var(--h) - 6px);
   border: 8px solid transparent;
   border-width: 8px 6px 0;
   border-top-color: #fff;
 }
 
 .joinchat--left .joinchat__qr {
-  left: 0;
+  left: 8px;
   right: auto;
 }
 
 .joinchat--left .joinchat__qr::after {
-  left: calc(var(--s)/2 - 6px);
+  left: calc(var(--h) - 6px);
   right: auto;
 }
 
@@ -220,6 +245,7 @@
   width: 200px;
   height: 200px;
   margin: 0;
+  image-rendering: pixelated;
 }
 
 @keyframes joinchat_show {
@@ -311,22 +337,23 @@
   background-color: #128c7e;
 }
 
-@media (orientation: portrait) and (width >= 481px), (orientation: landscape) and (height >= 481px) {
+@media (orientation: portrait) and (width >=481px),
+(orientation: landscape) and (height >=481px) {
   .joinchat--mobile {
     display: none !important;
   }
 }
 
-@media (width <= 767px) {
+@media (width <=767px) {
   .joinchat--footer-bar {
     --bottom: 76px !important;
   }
 }
 
-@media (width <= 480px), (orientation: landscape) and (height <= 480px) {
+@media (width <=480px),
+(orientation: landscape) and (height <=480px) {
   .joinchat {
-    --bottom: 6px;
-    --sep: 6px;
+    --sep: 6px
   }
 }
 
@@ -336,13 +363,14 @@
     animation: none;
     transition: opacity 0.2s;
   }
-  .joinchat--btn .joinchat__button:hover .joinchat__qr {
+
+  .joinchat--btn .joinchat__button:hover~.joinchat__qr {
     display: flex;
   }
 }
 
 @media (prefers-reduced-motion) {
   .joinchat {
-    animation: none;
+    animation: none
   }
 }

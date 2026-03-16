@@ -8,6 +8,7 @@
   }
 }
 
+// Used for the badge & qr animation
 @keyframes #{$name}_badge_in {
   from {
     opacity: 0;
@@ -33,24 +34,11 @@
     }
   }
 
-  @keyframes #{$name}_plain {
+  @keyframes #{$name}_send_svg {
     0%,
     50%,
     100% {
-      stroke-dashoffset: 1097;
-    }
-
-    5%,
-    45% {
-      stroke-dashoffset: 0;
-    }
-  }
-
-  @keyframes #{$name}_chat {
-    0%,
-    50%,
-    100% {
-      stroke-dashoffset: 1020;
+      stroke-dashoffset: var(--stroke);
     }
 
     5%,

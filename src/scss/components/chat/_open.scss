@@ -1,0 +1,130 @@
+#{$class}__open {
+  position: sticky;
+  z-index: 2;
+  bottom: 8px;
+  align-self: flex-end;
+  display: flex;
+  flex-direction: row;
+  min-width: var(--s);
+  height: var(--s);
+  margin: 0 8px;
+  background: var(--color);
+  color: inherit;
+  border-radius: var(--h);
+  box-shadow: 0 1px 2px 0 rgba($black, 0.3);
+  overflow: hidden;
+  cursor: pointer;
+  transition: background-color 0.2s linear;
+
+  #{$rtl} & {
+    align-self: flex-start;
+    flex-direction: row-reverse;
+  }
+
+  &:hover,
+  &:active {
+    background: var(--hover);
+  }
+
+  #{$class}--left & {
+    align-self: flex-start;
+    flex-direction: row-reverse;
+
+    #{$rtl} & {
+      flex-direction: row;
+    }
+  }
+
+  // Opt-in disabled
+  #{$class}--optout & {
+    background-color: #999;
+    pointer-events: none;
+  }
+}
+
+#{$class}__open__icon {
+  flex-shrink: 0;
+  width: var(--s);
+  height: var(--s);
+  max-width: var(--s); // fix theme Twenty Twenty max-width: 100%;
+  padding: calc(var(--s)*0.18);
+  margin: 0;
+  overflow: hidden;
+
+  path {
+    fill: none !important;
+    stroke: var(--text) !important;
+    stroke-linecap: round;
+    stroke-width: 33px;
+    animation: none;
+  }
+
+  #{$class}__pa {
+    --stroke: 1097;
+
+  }
+  #{$class}__pb {
+    --stroke: 1020;
+  }
+
+  #{$class}--chatbox & {
+    path {
+      stroke-dasharray: var(--stroke);
+      stroke-dashoffset: var(--stroke);
+      animation: #{$name}_send_svg 6s 0.2s ease-in-out infinite;
+    }
+
+    #{$class}__pb {
+      animation-delay: 3.2s;
+    }
+  }
+
+  // Opt-in disabled
+  #{$class}--optout & {
+    path {
+      animation: none;
+    }
+
+    #{$class}__pa {
+      stroke-dasharray: 0;
+    }
+  }
+
+  @include motionless {
+    path {
+      animation: none;
+    }
+
+    #{$class}__pa {
+      stroke-dasharray: 0;
+    }
+  }
+}
+
+#{$class}__open__text {
+  max-width: 0;
+  padding: 0;
+  border-radius: var(--s);
+  font-weight: 600;
+  line-height: var(--s);
+  white-space: nowrap;
+  opacity: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: none;
+
+  #{$class}--chatbox & {
+    max-width: min(400px - 16px - var(--s), 100vw - 16px - var(--s) - 2*var(--sep)); // box - space - btn or 100vw - space - btn - 2sep
+    padding: 0 4px 0 24px;
+    opacity: 1;
+    transition: max-width 0.2s linear, opacity 0.4s ease-out 0.2s;
+  }
+
+  #{$class}--chatbox#{$class}--left & {
+    padding: 0 24px 0 4px;
+  }
+
+  @include motionless {
+    transition: none !important;
+  }
+}

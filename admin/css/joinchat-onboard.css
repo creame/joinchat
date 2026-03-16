@@ -411,3 +411,12 @@
 .joinchat__optin input[readonly]+label {
   cursor: default;
 }
+
+.iti .iti__search-input {
+  width: 100%;
+  border-width: 0;
+  border-radius: 3px;
+  padding-left: 30px;
+  padding-right: 28px;
+  margin: 0;
+}

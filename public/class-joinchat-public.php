@@ -29,6 +29,15 @@ class Joinchat_Public {
 	private $show = false;
 
 	/**
+	 * Chatbox content.
+	 *
+	 * @since    6.0.0
+	 * @access   private
+	 * @var      string     $chatbox_content    Chatbox content (messages & opt-in).
+	 */
+	private $chatbox_content = '';
+
+	/**
 	 * Get global settings and current post settings and prepare
 	 *
 	 * @since    1.0.0
@@ -106,36 +115,97 @@ class Joinchat_Public {
 	}
 
 	/**
-	 * Enqueue the stylesheets for the public-facing side of the site.
+	 * Register the stylesheets for the public-facing side of the site.
 	 *
-	 * @since    1.0.0
-	 * @since    2.2.2     minified
-	 * @since    4.4.2     use "only button stylesheet" if no chatbox
+	 * Can defer styles if button delay > 0:
+	 *  - move stylesheet to footer
+	 *
+	 * @since    6.0.0
 	 * @return   void
 	 */
-	public function enqueue_styles() {
+	public function register_styles() {
 
 		if ( ! $this->show ) {
 			return;
 		}
 
-		$settings = jc_common()->settings;
-		$file     = JOINCHAT_SLUG;
-		$min      = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
+		$file = JOINCHAT_SLUG;
+		$min  = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
+
+		// Defer styles by default.
+		$defer = apply_filters( 'joinchat_defer_styles', true );
 
 		// If not chatbox use lighter only button styles.
-		if ( empty( $settings['message_text'] ) && empty( $settings['optin_text'] ) && ! has_filter( 'joinchat_content' ) ) {
+		if ( empty( $this->chatbox_content ) ) {
 			$file .= '-btn';
 		}
 
-		wp_enqueue_style( JOINCHAT_SLUG, plugins_url( "css/{$file}{$min}.css", __FILE__ ), array(), JOINCHAT_VERSION, 'all' );
+		wp_register_style( JOINCHAT_SLUG, plugins_url( "public/css/{$file}{$min}.css", JOINCHAT_FILE ), array(), JOINCHAT_VERSION );
+
+		if ( ! $defer || jc_common()->preview ) {
+			$this->enqueue_styles();
+		}
+	}
+
+	/**
+	 * Inline header styles.
+	 *
+	 * If button appears directly (delay < 0) inline on <head> min required styles.
+	 *
+	 * @since    6.0.0
+	 * @return   void
+	 */
+	public function header_styles() {
+
+		if ( ! $this->show || jc_common()->settings['button_delay'] >= 0 || did_filter( 'joinchat_inline_style' ) ) {
+			return;
+		}
+
+		$handle = JOINCHAT_SLUG . '-head';
+		$css    = $this->get_inline_styles();
+		$css   .= file_get_contents( JOINCHAT_DIR . 'public/css/joinchat-head.css' );
+
+		wp_register_style( $handle, false ); // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.MissingVersion
+		wp_enqueue_style( $handle );
+		wp_add_inline_style( $handle, Joinchat_Util::min_css( $css ) );
+
+	}
+
+	/**
+	 * Enqueue front stylesheets and adds inline CSS.
+	 *
+	 * @since    1.0.0
+	 * @since    2.2.2     minified
+	 * @since    4.4.2     use "only button stylesheet" if no chatbox
+	 * @since    6.0.0     Only enqueue, register is on register_styles()
+	 * @return   void
+	 */
+	public function enqueue_styles() {
+
+		if ( ! $this->show || wp_style_is( JOINCHAT_SLUG, 'done' ) ) {
+			return;
+		}
+
+		wp_enqueue_style( JOINCHAT_SLUG );
+		wp_add_inline_style( JOINCHAT_SLUG, Joinchat_Util::min_css( $this->get_inline_styles() ) );
+
+	}
+
+	/**
+	 * Get inline styles
+	 *
+	 * @since 6.0.0
+	 * @return string
+	 */
+	private function get_inline_styles() {
 
 		$inline_css = '';
+		$settings   = jc_common()->settings;
 
 		if ( jc_common()->defaults( 'color' ) !== $settings['color'] ) {
-			list($color, $text) = explode( '/', $settings['color'] . '/100' );
-			list($r, $g, $b)    = sscanf( $color, '#%02x%02x%02x' );
-			$inline_css        .= ".joinchat{ --red:$r; --green:$g; --blue:$b; --bw:$text }";
+			list($h, $s, $l, $text) = jc_common()->get_color_values();
+
+			$inline_css .= ".joinchat{ --ch:$h; --cs:$s%; --cl:$l%; --bw:$text }";
 		}
 
 		if ( ! empty( $settings['custom_css'] ) ) {
@@ -143,9 +213,8 @@ class Joinchat_Public {
 			$inline_css .= wp_strip_all_tags( $settings['custom_css'] );
 		}
 
-		$inline_css = apply_filters( 'joinchat_inline_style', $inline_css, $settings );
+		return apply_filters( 'joinchat_inline_style', $inline_css, $settings );
 
-		wp_add_inline_style( JOINCHAT_SLUG, Joinchat_Util::min_css( $inline_css ) );
 	}
 
 	/**
@@ -156,33 +225,28 @@ class Joinchat_Public {
 	 * @since    4.4.0     added kjua script
 	 * @since    4.5.0     added joinchat-lite script
 	 * @since    4.5.20    abstract QR script
+	 * @since    6.0.0     remove jQuery dependency & defer strategy
 	 * @return   void
 	 */
 	public function enqueue_scripts() {
 
-		$min = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
-
-		if ( wp_script_is( 'jquery-core', 'registered' ) ) {
-			$deps = array( 'jquery-core' ); // Don't need jquery-migrate.
-		} else {
-			if ( ! wp_script_is( 'jquery', 'registered' ) ) {
-				wp_register_script( 'jquery', "/wp-includes/js/jquery/jquery$min.js", array(), '3.7.1' );
-			}
-			$deps = array( 'jquery' );
-		}
+		$min  = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
+		$args = is_wp_version_compatible( '6.3' ) ? array(
+			'in_footer'     => true,
+			'strategy'      => 'defer',
+			'fetchpriority' => 'low',
+		) : true;
 
 		// Register QR script.
-		wp_register_script( 'joinchat-qr', plugins_url( 'js/qr-creator.min.js', __FILE__ ), array(), '1.0.0', true );
+		wp_register_script( 'joinchat-qr', plugins_url( 'js/qr-creator.min.js', __FILE__ ), array(), '1.0.0', $args );
 
 		// If QR script is missing it fails silently and don't shows QR Code :).
-		if ( $this->need_enqueue_qr_script() ) {
-			$deps[] = 'joinchat-qr';
-		}
+		$deps = $this->need_enqueue_qr_script() ? array( 'joinchat-qr' ) : array();
 
 		if ( $this->show ) {
 
 			// Enqueue default full script.
-			wp_enqueue_script( 'joinchat', plugins_url( "js/joinchat{$min}.js", __FILE__ ), $deps, JOINCHAT_VERSION, true );
+			wp_enqueue_script( JOINCHAT_SLUG, plugins_url( "js/joinchat{$min}.js", __FILE__ ), $deps, JOINCHAT_VERSION, $args );
 			// Do action.
 			do_action( 'joinchat_enqueue_script' );
 
@@ -203,8 +267,8 @@ class Joinchat_Public {
 			$data['message_send'] = Joinchat_Util::replace_variables( $data['message_send'] );
 
 			// Enqueue lite script.
-			wp_enqueue_script( 'joinchat-lite', plugins_url( "js/joinchat-lite{$min}.js", __FILE__ ), $deps, JOINCHAT_VERSION, true );
-			wp_localize_script( 'joinchat-lite', 'joinchat_obj', array( 'settings' => $data ) );
+			wp_enqueue_script( 'joinchat-lite', plugins_url( "js/joinchat-lite{$min}.js", __FILE__ ), $deps, JOINCHAT_VERSION, $args );
+			wp_add_inline_script( 'joinchat-lite', 'var joinchat_obj = ' . wp_json_encode( array( 'settings' => $data ) ) . ';', 'before' );
 		}
 	}
 
@@ -224,9 +288,9 @@ class Joinchat_Public {
 		}
 
 		$script = false;
-		if ( wp_script_is( 'joinchat' ) ) {
-			$script = wp_scripts()->query( 'joinchat', 'registered' );
-		} elseif ( wp_script_is( 'joinchat-lite', 'enqueued' ) ) {
+		if ( wp_script_is( JOINCHAT_SLUG ) ) {
+			$script = wp_scripts()->query( JOINCHAT_SLUG, 'registered' );
+		} elseif ( wp_script_is( 'joinchat-lite' ) ) {
 			$script = wp_scripts()->query( 'joinchat-lite', 'registered' );
 		}
 
@@ -234,6 +298,41 @@ class Joinchat_Public {
 		if ( $script ) {
 			$script->deps[] = 'joinchat-qr';
 		}
+	}
+
+	/**
+	 * Set chatbox content (messages & opt-in)
+	 *
+	 * @since    6.0.0
+	 * @return void
+	 */
+	public function set_chatbox_content() {
+
+		$settings   = jc_common()->settings;
+		$is_preview = jc_common()->preview;
+		$content    = '';
+
+		if ( $settings['message_text'] ) {
+			$content = '<div class="joinchat__chat">' . Joinchat_Util::formatted_message( $settings['message_text'] ) . '</div>';
+		} elseif ( $is_preview ) {
+			$content = '<div class="joinchat__chat"><div class="joinchat__bubble"></div></div>';
+		}
+
+		if ( $settings['optin_text'] ) {
+			$optin = nl2br( $settings['optin_text'] );
+			$optin = str_replace( '<a ', '<a target="_blank" rel="nofollow noopener" ', $optin );
+
+			if ( $settings['optin_check'] ) {
+				$optin = '<input type="checkbox" id="joinchat_optin"><label for="joinchat_optin">' . $optin . '</label>';
+			}
+
+			$content .= '<div class="joinchat__optin">' . $optin . '</div>';
+		} elseif ( $is_preview ) {
+			$content .= '<div class="joinchat__optin"></div>';
+		}
+
+		$this->chatbox_content = apply_filters( 'joinchat_content', $content, $settings );
+
 	}
 
 	/**
@@ -260,6 +359,7 @@ class Joinchat_Public {
 			array(
 				'visibility',
 				'position',
+				'button_ico',
 				'button_tip',
 				'button_image',
 				'message_start',
@@ -288,24 +388,28 @@ class Joinchat_Public {
 			$powered_link = add_query_arg( $powered_args, "https://join.chat/$powered_lang/powered/" );
 		}
 
+		$ico = 'app' !== $settings['button_ico'] ? jc_common()->get_icons( $settings['button_ico'] ) : '';
+
 		// Set custom img tag and bypass default image logic.
 		$image = apply_filters( 'joinchat_image', null );
 
 		if ( is_null( $image ) && $settings['button_image'] ) {
-			$img_id = $settings['button_image'];
+			$img_id = absint( $settings['button_image'] );
 
-			if ( apply_filters( 'joinchat_image_original', Joinchat_Util::is_animated_gif( $img_id ), $img_id, 'button' ) ) {
-				$image = '<img src="' . wp_get_attachment_url( $img_id ) . '" alt="" loading="lazy">';
+			if ( Joinchat_Util::is_video( $img_id ) ) {
+				$image = '<video autoplay loop muted playsinline src="' . esc_url( wp_get_attachment_url( $img_id ) ) . '"></video>';
+			} elseif ( apply_filters( 'joinchat_image_original', Joinchat_Util::is_animated_gif( $img_id ), $img_id, 'button' ) ) {
+				$image = '<img src="' . esc_url( wp_get_attachment_url( $img_id ) ) . '" alt="" loading="lazy">';
 			} elseif ( is_array( Joinchat_Util::thumb( $img_id, 58, 58 ) ) ) {
 				$thumb  = Joinchat_Util::thumb( $img_id, 58, 58 );
 				$thumb2 = Joinchat_Util::thumb( $img_id, 116, 116 );
 				$thumb3 = Joinchat_Util::thumb( $img_id, 174, 174 );
-				$image  = "<img src=\"{$thumb['url']}\" srcset=\"{$thumb2['url']} 2x, {$thumb3['url']} 3x\" alt=\"\" loading=\"lazy\">";
+				$image  = '<img src="' . esc_url( $thumb['url'] ) . '" srcset="' . esc_url( $thumb2['url'] ) . ' 2x, ' . esc_url( $thumb3['url'] ) . ' 3x" alt="" loading="lazy">';
 			}
 		}
 
 		$joinchat_classes = array();
-		$box_content      = '';
+		$box_content      = $this->chatbox_content;
 
 		// class position.
 		$joinchat_classes[] = 'joinchat--' . $settings['position'];
@@ -313,6 +417,11 @@ class Joinchat_Public {
 		// class dark mode.
 		if ( 'no' !== $settings['dark_mode'] ) {
 			$joinchat_classes[] = 'auto' === $settings['dark_mode'] ? 'joinchat--dark-auto' : 'joinchat--dark';
+		}
+
+		// class for button fixed image.
+		if ( (int) $settings['button_image'] < 0 ) {
+			$joinchat_classes[] = 'joinchat--img';
 		}
 
 		// class direct display (w/o animation).
@@ -326,32 +435,21 @@ class Joinchat_Public {
 			}
 		}
 
-		if ( $settings['message_text'] ) {
-			$box_content = '<div class="joinchat__message">' . Joinchat_Util::formated_message( $settings['message_text'] ) . '</div>';
-		} elseif ( $is_preview ) {
-			$box_content .= '<div class="joinchat__message"></div>';
+		// class for required opt-in (initially opt-out).
+		if ( ! empty( $settings['optin_text'] ) && $settings['optin_check'] ) {
+			$joinchat_classes[] = 'joinchat--optout';
 		}
-
-		if ( $settings['optin_text'] ) {
-			$optin = nl2br( $settings['optin_text'] );
-			$optin = str_replace( '<a ', '<a target="_blank" rel="nofollow noopener" ', $optin );
-
-			if ( $settings['optin_check'] ) {
-				$optin              = '<input type="checkbox" id="joinchat_optin"><label for="joinchat_optin">' . $optin . '</label>';
-				$joinchat_classes[] = 'joinchat--optout';
-			}
-
-			$box_content .= '<div class="joinchat__optin">' . $optin . '</div>';
-		} elseif ( $is_preview ) {
-			$box_content .= '<div class="joinchat__optin"></div>';
-		}
-
-		$box_content = apply_filters( 'joinchat_content', $box_content, $settings );
 
 		// class only button.
 		if ( empty( $box_content ) ) {
 			$joinchat_classes[] = 'joinchat--btn';
 		}
+
+		$button_label = empty( $box_content ) ? __( 'WhatsApp contact', 'creame-whatsapp-me' ) : __( 'Open chat', 'creame-whatsapp-me' );
+		if ( $settings['button_tip'] ) {
+			$button_label = sprintf( '%s %s', $settings['button_tip'], $button_label );
+		}
+		$button_label = apply_filters( 'joinchat_button_label', $button_label, $settings );
 
 		$joinchat_classes  = apply_filters( 'joinchat_classes', $joinchat_classes, $settings );
 		$joinchat_template = apply_filters( 'joinchat_template', __DIR__ . '/partials/html.php' );

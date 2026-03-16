@@ -28,9 +28,9 @@
 }
 
 .joinchat__woo-btn:empty {
-    padding-right: 0;
-  }
+  padding-right: 0;
+}
 
 .joinchat__woo-btn:hover {
-    background-color: #128c7e;
-  }
+  background-color: #128c7e;
+}

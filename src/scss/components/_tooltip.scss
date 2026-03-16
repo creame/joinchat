@@ -1,6 +1,6 @@
 #{$class}__tooltip {
   position: absolute;
-  top: calc(var(--s)/2 - 16px);
+  top: calc(var(--h) - 16px);
   right: calc(var(--s) + 16px);
   max-width: calc(100vw - var(--s) - 45px);
   height: 32px;

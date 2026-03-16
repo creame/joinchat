@@ -27,7 +27,7 @@ class Joinchat_Gutenberg {
 		$asset_file = include JOINCHAT_DIR . '/gutenberg/build/index.asset.php';
 
 		$joinchat_data = array(
-			'image_qr'     => plugins_url( 'admin/img/qr.png', JOINCHAT_FILE ),
+			'image_qr'     => plugins_url( 'admin/img/qr.webp', JOINCHAT_FILE ),
 			'defaults'     => jc_common()->get_obj_placeholders( get_post() ),
 			'message_vars' => jc_common()->get_obj_vars( get_post() ),
 		);
@@ -110,7 +110,7 @@ class Joinchat_Gutenberg {
 	 */
 	public function root_styles() {
 
-		if ( has_block( 'joinchat/button' ) && ! wp_script_is( 'joinchat', 'done' ) && ! wp_script_is( 'joinchat-woo', 'done' ) ) {
+		if ( has_block( 'joinchat/button' ) && ! wp_script_is( JOINCHAT_SLUG, 'done' ) && ! wp_script_is( 'joinchat-woo', 'done' ) ) {
 
 			ob_start();
 			?>

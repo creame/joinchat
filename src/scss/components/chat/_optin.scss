@@ -30,7 +30,7 @@
     font: inherit;
     cursor: pointer;
 
-    &:before {
+    &::before {
       @include pseudo;
       top: min(50% - 11px, 5px);
       left: 0;
@@ -53,7 +53,7 @@
       }
     }
 
-    &:after {
+    &::after {
       @include pseudo(none);
       top: min(50% - 8px, 8px);
       left: 8px;
@@ -67,12 +67,12 @@
     #{$rtl} & {
       padding: 0 30px 0 0;
 
-      &:before {
+      &::before {
         left: auto;
         right: 0;
       }
 
-      &:after {
+      &::after {
         left: auto;
         right: 8px;
       }
@@ -80,11 +80,11 @@
   }
 
   input:checked+label {
-    &:before {
+    &::before {
       box-shadow: 0 0 0 1px var(--text), inset 0 0 0 10px var(--color);
     }
 
-    &:after {
+    &::after {
       display: block;
     }
   }
