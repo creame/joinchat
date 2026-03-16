@@ -307,12 +307,6 @@
     // Opt-in toggle
     joinchat_obj.$('#joinchat_optin')?.addEventListener('change', e => joinchat_obj.$div.classList.toggle('joinchat--optout', !e.target.checked));
 
-    // Only scroll Joinchat message box (no all body)
-    joinchat_obj.$('.joinchat__scroll')?.addEventListener('wheel', function (e) {
-      e.preventDefault();
-      this.scrollTop += e.deltaY;
-    }, { passive: false });
-
     // Mobile enhancements
     if (joinchat_obj.is_mobile) {
       let timeout_kb, timeout_resize;
