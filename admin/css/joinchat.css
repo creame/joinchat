@@ -299,9 +299,9 @@ tr.joinchat--focus .joinchat_vars_help {
 
 #joinchat_form .joinchat_color_text .button:has(input:checked) {
   background-color: #dcdcde;
-  color: #135e96;
-  border-color: #0a4b78;
-  box-shadow: inset 0 2px 5px -3px #0a4b78;
+  color: var(--wp-admin-theme-color, #135e96);
+  border-color: var(--wp-admin-theme-color, #135e96);
+  box-shadow: inset 0 2px 5px -3px var(--wp-admin-theme-color, #0a4b78);
 }
 
 #wp-joinchat_optin_text-editor-container {
@@ -322,8 +322,8 @@ tr.joinchat--focus .joinchat_vars_help {
 }
 
 .joinchat-gads:focus-within {
-  border-color: #2271b1;
-  box-shadow: 0 0 0 1px #2271b1;
+  border-color: var(--wp-admin-theme-color, #2271b1);
+  box-shadow: 0 0 0 var(--wp-admin-border-width-focus, 1.5px) var(--wp-admin-theme-color, #2271b1);
   outline: 2px solid transparent;
 }
 
@@ -332,6 +332,8 @@ tr.joinchat--focus .joinchat_vars_help {
   padding: 0 6px;
   border: none;
   background: transparent;
+  outline: none;
+  box-shadow: none !important;
 }
 
 #joinchat_form .CodeMirror {
