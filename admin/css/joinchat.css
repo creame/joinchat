@@ -60,6 +60,7 @@
 
 .joinchat__visibility__wrapper label {
   margin-right: 15px;
+  margin-top: 0 !important;
 }
 
 .joinchat__visibility__wrapper .dashicons {
@@ -128,6 +129,7 @@
   border-radius: 50%;
   background: var(--color, #25d366);
   overflow: hidden;
+  cursor: pointer;
   /* for SVG fill */
   color: var(--text, #fff);
 }
@@ -142,16 +144,12 @@
   background: #25d366 var(--joinchat-ico) no-repeat center;
 }
 
-.joinchat__button_ico label:hover span {
-  box-shadow: 0 0 0 3px #5b9dd9;
-}
-
 .joinchat__button_ico input:checked+span {
-  box-shadow: 0 0 0 3px #0073aa;
+  box-shadow: 0 0 0 3px var(--wp-admin-theme-color, #0073aa);
 }
 
 .joinchat__button_ico input:focus+span {
-  box-shadow: 0 0 0 3px #0073aa, 0 0 2px 4px rgba(30, 140, 190, 0.8);
+  box-shadow:0 0 0 2px #ffffff, 0 0 0 4px var(--wp-admin-theme-color)
 }
 
 /* Button image field */
@@ -515,12 +513,22 @@ tr.joinchat--focus .joinchat_vars_help {
 }
 
 #joinchat_preview_show {
+  position: relative;
   margin-top: 10px;
   vertical-align: top;
 }
 
 #joinchat_preview_show:before {
   content: "\f115";
+}
+
+#joinchat_preview_show::after {
+  content: '';
+  display: block;
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background-color: #f0f0f1;
 }
 
 :root {
