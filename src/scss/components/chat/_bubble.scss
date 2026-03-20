@@ -7,6 +7,7 @@
   flex-direction: column;
   align-items: flex-start;
   padding-bottom: 10px;
+  transition: height 200ms ease-out;
 
   #{$rtl} & {
     --peak: var(--peak_r);
@@ -14,6 +15,7 @@
 }
 
 #{$class}__bubble {
+  flex-shrink: 0;
   position: relative;
   min-width: 60px;
   max-width: calc(100% - 52px);

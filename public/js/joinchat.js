@@ -385,6 +385,23 @@
       // Random text
       if (has_cta) joinchat_obj.rand_text(jc_chat);
 
+      // Animate height growth on any child/class mutation
+      if (!window.matchMedia('(prefers-reduced-motion)').matches) {
+        let prev_height = jc_chat.offsetHeight;
+        let anim_timeout;
+        const observer = new MutationObserver(() => {
+          const new_height = jc_chat.offsetHeight;
+          console.log('Height changed:', { prev_height, new_height });
+          jc_chat.style.height = `${prev_height}px`;
+          jc_chat.offsetHeight; // force reflow
+          jc_chat.style.height = `${new_height}px`;
+          prev_height = new_height;
+          clearTimeout(anim_timeout);
+          anim_timeout = setTimeout(() => jc_chat.style.height = '', 240);
+        });
+        observer.observe(jc_chat, { childList: true, subtree: true, attributes: true, attributeFilter: ['class'] });
+      }
+
       // Bubbles animated (show one by one)
       if (jc_bubbles.length <= 1 || window.matchMedia('(prefers-reduced-motion)').matches) {
         setTimeout(() => jc_chat.dispatchEvent(new Event('joinchat:bubbles')), 1); // Need delay (to trigger after joinchat:show)
@@ -401,7 +418,7 @@
         bubble.classList.remove('joinchat--hidden');
         jc_scroll.scrollTop = jc_scroll.scrollHeight;
         setTimeout(nextBubble, next_delay);
-      }
+      };
       const nextBubble = () => {
         if (index >= jc_bubbles.length) {
           joinchat_obj.$('.joinchat__optin')?.classList.remove('joinchat--hidden');
