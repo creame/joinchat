@@ -18,7 +18,6 @@
 
   #{$rtl} & {
     align-self: flex-start;
-    flex-direction: row-reverse;
   }
 
   &:hover,
@@ -28,10 +27,9 @@
 
   #{$class}--left & {
     align-self: flex-start;
-    flex-direction: row-reverse;
 
     #{$rtl} & {
-      flex-direction: row;
+      align-self: flex-end;
     }
   }
 
@@ -51,6 +49,10 @@
   margin: 0;
   overflow: hidden;
 
+  #{$rtl} & {
+    transform: rotateY(180deg);
+  }
+
   path {
     fill: none !important;
     stroke: var(--text) !important;
@@ -63,6 +65,7 @@
     --stroke: 1097;
 
   }
+
   #{$class}__pb {
     --stroke: 1020;
   }
@@ -102,29 +105,51 @@
 }
 
 #{$class}__open__text {
-  max-width: 0;
+  --mw: 0;
+  max-width: var(--mw);
+  width: fit-content;
   padding: 0;
-  border-radius: var(--s);
   font-weight: 600;
   line-height: var(--s);
   white-space: nowrap;
   opacity: 0;
   overflow: hidden;
   text-overflow: ellipsis;
-  transition: none;
 
   #{$class}--chatbox & {
-    max-width: min(400px - 16px - var(--s), 100vw - 16px - var(--s) - 2*var(--sep)); // box - space - btn or 100vw - space - btn - 2sep
+    --mw: min(400px - 16px - var(--s), 100vw - 16px - var(--s) - 2*var(--sep)); // box - space - btn or 100vw - space - btn - 2sep
     padding: 0 4px 0 24px;
     opacity: 1;
-    transition: max-width 0.2s linear, opacity 0.4s ease-out 0.2s;
   }
 
-  #{$class}--chatbox#{$class}--left & {
+  #{$rtl} & {
     padding: 0 24px 0 4px;
   }
 
+  #{$class}--chatbox#{$class}--opening & {
+    animation: #{$name}_open_text 0.45s ease-out both;
+  }
+
   @include motionless {
-    transition: none !important;
+    #{$class}--chatbox#{$class}--opening & {
+      animation: none;
+    }
+  }
+}
+
+@keyframes #{$name}_open_text {
+  0% {
+    max-width: 0;
+    opacity: 0;
+  }
+
+  60% {
+    max-width: var(--mw);
+    opacity: 0;
+  }
+
+  100% {
+    max-width: var(--mw);
+    opacity: 1;
   }
 }

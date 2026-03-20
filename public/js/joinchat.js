@@ -153,7 +153,12 @@
 
     this.chatbox = true;
     this.showed_at = Date.now(); // Avoid faux clicks
+
+    clearTimeout(this.open_text_anim_timeout);
     this.$div.classList.add('joinchat--chatbox');
+    this.$div.offsetWidth; // force reflow to restart CSS animation
+    this.$div.classList.add('joinchat--opening');
+    this.open_text_anim_timeout = setTimeout(() => this.$div.classList.remove('joinchat--opening'), 550);
 
     if (this.settings.message_badge) {
       this.$('.joinchat__badge').classList.replace('joinchat__badge--in', 'joinchat__badge--out');
@@ -167,7 +172,8 @@
     if (!this.chatbox) return;
 
     this.chatbox = false;
-    this.$div.classList.remove('joinchat--chatbox', 'joinchat--tooltip');
+    clearTimeout(this.open_text_anim_timeout);
+    this.$div.classList.remove('joinchat--chatbox', 'joinchat--tooltip', 'joinchat--opening');
 
     if (this.settings.message_badge) {
       this.$('.joinchat__badge').classList.remove('joinchat__badge--out');
