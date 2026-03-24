@@ -66,6 +66,7 @@ class Joinchat {
 	 * - Joinchat_i18n. Defines internationalization functionality.
 	 * - Joinchat_Integrations. Defines thrid party integrations.
 	 * - Joinchat_Util. Defines common utilities.
+	 * - Joinchat_Abilities. Manages plugin abilities API.
 	 *
 	 * Create an instance of the loader which will be used to register the hooks
 	 * with WordPress.
@@ -81,9 +82,11 @@ class Joinchat {
 		require_once JOINCHAT_DIR . 'includes/class-joinchat-i18n.php';
 		require_once JOINCHAT_DIR . 'includes/class-joinchat-integrations.php';
 		require_once JOINCHAT_DIR . 'includes/class-joinchat-util.php';
+		require_once JOINCHAT_DIR . 'includes/class-joinchat-abilities.php';
 
 		$this->loader = new Joinchat_Loader();
 		jc_common(); // Instance Joinchat_Common.
+		Joinchat_Abilities::init(); // Initialize Abilities API registration.
 
 	}
 
