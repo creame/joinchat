@@ -1,15 +1,15 @@
-# Copyright (C) 2025 Creame
+# Copyright (C) 2026 Creame
 # This file is distributed under the GPL-2.0+.
 msgid ""
 msgstr ""
-"Project-Id-Version: Joinchat 6.0.9\n"
+"Project-Id-Version: Joinchat 6.1.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/creame-whatsapp-me\n"
 "Last-Translator: Pacotole <pacotole@crea.me>\n"
 "Language-Team: Creame <hola@crea.me>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-12-31T15:43:53+00:00\n"
+"POT-Creation-Date: 2026-03-24T11:13:26+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: creame-whatsapp-me\n"
@@ -1170,6 +1170,102 @@ msgstr ""
 msgid "Add-on"
 msgstr ""
 
+#: includes/class-joinchat-abilities.php:59
+msgid "WhatsApp Contact"
+msgstr ""
+
+#: includes/class-joinchat-abilities.php:60
+msgid "WhatsApp contact and communication abilities"
+msgstr ""
+
+#: includes/class-joinchat-abilities.php:115
+msgid "Generate WhatsApp URL"
+msgstr ""
+
+#: includes/class-joinchat-abilities.php:116
+msgid "Generate WhatsApp \"click to chat\" URL with phone and pre-filled message"
+msgstr ""
+
+#: includes/class-joinchat-abilities.php:124
+msgid "WhatsApp phone number (with country code)"
+msgstr ""
+
+#: includes/class-joinchat-abilities.php:129
+msgid "Optional pre-filled message text"
+msgstr ""
+
+#: includes/class-joinchat-abilities.php:136
+msgid "WhatsApp (click to chat) URL"
+msgstr ""
+
+#: includes/class-joinchat-abilities.php:186
+msgid "Get WhatsApp contact Phone"
+msgstr ""
+
+#: includes/class-joinchat-abilities.php:187
+msgid "Get the configured WhatsApp phone number for current context"
+msgstr ""
+
+#: includes/class-joinchat-abilities.php:195
+#: includes/class-joinchat-abilities.php:277
+#: includes/class-joinchat-abilities.php:368
+#: includes/class-joinchat-abilities.php:457
+msgid "Optional post ID for context-specific phone"
+msgstr ""
+
+#: includes/class-joinchat-abilities.php:200
+#: includes/class-joinchat-abilities.php:282
+#: includes/class-joinchat-abilities.php:373
+#: includes/class-joinchat-abilities.php:462
+msgid "Optional term ID for context-specific phone"
+msgstr ""
+
+#: includes/class-joinchat-abilities.php:207
+msgid "Phone number"
+msgstr ""
+
+#: includes/class-joinchat-abilities.php:263
+msgid "Set WhatsApp contact Phone"
+msgstr ""
+
+#: includes/class-joinchat-abilities.php:264
+msgid "Set the WhatsApp phone number globally or for current context"
+msgstr ""
+
+#: includes/class-joinchat-abilities.php:272
+msgid "WhatsApp phone number"
+msgstr ""
+
+#: includes/class-joinchat-abilities.php:289
+#: includes/class-joinchat-abilities.php:380
+#: includes/class-joinchat-abilities.php:469
+msgid "Success status"
+msgstr ""
+
+#: includes/class-joinchat-abilities.php:354
+msgid "Set Call to Action"
+msgstr ""
+
+#: includes/class-joinchat-abilities.php:355
+msgid "Set the call to action text for the Joinchat chat window globally or for current context"
+msgstr ""
+
+#: includes/class-joinchat-abilities.php:363
+msgid "Call to Action text"
+msgstr ""
+
+#: includes/class-joinchat-abilities.php:443
+msgid "Set WhatsApp pre-filled Message"
+msgstr ""
+
+#: includes/class-joinchat-abilities.php:444
+msgid "Set the pre-filled WhatsApp first message globally or for current context"
+msgstr ""
+
+#: includes/class-joinchat-abilities.php:452
+msgid "Pre-filled message text"
+msgstr ""
+
 #: includes/class-joinchat-common.php:105
 #: gutenberg/build/index.js:1
 msgid "Scan the code"
@@ -1237,11 +1333,11 @@ msgctxt "Keywords in Elementor Finder"
 msgid "woocommerce,shop,product"
 msgstr ""
 
-#: public/class-joinchat-public.php:448
+#: public/class-joinchat-public.php:484
 msgid "WhatsApp contact"
 msgstr ""
 
-#: public/class-joinchat-public.php:448
+#: public/class-joinchat-public.php:484
 msgid "Open chat"
 msgstr ""
 

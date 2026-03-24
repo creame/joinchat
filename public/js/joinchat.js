@@ -153,7 +153,12 @@
 
     this.chatbox = true;
     this.showed_at = Date.now(); // Avoid faux clicks
+
+    clearTimeout(this.open_text_anim_timeout);
     this.$div.classList.add('joinchat--chatbox');
+    this.$div.offsetWidth; // force reflow to restart CSS animation
+    this.$div.classList.add('joinchat--opening');
+    this.open_text_anim_timeout = setTimeout(() => this.$div.classList.remove('joinchat--opening'), 550);
 
     if (this.settings.message_badge) {
       this.$('.joinchat__badge').classList.replace('joinchat__badge--in', 'joinchat__badge--out');
@@ -167,7 +172,8 @@
     if (!this.chatbox) return;
 
     this.chatbox = false;
-    this.$div.classList.remove('joinchat--chatbox', 'joinchat--tooltip');
+    clearTimeout(this.open_text_anim_timeout);
+    this.$div.classList.remove('joinchat--chatbox', 'joinchat--tooltip', 'joinchat--opening');
 
     if (this.settings.message_badge) {
       this.$('.joinchat__badge').classList.remove('joinchat__badge--out');
@@ -307,12 +313,6 @@
     // Opt-in toggle
     joinchat_obj.$('#joinchat_optin')?.addEventListener('change', e => joinchat_obj.$div.classList.toggle('joinchat--optout', !e.target.checked));
 
-    // Only scroll Joinchat message box (no all body)
-    joinchat_obj.$('.joinchat__scroll')?.addEventListener('wheel', function (e) {
-      e.preventDefault();
-      this.scrollTop += e.deltaY;
-    }, { passive: false });
-
     // Mobile enhancements
     if (joinchat_obj.is_mobile) {
       let timeout_kb, timeout_resize;
@@ -385,6 +385,23 @@
       // Random text
       if (has_cta) joinchat_obj.rand_text(jc_chat);
 
+      // Animate height growth on any child/class mutation
+      if (!window.matchMedia('(prefers-reduced-motion)').matches) {
+        let prev_height = jc_chat.offsetHeight;
+        let anim_timeout;
+        const observer = new MutationObserver(() => {
+          const new_height = jc_chat.offsetHeight;
+          console.log('Height changed:', { prev_height, new_height });
+          jc_chat.style.height = `${prev_height}px`;
+          jc_chat.offsetHeight; // force reflow
+          jc_chat.style.height = `${new_height}px`;
+          prev_height = new_height;
+          clearTimeout(anim_timeout);
+          anim_timeout = setTimeout(() => jc_chat.style.height = '', 240);
+        });
+        observer.observe(jc_chat, { childList: true, subtree: true, attributes: true, attributeFilter: ['class'] });
+      }
+
       // Bubbles animated (show one by one)
       if (jc_bubbles.length <= 1 || window.matchMedia('(prefers-reduced-motion)').matches) {
         setTimeout(() => jc_chat.dispatchEvent(new Event('joinchat:bubbles')), 1); // Need delay (to trigger after joinchat:show)
@@ -401,7 +418,7 @@
         bubble.classList.remove('joinchat--hidden');
         jc_scroll.scrollTop = jc_scroll.scrollHeight;
         setTimeout(nextBubble, next_delay);
-      }
+      };
       const nextBubble = () => {
         if (index >= jc_bubbles.length) {
           joinchat_obj.$('.joinchat__optin')?.classList.remove('joinchat--hidden');

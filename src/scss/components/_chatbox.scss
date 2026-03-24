@@ -1,5 +1,6 @@
 #{$class}__chatbox {
   content-visibility: hidden;
+  contain-intrinsic-size: auto 400px auto 240px;
   display: flex;
   flex-direction: column;
   position: absolute;
@@ -16,7 +17,7 @@
   overflow: hidden;
   transform: scale3d(0, 0, 0);
   opacity: 0;
-  transition: max-height 0.2s ease-out, opacity 0.4s ease-out, transform 0s linear 0.3s;
+  transition: opacity 80ms, transform 0s linear 81ms;
 
   #{$rtl} & {
     text-align: right;
@@ -26,7 +27,7 @@
     content-visibility: visible;
     opacity: 1;
     transform: scale3d(1, 1, 1);
-    transition: max-height 0.2s ease-out, opacity 0.2s ease-out, transform 0s linear;
+    transition: opacity 0.2s ease-out, transform 0s linear;
   }
 
   #{$class}--left & {

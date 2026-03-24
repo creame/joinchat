@@ -44,6 +44,7 @@
   touch-action: manipulation;
   -webkit-font-smoothing: antialiased;
   -webkit-tap-highlight-color: $transparent;
+  contain: style;
 
   *,
   *::before,

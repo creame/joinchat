@@ -66,6 +66,7 @@ class Joinchat {
 	 * - Joinchat_i18n. Defines internationalization functionality.
 	 * - Joinchat_Integrations. Defines thrid party integrations.
 	 * - Joinchat_Util. Defines common utilities.
+	 * - Joinchat_Abilities. Manages plugin abilities API.
 	 *
 	 * Create an instance of the loader which will be used to register the hooks
 	 * with WordPress.
@@ -81,9 +82,11 @@ class Joinchat {
 		require_once JOINCHAT_DIR . 'includes/class-joinchat-i18n.php';
 		require_once JOINCHAT_DIR . 'includes/class-joinchat-integrations.php';
 		require_once JOINCHAT_DIR . 'includes/class-joinchat-util.php';
+		require_once JOINCHAT_DIR . 'includes/class-joinchat-abilities.php';
 
 		$this->loader = new Joinchat_Loader();
 		jc_common(); // Instance Joinchat_Common.
+		Joinchat_Abilities::init(); // Initialize Abilities API registration.
 
 	}
 
@@ -230,7 +233,7 @@ class Joinchat {
 		$this->loader->add_action( 'wp', $plugin_public, 'set_chatbox_content', 100 );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'register_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
-		$this->loader->add_action( 'wp_print_styles', $plugin_public, 'header_styles' );
+		$this->loader->add_action( 'wp_print_styles', $plugin_public, 'above_the_fold_styles' );
 		$this->loader->add_action( 'wp_footer', $plugin_public, 'footer_html' );
 		$this->loader->add_action( 'wp_footer', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_footer', $plugin_public, 'enqueue_qr_script' );

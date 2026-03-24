@@ -249,6 +249,7 @@ class Joinchat_Admin_Onboard {
 			$body = array(
 				'email' => $data['newsletter'],
 				'site'  => get_site_url(),
+				'lang'  => get_bloginfo( 'language' ),
 			);
 
 			$response = wp_remote_post(
@@ -256,7 +257,7 @@ class Joinchat_Admin_Onboard {
 				array(
 					'headers' => array( 'Content-Type' => 'application/json' ),
 					'body'    => wp_json_encode( $body ),
-					'timeout' => 15,
+					'timeout' => 10,
 				)
 			);
 

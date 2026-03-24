@@ -305,7 +305,7 @@
           <div id="joinchatprev">
             <div id="joinchatprev__resize"></div>
             <div id="joinchatprev__devices">
-              <div class="button-group">
+              <div class="button-group button-compact">
                 <button class="button desktop" title="Desktop"><span class="dashicons dashicons-desktop"></span></button>
                 <button class="button active mobile" title="Mobile"><span class="dashicons dashicons-smartphone"></span></button>
               </div>

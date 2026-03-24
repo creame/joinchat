@@ -439,7 +439,7 @@ class Joinchat_Admin_Page {
 					list($color, $text) = explode( '/', $value . '/1' );
 
 					$output = '<input id="joinchat_color" name="joinchat[color][bg]" value="' . esc_attr( $color ) . '" type="text" data-default-color="#25d366"> ' .
-						'<div class="button-group joinchat_color_text">' .
+						'<div class="button-group button-compact joinchat_color_text">' .
 						'<label class="button white" title="' . esc_attr__( 'White Text', 'creame-whatsapp-me' ) . '"><input class="ui-helper-hidden-accessible" name="joinchat[color][text]" type="radio" value="1"' . checked( '1', $text, false ) . '><span class="screen-reader-text">' . esc_html__( 'White Text', 'creame-whatsapp-me' ) . '</span></label>' .
 						'<label class="button black" title="' . esc_attr__( 'Black Text', 'creame-whatsapp-me' ) . '"><input class="ui-helper-hidden-accessible" name="joinchat[color][text]" type="radio" value="0"' . checked( '0', $text, false ) . '><span class="screen-reader-text">' . esc_html__( 'Black Text', 'creame-whatsapp-me' ) . '</span></label>' .
 						'</div>';
@@ -800,7 +800,7 @@ class Joinchat_Admin_Page {
 
 		// phpcs:ignore WordPress.Security.NonceVerification,WordPress.Security.ValidatedSanitizedInput
 		$active_tab = isset( $_GET['tab'] ) && in_array( $_GET['tab'], array_keys( $this->tabs ), true ) ? $_GET['tab'] : 'general';
-		$prev_satus = in_array( $active_tab, array( 'general', 'advanced' ), true ) ? 'button' : 'button disabled';
+		$prev_satus = in_array( $active_tab, array( 'general', 'advanced' ), true ) ? '' : 'disabled';
 		?>
 			<div class="wrap">
 				<div class="wp-header-end"></div>
@@ -825,7 +825,7 @@ class Joinchat_Admin_Page {
 						}
 						?>
 					</h2>
-					<div class="joinchat_preview_control"><a id="joinchat_preview_show" href="#" class="<?php echo esc_attr( $prev_satus ); ?> dashicons-before"><?php esc_html_e( 'Preview', 'creame-whatsapp-me' ); ?></a></div>
+					<div class="joinchat_preview_control"><a id="joinchat_preview_show" href="#" class="button button-compact <?php echo esc_attr( $prev_satus ); ?> dashicons-before"><?php esc_html_e( 'Preview', 'creame-whatsapp-me' ); ?></a></div>
 					<div class="joinchat-tabs">
 						<?php do_settings_sections( JOINCHAT_SLUG ); ?>
 					</div><!-- end tabs -->

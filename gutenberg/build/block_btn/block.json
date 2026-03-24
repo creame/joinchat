@@ -1,8 +1,8 @@
 {
   "$schema": "https://schemas.wp.org/trunk/block.json",
-  "apiVersion": 2,
+  "apiVersion": 3,
   "name": "joinchat/button",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "title": "Joinchat Button",
   "category": "widgets",
   "icon": "smiley",
@@ -66,29 +66,20 @@
     "align": true,
     "alignWide": false,
     "color": {
-      "__experimentalSkipSerialization": true,
       "gradients": true,
       "background": true,
-      "__experimentalDefaultControls": {
-        "background": true,
-        "text": true
-      }
+      "text": true
     },
     "reusable": true,
     "spacing": {
       "margin": true,
       "padding": true
     },
-    "__experimentalBorder": {
-      "radius": true,
+    "border": {
       "color": true,
+      "radius": true,
       "width": true,
-      "style": true,
-      "__experimentalDefaultControls": {
-        "radius": true,
-        "color": true
-      }
-    },
-    "__experimentalSelector": ".joinchat-button__link"
+      "style": true
+    }
   }
 }

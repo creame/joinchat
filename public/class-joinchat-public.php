@@ -132,12 +132,26 @@ class Joinchat_Public {
 		$file = JOINCHAT_SLUG;
 		$min  = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
 
-		// Defer styles by default.
-		$defer = apply_filters( 'joinchat_defer_styles', true );
-
 		// If not chatbox use lighter only button styles.
 		if ( empty( $this->chatbox_content ) ) {
 			$file .= '-btn';
+		}
+
+		// Defer styles if floating button delay is set.
+		$defer = apply_filters( 'joinchat_defer_styles', true );
+
+		// From WP 6.9 with a classic theme move footer styles to header to avoid FOUC but sometimes styles are missing.
+		// view: https://make.wordpress.org/core/2025/11/18/wordpress-6-9-frontend-performance-field-guide/#introduce-the-template-enhancement-output-buffer
+		// view: https://wordpress.org/support/topic/wordpress-6-9-broke-site-layout-crewbloom/
+		// To fix it enqueue on header and force defer with media="print" onload="this.media='all'" .
+		if ( $defer && version_compare( get_bloginfo( 'version' ), '6.9', '>=' ) && ! wp_is_block_theme() ) {
+			wp_register_style( JOINCHAT_SLUG, plugins_url( "public/css/{$file}{$min}.css", JOINCHAT_FILE ), array(), JOINCHAT_VERSION, 'print' );
+			$this->above_the_fold_styles();
+			$this->enqueue_styles();
+
+			add_filter( 'style_loader_tag', array( $this, 'style_media_print_onload' ), 10, 4 );
+
+			return;
 		}
 
 		wp_register_style( JOINCHAT_SLUG, plugins_url( "public/css/{$file}{$min}.css", JOINCHAT_FILE ), array(), JOINCHAT_VERSION );
@@ -148,6 +162,28 @@ class Joinchat_Public {
 	}
 
 	/**
+	 * Deferred styles with media="print" add onload="this.media='all'".
+	 *
+	 * @param string $tag The link tag for the enqueued style.
+	 * @param string $handle The style’s registered handle.
+	 * @param string $href The stylesheet’s source URL.
+	 * @param string $media The stylesheet’s media attribute.
+	 * @return string The modified link tag with defer attributes if applicable.
+	 */
+	public function style_media_print_onload( $tag, $handle, $href, $media ) {
+
+		if ( 'print' !== $media || strpos( $handle, JOINCHAT_SLUG ) !== 0 ) {
+			return $tag;
+		}
+
+		$tag = str_replace( "media='print'", 'media="print"', $tag );
+		$tag = str_replace( 'media="print"', 'media="print" onload="this.media=\'all\';this.onload=null;"', $tag );
+
+		return $tag;
+
+	}
+
+	/**
 	 * Inline header styles.
 	 *
 	 * If button appears directly (delay < 0) inline on <head> min required styles.
@@ -155,15 +191,15 @@ class Joinchat_Public {
 	 * @since    6.0.0
 	 * @return   void
 	 */
-	public function header_styles() {
+	public function above_the_fold_styles() {
 
 		if ( ! $this->show || jc_common()->settings['button_delay'] >= 0 || did_filter( 'joinchat_inline_style' ) ) {
 			return;
 		}
 
 		$handle = JOINCHAT_SLUG . '-head';
-		$css    = $this->get_inline_styles();
-		$css   .= file_get_contents( JOINCHAT_DIR . 'public/css/joinchat-head.css' );
+		$css    = file_get_contents( JOINCHAT_DIR . 'public/css/joinchat-head.css' );
+		$css   .= $this->get_inline_styles();
 
 		wp_register_style( $handle, false ); // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.MissingVersion
 		wp_enqueue_style( $handle );
