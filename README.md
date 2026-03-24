@@ -17,12 +17,12 @@ Options:
 If you have Google Analytics, an event is triggered when the user launches WhatsApp.
 
 ## Descripción [ES]
-Incluye en la web un enlace directo a tu perfil de WhastApp para dar soporte a tus usuarios.
+Incluye en la web un enlace directo a tu perfil de WhatsApp para dar soporte a tus usuarios.
 
 Opciones:
 
  - **Teléfono**
- - **Solo en móviles**, en el escritorio se abrirá WhastApp Web (si está disponible)
+ - **Solo en móviles**, en el escritorio se abrirá WhatsApp Web (si está disponible)
  - **Llamada a la acción**, escribe un mensaje para animar a los usuarios a contactar a través de WhatsApp
  - **Retardo**, puedes definir un tiempo de espera para mostrar el mensaje de llamada a la acción
 

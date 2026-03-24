@@ -245,8 +245,8 @@ For WooCommerce Product Button you can change size with:
 
 Joinchat does not provide any shortcodes, but you can easily link to WhatsApp in two ways:
 
-1. Add an anchor link to `#whatsapp` (open WhastApp directly) or `#joinchat` (show chat window).<br>e.g.: add in your menu a custom link with the URL `#whatsapp`
-2. Add a css class to any element, `joinchat_app` (open WhastApp directly) or `joinchat_open` (show chat window).<br>e.g.: `<img src="contact.jpg" class="joinchat_open" alt="Contact">`
+1. Add an anchor link to `#whatsapp` (open WhatsApp directly) or `#joinchat` (show chat window).<br>e.g.: add in your menu a custom link with the URL `#whatsapp`
+2. Add a css class to any element, `joinchat_app` (open WhatsApp directly) or `joinchat_open` (show chat window).<br>e.g.: `<img src="contact.jpg" class="joinchat_open" alt="Contact">`
 
 This works with your phone settings and message with dynamic variables, **even on pages without Joinchat visible**.
 
@@ -408,7 +408,7 @@ You can view in your *Settings > Privacy > Policy Guide* the suggested text by J
 
 = 6.0.8 =
 * New allow to disable GA4 event with filter 'joinchat_get_settings' and set 'ga_event' as false
-* Fix mask WhastApp phone number for Facebook Pixel events
+* Fix mask WhatsApp phone number for Facebook Pixel events
 * Fix add aria-label to Joinchat floating button
 
 
