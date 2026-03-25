@@ -263,8 +263,8 @@ class Joinchat_Formatter {
 
 		$is_video = false;
 		$sizes    = array();
-		$width    = $w < $chat_max ? "width=\"$w\"" : '';
-		$class    = $w < $chat_max ? 'class="joinchat--inline"' : '';
+		$width    = $w <= $chat_max ? "width=\"$w\"" : '';
+		$class    = $w <= $chat_max ? 'class="joinchat--inline"' : '';
 
 		if ( is_numeric( $src ) && (int) $src > 0 ) {
 			if ( wp_attachment_is( 'image', $src ) ) {

@@ -201,7 +201,7 @@ defined( 'WPINC' ) || exit;
 
 		const width = w ? ` width="${w}"` : '';
 		const altText = alt ? ` alt="${alt}"` : '';
-		const cls = w < 340 ? ' class="joinchat--inline"' : '';
+		const cls = w <= 340 ? ' class="joinchat--inline"' : '';
 
 		if (src.startsWith('vid|')) return `<video${cls} autoplay loop muted playsinline src="${src.substring(4)}"${width}></video>`;
 		else return `<img${cls} src="${src}"${altText}${width}>`;

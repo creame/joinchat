@@ -867,6 +867,7 @@
   display: block;
   margin: 0;
   border-radius: 21px;
+  box-shadow: none;
 }
 
 .joinchat__bubble code {
