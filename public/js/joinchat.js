@@ -387,19 +387,34 @@
 
       // Animate height growth on any child/class mutation
       if (!window.matchMedia('(prefers-reduced-motion)').matches) {
+        // Hide before observe
+        if (jc_bubbles.length > 1) {
+          jc_bubbles.forEach(bubble => bubble.classList.add('joinchat--hidden'));
+          joinchat_obj.$('.joinchat__optin')?.classList.add('joinchat--hidden');
+        }
+
         let prev_height = jc_chat.offsetHeight;
         let anim_timeout;
+
+        // Observe DOM mutations
         const observer = new MutationObserver(() => {
+          if (jc_scroll.scrollHeight > jc_scroll.offsetHeight) {
+            observer.disconnect();
+            return;
+          }
+
           const new_height = jc_chat.offsetHeight;
-          console.log('Height changed:', { prev_height, new_height });
+          clearTimeout(anim_timeout);
           jc_chat.style.height = `${prev_height}px`;
           jc_chat.offsetHeight; // force reflow
           jc_chat.style.height = `${new_height}px`;
           prev_height = new_height;
-          clearTimeout(anim_timeout);
-          anim_timeout = setTimeout(() => jc_chat.style.height = '', 240);
+          anim_timeout = setTimeout(() => {
+            jc_chat.style.height = '';
+            prev_height = jc_chat.offsetHeight; // Capture new height after animation (image, video)
+          }, 205);
         });
-        observer.observe(jc_chat, { childList: true, subtree: true, attributes: true, attributeFilter: ['class'] });
+        observer.observe(jc_chat, { childList: true, attributes: true, attributeFilter: ['class'] });
       }
 
       // Bubbles animated (show one by one)
@@ -408,20 +423,18 @@
         return;
       }
 
-      jc_bubbles.forEach(bubble => bubble.classList.add('joinchat--hidden'));
-      joinchat_obj.$('.joinchat__optin')?.classList.add('joinchat--hidden');
-
       let index = 0;
       const random = (min, max) => Math.round(Math.random() * (max - min) + min);
       const showBubble = (bubble, next_delay) => {
         joinchat_obj.$('.joinchat__bubble--loading')?.remove();
         bubble.classList.remove('joinchat--hidden');
-        jc_scroll.scrollTop = jc_scroll.scrollHeight;
+        jc_chat.parentNode.scrollIntoView({ behavior: 'smooth', block: 'end' });
         setTimeout(nextBubble, next_delay);
       };
       const nextBubble = () => {
         if (index >= jc_bubbles.length) {
           joinchat_obj.$('.joinchat__optin')?.classList.remove('joinchat--hidden');
+          jc_chat.parentNode.scrollIntoView({ behavior: 'smooth', block: 'end' });
           jc_chat.dispatchEvent(new Event('joinchat:bubbles')); // All bubbles shown
           return;
         }
@@ -431,8 +444,8 @@
           showBubble(bubble, 100);
         } else {
           jc_chat.insertAdjacentHTML('beforeend', '<div class="joinchat__bubble joinchat__bubble--loading"></div>');
-          jc_scroll.scrollTop = jc_scroll.scrollHeight;
-          setTimeout(() => showBubble(bubble, random(400, 600)), (bubble.textContent.split(/\s+/).length * 60) + random(100, 200)); // Delay (word count * time) + random delay
+          jc_chat.parentNode.scrollIntoView({ behavior: 'smooth', block: 'end' });
+          setTimeout(() => showBubble(bubble, random(400, 600)), Math.min((bubble.textContent.split(/\s+/).length * 60) + 210, 3000)); // Delay (word count * time) + animation delay
         }
       };
       nextBubble();
