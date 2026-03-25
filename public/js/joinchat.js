@@ -385,6 +385,12 @@
       // Random text
       if (has_cta) joinchat_obj.rand_text(jc_chat);
 
+      // Set data-src to src (for delayed loading)
+      joinchat_obj.$$('[data-src]').forEach(el => {
+        el.setAttribute('src', el.dataset.src);
+        el.removeAttribute('data-src');
+      });
+
       // Animate height growth on any child/class mutation
       if (!window.matchMedia('(prefers-reduced-motion)').matches) {
         // Hide before observe

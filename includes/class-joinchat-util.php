@@ -296,7 +296,10 @@ class Joinchat_Util {
 			$messages[ $key ] = sprintf( '<div class="joinchat__bubble%s">%s</div>', $class, $msg );
 		}
 
-		return join( "\n", $messages );
+		$messages = join( "\n", $messages );
+		$messages = str_replace( ' src="', ' data-src="', $messages ); // For delayed loading.
+
+		return $messages;
 
 	}
 
