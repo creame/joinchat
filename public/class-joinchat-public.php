@@ -193,7 +193,7 @@ class Joinchat_Public {
 	 */
 	public function above_the_fold_styles() {
 
-		if ( ! $this->show || jc_common()->settings['button_delay'] >= 0 || did_filter( 'joinchat_inline_style' ) ) {
+		if ( ! $this->show || jc_common()->settings['button_delay'] > 0 || did_filter( 'joinchat_inline_style' ) ) {
 			return;
 		}
 
