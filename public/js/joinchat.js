@@ -156,7 +156,7 @@
 
     clearTimeout(this.open_text_anim_timeout);
     this.$div.classList.add('joinchat--chatbox');
-    this.$div.offsetWidth; // force reflow to restart CSS animation
+    // In two steps to trigger animation
     this.$div.classList.add('joinchat--opening');
     this.open_text_anim_timeout = setTimeout(() => this.$div.classList.remove('joinchat--opening'), 550);
 
@@ -404,10 +404,7 @@
 
         // Observe DOM mutations
         const observer = new MutationObserver(() => {
-          if (jc_scroll.scrollHeight > jc_scroll.offsetHeight) {
-            observer.disconnect();
-            return;
-          }
+          if (jc_scroll.scrollHeight > jc_scroll.offsetHeight) observer.disconnect();
 
           const new_height = jc_chat.offsetHeight;
           clearTimeout(anim_timeout);
@@ -447,7 +444,7 @@
 
         const bubble = jc_bubbles[index++];
         if (bubble.classList.contains('joinchat__bubble--note')) {
-          showBubble(bubble, 100);
+          showBubble(bubble, 210);
         } else {
           jc_chat.insertAdjacentHTML('beforeend', '<div class="joinchat__bubble joinchat__bubble--loading"></div>');
           jc_chat.parentNode.scrollIntoView({ behavior: 'smooth', block: 'end' });
