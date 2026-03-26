@@ -3,9 +3,9 @@ Contributors: creapuntome, pacotole, davidlillo, monillo
 Donate link: https://join.chat/donate/
 Tags: WhatsApp, Chat, Floating Button, Facebook Messenger, Telegram
 Requires at least: 4.9.6
-Tested up to: 6.9
+Tested up to: 7.0
 Requires PHP: 7.0
-Stable tag: 6.0.10
+Stable tag: 6.1.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -39,12 +39,13 @@ Define in which pages or zones it should appear, the delay time, if you want it 
 
 You can define a tooltip or a call to action to capture the user's interest, the limit is set by your creativity.
 
-### 📢 New on Joinchat 6.0
+### 📢 New on Joinchat 6
 
 * Enhance your CTAs with **Rich Chat**: multiple chat bubbles, include links or buttons, add images and use random texts.
 * **Improved performance**: vanilla JavaScript without any dependency and lazy loading of styles and scripts.
 * **New button icons** and allows to keep the alternative image fixed.
 * Integration with new **WooCommerce brands**.
+* Added WordPress Abilities for set main settings and generate WhatsApp "click to chat" links
 * Other optimizations: refactor and improved styles, updated phone input (37 translations included), added **{HOME}** variable, etc.
 
 ### 📝 Settings at page or archive level.
@@ -396,6 +397,15 @@ You can view in your *Settings > Privacy > Policy Guide* the suggested text by J
 
 
 == Changelog ==
+
+= 6.1.0 =
+* New Added WordPress Abilities for set main settings and generate WhatsApp "click to chat" links
+* Updated Joinchat Block with API V3
+* Updated admin styles for WordPress 7.0
+* Add smooth transitions as the chat window grows and other modern CSS optimizations
+* Add lazy load for animated images (as webm video)
+* Fix WordPress 6.9 don't load styles with classic themes in some cases
+* Bump tested up to Wordpress 7.0
 
 = 6.0.10 =
 * Tweak CTA random text allow html tags (bold, italic, img...)
