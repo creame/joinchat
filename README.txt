@@ -398,6 +398,10 @@ You can view in your *Settings > Privacy > Policy Guide* the suggested text by J
 
 == Changelog ==
 
+= 6.1.1 =
+* Fix revert defer styles with media="print" because some optimizers remove them.
+* With WP 6.9 and classic theme ensure enqueue styles on header.
+
 = 6.1.0 =
 * New Added WordPress Abilities for set main settings and generate WhatsApp "click to chat" links
 * Updated Joinchat Block with API V3
