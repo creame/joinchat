@@ -22,7 +22,7 @@
    */
   joinchat_obj.send_event = function (params) {
     params = {
-      event_category: 'JoinChat', // Name
+      event_category: this.settings.event_category || 'JoinChat', // Name
       event_label: '',            // Destination url
       event_action: '',           // "chanel: id"
       chat_channel: 'whatsapp',   // Channel name
@@ -36,7 +36,7 @@
     params.event_action = params.event_action || `${params.chat_channel}: ${params.chat_id}`;
     delete params.link;
 
-    // Trigger event (params can be edited by third party scripts or cancel if return false)
+    // Trigger event (params can be edited by third party scripts or cancel)
     if (!document.dispatchEvent(new CustomEvent('joinchat:event', { detail: params, cancelable: true }))) return;
 
     const data_layer = window[this.settings.data_layer] || window[window.gtm4wp_datalayer_name] || window.dataLayer;
@@ -118,7 +118,7 @@
   };
 
   // Open WhatsApp link with supplied phone and message or with settings defaults
-  joinchat_obj.open_whatsapp = function (phone, message) {
+  joinchat_obj.open_whatsapp = function (phone, message, trigger = 'unknown') {
     phone = phone || this.settings.telephone;
     message = message !== undefined ? message : this.settings.message_send || '';
 
@@ -127,6 +127,7 @@
       chat_channel: 'whatsapp',
       chat_id: phone,
       chat_message: message,
+      trigger: trigger, // "button", "contact", "trigger", "url", "auto", "screen", "hover"
     };
 
     // Trigger event (params can be edited by third party scripts or cancel if return false)
@@ -155,7 +156,7 @@
     document.addEventListener('click', function (e) {
       if (e.target.closest('.joinchat_open, .joinchat_app, a[href="#joinchat"], a[href="#whatsapp"]')) {
         e.preventDefault();
-        joinchat_obj.open_whatsapp(e.target.dataset.phone, e.target.dataset.message);
+        joinchat_obj.open_whatsapp(e.target.dataset.phone, e.target.dataset.message, 'trigger');
       }
     });
 
