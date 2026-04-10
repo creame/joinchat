@@ -89,15 +89,18 @@ class Joinchat_Gutenberg {
 			jc_common()->qr = true;
 		}
 
-		// Replace dynamic vars.
-		if ( ! empty( $attributes['message'] ) ) {
-			$escaped = str_replace( array( '&', '"', '>' ), array( '&amp;', '&quot;', '&gt;' ), $attributes['message'] );
-			$content = str_replace( $escaped, esc_attr( Joinchat_Util::replace_variables( $attributes['message'] ) ), $content );
+		$data = ' ';
+		if ( ! empty( $attributes['phone'] ) ) {
+			$data .= 'data-phone="' . esc_attr( Joinchat_Util::clean_whatsapp( $attributes['phone'] ) ) . '"';
 		}
 
-		// Render an empty Button Block to ensure enqueue button styles.
-		$button = parse_blocks( '<!-- wp:button /-->' );
-		render_block( $button[0] );
+		// Replace dynamic vars.
+		if ( ! empty( $attributes['message'] ) ) {
+			$data .= ' data-message="' . esc_attr( Joinchat_Util::replace_variables( $attributes['message'] ) ) . '"';
+		}
+
+		// Links to '#whatsapp' with data attributes.
+		$content = preg_replace( '/\s*href="[^"]*"/', 'href="#whatsapp"' . $data, $content );
 
 		return $content;
 

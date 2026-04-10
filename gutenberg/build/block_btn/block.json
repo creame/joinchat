@@ -2,11 +2,11 @@
   "$schema": "https://schemas.wp.org/trunk/block.json",
   "apiVersion": 3,
   "name": "joinchat/button",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "title": "Joinchat Button",
   "category": "widgets",
   "icon": "smiley",
-  "description": "WhatsApp contact button",
+  "description": "WhatsApp contact button with QR code",
   "keywords": [
     "WhatsApp",
     "QR",
@@ -18,19 +18,6 @@
   "style": "file:../style-index.css",
   "example": {},
   "attributes": {
-    "cta": {
-      "type": "string",
-      "source": "html",
-      "selector": ".joinchat-button__link>span",
-      "default": "<strong>Open Chat</strong>"
-    },
-    "backgroundColor": {
-      "type": "string"
-    },
-    "textColor": {
-      "type": "string",
-      "default": "#ffffff"
-    },
     "phone": {
       "type": "string"
     },
@@ -46,40 +33,48 @@
       ],
       "default": "both"
     },
-    "style": {
+    "layout": {
       "type": "object",
       "default": {
-        "color": {
-          "background": "#25d366"
-        },
-        "border": {
-          "width": "6px",
-          "style": "solid",
-          "color": "#25d366",
-          "radius": "30px"
-        }
+        "type": "flex",
+        "justifyContent": "center",
+        "orientation": "vertical"
+      }
+    },
+    "style": {
+      "type": "object"
+    },
+    "qrBorderStyles": {
+      "type": "object",
+      "default": {
+        "width": "6px",
+        "radius": "30px",
+        "color": "#25d366",
+        "colorSlug": ""
       }
     }
   },
   "supports": {
-    "anchor": true,
+    "anchor": false,
     "align": true,
     "alignWide": false,
-    "color": {
-      "gradients": true,
-      "background": true,
-      "text": true
+    "lock": false,
+    "layout": {
+      "allowSwitching": false,
+      "allowInheriting": false,
+      "allowWrap": false,
+      "default": {
+        "type": "flex"
+      }
     },
     "reusable": true,
     "spacing": {
       "margin": true,
-      "padding": true
+      "padding": true,
+      "blockGap": {
+        "__experimentalDefault": "10px"
+      }
     },
-    "border": {
-      "color": true,
-      "radius": true,
-      "width": true,
-      "style": true
-    }
+    "defaultStylePicker": false
   }
 }
