@@ -476,7 +476,7 @@
       const trigger = e.target.closest('.joinchat_open, .joinchat_app, a[href="#joinchat"], a[href="#whatsapp"]');
       if (!trigger) return;
       e.preventDefault();
-      const direct = !!trigger.closest('.joinchat_app, a[href="#whatsapp"]');
+      const direct = trigger === trigger.closest('.joinchat_app, a[href="#whatsapp"]');
       joinchat_obj.open(direct, trigger.dataset.phone, trigger.dataset.message, 'trigger');
     });
 
