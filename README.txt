@@ -5,7 +5,7 @@ Tags: WhatsApp, Chat, Floating Button, Facebook Messenger, Telegram
 Requires at least: 4.9.6
 Tested up to: 7.0
 Requires PHP: 7.0
-Stable tag: 6.1.1
+Stable tag: 6.1.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -397,6 +397,12 @@ You can view in your *Settings > Privacy > Policy Guide* the suggested text by J
 
 
 == Changelog ==
+
+= 6.1.2 =
+* Fix editor error on WordPress 6.9 on edit page with "Joinchat Button" block
+* Updated "Joinchat Button" block with more flexible controls (orientation vertical/horizontal, align, gap and button settings)
+* New event parameter "trigger" on JS events "joinchat:show" and "joinchat:open"
+* New JS event "joinchat:optin" on change opt-in value
 
 = 6.1.1 =
 * Fix revert defer styles with media="print" because some optimizers remove them.
