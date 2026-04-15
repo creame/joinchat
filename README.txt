@@ -5,7 +5,7 @@ Tags: WhatsApp, Chat, Floating Button, Facebook Messenger, Telegram
 Requires at least: 4.9.6
 Tested up to: 7.0
 Requires PHP: 7.0
-Stable tag: 6.1.2
+Stable tag: 6.1.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -397,6 +397,9 @@ You can view in your *Settings > Privacy > Policy Guide* the suggested text by J
 
 
 == Changelog ==
+
+= 6.1.3 =
+* Fix recover Gutenberg compatibility with WordPress < 6.6
 
 = 6.1.2 =
 * Fix editor error on WordPress 6.9 on edit page with "Joinchat Button" block
