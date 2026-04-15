@@ -24,16 +24,17 @@ class Joinchat_Gutenberg {
 	 */
 	public function enqueue_editor_assets() {
 
-		$asset_file = include JOINCHAT_DIR . '/gutenberg/build/index.asset.php';
-
-		$joinchat_data = array(
+		// Enqueue script.
+		$script_url  = plugins_url( 'gutenberg/build/index.js', JOINCHAT_FILE );
+		$asset_file  = include JOINCHAT_DIR . '/gutenberg/build/index.asset.php';
+		$script_data = array(
 			'image_qr'     => plugins_url( 'admin/img/qr.webp', JOINCHAT_FILE ),
 			'defaults'     => jc_common()->get_obj_placeholders( get_post() ),
 			'message_vars' => jc_common()->get_obj_vars( get_post() ),
 		);
 
-		wp_enqueue_script( 'joinchat-gutenberg', plugins_url( 'gutenberg/build/index.js', JOINCHAT_FILE ), $asset_file['dependencies'], $asset_file['version'], true );
-		wp_localize_script( 'joinchat-gutenberg', 'joinchatData', $joinchat_data );
+		wp_enqueue_script( 'joinchat-gutenberg', $script_url, $asset_file['dependencies'], $asset_file['version'], true );
+		wp_localize_script( 'joinchat-gutenberg', 'joinchatData', $script_data );
 		wp_set_script_translations( 'joinchat-gutenberg', 'creame-whatsapp-me', JOINCHAT_DIR . 'languages' );
 
 		/**
@@ -60,9 +61,17 @@ class Joinchat_Gutenberg {
 	 */
 	public function register_blocks() {
 
+		/**
+		 * For now, we will keep the back compat for WP 6.5 and below
+		 * With @wordpress/scripts >= 28 need 'react-jsx-runtime' fallback or drop support for WP 6.5 and below.
+		 * View https://make.wordpress.org/core/2024/06/06/jsx-in-wordpress-6-6/
+		 * and https://github.com/WordPress/gutenberg/issues/62202#issuecomment-2156796649
+		 */
+
 		register_block_type(
 			JOINCHAT_DIR . '/gutenberg/build/block_btn/',
 			array(
+				'api_version'     => is_wp_version_compatible( '6.6' ) ? 3 : 2,
 				'render_callback' => array( $this, 'render_button' ),
 			)
 		);
