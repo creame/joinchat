@@ -186,5 +186,9 @@
     border: none !important;
     border-top: 2px solid var(--msg) !important;
     margin: 10px 0 !important;
+
+    &+br {
+      display: none;
+    }
   }
 }
