@@ -299,7 +299,7 @@ class Joinchat_Formatter {
 				$sizes[1] = esc_url( wp_get_attachment_url( $src ) );
 			}
 		} elseif ( ! empty( $src ) ) {
-			$is_video = preg_match( '/\.(webp|mp4)$/', $src );
+			$is_video = preg_match( '/\.(webm|mp4)$/', $src );
 			$sizes[1] = esc_url( $src );
 		}
 
