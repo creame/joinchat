@@ -5,6 +5,8 @@
  * @package    Joinchat
  */
 
+defined( 'WPINC' ) || exit;
+
 /**
  * The admin common functionality of the plugin.
  *

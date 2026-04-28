@@ -5,6 +5,8 @@
  * @package    Joinchat
  */
 
+defined( 'WPINC' ) || exit;
+
 /**
  * Define the internationalization functionality.
  *

@@ -5,6 +5,8 @@
  * @package    Joinchat
  */
 
+defined( 'WPINC' ) || exit;
+
 /**
  * Register Gutenberg block editor plugin logic.
  * Add native sidebar for postmeta and register blocks and patterns.

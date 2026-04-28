@@ -5,6 +5,8 @@
  * @package    Joinchat
  */
 
+defined( 'WPINC' ) || exit;
+
 /**
  * Formatter class.
  *

@@ -5,6 +5,8 @@
  * @package    Joinchat
  */
 
+defined( 'WPINC' ) || exit;
+
 /**
  * The core plugin class.
  *
@@ -342,6 +344,6 @@ class Joinchat {
 	 * @return   bool    True if is login page, false otherwise.
 	 */
 	private function is_login() {
-		return function_exists( 'is_login' ) ? is_login() : false !== stripos( wp_login_url(), $_SERVER['SCRIPT_NAME'] );
+		return function_exists( 'is_login' ) ? is_login() : false !== stripos( wp_login_url(), $_SERVER['SCRIPT_NAME'] ?? '' );
 	}
 }

@@ -5,6 +5,8 @@
  * @package    Joinchat
  */
 
+defined( 'WPINC' ) || exit;
+
 /**
  * Utility class.
  *
@@ -452,7 +454,7 @@ class Joinchat_Util {
 	 */
 	public static function can_gutenberg() {
 
-		return function_exists( 'register_block_type' ) && version_compare( get_bloginfo( 'version' ), '5.9', '>=' );
+		return function_exists( 'register_block_type' ) && is_wp_version_compatible( '5.9' );
 
 	}
 
