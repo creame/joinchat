@@ -123,7 +123,6 @@ class Joinchat_Admin_Page {
 		$this->help_tab();
 
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_assets' ) );
-		add_action( 'in_admin_header', array( $this, 'admin_header' ) );
 
 		add_filter( 'admin_title', array( $this, 'admin_title' ) );
 		add_filter( 'admin_footer_text', array( $this, 'admin_footer_text' ), PHP_INT_MAX );
@@ -945,24 +944,6 @@ z-index: 9000;   put above or below other objects
 
 		return sprintf( '%s &lsaquo; %s', esc_html__( 'Joinchat Settings', 'creame-whatsapp-me' ), get_bloginfo( 'name' ) );
 
-	}
-
-	/**
-	 * Custom admin header with Joinchat logo
-	 *
-	 * @since 5.0.0
-	 * @since 5.0.12 Added action 'joinchat_admin_header'.
-	 * @return void
-	 */
-	public function admin_header() {
-		?>
-		<div id="jcadminbar">
-			<div class="joinchat-header">
-				<h1><img src="<?php echo esc_url( plugin_dir_url( JOINCHAT_FILE ) . '/admin/img/joinchat.svg' ); ?>" width="159" height="40" alt="Joinchat"></h1>
-				<?php do_action( 'joinchat_admin_header' ); ?>
-			</div>
-		</div>
-		<?php
 	}
 
 	/**

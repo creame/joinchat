@@ -72,7 +72,6 @@ class Joinchat_Admin_Onboard {
 	public function page_hooks() {
 
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_assets' ) );
-		add_action( 'in_admin_header', array( $this, 'admin_header' ) );
 
 		add_filter( 'admin_title', array( $this, 'admin_title' ) );
 		add_filter( 'submenu_file', array( $this, 'submenu_file' ) );
@@ -131,22 +130,6 @@ class Joinchat_Admin_Onboard {
 
 		return JOINCHAT_SLUG;
 
-	}
-
-	/**
-	 * Custom admin header with Joinchat logo
-	 *
-	 * @since    5.0.0
-	 * @return   void
-	 */
-	public function admin_header() {
-		?>
-		<div id="jcadminbar">
-			<div class="joinchat-header">
-				<h1><img src="<?php echo esc_url( plugin_dir_url( JOINCHAT_FILE ) . '/admin/img/joinchat.svg' ); ?>" width="159" height="40" alt="Joinchat"></h1>
-			</div>
-		</div>
-		<?php
 	}
 
 	/**

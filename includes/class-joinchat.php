@@ -182,6 +182,7 @@ class Joinchat {
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'register_scripts' );
 		$this->loader->add_action( 'admin_notices', $plugin_admin, 'notices' );
 		$this->loader->add_action( 'wp_ajax_joinchat_notice_dismiss', $plugin_admin, 'ajax_notice_dismiss' );
+		$this->loader->add_action( 'in_admin_header', $plugin_admin, 'admin_header' );
 		// Post meta.
 		$this->loader->add_action( 'add_meta_boxes', $plugin_admin, 'add_meta_boxes' );
 		$this->loader->add_action( 'save_post', $plugin_admin, 'save_meta', 10, 2 );

@@ -470,7 +470,9 @@ class Joinchat_Util {
 
 		if ( did_action( 'load_joinchat_settings_page' ) ) {
 			return true;
-		} elseif ( $include_onboard && did_action( 'load_joinchat_onboard_page' ) ) {
+		}
+
+		if ( $include_onboard && did_action( 'load_joinchat_onboard_page' ) ) {
 			return true;
 		}
 

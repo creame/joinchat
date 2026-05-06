@@ -567,4 +567,29 @@ class Joinchat_Admin {
 		wp_add_privacy_policy_content( 'Joinchat', apply_filters( 'joinchat_privacy_message', $message ) );
 
 	}
+
+	/**
+	 * Custom admin header with Joinchat logo
+	 *
+	 * @since 6.2.0
+	 * @return void
+	 */
+	public function admin_header() {
+
+		if ( ! Joinchat_Util::is_admin_screen( true ) ) {
+			return;
+		}
+
+		?>
+		<div id="jcadminbar">
+			<div class="joinchat-header">
+				<h1>
+					<img src="<?php echo esc_url( plugin_dir_url( JOINCHAT_FILE ) . '/admin/img/joinchat-icon.svg' ); ?>" width="36" height="36" alt="">
+					<img src="<?php echo esc_url( plugin_dir_url( JOINCHAT_FILE ) . '/admin/img/joinchat-logo.svg' ); ?>" width="117" height="26" alt="Joinchat">
+				</h1>
+				<?php do_action( 'joinchat_admin_header' ); ?>
+			</div>
+		</div>
+		<?php
+	}
 }
