@@ -42,8 +42,7 @@ class Joinchat_Admin_Page {
 
 			$page_hook = add_options_page( $title, $title . $icon, Joinchat_Util::capability(), JOINCHAT_SLUG, array( $this, 'options_page' ) );
 		} else {
-			$icon = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNyAxNiI+PHBhdGggZmls' .
-				'bD0iIzlDQTJBNyIgZD0iTTE0LjQgMTIuOGE4IDggMCAxIDAtMS42IDEuNkMxNC40IDE1LjUgMTcgMTYgMTcgMTZzLTEuNS0xLjYtMi42LTMuMiIvPjwvc3ZnPg==';
+			$icon = 'data:image/svg+xml;base64,' . base64_encode( file_get_contents( JOINCHAT_DIR . 'admin/img/menu-icon.svg' ) );
 
 			$page_hook = add_menu_page( $title, $title, Joinchat_Util::capability(), JOINCHAT_SLUG, array( $this, 'options_page' ), $icon, 81 );
 		}
