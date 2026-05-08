@@ -46,7 +46,7 @@ class Joinchat_Premium {
 	 */
 	public function admin_tab( $tabs ) {
 
-		$tabs['premium'] = esc_html__( 'Premium', 'creame-whatsapp-me' );
+		$tabs['premium'] = esc_html__( 'Go Premium', 'creame-whatsapp-me' );
 
 		return $tabs;
 	}
