@@ -64,6 +64,10 @@ defined( 'WPINC' ) || exit;
 			.joinchat__qr {
 				display: none !important;
 			}
+
+			.joinchat:has(.joinchat__powered.joinchat--hidden) .joinchat__content {
+				padding-top: 20px;
+			}
 		}
 	</style>
 </head>

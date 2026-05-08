@@ -403,7 +403,7 @@
       });
 
       // Chatbox show (if available)
-      $('#joinchat_message_text,#joinchat_message_start,input[name="joinchat[color][text]"],input[name="joinchat[dark_mode]"],input[name="joinchat[header]"],#joinchat_header_custom').on('focus', view_chatbox);
+      $('#joinchat_message_text,#joinchat_message_start,input[name="joinchat[color][text]"],input[name="joinchat[dark_mode]"],input[name="joinchat[header]"],#joinchat_header_custom,#joinchat_show_brand').on('focus', view_chatbox);
 
       function change_message_text(e) {
         prev_jc.has_cta = $(e.target).val().trim() != '';
@@ -439,7 +439,6 @@
         view_chatbox();
       });
       $('input[name="joinchat[header]"]').on('change', function () {
-        prev_jc.$('#joinchat__label a').classList.toggle('joinchat--hidden', this.value != '__jc__');
         prev_jc.$('#joinchat__label span').classList.toggle('joinchat--hidden', this.value != '__custom__');
         prev_jc.$('#joinchat__label .joinchat__wa').classList.toggle('joinchat--hidden', this.value != '__wa__');
         view_chatbox();
@@ -465,6 +464,12 @@
       // Custom CSS (strip tags)
       custom_css_editor.codemirror.on('change', function (ed) {
         $('#joinchat_preview')[0].contentDocument.getElementById('joinchat-inline-css').innerHTML = ed.getValue().replace(/(<([^>]+)>)/gi, "");
+      });
+
+      // Powered label
+      $('#joinchat_show_brand').on('change', function () {
+        prev_jc.$('.joinchat__powered').classList.toggle('joinchat--hidden', !this.checked);
+        view_chatbox();
       });
 
       // Trigger change to force updated settings on preview

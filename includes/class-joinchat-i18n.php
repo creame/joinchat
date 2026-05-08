@@ -115,7 +115,7 @@ class Joinchat_I18n {
 			'optin_text'    => 'Opt-in Text',
 		);
 
-		if ( isset( $settings['header'] ) && ! in_array( $settings['header'], array( '', '__jc__', '__wa__' ), true ) ) {
+		if ( isset( $settings['header'] ) && '__wa__' !== $settings['header'] ) {
 			$localized['header'] = 'Header';
 		}
 

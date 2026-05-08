@@ -115,12 +115,13 @@ class Joinchat_Common {
 			'visibility'    => array( 'all' => 'yes' ),
 			'color'         => '#25d366/1', // hexcolor/0|1 (black or white text).
 			'dark_mode'     => 'no',     // values: 'no', 'yes' or 'auto'.
-			'header'        => '__jc__', // values: '__jc__', '__wa__' or other custom text.
+			'header'        => '__wa__', // values: '__wa__' or other custom text.
 			'optin_text'    => '',
 			'optin_check'   => 'no',
 			'gads'          => '',
 			'custom_css'    => '',
 			'clear'         => 'no',
+			'show_brand'    => 'yes',
 		);
 
 		$defaults = array_merge( $defaults, apply_filters( 'joinchat_extra_settings', array() ) );
@@ -156,6 +157,12 @@ class Joinchat_Common {
 		if ( isset( $settings['remove_brand'] ) ) {
 			$remove             = $settings['remove_brand'];
 			$settings['header'] = 'wa' === $remove ? '__wa__' : ( 'no' === $remove ? '__jc__' : '' );
+		}
+
+		// Since v6.2.0 use "show_brand" setting.
+		if ( '__jc__' === $settings['header'] ) {
+			$settings['header']     = '__wa__';
+			$settings['show_brand'] = 'yes';
 		}
 
 		// Since v5.1 use negative values for disabled.

@@ -102,13 +102,14 @@ class Joinchat_Admin {
 		$value['position']      = 'left' !== $value['position'] ? 'right' : 'left';
 		$value['color']         = "$bg/$text";
 		$value['dark_mode']     = in_array( $value['dark_mode'], array( 'no', 'yes', 'auto' ), true ) ? $value['dark_mode'] : 'no';
-		$value['header']        = in_array( $value['header'], array( '__jc__', '__wa__' ), true ) ? $value['header'] : $util::substr( $util::clean_input( $value['header_custom'] ), 0, 40 );
+		$value['header']        = '__wa__' === $value['header'] ? $value['header'] : $util::substr( $util::clean_input( $value['header_custom'] ), 0, 40 );
 		$value['optin_check']   = $util::yes_no( $value, 'optin_check' );
 		$value['optin_text']    = wp_kses( $value['optin_text'], $optin_tags );
 		$value['gads']          = is_array( $value['gads'] ) ? sprintf( 'AW-%s/%s', $util::substr( $util::clean_input( $value['gads'][0] ), 0, 11 ), $util::substr( $util::clean_input( $value['gads'][1] ), 0, 20 ) ) : '';
 		$value['gads']          = 'AW-/' !== $value['gads'] ? $value['gads'] : '';
 		$value['custom_css']    = trim( $util::clean_nl( $value['custom_css'] ) );
 		$value['clear']         = $util::yes_no( $value, 'clear' );
+		$value['show_brand']    = $util::yes_no( $value, 'show_brand' );
 
 		if ( isset( $value['view'] ) ) {
 			$value['visibility'] = array_filter(

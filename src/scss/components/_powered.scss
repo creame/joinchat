@@ -1,0 +1,80 @@
+#{$class}__header {
+  anchor-name: --joinchat-header;
+}
+
+#{$class}__powered {
+  position: absolute;
+  position-anchor: --joinchat-header;
+  position-area: bottom left;
+  left: -75px;
+  top: 75px;
+  width: 130px;
+  height: 20px;
+  background: #fff;
+  color: #00000099 !important;
+  border-radius: 4px 4px 0 0;
+  font-size: 11px;
+  line-height: 20px;
+  text-align: center;
+  text-decoration: none !important;
+  transition: color 0.2s ease-out;
+  box-shadow: 0px 2px 6px 0px #00000033;
+  transform: rotateZ(-90deg);
+  opacity: 0;
+
+  @supports not (position-anchor: --x) {
+    display: none;
+  }
+
+  #{$class}--chatbox & {
+    opacity: 1;
+    transition: opacity 0.2s ease-out;
+  }
+
+  span {
+    font-weight: 600;
+  }
+
+  &:hover,
+  &:active {
+    color: #000 !important;
+    text-decoration: none !important;
+  }
+
+  #{$class}--left & {
+    position-area: bottom right;
+    left: auto;
+    right: -75px;
+    transform: rotateZ(90deg);
+  }
+
+  #{$class}--dark & {
+    background: #ddd !important;
+  }
+}
+
+@include mobile {
+
+  #{$class}:has(#{$class}__powered) #{$class}__content {
+    padding-top: 40px;
+  }
+
+  #{$class}--right #{$class}__powered,
+  #{$class}--left #{$class}__powered {
+    position-area: bottom center;
+    z-index: 2;
+    top: 0;
+    left: 0;
+    right: 0;
+    transform: none;
+    border-radius: 0 0 4px 4px;
+  }
+}
+
+@include dark {
+  #{$class}--dark-auto {
+    #{$class}__powered {
+      background: #ddd !important;
+    }
+  }
+}

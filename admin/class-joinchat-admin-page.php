@@ -224,6 +224,7 @@ class Joinchat_Admin_Page {
 					'global' => array(
 						'gads'       => '<label for="joinchat_gads">' . esc_html__( 'Google Ads Conversion', 'creame-whatsapp-me' ) . '</label>',
 						'custom_css' => esc_html__( 'Custom CSS', 'creame-whatsapp-me' ),
+						'show_brand' => esc_html__( 'Show Branding', 'creame-whatsapp-me' ),
 						'clear'      => esc_html__( 'Clear on uninstall', 'creame-whatsapp-me' ),
 					),
 				);
@@ -456,12 +457,10 @@ class Joinchat_Admin_Page {
 					break;
 
 				case 'header':
-					$check = in_array( $value, array( '__jc__', '__wa__' ), true ) ? $value : '__custom__';
+					$check = '__wa__' === $value ? $value : '__custom__';
 					$value = '__custom__' === $check ? $value : '';
 
 					$output = '<fieldset><legend class="screen-reader-text"><span>' . esc_html__( 'Header', 'creame-whatsapp-me' ) . '</span></legend>' .
-						'<label><input name="joinchat[header]" value="__jc__" type="radio"' . checked( '__jc__', $check, false ) . '> ' .
-						esc_html__( 'Powered by Joinchat', 'creame-whatsapp-me' ) . '</label><br>' .
 						'<label><input name="joinchat[header]" value="__wa__" type="radio"' . checked( '__wa__', $check, false ) . '> ' .
 						esc_html__( 'WhatsApp Logo', 'creame-whatsapp-me' ) . '</label><br>' .
 						'<label><input name="joinchat[header]" value="__custom__" type="radio"' . checked( '__custom__', $check, false ) . '> ' .
@@ -491,6 +490,13 @@ class Joinchat_Admin_Page {
 							wp_kses( __( 'You can find examples and more tricks <a href="%s" target="_blank">here</a>.', 'creame-whatsapp-me' ), Joinchat_Admin::KSES_LINK ),
 							esc_url( Joinchat_Util::link( 'css', 'help' ) )
 						) . '</p></fieldset>';
+					break;
+
+				case 'show_brand':
+					$output = '<fieldset><legend class="screen-reader-text"><span>' . esc_html__( 'Show Branding', 'creame-whatsapp-me' ) . '</span></legend>' .
+						'<label><input id="joinchat_show_brand" name="joinchat[show_brand]" value="yes" type="checkbox"' . checked( 'yes', $value, false ) . '> ' .
+						/* translators: %s: Powered by Joinchat. */
+						sprintf( esc_html__( 'Display "%s" label', 'creame-whatsapp-me' ), 'Powered by Joinchat' ) . '</label></fieldset>';
 					break;
 
 				case 'clear':

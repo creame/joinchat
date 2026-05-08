@@ -82,6 +82,7 @@ class Joinchat_Public {
 		$settings['qr']            = 'yes' === $settings['qr'];
 		$settings['message_badge'] = 'yes' === $settings['message_badge'] && '' !== $settings['message_text'];
 		$settings['optin_check']   = 'yes' === $settings['optin_check'];
+		$settings['show_brand']    = 'yes' === $settings['show_brand'];
 
 		if ( empty( $settings['gads'] ) ) {
 			unset( $settings['gads'] );
@@ -380,6 +381,7 @@ class Joinchat_Public {
 				'qr_text',
 				'custom_css',
 				'clear',
+				'show_brand',
 			)
 		);
 
@@ -387,10 +389,10 @@ class Joinchat_Public {
 
 		$data['message_send'] = Joinchat_Util::replace_variables( $data['message_send'] );
 
-		if ( '__jc__' === $settings['header'] || $is_preview ) {
+		if ( $settings['show_brand'] || $is_preview ) {
 			$powered_args = array(
-				'site' => rawurlencode( get_bloginfo( 'name' ) ),
-				'url'  => rawurlencode( home_url( $wp->request ) ),
+				'utm_medium' => 'widget',
+				'utm_source' => rawurlencode( wp_parse_url( home_url(), PHP_URL_HOST ) ),
 			);
 			$powered_lang = false !== strpos( strtolower( get_locale() ), 'es' ) ? 'es' : 'en';
 			$powered_link = add_query_arg( $powered_args, "https://join.chat/$powered_lang/powered/" );
