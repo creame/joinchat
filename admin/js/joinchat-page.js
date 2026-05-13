@@ -1,10 +1,6 @@
 (function ($, window, document) {
   'use strict';
 
-  function textarea_autoheight() {
-    $(this).height(0).height(this.scrollHeight);
-  }
-
   // View Joinchat_Util::clean_whatsapp() for regex clean info
   function phone_to_whatsapp(phone) {
     return phone.replace(/^0+|\D/, '')
@@ -84,8 +80,6 @@
       $(document).trigger('navtabchange', [$(href), href]);
     });
 
-    $(document).on('navtabchange', function (e, $tab) { $tab.find('textarea').each(textarea_autoheight); });
-
     // Test phone number
     if ($phone.length) {
       // Enable/disable phone test
@@ -131,9 +125,7 @@
     // Texarea focus and auto height
     $('textarea', '#joinchat_form')
       .on('focus', function () { $(this).closest('tr').addClass('joinchat--focus'); })
-      .on('blur', function () { $(this).closest('tr').removeClass('joinchat--focus'); })
-      .on('input', textarea_autoheight)
-      .each(textarea_autoheight);
+      .on('blur', function () { $(this).closest('tr').removeClass('joinchat--focus'); });
 
     // Show title when placeholder
     $('#joinchat_form').find('.autofill')
@@ -248,7 +240,7 @@
 
     // Toggle Woo Product Button text
     $('#joinchat_woo_btn_position').on('change', function () {
-      $('#joinchat_woo_btn_text').closest('tr').toggleClass('joinchat-hidden', $(this).val() == 'none');
+      $('#joinchat_woo_btn_text').closest('tr').toggleClass('joinchat-dimmed', $(this).val() == 'none');
     }).trigger('change');
 
     // Custom CSS

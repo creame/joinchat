@@ -29,8 +29,10 @@
 }
 
 .js #joinchat_form textarea {
-  overflow: hidden;
-  min-height: 100px;
+  min-height: 80px;
+  max-height: 500px;
+  field-sizing: content;
+  overflow: auto;
 }
 
 .joinchat-tab {
@@ -407,8 +409,10 @@ tr.joinchat--focus .joinchat_vars_help {
 }
 
 .js .joinchat-metabox textarea {
-  overflow: hidden;
-  min-height: 3em;
+  min-height: 80px;
+  max-height: 500px;
+  overflow: auto;
+  field-sizing: content;
 }
 
 /* Joinchat term metabox */
