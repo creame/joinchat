@@ -224,6 +224,7 @@ class Joinchat_Admin_Page {
 					'global' => array(
 						'gads'       => '<label for="joinchat_gads">' . esc_html__( 'Google Ads Conversion', 'creame-whatsapp-me' ) . '</label>',
 						'custom_css' => esc_html__( 'Custom CSS', 'creame-whatsapp-me' ),
+						'tracking'   => esc_html__( 'Clicks Counter', 'creame-whatsapp-me' ),
 						'show_brand' => esc_html__( 'Show Branding', 'creame-whatsapp-me' ),
 						'clear'      => esc_html__( 'Clear on uninstall', 'creame-whatsapp-me' ),
 					),
@@ -490,6 +491,12 @@ class Joinchat_Admin_Page {
 							wp_kses( __( 'You can find examples and more tricks <a href="%s" target="_blank">here</a>.', 'creame-whatsapp-me' ), Joinchat_Admin::KSES_LINK ),
 							esc_url( Joinchat_Util::link( 'css', 'help' ) )
 						) . '</p></fieldset>';
+					break;
+
+				case 'tracking':
+					$output = '<fieldset><legend class="screen-reader-text"><span>' . esc_html__( 'Clicks Counter', 'creame-whatsapp-me' ) . '</span></legend>' .
+						'<label><input id="joinchat_tracking" name="joinchat[tracking]" value="yes" type="checkbox"' . checked( 'yes', $value, false ) . '> ' .
+						esc_html__( 'Count WhatsApp clicks and show daily totals in the dashboard widget', 'creame-whatsapp-me' ) . '</label>';
 					break;
 
 				case 'show_brand':

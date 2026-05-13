@@ -133,6 +133,45 @@
     return url.toString();
   };
 
+  // Track click on backend
+  joinchat_obj.track_click = function (params) {
+    if (!this.settings.tracking_url) return;
+
+    const payload_data = {
+      trigger: params.trigger || 'unknown',
+      chat_channel: params.chat_channel || '',
+      chat_id: params.chat_id || '',
+      is_mobile: this.is_mobile ? '1' : '0',
+    };
+
+    // Allow third parties to edit or cancel the backend tracking payload.
+    if (!document.dispatchEvent(new CustomEvent('joinchat:track', {
+      detail: {
+        params: params,
+        payload: payload_data,
+      },
+      cancelable: true,
+    }))) return;
+
+    const payload = new URLSearchParams(payload_data);
+    if (this.settings.tracking_nonce) {
+      payload.set('nonce', this.settings.tracking_nonce);
+    }
+
+    if (typeof navigator.sendBeacon === 'function') {
+      navigator.sendBeacon(this.settings.tracking_url, payload);
+      return;
+    }
+
+    fetch(this.settings.tracking_url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
+      body: payload.toString(),
+      keepalive: true,
+      credentials: 'same-origin',
+    }).catch(() => undefined);
+  };
+
   // Show Joinchat button
   joinchat_obj.show = function (tooltip) {
     this.$div.removeAttribute('hidden');
@@ -211,6 +250,8 @@
     // Trigger event (params can be edited by third party scripts or cancel if return false)
     if (!document.dispatchEvent(new CustomEvent('joinchat:open', { detail: params, cancelable: true }))) return;
 
+    // Store tracking event on backend
+    this.track_click(params);
     // Send analytics events
     this.send_event(params);
     // Open WhatsApp link
