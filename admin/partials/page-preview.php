@@ -207,7 +207,7 @@ defined( 'WPINC' ) || exit;
 		const altText = alt ? ` alt="${alt}"` : '';
 		const cls = w <= 340 ? ' class="joinchat--inline"' : '';
 
-		if (src.startsWith('vid|')) return `<video${cls} autoplay loop muted playsinline src="${src.substring(4)}"${width}></video>`;
+		if (src.endsWith('.webm') || src.endsWith('.mp4')) return `<video${cls} autoplay loop muted playsinline src="${src}"${width}></video>`;
 		else return `<img${cls} src="${src}"${altText}${width}>`;
 	};
 
@@ -218,8 +218,7 @@ defined( 'WPINC' ) || exit;
 			}
 
 			wp.apiFetch({ path: `wp/v2/media/${src}/` }).then(media => {
-				if (media.mime_type.startsWith('video')) images_cache[src] = `vid|${media.source_url}`;
-				else if (media.mime_type.startsWith('image')) images_cache[src] = media.source_url;
+				if (media.mime_type.startsWith('video') || media.mime_type.startsWith('image')) images_cache[src] = media.source_url;
 				else images_cache[src] = false;
 
 				document.getElementById(`img-${src}`).outerHTML = getImageTag(images_cache[src], alt, w);

@@ -164,6 +164,9 @@ class Joinchat_Admin_Onboard {
 			'nonce'        => wp_create_nonce( 'joinchat_onboard' ),
 		);
 
+		$cta_img   = plugin_dir_url( JOINCHAT_FILE ) . 'public/img/joinchat-ok.webm';
+		$cta_value = __( "Hello 👋, welcome to *{SITE}*\n===\nCan we help you?", 'creame-whatsapp-me' ) . "\n===\n{IMG " . $cta_img . ' 180}';
+
 		$l10n = array(
 			'step_hi'         => sprintf(
 				wp_kses( /* translators: %s: User display name. */
@@ -180,12 +183,12 @@ class Joinchat_Admin_Onboard {
 			'step_phone_next' => _x( "Done, let's continue", 'onboard', 'creame-whatsapp-me' ),
 			'step_msg'        => _x( 'Add the text for the first message that users will send you via WhatsApp.', 'onboard', 'creame-whatsapp-me' ),
 			'step_msg_field'  => __( 'Message', 'creame-whatsapp-me' ),
-			'step_msg_value'  => esc_textarea( __( 'Hi *{SITE}*! I need more info about {TITLE} {URL}', 'creame-whatsapp-me' ) ),
+			'step_msg_value'  => esc_textarea( __( "Hi *{SITE}*! I need more info about {TITLE} {URL}\n\n_Sent with Joinchat_", 'creame-whatsapp-me' ) ),
 			'step_msg_yes'    => _x( 'Continue with this text', 'onboard', 'creame-whatsapp-me' ),
 			'step_msg_no'     => _x( "I don't want a message", 'onboard', 'creame-whatsapp-me' ),
 			'step_cta'        => _x( 'Define a Call to Action message to prompt users to interact.', 'onboard', 'creame-whatsapp-me' ),
 			'step_cta_field'  => __( 'Call to Action', 'creame-whatsapp-me' ),
-			'step_cta_value'  => esc_textarea( __( "{RAND Hi||Hello} 👋, welcome to *{SITE}*\n===\nCan we help you?", 'creame-whatsapp-me' ) ),
+			'step_cta_value'  => esc_textarea( $cta_value ),
 			'step_cta_yes'    => _x( 'Continue with this text', 'onboard', 'creame-whatsapp-me' ),
 			'step_cta_no'     => _x( "I don't want a CTA", 'onboard', 'creame-whatsapp-me' ),
 			'step_news'       => _x( 'Finally, do you want us to send you tips to improve conversion with <strong>Joinchat</strong>?', 'onboard', 'creame-whatsapp-me' ),

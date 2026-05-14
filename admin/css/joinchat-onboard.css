@@ -331,6 +331,10 @@
   font-size: 18px;
 }
 
+.joinchat__message textarea {
+  field-sizing: content;
+}
+
 .joinchat__optin {
   margin: 20px 0 10px 2px;
   font-size: 13px;
