@@ -144,7 +144,7 @@ This file contains only old changelog. See README.txt for newer versions.
 
 = 4.5.18 =
 * FIX Removed WooCommerce product metabox introduced in v4.5.17.
-* FIX Correct currency symbol for products on WhastApp message.
+* FIX Correct currency symbol for products on WhatsApp message.
 
 = 4.5.17 =
 * FIX Remove "Close" aria-label attribute.
@@ -212,7 +212,7 @@ This file contains only old changelog. See README.txt for newer versions.
 
 = 4.5 =
 * **NEW: Added Gutenberg native support.**
-* **NEW:** WhastApp Contact Button Block.
+* **NEW:** WhatsApp Contact Button Block.
 * **NEW:** Native Joinchat sidebar on Block Editor.
 * **NEW:** Direct WhatsApp triggers can use custom phone and initial message.
 * **NEW:** Triggers also fire analytics events even without the Joinchat floating button.
@@ -312,7 +312,7 @@ This file contains only old changelog. See README.txt for newer versions.
 * FIX minor css error introduced in v4.1.5
 
 = 4.1.5 =
-* **NEW:** Add links to WhastApp with `#joinchat` or `#whatsapp` in your href. CSS triggers and links work on all pages, **even without Join.chat visible**.
+* **NEW:** Add links to WhatsApp with `#joinchat` or `#whatsapp` in your href. CSS triggers and links work on all pages, **even without Join.chat visible**.
 * **NEW:** Analytics event compatible with Google Analytics Dashboard Plugin for WordPress by MonsterInsights custom tracker name
 * Load images when show button for better Page speed.
 

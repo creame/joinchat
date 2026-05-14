@@ -5,6 +5,8 @@
  * @package    Joinchat
  */
 
+defined( 'WPINC' ) || exit;
+
 /**
  * Utility class.
  *
@@ -296,7 +298,10 @@ class Joinchat_Util {
 			$messages[ $key ] = sprintf( '<div class="joinchat__bubble%s">%s</div>', $class, $msg );
 		}
 
-		return join( "\n", $messages );
+		$messages = join( "\n", $messages );
+		$messages = str_replace( ' src="', ' data-src="', $messages ); // For delayed loading.
+
+		return $messages;
 
 	}
 
@@ -449,7 +454,7 @@ class Joinchat_Util {
 	 */
 	public static function can_gutenberg() {
 
-		return function_exists( 'register_block_type' ) && version_compare( get_bloginfo( 'version' ), '5.9', '>=' );
+		return function_exists( 'register_block_type' ) && is_wp_version_compatible( '5.9' );
 
 	}
 
@@ -465,7 +470,9 @@ class Joinchat_Util {
 
 		if ( did_action( 'load_joinchat_settings_page' ) ) {
 			return true;
-		} elseif ( $include_onboard && did_action( 'load_joinchat_onboard_page' ) ) {
+		}
+
+		if ( $include_onboard && did_action( 'load_joinchat_onboard_page' ) ) {
 			return true;
 		}
 

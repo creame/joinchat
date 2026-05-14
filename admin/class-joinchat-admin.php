@@ -5,6 +5,8 @@
  * @package    Joinchat
  */
 
+defined( 'WPINC' ) || exit;
+
 /**
  * The admin common functionality of the plugin.
  *
@@ -100,13 +102,15 @@ class Joinchat_Admin {
 		$value['position']      = 'left' !== $value['position'] ? 'right' : 'left';
 		$value['color']         = "$bg/$text";
 		$value['dark_mode']     = in_array( $value['dark_mode'], array( 'no', 'yes', 'auto' ), true ) ? $value['dark_mode'] : 'no';
-		$value['header']        = in_array( $value['header'], array( '__jc__', '__wa__' ), true ) ? $value['header'] : $util::substr( $util::clean_input( $value['header_custom'] ), 0, 40 );
+		$value['header']        = '__wa__' === $value['header'] ? $value['header'] : $util::substr( $util::clean_input( $value['header_custom'] ), 0, 40 );
 		$value['optin_check']   = $util::yes_no( $value, 'optin_check' );
 		$value['optin_text']    = wp_kses( $value['optin_text'], $optin_tags );
 		$value['gads']          = is_array( $value['gads'] ) ? sprintf( 'AW-%s/%s', $util::substr( $util::clean_input( $value['gads'][0] ), 0, 11 ), $util::substr( $util::clean_input( $value['gads'][1] ), 0, 20 ) ) : '';
 		$value['gads']          = 'AW-/' !== $value['gads'] ? $value['gads'] : '';
+		$value['tracking']      = $util::yes_no( $value, 'tracking' );
 		$value['custom_css']    = trim( $util::clean_nl( $value['custom_css'] ) );
 		$value['clear']         = $util::yes_no( $value, 'clear' );
+		$value['show_brand']    = $util::yes_no( $value, 'show_brand' );
 
 		if ( isset( $value['view'] ) ) {
 			$value['visibility'] = array_filter(
@@ -564,5 +568,30 @@ class Joinchat_Admin {
 
 		wp_add_privacy_policy_content( 'Joinchat', apply_filters( 'joinchat_privacy_message', $message ) );
 
+	}
+
+	/**
+	 * Custom admin header with Joinchat logo
+	 *
+	 * @since 6.2.0
+	 * @return void
+	 */
+	public function admin_header() {
+
+		if ( ! Joinchat_Util::is_admin_screen( true ) ) {
+			return;
+		}
+
+		?>
+		<div id="jcadminbar">
+			<div class="joinchat-header">
+				<h1>
+					<img src="<?php echo esc_url( plugin_dir_url( JOINCHAT_FILE ) . '/admin/img/joinchat-icon.svg' ); ?>" width="36" height="36" alt="">
+					<img src="<?php echo esc_url( plugin_dir_url( JOINCHAT_FILE ) . '/admin/img/joinchat-logo.svg' ); ?>" width="117" height="26" alt="Joinchat">
+				</h1>
+				<?php do_action( 'joinchat_admin_header' ); ?>
+			</div>
+		</div>
+		<?php
 	}
 }

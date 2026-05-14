@@ -5,6 +5,8 @@
  * @package    Joinchat
  */
 
+defined( 'WPINC' ) || exit;
+
 /**
  * The public-facing functionality of the plugin.
  *
@@ -80,6 +82,16 @@ class Joinchat_Public {
 		$settings['qr']            = 'yes' === $settings['qr'];
 		$settings['message_badge'] = 'yes' === $settings['message_badge'] && '' !== $settings['message_text'];
 		$settings['optin_check']   = 'yes' === $settings['optin_check'];
+		$settings['show_brand']    = 'yes' === $settings['show_brand'];
+		$settings['tracking']      = 'yes' === $settings['tracking'];
+
+		if ( $settings['tracking'] ) {
+			$settings['tracking_url'] = Joinchat_Tracking::rest_url();
+
+			if ( Joinchat_Tracking::requires_nonce() ) {
+				$settings['tracking_nonce'] = wp_create_nonce( Joinchat_Tracking::NONCE_ACTION );
+			}
+		}
 
 		if ( empty( $settings['gads'] ) ) {
 			unset( $settings['gads'] );
@@ -137,63 +149,33 @@ class Joinchat_Public {
 			$file .= '-btn';
 		}
 
+		wp_register_style( JOINCHAT_SLUG, plugins_url( "public/css/{$file}{$min}.css", JOINCHAT_FILE ), array(), JOINCHAT_VERSION );
+
 		// Defer styles if floating button delay is set.
 		$defer = apply_filters( 'joinchat_defer_styles', true );
 
-		// From WP 6.9 with a classic theme move footer styles to header to avoid FOUC but sometimes styles are missing.
+		// From WP 6.9 with a classic theme move footer styles to header to avoid FOUC but sometimes styles are missing
 		// view: https://make.wordpress.org/core/2025/11/18/wordpress-6-9-frontend-performance-field-guide/#introduce-the-template-enhancement-output-buffer
 		// view: https://wordpress.org/support/topic/wordpress-6-9-broke-site-layout-crewbloom/
-		// To fix it enqueue on header and force defer with media="print" onload="this.media='all'" .
-		if ( $defer && version_compare( get_bloginfo( 'version' ), '6.9', '>=' ) && ! wp_is_block_theme() ) {
-			wp_register_style( JOINCHAT_SLUG, plugins_url( "public/css/{$file}{$min}.css", JOINCHAT_FILE ), array(), JOINCHAT_VERSION, 'print' );
-			$this->above_the_fold_styles();
-			$this->enqueue_styles();
+		// To fix it enqueue on header.
+		$is_wp69_classic_theme = is_wp_version_compatible( '6.9' ) && ! wp_is_block_theme();
 
-			add_filter( 'style_loader_tag', array( $this, 'style_media_print_onload' ), 10, 4 );
-
-			return;
-		}
-
-		wp_register_style( JOINCHAT_SLUG, plugins_url( "public/css/{$file}{$min}.css", JOINCHAT_FILE ), array(), JOINCHAT_VERSION );
-
-		if ( ! $defer || jc_common()->preview ) {
+		if ( ! $defer || jc_common()->preview || $is_wp69_classic_theme ) {
 			$this->enqueue_styles();
 		}
-	}
-
-	/**
-	 * Deferred styles with media="print" add onload="this.media='all'".
-	 *
-	 * @param string $tag The link tag for the enqueued style.
-	 * @param string $handle The style’s registered handle.
-	 * @param string $href The stylesheet’s source URL.
-	 * @param string $media The stylesheet’s media attribute.
-	 * @return string The modified link tag with defer attributes if applicable.
-	 */
-	public function style_media_print_onload( $tag, $handle, $href, $media ) {
-
-		if ( 'print' !== $media || strpos( $handle, JOINCHAT_SLUG ) !== 0 ) {
-			return $tag;
-		}
-
-		$tag = str_replace( "media='print'", 'media="print"', $tag );
-		$tag = str_replace( 'media="print"', 'media="print" onload="this.media=\'all\';this.onload=null;"', $tag );
-
-		return $tag;
-
 	}
 
 	/**
 	 * Inline header styles.
 	 *
-	 * If button appears directly (delay < 0) inline on <head> min required styles.
+	 * If button appears directly (delay <= 0) inline on <head> min required styles.
 	 *
 	 * @since    6.0.0
 	 * @return   void
 	 */
 	public function above_the_fold_styles() {
 
-		if ( ! $this->show || jc_common()->settings['button_delay'] >= 0 || did_filter( 'joinchat_inline_style' ) ) {
+		if ( ! $this->show || jc_common()->settings['button_delay'] > 0 || did_filter( 'joinchat_inline_style' ) ) {
 			return;
 		}
 
@@ -293,6 +275,8 @@ class Joinchat_Public {
 				'whatsapp_web',
 				'message_send',
 				'gads',
+				'tracking_url', // Tracking settings.
+				'tracking_nonce',
 				'ga_tracker',   // Event customize.
 				'ga_event',
 				'data_layer',
@@ -408,6 +392,8 @@ class Joinchat_Public {
 				'qr_text',
 				'custom_css',
 				'clear',
+				'show_brand',
+				'tracking',
 			)
 		);
 
@@ -415,10 +401,10 @@ class Joinchat_Public {
 
 		$data['message_send'] = Joinchat_Util::replace_variables( $data['message_send'] );
 
-		if ( '__jc__' === $settings['header'] || $is_preview ) {
+		if ( $settings['show_brand'] || $is_preview ) {
 			$powered_args = array(
-				'site' => rawurlencode( get_bloginfo( 'name' ) ),
-				'url'  => rawurlencode( home_url( $wp->request ) ),
+				'utm_medium' => 'widget',
+				'utm_source' => rawurlencode( wp_parse_url( home_url(), PHP_URL_HOST ) ),
 			);
 			$powered_lang = false !== strpos( strtolower( get_locale() ), 'es' ) ? 'es' : 'en';
 			$powered_link = add_query_arg( $powered_args, "https://join.chat/$powered_lang/powered/" );

@@ -5,6 +5,8 @@
  * @package    Joinchat
  */
 
+defined( 'WPINC' ) || exit;
+
 /**
  * The admin settings page of the plugin.
  *
@@ -40,8 +42,7 @@ class Joinchat_Admin_Page {
 
 			$page_hook = add_options_page( $title, $title . $icon, Joinchat_Util::capability(), JOINCHAT_SLUG, array( $this, 'options_page' ) );
 		} else {
-			$icon = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNyAxNiI+PHBhdGggZmls' .
-				'bD0iIzlDQTJBNyIgZD0iTTE0LjQgMTIuOGE4IDggMCAxIDAtMS42IDEuNkMxNC40IDE1LjUgMTcgMTYgMTcgMTZzLTEuNS0xLjYtMi42LTMuMiIvPjwvc3ZnPg==';
+			$icon = 'data:image/svg+xml;base64,' . base64_encode( file_get_contents( JOINCHAT_DIR . 'admin/img/menu-icon.svg' ) );
 
 			$page_hook = add_menu_page( $title, $title, Joinchat_Util::capability(), JOINCHAT_SLUG, array( $this, 'options_page' ), $icon, 81 );
 		}
@@ -121,7 +122,6 @@ class Joinchat_Admin_Page {
 		$this->help_tab();
 
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_assets' ) );
-		add_action( 'in_admin_header', array( $this, 'admin_header' ) );
 
 		add_filter( 'admin_title', array( $this, 'admin_title' ) );
 		add_filter( 'admin_footer_text', array( $this, 'admin_footer_text' ), PHP_INT_MAX );
@@ -224,6 +224,8 @@ class Joinchat_Admin_Page {
 					'global' => array(
 						'gads'       => '<label for="joinchat_gads">' . esc_html__( 'Google Ads Conversion', 'creame-whatsapp-me' ) . '</label>',
 						'custom_css' => esc_html__( 'Custom CSS', 'creame-whatsapp-me' ),
+						'tracking'   => esc_html__( 'Clicks Counter', 'creame-whatsapp-me' ),
+						'show_brand' => esc_html__( 'Show Branding', 'creame-whatsapp-me' ),
 						'clear'      => esc_html__( 'Clear on uninstall', 'creame-whatsapp-me' ),
 					),
 				);
@@ -421,12 +423,15 @@ class Joinchat_Admin_Page {
 					break;
 
 				case 'message_text':
-					$output = '<textarea id="joinchat_message_text" name="joinchat[message_text]" rows="4" class="large-text autofill" placeholder="' . esc_attr__( "{RAND Hi||Hello} 👋, welcome to *{SITE}*\n===\nCan we help you?", 'creame-whatsapp-me' ) . '">' . esc_textarea( $value ) . '</textarea>' .
+					$cta_img     = plugin_dir_url( JOINCHAT_FILE ) . 'public/img/joinchat-ok.webm';
+					$placeholder = __( "Hello 👋, welcome to *{SITE}*\n===\nCan we help you?", 'creame-whatsapp-me' ) . "\n===\n{IMG " . $cta_img . ' 180}';
+
+					$output = '<textarea id="joinchat_message_text" name="joinchat[message_text]" rows="4" class="large-text autofill" placeholder="' . esc_attr( $placeholder ) . '">' . esc_textarea( $value ) . '</textarea>' .
 						'<p class="description">' . esc_html__( 'Define an attractive text that encourages users to contact you if they are interested or need help', 'creame-whatsapp-me' ) . '</p>';
 					break;
 
 				case 'message_send':
-					$output = '<textarea id="joinchat_message_send" name="joinchat[message_send]" rows="3" class="regular-text autofill" placeholder="' . esc_attr__( 'Hi *{SITE}*! I need more info about {TITLE} {URL}', 'creame-whatsapp-me' ) . '">' . esc_textarea( $value ) . '</textarea>' .
+					$output = '<textarea id="joinchat_message_send" name="joinchat[message_send]" rows="3" class="regular-text autofill" placeholder="' . esc_attr__( "Hi *{SITE}*! I need more info about {TITLE} {URL}\n\n_Sent with Joinchat_", 'creame-whatsapp-me' ) . '">' . esc_textarea( $value ) . '</textarea>' .
 						'<p class="description">' . esc_html__( 'Pre-filled text in the first message the user will send you', 'creame-whatsapp-me' ) . '</p>';
 					break;
 
@@ -456,12 +461,10 @@ class Joinchat_Admin_Page {
 					break;
 
 				case 'header':
-					$check = in_array( $value, array( '__jc__', '__wa__' ), true ) ? $value : '__custom__';
+					$check = '__wa__' === $value ? $value : '__custom__';
 					$value = '__custom__' === $check ? $value : '';
 
 					$output = '<fieldset><legend class="screen-reader-text"><span>' . esc_html__( 'Header', 'creame-whatsapp-me' ) . '</span></legend>' .
-						'<label><input name="joinchat[header]" value="__jc__" type="radio"' . checked( '__jc__', $check, false ) . '> ' .
-						esc_html__( 'Powered by Joinchat', 'creame-whatsapp-me' ) . '</label><br>' .
 						'<label><input name="joinchat[header]" value="__wa__" type="radio"' . checked( '__wa__', $check, false ) . '> ' .
 						esc_html__( 'WhatsApp Logo', 'creame-whatsapp-me' ) . '</label><br>' .
 						'<label><input name="joinchat[header]" value="__custom__" type="radio"' . checked( '__custom__', $check, false ) . '> ' .
@@ -491,6 +494,19 @@ class Joinchat_Admin_Page {
 							wp_kses( __( 'You can find examples and more tricks <a href="%s" target="_blank">here</a>.', 'creame-whatsapp-me' ), Joinchat_Admin::KSES_LINK ),
 							esc_url( Joinchat_Util::link( 'css', 'help' ) )
 						) . '</p></fieldset>';
+					break;
+
+				case 'tracking':
+					$output = '<fieldset><legend class="screen-reader-text"><span>' . esc_html__( 'Clicks Counter', 'creame-whatsapp-me' ) . '</span></legend>' .
+						'<label><input id="joinchat_tracking" name="joinchat[tracking]" value="yes" type="checkbox"' . checked( 'yes', $value, false ) . '> ' .
+						esc_html__( 'Count WhatsApp clicks and show daily totals in the dashboard widget', 'creame-whatsapp-me' ) . '</label>';
+					break;
+
+				case 'show_brand':
+					$output = '<fieldset><legend class="screen-reader-text"><span>' . esc_html__( 'Show Branding', 'creame-whatsapp-me' ) . '</span></legend>' .
+						'<label><input id="joinchat_show_brand" name="joinchat[show_brand]" value="yes" type="checkbox"' . checked( 'yes', $value, false ) . '> ' .
+						/* translators: %s: Powered by Joinchat. */
+						sprintf( esc_html__( 'Display "%s" label', 'creame-whatsapp-me' ), 'Powered by Joinchat' ) . '</label></fieldset>';
 					break;
 
 				case 'clear':
@@ -943,24 +959,6 @@ z-index: 9000;   put above or below other objects
 
 		return sprintf( '%s &lsaquo; %s', esc_html__( 'Joinchat Settings', 'creame-whatsapp-me' ), get_bloginfo( 'name' ) );
 
-	}
-
-	/**
-	 * Custom admin header with Joinchat logo
-	 *
-	 * @since 5.0.0
-	 * @since 5.0.12 Added action 'joinchat_admin_header'.
-	 * @return void
-	 */
-	public function admin_header() {
-		?>
-		<div id="jcadminbar">
-			<div class="joinchat-header">
-				<h1><img src="<?php echo esc_url( plugin_dir_url( JOINCHAT_FILE ) . '/admin/img/joinchat.svg' ); ?>" width="159" height="40" alt="Joinchat"></h1>
-				<?php do_action( 'joinchat_admin_header' ); ?>
-			</div>
-		</div>
-		<?php
 	}
 
 	/**

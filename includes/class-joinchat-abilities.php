@@ -12,6 +12,8 @@
  * @subpackage Joinchat/includes
  */
 
+defined( 'WPINC' ) || exit;
+
 /**
  * Abilities class
  */

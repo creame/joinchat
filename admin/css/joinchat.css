@@ -29,8 +29,10 @@
 }
 
 .js #joinchat_form textarea {
-  overflow: hidden;
-  min-height: 100px;
+  min-height: 80px;
+  max-height: 500px;
+  field-sizing: content;
+  overflow: auto;
 }
 
 .joinchat-tab {
@@ -407,8 +409,10 @@ tr.joinchat--focus .joinchat_vars_help {
 }
 
 .js .joinchat-metabox textarea {
-  overflow: hidden;
-  min-height: 3em;
+  min-height: 80px;
+  max-height: 500px;
+  overflow: auto;
+  field-sizing: content;
 }
 
 /* Joinchat term metabox */
@@ -431,7 +435,6 @@ tr.joinchat--focus .joinchat_vars_help {
 
 #jcadminbar {
   position: relative;
-  min-height: 50px;
   background: #fff;
   filter: drop-shadow(0 0px 2px #0003);
 }
@@ -448,12 +451,18 @@ tr.joinchat--focus .joinchat_vars_help {
 }
 
 .joinchat-header {
-  padding: 5px 30px 1px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 40px;
+  padding: 5px 20px 5px 0;
   overflow: auto;
 }
 
 #jcadminbar h1 {
-  float: left;
+  display: flex;
+  align-items: center;
+  gap: 9px;
   margin: 0;
 }
 
@@ -479,8 +488,6 @@ tr.joinchat--focus .joinchat_vars_help {
 /* Coupon */
 
 .joinchat-coupon {
-  float: right;
-  margin: 10px 0;
   color: #000;
 }
 

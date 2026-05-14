@@ -202,7 +202,7 @@
           });
         }
       } else if (msg.includes('{INPUT message}')) {
-        $msg.html(msg.replace('{INPUT message}', '<textarea id="joinchat_message_send" name="joinchat[message_send]" rows="3" class="regular-text">' + joinchat_l10n.step_msg_value + '</textarea>'));
+        $msg.html(msg.replace('{INPUT message}', '<textarea id="joinchat_message_send" name="joinchat[message_send]" rows="4" class="regular-text">' + joinchat_l10n.step_msg_value + '</textarea>'));
       } else if (msg.includes('{INPUT cta}')) {
         $msg.html(msg.replace('{INPUT cta}', '<textarea id="joinchat_message_text" name="joinchat[message_text]" rows="4" class="regular-text">' + joinchat_l10n.step_cta_value + '</textarea>'));
       } else if (msg.includes('{INPUT newsletter}')) {

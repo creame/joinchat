@@ -1,10 +1,6 @@
 (function ($, window) {
   'use strict';
 
-  function textarea_autoheight() {
-    $(this).height(0).height(this.scrollHeight);
-  }
-
   $(function () {
     var has_iti = typeof intlTelInput === 'function' && window.intl_tel_l10n;
     var $phone = $('#joinchat_phone');
@@ -56,11 +52,6 @@
           iti.ui.hiddenInput.value = iti.getNumber();
         });
       }
-    }
-
-    if ($('.joinchat-metabox').length) {
-      // Texarea auto height
-      $('.joinchat-metabox textarea').on('focus input', textarea_autoheight).each(textarea_autoheight);
     }
   });
 })(jQuery, window);

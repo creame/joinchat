@@ -21,17 +21,17 @@ defined( 'WPINC' ) || exit;
 	</thead>
 
 	<tbody id="the-list" data-wp-lists="list:addon">
-	<?php foreach ( $addons as $addon ) : ?>
+	<?php foreach ( $addons as $joinchat_addon ) : ?>
 		<tr class="inactive">
 			<th scope="row" class="check-column"><input type="checkbox" disabled></th>
-			<td class="plugin-title column-primary"><strong><?php echo esc_html( $addon['name'] ); ?></strong>
+			<td class="plugin-title column-primary"><strong><?php echo esc_html( $joinchat_addon['name'] ); ?></strong>
 				<div class="row-actions visible"></div>
 			</td>
 			<td class="column-description desc">
-				<div class="plugin-description"><?php echo wp_kses( $addon['description'], array( 'strong' => array() ) ); ?></div>
+				<div class="plugin-description"><?php echo wp_kses( $joinchat_addon['description'], array( 'strong' => array() ) ); ?></div>
 				<div class="inactive second plugin-version-author-uri">
-					<a href="<?php echo esc_url( $addon['info'] ); ?>" target="_blank"><?php esc_html_e( 'View details' ); ?></a> |
-					<a href="<?php echo esc_url( $addon['docs'] ); ?>" target="_blank"><?php esc_html_e( 'Documentation' ); ?></a>
+					<a href="<?php echo esc_url( $joinchat_addon['info'] ); ?>" target="_blank"><?php esc_html_e( 'View details' ); ?></a> |
+					<a href="<?php echo esc_url( $joinchat_addon['docs'] ); ?>" target="_blank"><?php esc_html_e( 'Documentation' ); ?></a>
 				</div>
 			</td>
 		</tr>

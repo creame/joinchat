@@ -5,6 +5,8 @@
  * @package    Joinchat
  */
 
+defined( 'WPINC' ) || exit;
+
 /**
  * Define the internationalization functionality.
  *
@@ -23,21 +25,69 @@ class Joinchat_I18n {
 	/**
 	 * Allow settings translations.
 	 *
-	 * @since    5.2.4
+	 * @since 5.2.4
+	 * @since 6.2.0 Add TranslatePress support.
 	 */
 	public function init() {
 
-		if ( defined( 'WPML_PLUGIN_PATH' ) || defined( 'POLYLANG_VERSION' ) ) {
+		if ( ! $this->is_ml() ) {
+			return;
+		}
 
-			add_action( 'admin_notices', array( $this, 'settings_notice' ) );
-			add_action( 'joinchat_settings_validation', array( $this, 'register_translations' ), 10, 3 );
+		add_action( 'admin_notices', array( $this, 'settings_notice' ) );
+
+		// Allow third party plugins to load translations.
+		add_filter( 'joinchat_load_translations', array( $this, 'load_translations' ), 10, 2 );
+
+		if ( $this->is_ml( 'wpml' ) || $this->is_ml( 'polylang' ) ) {
+
+			// Load translations for global settings.
 			add_filter( 'joinchat_get_settings_site', array( $this, 'load_translations' ), 20 );
 
-			// Add custom hooks for third party plugins.
+			add_action( 'joinchat_settings_validation', array( $this, 'register_translations' ), 10, 3 );
+			// Allow third party plugins to register translations.
 			add_action( 'joinchat_register_translations', array( $this, 'register_translations' ), 10, 3 );
-			add_filter( 'joinchat_load_translations', array( $this, 'load_translations' ), 10, 2 );
 
+		} else {
+
+			// Load translations for TranslatePress after apply Post/Page settings.
+			add_filter( 'joinchat_get_settings', array( $this, 'load_translations' ), 20 );
+			add_filter( 'joinchat_show', array( $this, 'trp_hide' ) );
 		}
+
+	}
+
+	/**
+	 * Get current multilingual plugin
+	 *
+	 * @since 6.2.0
+	 * @param string $plugin Plugin name (wpml, polylang or translatepress).
+	 * @return bool
+	 */
+	private function is_ml( $plugin = '' ) {
+
+		$plugin            = strtolower( $plugin );
+		$is_wpml           = defined( 'WPML_PLUGIN_PATH' );
+		$is_polylang       = defined( 'POLYLANG_VERSION' );
+		$is_translatepress = defined( 'TRP_PLUGIN_SLUG' ) && 'translatepress-multilingual' === TRP_PLUGIN_SLUG;
+
+		if ( '' === $plugin || 'any' === $plugin ) {
+			return $is_wpml || $is_polylang || $is_translatepress;
+		}
+
+		if ( 'wpml' === $plugin ) {
+			return $is_wpml;
+		}
+
+		if ( 'polylang' === $plugin ) {
+			return $is_polylang;
+		}
+
+		if ( 'translatepress' === $plugin ) {
+			return $is_translatepress;
+		}
+
+		return false;
 
 	}
 
@@ -65,7 +115,7 @@ class Joinchat_I18n {
 			'optin_text'    => 'Opt-in Text',
 		);
 
-		if ( isset( $settings['header'] ) && ! in_array( $settings['header'], array( '', '__jc__', '__wa__' ), true ) ) {
+		if ( isset( $settings['header'] ) && '__wa__' !== $settings['header'] ) {
 			$localized['header'] = 'Header';
 		}
 
@@ -87,6 +137,18 @@ class Joinchat_I18n {
 	}
 
 	/**
+	 * Return string prefix for TranslatePress strings
+	 *
+	 * @since  6.2.0
+	 * @return string
+	 */
+	private function get_prefix( $option = JOINCHAT_SLUG ) {
+
+		return apply_filters( 'joinchat_trp_prefix', 'JC/ ', $option );
+
+	}
+
+	/**
 	 * Show notice with default language info at Joinchat settings page
 	 *
 	 * @since 5.0.0
@@ -101,7 +163,7 @@ class Joinchat_I18n {
 		$need_translation = false;
 
 		// Find untranslated strings on WPML.
-		if ( function_exists( 'icl_get_string_translations' ) && defined( 'ICL_TM_COMPLETE' ) ) {
+		if ( $this->is_ml( 'wpml' ) && function_exists( 'icl_get_string_translations' ) && defined( 'ICL_TM_COMPLETE' ) ) {
 			$strings = wp_list_filter( icl_get_string_translations(), array( 'context' => self::DOMAIN_GROUP ) );
 
 			foreach ( $strings as $string ) {
@@ -188,6 +250,7 @@ class Joinchat_I18n {
 	 * @since  4.2
 	 * @since  5.1.6 Allow settings in array in format 'key__subkey'
 	 * @since  6.0.0 Add $option parameter.
+	 * @since  6.2.0 Add TranslatePress support.
 	 * @param  array  $settings list of settings.
 	 * @param  string $option option name.
 	 * @return array
@@ -195,17 +258,31 @@ class Joinchat_I18n {
 	public function load_translations( $settings, $option = JOINCHAT_SLUG ) {
 
 		$settings_i18n = $this->settings_i18n( $settings, $option );
-		$domain        = $this->get_domain( $option );
+
+		if ( $this->is_ml( 'wpml' ) || $this->is_ml( 'polylang' ) ) {
+			$domain = $this->get_domain( $option );
+
+			$translate = function ( $string, $label ) use ( $domain ) {
+				return apply_filters( 'wpml_translate_single_string', $string, $domain, $label );
+			};
+		} else {
+			$prefix = $this->get_prefix( $option );
+
+			$translate = function ( $string, $label ) use ( $prefix ) {
+				$string = trp_translate( $prefix . $string, null, false );
+				return strpos( $string, $prefix ) === 0 ? substr( $string, strlen( $prefix ) ) : $string;
+			};
+		}
 
 		foreach ( $settings_i18n as $setting => $label ) {
 			list( $key, $subkey ) = explode( '__', $setting . '__' );
 
 			if ( empty( $subkey ) ) {
 				if ( ! empty( $settings[ $key ] ) ) {
-					$settings[ $key ] = apply_filters( 'wpml_translate_single_string', $settings[ $key ], $domain, $label );
+					$settings[ $key ] = $translate( $settings[ $key ], $label );
 				}
 			} elseif ( ! empty( $settings[ $key ][ $subkey ] ) ) {
-				$settings[ $key ][ $subkey ] = apply_filters( 'wpml_translate_single_string', $settings[ $key ][ $subkey ], $domain, $label );
+				$settings[ $key ][ $subkey ] = $translate( $settings[ $key ][ $subkey ], $label );
 			}
 		}
 
@@ -214,27 +291,58 @@ class Joinchat_I18n {
 	}
 
 	/**
-	 * Return strings translations url for WPML/Polylang
+	 * Hide Joinchat during TranslatePress translation editing
+	 *
+	 * @since 6.2.0
+	 * @param  bool $show Whether to show Joinchat.
+	 * @return bool
+	 */
+	public function trp_hide( $show ) {
+
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Not needed as this is a GET param used by TranslatePress.
+		if ( isset( $_GET['trp-edit-translation'] ) && in_array( $_GET['trp-edit-translation'], array( 'true', 'preview' ), true ) ) {
+			return false;
+		}
+
+		return $show;
+
+	}
+
+	/**
+	 * Return strings translations url for WPML/Polylang/TranslatePress
 	 *
 	 * @since 5.0.0
+	 * @since 6.2.0 Add TranslatePress support.
 	 * @return string
 	 */
 	private function translations_link() {
 
-		if ( defined( 'WPML_PLUGIN_PATH' ) ) {
+		if ( $this->is_ml( 'wpml' ) ) {
 			$args = array(
 				'page'    => 'wpml-string-translation/menu/string-translation.php',
 				'context' => self::DOMAIN_GROUP,
 			);
-		} else {
+
+			return add_query_arg( $args, admin_url( 'admin.php' ) );
+		}
+
+		if ( $this->is_ml( 'polylang' ) ) {
 			$args = array(
 				'page'  => 'mlang_strings',
 				'group' => self::DOMAIN_GROUP,
 				'lang'  => 'all',
 			);
+
+			return add_query_arg( $args, admin_url( 'admin.php' ) );
 		}
 
-		return add_query_arg( $args, admin_url( 'admin.php' ) );
+		if ( $this->is_ml( 'translatepress' ) ) {
+			$prefix = $this->get_prefix();
+
+			return home_url() . '?trp-string-translation=true#/regular/?s=' . $prefix;
+		}
+
+		return '';
 
 	}
 
@@ -242,20 +350,31 @@ class Joinchat_I18n {
 	 * Return default language name for WPML/Polylang
 	 *
 	 * @since 5.0.0
+	 * @since 6.2.0 Add TranslatePress support.
 	 * @return string
 	 */
 	private function default_language_name() {
 
-		if ( defined( 'WPML_PLUGIN_PATH' ) ) {
+		if ( $this->is_ml( 'wpml' ) ) {
 			$default_language = apply_filters( 'wpml_default_language', null );
 			$current_language = apply_filters( 'wpml_current_language', null );
 
-			$name = apply_filters( 'wpml_translated_language_name', null, $default_language, $current_language );
-		} else {
-			$name = pll_default_language( 'name' );
+			return apply_filters( 'wpml_translated_language_name', null, $default_language, $current_language );
 		}
 
-		return $name;
+		if ( $this->is_ml( 'polylang' ) ) {
+			return pll_default_language( 'name' );
+		}
+
+		if ( $this->is_ml( 'translatepress' ) ) {
+			$settings  = get_option( 'trp_settings', array() );
+			$language  = isset( $settings['default_language'] ) ? $settings['default_language'] : 'en_US';
+			$languages = trp_get_languages();
+
+			return isset( $languages[ $language ] ) ? $languages[ $language ] : $language;
+		}
+
+		return get_locale();
 
 	}
 
@@ -263,23 +382,35 @@ class Joinchat_I18n {
 	 * Return default language flag for WPML/Polylang
 	 *
 	 * @since 5.0.0
+	 * @since 6.2.0 Add TranslatePress support.
 	 * @return string
 	 */
 	private function default_language_flag() {
 
-		if ( defined( 'WPML_PLUGIN_PATH' ) ) {
+		if ( $this->is_ml( 'wpml' ) ) {
 			$languages = apply_filters( 'wpml_active_languages', null, array() );
 			$language  = $languages[ apply_filters( 'wpml_default_language', null ) ];
 
-			$img = '<img src="' . esc_url( $language['country_flag_url'] ) . '" alt="' . esc_attr( $language['language_code'] ) . '" height="12" width="18" />';
-		} else {
+			return '<img src="' . esc_url( $language['country_flag_url'] ) . '" alt="' . esc_attr( $language['language_code'] ) . '" height="12" width="18" />';
+		}
+
+		if ( $this->is_ml( 'polylang' ) ) {
 			$languages = pll_the_languages( array( 'raw' => 1, 'show_flags' => 1 ) ); // phpcs:ignore WordPress.Arrays.ArrayDeclarationSpacing.AssociativeArrayFound
 			$language  = $languages[ pll_default_language() ];
 
-			$img = $language['flag'];
+			return $language['flag'];
 		}
 
-		return $img;
+		if ( $this->is_ml( 'translatepress' ) ) {
+			$settings  = get_option( 'trp_settings', array() );
+			$language  = isset( $settings['default_language'] ) ? $settings['default_language'] : 'en_US';
+			$flag_path = apply_filters( 'trp_flags_path', TRP_PLUGIN_URL . 'assets/images/flags/', $language );
+			$flag_file = apply_filters( 'trp_flag_file_name', $language . '.png', $language );
+
+			return '<img src="' . esc_url( $flag_path . $flag_file ) . '" alt="' . esc_attr( $language ) . '" height="12" width="18" />';
+		}
+
+		return '';
 
 	}
 

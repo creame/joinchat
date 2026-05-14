@@ -5,6 +5,8 @@
  * @package    Joinchat
  */
 
+defined( 'WPINC' ) || exit;
+
 /**
  * Register Gutenberg block editor plugin logic.
  * Add native sidebar for postmeta and register blocks and patterns.
@@ -24,16 +26,17 @@ class Joinchat_Gutenberg {
 	 */
 	public function enqueue_editor_assets() {
 
-		$asset_file = include JOINCHAT_DIR . '/gutenberg/build/index.asset.php';
-
-		$joinchat_data = array(
+		// Enqueue script.
+		$script_url  = plugins_url( 'gutenberg/build/index.js', JOINCHAT_FILE );
+		$asset_file  = include JOINCHAT_DIR . '/gutenberg/build/index.asset.php';
+		$script_data = array(
 			'image_qr'     => plugins_url( 'admin/img/qr.webp', JOINCHAT_FILE ),
 			'defaults'     => jc_common()->get_obj_placeholders( get_post() ),
 			'message_vars' => jc_common()->get_obj_vars( get_post() ),
 		);
 
-		wp_enqueue_script( 'joinchat-gutenberg', plugins_url( 'gutenberg/build/index.js', JOINCHAT_FILE ), $asset_file['dependencies'], $asset_file['version'], true );
-		wp_localize_script( 'joinchat-gutenberg', 'joinchatData', $joinchat_data );
+		wp_enqueue_script( 'joinchat-gutenberg', $script_url, $asset_file['dependencies'], $asset_file['version'], true );
+		wp_localize_script( 'joinchat-gutenberg', 'joinchatData', $script_data );
 		wp_set_script_translations( 'joinchat-gutenberg', 'creame-whatsapp-me', JOINCHAT_DIR . 'languages' );
 
 		/**
@@ -60,9 +63,17 @@ class Joinchat_Gutenberg {
 	 */
 	public function register_blocks() {
 
+		/**
+		 * For now, we will keep the back compat for WP 6.5 and below
+		 * With @wordpress/scripts >= 28 need 'react-jsx-runtime' fallback or drop support for WP 6.5 and below.
+		 * View https://make.wordpress.org/core/2024/06/06/jsx-in-wordpress-6-6/
+		 * and https://github.com/WordPress/gutenberg/issues/62202#issuecomment-2156796649
+		 */
+
 		register_block_type(
 			JOINCHAT_DIR . '/gutenberg/build/block_btn/',
 			array(
+				'api_version'     => is_wp_version_compatible( '6.6' ) ? 3 : 2,
 				'render_callback' => array( $this, 'render_button' ),
 			)
 		);
@@ -89,15 +100,18 @@ class Joinchat_Gutenberg {
 			jc_common()->qr = true;
 		}
 
-		// Replace dynamic vars.
-		if ( ! empty( $attributes['message'] ) ) {
-			$escaped = str_replace( array( '&', '"', '>' ), array( '&amp;', '&quot;', '&gt;' ), $attributes['message'] );
-			$content = str_replace( $escaped, esc_attr( Joinchat_Util::replace_variables( $attributes['message'] ) ), $content );
+		$data = ' ';
+		if ( ! empty( $attributes['phone'] ) ) {
+			$data .= 'data-phone="' . esc_attr( Joinchat_Util::clean_whatsapp( $attributes['phone'] ) ) . '"';
 		}
 
-		// Render an empty Button Block to ensure enqueue button styles.
-		$button = parse_blocks( '<!-- wp:button /-->' );
-		render_block( $button[0] );
+		// Replace dynamic vars.
+		if ( ! empty( $attributes['message'] ) ) {
+			$data .= ' data-message="' . esc_attr( Joinchat_Util::replace_variables( $attributes['message'] ) ) . '"';
+		}
+
+		// Links to '#whatsapp' with data attributes.
+		$content = preg_replace( '/\s*href="[^"]*"/', 'href="#whatsapp"' . $data, $content );
 
 		return $content;
 
