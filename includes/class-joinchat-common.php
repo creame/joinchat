@@ -154,16 +154,12 @@ class Joinchat_Common {
 		// Can hook 'option_joinchat' and 'default_option_joinchat' filters.
 		$settings = array_merge( $defaults, (array) get_option( JOINCHAT_SLUG, $defaults ) );
 
-		// Migrate addons 'remove_brand' setting to 'header' (v. < 4.1).
-		if ( isset( $settings['remove_brand'] ) ) {
-			$remove             = $settings['remove_brand'];
-			$settings['header'] = 'wa' === $remove ? '__wa__' : ( 'no' === $remove ? '__jc__' : '' );
-		}
-
 		// Since v6.2.0 use "show_brand" setting.
 		if ( '__jc__' === $settings['header'] ) {
 			$settings['header']     = '__wa__';
 			$settings['show_brand'] = 'yes';
+		} elseif ( $settings !== $defaults ) {
+			$settings['show_brand'] = 'no';
 		}
 
 		// Since v5.1 use negative values for disabled.
