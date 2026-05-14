@@ -1,120 +1,120 @@
-=== Joinchat ===
+=== Joinchat - Enhanced "click to chat" ===
 Contributors: creapuntome, pacotole, davidlillo, monillo
 Donate link: https://join.chat/donate/
-Tags: WhatsApp, Chat, Floating Button, Facebook Messenger, Telegram
+Tags: WhatsApp, WhatsApp Button, Click to Chat, Floating Button, Chat
 Requires at least: 4.9.6
 Tested up to: 7.0
 Requires PHP: 7.0
 Stable tag: 6.1.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
-
-WhatsApp, Messenger, Telegram, Phone call… capture users through their favorite Apps and turn into clients
-
+The most installed WordPress plugin for WhatsApp: a customizable floating button that turns your visitors into chats, leads and sales.
 
 == Description ==
 
-> **Turn conversations into conversions**
+**Turn conversations into conversions**
 
-**🎉 Chat with your website visitors through their favorite chat applications. Place a floating contact button at the bottom of your site and give the best support to your customers.**
+Joinchat is the most installed plugin for WhatsApp: a customizable floating button that turns your visitors into chats, leads and sales.
 
-[Documentation](https://join.chat/en/docs/?utm_source=wporg&utm_medium=web) | [**Joinchat Premium**](https://join.chat/en/premium/?utm_source=wporg&utm_medium=web) | [**Joinchat AI ✨**](https://join.chat/en/ai/?utm_source=wporg&utm_medium=web)
+Built for conversion from the very first click: eye-catching CTAs, dynamic start messages, native WooCommerce integration and built-in analytics to measure every conversation.
 
-### ⌁ What you can do with Joinchat ✅
+🌍 **Joinchat, the global leader in WhatsApp click to chat**
 
-### 🛎 Insert a contact button for WhatsApp on your website.
-Set your ‘WhatsApp’ or ‘WhatsApp Business’ number and let your visitors contact you easily:
+🗺️ Present in more than 176 countries
 
-🧩 **WhatsApp Contact Button Block** with optional QR Code
+🏆 **#1 chat solution in:** 
 
-📱 On mobile, launch WhatsApp mobile app
+🇦🇷 Argentina 🇨🇴 Colombia 🇧🇷 Brazil 🇪🇸 Spain 🇳🇱 Netherlands 🇲🇽 Mexico 🇨🇱 Chile 🇵🇪 Peru 🇵🇹 Portugal
 
-💻 On desktop, launch WhatsApp desktop app or WhatsApp Web
+*Source: BuiltWith®*
 
-🤳 On desktop, **show QR Code** to scan from phone
+## What you get with Joinchat
 
-Customize your logo, profile picture or even an animated gif.
+A complete WhatsApp conversion toolkit for WordPress, designed to capture more leads and close more sales.
 
-Define in which pages or zones it should appear, the delay time, if you want it to the right or to the left, only on mobile phones or also on the desktop.
+* **Floating WhatsApp button** that opens the WhatsApp app on mobile, and on desktop launches WhatsApp Desktop or WhatsApp Web and **shows a scannable QR code**.
+* **Eye-catching CTAs** to greet visitors, present offers and start the chat with the right message.
+* **Dynamic start messages** so every conversation arrives with full context (the page, the product, the price, the discount…).
+* **WooCommerce integration**, with a contact button next to "Add to cart" and shop-specific CTAs.
+* **Analytics built in** — 🆕 — Clicks counter in your WordPress dashboard. Events for Google Analytics 4, Google Tag Manager and Facebook Pixel, plus Google Ads conversions.
+* **Lightweight and fast** — JavaScript with no dependencies and lazy-loaded styles. No render-blocking.
+* **Customizable site-wide** or at the page, product, category, etc. level.
 
-You can define a tooltip or a call to action to capture the user's interest, the limit is set by your creativity.
+## 🛡️ Say goodbye to the fear of WhatsApp bans
 
-### 📢 New on Joinchat 6
+Many companies lose their WhatsApp Business number for contacting customers first without consent. Joinchat flips the model: **the visitor writes first**, so every conversation starts aligned with WhatsApp's official policies.
 
-* Enhance your CTAs with **Rich Chat**: multiple chat bubbles, include links or buttons, add images and use random texts.
-* **Improved performance**: vanilla JavaScript without any dependency and lazy loading of styles and scripts.
-* **New button icons** and allows to keep the alternative image fixed.
-* Integration with new **WooCommerce brands**.
-* Added WordPress Abilities for set main settings and generate WhatsApp "click to chat" links
-* Other optimizations: refactor and improved styles, updated phone input (37 translations included), added **{HOME}** variable, etc.
+The result: your business number protected and your customers reaching out when they need to, not the other way around.
 
-### 📝 Settings at page or archive level.
-You can **change main settings on every Post, Page, Product or CPT and for Tag or Category archive pages**.
+With Joinchat, you can unlock the full potential of WhatsApp's "click to chat" feature.
 
-Editing your posts in the right side in the Joinchat metabox or editing your tags or categories in the Joinchat section, you can modify Phone, CTA, Start Message and Visibility options.
+## Take Joinchat further with Premium and AI
 
-### 🔴 Show a notification.
-Use a balloon on the button to get the visitor's attention.
+Joinchat Free is just the start. Premium and AI unlock its full conversion potential.
 
-In this way, you ensure that you do not miss any important message you want to give them, surprise them in a less intrusive way.
+* 🌍 **Show or hide the button by country** — 🆕 — geo-target your visitors with country-specific rules. Perfect for international stores, regional campaigns and multi-language sites.
+* 💬 **Add more support channels** — extend beyond WhatsApp with Telegram, Facebook Messenger, phone calls and more, all from the same widget.
+* 🕒 **Multi-agent with custom schedules** — assign chats to the right person at the right time. Each agent works their own hours and only takes chats when available, and you can **set an alternative CTA when no agents are online**.
+* 🔁 **Add a Chat Funnel** — guided conversational flows that qualify and capture leads automatically with higher conversion than a form, 24/7, even when no one is at the desk.
+* ✨ **Add an AI agent** — trained on your FAQs and website content. Answers visitors instantly, anytime, with the tone and knowledge you define.
 
-### 📯 Create call-to-action messages.
-To get users to start the chat, use custom CTAs on each page, product or section.
+**[👉 Get Joinchat Premium](https://join.chat/en/premium/?utm_source=wporg&utm_medium=web)** | **[👉 Get Joinchat AI](https://join.chat/en/ai/?utm_source=wporg&utm_medium=web)**
 
-Welcome them, help them and offer them offers or promotions. [Read more](https://join.chat/es/joinchat-mucho-mas-que-un-click-to-chat/?utm_source=wporg&utm_medium=web)
+### 📝 Settings at page or archive level
+You can **change main settings on every Post, Page, Product or CPT and for Tag or Category archive pages**. Edit your WhatsApp number, CTA, Start Message and Visibility options.
 
-### 💬 Customize conversation start messages.
-Set the first message so that the visitor can start the conversation immediately.
+### 🔴 Show a notification
+Use a balloon on the button to get the visitor's attention. In this way, you ensure that you do not miss any important message you want to give them, surprise them in a less intrusive way.
 
-Use our "Dynamic Variables" and you will know what page the visitor is coming from or what product they are looking at when they start the chat.
+### 📯 Create call-to-action messages
+CTAs with **Rich Chat**: multiple chat bubbles with links, buttons, images or random text. Encourage users to contact you with a welcome message, offering help or promotions and offers. [Read more](https://join.chat/es/joinchat-mucho-mas-que-un-click-to-chat/?utm_source=wporg&utm_medium=web)
 
-### ✅ Opt-in text.
+### 💬 Customize conversation start messages
+Defines a pre-loaded initial message for when the user contacts via WhatsApp. Add context with our "Dynamic Variables" and you will know what page the visitor is coming from or what product they are looking at when they start the chat.
+
+### ✅ Opt-in text
 Opt-in is a users' consent to receive messages from a business.
 
-Write a text with the conditions under which the visitor contacts you (or other info that you consider important).
+Write a text with the conditions under which the visitor contacts you (or other info that you consider important). 
 
 You can make it mandatory and disable contact until the user accepts it.
 
-### 🛒 Integration with WooCommerce.
-Define CTAs and Custom Start Messages for shop page, product pages and for products on sale.
+### 🛒 Integration with WooCommerce
+Set CTAs and Start Messages for shop page, product pages and for products on sale.
 
 Add a **WhatsApp Contact Button** directly on your product page next to the "Add to cart" button or choose the best position, even on products without a price.
 
-### 🧩 WhatsApp Contact Button Block (min WP 5.9).
-Add beautiful and customizable WhatsApp contact buttons in the Block Editor.
-
-Ready to use patterns with different styles are also included.
+### 🧩 WhatsApp Contact Button Block
+Add beautiful and customizable WhatsApp contact buttons in the **Block Editor**. You can define phone and initial message of the button or use the post/general Joinchat settings (ideal for Reusable Blocks).
 
 Enable QR Code on desktop to allow your visitors to scan it and start messaging from their phone.
 
-You can define phone and initial message of the button or use the post/general Joinchat settings (ideal for Reusable Blocks).
-
-### 🃏 Dynamic Variables.
+### 🃏 Dynamic Variables
 Use variables in your CTAs and Start Messages that change dynamically for each page:
 
-**{SITE}** ➡ Website title
-**{TITLE}** ➡ Current page title
-**{HOME}** ➡ Website home url
-**{URL}** ➡ Current page url
-**{HREF}** ➡ Current page url (full with query params)
-**{PRODUCT}** ➡ Product name (Woo)
-**{SKU}** ➡ Product SKU (Woo)
-**{REGULAR}** ➡ Product regular price (Woo)
-**{PRICE}** ➡ Product current price (Woo)
-**{DISCOUNT}** ➡ Product percent discount when is on sale (Woo)
+- **{SITE}** ➡ Website title
+- **{TITLE}** ➡ Current page title
+- **{HOME}** ➡ Website home url
+- **{URL}** ➡ Current page url
+- **{HREF}** ➡ Current page url (full with query params)
+- **{PRODUCT}** ➡ Product name (Woo)
+- **{SKU}** ➡ Product SKU (Woo)
+- **{REGULAR}** ➡ Product regular price (Woo)
+- **{PRICE}** ➡ Product current price (Woo)
+- **{DISCOUNT}** ➡ Product percent discount when is on sale (Woo)
 
-### 📈 Analytics Integration.
+### 📈 Analytics Integration
 Automatically send events to **Google Analytics, Google Tag Manager and Facebook Pixel** when the user opens WhatsApp.
 
-Now can **send events to multiple destinations** on Google Tag!
-
-**Google Analytics 4** integration with the recommended `"generate_lead"` event.
-
-**Google Ads** conversion, just add your Conversion ID and Conversion Label.
+- — 🆕 — **Clicks counter** in your WordPress dashboard
+- **Google Analytics 4** send the recommended `"generate_lead"` event
+- **Google Tag Manager** send `"JoinChat"` event
+- **Facebook Pixel**  send `"JoinChat"` event
+- **Google Ads** conversion, just add your Conversion ID and Conversion Label
 
 You can also **create your own custom events or add event parameters**. [View FAQs](https://wordpress.org/plugins/creame-whatsapp-me/faq/) / [Read more](https://join.chat/en/joinchat-measures-whatsapp-events-in-google-analytics/?utm_source=wporg&utm_medium=web)
 
-### 🍾 Chat Triggers.
+### 🍾 Chat Triggers
 Any element in your page can be a chat trigger, eg: it can launch WhatsApp from a link or show the Joinchat CTA when the user scrolls to the footer.
 
 **On page load (by url):**
@@ -139,58 +139,31 @@ Set **custom phone and initial message** for direct WhatsApp triggers:
 * class `"joinchat_show"` opens Joinchat CTA (first time)
 * class `"joinchat_force_show"` opens Joinchat CTA (always)
 
-### 💱 Multi-Language & RTL Support.
-To be able to support all your users, wherever they are. Our plugin is **compatible with WPML and Polylang** and also **RTL languages** are supported.
+### 💱 Multi-Language & RTL Support
+To be able to support all your users, wherever they are. Our plugin is **compatible with WPML, Polylang and — 🆕 — TranslatePress** and also **RTL languages** are supported.
 
-**Direct link to edit translations** when a translatable field is changed.
-
-### 🌈 Theme Colors & 🌚 Dark Mode.
+### 🌈 Theme Colors & 🌚 Dark Mode
 You choose a color and we customize the entire visual theme of the widget. With Dark Mode display the chat window with dark colors and white text. From settings you can activate it or leave it automatic and detects devices' configuration.
 
-### ⚡ Fast & Light.
-Only load what need when needed. Joinchat is lightweight and follow best coding practices. [See tests report](https://wphive.com/plugins/creame-whatsapp-me/)
+### ⚡ Fast & Light
+Only load what need when needed. Joinchat is lightweight and follow best coding practices. Use vanilla **JavaScript without dependencies**, deferred scripts and lazy load of styles to **prevent render-blocking**.
 
-Use vanilla **JavaScript without dependencies**, deferred scripts and lazy load of styles to **prevent render-blocking**.
+See [Tests Report](https://wphive.com/plugins/creame-whatsapp-me/) and [Speed Score](https://makewpfast.com/plugins/creame-whatsapp-me/).
 
-### 🔕 No distractions.
+### 🔕 No distractions
 Joinchat integrates with all major Visual Editors and Page Builders and will not appear when editing a page.
 
 Supported editors: **Beaver Builder**, **Brizy Page Builder**, **Elementor**, **Oxygen Builder**, **Page Builder by SiteOrigin**, **Thrive Architect**, **Visual Composer** and **WP Page Builder**.
 
-### 🍪 Cookies & GDPR.
-
+### 🍪 Cookies & GDPR
 **Joinchat can be used without any cookies**. But to automatically display the CTA, two cookies are necessary. They are first-party cookies and don't collect personal data.
 
 Joinchat integrates with *Wordpress's Privacy Policy Guide* and suggests the necessary text.
 
-### 👨‍💻 Developer friendly.
+### 👨‍💻 Developer friendly
 Fully extensible, with lots of filters and actions to extend its functionality or change behavior.
 
-### === **Joinchat Premium** 🚀 ===
-Turn your chat into a powerful lead capture and support tool.
-
-* **Create chatbot-like conversation flows** to capture leads and automate replies.
-* **Manage multiple agents and schedules** to organize support.
-* **Prevent overload** by distributing chats across multiple WhatsApp numbers.
-* **Add more channels** like Telegram, Messenger, or phone calls.
-* **Boost conversions** with videos, surveys, and more right inside the chat window.
-
-[👉 **Get Joinchat Premium**](https://join.chat/en/premium/?utm_source=wporg&utm_medium=web) and upgrade your support today.
-
-### === **Joinchat AI** ✨ ===
-Supercharge your chat with AI-powered instant replies and smart support.
-
-* **Answer instantly 24/7** using AI trained on your FAQs and website content.
-* **Guide visitors and solve questions automatically** without human intervention.
-* **Reduce workload and boost efficiency** by handling repetitive queries.
-* **Keep control** with easy knowledge base management and response customization.
-
-[👉 **Get Joinchat AI**](https://join.chat/en/ai/?utm_source=wporg&utm_medium=web) and let AI handle the hard work.
-
-### 🎨 "Business Chat" is our WordPress theme recommended
-**Business Chat** is a versatile WordPress theme designed for businesses seeking a professional online presence. It offers a fully responsive design, built-in SEO tools, extensive customization options, and a chat integration through Joinchat. It's compatible with popular page builders and backed by dedicated customer support. Also it's the ultimate solution for a high-performing, user-friendly business website.
-
-**Business Chat** offers both a [free](https://wordpress.org/themes/business-chat/) and a [premium version](https://superbthemes.com/business-chat/), catering to businesses with varying budgets and requirements. This flexibility makes it an ideal choice for businesses looking for a comprehensive and versatile solution to establish their online presence.
+[Documentation](https://join.chat/en/docs/?utm_source=wporg&utm_medium=web)
 
 ### ⌁ If you like Joinchat 😍
 1. Please leave us a [★★★★★](https://wordpress.org/support/plugin/creame-whatsapp-me/reviews/#new-post) rating. We'll thank you.
@@ -397,6 +370,13 @@ You can view in your *Settings > Privacy > Policy Guide* the suggested text by J
 
 
 == Changelog ==
+
+= 6.2.0 =
+* New Clicks Counter widget on dashboard
+* New Add compatibility with TranslatePress for multi-language support
+* Fix detect videos with webm extension for animated images
+* Fix chat bubble HR separator styles
+* Fix Plugin Check (PCP) fixes
 
 = 6.1.3 =
 * Fix recover Gutenberg compatibility with WordPress < 6.6
