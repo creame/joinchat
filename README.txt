@@ -8,6 +8,7 @@ Requires PHP: 7.0
 Stable tag: 6.1.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
+
 The most installed WordPress plugin for WhatsApp: a customizable floating button that turns your visitors into chats, leads and sales.
 
 == Description ==
@@ -50,7 +51,7 @@ With Joinchat, you can unlock the full potential of WhatsApp's "click to chat" f
 
 ## Take Joinchat further with Premium and AI
 
-Joinchat Free is just the start. Premium and AI unlock its full conversion potential.
+Joinchat Free is just the start. **Premium and AI** unlock its full conversion potential.
 
 * 🌍 **Show or hide the button by country** — 🆕 — geo-target your visitors with country-specific rules. Perfect for international stores, regional campaigns and multi-language sites.
 * 💬 **Add more support channels** — extend beyond WhatsApp with Telegram, Facebook Messenger, phone calls and more, all from the same widget.
