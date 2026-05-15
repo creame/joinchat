@@ -178,7 +178,7 @@ class Joinchat_Tracking {
 
 		$settings = (array) get_option( JOINCHAT_SLUG, array() );
 
-		$this->is_enabled = isset( $settings['tracking'] ) && 'yes' === $settings['tracking'];
+		$this->is_enabled = ! isset( $settings['tracking'] ) || 'yes' === $settings['tracking'];
 
 		return $this->is_enabled;
 	}
