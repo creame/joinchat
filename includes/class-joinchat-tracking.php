@@ -176,9 +176,9 @@ class Joinchat_Tracking {
 			return $this->is_enabled;
 		}
 
-		$settings = wp_parse_args( (array) get_option( JOINCHAT_SLUG, array() ), jc_common()->defaults() );
+		$settings = (array) get_option( JOINCHAT_SLUG, array() );
 
-		$this->is_enabled = 'yes' === $settings['tracking'];
+		$this->is_enabled = isset( $settings['tracking'] ) && 'yes' === $settings['tracking'];
 
 		return $this->is_enabled;
 	}
