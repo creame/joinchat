@@ -467,7 +467,7 @@ class Joinchat_Public {
 			$joinchat_classes[] = 'joinchat--btn';
 		}
 
-		$button_label = empty( $box_content ) ? __( 'WhatsApp contact', 'creame-whatsapp-me' ) : __( 'Open chat', 'creame-whatsapp-me' );
+		$button_label = empty( $box_content ) ? __( 'WhatsApp Contact', 'creame-whatsapp-me' ) : __( 'Open Chat', 'creame-whatsapp-me' );
 		if ( $settings['button_tip'] ) {
 			$button_label = sprintf( '%s %s', $settings['button_tip'], $button_label );
 		}
