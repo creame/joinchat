@@ -24,32 +24,32 @@ defined( 'WPINC' ) || exit;
 	</p>
 	<ul>
 		<li>
-			<img src="<?php echo esc_url( plugin_dir_url( JOINCHAT_FILE ) . 'admin/img/premium-omnichannel.webp' ); ?>" width="400" height="250" loading="lazy" alt="">
+			<img src="<?php echo esc_url( plugin_dir_url( JOINCHAT_FILE ) . 'admin/img/ad-omnichannel.webp' ); ?>" width="400" height="250" loading="lazy" alt="">
 			<span><?php esc_html_e( 'Add more contact channels', 'creame-whatsapp-me' ); ?></span>
 			<a href="<?php echo esc_url( Joinchat_Util::link( 'premium/omnichannel', 'upselltab' ) ); ?>" target="_blank"><?php esc_html_e( 'Upgrade Now', 'creame-whatsapp-me' ); ?></a>
 		</li>
 		<li>
-			<img src="<?php echo esc_url( plugin_dir_url( JOINCHAT_FILE ) . 'admin/img/premium-agents.webp' ); ?>" width="400" height="250" loading="lazy" alt="">
+			<img src="<?php echo esc_url( plugin_dir_url( JOINCHAT_FILE ) . 'admin/img/ad-agents.webp' ); ?>" width="400" height="250" loading="lazy" alt="">
 			<span><?php esc_html_e( 'Create as many agents as you want', 'creame-whatsapp-me' ); ?></span>
 			<a href="<?php echo esc_url( Joinchat_Util::link( 'premium/support-agents', 'upselltab' ) ); ?>" target="_blank"><?php esc_html_e( 'Upgrade Now', 'creame-whatsapp-me' ); ?></a>
 		</li>
 		<li>
-			<img src="<?php echo esc_url( plugin_dir_url( JOINCHAT_FILE ) . 'admin/img/premium-agents-schedule.webp' ); ?>" width="400" height="250" loading="lazy" alt="">
+			<img src="<?php echo esc_url( plugin_dir_url( JOINCHAT_FILE ) . 'admin/img/ad-agents-schedule.webp' ); ?>" width="400" height="250" loading="lazy" alt="">
 			<span><?php esc_html_e( 'Set up schedules and shifts for each day', 'creame-whatsapp-me' ); ?></span>
 			<a href="<?php echo esc_url( Joinchat_Util::link( 'premium/support-agents', 'upselltab' ) ); ?>" target="_blank"><?php esc_html_e( 'Upgrade Now', 'creame-whatsapp-me' ); ?></a>
 		</li>
 		<li>
-			<img src="<?php echo esc_url( plugin_dir_url( JOINCHAT_FILE ) . 'admin/img/premium-random-phone.webp' ); ?>" width="400" height="250" loading="lazy" alt="">
+			<img src="<?php echo esc_url( plugin_dir_url( JOINCHAT_FILE ) . 'admin/img/ad-random-phone.webp' ); ?>" width="400" height="250" loading="lazy" alt="">
 			<span><?php esc_html_e( 'Add as many WhatsApp numbers as you need', 'creame-whatsapp-me' ); ?></span>
 			<a href="<?php echo esc_url( Joinchat_Util::link( 'premium/random-phone', 'upselltab' ) ); ?>" target="_blank"><?php esc_html_e( 'Upgrade Now', 'creame-whatsapp-me' ); ?></a>
 		</li>
 		<li>
-			<img src="<?php echo esc_url( plugin_dir_url( JOINCHAT_FILE ) . 'admin/img/premium-chat-funnels.webp' ); ?>" width="400" height="250" loading="lazy" alt="">
+			<img src="<?php echo esc_url( plugin_dir_url( JOINCHAT_FILE ) . 'admin/img/ad-chat-funnels.webp' ); ?>" width="400" height="250" loading="lazy" alt="">
 			<span><?php esc_html_e( 'Create chat funnels, and capture key data', 'creame-whatsapp-me' ); ?></span>
 			<a href="<?php echo esc_url( Joinchat_Util::link( 'premium/chatfunnel', 'upselltab' ) ); ?>" target="_blank"><?php esc_html_e( 'Upgrade Now', 'creame-whatsapp-me' ); ?></a>
 		</li>
 		<li>
-			<img src="<?php echo esc_url( plugin_dir_url( JOINCHAT_FILE ) . 'admin/img/joinchat-ai.webp' ); ?>" width="400" height="250" loading="lazy" alt="">
+			<img src="<?php echo esc_url( plugin_dir_url( JOINCHAT_FILE ) . 'admin/img/ad-ai.webp' ); ?>" width="400" height="250" loading="lazy" alt="">
 			<span><?php esc_html_e( 'Add an AI agent and automate up to 80% of inquiries', 'creame-whatsapp-me' ); ?></span>
 			<a href="<?php echo esc_url( Joinchat_Util::link( 'ai', 'upselltab' ) ); ?>" target="_blank"><?php esc_html_e( 'Upgrade Now', 'creame-whatsapp-me' ); ?></a>
 		</li>
