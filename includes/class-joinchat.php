@@ -48,6 +48,7 @@ class Joinchat {
 		$this->set_locale();
 		$this->load_integrations();
 
+		$this->define_tracking_hooks();
 		$this->define_admin_hooks();
 		$this->define_public_hooks();
 		$this->define_premium_hooks();
@@ -124,6 +125,28 @@ class Joinchat {
 		// No delegate to $this->loader, use WordPress add_action.
 		// At 'plugins_loaded' hook can determine if other plugins are present.
 		add_action( 'plugins_loaded', array( $plugin_integrations, 'load_integrations' ) );
+
+	}
+
+	/**
+	 * Register all hooks related to click tracking.
+	 *
+	 * @since    6.2.0
+	 * @access   private
+	 * @return   void
+	 */
+	private function define_tracking_hooks() {
+
+		require_once JOINCHAT_DIR . 'includes/class-joinchat-tracking.php';
+
+		$plugin_tracking = new Joinchat_Tracking();
+
+		if ( ! $plugin_tracking->is_enabled() ) {
+			return;
+		}
+
+		$this->loader->add_action( 'rest_api_init', $plugin_tracking, 'register_rest_routes' );
+		$this->loader->add_action( 'wp_dashboard_setup', $plugin_tracking, 'register_dashboard_widget' );
 
 	}
 

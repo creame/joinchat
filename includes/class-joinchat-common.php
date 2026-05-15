@@ -119,6 +119,7 @@ class Joinchat_Common {
 			'optin_text'    => '',
 			'optin_check'   => 'no',
 			'gads'          => '',
+			'tracking'      => 'yes',
 			'custom_css'    => '',
 			'clear'         => 'no',
 			'show_brand'    => 'yes',
@@ -148,21 +149,17 @@ class Joinchat_Common {
 			return $this->settings;
 		}
 
-		$default_settings = $this->defaults();
+		$defaults = $this->defaults();
 
 		// Can hook 'option_joinchat' and 'default_option_joinchat' filters.
-		$settings = array_merge( $default_settings, (array) get_option( JOINCHAT_SLUG, $default_settings ) );
-
-		// Migrate addons 'remove_brand' setting to 'header' (v. < 4.1).
-		if ( isset( $settings['remove_brand'] ) ) {
-			$remove             = $settings['remove_brand'];
-			$settings['header'] = 'wa' === $remove ? '__wa__' : ( 'no' === $remove ? '__jc__' : '' );
-		}
+		$settings = array_merge( $defaults, (array) get_option( JOINCHAT_SLUG, $defaults ) );
 
 		// Since v6.2.0 use "show_brand" setting.
 		if ( '__jc__' === $settings['header'] ) {
 			$settings['header']     = '__wa__';
 			$settings['show_brand'] = 'yes';
+		} elseif ( $settings !== $defaults ) {
+			$settings['show_brand'] = 'no';
 		}
 
 		// Since v5.1 use negative values for disabled.
@@ -177,7 +174,7 @@ class Joinchat_Common {
 		$settings['color'] = str_replace( '/100', '/1', $settings['color'] );
 
 		// Clean unused saved settings.
-		$settings = array_intersect_key( $settings, $default_settings );
+		$settings = array_intersect_key( $settings, $defaults );
 
 		$this->settings = apply_filters( 'joinchat_settings', $settings );
 

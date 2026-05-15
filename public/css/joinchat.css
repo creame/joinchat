@@ -445,7 +445,10 @@
 }
 
 .joinchat__scroll {
+  display: flex;
+  flex-direction: column-reverse;
   overflow: hidden scroll;
+  scroll-behavior: smooth;
   overscroll-behavior-y: contain;
   -webkit-overflow-scrolling: touch;
 }

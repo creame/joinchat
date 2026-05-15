@@ -83,6 +83,15 @@ class Joinchat_Public {
 		$settings['message_badge'] = 'yes' === $settings['message_badge'] && '' !== $settings['message_text'];
 		$settings['optin_check']   = 'yes' === $settings['optin_check'];
 		$settings['show_brand']    = 'yes' === $settings['show_brand'];
+		$settings['tracking']      = 'yes' === $settings['tracking'];
+
+		if ( $settings['tracking'] ) {
+			$settings['tracking_url'] = Joinchat_Tracking::rest_url();
+
+			if ( Joinchat_Tracking::requires_nonce() ) {
+				$settings['tracking_nonce'] = wp_create_nonce( Joinchat_Tracking::NONCE_ACTION );
+			}
+		}
 
 		if ( empty( $settings['gads'] ) ) {
 			unset( $settings['gads'] );
@@ -266,6 +275,8 @@ class Joinchat_Public {
 				'whatsapp_web',
 				'message_send',
 				'gads',
+				'tracking_url', // Tracking settings.
+				'tracking_nonce',
 				'ga_tracker',   // Event customize.
 				'ga_event',
 				'data_layer',
@@ -382,6 +393,7 @@ class Joinchat_Public {
 				'custom_css',
 				'clear',
 				'show_brand',
+				'tracking',
 			)
 		);
 
@@ -455,7 +467,7 @@ class Joinchat_Public {
 			$joinchat_classes[] = 'joinchat--btn';
 		}
 
-		$button_label = empty( $box_content ) ? __( 'WhatsApp contact', 'creame-whatsapp-me' ) : __( 'Open chat', 'creame-whatsapp-me' );
+		$button_label = empty( $box_content ) ? __( 'WhatsApp Contact', 'creame-whatsapp-me' ) : __( 'Open Chat', 'creame-whatsapp-me' );
 		if ( $settings['button_tip'] ) {
 			$button_label = sprintf( '%s %s', $settings['button_tip'], $button_label );
 		}

@@ -29,8 +29,10 @@
 }
 
 .js #joinchat_form textarea {
-  overflow: hidden;
-  min-height: 100px;
+  min-height: 80px;
+  max-height: 500px;
+  field-sizing: content;
+  overflow: auto;
 }
 
 .joinchat-tab {
@@ -407,8 +409,10 @@ tr.joinchat--focus .joinchat_vars_help {
 }
 
 .js .joinchat-metabox textarea {
-  overflow: hidden;
-  min-height: 3em;
+  min-height: 80px;
+  max-height: 500px;
+  overflow: auto;
+  field-sizing: content;
 }
 
 /* Joinchat term metabox */
@@ -484,20 +488,33 @@ tr.joinchat--focus .joinchat_vars_help {
 /* Coupon */
 
 .joinchat-coupon {
-  color: #000;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  min-height: 30px;
+  padding: 3px 20px;
+	background: linear-gradient(to bottom, #ff9500 0%, #f9603a 50%) top/100% 200%;
+	border-radius: 4px;
+	color: #fff;
+	font-weight: 600;
+	text-decoration: none !important;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
+	transition: all 0.2s;
 }
 
-.joinchat-coupon span {
-  display: inline-block;
-  padding: 0 10px;
-  margin: 0 10px;
-  border: 2px dashed #F9603A;
-  border-radius: 4px;
-  background: rgba(249, 96, 58, 0.15);
+.joinchat-coupon:hover,
+.joinchat-coupon:active,
+.joinchat-coupon:focus {
+  background-position: bottom;
+  color: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.7);
 }
 
-.joinchat-coupon a {
-  white-space: nowrap;
+.joinchat-coupon::before {
+  content: '';
+  width: 47px;
+  height: 20px;
+  background: url(data:image/webp;base64,UklGRiYDAABXRUJQVlA4WAoAAAAQAAAAXQAAJwAAQUxQSLsCAAABgFZrb95GEAxBEAzBEAIhEMwgYdAwSBikDFwGHgOVgSHonMX6sHf2PyIYSJLUZE9MoA7nkb4ALosLTLCU4NfuAvMttn2GrvPRl+YJUSY+J5xfzGcCYA7zPMUlx+4D/J6mlTnNS4/R2Z7nAOudccIFMfcZYTluIqrlWIKuLcmkWoPAv1bX0SLbA7c9VdSpz6RpZzqXYCXmAMKFIyddkhumQ6UuKNQ7h83ECF9B8ApehVSYWa36rnNvEq+wyxJozOhSIYuTbggGSBHOSD6tcPHY9v5a+n5McRVbGxZXZ+ZKUp/0gGUTvYjCttpnB9Bd/gLTDOD9KRJFaDlog5nXecCCTN7ubRcpK2530RYzD2I2Q4wcqdbUExPAycKct5KVd7s8sPoUHuK1/8jQYc2OPDs0fBdd9PeRMUar5tUlAPZhSBkhyoh0fQEZn54fH8Q9Yuq7obYnTJeg7XyVdumrQwBX5iv0sXZ3yq5XcYTyhqQgIjF/ggDXaN8sTRIv3Kwu6nS15O6D8GJGjTZ4aKv6/2PlgrBxQ4jlQUDfw4I2h7AxcwQsdAbIj/Cup6StZi/RVZCqNsKIf9UsqbQKHJ1PuaND2Emj5SlmaR7tf5DRuCinpXad4pK6HnLCRd8Alkwd7ZouNmi/zGY/f3DrohglerXkpA2XaEqRddprpK85hN6uF6nKIv6DizaPdMOrxLY0lxZVLTb6QA8UZ9BGe0wvlsibM4uWhAcd0wjx/06t5x+93HS9TFpyzoJS9Yxaep2NuZlCi8WmTazbuUQAXAuz/+hxNVM39wvpaB7ag73m7Zj9czAiL22oQyp+BZpGiw7AgWb0N7RIEw9/QxuOPzkA3vNoV7JFCVfyHIZpW8bLR7v+6Pr0sRyvNrhwQuuk7aGrwsflaszvn8bcvpe6ogrrMbx+Oz6tn0YeWk1wPwEAVlA4IEQAAACQBACdASpeACgAPjEUiEKiISEXFAAgAwS0gAA2msfd/KeJqw2ijF9/ECVemvgA/v5V92L///aidH/qDCX/yxAAAAAAAA==) no-repeat center/contain;
 }
 
 @media screen and (max-width: 600px) {

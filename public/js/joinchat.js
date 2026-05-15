@@ -133,6 +133,45 @@
     return url.toString();
   };
 
+  // Track click on backend
+  joinchat_obj.track_click = function (params) {
+    if (!this.settings.tracking_url) return;
+
+    const payload_data = {
+      trigger: params.trigger || 'unknown',
+      chat_channel: params.chat_channel || '',
+      chat_id: params.chat_id || '',
+      is_mobile: this.is_mobile ? '1' : '0',
+    };
+
+    // Allow third parties to edit or cancel the backend tracking payload.
+    if (!document.dispatchEvent(new CustomEvent('joinchat:track', {
+      detail: {
+        params: params,
+        payload: payload_data,
+      },
+      cancelable: true,
+    }))) return;
+
+    const payload = new URLSearchParams(payload_data);
+    if (this.settings.tracking_nonce) {
+      payload.set('nonce', this.settings.tracking_nonce);
+    }
+
+    if (typeof navigator.sendBeacon === 'function') {
+      navigator.sendBeacon(this.settings.tracking_url, payload);
+      return;
+    }
+
+    fetch(this.settings.tracking_url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
+      body: payload.toString(),
+      keepalive: true,
+      credentials: 'same-origin',
+    }).catch(() => undefined);
+  };
+
   // Show Joinchat button
   joinchat_obj.show = function (tooltip) {
     this.$div.removeAttribute('hidden');
@@ -211,6 +250,8 @@
     // Trigger event (params can be edited by third party scripts or cancel if return false)
     if (!document.dispatchEvent(new CustomEvent('joinchat:open', { detail: params, cancelable: true }))) return;
 
+    // Store tracking event on backend
+    this.track_click(params);
     // Send analytics events
     this.send_event(params);
     // Open WhatsApp link
@@ -386,6 +427,7 @@
       const jc_scroll = joinchat_obj.$('.joinchat__scroll');
       const jc_chat = joinchat_obj.$('.joinchat__chat');
       const jc_bubbles = joinchat_obj.$$('.joinchat__bubble');
+      const reduced_motion = window.matchMedia('(prefers-reduced-motion)').matches;
 
       if (!jc_chat) return;
 
@@ -399,7 +441,7 @@
       });
 
       // Animate height growth on any child/class mutation
-      if (!window.matchMedia('(prefers-reduced-motion)').matches) {
+      if (!reduced_motion) {
         // Hide before observe
         if (jc_bubbles.length > 1) {
           jc_bubbles.forEach(bubble => bubble.classList.add('joinchat--hidden'));
@@ -411,7 +453,7 @@
 
         // Observe DOM mutations
         const observer = new MutationObserver(() => {
-          if (jc_scroll.scrollHeight > jc_scroll.offsetHeight) observer.disconnect();
+          if (jc_scroll.scrollHeight > jc_scroll.offsetHeight) return;
 
           const new_height = jc_chat.offsetHeight;
           clearTimeout(anim_timeout);
@@ -428,7 +470,7 @@
       }
 
       // Bubbles animated (show one by one)
-      if (jc_bubbles.length <= 1 || window.matchMedia('(prefers-reduced-motion)').matches) {
+      if (jc_bubbles.length <= 1 || reduced_motion) {
         setTimeout(() => jc_chat.dispatchEvent(new Event('joinchat:bubbles')), 1); // Need delay (to trigger after joinchat:show)
         return;
       }
@@ -438,13 +480,11 @@
       const showBubble = (bubble, next_delay) => {
         joinchat_obj.$('.joinchat__bubble--loading')?.remove();
         bubble.classList.remove('joinchat--hidden');
-        jc_chat.parentNode.scrollIntoView({ behavior: 'smooth', block: 'end' });
         setTimeout(nextBubble, next_delay);
       };
       const nextBubble = () => {
         if (index >= jc_bubbles.length) {
           joinchat_obj.$('.joinchat__optin')?.classList.remove('joinchat--hidden');
-          jc_chat.parentNode.scrollIntoView({ behavior: 'smooth', block: 'end' });
           jc_chat.dispatchEvent(new Event('joinchat:bubbles')); // All bubbles shown
           return;
         }
@@ -454,7 +494,6 @@
           showBubble(bubble, 210);
         } else {
           jc_chat.insertAdjacentHTML('beforeend', '<div class="joinchat__bubble joinchat__bubble--loading"></div>');
-          jc_chat.parentNode.scrollIntoView({ behavior: 'smooth', block: 'end' });
           setTimeout(() => showBubble(bubble, random(400, 600)), Math.min((bubble.textContent.split(/\s+/).length * 60) + 210, 3000)); // Delay (word count * time) + animation delay
         }
       };
