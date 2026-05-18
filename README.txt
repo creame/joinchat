@@ -5,7 +5,7 @@ Tags: WhatsApp, WhatsApp Button, Click to Chat, Floating Button, Chat
 Requires at least: 4.9.6
 Tested up to: 7.0
 Requires PHP: 7.0
-Stable tag: 6.1.3
+Stable tag: 6.2.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -375,6 +375,7 @@ You can view in your *Settings > Privacy > Policy Guide* the suggested text by J
 = 6.2.0 =
 * New Clicks Counter widget on dashboard
 * New Add compatibility with TranslatePress for multi-language support
+* Change branding label out of chat window header
 * Fix detect videos with webm extension for animated images
 * Fix chat bubble HR separator styles
 * Fix Plugin Check (PCP) fixes
