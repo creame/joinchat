@@ -152,15 +152,19 @@ class Joinchat_Common {
 		$defaults = $this->defaults();
 
 		// Can hook 'option_joinchat' and 'default_option_joinchat' filters.
-		$settings = array_merge( $defaults, (array) get_option( JOINCHAT_SLUG, $defaults ) );
+		$settings = (array) get_option( JOINCHAT_SLUG, $defaults );
 
 		// Since v6.2.0 use "show_brand" setting.
-		if ( '__jc__' === $settings['header'] ) {
-			$settings['header']     = '__wa__';
-			$settings['show_brand'] = 'yes';
-		} elseif ( $settings !== $defaults ) {
-			$settings['show_brand'] = 'no';
+		if ( ! isset( $settings['show_brand'] ) && isset( $settings['header'] ) ) {
+			if ( '__jc__' === $settings['header'] ) {
+				$settings['header']     = '__wa__';
+				$settings['show_brand'] = 'yes';
+			} else {
+				$settings['show_brand'] = 'no';
+			}
 		}
+
+		$settings = array_merge( $defaults, $settings );
 
 		// Since v5.1 use negative values for disabled.
 		if ( 0 === $settings['message_delay'] ) {
