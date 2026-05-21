@@ -25,6 +25,7 @@ if ( isset( $option['clear'] ) && 'yes' === $option['clear'] ) {
 	delete_option( 'joinchat' );
 	delete_option( 'joinchat_notice_dismiss' );
 	delete_option( 'joinchat_tracking_clicks' );
+	delete_option( 'joinchat_tracking_dedup' );
 
 	// Delete post meta '_joinchat' added by plugin.
 	$wpdb->delete( $wpdb->prefix . 'postmeta', array( 'meta_key' => '_joinchat' ) );

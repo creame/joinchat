@@ -533,6 +533,61 @@ class Joinchat_Util {
 	}
 
 	/**
+	 * Get client IP address from request.
+	 *
+	 * Checks multiple headers commonly used by proxies and CDNs,
+	 * validates IPs and prefers public IPs over private/reserved ones.
+	 *
+	 * @since 6.2.2
+	 * @param bool $anonymize Whether to anonymize the IP address (GDPR compliance).
+	 * @return string Client IP address or empty string if not available.
+	 */
+	public static function get_client_ip( $anonymize = false ) {
+
+		// Headers to check in order of preference.
+		$headers = array(
+			'HTTP_X_FORWARDED_FOR',      // Standard proxy header.
+			'HTTP_CF_CONNECTING_IP',     // Cloudflare.
+			'HTTP_X_REAL_IP',            // Nginx proxy.
+			'HTTP_X_CLIENT_IP',          // Alternative.
+			'HTTP_X_CLUSTER_CLIENT_IP',  // Rackspace LB, Riverbed Stingray.
+			'HTTP_FORWARDED_FOR',        // RFC 7239.
+			'HTTP_FORWARDED',            // RFC 7239.
+		);
+
+		$client_ip = '';
+
+		foreach ( $headers as $header ) {
+			if ( empty( $_SERVER[ $header ] ) ) {
+				continue;
+			}
+
+			// Headers like X-Forwarded-For can contain multiple IPs (comma-separated).
+			$ips = array_map( 'trim', explode( ',', wp_unslash( (string) $_SERVER[ $header ] ) ) );
+
+			foreach ( $ips as $ip ) {
+				if ( filter_var( $ip, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE ) !== false ) {
+					$client_ip = $ip;
+					break 2;
+				}
+			}
+		}
+
+		if ( empty( $client_ip ) && ! empty( $_SERVER['REMOTE_ADDR'] ) ) {
+			$ip = trim( wp_unslash( (string) $_SERVER['REMOTE_ADDR'] ) );
+			if ( filter_var( $ip, FILTER_VALIDATE_IP ) !== false ) {
+				$client_ip = $ip;
+			}
+		}
+
+		if ( ! empty( $client_ip ) && $anonymize ) {
+			return wp_privacy_anonymize_ip( $client_ip );
+		}
+
+		return $client_ip;
+	}
+
+	/**
 	 * Convert RGB to HSL
 	 *
 	 * @since 6.0.0
