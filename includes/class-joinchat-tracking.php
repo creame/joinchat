@@ -317,7 +317,7 @@ class Joinchat_Tracking {
 	/**
 	 * Get client fingerprint hash for deduplication.
 	 *
-	 * Combines: client IP, user agent, trigger, and chat ID.
+	 * Combines: client IP, user agent, channel, and chat ID.
 	 * Used to detect and block automated/duplicate click events.
 	 *
 	 * @since 6.2.2
@@ -326,17 +326,17 @@ class Joinchat_Tracking {
 	 */
 	private function get_event_fingerprint( WP_REST_Request $request ) {
 
-		$client_ip  = Joinchat_Util::get_client_ip();
-		$user_agent = (string) $request->get_header( 'User-Agent' );
-		$trigger    = sanitize_key( (string) $request->get_param( 'trigger' ) );
-		$chat_id    = sanitize_text_field( (string) $request->get_param( 'chat_id' ) );
+		$client_ip    = Joinchat_Util::get_client_ip();
+		$user_agent   = (string) $request->get_header( 'User-Agent' );
+		$chat_channel = sanitize_text_field( (string) $request->get_param( 'chat_channel' ) );
+		$chat_id      = sanitize_text_field( (string) $request->get_param( 'chat_id' ) );
 
 		// Combine all factors into a fingerprint string.
 		$fingerprint_data = sprintf(
 			'%s|%s|%s|%s',
 			empty( $client_ip ) ? 'unknown' : $client_ip,
 			$user_agent,
-			$trigger,
+			$chat_channel,
 			$chat_id
 		);
 
