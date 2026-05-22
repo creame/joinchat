@@ -548,15 +548,17 @@ class Joinchat_Tracking {
 		?>
 <div style="background:#fff;border:1px solid #dcdcde;border-radius:4px;padding:10px 8px 0;">
 	<style>
+		#joinchat_tracking_widget .postbox-header h2 { justify-content:flex-start; }
+		#joinchat_tracking_widget .postbox-header h2::before {content:''; width:20px; height:20px; margin:-2px 8px 0 -4px; background:url(<?php echo esc_url( plugin_dir_url( JOINCHAT_FILE ) . 'admin/img/menu-icon.svg' ); ?>) !important; filter:invert(1); }
 		.joinchat-tracking-svg .chart-y-grid { stroke:#e2e4e7; stroke-width:1; }
 		.joinchat-tracking-svg .chart-y-label { text-anchor:start; font-size:11px; fill:#646970; }
 		.joinchat-tracking-svg .chart-dot { stroke:#3a87c6; stroke-width:1.5; }
 		.joinchat-tracking-svg .chart-tip-box { fill:#fff; stroke:#dcdcde; stroke-width:1; }
 		.joinchat-tracking-svg .chart-tip-day { text-anchor:middle; font-size:13px; font-weight:500; fill:#333; }
 		.joinchat-tracking-svg .chart-tip-num { text-anchor:middle; font-size:14px; font-weight:600; fill:#1d1d1d; }
-		.joinchat-tracking-svg .chart-point { cursor: pointer; }
-		.joinchat-tracking-svg .chart-tip { opacity: 0; transition: opacity 0.2s ease-in-out; pointer-events: none; }
-		.joinchat-tracking-svg .chart-point:hover .chart-tip { opacity: 1; }
+		.joinchat-tracking-svg .chart-point { cursor:pointer; }
+		.joinchat-tracking-svg .chart-tip { opacity:0; transition:opacity 0.2s ease-in-out; pointer-events:none; }
+		.joinchat-tracking-svg .chart-point:hover .chart-tip { opacity:1; }
 	</style>
 	<svg class="joinchat-tracking-svg" viewBox="0 0 <?php echo (int) $width; ?> <?php echo (int) $height; ?>" role="img" aria-label="<?php echo esc_attr__( 'Joinchat clicks over the last 30 days', 'creame-whatsapp-me' ); ?>" style="display:block;width:100%;height:auto;overflow:visible;">
 		<?php foreach ( $y_scale_rows as $scale_row ) : ?>
