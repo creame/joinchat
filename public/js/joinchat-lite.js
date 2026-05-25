@@ -39,7 +39,7 @@
     // Trigger event (params can be edited by third party scripts or cancel)
     if (!document.dispatchEvent(new CustomEvent('joinchat:event', { detail: params, cancelable: true }))) return;
 
-    const data_layer = window[this.settings.data_layer] || window[window.gtm4wp_datalayer_name] || window.dataLayer;
+    const data_layer = window[this.settings.data_layer] || window[window.gtm4wp_datalayer_name] || window.dataLayerPYS || window.dataLayer;
 
     if (typeof data_layer === 'object') {
       const gtag = window.gtag || function () { data_layer.push(arguments); };
