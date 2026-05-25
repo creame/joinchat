@@ -5,7 +5,7 @@ Tags: WhatsApp, WhatsApp Button, Click to Chat, Floating Button, Chat
 Requires at least: 4.9.6
 Tested up to: 7.0
 Requires PHP: 7.0
-Stable tag: 6.2.2
+Stable tag: 6.2.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -295,7 +295,7 @@ add_filter( 'joinchat_get_settings', function( $settings ){
     return $settings;
 } );`
 
-Joinchat is compatible with plugins **MonsterInsights – Google Analytics Dashboard for WordPress** and **Google Tag Manager for WordPress** custom names.
+Joinchat is compatible with plugins **MonsterInsights – Google Analytics Dashboard for WordPress**, **Google Tag Manager for WordPress** and **PixelYourSite** custom names.
 
 = Google Tag Manager integration =
 
@@ -371,6 +371,9 @@ You can view in your *Settings > Privacy > Policy Guide* the suggested text by J
 
 
 == Changelog ==
+
+= 6.2.3 =
+* **NEW** Compatible with **PixelYourSite** custom DataLayer name
 
 = 6.2.2 =
 * Enhanced clicks counter to prevent duplicates (in a 60s window) and bot hits
