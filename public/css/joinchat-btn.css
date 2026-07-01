@@ -21,14 +21,14 @@
   z-index: 9000;
   right: var(--sep);
   bottom: var(--bottom);
-  font: normal normal normal 16px/1.625em var(--joinchat-font);
+  font: 16px/1.625em var(--joinchat-font);
   letter-spacing: 0;
   animation: joinchat_show 500ms cubic-bezier(0.18, 0.89, 0.32, 1.28) 10ms both;
   transform: scale3d(0, 0, 0);
   transform-origin: calc(var(--s)/-2) calc(var(--s)/-4);
   -webkit-user-select: none;
-     -moz-user-select: none;
-          user-select: none;
+  -moz-user-select: none;
+  user-select: none;
   touch-action: manipulation;
   -webkit-font-smoothing: antialiased;
   -webkit-tap-highlight-color: rgb(0 0 0 / 0%);
@@ -322,7 +322,7 @@
   background-size: calc(var(--s)*0.6);
   color: #fff;
   border-radius: calc(var(--s)/2);
-  font: 700 normal calc(var(--s)*0.35)/var(--s) var(--joinchat-font);
+  font: 700 calc(var(--s)*0.35)/var(--s) var(--joinchat-font);
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;

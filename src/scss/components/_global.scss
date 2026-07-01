@@ -35,7 +35,7 @@
   z-index: 9000;
   right: var(--sep);
   bottom: var(--bottom);
-  font: normal normal normal 16px/1.625em var(--joinchat-font);
+  font: 16px/1.625em var(--joinchat-font);
   letter-spacing: 0;
   animation: #{$name}_show 500ms cubic-bezier(0.18, 0.89, 0.32, 1.28) 10ms both;
   transform: scale3d(0, 0, 0);
