@@ -4,16 +4,7 @@
   // Random number
   function rand(min, max) { return Math.round(Math.random() * (max - min) + min); }
 
-  // Country code for IntTelInput
-  var country_request = JSON.parse(localStorage.joinchat_country_code || '{}');
-  var country_code = (country_request.code && country_request.date == new Date().toDateString()) ? country_request.code : false;
-  if (!country_code) {
-    $.getJSON('https://ipinfo.io').always(function (resp) {
-      country_code = (resp && resp.country) ? resp.country : '';
-      localStorage.joinchat_country_code = JSON.stringify({ code: country_code, date: new Date().toDateString() });
-    });
-  }
-
+  var has_iti = window.joinchat_iti?.hasITI();
   var joinchat_obj = {
     $div: null,
     $: function (sel) { return $(sel || this.$div, this.$div); },
@@ -149,7 +140,7 @@
 
     doOptionPhone: function (option) {
       var input = $('#joinchat_phone').get(0);
-      this.saved['telephone'] = intlTelInput.getInstance(input).getNumber();
+      this.saved['telephone'] = has_iti ? window.joinchat_iti.getNumber(input) : $(input).val();
       input.readOnly = true;
       this.doOptionGoto(option);
     },
@@ -184,21 +175,9 @@
         $msg.html(msg.replace('{INPUT phone}', '<input id="joinchat_phone" value="" type="text">'));
         $msg.css('z-index', 1); // Flag dropdown over option buttons.
 
-        if (typeof intlTelInput === 'function' && window.intl_tel_l10n) {
-          var $phone = $('#joinchat_phone');
-          var iti = intlTelInput($phone[0], {
-            hiddenInput: () => { return { phone: 'joinchat[telephone]' }; },
-            strictMode: true,
-            separateDialCode: true,
-            initialCountry: country_code || 'auto',
-            customPlaceholder: (country_ph) => `${intl_tel_l10n.placeholder} ${country_ph}`,
-            i18n: intl_tel_l10n,
-          });
-
-          $phone.on('input countrychange', function () {
-            var is_valid = iti.isValidNumber(true);
-            $(this).css('color', this.value.trim() && !is_valid ? '#ca4a1f' : '');
-            joinchat_obj.$('.joinchat__option--phone').toggleClass('joinchat__option--disabled', !is_valid);
+        if (has_iti) {
+          window.joinchat_iti.init($('#joinchat_phone')[0], null, {
+            onChange: function (_, is_valid) { joinchat_obj.$('.joinchat__option--phone').toggleClass('joinchat__option--disabled', !is_valid); },
           });
         }
       } else if (msg.includes('{INPUT message}')) {

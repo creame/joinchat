@@ -19,46 +19,14 @@
 
   $(function () {
     var media_frame;
-    var has_iti = typeof intlTelInput === 'function' && window.intl_tel_l10n;
+    var has_iti = window.joinchat_iti?.hasITI();
     var $phone = $('#joinchat_phone');
 
-    if (has_iti) {
-      // Set intlTelInput config (make global)
-      var country_request = JSON.parse(localStorage.joinchat_country_code || '{}');
-      var country_code = (country_request.code && country_request.date == new Date().toDateString()) ? country_request.code : false;
-
-      window.joinchat_intl_tel_config = {
-        hiddenInput: () => ({ phone: $phone.data('name') || 'joinchat[telephone]' }),
-        strictMode: true,
-        separateDialCode: true,
-        initialCountry: country_code || 'auto',
-        geoIpLookup: country_code ? null : (success, failure) => {
-          fetch("https://ipapi.co/json")
-            .then((res) => res.json())
-            .then((data) => {
-              localStorage.joinchat_country_code = JSON.stringify({ code: data.country_code, date: new Date().toDateString() });
-              success(data.country_code);
-            }).catch(() => failure());
-        },
-        customPlaceholder: (country_ph) => `${intl_tel_l10n.placeholder} ${country_ph}`,
-        i18n: intl_tel_l10n,
-      };
-
-      // Apply intlTelInput to phone input
-      if ($phone.length) {
-        var iti = intlTelInput($phone[0], joinchat_intl_tel_config);
-        iti.promise.then(() => { $phone.trigger('input'); });
-
-        $phone.on('input countrychange', function () {
-          var is_valid = iti.isValidNumber(true); // check for mobile
-
-          $(this).css('color', this.value.trim() && !is_valid ? '#ca4a1f' : '');
-          // Ensures number it's updated
-          iti.ui.hiddenInput.value = iti.getNumber();
-          // Enable/disable phone test
-          $('#joinchat_phone_test').attr('disabled', !is_valid);
-        });
-      }
+    // Apply intlTelInput to phone input
+    if (has_iti && $phone.length) {
+      window.joinchat_iti.init($phone[0], null, {
+        onChange: function (_, is_valid) { $('#joinchat_phone_test').attr('disabled', !is_valid); } // Enable/disable phone test
+      });
     }
 
     // Tabs
@@ -84,13 +52,11 @@
     if ($phone.length) {
       // Enable/disable phone test
       if (!has_iti) {
-        $phone.on('input change', function () {
-          $('#joinchat_phone_test').attr('disabled', this.value.length < 7);
-        });
+        $phone.on('input change', function () { $('#joinchat_phone_test').attr('disabled', this.value.length < 7); });
       }
 
       $('#joinchat_phone_test').on('click', function () {
-        var phone = has_iti ? intlTelInput.getInstance($phone[0]).getNumber() : $phone.val();
+        var phone = has_iti ? window.joinchat_iti.getNumber($phone[0]) : $phone.val();
         window.open('https://wa.me/' + encodeURIComponent(phone_to_whatsapp(phone)), 'joinchat', 'noopener');
       });
     }
@@ -349,7 +315,7 @@
 
       // Contact
       $phone.on('change', function () {
-        prev_jc.settings.telephone = phone_to_whatsapp(has_iti ? intlTelInput.getInstance(this).getNumber() : $(this).val());
+        prev_jc.settings.telephone = phone_to_whatsapp(has_iti ? window.joinchat_iti.getNumber(this) : $(this).val());
         prev_jc.$div.classList.toggle('joinchat--disabled', prev_jc.settings.telephone == '');
       });
       $('#joinchat_message_send').on('change', function () { prev_jc.settings.message_send = $(this).val(); });

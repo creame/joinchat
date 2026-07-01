@@ -180,56 +180,32 @@ class Joinchat_Admin {
 
 		$intltel = jc_common()->get_intltel();
 		if ( $intltel ) {
-			$deps[] = 'intl-tel-input';
+			$deps[] = 'joinchat-iti';
+
+			$translations = array(
+				// Custom placeholder and countryNameLocale.
+				'placeholder'              => esc_attr__( 'e.g.', 'creame-whatsapp-me' ),
+				'countryNameLocale'        => strtolower( substr( get_user_locale(), 0, 2 ) ),
+				// IntlTelInput UI Translatable keys.
+				'selectedCountryAriaLabel' => esc_html_x( 'Change country, selected ${countryName} (${dialCode})', 'IntlTelInput UI', 'creame-whatsapp-me' ),
+				'noCountrySelected'        => esc_html_x( 'Select country', 'IntlTelInput UI', 'creame-whatsapp-me' ),
+				'countryListAriaLabel'     => esc_html_x( 'List of countries', 'IntlTelInput UI', 'creame-whatsapp-me' ),
+				'searchPlaceholder'        => esc_html_x( 'Search', 'IntlTelInput UI', 'creame-whatsapp-me' ),
+				'clearSearchAriaLabel'     => esc_html_x( 'Clear search', 'IntlTelInput UI', 'creame-whatsapp-me' ),
+				'searchEmptyState'         => esc_html_x( 'No results found', 'IntlTelInput UI', 'creame-whatsapp-me' ),
+				'searchSummaryAria'        => array(
+					'zero'     => esc_html_x( 'No results found', 'IntlTelInput UI', 'creame-whatsapp-me' ),
+					'one'      => esc_html_x( '1 result found', 'IntlTelInput UI', 'creame-whatsapp-me' ),
+					'multiple' => esc_html_x( '${count} results found', 'IntlTelInput UI', 'creame-whatsapp-me' ),
+				),
+			);
 
 			wp_register_script( 'intl-tel-input', plugins_url( 'lib/intl-tel-input/js/intlTelInputWithUtils.min.js', __FILE__ ), array(), $intltel, true );
-			wp_add_inline_script( 'intl-tel-input', $this->load_intltel_lang() );
+			wp_register_script( 'joinchat-iti', plugins_url( "js/joinchat-iti{$min}.js", __FILE__ ), array( 'intl-tel-input' ), JOINCHAT_VERSION, true );
+			wp_add_inline_script( 'joinchat-iti', 'var joinchat_iti_l10n = ' . wp_json_encode( $translations ) . ';' );
 		}
 
 		wp_register_script( JOINCHAT_SLUG, plugins_url( "js/joinchat{$min}.js", __FILE__ ), $deps, JOINCHAT_VERSION, true );
-
-	}
-
-	/**
-	 * Load intlTelInput language files
-	 *
-	 * @since 6.0.0
-	 * @return array
-	 */
-	private function load_intltel_lang() {
-
-		$lang = strtolower( substr( get_user_locale(), 0, 2 ) );
-
-		$placeholder = 'placeholder:"' . esc_attr__( 'e.g.', 'creame-whatsapp-me' ) . '"';
-
-		if ( 'en' === $lang ) {
-			return 'var intl_tel_l10n = { ' . $placeholder . ' };';
-		}
-
-		$i18n = get_transient( "joinchat_intltel_lang_{$lang}" );
-
-		if ( ! is_string( $i18n ) ) {
-			$i18n = '';
-
-			// Get javascript lang files.
-			foreach ( array( 'interface', 'countries' ) as $file ) {
-				if ( file_exists( JOINCHAT_DIR . "admin/lib/intl-tel-input/js/i18n/$lang/$file.js" ) ) {
-					$str   = file_get_contents( JOINCHAT_DIR . "admin/lib/intl-tel-input/js/i18n/$lang/$file.js" );
-					$str   = substr( $str, 0, strrpos( $str, '};' ) + 2 ); // To };.
-					$i18n .= $str . "\n";
-				}
-			}
-
-			if ( empty( $i18n ) ) {
-				$i18n = 'var intl_tel_l10n = { ' . $placeholder . ' };';
-			} else {
-				$i18n = '(() => { ' . $i18n . 'window.intl_tel_l10n = { ' . $placeholder . ', ...interfaceTranslations, ...countryTranslations }; })();';
-			}
-
-			set_transient( "joinchat_intltel_lang_{$lang}", $i18n, DAY_IN_SECONDS );
-		}
-
-		return $i18n;
 
 	}
 
@@ -593,5 +569,53 @@ class Joinchat_Admin {
 			</div>
 		</div>
 		<?php
+	}
+
+	/**
+	 * Compatibility for legacy Joinchat Premium versions.
+	 *
+	 * @since 6.2.4
+	 * @param string|false $intltel_version IntlTelInput version.
+	 * @return string|false
+	 */
+	public function compat_enhanced_phone( $intltel_version ) {
+
+		$premium_version = defined( 'JOINCHAT_PREMIUM_VERSION' ) ? (string) JOINCHAT_PREMIUM_VERSION : false;
+
+		if ( ! $premium_version || version_compare( $premium_version, '6.8', '>=' ) ) {
+			return $intltel_version;
+		}
+
+		return false;
+
+	}
+
+	/**
+	 * Print compatibility notice in admin.
+	 *
+	 * @since 6.2.4
+	 * @return void
+	 */
+	public function notice_enhanced_phone() {
+
+		if ( defined( 'DISABLE_NAG_NOTICES' ) && DISABLE_NAG_NOTICES ) {
+			return;
+		}
+
+		if ( ! current_user_can( Joinchat_Util::capability() ) || ! Joinchat_Util::is_admin_screen( true ) ) {
+			return;
+		}
+
+		$premium_version = defined( 'JOINCHAT_PREMIUM_VERSION' ) ? (string) JOINCHAT_PREMIUM_VERSION : false;
+
+		if ( ! $premium_version || version_compare( $premium_version, '6.8', '>=' ) ) {
+			return;
+		}
+
+		printf(
+			'<div class="notice notice-warning is-dismissible"><p>%s</p></div>',
+			esc_html__( 'Joinchat Premium is not compatible with current Joinchat enhanced phone input. You can continue using the basic phone input. Please update Joinchat Premium to version 6.8 or later.', 'creame-whatsapp-me' )
+		);
+
 	}
 }

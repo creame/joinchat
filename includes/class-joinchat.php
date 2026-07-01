@@ -66,6 +66,7 @@ class Joinchat {
 	 * Include the following files that make up the plugin:
 	 *
 	 * - Joinchat_Loader. Orchestrates the hooks of the plugin.
+	 * - Joinchat_Common. Defines all common functionality for the plugin.
 	 * - Joinchat_i18n. Defines internationalization functionality.
 	 * - Joinchat_Integrations. Defines thrid party integrations.
 	 * - Joinchat_Util. Defines common utilities.
@@ -218,6 +219,9 @@ class Joinchat {
 		$this->loader->add_filter( 'plugin_row_meta', $plugin_admin, 'plugin_links', 10, 2 );
 		// Privacy Policy Guide.
 		$this->loader->add_action( 'admin_init', $plugin_admin, 'add_privacy_message' );
+		// Compatibility for legacy Joinchat Premium versions.
+		$this->loader->add_filter( 'joinchat_enhanced_phone', $plugin_admin, 'compat_enhanced_phone', 5 );
+		$this->loader->add_action( 'admin_notices', $plugin_admin, 'notice_enhanced_phone' );
 
 		$plugin_page = new Joinchat_Admin_Page();
 
