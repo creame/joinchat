@@ -2,14 +2,14 @@
 # This file is distributed under the GPL-2.0+.
 msgid ""
 msgstr ""
-"Project-Id-Version: Joinchat 6.2.0\n"
+"Project-Id-Version: Joinchat 6.2.4\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/creame-whatsapp-me\n"
 "Last-Translator: Pacotole <pacotole@crea.me>\n"
 "Language-Team: Creame <hola@crea.me>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-05-15T10:04:47+00:00\n"
+"POT-Creation-Date: 2026-07-01T16:15:29+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: creame-whatsapp-me\n"
@@ -17,7 +17,7 @@ msgstr ""
 #. Plugin Name of the plugin
 #: joinchat.php
 #: admin/class-joinchat-admin.php:41
-#: admin/class-joinchat-admin.php:341
+#: admin/class-joinchat-admin.php:317
 #: admin/partials/term-meta-box.php:15
 #: gutenberg/build/index.js:1
 msgid "Joinchat"
@@ -736,7 +736,7 @@ msgstr ""
 #: admin/class-joinchat-admin-page.php:748
 #: admin/class-joinchat-admin-page.php:750
 #: admin/class-joinchat-admin-page.php:756
-#: admin/class-joinchat-admin.php:203
+#: admin/class-joinchat-admin.php:187
 msgid "e.g."
 msgstr ""
 
@@ -872,42 +872,87 @@ msgstr ""
 msgid "Settings saved"
 msgstr ""
 
-#: admin/class-joinchat-admin.php:258
+#: admin/class-joinchat-admin.php:190
+msgctxt "IntlTelInput UI"
+msgid "Change country, selected ${countryName} (${dialCode})"
+msgstr ""
+
+#: admin/class-joinchat-admin.php:191
+msgctxt "IntlTelInput UI"
+msgid "Select country"
+msgstr ""
+
+#: admin/class-joinchat-admin.php:192
+msgctxt "IntlTelInput UI"
+msgid "List of countries"
+msgstr ""
+
+#: admin/class-joinchat-admin.php:193
+msgctxt "IntlTelInput UI"
+msgid "Search"
+msgstr ""
+
+#: admin/class-joinchat-admin.php:194
+msgctxt "IntlTelInput UI"
+msgid "Clear search"
+msgstr ""
+
+#: admin/class-joinchat-admin.php:195
+#: admin/class-joinchat-admin.php:197
+msgctxt "IntlTelInput UI"
+msgid "No results found"
+msgstr ""
+
+#: admin/class-joinchat-admin.php:198
+msgctxt "IntlTelInput UI"
+msgid "1 result found"
+msgstr ""
+
+#: admin/class-joinchat-admin.php:199
+msgctxt "IntlTelInput UI"
+msgid "${count} results found"
+msgstr ""
+
+#: admin/class-joinchat-admin.php:234
 msgid "You only need to add your WhatsApp number to contact with your users."
 msgstr ""
 
-#: admin/class-joinchat-admin.php:259
+#: admin/class-joinchat-admin.php:235
 msgid "Go to settings"
 msgstr ""
 
-#: admin/class-joinchat-admin.php:297
+#: admin/class-joinchat-admin.php:273
 msgid "Settings"
 msgstr ""
 
-#: admin/class-joinchat-admin.php:317
+#: admin/class-joinchat-admin.php:293
 msgid "Documentation"
 msgstr ""
 
-#: admin/class-joinchat-admin.php:318
+#: admin/class-joinchat-admin.php:294
 msgid "Support"
 msgstr ""
 
-#: admin/class-joinchat-admin.php:556
+#: admin/class-joinchat-admin.php:532
 msgid "With the current Joinchat's settings, no user data is collected and no cookies are used."
 msgstr ""
 
-#: admin/class-joinchat-admin.php:561
+#: admin/class-joinchat-admin.php:537
 msgid "Joinchat uses cookies to control when the chat window should be automatically displayed."
 msgstr ""
 
-#: admin/class-joinchat-admin.php:563
+#: admin/class-joinchat-admin.php:539
 msgid "Cookies can be used to control when the WhatsApp floating button chat window should be automatically displayed."
 msgstr ""
 
 #. translators: %s: cookies names.
-#: admin/class-joinchat-admin.php:565
+#: admin/class-joinchat-admin.php:541
 #, php-format
 msgid "These cookies (%s) do not contain personal data, are of type HTML LocalStorage and do not expire."
+msgstr ""
+
+#: admin/class-joinchat-admin.php:617
+msgid "Joinchat Premium is not compatible with current Joinchat enhanced phone input. You can continue using the basic phone input. Please update Joinchat Premium to version 6.8 or later."
 msgstr ""
 
 #: admin/class-joinchat-premium.php:33
@@ -1316,32 +1361,32 @@ msgctxt "Keywords in Elementor Finder"
 msgid "woocommerce,shop,product"
 msgstr ""
 
-#: includes/class-joinchat-tracking.php:76
+#: includes/class-joinchat-tracking.php:86
 msgid "Joinchat Clicks"
 msgstr ""
 
-#: includes/class-joinchat-tracking.php:98
+#: includes/class-joinchat-tracking.php:108
 msgid "Total clicks"
 msgstr ""
 
-#: includes/class-joinchat-tracking.php:99
+#: includes/class-joinchat-tracking.php:109
 msgid "Today"
 msgstr ""
 
-#: includes/class-joinchat-tracking.php:100
+#: includes/class-joinchat-tracking.php:110
 msgid "Last 7 days"
 msgstr ""
 
-#: includes/class-joinchat-tracking.php:321
+#: includes/class-joinchat-tracking.php:496
 msgid "No clicks yet."
 msgstr ""
 
-#: includes/class-joinchat-tracking.php:386
+#: includes/class-joinchat-tracking.php:563
 msgid "Joinchat clicks over the last 30 days"
 msgstr ""
 
 #. translators: %d: number of clicks.
-#: includes/class-joinchat-tracking.php:404
+#: includes/class-joinchat-tracking.php:581
 #, php-format
 msgid "%d click"
 msgid_plural "%d clicks"
