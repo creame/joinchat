@@ -5,7 +5,7 @@
   joinchat_obj = {
     $div: null,
     settings: null,
-    store: null,
+    storage: null,
     chatbox: false,
     showed_at: 0,
     is_ready: false, // Change to true when Joinchat ends initialization
@@ -226,11 +226,11 @@
     if (!this.settings.message_hash) return; // No hash
     if (this.settings.message_delay < 0) return; // No delay
 
-    let saved_hashes = (this.store.getItem('joinchat_hashes') || '').split(',').filter(Boolean);
+    let saved_hashes = (this.storage.getItem('joinchat_hashes') || '').split(',').filter(Boolean);
 
     if (!saved_hashes.includes(this.settings.message_hash)) {
       saved_hashes.push(this.settings.message_hash);
-      this.store.setItem('joinchat_hashes', saved_hashes.join(','));
+      this.storage.setItem('joinchat_hashes', saved_hashes.join(','));
     }
   };
 
@@ -315,8 +315,8 @@
     const has_cta = !!joinchat_obj.settings.message_hash;
 
     // Stored values (views counter & CTA hashes)
-    const has_pageviews = parseInt(joinchat_obj.store.getItem('joinchat_views') || 1) >= joinchat_obj.settings.message_views;
-    const saved_hashes = (joinchat_obj.store.getItem('joinchat_hashes') || '').split(',').filter(Boolean);
+    const has_pageviews = parseInt(joinchat_obj.storage.getItem('joinchat_views') || 1) >= joinchat_obj.settings.message_views;
+    const saved_hashes = (joinchat_obj.storage.getItem('joinchat_hashes') || '').split(',').filter(Boolean);
     const cta_viewed = joinchat_obj.settings.cta_viewed !== undefined ?
       joinchat_obj.settings.cta_viewed : saved_hashes.indexOf(joinchat_obj.settings.message_hash || 'none') !== -1;
 
@@ -419,7 +419,7 @@
 
     // Count visits (if needed)
     if (chat_delay && !has_pageviews) {
-      joinchat_obj.store.setItem('joinchat_views', parseInt(joinchat_obj.store.getItem('joinchat_views') || 0) + 1);
+      joinchat_obj.storage.setItem('joinchat_views', parseInt(joinchat_obj.storage.getItem('joinchat_views') || 0) + 1);
     }
 
     // On first show
@@ -555,52 +555,53 @@
 
     joinchat_obj.settings = JSON.parse(joinchat_obj.$div.dataset.settings);
 
-    // Fallback if localStorage not supported (iOS incognito)
+    // Only works if joinchat is defined
+    if (!joinchat_obj.settings || !joinchat_obj.settings.telephone) return;
+
+    // Fallback if xStorage not supported (private mode)
     // Implements functional storage in memory and will not persist between page loads
     try {
-      localStorage.test = 2;
-      joinchat_obj.store = localStorage;
+      const storage = joinchat_obj.settings.cookieless ? sessionStorage : localStorage;
+      storage.test = 2;
+      joinchat_obj.storage = storage;
     } catch (e) {
-      joinchat_obj.store = {
+      joinchat_obj.storage = {
         _data: {},
         setItem: function (id, val) { this._data[id] = String(val); },
         getItem: function (id) { return this._data.hasOwnProperty(id) ? this._data[id] : null; }
       };
     }
 
-    // Only works if joinchat is defined
-    if (!!joinchat_obj.settings && !!joinchat_obj.settings.telephone) {
-      if (joinchat_obj.is_mobile || !joinchat_obj.settings.mobile_only) {
-        joinchat_magic();
-      } else {
-        // Ensure don't show
-        joinchat_obj.hide();
+    if (joinchat_obj.is_mobile || !joinchat_obj.settings.mobile_only) {
+      joinchat_magic();
+    } else {
+      // Ensure don't show
+      joinchat_obj.hide();
 
-        // TRIGGERS: launch WhatsApp on click
-        document.addEventListener('click', e => {
-          const trigger = e.target.closest('.joinchat_open, .joinchat_app, a[href="#joinchat"], a[href="#whatsapp"]');
-          if (!trigger) return;
-          e.preventDefault();
-          joinchat_obj.open_whatsapp(trigger.dataset.phone, trigger.dataset.message, 'trigger');
-        });
-      }
+      // TRIGGERS: launch WhatsApp on click
+      document.addEventListener('click', e => {
+        const trigger = e.target.closest('.joinchat_open, .joinchat_app, a[href="#joinchat"], a[href="#whatsapp"]');
+        if (!trigger) return;
+        e.preventDefault();
+        joinchat_obj.open_whatsapp(trigger.dataset.phone, trigger.dataset.message, 'trigger');
+      });
+    }
 
-      // Gutenberg buttons add QR
-      if (joinchat_obj.can_qr && !joinchat_obj.is_mobile) {
-        document.querySelectorAll('.joinchat-button__qr').forEach(el => el.appendChild(joinchat_obj.qr(joinchat_obj.get_wa_link(el.dataset.phone, el.dataset.message, false))));
-      } else {
-        document.querySelectorAll('.wp-block-joinchat-button figure').forEach(el => el.remove());
-      }
+    // Gutenberg buttons add QR
+    if (joinchat_obj.can_qr && !joinchat_obj.is_mobile) {
+      document.querySelectorAll('.joinchat-button__qr').forEach(el => el.appendChild(joinchat_obj.qr(joinchat_obj.get_wa_link(el.dataset.phone, el.dataset.message, false))));
+    } else {
+      document.querySelectorAll('.wp-block-joinchat-button figure').forEach(el => el.remove());
+    }
 
-      // Replace product variable SKU (requires jQuery)
-      if (joinchat_obj.settings.sku !== undefined && typeof jQuery === 'function') {
-        const message = joinchat_obj.settings.message_send;
-        jQuery('form.variations_form').on('found_variation reset_data', function (e, variation) {
-          const sku = variation && variation.sku || joinchat_obj.settings.sku;
-          joinchat_obj.$$('.joinchat__chat jc-sku').forEach(e => e.textContent = sku);
-          joinchat_obj.settings.message_send = message.replace(/<jc-sku>.*<\/jc-sku>/g, sku);
-        });
-      }
+    // Replace product variable SKU (requires jQuery)
+    if (joinchat_obj.settings.sku !== undefined && typeof jQuery === 'function') {
+      const message = joinchat_obj.settings.message_send;
+      jQuery('form.variations_form').on('found_variation reset_data', function (e, variation) {
+        const sku = variation && variation.sku || joinchat_obj.settings.sku;
+        joinchat_obj.$$('.joinchat__chat jc-sku').forEach(e => e.textContent = sku);
+        joinchat_obj.settings.message_send = message.replace(/<jc-sku>.*<\/jc-sku>/g, sku);
+      });
     }
   }
 
