@@ -8,6 +8,8 @@
     storage: null,
     chatbox: false,
     showed_at: 0,
+    is_starting: false,
+    start_blocked: false,
     is_ready: false, // Change to true when Joinchat ends initialization
     is_mobile: /Mobile|Android|iPhone|iPad/i.test(navigator.userAgent),
     can_qr: window.QrCreator && typeof QrCreator.render === 'function',
@@ -306,9 +308,31 @@
     return canvas;
   }
 
+  // Start initialization flow (triggering joinchat:starting)
+  joinchat_obj.start = function () {
+    return joinchat_magic();
+  }
+
+  // Resume initialization after a canceled joinchat:starting
+  joinchat_obj.resume = function () {
+    if (!this.start_blocked) return false;
+    return joinchat_magic(true);
+  }
+
   // MARK: Magic
-  function joinchat_magic() {
-    document.dispatchEvent(new Event('joinchat:starting'));
+  function joinchat_magic(skip_start_event = false) {
+    if (joinchat_obj.is_ready || joinchat_obj.is_starting) return false;
+
+    joinchat_obj.is_starting = true;
+
+    if (!skip_start_event && !document.dispatchEvent(new CustomEvent('joinchat:starting', { cancelable: true }))) {
+      joinchat_obj.is_starting = false;
+      joinchat_obj.start_blocked = true;
+      document.dispatchEvent(new Event('joinchat:paused'));
+      return false;
+    }
+
+    joinchat_obj.start_blocked = false;
 
     const button_delay = joinchat_obj.settings.button_delay * 1000;
     const chat_delay = Math.max(0, joinchat_obj.settings.message_delay * 1000);
@@ -541,8 +565,10 @@
       show_on_scroll.forEach(element => observer.observe(element));
     }
 
+    joinchat_obj.is_starting = false;
     joinchat_obj.is_ready = true;
     document.dispatchEvent(new Event('joinchat:start'));
+    return true;
   }
 
 
@@ -564,6 +590,7 @@
       const storage = joinchat_obj.settings.cookieless ? sessionStorage : localStorage;
       storage.test = 2;
       joinchat_obj.storage = storage;
+      storage.removeItem('test');
     } catch (e) {
       joinchat_obj.storage = {
         _data: {},
@@ -573,7 +600,7 @@
     }
 
     if (joinchat_obj.is_mobile || !joinchat_obj.settings.mobile_only) {
-      joinchat_magic();
+      joinchat_obj.start();
     } else {
       // Ensure don't show
       joinchat_obj.hide();
