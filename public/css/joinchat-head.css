@@ -7,6 +7,10 @@
   --bottom: var(--sep);
   --s: 60px;
   --h: calc(var(--s)/2);
+  --ch: 142;
+  --cs: 70%;
+  --cl: 49%;
+  --bw: 1;
 
   display: block;
   transform: scale3d(1, 1, 1);
