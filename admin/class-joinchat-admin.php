@@ -529,16 +529,15 @@ class Joinchat_Admin {
 
 		if ( jc_common()->settings['message_delay'] < 0 ) {
 
-			$message = '<p class="privacy-policy-tutorial">' . esc_html__( "With the current Joinchat's settings, no user data is collected and no cookies are used.", 'creame-whatsapp-me' ) . '</p>';
+			$message = '<p class="privacy-policy-tutorial">' . esc_html__( "With the current Joinchat settings, no data is collected in the browser.", 'creame-whatsapp-me' ) . '</p>';
 
 		} else {
 			$message = '' .
-				'<h2>' . esc_html__( 'Cookies' ) . '</h2>' . // phpcs:ignore WordPress.WP.I18n.MissingArgDomain
-				'<p class="privacy-policy-tutorial">' . esc_html__( 'Joinchat uses cookies to control when the chat window should be automatically displayed.', 'creame-whatsapp-me' ) . '</p>' .
+				'<p class="privacy-policy-tutorial">' . esc_html__( 'Joinchat can use LocalStorage to control when the chat window should be shown automatically.', 'creame-whatsapp-me' ) . '</p>' .
 				'<p><strong class="privacy-policy-tutorial">' . esc_html__( 'Suggested text:' ) . '</strong> ' . // phpcs:ignore WordPress.WP.I18n.MissingArgDomain
-					esc_html__( 'Cookies can be used to control when the WhatsApp floating button chat window should be automatically displayed.', 'creame-whatsapp-me' ) . ' ' .
-					/* translators: %s: cookies names. */
-					sprintf( esc_html__( 'These cookies (%s) do not contain personal data, are of type HTML LocalStorage and do not expire.', 'creame-whatsapp-me' ), '"joinchat_views", "joinchat_hashes"' ) .
+					esc_html__( 'This website may use LocalStorage to control when the contact floating button chat window should be automatically displayed.', 'creame-whatsapp-me' ) . ' ' .
+					/* translators: %s: localStorage data names. */
+					sprintf( esc_html__( 'These LocalStorage entries (%s) do not contain personal data and do not expire.', 'creame-whatsapp-me' ), '"joinchat_views", "joinchat_hashes"' ) .
 				'</p>';
 		}
 
