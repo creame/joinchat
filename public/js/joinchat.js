@@ -1,15 +1,16 @@
 ((window, document, joinchat_obj) => {
   'use strict';
 
+  let showed_at = 0;
+  let is_starting = false;
+  let start_blocked = false;
+
   // MARK: joinchat_obj
   joinchat_obj = {
     $div: null,
     settings: null,
     storage: null,
     chatbox: false,
-    showed_at: 0,
-    is_starting: false,
-    start_blocked: false,
     is_ready: false, // Change to true when Joinchat ends initialization
     is_mobile: /Mobile|Android|iPhone|iPad/i.test(navigator.userAgent),
     can_qr: window.QrCreator && typeof QrCreator.render === 'function',
@@ -193,7 +194,7 @@
     if (this.chatbox) return;
 
     this.chatbox = true;
-    this.showed_at = Date.now(); // Avoid faux clicks
+    showed_at = Date.now(); // Avoid faux clicks
 
     clearTimeout(this.open_text_anim_timeout);
     this.$div.classList.add('joinchat--chatbox');
@@ -273,7 +274,7 @@
   // Show Chatbox or open WhatsApp
   joinchat_obj.open = function (direct, phone, message, trigger = 'unknown') {
     if ((direct && !this.need_optin()) || !joinchat_obj.$('.joinchat__chatbox')) {
-      if (Date.now() < joinchat_obj.showed_at + 600) return; // Avoid trigger WA on auto show chatbox
+      if (Date.now() < showed_at + 600) return; // Avoid trigger WA on auto show chatbox
       this.save_hash();
       this.open_whatsapp(phone, message, trigger);
     } else {
@@ -315,24 +316,24 @@
 
   // Resume initialization after a canceled joinchat:starting
   joinchat_obj.resume = function () {
-    if (!this.start_blocked) return false;
+    if (!start_blocked) return false;
     return joinchat_magic(true);
   }
 
   // MARK: Magic
   function joinchat_magic(skip_start_event = false) {
-    if (joinchat_obj.is_ready || joinchat_obj.is_starting) return false;
+    if (joinchat_obj.is_ready || is_starting) return false;
 
-    joinchat_obj.is_starting = true;
+    is_starting = true;
 
     if (!skip_start_event && !document.dispatchEvent(new CustomEvent('joinchat:starting', { cancelable: true }))) {
-      joinchat_obj.is_starting = false;
-      joinchat_obj.start_blocked = true;
+      is_starting = false;
+      start_blocked = true;
       document.dispatchEvent(new Event('joinchat:paused'));
       return false;
     }
 
-    joinchat_obj.start_blocked = false;
+    start_blocked = false;
 
     const button_delay = joinchat_obj.settings.button_delay * 1000;
     const chat_delay = Math.max(0, joinchat_obj.settings.message_delay * 1000);
@@ -565,7 +566,7 @@
       show_on_scroll.forEach(element => observer.observe(element));
     }
 
-    joinchat_obj.is_starting = false;
+    is_starting = false;
     joinchat_obj.is_ready = true;
     document.dispatchEvent(new Event('joinchat:start'));
     return true;
