@@ -147,9 +147,9 @@ class Joinchat_Admin_Onboard {
 		$css_deps = array();
 
 		// Enqueue IntlTelInput assets.
-		if ( jc_common()->get_intltel() ) {
+		if ( jc_common()->get_iti_version() ) {
 			$js_deps[]  = 'joinchat-iti';
-			$css_deps[] = 'intl-tel-input';
+			$css_deps[] = 'joinchat-iti';
 		}
 
 		// Enqueue styles.

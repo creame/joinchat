@@ -356,7 +356,7 @@ class Joinchat_Admin_Page {
 
 			switch ( $field_id ) {
 				case 'telephone':
-					$output = '<input id="joinchat_phone" ' . ( jc_common()->get_intltel() ? 'data-' : '' ) . 'name="joinchat[telephone]" value="' . esc_attr( $value ) . '" type="text" style="width:15em;display:inline-block"> ' .
+					$output = '<input id="joinchat_phone" ' . ( jc_common()->get_iti_version() ? 'data-' : '' ) . 'name="joinchat[telephone]" value="' . esc_attr( $value ) . '" type="text" style="width:15em;display:inline-block"> ' .
 						'<input id="joinchat_phone_test" type="button" value="' . esc_attr__( 'Test Number', 'creame-whatsapp-me' ) . '" class="button" ' . ( empty( $value ) ? 'disabled' : '' ) . '>' .
 						'<p class="description">' . wp_kses( __( "WhatsApp contact number <strong>(the button will not be shown if it's empty)</strong>", 'creame-whatsapp-me' ), array( 'strong' => array() ) ) . '</p>';
 					break;
@@ -901,9 +901,9 @@ class Joinchat_Admin_Page {
 		wp_enqueue_media();
 
 		// Enqueue IntlTelInput assets.
-		if ( jc_common()->get_intltel() ) {
+		if ( jc_common()->get_iti_version() ) {
 			$js_deps[]  = 'joinchat-iti';
-			$css_deps[] = 'intl-tel-input';
+			$css_deps[] = 'joinchat-iti';
 		}
 
 		// Enqueue styles.

@@ -155,10 +155,10 @@ class Joinchat_Admin {
 		$min  = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
 		$deps = array();
 
-		$intltel = jc_common()->get_intltel();
-		if ( $intltel ) {
-			$deps[] = 'intl-tel-input';
-			wp_register_style( 'intl-tel-input', plugins_url( 'lib/intl-tel-input/css/intlTelInput.min.css', __FILE__ ), array(), $intltel, 'all' );
+		$iti_version = jc_common()->get_iti_version();
+		if ( $iti_version ) {
+			$deps[] = 'joinchat-iti';
+			wp_register_style( 'joinchat-iti', plugins_url( 'lib/intl-tel-input/css/intlTelInput.min.css', __FILE__ ), array(), $iti_version, 'all' );
 		}
 
 		wp_register_style( JOINCHAT_SLUG, plugins_url( "css/joinchat{$min}.css", __FILE__ ), $deps, JOINCHAT_VERSION, 'all' );
@@ -178,8 +178,8 @@ class Joinchat_Admin {
 		$min  = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
 		$deps = array( 'jquery' );
 
-		$intltel = jc_common()->get_intltel();
-		if ( $intltel ) {
+		$iti_version = jc_common()->get_iti_version();
+		if ( $iti_version ) {
 			$deps[] = 'joinchat-iti';
 
 			$translations = array(
@@ -200,8 +200,8 @@ class Joinchat_Admin {
 				),
 			);
 
-			wp_register_script( 'intl-tel-input', plugins_url( 'lib/intl-tel-input/js/intlTelInputWithUtils.min.js', __FILE__ ), array(), $intltel, true );
-			wp_register_script( 'joinchat-iti', plugins_url( "js/joinchat-iti{$min}.js", __FILE__ ), array( 'intl-tel-input' ), JOINCHAT_VERSION, true );
+			wp_register_script( 'joinchat-iti-core', plugins_url( 'lib/intl-tel-input/js/intlTelInputWithUtils.min.js', __FILE__ ), array(), $iti_version, true );
+			wp_register_script( 'joinchat-iti', plugins_url( "js/joinchat-iti{$min}.js", __FILE__ ), array( 'joinchat-iti-core' ), JOINCHAT_VERSION, true );
 			wp_add_inline_script( 'joinchat-iti', 'var joinchat_iti_l10n = ' . wp_json_encode( $translations ) . ';' );
 		}
 
@@ -529,7 +529,7 @@ class Joinchat_Admin {
 
 		if ( jc_common()->settings['message_delay'] < 0 ) {
 
-			$message = '<p class="privacy-policy-tutorial">' . esc_html__( "With the current Joinchat settings, no data is collected in the browser.", 'creame-whatsapp-me' ) . '</p>';
+			$message = '<p class="privacy-policy-tutorial">' . esc_html__( 'With the current Joinchat settings, no data is collected in the browser.', 'creame-whatsapp-me' ) . '</p>';
 
 		} else {
 			$message = '' .
@@ -574,15 +574,15 @@ class Joinchat_Admin {
 	 * Compatibility for legacy Joinchat Premium versions.
 	 *
 	 * @since 6.2.4
-	 * @param string|false $intltel_version IntlTelInput version.
+	 * @param string|false $iti_version IntlTelInput version.
 	 * @return string|false
 	 */
-	public function compat_enhanced_phone( $intltel_version ) {
+	public function compat_enhanced_phone( $iti_version ) {
 
 		$premium_version = defined( 'JOINCHAT_PREMIUM_VERSION' ) ? (string) JOINCHAT_PREMIUM_VERSION : false;
 
 		if ( ! $premium_version || version_compare( $premium_version, '6.8', '>=' ) ) {
-			return $intltel_version;
+			return $iti_version;
 		}
 
 		return false;

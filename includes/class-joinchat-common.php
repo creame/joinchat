@@ -192,9 +192,10 @@ class Joinchat_Common {
 	 * Return IntlTelInput library version or false to disable.
 	 *
 	 * @since    4.5.10
+	 * @since    6.3.0 renamed from get_intltel() to get_iti_version()
 	 * @return string|false
 	 */
-	public function get_intltel() {
+	public function get_iti_version() {
 
 		return apply_filters( 'joinchat_enhanced_phone', self::INTL_TEL_INPUT_VERSION );
 
