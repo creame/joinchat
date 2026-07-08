@@ -11,12 +11,12 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2026-05-15T10:04:47+00:00\n"
-"PO-Revision-Date: 2026-07-01 16:23+0000\n"
+"PO-Revision-Date: 2026-07-08 15:50+0000\n"
 "X-Generator: Loco https://localise.biz/\n"
 "X-Domain: creame-whatsapp-me\n"
 "Language: it_IT\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Loco-Version: 2.8.5; wp-7.0; php-8.3.23"
+"X-Loco-Version: 2.8.5; wp-7.0.1-RC1; php-8.3.23"
 
 #. translators: %d: number of clicks.
 #: includes/class-joinchat-tracking.php:581
@@ -339,14 +339,6 @@ msgstr "ID di conversione"
 msgid "Conversion label"
 msgstr "Etichetta di conversione"
 
-#: admin/class-joinchat-admin.php:539
-msgid ""
-"Cookies can be used to control when the WhatsApp floating button chat window "
-"should be automatically displayed."
-msgstr ""
-"I cookie possono essere usati per controllare quando la finestra di chat "
-"flottante di WhatsApp dovrebbe essere visualizzata automaticamente."
-
 #: admin/class-joinchat-admin-page.php:502
 msgid "Count WhatsApp clicks and show daily totals in the dashboard widget"
 msgstr ""
@@ -511,6 +503,14 @@ msgid ""
 msgstr ""
 "Per il <strong>Chiamata all'azione per i prodotti in saldo</strong>, puoi "
 "anche usare:"
+
+#: admin/class-joinchat-admin-page.php:647
+msgid ""
+"For this function to work correctly, data may be stored in the browser "
+"(LocalStorage)."
+msgstr ""
+"Per far funzionare correttamente questa funzione, i dati possono essere "
+"memorizzati nel browser (LocalStorage)."
 
 #: admin/class-joinchat-admin-page.php:304
 msgid ""
@@ -744,6 +744,14 @@ msgstr "Corsivo"
 msgid "Joinchat"
 msgstr "Joinchat"
 
+#: admin/class-joinchat-admin.php:536
+msgid ""
+"Joinchat can use LocalStorage to control when the chat window should be "
+"shown automatically."
+msgstr ""
+"Joinchat può usare LocalStorage per controllare quando la finestra di chat "
+"dovrebbe essere mostrata automaticamente."
+
 #: includes/class-joinchat-tracking.php:86
 msgid "Joinchat Clicks"
 msgstr "Click di Joinchat"
@@ -752,7 +760,7 @@ msgstr "Click di Joinchat"
 msgid "Joinchat clicks over the last 30 days"
 msgstr "Click di Joinchat negli ultimi 30 giorni"
 
-#: admin/class-joinchat-admin.php:617
+#: admin/class-joinchat-admin.php:616
 msgid ""
 "Joinchat Premium is not compatible with current Joinchat enhanced phone "
 "input. You can continue using the basic phone input. Please update Joinchat "
@@ -775,14 +783,6 @@ msgstr "Impostazioni Joinchat"
 #: includes/class-joinchat-integrations.php:137
 msgid "Joinchat settings page"
 msgstr "Pagina delle impostazioni di Joinchat"
-
-#: admin/class-joinchat-admin.php:537
-msgid ""
-"Joinchat uses cookies to control when the chat window should be "
-"automatically displayed."
-msgstr ""
-"Joinchat usa cookie per controllare quando la finestra di chat dovrebbe "
-"essere visualizzata automaticamente."
 
 #: includes/class-joinchat-elementor-finder.php:58
 msgctxt "Keywords in Elementor Finder"
@@ -1387,15 +1387,14 @@ msgstr "Ci sono modifiche nei campi che possono essere tradotti"
 msgid "there are untranslated strings"
 msgstr "ci sono stringhe non tradotte"
 
-#. translators: %s: cookies names.
-#: admin/class-joinchat-admin.php:541
+#. translators: %s: localStorage data names.
+#: admin/class-joinchat-admin.php:540
 #, php-format
 msgid ""
-"These cookies (%s) do not contain personal data, are of type HTML "
-"LocalStorage and do not expire."
+"These LocalStorage entries (%s) do not contain personal data and do not "
+"expire."
 msgstr ""
-"Questi cookie (%s) non contengono dati personali, sono di tipo HTML "
-"LocalStorage e non scadono."
+"Queste voci di LocalStorage (%s) non contengono dati personali e non scadono."
 
 #: admin/class-joinchat-woo-admin.php:304
 msgid ""
@@ -1407,9 +1406,14 @@ msgstr ""
 "===\n"
 "Se hai domande, chiedici."
 
-#: admin/class-joinchat-admin-page.php:647
-msgid "This feature requires the use of cookies"
-msgstr "Questa funzione richiede l'uso dei cookie"
+#: admin/class-joinchat-admin.php:538
+msgid ""
+"This website may use LocalStorage to control when the contact floating "
+"button chat window should be automatically displayed."
+msgstr ""
+"Questo sito web può usare LocalStorage per controllare quando la finestra di "
+"chat del pulsante flottante di contatto dovrebbe essere visualizzata "
+"automaticamente."
 
 #: admin/class-joinchat-admin-page.php:422
 msgid "Time since the page is opened until the button is displayed"
@@ -1544,11 +1548,10 @@ msgstr "Testo bianco"
 
 #: admin/class-joinchat-admin.php:532
 msgid ""
-"With the current Joinchat's settings, no user data is collected and no "
-"cookies are used."
+"With the current Joinchat settings, no data is collected in the browser."
 msgstr ""
-"Con le impostazioni attuali di Joinchat, nessun dato utente viene raccolto e "
-"non vengono usati cookie."
+"Con le impostazioni attuali di Joinchat, nessun dato viene raccolto nel "
+"browser."
 
 #: admin/class-joinchat-woo-admin.php:271
 msgid "WooCommerce"
