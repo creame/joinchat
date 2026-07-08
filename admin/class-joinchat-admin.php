@@ -573,7 +573,7 @@ class Joinchat_Admin {
 	/**
 	 * Compatibility for legacy Joinchat Premium versions.
 	 *
-	 * @since 6.2.4
+	 * @since 6.3.0
 	 * @param string|false $iti_version IntlTelInput version.
 	 * @return string|false
 	 */
@@ -592,7 +592,7 @@ class Joinchat_Admin {
 	/**
 	 * Print compatibility notice in admin.
 	 *
-	 * @since 6.2.4
+	 * @since 6.3.0
 	 * @return void
 	 */
 	public function notice_enhanced_phone() {

@@ -5,7 +5,7 @@ Tags: WhatsApp, WhatsApp Button, Click to Chat, Floating Button, Chat
 Requires at least: 4.9.6
 Tested up to: 7.0
 Requires PHP: 7.0
-Stable tag: 6.2.3
+Stable tag: 6.3.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -157,7 +157,7 @@ Joinchat integrates with all major Visual Editors and Page Builders and will not
 Supported editors: **Beaver Builder**, **Brizy Page Builder**, **Elementor**, **Oxygen Builder**, **Page Builder by SiteOrigin**, **Thrive Architect**, **Visual Composer** and **WP Page Builder**.
 
 ### 🍪 Cookies & GDPR
-**Joinchat can be used without any cookies**. But to automatically display the CTA, two cookies are necessary. They are first-party cookies and don't collect personal data.
+Joinchat can be used without any cookies or persisten storage and don't collect personal data.
 
 Joinchat integrates with *Wordpress's Privacy Policy Guide* and suggests the necessary text.
 
@@ -346,12 +346,21 @@ jQuery(document).on('joinchat:event', function (event, params) {
 
 **Joinchat can be used without any cookies**.
 
-Depending on your Joinchat settings, two cookies may be needed. They are first-party cookies and don't collect personal data.
+Depending on your Joinchat settings, browser storage may be needed. Joinchat uses localStorage (or sessionStorage when cookieless mode is enabled) and doesn't collect personal data.
 
 * `joinchat_views` is a visits counter to control when to show chat window.
 * `joinchat_hashes` saves when a user has interacted with a CTA to prevent automatically show that CTA again.
 
 You can view in your *Settings > Privacy > Policy Guide* the suggested text by Joinchat.
+
+To ensure a non-persistent data mode, you can use Joinchat Premium privacy controls or add this snippet to force cookieless mode (sessionStorage only):
+
+```
+add_filter( 'joinchat_get_settings', function( $settings ){
+    $settings['cookieless'] = true;
+    return $settings;
+} );
+```
 
 
 == Screenshots ==
@@ -371,6 +380,15 @@ You can view in your *Settings > Privacy > Policy Guide* the suggested text by J
 
 
 == Changelog ==
+
+= 6.3.0 =
+* Updated IntlTelInput library to 29.1.1, refactor enhanced phone input and simplified translations
+* Fix "Powered by Joinchat" label styles
+* Fix syle colors for inline styles
+* Fix rename 'intl-tel-input' library to prevent conflicts with other plugins
+* New allow third-party plugins pause/resume Joinchat initialization
+* New 'cookieless' setting allows the use of sessionStorage for better GDPR compliance
+* Reduced plugin size
 
 = 6.2.3 =
 * **NEW** Compatible with **PixelYourSite** custom DataLayer name
@@ -419,7 +437,7 @@ You can view in your *Settings > Privacy > Policy Guide* the suggested text by J
 * New add WordPress 6.9 script enqueue option fetchpriority low
 * Bump tested up to Wordpress 6.9
 * Tweak replace png images to webp
-* Tweak Updated IntTelInput library to 25.13.3
+* Tweak Updated IntlTelInput library to 25.13.3
 
 = 6.0.8 =
 * New allow to disable GA4 event with filter 'joinchat_get_settings' and set 'ga_event' as false
@@ -429,7 +447,7 @@ You can view in your *Settings > Privacy > Policy Guide* the suggested text by J
 
 = 6.0.7 =
 * Fix dark styles for loading and note messages
-* Fix admin JS conflict when other plugin use IntTelInput library
+* Fix admin JS conflict when other plugin use IntlTelInput library
 * Fix Joinchat settings don't work with HivePress
 
 = 6.0.6 =
@@ -439,7 +457,7 @@ You can view in your *Settings > Privacy > Policy Guide* the suggested text by J
 * Fix CSS transparent background color if only floating button without chatbox.
 
 = 6.0.4 =
-* Fix some js conflicts in wp-admin if other plugins adds IntTelInput.
+* Fix some js conflicts in wp-admin if other plugins adds IntlTelInput.
 
 = 6.0.3 =
 * Fix js error with variable product SKU.
@@ -465,5 +483,4 @@ See [changelog.txt](https://plugins.svn.wordpress.org/creame-whatsapp-me/trunk/c
 
 == Upgrade Notice ==
 
-**Joinchat 6** is a mayor version that includes refactored layout, styles and JavaScript. Please check your site after updating.
-**Joinchat Premium users:** You need to upgrade to Joinchat Premium 6 for full compatibility.
+For **Joinchat Premium** users it is recommended to update to v6.8.0
