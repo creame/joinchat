@@ -5,7 +5,7 @@ Tags: WhatsApp, WhatsApp Button, Click to Chat, Floating Button, Chat
 Requires at least: 4.9.6
 Tested up to: 7.0
 Requires PHP: 7.0
-Stable tag: 6.3.0
+Stable tag: 6.3.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -353,14 +353,12 @@ Depending on your Joinchat settings, browser storage may be needed. Joinchat use
 
 You can view in your *Settings > Privacy > Policy Guide* the suggested text by Joinchat.
 
-To ensure a non-persistent data mode, you can use Joinchat Premium privacy controls or add this snippet to force cookieless mode (sessionStorage only):
+To ensure a non-persistent data mode, you can use **Joinchat Premium** privacy controls or add this snippet to force cookieless mode (sessionStorage only):
 
-```
-add_filter( 'joinchat_get_settings', function( $settings ){
+`add_filter( 'joinchat_get_settings', function( $settings ){
     $settings['cookieless'] = true;
     return $settings;
-} );
-```
+} );`
 
 
 == Screenshots ==
@@ -380,6 +378,9 @@ add_filter( 'joinchat_get_settings', function( $settings ){
 
 
 == Changelog ==
+
+= 6.3.1 =
+* Ensure lazy load of styles on WordPress 6.9+ with classic themes
 
 = 6.3.0 =
 * Updated IntlTelInput library to 29.1.1, refactor enhanced phone input and simplified translations
