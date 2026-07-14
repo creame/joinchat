@@ -266,6 +266,7 @@ class Joinchat {
 		$this->loader->add_action( 'wp_print_styles', $plugin_public, 'above_the_fold_styles' );
 		$this->loader->add_action( 'wp_footer', $plugin_public, 'footer_html' );
 		$this->loader->add_action( 'wp_footer', $plugin_public, 'enqueue_styles' );
+		$this->loader->add_action( 'wp_footer', $plugin_public, 'late_enqueue_styles', 30 );
 		$this->loader->add_action( 'wp_footer', $plugin_public, 'enqueue_qr_script' );
 
 		// Actions (only) for preview.

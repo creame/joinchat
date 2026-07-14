@@ -151,16 +151,8 @@ class Joinchat_Public {
 
 		wp_register_style( JOINCHAT_SLUG, plugins_url( "public/css/{$file}{$min}.css", JOINCHAT_FILE ), array(), JOINCHAT_VERSION );
 
-		// Defer styles if floating button delay is set.
-		$defer = apply_filters( 'joinchat_defer_styles', true );
-
-		// From WP 6.9 with a classic theme move footer styles to header to avoid FOUC but sometimes styles are missing
-		// view: https://make.wordpress.org/core/2025/11/18/wordpress-6-9-frontend-performance-field-guide/#introduce-the-template-enhancement-output-buffer
-		// view: https://wordpress.org/support/topic/wordpress-6-9-broke-site-layout-crewbloom/
-		// To fix it enqueue on header.
-		$is_wp69_classic_theme = is_wp_version_compatible( '6.9' ) && ! wp_is_block_theme();
-
-		if ( ! $defer || jc_common()->preview || $is_wp69_classic_theme ) {
+		// Enqueue styles if is preview or not defer styles.
+		if ( jc_common()->preview || ! apply_filters( 'joinchat_defer_styles', true ) ) {
 			$this->enqueue_styles();
 		}
 	}
@@ -200,12 +192,65 @@ class Joinchat_Public {
 	 */
 	public function enqueue_styles() {
 
-		if ( ! $this->show || wp_style_is( JOINCHAT_SLUG, 'done' ) ) {
+		// On WP 6.9+ classic themes, avoid queueing Joinchat in the footer capture pass that hoists styles to HEAD.
+		if ( ! $this->can_enqueue_joinchat_style() || $this->should_avoid_wp69_style_hoist() ) {
 			return;
 		}
 
 		wp_enqueue_style( JOINCHAT_SLUG );
 		wp_add_inline_style( JOINCHAT_SLUG, Joinchat_Util::min_css( $this->get_inline_styles() ) );
+
+	}
+
+	/**
+	 * Enqueue and print Joinchat styles late in footer, after core footer styles capture.
+	 *
+	 * This keeps Joinchat CSS in footer on WP 6.9+ classic themes while leaving
+	 * wp_hoist_late_printed_styles() active for the rest of styles.
+	 *
+	 * @since 6.3.1
+	 * @return void
+	 */
+	public function late_enqueue_styles() {
+
+		if ( ! $this->can_enqueue_joinchat_style() || ! $this->should_avoid_wp69_style_hoist() ) {
+			return;
+		}
+
+		wp_enqueue_style( JOINCHAT_SLUG );
+		wp_add_inline_style( JOINCHAT_SLUG, Joinchat_Util::min_css( $this->get_inline_styles() ) );
+		wp_print_styles( array( JOINCHAT_SLUG ) );
+
+	}
+
+	/**
+	 * Determine whether Joinchat style can still be enqueued.
+	 *
+	 * @since 6.3.1
+	 * @return bool
+	 */
+	private function can_enqueue_joinchat_style() {
+
+		return $this->show && ! wp_style_is( JOINCHAT_SLUG, 'done' );
+
+	}
+
+	/**
+	 * Determine whether Joinchat styles should avoid WordPress 6.9 style hoisting.
+	 *
+	 * From WP 6.9, classic themes can hoist late footer styles to HEAD.
+	 * view: https://make.wordpress.org/core/2025/11/18/wordpress-6-9-frontend-performance-field-guide/#introduce-the-template-enhancement-output-buffer
+	 * view: https://wordpress.org/support/topic/wordpress-6-9-broke-site-layout-crewbloom/.
+	 *
+	 * @since 6.3.1
+	 * @return bool
+	 */
+	private function should_avoid_wp69_style_hoist() {
+
+		$is_wp69_classic_theme = is_wp_version_compatible( '6.9' ) && ! wp_is_block_theme();
+		$is_footer_styles      = doing_action( 'wp_footer' );
+
+		return (bool) apply_filters( 'joinchat_avoid_wp69_style_hoist', $is_wp69_classic_theme && $is_footer_styles );
 
 	}
 
