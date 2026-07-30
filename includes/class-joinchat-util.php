@@ -235,74 +235,13 @@ class Joinchat_Util {
 	 * Also apply styles transformations like WhatsApp app.
 	 *
 	 * @since    6.0.0
+	 * @since    6.3.2 Delegated to Joinchat_Formatter::formatted_message().
 	 * @param    string $string    string to apply format replacements.
 	 * @param    bool   $as_array  return array of messages.
 	 * @return   string|array     string formated
 	 */
 	public static function formatted_message( $string, $as_array = false ) {
-
-		if ( empty( $string ) ) {
-			return $as_array ? array() : '';
-		}
-
-		// Format replacements .
-		$replacements = apply_filters( 'joinchat_format_replacements', array() );
-
-		// Split text into lines.
-		$lines = explode( "\n", self::clean_nl( $string ) );
-
-		// Apply replacements line by line.
-		if ( count( $replacements ) ) {
-			foreach ( $lines as $key => $line ) {
-				$escaped_line = esc_html( $line );
-
-				foreach ( $replacements as $pattern => $replacement ) {
-					if ( is_callable( $replacement ) ) {
-						$escaped_line = preg_replace_callback( $pattern, $replacement, $escaped_line );
-					} else {
-						$escaped_line = preg_replace( $pattern, $replacement, $escaped_line );
-					}
-				}
-
-				$lines[ $key ] = $escaped_line;
-			}
-		}
-
-		// Join lines and replace variables.
-		$formatted = self::replace_variables( implode( '<br>', $lines ) );
-
-		// Out of bubble messages (notes).
-		$formatted = preg_replace( '/(^(?:&gt;){3,}<br>)/u', '>>>', $formatted );
-		$formatted = preg_replace( '/(<br>(?:&gt;){3,}<br>)/u', '<br>===<br>>>>', $formatted );
-		$formatted = preg_replace( '/(^(?:=){3,}<br>)/u', '', $formatted );
-
-		// Split message in bubbles.
-		$messages = preg_split( '/<br>={3,}<br>/u', $formatted );
-
-		// Return array of messages.
-		if ( $as_array ) {
-			return $messages;
-		}
-
-		// Wrap messages in divs & add classes.
-		foreach ( $messages as $key => $msg ) {
-			$class = '';
-
-			if ( substr( $msg, 0, 3 ) === '>>>' ) {
-				$class = ' joinchat__bubble--note';
-				$msg   = substr( $msg, 3 );
-			} elseif ( wp_strip_all_tags( $msg ) === '' ) {
-				$class = ' joinchat__bubble--media';
-			}
-
-			$messages[ $key ] = sprintf( '<div class="joinchat__bubble%s">%s</div>', $class, $msg );
-		}
-
-		$messages = join( "\n", $messages );
-		$messages = str_replace( ' src="', ' data-src="', $messages ); // For delayed loading.
-
-		return $messages;
-
+		return Joinchat_Formatter::formatted_message( $string, $as_array );
 	}
 
 	/**
@@ -316,35 +255,26 @@ class Joinchat_Util {
 	 * @return   string     string formated
 	 */
 	public static function formated_message( $string ) {
-		return self::formatted_message( $string );
+		return Joinchat_Formatter::formatted_message( $string );
 	}
 
 	/**
 	 * Format message send, replace vars.
 	 *
 	 * @since    3.1.0
+	 * @since    6.3.2      Add $context param.
 	 * @param    string $string    string to apply variable replacements.
+	 * @param    string $context   output context: display (legacy), raw, html or attr.
 	 * @return   string     string with replaced variables
 	 */
-	public static function replace_variables( $string ) {
+	public static function replace_variables( $string, $context = 'display' ) {
 
 		// If empty or don't has vars return early.
 		if ( empty( $string ) || false === strpos( $string, '{' ) ) {
 			return $string;
 		}
 
-		global $wp;
-
-		$replacements = apply_filters(
-			'joinchat_variable_replacements',
-			array(
-				'SITE'  => get_bloginfo( 'name' ),
-				'HOME'  => home_url(),
-				'URL'   => user_trailingslashit( home_url( $wp->request ) ),
-				'HREF'  => home_url( add_query_arg( null, null ) ),
-				'TITLE' => self::get_title(),
-			)
-		);
+		$replacements = self::get_variable_replacements( $context );
 
 		// Patterns as regex {VAR}.
 		$patterns = array();
@@ -352,13 +282,86 @@ class Joinchat_Util {
 			$patterns[] = "/\{$var\}/u";
 		}
 
-		// Prevent malformed json.
-		foreach ( $replacements as $var => $replacement ) {
-			$replacements[ $var ] = str_replace( '&quot;', '"', $replacement );
-		}
-
 		return preg_replace( $patterns, $replacements, $string );
 
+	}
+
+	/**
+	 * Build variable replacements for a given output context.
+	 *
+	 * @since 6.3.2
+	 * @param string $context output context.
+	 * @return array<string, string>
+	 */
+	private static function get_variable_replacements( $context ) {
+
+		global $wp;
+
+		$replacements = apply_filters(
+			'joinchat_variable_replacements',
+			array(
+				'SITE'  => get_bloginfo( 'name' ),
+				'HOME'  => esc_url_raw( home_url() ),
+				'URL'   => esc_url_raw( user_trailingslashit( home_url( $wp->request ) ) ),
+				'HREF'  => esc_url_raw( home_url( add_query_arg( null, null ) ) ),
+				'TITLE' => self::get_title(),
+			),
+			$context
+		);
+
+		foreach ( $replacements as $var => $replacement ) {
+			$replacements[ $var ] = self::escape_variable_replacement( $var, (string) $replacement, $context );
+		}
+
+		return $replacements;
+
+	}
+
+	/**
+	 * Escape a replacement according to the output context.
+	 *
+	 * @since 6.3.2
+	 * @param string $var         variable name.
+	 * @param string $replacement replacement value.
+	 * @param string $context     output context.
+	 * @return string
+	 */
+	private static function escape_variable_replacement( $var, $replacement, $context ) {
+
+		$replacement = str_replace( '&quot;', '"', $replacement );
+
+		if ( 'raw' === $context ) {
+			return $replacement;
+		}
+
+		if ( 'attr' === $context ) {
+			return esc_attr( wp_strip_all_tags( $replacement ) );
+		}
+
+		if ( 'html' === $context ) {
+			if ( false !== strpos( $replacement, '<' ) ) {
+				return wp_kses( $replacement, self::variable_allowed_html() );
+			}
+
+			return esc_html( $replacement );
+		}
+
+		if ( in_array( $var, array( 'HOME', 'URL', 'HREF' ), true ) ) {
+			return esc_url( $replacement );
+		}
+
+		return $replacement;
+
+	}
+
+	/**
+	 * Allowed HTML tags for variable replacements in formatted messages.
+	 *
+	 * @since 6.3.2
+	 * @return array<string, array<string, bool>>
+	 */
+	private static function variable_allowed_html() {
+		return (array) apply_filters( 'joinchat_variable_allowed_html', array() );
 	}
 
 	/**

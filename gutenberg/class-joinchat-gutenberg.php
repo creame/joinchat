@@ -107,7 +107,7 @@ class Joinchat_Gutenberg {
 
 		// Replace dynamic vars.
 		if ( ! empty( $attributes['message'] ) ) {
-			$data .= ' data-message="' . esc_attr( Joinchat_Util::replace_variables( $attributes['message'] ) ) . '"';
+			$data .= ' data-message="' . Joinchat_Util::replace_variables( $attributes['message'], 'attr' ) . '"';
 		}
 
 		// Links to '#whatsapp' with data attributes.

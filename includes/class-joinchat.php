@@ -253,7 +253,7 @@ class Joinchat {
 		}
 
 		require_once JOINCHAT_DIR . 'includes/class-joinchat-formatter.php';
-		Joinchat_Formatter::instance();
+		Joinchat_Formatter::init();
 
 		require_once JOINCHAT_DIR . 'public/class-joinchat-public.php';
 

@@ -329,7 +329,7 @@ class Joinchat_Public {
 
 			$data = array_intersect_key( jc_common()->settings, array_flip( apply_filters( 'joinchat_script_lite_fields', $fields ) ) );
 
-			$data['message_send'] = Joinchat_Util::replace_variables( $data['message_send'] );
+			$data['message_send'] = Joinchat_Util::replace_variables( $data['message_send'], 'raw' );
 
 			// Enqueue lite script.
 			wp_enqueue_script( 'joinchat-lite', plugins_url( "js/joinchat-lite{$min}.js", __FILE__ ), $deps, JOINCHAT_VERSION, $args );
@@ -444,7 +444,7 @@ class Joinchat_Public {
 
 		$data = array_diff_key( $settings, array_flip( $excluded_fields ) );
 
-		$data['message_send'] = Joinchat_Util::replace_variables( $data['message_send'] );
+		$data['message_send'] = Joinchat_Util::replace_variables( $data['message_send'], 'raw' );
 
 		if ( $settings['show_brand'] || $is_preview ) {
 			$powered_args = array(
