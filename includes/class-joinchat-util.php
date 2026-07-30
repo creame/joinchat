@@ -561,12 +561,14 @@ class Joinchat_Util {
 		$client_ip = '';
 
 		foreach ( $headers as $header ) {
-			if ( empty( $_SERVER[ $header ] ) ) {
+			$server_header = isset( $_SERVER[ $header ] ) ? sanitize_text_field( wp_unslash( (string) $_SERVER[ $header ] ) ) : '';
+
+			if ( '' === $server_header ) {
 				continue;
 			}
 
 			// Headers like X-Forwarded-For can contain multiple IPs (comma-separated).
-			$ips = array_map( 'trim', explode( ',', wp_unslash( (string) $_SERVER[ $header ] ) ) );
+			$ips = array_map( 'trim', explode( ',', $server_header ) );
 
 			foreach ( $ips as $ip ) {
 				if ( filter_var( $ip, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE ) !== false ) {
@@ -576,9 +578,10 @@ class Joinchat_Util {
 			}
 		}
 
-		if ( empty( $client_ip ) && ! empty( $_SERVER['REMOTE_ADDR'] ) ) {
-			$ip = trim( wp_unslash( (string) $_SERVER['REMOTE_ADDR'] ) );
-			if ( filter_var( $ip, FILTER_VALIDATE_IP ) !== false ) {
+		if ( empty( $client_ip ) ) {
+			$remote_addr = isset( $_SERVER['REMOTE_ADDR'] ) ? sanitize_text_field( wp_unslash( (string) $_SERVER['REMOTE_ADDR'] ) ) : '';
+			$ip          = trim( $remote_addr );
+			if ( '' !== $ip && filter_var( $ip, FILTER_VALIDATE_IP ) !== false ) {
 				$client_ip = $ip;
 			}
 		}

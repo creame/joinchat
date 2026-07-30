@@ -12,12 +12,12 @@ if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 	exit;
 }
 
-$option = get_option( 'joinchat' );
+$joinchat_option = get_option( 'joinchat' );
 
 /**
  * Delete all plugin data if 'clear' is true.
  */
-if ( isset( $option['clear'] ) && 'yes' === $option['clear'] ) {
+if ( isset( $joinchat_option['clear'] ) && 'yes' === $joinchat_option['clear'] ) {
 
 	global $wpdb;
 

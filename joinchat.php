@@ -49,7 +49,7 @@ require JOINCHAT_DIR . 'includes/class-joinchat.php';
  * @since    1.0.0
  * @since    3.0.0     Replaced direct run() to launch via 'init' hook
  */
-function run_joinchat() {
+function joinchat_run() {
 
 	$plugin = new Joinchat();
 
@@ -57,4 +57,4 @@ function run_joinchat() {
 
 }
 
-run_joinchat();
+joinchat_run();

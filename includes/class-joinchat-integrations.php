@@ -93,7 +93,7 @@ class Joinchat_Integrations {
 		 *
 		 * Don't load HivePress assets on Joinchat settings page (fix conflixt with intlTelInput).
 		 */
-		if ( defined( 'HP_FILE' ) && is_admin() && isset( $_GET['page'] ) && JOINCHAT_SLUG === $_GET['page'] ) {
+		if ( defined( 'HP_FILE' ) && is_admin() && isset( $_GET['page'] ) && JOINCHAT_SLUG === $_GET['page'] ) { // phpcs:ignore WordPress.Security.NonceVerification
 			add_filter( 'hivepress/v1/scripts', '__return_empty_array' );
 			add_filter( 'hivepress/v1/styles', '__return_empty_array' );
 		}
