@@ -5,7 +5,7 @@ Tags: WhatsApp, WhatsApp Button, Click to Chat, Floating Button, Chat
 Requires at least: 4.9.6
 Tested up to: 7.0
 Requires PHP: 7.0
-Stable tag: 6.3.1
+Stable tag: 6.3.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -378,6 +378,11 @@ To ensure a non-persistent data mode, you can use **Joinchat Premium** privacy c
 
 
 == Changelog ==
+
+= 6.3.2 =
+* **Security fix** Fixes a XSS vulnerability when using the dynamic variable "{HREF}" on Call to Action
+* Refactoring of replace_variables() with correct escape functions for any context.
+* PCP plugins fixes.
 
 = 6.3.1 =
 * Ensure lazy load of styles on WordPress 6.9+ with classic themes
