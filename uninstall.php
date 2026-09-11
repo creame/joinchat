@@ -33,6 +33,9 @@ if ( isset( $joinchat_option['clear'] ) && 'yes' === $joinchat_option['clear'] )
 	// Delete term meta '_joinchat' added by plugin.
 	$wpdb->delete( $wpdb->prefix . 'termmeta', array( 'meta_key' => '_joinchat' ) );
 
+	// Delete user meta '_joinchat' added by plugin.
+	$wpdb->delete( $wpdb->prefix . 'usermeta', array( 'meta_key' => '_joinchat' ) );
+
 	// TODO: delete WPML/Polylang translations.
 
 	// Clear any cached data that has been removed.

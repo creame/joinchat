@@ -65,6 +65,8 @@ class Joinchat_Public {
 			$obj_settings = get_post_meta( $obj->ID, '_joinchat', true );
 		} elseif ( $obj instanceof WP_Term ) {
 			$obj_settings = get_term_meta( $obj->term_id, '_joinchat', true );
+		} elseif ( $obj instanceof WP_User ) {
+			$obj_settings = get_user_meta( $obj->ID, '_joinchat', true );
 		}
 
 		if ( is_array( $obj_settings ) ) {

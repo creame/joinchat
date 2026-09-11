@@ -368,8 +368,8 @@ class Joinchat_Admin {
 	 *
 	 * @since    4.3.0
 	 * @access   public
-	 * @param  int         $id post|term ID.
-	 * @param  WP_Post|int $arg current post or term taxonomi id.
+	 * @param  int                 $id post|term|user ID.
+	 * @param  WP_Post|WP_User|int $arg current post, user or term taxonomy id.
 	 * @return void
 	 */
 	public function save_meta( $id, $arg ) {
@@ -378,9 +378,19 @@ class Joinchat_Admin {
 			return;
 		}
 
-		$type = $arg instanceof WP_Post ? 'post' : 'term';
+		if ( $arg instanceof WP_Post ) {
+			$type = 'post';
+		} elseif ( $arg instanceof WP_User ) {
+			$type = 'user';
+		} else {
+			$type = 'term';
+		}
 
 		if ( 'post' === $type && wp_is_post_autosave( $id ) ) {
+			return;
+		}
+
+		if ( ! current_user_can( 'edit_' . $type, $id ) ) {
 			return;
 		}
 
@@ -408,6 +418,65 @@ class Joinchat_Admin {
 	}
 
 	/**
+	 * Generate user edit form fields html
+	 *
+	 * @since    6.9.0
+	 * @access   public
+	 * @param  WP_User $user Current user object.
+	 * @return void
+	 */
+	public function user_meta_box( $user ) {
+
+		// Enqueue assets.
+		wp_enqueue_script( JOINCHAT_SLUG );
+		wp_enqueue_style( JOINCHAT_SLUG );
+
+		$metadata = get_user_meta( $user->ID, '_joinchat', true ) ?: array(); //phpcs:ignore WordPress.PHP.DisallowShortTernary
+		$metadata = array_merge(
+			array(
+				'telephone'    => '',
+				'message_text' => '',
+				'message_send' => '',
+				'view'         => '',
+			),
+			$metadata
+		);
+
+		$placeholders = jc_common()->get_obj_placeholders( $user );
+		$metabox_vars = jc_common()->get_obj_vars( $user );
+
+		ob_start();
+		include __DIR__ . '/partials/user-meta-box.php';
+		$metabox_output = ob_get_clean();
+
+		echo apply_filters( 'joinchat_user_metabox_output', $metabox_output, $user, $metadata ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+
+	}
+
+	/**
+	 * Save user meta data from "Joinchat"
+	 *
+	 * User profile update hooks only pass the user ID, so this
+	 * wrapper resolves WP_User and delegates to save_meta().
+	 *
+	 * @since    6.9.0
+	 * @access   public
+	 * @param  int $id User ID.
+	 * @return void
+	 */
+	public function save_user_meta( $id ) {
+
+		$user = get_user_by( 'id', (int) $id );
+
+		if ( ! $user instanceof WP_User ) {
+			return;
+		}
+
+		$this->save_meta( (int) $id, $user );
+
+	}
+
+	/**
 	 * Add term edit form meta fields
 	 *
 	 * @since    4.3.0
@@ -420,22 +489,6 @@ class Joinchat_Admin {
 
 		foreach ( $taxonomies as $taxonomy ) {
 			add_action( "{$taxonomy}_edit_form_fields", array( $this, 'term_meta_box' ), 10, 2 );
-		}
-	}
-
-	/**
-	 * Add term save meta fields
-	 *
-	 * @since    5.0.9
-	 * @access   public
-	 * @return void
-	 */
-	public function add_term_save_meta() {
-
-		$taxonomies = jc_common()->get_taxonomies_meta_box();
-
-		foreach ( $taxonomies as $taxonomy ) {
-			add_action( "edited_{$taxonomy}", array( $this, 'save_meta' ), 10, 2 );
 		}
 	}
 
@@ -474,6 +527,22 @@ class Joinchat_Admin {
 
 		echo apply_filters( 'joinchat_term_metabox_output', $metabox_output, $term, $metadata, $taxonomy ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 
+	}
+
+	/**
+	 * Add term save meta fields
+	 *
+	 * @since    5.0.9
+	 * @access   public
+	 * @return void
+	 */
+	public function save_term_meta() {
+
+		$taxonomies = jc_common()->get_taxonomies_meta_box();
+
+		foreach ( $taxonomies as $taxonomy ) {
+			add_action( "edited_{$taxonomy}", array( $this, 'save_meta' ), 10, 2 );
+		}
 	}
 
 	/**

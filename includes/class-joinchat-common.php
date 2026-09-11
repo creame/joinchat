@@ -244,10 +244,10 @@ class Joinchat_Common {
 	}
 
 	/**
-	 * Get post/term form placeholders
+	 * Get object form placeholders
 	 *
 	 * @since 4.5.0
-	 * @param  WP_Post|WP_Term $obj  Current post or term.
+	 * @param  WP_Post|WP_Term|WP_User $obj  Current post, term or user.
 	 * @return array
 	 */
 	public function get_obj_placeholders( $obj ) {
@@ -266,10 +266,10 @@ class Joinchat_Common {
 	}
 
 	/**
-	 * Get post/term dynamic variables for form help text
+	 * Get object dynamic variables for form help text
 	 *
 	 * @since 4.5.0
-	 * @param  WP_Post|WP_Term $obj  Current post or term.
+	 * @param  WP_Post|WP_Term|WP_User $obj  Current post, term or user.
 	 * @return array
 	 */
 	public function get_obj_vars( $obj ) {

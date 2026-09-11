@@ -9,11 +9,18 @@
  */
 
 defined( 'WPINC' ) || exit;
+
+$metadata     = isset( $metadata ) && is_array( $metadata ) ? $metadata : array();
+$placeholders = isset( $placeholders ) && is_array( $placeholders ) ? $placeholders : array();
+$metabox_vars = isset( $metabox_vars ) && is_array( $metabox_vars ) ? $metabox_vars : array();
 ?>
 
 <tr class="form-field">
-	<th><h2 style="margin:0"><?php esc_html_e( 'Joinchat', 'creame-whatsapp-me' ); ?></h2></th>
-	<td><?php wp_nonce_field( 'joinchat_data', 'joinchat_nonce' ); ?></td>
+	<th colspan="2">
+		<h2 style="margin:0"><?php esc_html_e( 'Joinchat', 'creame-whatsapp-me' ); ?></h2>
+		<p style="font-weight:normal"><?php esc_html_e( 'Contact settings for this term archive page.', 'creame-whatsapp-me' ); ?></p>
+		<?php wp_nonce_field( 'joinchat_data', 'joinchat_nonce' ); ?>
+	</th>
 </tr>
 <tr class="form-field joinchat-metabox">
 	<th scope="row"><label for="joinchat_phone"><?php esc_html_e( 'Telephone', 'creame-whatsapp-me' ); ?></label></th>

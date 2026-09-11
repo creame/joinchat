@@ -212,7 +212,13 @@ class Joinchat {
 		$this->loader->add_action( 'save_post', $plugin_admin, 'save_meta', 10, 2 );
 		// Term meta.
 		$this->loader->add_action( 'load-term.php', $plugin_admin, 'add_term_meta_boxes' );
-		$this->loader->add_action( 'load-edit-tags.php', $plugin_admin, 'add_term_save_meta' );
+		$this->loader->add_action( 'load-edit-tags.php', $plugin_admin, 'save_term_meta' );
+		// User meta.
+		$this->loader->add_action( 'show_user_profile', $plugin_admin, 'user_meta_box' );
+		$this->loader->add_action( 'edit_user_profile', $plugin_admin, 'user_meta_box' );
+		$this->loader->add_action( 'personal_options_update', $plugin_admin, 'save_user_meta' );
+		$this->loader->add_action( 'edit_user_profile_update', $plugin_admin, 'save_user_meta' );
+
 		$this->loader->add_action( 'update_option_joinchat', $plugin_admin, 'clear_cache', 100 );
 		// Plugins page.
 		$this->loader->add_filter( 'plugin_action_links_' . JOINCHAT_BASENAME, $plugin_admin, 'settings_link' );
