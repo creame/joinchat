@@ -26,7 +26,8 @@
 }
 
 .joinchat__qr,
-.joinchat__chatbox {
+.joinchat__chatbox,
+.joinchat__powered {
   display: none;
 }
 

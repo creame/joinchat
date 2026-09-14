@@ -3,6 +3,7 @@
 }
 
 #{$class}__powered {
+  display: unset; // Revert head inline display:none
   position: absolute;
   position-anchor: --joinchat-header;
   position-area: bottom left;
