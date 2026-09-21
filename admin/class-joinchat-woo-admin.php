@@ -32,7 +32,6 @@ class Joinchat_Woo_Admin {
 		$loader->add_filter( 'joinchat_settings_validate', $this, 'settings_validate' );
 		$loader->add_filter( 'joinchat_settings_i18n', $this, 'settings_i18n' );
 		$loader->add_filter( 'joinchat_admin_tabs', $this, 'admin_tab' );
-		$loader->add_filter( 'joinchat_taxonomies_meta_box', $this, 'custom_taxonomies' );
 		$loader->add_filter( 'joinchat_tab_visibility_sections', $this, 'visibility_tab_section' );
 		$loader->add_filter( 'joinchat_tab_woocommerce_sections', $this, 'woo_tab_sections' );
 		$loader->add_filter( 'joinchat_vars_help', $this, 'vars_help', 10, 2 );
@@ -124,25 +123,6 @@ class Joinchat_Woo_Admin {
 	}
 
 	/**
-	 * Add WooCommerce product taxonomies for metabox
-	 *
-	 * @since    4.3.0
-	 * @param    array $taxonomies list of taxonomies.
-	 * @return   array
-	 */
-	public function custom_taxonomies( $taxonomies ) {
-
-		$product_taxs = array( 'product_cat', 'product_tag', 'product_brand' );
-
-		if ( defined( 'PWB_PLUGIN_FILE' ) ) {
-			$product_taxs[] = 'pwb-brand';
-		}
-
-		return array_merge( $taxonomies, $product_taxs );
-
-	}
-
-	/**
 	 * Return Product Button available positions
 	 *
 	 * Array of WooCommerce action => named position
@@ -183,8 +163,20 @@ class Joinchat_Woo_Admin {
 
 		// Remove product CPT field.
 		unset( $sections['cpt']['view__cpt_product'] );
+		unset( $sections['cpt']['view__archive_product'] );
+
 		if ( empty( $sections['cpt'] ) ) {
 			unset( $sections['cpt'] );
+		}
+
+		// Remove taxonomies related to products.
+		unset( $sections['tax']['view__tax_product_cat'] );
+		unset( $sections['tax']['view__tax_product_tag'] );
+		unset( $sections['tax']['view__tax_product_brand'] );
+		unset( $sections['tax']['view__tax_pwb-brand'] );
+
+		if ( empty( $sections['tax'] ) ) {
+			unset( $sections['tax'] );
 		}
 
 		$pos = array_search( 'global_end', array_keys( $sections ), true );
@@ -193,12 +185,15 @@ class Joinchat_Woo_Admin {
 			array_slice( $sections, 0, $pos ),
 			array(
 				'woo' => array(
-					'view__woocommerce'  => esc_html__( 'Shop', 'creame-whatsapp-me' ),
-					'view__product'      => '— ' . esc_html__( 'Product Page', 'creame-whatsapp-me' ),
-					'view__cart'         => '— ' . esc_html__( 'Cart', 'creame-whatsapp-me' ),
-					'view__checkout'     => '— ' . esc_html__( 'Checkout', 'creame-whatsapp-me' ),
-					'view__thankyou'     => '— ' . esc_html__( 'Thank You', 'creame-whatsapp-me' ),
-					'view__account_page' => '— ' . esc_html__( 'My Account', 'creame-whatsapp-me' ),
+					'view__woocommerce'   => esc_html__( 'Shop', 'creame-whatsapp-me' ),
+					'view__product'       => '— ' . esc_html__( 'Product', 'creame-whatsapp-me' ),
+					'view__product_cat'   => '— ' . esc_html__( 'Product Categories', 'creame-whatsapp-me' ),
+					'view__product_tag'   => '— ' . esc_html__( 'Product Tags', 'creame-whatsapp-me' ),
+					'view__product_brand' => '— ' . esc_html__( 'Product Brands', 'creame-whatsapp-me' ),
+					'view__cart'          => '— ' . esc_html__( 'Cart', 'creame-whatsapp-me' ),
+					'view__checkout'      => '— ' . esc_html__( 'Checkout', 'creame-whatsapp-me' ),
+					'view__thankyou'      => '— ' . esc_html__( 'Thank You', 'creame-whatsapp-me' ),
+					'view__account_page'  => '— ' . esc_html__( 'My Account', 'creame-whatsapp-me' ),
 				),
 			),
 			array_slice( $sections, $pos )
@@ -352,7 +347,7 @@ class Joinchat_Woo_Admin {
 		// 'woocommerce' inherit from 'all' (Global).
 		$inheritance['all'][] = 'woocommerce';
 		// WooCommerce pages inherit from 'woocommerce'.
-		$inheritance['woocommerce'] = array( 'product', 'cart', 'checkout', 'thankyou', 'account_page' );
+		$inheritance['woocommerce'] = array( 'product', 'cart', 'checkout', 'thankyou', 'account_page', 'product_cat', 'product_tag', 'product_brand' );
 
 		return $inheritance;
 	}

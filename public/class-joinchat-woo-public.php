@@ -169,13 +169,12 @@ class Joinchat_Woo_Public {
 	 */
 	public function visibility( $visibility, $options ) {
 
+		if ( ! is_page() && ! is_woocommerce() ) {
+			return $visibility;
+		}
+
 		$global = isset( $options['all'] ) ? 'yes' === $options['all'] : true;
 		$woo    = isset( $options['woocommerce'] ) ? 'yes' === $options['woocommerce'] : $global;
-
-		// Product page.
-		if ( is_product() ) {
-			return isset( $options['product'] ) ? 'yes' === $options['product'] : $woo;
-		}
 
 		// Cart page.
 		if ( is_cart() ) {
@@ -197,11 +196,23 @@ class Joinchat_Woo_Public {
 			return isset( $options['account_page'] ) ? 'yes' === $options['account_page'] : $woo;
 		}
 
-		if ( is_woocommerce() ) {
-			return $woo;
+		if ( is_product() ) {
+			return isset( $options['product'] ) ? 'yes' === $options['product'] : $woo;
 		}
 
-		return $visibility;
+		if ( is_product_category() ) {
+			return isset( $options['product_category'] ) ? 'yes' === $options['product_category'] : $woo;
+		}
+
+		if ( is_product_tag() ) {
+			return isset( $options['product_tag'] ) ? 'yes' === $options['product_tag'] : $woo;
+		}
+
+		if ( is_tax( array( 'product_brand', 'pwb-brand' ) ) ) {
+			return isset( $options['product_brand'] ) ? 'yes' === $options['product_brand'] : $woo;
+		}
+
+		return is_woocommerce() ? $woo : $visibility;
 
 	}
 

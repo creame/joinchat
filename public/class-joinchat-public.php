@@ -536,6 +536,32 @@ class Joinchat_Public {
 	/**
 	 * Check visibility on current page
 	 *
+	 * Inheritance of visibility settings:
+	 *
+	 * 'all'
+	 * - 'front_page'
+	 * - '404_page'
+	 * - 'search'
+	 * - 'page'
+	 * - 'blog'
+	 *   - 'post'
+	 *   - 'category'
+	 *   - 'tag'
+	 *   - 'date'
+	 *   - 'author'
+	 * - 'cpt_xxxxxx' // Custom CPTs
+	 *   - 'archive_xxxxxx'
+	 * - 'tax_xxxxxx' // Custom Taxonomies
+	 * - 'woocommerce'
+	 *   - 'product'
+	 *   - 'product_cat'
+	 *   - 'product_tag'
+	 *   - 'product_brand'
+	 *   - 'cart'
+	 *   - 'checkout'
+	 *   - 'thankyou'
+	 *   - 'account_page'
+	 *
 	 * @since    2.0.0
 	 * @since    3.0.0       Added filter to 'joinchat_visibility'
 	 * @param    array $options    array of visibility settings.
@@ -543,22 +569,21 @@ class Joinchat_Public {
 	 */
 	public function check_visibility( $options ) {
 
+		$options = (array) $options;
+
 		// Custom visibility, bypass all checks if not null.
 		$visibility = apply_filters( 'joinchat_visibility', null, $options );
+
 		if ( ! is_null( $visibility ) ) {
-			return $visibility;
+			return (bool) $visibility;
 		}
 
 		$global = isset( $options['all'] ) ? 'yes' === $options['all'] : true;
+		$blog   = isset( $options['blog'] ) ? 'yes' === $options['blog'] : $global;
 
 		// Check front page.
 		if ( is_front_page() ) {
 			return isset( $options['front_page'] ) ? 'yes' === $options['front_page'] : $global;
-		}
-
-		// Check blog page.
-		if ( is_home() ) {
-			return isset( $options['blog_page'] ) ? 'yes' === $options['blog_page'] : $global;
 		}
 
 		// Check 404 page.
@@ -566,53 +591,84 @@ class Joinchat_Public {
 			return isset( $options['404_page'] ) ? 'yes' === $options['404_page'] : $global;
 		}
 
-		// Check Custom Post Types.
-		if ( is_array( $options ) ) {
-			foreach ( $options as $cpt => $view ) {
-				if ( substr( $cpt, 0, 4 ) === 'cpt_' ) {
-					$cpt = substr( $cpt, 4 );
-					if ( is_singular( $cpt ) || is_post_type_archive( $cpt ) ) {
-						return 'yes' === $view;
-					}
-				}
-			}
-		}
-
 		// Search results.
 		if ( is_search() ) {
 			return isset( $options['search'] ) ? 'yes' === $options['search'] : $global;
 		}
 
+		// Check blog page.
+		if ( is_home() ) {
+			return $blog;
+		}
+
 		// Check archives.
 		if ( is_archive() ) {
-
-			// Date archive.
-			if ( isset( $options['date'] ) && is_date() ) {
-				return 'yes' === $options['date'];
+			if ( is_category() ) {
+				return isset( $options['category'] ) ? 'yes' === $options['category'] : $blog;
 			}
 
-			// Author archive.
-			if ( isset( $options['author'] ) && is_author() ) {
-				return 'yes' === $options['author'];
+			if ( is_tag() ) {
+				return isset( $options['tag'] ) ? 'yes' === $options['tag'] : $blog;
 			}
 
-			return isset( $options['archive'] ) ? 'yes' === $options['archive'] : $global;
+			if ( is_date() ) {
+				return isset( $options['date'] ) ? 'yes' === $options['date'] : $blog;
+			}
+
+			if ( is_author() ) {
+				return isset( $options['author'] ) ? 'yes' === $options['author'] : $blog;
+			}
+
+			if ( is_post_type_archive() ) {
+				// Custom CPT archives.
+				foreach ( $options as $cpt => $view ) {
+					if ( substr( $cpt, 0, 8 ) === 'archive_' ) {
+						if ( get_post_type() === substr( $cpt, 8 ) ) {
+							return 'yes' === $view;
+						}
+					}
+				}
+
+				// Custom CPT archives fallback.
+				foreach ( $options as $cpt => $view ) {
+					if ( substr( $cpt, 0, 4 ) === 'cpt_' ) {
+						if ( get_post_type() === substr( $cpt, 4 ) ) {
+							return 'yes' === $view;
+						}
+					}
+				}
+			}
+
+			// Taxonomy archives.
+			if ( is_tax() ) {
+				foreach ( $options as $tax => $view ) {
+					if ( substr( $tax, 0, 4 ) === 'tax_' ) {
+						if ( is_tax( substr( $tax, 4 ) ) ) {
+							return 'yes' === $view;
+						}
+					}
+				}
+			}
+
+			return $global;
 		}
 
 		// Check singular.
-		if ( is_singular() ) {
+		if ( is_page() ) {
+			return isset( $options['page'] ) ? 'yes' === $options['page'] : $global;
+		}
 
-			// Page.
-			if ( isset( $options['page'] ) && is_page() ) {
-				return 'yes' === $options['page'];
+		if ( is_singular( 'post' ) ) {
+			return isset( $options['post'] ) ? 'yes' === $options['post'] : $blog;
+		}
+
+		// Custom CPT singular.
+		foreach ( $options as $cpt => $view ) {
+			if ( substr( $cpt, 0, 4 ) === 'cpt_' ) {
+				if ( is_singular( substr( $cpt, 4 ) ) ) {
+					return 'yes' === $view;
+				}
 			}
-
-			// Post (or other custom posts).
-			if ( isset( $options['post'] ) && is_single() ) {
-				return 'yes' === $options['post'];
-			}
-
-			return isset( $options['singular'] ) ? 'yes' === $options['singular'] : $global;
 		}
 
 		return $global;

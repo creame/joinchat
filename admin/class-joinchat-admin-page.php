@@ -183,36 +183,68 @@ class Joinchat_Admin_Page {
 					),
 					'wp'     => array(
 						'view__front_page' => esc_html__( 'Front Page', 'creame-whatsapp-me' ),
-						'view__blog_page'  => esc_html__( 'Blog Page', 'creame-whatsapp-me' ),
 						'view__404_page'   => esc_html__( '404 Page', 'creame-whatsapp-me' ),
 						'view__search'     => esc_html__( 'Search Results', 'creame-whatsapp-me' ),
-						'view__archive'    => esc_html__( 'Archives', 'creame-whatsapp-me' ),
-						'view__date'       => '— ' . esc_html__( 'Date Archives', 'creame-whatsapp-me' ),
-						'view__author'     => '— ' . esc_html__( 'Author Archives', 'creame-whatsapp-me' ),
-						'view__singular'   => esc_html__( 'Singular', 'creame-whatsapp-me' ),
-						'view__page'       => '— ' . esc_html__( 'Page', 'creame-whatsapp-me' ),
-						'view__post'       => '— ' . esc_html__( 'Post', 'creame-whatsapp-me' ),
+						'view__page'       => esc_html__( 'Page', 'creame-whatsapp-me' ),
 					),
 				);
 
-				// If isn't set Blog Page or is the same than Front Page unset blog_page option.
-				if ( get_option( 'show_on_front' ) === 'posts' || get_option( 'page_for_posts' ) === 0 ) {
-					unset( $sections['wp']['view__blog_page'] );
+				// Post Types.
+				$post_types = jc_common()->get_public_post_types();
+
+				if ( in_array( 'post', $post_types, true ) ) {
+					$sections['wp'] = array_merge(
+						$sections['wp'],
+						array(
+							'view__blog'     => esc_html__( 'Blog / Posts', 'creame-whatsapp-me' ),
+							'view__post'     => '— ' . esc_html__( 'Post', 'creame-whatsapp-me' ),
+							'view__category' => '— ' . esc_html__( 'Categories', 'creame-whatsapp-me' ),
+							'view__tag'      => '— ' . esc_html__( 'Tags', 'creame-whatsapp-me' ),
+							'view__date'     => '— ' . esc_html__( 'Date Archives', 'creame-whatsapp-me' ),
+							'view__author'   => '— ' . esc_html__( 'Author Archives', 'creame-whatsapp-me' ),
+						)
+					);
 				}
 
-				// Custom Post Types.
-				$custom_post_types = jc_common()->get_custom_post_types();
+				$custom_post_types = array_diff( $post_types, array( 'post', 'page' ) );
 
 				if ( count( $custom_post_types ) ) {
 					$sections['cpt'] = array();
 
 					foreach ( $custom_post_types as $custom_post_type ) {
-						$post_type      = get_post_type_object( $custom_post_type );
-						$post_type_name = function_exists( 'mb_convert_case' ) ?
-							mb_convert_case( $post_type->labels->name, MB_CASE_TITLE ) :
-							strtolower( $post_type->labels->name );
+						$post_type = get_post_type_object( $custom_post_type );
 
-						$sections['cpt'][ "view__cpt_$custom_post_type" ] = $post_type_name;
+						$sections['cpt'][ "view__cpt_$custom_post_type" ] = $post_type->labels->singular_name;
+
+						if ( ! empty( $post_type->has_archive ) ) {
+							$sections['cpt'][ "view__archive_$custom_post_type" ] = '— Archive of ' . $post_type->labels->name;
+						}
+					}
+				}
+
+				// Public taxonomies.
+				$custom_taxonomies = jc_common()->get_public_taxonomies();
+				$custom_taxonomies = array_diff( $custom_taxonomies, array( 'category', 'post_tag' ) );
+
+				if ( count( $custom_taxonomies ) ) {
+					$sections['tax'] = array();
+
+					foreach ( $custom_taxonomies as $taxonomy ) {
+						$taxonomy_obj = get_taxonomy( $taxonomy );
+
+						if ( ! isset( $taxonomy_obj->labels->name ) || empty( $taxonomy_obj->labels->name ) ) {
+							continue;
+						}
+
+						$taxonomy_name = function_exists( 'mb_convert_case' ) ?
+							mb_convert_case( $taxonomy_obj->labels->name, MB_CASE_TITLE ) :
+							strtolower( $taxonomy_obj->labels->name );
+
+						$sections['tax'][ "view__tax_$taxonomy" ] = $taxonomy_name;
+					}
+
+					if ( empty( $sections['tax'] ) ) {
+						unset( $sections['tax'] );
 					}
 				}
 
@@ -311,6 +343,10 @@ class Joinchat_Admin_Page {
 
 			case 'joinchat_tab_visibility__cpt':
 				$output = '<h2 class="title">' . esc_html__( 'Custom Post Types', 'creame-whatsapp-me' ) . '</h2>';
+				break;
+
+			case 'joinchat_tab_visibility__tax':
+				$output = '<h2 class="title">' . esc_html__( 'Custom Taxonomies', 'creame-whatsapp-me' ) . '</h2>';
 				break;
 
 			case 'joinchat_tab_visibility__global_end':
@@ -535,14 +571,27 @@ class Joinchat_Admin_Page {
 
 		$value = ( isset( jc_common()->settings['visibility']['all'] ) && 'no' === jc_common()->settings['visibility']['all'] ) ? 'no' : 'yes';
 
-		$inheritance = apply_filters(
-			'joinchat_visibility_inheritance',
-			array(
-				'all'      => array( 'front_page', 'blog_page', '404_page', 'search', 'archive', 'singular', 'cpts' ),
-				'archive'  => array( 'date', 'author' ),
-				'singular' => array( 'page', 'post' ),
+		$inheritance = array(
+			'all'  => array( 'front_page', '404_page', 'search', 'page', 'blog', 'cpts', 'taxs' ),
+			'blog' => array( 'post', 'category', 'tag', 'date', 'author' ),
+		);
+
+		$post_archives = array_keys(
+			get_post_types(
+				array(
+					'has_archive' => true,
+					'_builtin'    => false,
+				)
 			)
 		);
+		$post_archives = array_intersect( $post_archives, jc_common()->get_public_post_types() );
+
+		foreach ( $post_archives as $cpt ) {
+			$inheritance['all'][]         = 'cpt_' . $cpt;
+			$inheritance[ 'cpt_' . $cpt ] = array( 'archive_' . $cpt );
+		}
+
+		$inheritance = apply_filters( 'joinchat_visibility_inheritance', $inheritance );
 
 		echo '<div class="joinchat_view_all" data-inheritance="' . esc_attr( wp_json_encode( $inheritance ) ) . '">' .
 			'<label><input type="radio" name="joinchat[view][all]" value="yes"' . checked( 'yes', $value, false ) . '> ' .

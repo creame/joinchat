@@ -485,7 +485,7 @@ class Joinchat_Admin {
 	 */
 	public function add_term_meta_boxes() {
 
-		$taxonomies = jc_common()->get_taxonomies_meta_box();
+		$taxonomies = jc_common()->get_public_taxonomies();
 
 		foreach ( $taxonomies as $taxonomy ) {
 			add_action( "{$taxonomy}_edit_form_fields", array( $this, 'term_meta_box' ), 10, 2 );
@@ -538,7 +538,7 @@ class Joinchat_Admin {
 	 */
 	public function save_term_meta() {
 
-		$taxonomies = jc_common()->get_taxonomies_meta_box();
+		$taxonomies = jc_common()->get_public_taxonomies();
 
 		foreach ( $taxonomies as $taxonomy ) {
 			add_action( "edited_{$taxonomy}", array( $this, 'save_meta' ), 10, 2 );

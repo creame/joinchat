@@ -3,9 +3,11 @@
 
   // View Joinchat_Util::clean_whatsapp() for regex clean info
   function phone_to_whatsapp(phone) {
-    return phone.replace(/^0+|\D/, '')
-      .replace(/^54(0|1|2|3|4|5|6|7|8)/, '549$1')
-      .replace(/^(54\d{5})15(\d{6})/, '$1$2')
+    return String(phone)
+      .replace(/^0+/, '')
+      .replace(/\D/g, '')
+      .replace(/^54([0-8])/, '549$1')
+      .replace(/^(54\d{5})15(\d{6})$/, '$1$2')
       .replace(/^52(0|2|3|4|5|6|7|8|9)/, '521$1');
   }
 
@@ -101,11 +103,7 @@
 
     // Visibility view inheritance
     var $tab_visibility = $('#joinchat_tab_visibility');
-    var inheritance = $('.joinchat_view_all').data('inheritance') || {
-      'all': ['front_page', 'blog_page', '404_page', 'search', 'archive', 'singular', 'cpts'],
-      'archive': ['date', 'author'],
-      'singular': ['page', 'post'],
-    };
+    var inheritance = $('.joinchat_view_all').data('inheritance');
 
     function propagate_inheritance(field, show) {
       field = field || 'all';
@@ -117,6 +115,10 @@
 
       if (field == 'cpts') {
         $('[class*=view_inheritance_cpt_]')
+          .toggleClass('dashicons-visibility', show == 'yes')
+          .toggleClass('dashicons-hidden', show == 'no');
+      } else if (field == 'taxs') {
+        $('[class*=view_inheritance_tax_]')
           .toggleClass('dashicons-visibility', show == 'yes')
           .toggleClass('dashicons-hidden', show == 'no');
       } else if (field in inheritance) {

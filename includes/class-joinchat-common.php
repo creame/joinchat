@@ -177,6 +177,36 @@ class Joinchat_Common {
 
 		$settings['color'] = str_replace( '/100', '/1', $settings['color'] );
 
+		// Since 6.4 migrate visibility settings.
+		$visibility = isset( $settings['visibility'] ) ? $settings['visibility'] : $defaults['visibility'];
+
+		if ( isset( $visibility['blog_page'] ) ) {
+			$visibility['blog'] = $visibility['blog_page'];
+			unset( $visibility['blog_page'] );
+		}
+
+		if ( isset( $visibility['singular'] ) ) {
+			if ( ! isset( $visibility['page'] ) ) {
+				$visibility['page'] = $visibility['singular'];
+			}
+			if ( ! isset( $visibility['post'] ) ) {
+				$visibility['post'] = $visibility['singular'];
+			}
+			unset( $visibility['singular'] );
+		}
+
+		if ( isset( $visibility['archive'] ) ) {
+			if ( ! isset( $visibility['date'] ) ) {
+				$visibility['date'] = $visibility['archive'];
+			}
+			if ( ! isset( $visibility['author'] ) ) {
+				$visibility['author'] = $visibility['archive'];
+			}
+			unset( $visibility['archive'] );
+		}
+
+		$settings['visibility'] = $visibility;
+
 		// Clean unused saved settings.
 		$settings = array_intersect_key( $settings, $defaults );
 
@@ -202,32 +232,36 @@ class Joinchat_Common {
 	}
 
 	/**
-	 * Get public custom post types
-	 *
-	 * Custom post types with public url.
-	 *
-	 * @since    4.5.17
-	 * @return array
-	 */
-	public function get_custom_post_types() {
-
-		return (array) apply_filters( 'joinchat_custom_post_types', array_keys( get_post_types( array( 'has_archive' => true ), 'names' ) ) );
-
-	}
-
-	/**
 	 * Get public post_types
 	 *
 	 * @since    4.5.0
+	 * @since    6.9.0 Deprecated `joinchat_post_types_meta_box`; use `joinchat_custom_post_types`.
 	 * @return array
 	 */
 	public function get_public_post_types() {
 
-		$builtin_post_types = array( 'post', 'page' );        // Built-in post types.
-		$custom_post_types  = $this->get_custom_post_types(); // Custom post types with public url.
+		$post_types = array_keys( get_post_types( array( 'public' => true ) ) );
+		$post_types = array_diff( $post_types, array( 'attachment' ) );
 
-		// Add/remove posts types for "Joinchat" meta box.
-		return (array) apply_filters( 'joinchat_post_types_meta_box', array_merge( $builtin_post_types, $custom_post_types ) );
+		// Legacy filter kept only as deprecated alias.
+		$post_types = (array) apply_filters_deprecated(
+			'joinchat_post_types_meta_box',
+			array( $post_types ),
+			'6.9.0',
+			'joinchat_post_types'
+		);
+
+		// Legacy filter kept only as deprecated alias.
+		$post_types = (array) apply_filters_deprecated(
+			'joinchat_custom_post_types',
+			array( $post_types ),
+			'6.9.0',
+			'joinchat_post_types'
+		);
+
+		$post_types = (array) apply_filters( 'joinchat_post_types', $post_types );
+
+		return array_unique( $post_types );
 
 	}
 
@@ -235,11 +269,25 @@ class Joinchat_Common {
 	 * Get taxonomies to include Joinchat meta box
 	 *
 	 * @since    5.0.9
+	 * @since    6.9.0 renamed from get_taxonomies_meta_box() to get_public_taxonomies()
 	 * @return array
 	 */
-	public function get_taxonomies_meta_box() {
+	public function get_public_taxonomies() {
 
-		return (array) apply_filters( 'joinchat_taxonomies_meta_box', array( 'category', 'post_tag' ) );
+		$taxonomies = array_keys( get_taxonomies( array( 'publicly_queryable' => true ) ) );
+		$taxonomies = array_diff( $taxonomies, array( 'post_format' ) );
+
+		// Legacy filter kept only as deprecated alias.
+		$taxonomies = (array) apply_filters_deprecated(
+			'joinchat_taxonomies_meta_box',
+			array( $taxonomies ),
+			'6.9.0',
+			'joinchat_taxonomies'
+		);
+
+		$taxonomies = (array) apply_filters( 'joinchat_taxonomies', $taxonomies );
+
+		return array_unique( $taxonomies );
 
 	}
 
