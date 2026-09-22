@@ -82,6 +82,15 @@ class Joinchat_Premium {
 			return $output;
 		}
 
+		if ( 'joinchat_tab_visibility__global' === $section_id ) {
+			$ad = sprintf(
+				'<a class="joinchat-ad" href="#go-premium" aria-hidden="true">%s <span>Premium</span></a>',
+				esc_html__( 'Add visibility by country', 'creame-whatsapp-me' )
+			);
+
+			return str_replace( '</a>', '</a> ' . $ad, $output );
+		}
+
 		return $output;
 	}
 
@@ -94,10 +103,67 @@ class Joinchat_Premium {
 	public function header_coupon() {
 
 		printf(
-			'<a class="joinchat-coupon" href="%s" target="_blank">%s</a>',
-			esc_url( Joinchat_Util::link( 'wp-coupon', 'coupon' ) ),
-			esc_html__( 'Unlock Extra Features, NOW ON SALE', 'creame-whatsapp-me' )
+			'<a class="joinchat-coupon joinchat-coupon--ai" href="%s" target="_blank" aria-hidden="true">%s</a>',
+			esc_url( Joinchat_Util::link( 'wp-try-ai', 'coupon' ) ),
+			esc_html__( 'AI AGENT. Try it free for 15 days', 'creame-whatsapp-me' )
 		);
+
+		printf(
+			'<a class="joinchat-coupon" href="%s" target="_blank" aria-hidden="true">%s</a>',
+			esc_url( Joinchat_Util::link( 'wp-coupon', 'coupon' ) ),
+			esc_html__( 'Unlock Premium. NOW ON SALE', 'creame-whatsapp-me' )
+		);
+
 	}
 
+	/**
+	 * Add premium ads to specific fields.
+	 *
+	 * @since  6.4.0
+	 * @param  string $output    current field output.
+	 * @param  string $field_id  current field id.
+	 * @param  array  $settings  current field settings.
+	 * @return string
+	 */
+	public function field_ads( $output, $field_id, $settings ) {
+
+		if ( 'telephone' === $field_id ) {
+			$ad = sprintf(
+				'<a class="joinchat-ad" href="#go-premium" aria-hidden="true">%s <span>Premium</span></a>',
+				esc_html__( 'Add more phones', 'creame-whatsapp-me' )
+			);
+
+			return str_replace( '<p class="description"', $ad . '<p class="description"', $output );
+		}
+
+		if ( 'button_ico' === $field_id ) {
+			$ad = sprintf(
+				'<a class="joinchat-ad" href="#go-premium" aria-hidden="true">%s <span>Premium</span></a>',
+				esc_html__( 'Add more channels', 'creame-whatsapp-me' )
+			);
+
+			return str_replace( '<p class="description"', $ad . '<p class="description"', $output );
+		}
+
+		if ( 'message_text' === $field_id ) {
+			$ad = sprintf(
+				'<a class="joinchat-ad" href="#go-premium" aria-hidden="true">%s <span>Premium</span></a>',
+				esc_html__( 'Automates support', 'creame-whatsapp-me' )
+			);
+
+			return str_replace( '<p class="description"', $ad . '<p class="description"', $output );
+		}
+
+		if ( 'gads' === $field_id ) {
+			$ad = sprintf(
+				'<a class="joinchat-ad" href="#go-premium" aria-hidden="true">%s <span>Premium</span></a>',
+				esc_html__( 'Advanced tracking on GA4/GTM', 'creame-whatsapp-me' )
+			);
+
+			return str_replace( '</p>', ' ' . $ad . '</p>', $output );
+		}
+
+		return $output;
+
+	}
 }

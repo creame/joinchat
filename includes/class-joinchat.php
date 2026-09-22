@@ -339,6 +339,7 @@ class Joinchat {
 		$this->loader->add_filter( 'joinchat_admin_tabs', $plugin_premium, 'admin_tab', 1000 );
 		$this->loader->add_filter( 'joinchat_tab_premium_sections', $plugin_premium, 'tab_sections' );
 		$this->loader->add_filter( 'joinchat_section_output', $plugin_premium, 'section_ouput', 10, 2 );
+		$this->loader->add_filter( 'joinchat_field_output', $plugin_premium, 'field_ads', 10, 3 );
 
 		$this->loader->add_action( 'joinchat_admin_header', $plugin_premium, 'header_coupon' );
 

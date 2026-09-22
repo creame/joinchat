@@ -12,52 +12,54 @@ defined( 'WPINC' ) || exit;
 ?>
 
 <div class="joinchat-premium">
-	<h2 class="joinchat-premium__title"><?php esc_html_e( 'Are you still handling WhatsApp messages manually, one by one?', 'creame-whatsapp-me' ); ?></h2>
-	<p class="joinchat-premium__description">
-		<?php
-		echo wp_kses(
-			/* translators: %s: Joinchat brand name */
-			sprintf( __( 'Today, 800K+ businesses in 176 countries use %s', 'creame-whatsapp-me' ), '<span class="joinchat-premium__brand">Joinchat</span>' ),
-			array( 'span' => array( 'class' => array() ) )
-		);
-		?>
-	</p>
-	<ul>
+	<h2 class="joinchat-premium__title">Are you still handling WhatsApp messages manually, one by one?</h2>
+	<p class="joinchat-premium__description">Today, 800K+ businesses in 176 countries use <span class="joinchat-premium__brand">Joinchat</span></p>
+	<ul class="joinchat-premium__addons">
 		<li>
 			<img src="<?php echo esc_url( plugin_dir_url( JOINCHAT_FILE ) . 'admin/img/ad-omnichannel.webp' ); ?>" width="400" height="250" loading="lazy" alt="">
-			<span><?php esc_html_e( 'Add more contact channels', 'creame-whatsapp-me' ); ?></span>
-			<a href="<?php echo esc_url( Joinchat_Util::link( 'premium/omnichannel', 'upselltab' ) ); ?>" target="_blank"><?php esc_html_e( 'Upgrade Now', 'creame-whatsapp-me' ); ?></a>
+			<span>Add more contact channels</span>
+			<a href="<?php echo esc_url( Joinchat_Util::link( 'premium/omnichannel', 'upselltab' ) ); ?>" target="_blank">PREMIUM. OmniChannel</a>
 		</li>
 		<li>
 			<img src="<?php echo esc_url( plugin_dir_url( JOINCHAT_FILE ) . 'admin/img/ad-agents.webp' ); ?>" width="400" height="250" loading="lazy" alt="">
-			<span><?php esc_html_e( 'Create as many agents as you want', 'creame-whatsapp-me' ); ?></span>
-			<a href="<?php echo esc_url( Joinchat_Util::link( 'premium/support-agents', 'upselltab' ) ); ?>" target="_blank"><?php esc_html_e( 'Upgrade Now', 'creame-whatsapp-me' ); ?></a>
+			<span>Create as many agents as you want</span>
+			<a href="<?php echo esc_url( Joinchat_Util::link( 'premium/support-agents', 'upselltab' ) ); ?>" target="_blank">PREMIUM. Support Agents</a>
 		</li>
 		<li>
 			<img src="<?php echo esc_url( plugin_dir_url( JOINCHAT_FILE ) . 'admin/img/ad-agents-schedule.webp' ); ?>" width="400" height="250" loading="lazy" alt="">
-			<span><?php esc_html_e( 'Set up schedules and shifts for each day', 'creame-whatsapp-me' ); ?></span>
-			<a href="<?php echo esc_url( Joinchat_Util::link( 'premium/support-agents', 'upselltab' ) ); ?>" target="_blank"><?php esc_html_e( 'Upgrade Now', 'creame-whatsapp-me' ); ?></a>
+			<span>Set up schedules and shifts for each day</span>
+			<a href="<?php echo esc_url( Joinchat_Util::link( 'premium/support-agents', 'upselltab' ) ); ?>" target="_blank">PREMIUM. Support Agents</a>
 		</li>
 		<li>
 			<img src="<?php echo esc_url( plugin_dir_url( JOINCHAT_FILE ) . 'admin/img/ad-random-phone.webp' ); ?>" width="400" height="250" loading="lazy" alt="">
-			<span><?php esc_html_e( 'Add as many WhatsApp numbers as you need', 'creame-whatsapp-me' ); ?></span>
-			<a href="<?php echo esc_url( Joinchat_Util::link( 'premium/random-phone', 'upselltab' ) ); ?>" target="_blank"><?php esc_html_e( 'Upgrade Now', 'creame-whatsapp-me' ); ?></a>
+			<span>Add as many WhatsApp numbers as you need</span>
+			<a href="<?php echo esc_url( Joinchat_Util::link( 'premium/random-phone', 'upselltab' ) ); ?>" target="_blank">PREMIUM. Random Phone</a>
 		</li>
 		<li>
 			<img src="<?php echo esc_url( plugin_dir_url( JOINCHAT_FILE ) . 'admin/img/ad-chat-funnels.webp' ); ?>" width="400" height="250" loading="lazy" alt="">
-			<span><?php esc_html_e( 'Create chat funnels, and capture key data', 'creame-whatsapp-me' ); ?></span>
-			<a href="<?php echo esc_url( Joinchat_Util::link( 'premium/chatfunnel', 'upselltab' ) ); ?>" target="_blank"><?php esc_html_e( 'Upgrade Now', 'creame-whatsapp-me' ); ?></a>
+			<span>Create chat funnels, and capture key data</span>
+			<a href="<?php echo esc_url( Joinchat_Util::link( 'premium/chatfunnel', 'upselltab' ) ); ?>" target="_blank">PREMIUM. Chat Funnels</a>
 		</li>
 		<li>
 			<img src="<?php echo esc_url( plugin_dir_url( JOINCHAT_FILE ) . 'admin/img/ad-ai.webp' ); ?>" width="400" height="250" loading="lazy" alt="">
-			<span><?php esc_html_e( 'Add an AI agent and automate up to 80% of inquiries', 'creame-whatsapp-me' ); ?></span>
-			<a href="<?php echo esc_url( Joinchat_Util::link( 'ai', 'upselltab' ) ); ?>" target="_blank"><?php esc_html_e( 'Upgrade Now', 'creame-whatsapp-me' ); ?></a>
+			<span>Add an AI agent and automate up to 80% of inquiries</span>
+			<a href="<?php echo esc_url( Joinchat_Util::link( 'ai', 'upselltab' ) ); ?>" target="_blank">Joinchat AI</a>
 		</li>
 	</ul>
 
+	<ul class="joinchat-premium__features">
+		<li>Visibility by country</li>
+		<li>Lightbox display mode</li>
+		<li>Setting for no-cookie mode</li>
+		<li>Elementor editor integration</li>
+		<li>Advanced analytics tracking on GA4/GTM</li>
+		<li>Manage post settings from a single location</li>
+		<li>Video, iframe, and Calendly in call to actions</li>
+	</ul>
+
 	<p class="joinchat-premium__description">
-		<?php esc_html_e( 'Unlock dozens more features for your business', 'creame-whatsapp-me' ); ?>
-		<a href="<?php echo esc_url( Joinchat_Util::link( 'wp-coupon', 'upselltab' ) ); ?>" target="_blank" class="joinchat-premium__button"><?php esc_html_e( 'Upgrade Now', 'creame-whatsapp-me' ); ?></a>
+		Unlock dozens more features for your business
+		<a href="<?php echo esc_url( Joinchat_Util::link( 'wp-coupon', 'upselltab' ) ); ?>" target="_blank" class="joinchat-premium__button">Upgrade Now</a>
 	</p>
 </div>
 <style>
@@ -93,7 +95,7 @@ defined( 'WPINC' ) || exit;
 	font-weight: 700;
 }
 
-.joinchat-premium ul {
+.joinchat-premium__addons {
 	display: grid;
 	grid-template-columns: repeat(3, 1fr);
 	gap: 30px;
@@ -103,7 +105,7 @@ defined( 'WPINC' ) || exit;
 	text-align: left;
 }
 
-.joinchat-premium li {
+.joinchat-premium__addons li {
 	position: relative;
 	display: flex;
 	flex-direction: column;
@@ -114,13 +116,13 @@ defined( 'WPINC' ) || exit;
 	box-shadow: 0 1px 6px rgba(0, 0, 0, 0.25);
 }
 
-.joinchat-premium li img {
+.joinchat-premium__addons li img {
 	width: 100%;
 	height: auto;
 	display: block;
 }
 
-.joinchat-premium li span {
+.joinchat-premium__addons li span {
 	flex: 1;
 	display: flex;
 	align-items: center;
@@ -133,7 +135,7 @@ defined( 'WPINC' ) || exit;
 	line-height: 1.3;
 }
 
-.joinchat-premium li span::before,
+.joinchat-premium__addons li span::before,
 .joinchat-premium__description:last-child::before {
 	content: "";
 	display: inline-block;
@@ -143,7 +145,7 @@ defined( 'WPINC' ) || exit;
 	background: var(--check) center / 16px no-repeat;
 }
 
-.joinchat-premium li > a,
+.joinchat-premium__addons li > a,
 .joinchat-premium__button {
 	background: linear-gradient(to bottom, #ff9500 0%, #f9603a 50%) top/100% 200%;
 	border-radius: 4px;
@@ -154,7 +156,7 @@ defined( 'WPINC' ) || exit;
 	transition: all 0.2s;
 }
 
-.joinchat-premium li > a {
+.joinchat-premium__addons li > a {
 	position: absolute;
 	top: 12px;
 	right: 12px;
@@ -164,13 +166,21 @@ defined( 'WPINC' ) || exit;
 	transition: all 0.3s ease;
 }
 
-.joinchat-premium li:hover > a {
+.joinchat-premium__addons li:hover > a {
 	opacity: 1;
 }
 
-.joinchat-premium li > a:hover {
+.joinchat-premium__addons li > a:hover {
 	background-position: bottom;
 	box-shadow: 0 1px 5px rgba(0, 0, 0, 0.7);
+}
+
+.joinchat-premium__features {
+	list-style: none;
+	margin: 0 0 32px;
+	padding: 0;
+	font-size: 20px;
+	line-height: 1.5;
 }
 
 .joinchat-premium__button {
@@ -214,3 +224,12 @@ defined( 'WPINC' ) || exit;
 	}
 }
 </style>
+
+<script>
+	jQuery(document).ready(function($) {
+		$('a.joinchat-ad').on('click', function(e) {
+			e.preventDefault();
+			$('#navtab_premium').trigger('click');
+		});
+	});
+</script>

@@ -115,6 +115,10 @@
 }
 
 /* Button ico field */
+.form-table td .joinchat__button_ico {
+  display: inline-block;
+}
+
 .form-table td .joinchat__button_ico label {
   margin: 0 0.5em 0.25em 0 !important;
 }
@@ -342,6 +346,46 @@ tr.joinchat--focus .joinchat_vars_help {
   font-size: 13px;
 }
 
+.joinchat-ad {
+  display: inline-flex;
+  align-items: center;
+  height: 20px;
+  padding: 0 4px 0 5px;
+  margin: 0 0 0 10px;
+  border-radius: 4px;
+  color: #f9603a;
+  font-size: 13px;
+  line-height: 20px;
+  text-decoration: none;
+  transition: all 200ms;
+}
+
+.joinchat-ad:hover,
+.joinchat-ad:active,
+.joinchat-ad:focus {
+  background-color: #f9603a;
+  color: #fff;
+}
+
+.joinchat-ad span {
+  height: 14px;
+  padding: 0 4px;
+  margin-left: 4px;
+  border-radius: 2px;
+  background: #f9603a;
+  color: #fff;
+  font-size: 10px;
+  line-height: 14px;
+  transition: all 200ms;
+}
+
+.joinchat-ad:hover span,
+.joinchat-ad:active span,
+.joinchat-ad:focus span {
+  background: #fff;
+  color: #f9603a;
+}
+
 /* Help */
 
 .toplevel_page_joinchat .help-tab-content li ul,
@@ -490,9 +534,9 @@ tr.joinchat--focus .joinchat_vars_help {
 .joinchat-coupon {
   display: flex;
   align-items: center;
-  gap: 15px;
+  gap: 12px;
   min-height: 30px;
-  padding: 3px 20px;
+  padding: 3px 12px;
 	background: linear-gradient(to bottom, #ff9500 0%, #f9603a 50%) top/100% 200%;
 	border-radius: 4px;
 	color: #fff;
@@ -510,11 +554,21 @@ tr.joinchat--focus .joinchat_vars_help {
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.7);
 }
 
+.joinchat-coupon:first-of-type {
+  margin-left: auto;
+  margin-right: 12px;
+}
+
 .joinchat-coupon::before {
   content: '';
-  width: 47px;
+  width: 20px;
   height: 20px;
-  background: url(data:image/webp;base64,UklGRiYDAABXRUJQVlA4WAoAAAAQAAAAXQAAJwAAQUxQSLsCAAABgFZrb95GEAxBEAzBEAIhEMwgYdAwSBikDFwGHgOVgSHonMX6sHf2PyIYSJLUZE9MoA7nkb4ALosLTLCU4NfuAvMttn2GrvPRl+YJUSY+J5xfzGcCYA7zPMUlx+4D/J6mlTnNS4/R2Z7nAOudccIFMfcZYTluIqrlWIKuLcmkWoPAv1bX0SLbA7c9VdSpz6RpZzqXYCXmAMKFIyddkhumQ6UuKNQ7h83ECF9B8ApehVSYWa36rnNvEq+wyxJozOhSIYuTbggGSBHOSD6tcPHY9v5a+n5McRVbGxZXZ+ZKUp/0gGUTvYjCttpnB9Bd/gLTDOD9KRJFaDlog5nXecCCTN7ubRcpK2530RYzD2I2Q4wcqdbUExPAycKct5KVd7s8sPoUHuK1/8jQYc2OPDs0fBdd9PeRMUar5tUlAPZhSBkhyoh0fQEZn54fH8Q9Yuq7obYnTJeg7XyVdumrQwBX5iv0sXZ3yq5XcYTyhqQgIjF/ggDXaN8sTRIv3Kwu6nS15O6D8GJGjTZ4aKv6/2PlgrBxQ4jlQUDfw4I2h7AxcwQsdAbIj/Cup6StZi/RVZCqNsKIf9UsqbQKHJ1PuaND2Emj5SlmaR7tf5DRuCinpXad4pK6HnLCRd8Alkwd7ZouNmi/zGY/f3DrohglerXkpA2XaEqRddprpK85hN6uF6nKIv6DizaPdMOrxLY0lxZVLTb6QA8UZ9BGe0wvlsibM4uWhAcd0wjx/06t5x+93HS9TFpyzoJS9Yxaep2NuZlCi8WmTazbuUQAXAuz/+hxNVM39wvpaB7ag73m7Zj9czAiL22oQyp+BZpGiw7AgWb0N7RIEw9/QxuOPzkA3vNoV7JFCVfyHIZpW8bLR7v+6Pr0sRyvNrhwQuuk7aGrwsflaszvn8bcvpe6ogrrMbx+Oz6tn0YeWk1wPwEAVlA4IEQAAACQBACdASpeACgAPjEUiEKiISEXFAAgAwS0gAA2msfd/KeJqw2ijF9/ECVemvgA/v5V92L///aidH/qDCX/yxAAAAAAAA==) no-repeat center/contain;
+  margin-top: -2px;
+  background: url(data:image/webp;base64,UklGRsABAABXRUJQVlA4WAoAAAAQAAAAJwAAJwAAQUxQSHABAAABgFXbVtjoSkDCk4AEJEQCEnAwkRAHqYPUAXHAOHh18CTcD+DRVEFETAC+mjJ+M3J/RmQUjecj0VhLBKKR7yeisdfTSCqkXUV8Rx5Eo9sQSNKKZ6eeW4jGxQBjr3kW2BtXBZ8BeYYRareeUCdUGaXvZLxmVBnAHmMLg33N7h1QD89B8Nm9pwDgj/7UoU7s3lMAgFgqF22QSNq9pwAAsVzGL+YOuaQAALFcxi/XQR/LZSTbFiBZOy2CmHVA6dJ+GYcHhtLIV0AfrkHp3pxjutEwDYOza46E2FgFfzRBrKwCGWhnDjaS1EZSTyOplw2s40/+lvm0pK1195ayzqz7uFQA4KAVABCbtO7lylg8Ju+uuNJKnpROXNtKmUiH6qkrOmoYZg9PVzg5ziOoh1VmqXGsmCYXeW4RkFw5zzMcvvUTztAeqR6IPsHkgegT1YVwPMDkArKuaZKsJOsCkP99d0YfX8a0Akh5/xtpn1cRzEM+AFZQOCAqAAAAMAMAnQEqKAAoAD6RSJ9LpaQioaOIALASCWkAABuBvT4OAAD++E0AAAAA) no-repeat center/contain;
+}
+
+.joinchat-coupon--ai::before {
+  background-image: url(data:image/webp;base64,UklGRtQBAABXRUJQVlA4WAoAAAAQAAAAJwAAJwAAQUxQSIMBAAABgFXbdtVqSYiESEDCkVAJkYCD4uDiABxQB8EBEk4dRML+yINyFUTEBIAZwJV5fN+qrz9lu7QZSOF/JMkegn0DipQb4bUe7n7l9RXumMEuSW8gF40eaQx4q/kGoq0DUo4jwbK6ngCWEWnrZNfdTBhTDo3P9873vKUrVEDy3mkBmO8od2BpLUCc3rq/VWbAUi0wF/3WwK7LgCw5bPp17gRMSsz6vYEZHAQJ/IFMPSnydaIkX6Zoe6nKYtF2byhUsybyB5P2QB1dOgN1vBpz9dEC8CdF2kkl0A6NrbqkOYS3pImYfQusVTyuLRIbV1XU96NI8k2Sr0WSL94olf7l/ypjZXnNXp3J9oFSfYc8AmGXVoCpd1WfoZlmCDTXzqeah6zVT525moZed+bOVJFH8p3ScprziLaxQ+3UCmVEW+zFrLbTTUPyIwHB1qJu6pGHaneNbgwGv3MzjxD9CdkI0Z/IQ8TjAdkQJL9X5ri7pHyDmHysLAEgnZLdAGw9S1XO1ejHZQMAVlA4ICoAAAAwAwCdASooACgAPpFIn0ulpCKho4gAsBIJaQAAG4G9Pg4AAP74TQAAAAA=);
 }
 
 @media screen and (max-width: 600px) {
