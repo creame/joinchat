@@ -235,7 +235,7 @@ class Joinchat_Common {
 	 * Get public post_types
 	 *
 	 * @since    4.5.0
-	 * @since    6.9.0 Deprecated `joinchat_post_types_meta_box`; use `joinchat_custom_post_types`.
+	 * @since    6.4.0 Deprecated `joinchat_post_types_meta_box`; use `joinchat_custom_post_types`.
 	 * @return array
 	 */
 	public function get_public_post_types() {
@@ -247,7 +247,7 @@ class Joinchat_Common {
 		$post_types = (array) apply_filters_deprecated(
 			'joinchat_post_types_meta_box',
 			array( $post_types ),
-			'6.9.0',
+			'6.4.0',
 			'joinchat_post_types'
 		);
 
@@ -255,7 +255,7 @@ class Joinchat_Common {
 		$post_types = (array) apply_filters_deprecated(
 			'joinchat_custom_post_types',
 			array( $post_types ),
-			'6.9.0',
+			'6.4.0',
 			'joinchat_post_types'
 		);
 
@@ -269,7 +269,7 @@ class Joinchat_Common {
 	 * Get taxonomies to include Joinchat meta box
 	 *
 	 * @since    5.0.9
-	 * @since    6.9.0 renamed from get_taxonomies_meta_box() to get_public_taxonomies()
+	 * @since    6.4.0 renamed from get_taxonomies_meta_box() to get_public_taxonomies()
 	 * @return array
 	 */
 	public function get_public_taxonomies() {
@@ -281,7 +281,7 @@ class Joinchat_Common {
 		$taxonomies = (array) apply_filters_deprecated(
 			'joinchat_taxonomies_meta_box',
 			array( $taxonomies ),
-			'6.9.0',
+			'6.4.0',
 			'joinchat_taxonomies'
 		);
 

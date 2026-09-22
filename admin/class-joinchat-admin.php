@@ -420,7 +420,7 @@ class Joinchat_Admin {
 	/**
 	 * Generate user edit form fields html
 	 *
-	 * @since    6.9.0
+	 * @since    6.4.0
 	 * @access   public
 	 * @param  WP_User $user Current user object.
 	 * @return void
@@ -459,7 +459,7 @@ class Joinchat_Admin {
 	 * User profile update hooks only pass the user ID, so this
 	 * wrapper resolves WP_User and delegates to save_meta().
 	 *
-	 * @since    6.9.0
+	 * @since    6.4.0
 	 * @access   public
 	 * @param  int $id User ID.
 	 * @return void

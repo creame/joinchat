@@ -3,9 +3,9 @@ Contributors: creapuntome, pacotole, davidlillo, monillo
 Donate link: https://join.chat/donate/
 Tags: WhatsApp, WhatsApp Button, Click to Chat, Floating Button, Chat
 Requires at least: 4.9.6
-Tested up to: 7.0
+Tested up to: 7.1
 Requires PHP: 7.0
-Stable tag: 6.3.2
+Stable tag: 6.4.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -23,7 +23,7 @@ Built for conversion from the very first click: eye-catching CTAs, dynamic start
 
 🗺️ Present in more than 176 countries
 
-🏆 **#1 chat solution in:** 
+🏆 **#1 chat solution in:**
 
 🇦🇷 Argentina 🇨🇴 Colombia 🇧🇷 Brazil 🇪🇸 Spain 🇳🇱 Netherlands 🇲🇽 Mexico 🇨🇱 Chile 🇵🇪 Peru 🇵🇹 Portugal
 
@@ -76,7 +76,7 @@ Defines a pre-loaded initial message for when the user contacts via WhatsApp. Ad
 ### ✅ Opt-in text
 Opt-in is a users' consent to receive messages from a business.
 
-Write a text with the conditions under which the visitor contacts you (or other info that you consider important). 
+Write a text with the conditions under which the visitor contacts you (or other info that you consider important).
 
 You can make it mandatory and disable contact until the user accepts it.
 
@@ -257,9 +257,9 @@ If you have any errors with Gutenberg and Joinchat or simply prefer the old Join
 
 `add_filter( 'joinchat_gutenberg_sidebar', '__return_false' );`
 
-= WPML/Polylang translations =
+= WPML/Polylang/TranslatePress translations =
 
-Joinchat settings are saved in your site's main language. For other languages translation go to *WPML/Polylang Settings > String translations*, filter strings group by "Joinchat" and update the strings for each language.
+Joinchat settings are saved in your site's main language. For other languages translation go to your multilanguage plugin on string translations, filter strings group by "Joinchat" on WPML/Polylang or filter by "JC" on TranslatePress. Then update the strings for each language.
 
 = Google Tag with multiple destinations =
 
@@ -378,6 +378,12 @@ To ensure a non-persistent data mode, you can use **Joinchat Premium** privacy c
 
 
 == Changelog ==
+
+= 6.4.0 =
+* **NEW Add user custom settings** for author archives
+* **NEW** Visibility setting for tags, categories and custom taxonomies
+* Fix public CSS
+* Updated IntlTelInput library to 29.5.2
 
 = 6.3.2 =
 * **Security fix** Fixes a XSS vulnerability when using the dynamic variable "{HREF}" on Call to Action

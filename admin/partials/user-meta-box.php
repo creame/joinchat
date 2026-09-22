@@ -2,7 +2,7 @@
 /**
  * Joinchat admin user edit form fields
  *
- * @since      6.9.0
+ * @since      6.4.0
  * @package    Joinchat
  * @subpackage Joinchat/admin
  * @author     Creame <hola@crea.me>
