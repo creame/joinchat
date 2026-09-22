@@ -917,7 +917,7 @@
   font: 11px/20px var(--joinchat-font) !important;
   text-align: center !important;
   text-decoration: none !important;
-  transition: color 0.2s ease-out;
+  transition: opacity 0.2s ease-out;
   box-shadow: 0 2px 6px 0 #0003 !important;
   transform: rotateZ(-90deg);
   opacity: 0;
@@ -931,7 +931,7 @@
 
 .joinchat--chatbox .joinchat__powered {
   opacity: 1;
-  transition: opacity 0.2s ease-out;
+  transition: opacity 0.2s ease-out, color 0.5s ease-out;
 }
 
 .joinchat__powered span {
@@ -942,6 +942,7 @@
 .joinchat__powered:active {
   color: #000 !important;
   text-decoration: none !important;
+  transition: color 0.2s ease-out;
 }
 
 .joinchat--left .joinchat__powered {
