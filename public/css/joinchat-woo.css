@@ -14,12 +14,12 @@
   box-sizing: border-box;
   height: var(--s);
   max-width: 100%;
-  padding: 0 calc(.5 * var(--s)) 0 var(--s);
-  background: #25d366 var(--joinchat-ico) calc(.2 * var(--s)) 50% no-repeat;
-  background-size: calc(.6 * var(--s));
+  padding: 0 calc(var(--s) / 2) 0 var(--s);
+  background: #25d366 var(--joinchat-ico) calc(var(--s) * .2) 50% no-repeat;
+  background-size: calc(var(--s) * .6);
   color: #fff;
-  border-radius: calc(.5 * var(--s));
-  font: 700 calc(.35 * var(--s))/var(--s) var(--joinchat-font);
+  border-radius: calc(var(--s) / 2);
+  font: 700 calc(var(--s) * .35)/var(--s) var(--joinchat-font);
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;

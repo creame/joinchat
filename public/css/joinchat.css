@@ -7,14 +7,14 @@
   --sep: 20px;
   --bottom: var(--sep);
   --s: 60px;
-  --h: calc(.5 * var(--s));
-  --header: max(50px, 1.16667 * var(--s));
+  --h: calc(var(--s) / 2);
+  --header: max(50px, var(--s) * 1.16667);
   --vh: 100vh;
   --ch: 142;
   --cs: 70%;
   --cl: 49%;
   --bw: 1;
-  --text: hsl(0deg 0% clamp(0%, 1000% * var(--bw), 100%) / clamp(70%, 1000% * var(--bw), 100%));
+  --text: hsl(0deg 0% clamp(0%, var(--bw) * 1000%, 100%) / clamp(70%, var(--bw) * 1000%, 100%));
   --hover: hsl(var(--ch) var(--cs) calc(20% + var(--cl)));
   --hsl: var(--ch) var(--cs) var(--cl);
   --color: hsl(var(--hsl));
@@ -32,7 +32,7 @@
   letter-spacing: 0;
   animation: joinchat_show 500ms cubic-bezier(0.18, 0.89, 0.32, 1.28) 10ms both;
   transform: scale3d(0, 0, 0);
-  transform-origin: calc(-.5 * var(--s)) calc(-.25 * var(--s));
+  transform-origin: calc(var(--s) / -2) calc(var(--s) / -4);
   -webkit-user-select: none;
   -moz-user-select: none;
   user-select: none;
@@ -77,7 +77,7 @@
 
 @supports not (width: clamp(1px, 1%, 10px)) {
   .joinchat {
-    --text: hsl(0deg 0% calc(1% * var(--bw)) / 90%);
+    --text: hsl(0deg 0% calc(var(--bw) * 1%) / 90%);
   }
 }
 
@@ -329,7 +329,7 @@
   bottom: 0;
   right: 0;
   z-index: 1;
-  width: calc(100vw - 2 * var(--sep));
+  width: calc(100vw - var(--sep) * 2);
   max-width: 400px;
   max-height: calc(var(--vh) - var(--bottom) - var(--sep));
   border-radius: calc(2px + var(--h));
@@ -421,7 +421,7 @@
   --size: 34px;
 
   position: absolute;
-  top: calc(50% - .5 * var(--size));
+  top: calc(50% - var(--size) / 2);
   right: 24px;
   width: var(--size);
   height: var(--size);
@@ -543,7 +543,7 @@
   width: var(--s);
   height: var(--s);
   max-width: var(--s);
-  padding: calc(.18 * var(--s));
+  padding: calc(var(--s) * .18);
   margin: 0;
   overflow: hidden;
 }
@@ -1050,12 +1050,12 @@
   box-sizing: border-box;
   height: var(--s);
   max-width: 100%;
-  padding: 0 calc(.5 * var(--s)) 0 var(--s);
-  background: #25d366 var(--joinchat-ico) calc(.2 * var(--s)) 50% no-repeat;
-  background-size: calc(.6 * var(--s));
+  padding: 0 calc(var(--s) / 2) 0 var(--s);
+  background: #25d366 var(--joinchat-ico) calc(var(--s) * .2) 50% no-repeat;
+  background-size: calc(var(--s) * .6);
   color: #fff;
-  border-radius: calc(.5 * var(--s));
-  font: 700 calc(.35 * var(--s))/var(--s) var(--joinchat-font);
+  border-radius: calc(var(--s) / 2);
+  font: 700 calc(var(--s) * .35)/var(--s) var(--joinchat-font);
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
@@ -1088,7 +1088,7 @@
 (orientation: landscape) and (height <=480px) {
   .joinchat {
     --sep: 6px;
-    --header: max(50px, .91667 * var(--s))
+    --header: max(50px, var(--s) * .91667)
   }
 
   .joinchat__header__text {
