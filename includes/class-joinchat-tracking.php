@@ -550,13 +550,14 @@ class Joinchat_Tracking {
 	<style>
 		#joinchat_tracking_widget .postbox-header h2 { justify-content:flex-start; }
 		#joinchat_tracking_widget .postbox-header h2::before {content:''; width:20px; height:20px; margin:-2px 8px 0 -4px; background:url(<?php echo esc_url( plugin_dir_url( JOINCHAT_FILE ) . 'admin/img/menu-icon.svg' ); ?>) !important; filter:invert(1); }
+		.joinchat-tracking-svg { --color: var(--wp-admin-theme-color, #3a87c6); }
 		.joinchat-tracking-svg .chart-y-grid { stroke:#e2e4e7; stroke-width:1; }
 		.joinchat-tracking-svg .chart-y-label { text-anchor:start; font-size:11px; fill:#646970; }
-		.joinchat-tracking-svg .chart-dot { stroke:#3a87c6; stroke-width:1.5; }
+		.joinchat-tracking-svg .chart-dot { stroke:var(--color); stroke-width:1.5; fill:var(--color); }
+		.joinchat-tracking-svg .chart-dot.zero { fill:#fff; }
 		.joinchat-tracking-svg .chart-tip-box { fill:#fff; stroke:#dcdcde; stroke-width:1; }
 		.joinchat-tracking-svg .chart-tip-day { text-anchor:middle; font-size:13px; font-weight:500; fill:#333; }
 		.joinchat-tracking-svg .chart-tip-num { text-anchor:middle; font-size:14px; font-weight:600; fill:#1d1d1d; }
-		.joinchat-tracking-svg .chart-point { cursor:pointer; }
 		.joinchat-tracking-svg .chart-tip { opacity:0; transition:opacity 0.2s ease-in-out; pointer-events:none; }
 		.joinchat-tracking-svg .chart-point:hover .chart-tip { opacity:1; }
 	</style>
@@ -568,20 +569,19 @@ class Joinchat_Tracking {
 			<text class="chart-y-label" x="<?php echo (int) $y_label_x; ?>" y="<?php echo esc_attr( sprintf( '%.2f', $scale_row['y'] - 2 ) ); ?>"><?php echo esc_html( number_format_i18n( $scale_row['value'] ) ); ?></text>
 		<?php endforeach; ?>
 		<line x1="<?php echo (int) $padding_x; ?>" y1="<?php echo (int) $base_y; ?>" x2="<?php echo (int) ( $width - $padding_x ); ?>" y2="<?php echo (int) $base_y; ?>" stroke="#c3c4c7" stroke-width="1" />
-		<path d="<?php echo esc_attr( $area_path ); ?>" fill="#3a87c6" fill-opacity="0.15" />
-		<path d="<?php echo esc_attr( implode( ' ', $path ) ); ?>" fill="none" stroke="#3a87c6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+		<path d="<?php echo esc_attr( $area_path ); ?>" fill="var(--color)" fill-opacity="0.15" />
+		<path d="<?php echo esc_attr( implode( ' ', $path ) ); ?>" fill="none" stroke="var(--color)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
 		<?php foreach ( $rows as $index => $row ) : ?>
 			<?php
 			$value     = (int) $row['clicks'];
 			$x         = $padding_x + ( $index * $step );
 			$y         = $padding_y + ( $chart_h - ( ( $value / $max_value ) * $chart_h ) );
-			$fill      = $value > 0 ? '#3a87c6' : '#fff';
 			$day_label = $this->format_day( $row['day'] );
 			/* translators: %d: number of clicks. */
 			$clicks_label = sprintf( _n( '%d click', '%d clicks', $value, 'creame-whatsapp-me' ), $value );
 			?>
 			<g class="chart-point">
-				<circle class="chart-dot" cx="<?php echo esc_attr( sprintf( '%.2f', $x ) ); ?>" cy="<?php echo esc_attr( sprintf( '%.2f', $y ) ); ?>" r="4" fill="<?php echo esc_attr( $fill ); ?>" />
+				<circle class="chart-dot <?php echo 0 === $value ? 'zero' : ''; ?>" cx="<?php echo esc_attr( sprintf( '%.2f', $x ) ); ?>" cy="<?php echo esc_attr( sprintf( '%.2f', $y ) ); ?>" r="4" />
 				<g class="chart-tip">
 					<rect class="chart-tip-box" x="<?php echo esc_attr( sprintf( '%.2f', $x - 42 ) ); ?>" y="<?php echo esc_attr( sprintf( '%.2f', $y - 48 ) ); ?>" width="84" height="50" rx="4" />
 					<text class="chart-tip-day" x="<?php echo esc_attr( sprintf( '%.2f', $x ) ); ?>" y="<?php echo esc_attr( sprintf( '%.2f', $y - 28 ) ); ?>"><?php echo esc_html( $day_label ); ?></text>
