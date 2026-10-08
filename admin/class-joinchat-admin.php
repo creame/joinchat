@@ -105,7 +105,7 @@ class Joinchat_Admin {
 		$value['header']        = '__wa__' === $value['header'] ? $value['header'] : $util::substr( $util::clean_input( $value['header_custom'] ), 0, 40 );
 		$value['optin_check']   = $util::yes_no( $value, 'optin_check' );
 		$value['optin_text']    = wp_kses( $value['optin_text'], $optin_tags );
-		$value['gads']          = is_array( $value['gads'] ) ? sprintf( 'AW-%s/%s', $util::substr( $util::clean_input( $value['gads'][0] ), 0, 11 ), $util::substr( $util::clean_input( $value['gads'][1] ), 0, 20 ) ) : '';
+		$value['gads']          = is_array( $value['gads'] ) ? sprintf( 'AW-%s/%s', $util::substr( $util::clean_input( $value['gads'][0] ), 0, 12 ), $util::substr( $util::clean_input( $value['gads'][1] ), 0, 22 ) ) : '';
 		$value['gads']          = 'AW-/' !== $value['gads'] ? $value['gads'] : '';
 		$value['tracking']      = $util::yes_no( $value, 'tracking' );
 		$value['custom_css']    = trim( $util::clean_nl( $value['custom_css'] ) );
