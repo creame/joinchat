@@ -217,7 +217,8 @@ class Joinchat_Admin_Page {
 						$sections['cpt'][ "view__cpt_$custom_post_type" ] = $post_type->labels->singular_name;
 
 						if ( ! empty( $post_type->has_archive ) ) {
-							$sections['cpt'][ "view__archive_$custom_post_type" ] = '— Archive of ' . $post_type->labels->name;
+							/* translators: %s: Custom post type name. */
+							$sections['cpt'][ "view__archive_$custom_post_type" ] = '— ' . sprintf( esc_html__( 'Archive of %s', 'creame-whatsapp-me' ), $post_type->labels->name );
 						}
 					}
 				}
