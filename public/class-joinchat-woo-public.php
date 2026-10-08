@@ -208,7 +208,7 @@ class Joinchat_Woo_Public {
 			return isset( $options['product_tag'] ) ? 'yes' === $options['product_tag'] : $woo;
 		}
 
-		if ( is_tax( array( 'product_brand', 'pwb-brand' ) ) ) {
+		if ( is_tax( array( 'product_brand', 'pwb-brand', 'yith_product_brand' ) ) ) {
 			return isset( $options['product_brand'] ) ? 'yes' === $options['product_brand'] : $woo;
 		}
 

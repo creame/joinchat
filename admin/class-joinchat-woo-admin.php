@@ -174,6 +174,7 @@ class Joinchat_Woo_Admin {
 		unset( $sections['tax']['view__tax_product_tag'] );
 		unset( $sections['tax']['view__tax_product_brand'] );
 		unset( $sections['tax']['view__tax_pwb-brand'] );
+		unset( $sections['tax']['view__tax_yith_product_brand'] );
 
 		if ( empty( $sections['tax'] ) ) {
 			unset( $sections['tax'] );
