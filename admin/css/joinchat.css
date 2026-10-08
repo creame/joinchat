@@ -315,7 +315,9 @@ tr.joinchat--focus .joinchat_vars_help {
 }
 
 .joinchat-gads {
-  display: inline-block;
+  display: inline-flex !important;
+  flex-wrap: nowrap;
+  align-items: center;
   padding: 0 0 0 8px;
   margin: 0 1px;
   border: 1px solid #8c8f94;
@@ -333,13 +335,27 @@ tr.joinchat--focus .joinchat_vars_help {
   outline: 2px solid transparent;
 }
 
-.joinchat-gads input {
-  display: inline-block !important;
-  padding: 0 6px;
+.form-table td .joinchat-gads input {
+  display: inline-block;
+  align-items: center;
+  padding: 0 3px;
   border: none;
   background: transparent;
   outline: none;
   box-shadow: none !important;
+}
+
+.form-table td .joinchat-gads input:first-child {
+  width: 7.25em;
+  flex-shrink: 0;
+}
+
+.form-table td .joinchat-gads input:last-child {
+  flex: 1 0 15em;
+}
+
+.joinchat-gads-help {
+  white-space: nowrap;
 }
 
 #joinchat_form .CodeMirror {
@@ -384,6 +400,12 @@ tr.joinchat--focus .joinchat_vars_help {
 .joinchat-ad:focus span {
   background: #fff;
   color: #f9603a;
+}
+
+@media screen and (max-width: 1024px) {
+  .joinchat-gads-help {
+    display: none;
+  }
 }
 
 /* Help */
