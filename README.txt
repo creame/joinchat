@@ -5,7 +5,7 @@ Tags: WhatsApp, WhatsApp Button, Click to Chat, Floating Button, Chat
 Requires at least: 4.9.6
 Tested up to: 7.1
 Requires PHP: 7.0
-Stable tag: 6.4.0
+Stable tag: 6.4.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -378,6 +378,11 @@ To ensure a non-persistent data mode, you can use **Joinchat Premium** privacy c
 
 
 == Changelog ==
+
+= 6.4.1 =
+* Fix allow Google Ads conversions labels with more than 20 characters
+* Dashboard clicks counter widget updated styles to WordPress 7+
+* Include "YITH WooCommerce Brands Add-On" taxonomy in product brands
 
 = 6.4.0 =
 * **NEW Add user custom settings** for author archives
