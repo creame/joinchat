@@ -365,6 +365,13 @@
 
     const jc_button = joinchat_obj.$('.joinchat__button');
 
+    // Context menu (right-click) on the chat button triggers a click event
+    jc_button.addEventListener('contextmenu', e => {
+      e.preventDefault();
+      e.stopPropagation();
+      jc_button.click();
+    }, { passive: false });
+
     // Open Chatbox on mouse over
     if (!joinchat_obj.is_mobile) {
       let timeout_on_hover;
