@@ -5,7 +5,7 @@ Tags: WhatsApp, WhatsApp Button, Click to Chat, Floating Button, Chat
 Requires at least: 4.9.6
 Tested up to: 7.1
 Requires PHP: 7.0
-Stable tag: 6.4.1
+Stable tag: 6.4.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -378,6 +378,10 @@ To ensure a non-persistent data mode, you can use **Joinchat Premium** privacy c
 
 
 == Changelog ==
+
+= 6.4.2 =
+* Tweak prevent context menu in floating contact button
+* **Security fix** scape custom message in Joinchat Button block
 
 = 6.4.1 =
 * Fix allow Google Ads conversions labels with more than 20 characters
