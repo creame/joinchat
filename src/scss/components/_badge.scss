@@ -16,6 +16,8 @@
   box-shadow: none;
   opacity: 0;
   pointer-events: none;
+  will-change: transform, opacity;
+  backface-visibility: hidden;
 
   #{$class}--left & {
     right: auto;
