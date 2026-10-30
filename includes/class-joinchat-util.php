@@ -160,21 +160,21 @@ class Joinchat_Util {
 				);
 			} else {
 				// Fallback to original image.
-				@list($w, $h) = getimagesize( $img_path );
+				$size = @getimagesize( $img_path ); // phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged
 
 				$thumb = array(
 					'url'    => str_replace( $uploads['basedir'], $uploads['baseurl'], $img_path ),
-					'width'  => $w,
-					'height' => $h,
+					'width'  => $size[0] ?? null,
+					'height' => $size[1] ?? null,
 				);
 			}
 		} else {
-			@list($w, $h) = getimagesize( $new_path );
+			$size = @getimagesize( $new_path ); // phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged
 
 			$thumb = array(
 				'url'    => str_replace( $uploads['basedir'], $uploads['baseurl'], $new_path ),
-				'width'  => $w,
-				'height' => $h,
+				'width'  => $size[0] ?? null,
+				'height' => $size[1] ?? null,
 			);
 		}
 
@@ -289,7 +289,7 @@ class Joinchat_Util {
 				'SITE'  => get_bloginfo( 'name' ),
 				'HOME'  => esc_url_raw( home_url() ),
 				'URL'   => esc_url_raw( user_trailingslashit( home_url( $wp->request ) ) ),
-				'HREF'  => esc_url_raw( home_url( add_query_arg( null, null ) ) ),
+				'HREF'  => esc_url_raw( home_url( add_query_arg( array() ) ) ),
 				'TITLE' => self::get_title(),
 			),
 			$context
@@ -383,9 +383,7 @@ class Joinchat_Util {
 	 */
 	public static function to_json( $data ) {
 
-		$json_options = defined( 'JSON_UNESCAPED_UNICODE' ) ?
-			JSON_HEX_APOS | JSON_HEX_QUOT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES :
-			JSON_HEX_APOS | JSON_HEX_QUOT;
+		$json_options = JSON_HEX_APOS | JSON_HEX_QUOT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES;
 
 		return wp_json_encode( $data, apply_filters( 'joinchat_json_options', $json_options ) );
 
@@ -596,8 +594,6 @@ class Joinchat_Util {
 		$max = max( $r, $g, $b );
 		$min = min( $r, $g, $b );
 
-		$h;
-		$s;
 		$l = ( $max + $min ) / 2;
 		$d = $max - $min;
 
@@ -639,15 +635,17 @@ class JoinChatUtil {
 	 * @param string $name       function name.
 	 * @param mixed  $arguments  function arguments.
 	 * @return mixed
+	 * @throws BadMethodCallException If method does not exist in Joinchat_Util.
 	 */
 	public static function __callStatic( $name, $arguments ) {
 
 		add_action( 'admin_notices', array( __CLASS__, 'deprecated_notice' ) );
 
 		if ( method_exists( 'Joinchat_Util', $name ) ) {
-			return call_user_func_array( array( 'Joinchat_Util', $name ), $arguments );
+			return Joinchat_Util::$name( ...$arguments );
 		}
-		trigger_error( esc_html( 'Call to undefined method ' . __CLASS__ . "::$name()" ), E_USER_ERROR );
+
+		throw new BadMethodCallException( esc_html( 'Call to undefined method ' . __CLASS__ . "::$name()" ) );
 	}
 
 	public static function deprecated_notice() {

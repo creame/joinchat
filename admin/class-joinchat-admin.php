@@ -580,9 +580,10 @@ class Joinchat_Admin {
 			$callable = (array) $callable;
 
 			if ( is_callable( $callable[0] ) ) {
-				call_user_func_array( array_shift( $callable ), $callable );
+				$callback = array_shift( $callable );
+				$callback( ...$callable );
 			} elseif ( has_action( $callable[0] ) ) {
-				call_user_func_array( 'do_action', $callable );
+				do_action( ...$callable );
 			}
 		}
 

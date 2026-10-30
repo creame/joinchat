@@ -469,11 +469,14 @@ class Joinchat_Public {
 				$image = '<video autoplay loop muted playsinline src="' . esc_url( wp_get_attachment_url( $img_id ) ) . '"></video>';
 			} elseif ( apply_filters( 'joinchat_image_original', Joinchat_Util::is_animated_gif( $img_id ), $img_id, 'button' ) ) {
 				$image = '<img src="' . esc_url( wp_get_attachment_url( $img_id ) ) . '" alt="" loading="lazy">';
-			} elseif ( is_array( Joinchat_Util::thumb( $img_id, 58, 58 ) ) ) {
-				$thumb  = Joinchat_Util::thumb( $img_id, 58, 58 );
-				$thumb2 = Joinchat_Util::thumb( $img_id, 116, 116 );
-				$thumb3 = Joinchat_Util::thumb( $img_id, 174, 174 );
-				$image  = '<img src="' . esc_url( $thumb['url'] ) . '" srcset="' . esc_url( $thumb2['url'] ) . ' 2x, ' . esc_url( $thumb3['url'] ) . ' 3x" alt="" loading="lazy">';
+			} else {
+				$thumb = Joinchat_Util::thumb( $img_id, 58, 58 );
+
+				if ( is_array( $thumb ) ) {
+					$thumb2 = Joinchat_Util::thumb( $img_id, 116, 116 ) ?: $thumb; //phpcs:ignore WordPress.PHP.DisallowShortTernary
+					$thumb3 = Joinchat_Util::thumb( $img_id, 174, 174 ) ?: $thumb2; //phpcs:ignore WordPress.PHP.DisallowShortTernary
+					$image  = '<img src="' . esc_url( $thumb['url'] ) . '" srcset="' . esc_url( $thumb2['url'] ) . ' 2x, ' . esc_url( $thumb3['url'] ) . ' 3x" alt="" loading="lazy">';
+				}
 			}
 		}
 
