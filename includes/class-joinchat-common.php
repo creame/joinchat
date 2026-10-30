@@ -131,7 +131,7 @@ class Joinchat_Common {
 			return $defaults;
 		}
 
-		return isset( $defaults[ $key ] ) ? $defaults[ $key ] : false;
+		return $defaults[ $key ] ?? false;
 
 	}
 
@@ -178,7 +178,7 @@ class Joinchat_Common {
 		$settings['color'] = str_replace( '/100', '/1', $settings['color'] );
 
 		// Since 6.4 migrate visibility settings.
-		$visibility = isset( $settings['visibility'] ) ? $settings['visibility'] : $defaults['visibility'];
+		$visibility = $settings['visibility'] ?? $defaults['visibility'];
 
 		if ( isset( $visibility['blog_page'] ) ) {
 			$visibility['blog'] = $visibility['blog_page'];

@@ -378,7 +378,7 @@ class Joinchat_Admin_Page {
 
 		if ( strpos( $field_id, 'view__' ) === 0 ) {
 			$field = substr( $field_id, 6 );
-			$value = isset( jc_common()->settings['visibility'][ $field ] ) ? jc_common()->settings['visibility'][ $field ] : '';
+			$value = jc_common()->settings['visibility'][ $field ] ?? '';
 
 			$output = '<label><input type="radio" name="joinchat[view][' . $field . ']" value="yes"' . checked( 'yes', $value, false ) . '> ' .
 				'<span class="dashicons dashicons-visibility" title="' . esc_attr__( 'Show', 'creame-whatsapp-me' ) . '"></span></label>' .
@@ -389,7 +389,7 @@ class Joinchat_Admin_Page {
 
 		} else {
 
-			$value = isset( jc_common()->settings[ $field_id ] ) ? jc_common()->settings[ $field_id ] : '';
+			$value = jc_common()->settings[ $field_id ] ?? '';
 
 			switch ( $field_id ) {
 				case 'telephone':

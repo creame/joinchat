@@ -73,7 +73,7 @@ class Joinchat_Admin {
 			$text = '0' === $value['color']['text'] ? '0' : '100'; // '0' => black, '100' => white.
 		} elseif ( preg_match( '/^(?<bg>#[a-f0-9]{6})(?:\/(?<text>0|100))?$/i', $value['color'], $color ) ) {
 			$bg   = $color['bg'];
-			$text = isset( $color['text'] ) ? $color['text'] : '100';
+			$text = $color['text'] ?? '100';
 		} else {
 			$bg   = '#25d366';
 			$text = '100';
@@ -398,10 +398,10 @@ class Joinchat_Admin {
 
 		// phpcs:disable WordPress.Security.ValidatedSanitizedInput.MissingUnslash,WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 		$metadata = array(
-			'telephone'    => isset( $_POST['joinchat_telephone'] ) ? $_POST['joinchat_telephone'] : '',
-			'message_text' => isset( $_POST['joinchat_message'] ) ? $_POST['joinchat_message'] : '',
-			'message_send' => isset( $_POST['joinchat_message_send'] ) ? $_POST['joinchat_message_send'] : '',
-			'view'         => isset( $_POST['joinchat_view'] ) ? $_POST['joinchat_view'] : '',
+			'telephone'    => $_POST['joinchat_telephone'] ?? '',
+			'message_text' => $_POST['joinchat_message'] ?? '',
+			'message_send' => $_POST['joinchat_message_send'] ?? '',
+			'view'         => $_POST['joinchat_view'] ?? '',
 		);
 		// phpcs:enable
 

@@ -219,7 +219,7 @@ class Joinchat_I18n {
 		}
 
 		foreach ( $settings_i18n as $key => $label ) {
-			$value = isset( $settings[ $key ] ) ? $settings[ $key ] : '';
+			$value = $settings[ $key ] ?? '';
 			do_action( 'wpml_register_single_string', $domain, $label, $value, false, $default_language );
 
 			if ( isset( $old_settings[ $key ] ) && $old_settings[ $key ] !== $value ) {
@@ -368,10 +368,10 @@ class Joinchat_I18n {
 
 		if ( $this->is_ml( 'translatepress' ) ) {
 			$settings  = get_option( 'trp_settings', array() );
-			$language  = isset( $settings['default_language'] ) ? $settings['default_language'] : 'en_US';
+			$language  = $settings['default_language'] ?? 'en_US';
 			$languages = trp_get_languages();
 
-			return isset( $languages[ $language ] ) ? $languages[ $language ] : $language;
+			return $languages[ $language ] ?? $language;
 		}
 
 		return get_locale();
@@ -403,7 +403,7 @@ class Joinchat_I18n {
 
 		if ( $this->is_ml( 'translatepress' ) ) {
 			$settings  = get_option( 'trp_settings', array() );
-			$language  = isset( $settings['default_language'] ) ? $settings['default_language'] : 'en_US';
+			$language  = $settings['default_language'] ?? 'en_US';
 			$flag_path = apply_filters( 'trp_flags_path', TRP_PLUGIN_URL . 'assets/images/flags/', $language );
 			$flag_file = apply_filters( 'trp_flag_file_name', $language . '.png', $language );
 

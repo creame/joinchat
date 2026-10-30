@@ -156,8 +156,8 @@ class Joinchat_Abilities {
 	 * @return string WhatsApp URL.
 	 */
 	public static function execute_generate_whatsapp_url( $input = array() ) {
-		$phone   = isset( $input['phone'] ) ? $input['phone'] : '';
-		$message = isset( $input['message'] ) ? $input['message'] : '';
+		$phone   = $input['phone'] ?? '';
+		$message = $input['message'] ?? '';
 
 		$phone = Joinchat_Util::clean_whatsapp( $phone );
 
@@ -303,7 +303,7 @@ class Joinchat_Abilities {
 	 * @return bool Success status.
 	 */
 	public static function execute_set_phone( $input = array() ) {
-		$phone   = isset( $input['phone'] ) ? $input['phone'] : '';
+		$phone   = $input['phone'] ?? '';
 		$post_id = isset( $input['post_id'] ) ? absint( $input['post_id'] ) : 0;
 		$term_id = isset( $input['term_id'] ) ? absint( $input['term_id'] ) : 0;
 

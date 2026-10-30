@@ -292,7 +292,7 @@ class Joinchat_Woo_Admin {
 	 */
 	public function field_ouput( $output, $field_id, $settings ) {
 
-		$value = isset( $settings[ $field_id ] ) ? $settings[ $field_id ] : '';
+		$value = $settings[ $field_id ] ?? '';
 
 		switch ( $field_id ) {
 			case 'message_text_product':
