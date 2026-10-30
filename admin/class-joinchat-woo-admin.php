@@ -80,7 +80,7 @@ class Joinchat_Woo_Admin {
 		$input['message_text_product'] = Joinchat_Util::clean_input( $input['message_text_product'] );
 		$input['message_text_on_sale'] = Joinchat_Util::clean_input( $input['message_text_on_sale'] );
 		$input['message_send_product'] = Joinchat_Util::clean_input( $input['message_send_product'] );
-		$input['woo_btn_position']     = array_key_exists( $input['woo_btn_position'], $this->btn_positions() ) ? $input['woo_btn_position'] : 'none';
+		$input['woo_btn_position']     = array_key_exists( (string) ( $input['woo_btn_position'] ?? '' ), $this->btn_positions() ) ? $input['woo_btn_position'] : 'none';
 		$input['woo_btn_text']         = Joinchat_Util::clean_input( $input['woo_btn_text'] );
 
 		return $input;

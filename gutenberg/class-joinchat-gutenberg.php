@@ -225,7 +225,7 @@ class Joinchat_Gutenberg {
 
 		Joinchat_Util::maybe_encode_emoji();
 
-		return array_filter( Joinchat_Util::clean_input( $meta_value ) );
+		return array_filter( (array) Joinchat_Util::clean_input( $meta_value ) );
 
 	}
 

@@ -342,7 +342,7 @@ class Joinchat_Admin {
 		wp_enqueue_script( JOINCHAT_SLUG );
 		wp_enqueue_style( JOINCHAT_SLUG );
 
-		$metadata = get_post_meta( $post->ID, '_joinchat', true ) ?: array(); //phpcs:ignore WordPress.PHP.DisallowShortTernary
+		$metadata = get_post_meta( $post->ID, '_joinchat', true );
 		$metadata = array_merge(
 			array(
 				'telephone'    => '',
@@ -350,7 +350,7 @@ class Joinchat_Admin {
 				'message_send' => '',
 				'view'         => '',
 			),
-			$metadata
+			is_array( $metadata ) ? $metadata : array()
 		);
 
 		$placeholders = jc_common()->get_obj_placeholders( $post );
@@ -431,7 +431,7 @@ class Joinchat_Admin {
 		wp_enqueue_script( JOINCHAT_SLUG );
 		wp_enqueue_style( JOINCHAT_SLUG );
 
-		$metadata = get_user_meta( $user->ID, '_joinchat', true ) ?: array(); //phpcs:ignore WordPress.PHP.DisallowShortTernary
+		$metadata = get_user_meta( $user->ID, '_joinchat', true );
 		$metadata = array_merge(
 			array(
 				'telephone'    => '',
@@ -439,7 +439,7 @@ class Joinchat_Admin {
 				'message_send' => '',
 				'view'         => '',
 			),
-			$metadata
+			is_array( $metadata ) ? $metadata : array()
 		);
 
 		$placeholders = jc_common()->get_obj_placeholders( $user );
@@ -507,7 +507,7 @@ class Joinchat_Admin {
 		wp_enqueue_script( JOINCHAT_SLUG );
 		wp_enqueue_style( JOINCHAT_SLUG );
 
-		$metadata = get_term_meta( $term->term_id, '_joinchat', true ) ?: array(); //phpcs:ignore WordPress.PHP.DisallowShortTernary
+		$metadata = get_term_meta( $term->term_id, '_joinchat', true );
 		$metadata = array_merge(
 			array(
 				'telephone'    => '',
@@ -515,7 +515,7 @@ class Joinchat_Admin {
 				'message_send' => '',
 				'view'         => '',
 			),
-			$metadata
+			is_array( $metadata ) ? $metadata : array()
 		);
 
 		$placeholders = jc_common()->get_obj_placeholders( $term );

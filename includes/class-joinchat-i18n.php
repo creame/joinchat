@@ -269,7 +269,7 @@ class Joinchat_I18n {
 			$prefix = $this->get_prefix( $option );
 
 			$translate = function ( $string, $label ) use ( $prefix ) {
-				$string = trp_translate( $prefix . $string, null, false );
+				$string = (string) trp_translate( $prefix . $string, null, false );
 				return strpos( $string, $prefix ) === 0 ? substr( $string, strlen( $prefix ) ) : $string;
 			};
 		}
@@ -388,17 +388,21 @@ class Joinchat_I18n {
 	private function default_language_flag() {
 
 		if ( $this->is_ml( 'wpml' ) ) {
-			$languages = apply_filters( 'wpml_active_languages', null, array() );
-			$language  = $languages[ apply_filters( 'wpml_default_language', null ) ];
+			$languages = (array) apply_filters( 'wpml_active_languages', null, array() );
+			$language  = $languages[ (string) apply_filters( 'wpml_default_language', null ) ] ?? null;
 
-			return '<img src="' . esc_url( $language['country_flag_url'] ) . '" alt="' . esc_attr( $language['language_code'] ) . '" height="12" width="18" />';
+			if ( empty( $language['country_flag_url'] ) ) {
+				return '';
+			}
+
+			return '<img src="' . esc_url( $language['country_flag_url'] ) . '" alt="' . esc_attr( $language['language_code'] ?? '' ) . '" height="12" width="18" />';
 		}
 
 		if ( $this->is_ml( 'polylang' ) ) {
 			$languages = pll_the_languages( array( 'raw' => 1, 'show_flags' => 1 ) ); // phpcs:ignore WordPress.Arrays.ArrayDeclarationSpacing.AssociativeArrayFound
-			$language  = $languages[ pll_default_language() ];
+			$language  = $languages[ (string) pll_default_language() ] ?? array();
 
-			return $language['flag'];
+			return $language['flag'] ?? '';
 		}
 
 		if ( $this->is_ml( 'translatepress' ) ) {

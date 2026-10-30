@@ -451,7 +451,7 @@ class Joinchat_Public {
 		if ( $settings['show_brand'] || $is_preview ) {
 			$powered_args = array(
 				'utm_medium' => 'widget',
-				'utm_source' => rawurlencode( wp_parse_url( home_url(), PHP_URL_HOST ) ),
+				'utm_source' => rawurlencode( (string) wp_parse_url( home_url(), PHP_URL_HOST ) ),
 			);
 			$powered_lang = false !== strpos( strtolower( get_locale() ), 'es' ) ? 'es' : 'en';
 			$powered_link = add_query_arg( $powered_args, "https://join.chat/$powered_lang/powered/" );
