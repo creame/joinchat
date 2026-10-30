@@ -111,20 +111,6 @@ class Joinchat_Util {
 	}
 
 	/**
-	 * Apply mb_substr() if available or fallback to substr()
-	 *
-	 * @since    3.1.0
-	 * @access   public
-	 * @param    string $str The input string.
-	 * @param    int    $start The first position used in str.
-	 * @param    int    $length The maximum length of the returned string.
-	 * @return   string     The portion of str specified by the start and length parameters
-	 */
-	public static function substr( $str, $start, $length = null ) {
-		return function_exists( 'mb_substr' ) ? mb_substr( $str, $start, $length ) : substr( $str, $start, $length );
-	}
-
-	/**
 	 * Return thumbnail url and size.
 	 *
 	 * Create thumbnail of size if not exists and return url an size info.
