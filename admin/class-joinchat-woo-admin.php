@@ -45,7 +45,6 @@ class Joinchat_Woo_Admin {
 		if ( defined( 'PWB_PLUGIN_FILE' ) ) { // Perfect Brands for WooCommerce.
 			$loader->add_filter( 'joinchat_term_metabox_output', $this, 'term_metabox_fix', 10, 4 );
 		}
-
 	}
 
 	/**
@@ -119,7 +118,6 @@ class Joinchat_Woo_Admin {
 			array( 'woocommerce' => 'WooCommerce' ),
 			array_slice( $tabs, $pos )
 		);
-
 	}
 
 	/**
@@ -148,7 +146,6 @@ class Joinchat_Woo_Admin {
 		);
 
 		return array( 'none' => __( "Don't show", 'creame-whatsapp-me' ) ) + apply_filters( 'joinchat_woo_btn_positions', $positions );
-
 	}
 
 	/**
@@ -377,7 +374,6 @@ class Joinchat_Woo_Admin {
 			'</p>';
 
 		return $tab;
-
 	}
 
 	/**
@@ -450,6 +446,5 @@ class Joinchat_Woo_Admin {
 		}
 
 		return $metabox_output;
-
 	}
 }

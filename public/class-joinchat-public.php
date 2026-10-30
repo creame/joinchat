@@ -125,7 +125,6 @@ class Joinchat_Public {
 		}
 
 		return $settings;
-
 	}
 
 	/**
@@ -180,7 +179,6 @@ class Joinchat_Public {
 		wp_register_style( $handle, false ); // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.MissingVersion
 		wp_enqueue_style( $handle );
 		wp_add_inline_style( $handle, Joinchat_Util::min_css( $css ) );
-
 	}
 
 	/**
@@ -201,7 +199,6 @@ class Joinchat_Public {
 
 		wp_enqueue_style( JOINCHAT_SLUG );
 		wp_add_inline_style( JOINCHAT_SLUG, Joinchat_Util::min_css( $this->get_inline_styles() ) );
-
 	}
 
 	/**
@@ -222,7 +219,6 @@ class Joinchat_Public {
 		wp_enqueue_style( JOINCHAT_SLUG );
 		wp_add_inline_style( JOINCHAT_SLUG, Joinchat_Util::min_css( $this->get_inline_styles() ) );
 		wp_print_styles( array( JOINCHAT_SLUG ) );
-
 	}
 
 	/**
@@ -234,7 +230,6 @@ class Joinchat_Public {
 	private function can_enqueue_joinchat_style() {
 
 		return $this->show && ! wp_style_is( JOINCHAT_SLUG, 'done' );
-
 	}
 
 	/**
@@ -253,7 +248,6 @@ class Joinchat_Public {
 		$is_footer_styles      = doing_action( 'wp_footer' );
 
 		return (bool) apply_filters( 'joinchat_avoid_wp69_style_hoist', $is_wp69_classic_theme && $is_footer_styles );
-
 	}
 
 	/**
@@ -279,7 +273,6 @@ class Joinchat_Public {
 		}
 
 		return apply_filters( 'joinchat_inline_style', $inline_css, $settings );
-
 	}
 
 	/**
@@ -399,7 +392,6 @@ class Joinchat_Public {
 		}
 
 		$this->chatbox_content = apply_filters( 'joinchat_content', $content, $settings );
-
 	}
 
 	/**
@@ -533,7 +525,6 @@ class Joinchat_Public {
 		echo apply_filters( 'joinchat_html_output', $html_output, $settings ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 
 		do_action( 'joinchat_after_html' );
-
 	}
 
 	/**

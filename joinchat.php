@@ -11,6 +11,8 @@
  * Plugin URI:        https://join.chat
  * Description:       Connects a WordPress chat with WhatsApp. The best solution for marketing and support. Stop losing customers and increase your sales.
  * Version:           6.4.2
+ * Requires at least: 5.9
+ * Requires PHP:      7.4
  * Author:            Creame
  * Author URI:        https://crea.me
  * License:           GPL-2.0+
@@ -54,7 +56,6 @@ function joinchat_run() {
 	$plugin = new Joinchat();
 
 	add_action( 'init', array( $plugin, 'run' ) );
-
 }
 
 joinchat_run();

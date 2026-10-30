@@ -359,7 +359,7 @@ class Joinchat_Tracking {
 		$current_time = current_time( 'timestamp' );
 		$stored_data  = array_filter(
 			$stored_data,
-			function( $timestamp ) use ( $current_time ) {
+			function ( $timestamp ) use ( $current_time ) {
 				return ( $current_time - (int) $timestamp ) < self::DEDUP_WINDOW;
 			}
 		);

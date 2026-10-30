@@ -52,7 +52,6 @@ class Joinchat_Gutenberg {
 		if ( count( array_filter( $conditions ) ) < count( $conditions ) ) {
 			wp_add_inline_script( 'joinchat-gutenberg', 'wp.hooks.addFilter( "joinchat_gutenberg_sidebar", "joinchat", () => { return false; } );', 'before' );
 		}
-
 	}
 
 	/**
@@ -77,7 +76,6 @@ class Joinchat_Gutenberg {
 				'render_callback' => array( $this, 'render_button' ),
 			)
 		);
-
 	}
 
 	/**
@@ -114,7 +112,6 @@ class Joinchat_Gutenberg {
 		$content = preg_replace( '/\s*href="[^"]*"/', 'href="#whatsapp"' . $data, $content );
 
 		return $content;
-
 	}
 
 	/**
@@ -130,15 +127,14 @@ class Joinchat_Gutenberg {
 			?>
 <style>
 :root {
-  --joinchat-ico: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23fff' d='M3.516 3.516c4.686-4.686 12.284-4.686 16.97 0 4.686 4.686 4.686 12.283 0 16.97a12.004 12.004 0 0 1-13.754 2.299l-5.814.735a.392.392 0 0 1-.438-.44l.748-5.788A12.002 12.002 0 0 1 3.517 3.517zm3.61 17.043.3.158a9.846 9.846 0 0 0 11.534-1.758c3.843-3.843 3.843-10.074 0-13.918-3.843-3.843-10.075-3.843-13.918 0a9.846 9.846 0 0 0-1.747 11.554l.16.303-.51 3.942a.196.196 0 0 0 .219.22l3.961-.501zm6.534-7.003-.933 1.164a9.843 9.843 0 0 1-3.497-3.495l1.166-.933a.792.792 0 0 0 .23-.94L9.561 6.96a.793.793 0 0 0-.924-.445 1291.6 1291.6 0 0 0-2.023.524.797.797 0 0 0-.588.88 11.754 11.754 0 0 0 10.005 10.005.797.797 0 0 0 .88-.587l.525-2.023a.793.793 0 0 0-.445-.923L14.6 13.327a.792.792 0 0 0-.94.23z'/%3E%3C/svg%3E");
-  --joinchat-font: -apple-system, blinkmacsystemfont, "Segoe UI", roboto, oxygen-sans, ubuntu, cantarell, "Helvetica Neue", sans-serif;
+	--joinchat-ico: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23fff' d='M3.516 3.516c4.686-4.686 12.284-4.686 16.97 0 4.686 4.686 4.686 12.283 0 16.97a12.004 12.004 0 0 1-13.754 2.299l-5.814.735a.392.392 0 0 1-.438-.44l.748-5.788A12.002 12.002 0 0 1 3.517 3.517zm3.61 17.043.3.158a9.846 9.846 0 0 0 11.534-1.758c3.843-3.843 3.843-10.074 0-13.918-3.843-3.843-10.075-3.843-13.918 0a9.846 9.846 0 0 0-1.747 11.554l.16.303-.51 3.942a.196.196 0 0 0 .219.22l3.961-.501zm6.534-7.003-.933 1.164a9.843 9.843 0 0 1-3.497-3.495l1.166-.933a.792.792 0 0 0 .23-.94L9.561 6.96a.793.793 0 0 0-.924-.445 1291.6 1291.6 0 0 0-2.023.524.797.797 0 0 0-.588.88 11.754 11.754 0 0 0 10.005 10.005.797.797 0 0 0 .88-.587l.525-2.023a.793.793 0 0 0-.445-.923L14.6 13.327a.792.792 0 0 0-.94.23z'/%3E%3C/svg%3E");
+	--joinchat-font: -apple-system, blinkmacsystemfont, "Segoe UI", roboto, oxygen-sans, ubuntu, cantarell, "Helvetica Neue", sans-serif;
 }
 </style>
 			<?php
 			echo ob_get_clean(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 
 		}
-
 	}
 
 	/**
@@ -148,11 +144,6 @@ class Joinchat_Gutenberg {
 	 * @return void
 	 */
 	public function register_patterns() {
-
-		if ( ! function_exists( 'register_block_pattern' ) ) {
-			return;
-		}
-
 		// Comming soon.
 	}
 
@@ -165,7 +156,6 @@ class Joinchat_Gutenberg {
 	public function show_sidebar() {
 
 		return apply_filters( 'joinchat_gutenberg_sidebar', true );
-
 	}
 
 	/**
@@ -211,7 +201,6 @@ class Joinchat_Gutenberg {
 		// Sanitize meta on save.
 		add_filter( 'sanitize_post_meta__joinchat', array( $this, 'sanitize_meta' ) );
 		add_action( 'updated_postmeta', array( $this, 'delete_empty_meta' ), 10, 4 );
-
 	}
 
 	/**
@@ -226,7 +215,6 @@ class Joinchat_Gutenberg {
 		Joinchat_Util::maybe_encode_emoji();
 
 		return array_filter( (array) Joinchat_Util::clean_input( $meta_value ) );
-
 	}
 
 	/**
@@ -244,6 +232,5 @@ class Joinchat_Gutenberg {
 		if ( '_joinchat' === $meta_key && empty( maybe_unserialize( $meta_value ) ) ) {
 			delete_metadata_by_mid( 'post', $meta_id );
 		}
-
 	}
 }

@@ -34,7 +34,6 @@ class Joinchat_Premium {
 		);
 
 		return $links;
-
 	}
 
 	/**
@@ -61,7 +60,6 @@ class Joinchat_Premium {
 	public function tab_sections( $sections ) {
 
 		return array( 'info' => array() );
-
 	}
 
 	/**
@@ -113,7 +111,6 @@ class Joinchat_Premium {
 			esc_url( Joinchat_Util::link( 'wp-coupon', 'coupon' ) ),
 			esc_html__( 'Unlock Premium. NOW ON SALE', 'creame-whatsapp-me' )
 		);
-
 	}
 
 	/**
@@ -164,6 +161,5 @@ class Joinchat_Premium {
 		}
 
 		return $output;
-
 	}
 }

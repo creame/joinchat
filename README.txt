@@ -2,9 +2,9 @@
 Contributors: creapuntome, pacotole, davidlillo, monillo
 Donate link: https://join.chat/donate/
 Tags: WhatsApp, WhatsApp Button, Click to Chat, Floating Button, Chat
-Requires at least: 4.9.6
+Requires at least: 5.9
 Tested up to: 7.1
-Requires PHP: 7.0
+Requires PHP: 7.4
 Stable tag: 6.4.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html

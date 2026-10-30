@@ -57,7 +57,6 @@ class Joinchat {
 		$this->define_gutenberg_hooks();
 
 		add_action( 'joinchat_run_pre', array( $this, 'define_preview_hooks' ) );
-
 	}
 
 	/**
@@ -91,7 +90,6 @@ class Joinchat {
 		$this->loader = new Joinchat_Loader();
 		jc_common(); // Instance Joinchat_Common.
 		Joinchat_Abilities::init(); // Initialize Abilities API registration.
-
 	}
 
 	/**
@@ -109,7 +107,6 @@ class Joinchat {
 		$plugin_i18n = new Joinchat_I18n();
 
 		$this->loader->add_action( 'init', $plugin_i18n, 'init', 11 );
-
 	}
 
 	/**
@@ -126,7 +123,6 @@ class Joinchat {
 		// No delegate to $this->loader, use WordPress add_action.
 		// At 'plugins_loaded' hook can determine if other plugins are present.
 		add_action( 'plugins_loaded', array( $plugin_integrations, 'load_integrations' ) );
-
 	}
 
 	/**
@@ -148,7 +144,6 @@ class Joinchat {
 
 		$this->loader->add_action( 'rest_api_init', $plugin_tracking, 'register_rest_routes' );
 		$this->loader->add_action( 'wp_dashboard_setup', $plugin_tracking, 'register_dashboard_widget' );
-
 	}
 
 	/**
@@ -161,10 +156,6 @@ class Joinchat {
 	 */
 	private function define_gutenberg_hooks() {
 
-		if ( ! Joinchat_Util::can_gutenberg() ) {
-			return;
-		}
-
 		require_once JOINCHAT_DIR . 'gutenberg/class-joinchat-gutenberg.php';
 
 		$plugin_gutenberg = new Joinchat_Gutenberg();
@@ -176,7 +167,6 @@ class Joinchat {
 		$this->loader->add_action( 'enqueue_block_editor_assets', $plugin_gutenberg, 'enqueue_editor_assets' );
 
 		$this->loader->add_action( 'wp_footer', $plugin_gutenberg, 'root_styles', 100 );
-
 	}
 
 	/**
@@ -241,7 +231,6 @@ class Joinchat {
 		$this->loader->add_action( 'admin_head', $plugin_onboard, 'remove_menu' );
 		$this->loader->add_action( 'load_joinchat_onboard_page', $plugin_onboard, 'page_hooks' );
 		$this->loader->add_action( 'wp_ajax_joinchat_onboard', $plugin_onboard, 'save' );
-
 	}
 
 	/**
@@ -278,7 +267,6 @@ class Joinchat {
 		// Actions (only) for preview.
 		$this->loader->add_action( 'joinchat_preview_footer', $plugin_public, 'footer_html' );
 		$this->loader->add_action( 'joinchat_preview_footer', $plugin_public, 'enqueue_qr_script', 5 );
-
 	}
 
 	/**
@@ -315,7 +303,6 @@ class Joinchat {
 		$this->loader->add_action( 'wp_print_scripts', $plugin_preview, 'remove_all_scripts', 1000 );
 		$this->loader->add_action( 'wp_print_styles', $plugin_preview, 'remove_all_styles', 1000 );
 		$this->loader->add_action( 'joinchat_preview_header', $plugin_preview, 'preview_header' );
-
 	}
 
 	/**
@@ -342,7 +329,6 @@ class Joinchat {
 		$this->loader->add_filter( 'joinchat_field_output', $plugin_premium, 'field_ads', 10, 3 );
 
 		$this->loader->add_action( 'joinchat_admin_header', $plugin_premium, 'header_coupon' );
-
 	}
 
 	/**
@@ -359,7 +345,6 @@ class Joinchat {
 		$this->loader->run();
 
 		do_action( 'joinchat_run_pos', $this );
-
 	}
 
 	/**

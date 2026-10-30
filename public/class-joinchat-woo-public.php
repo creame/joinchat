@@ -50,7 +50,6 @@ class Joinchat_Woo_Public {
 		$loader->add_filter( 'storefront_handheld_footer_bar_links', $this, 'storefront_footer_bar' );
 
 		$loader->add_action( 'wp_footer', $this, 'enqueue_styles' );
-
 	}
 
 	/**
@@ -129,7 +128,6 @@ class Joinchat_Woo_Public {
 		}
 
 		return $settings;
-
 	}
 
 	/**
@@ -156,7 +154,6 @@ class Joinchat_Woo_Public {
 		}
 
 		return $settings;
-
 	}
 
 	/**
@@ -213,7 +210,6 @@ class Joinchat_Woo_Public {
 		}
 
 		return is_woocommerce() ? $woo : $visibility;
-
 	}
 
 	/**
@@ -259,7 +255,6 @@ class Joinchat_Woo_Public {
 		$allowed['jc-sku'] = array();
 
 		return $allowed;
-
 	}
 
 	/**
@@ -292,7 +287,6 @@ class Joinchat_Woo_Public {
 	public function lite_fields( $fields ) {
 
 		return array_merge( $fields, array( 'sku' ) );
-
 	}
 
 	/**
@@ -306,11 +300,10 @@ class Joinchat_Woo_Public {
 	 */
 	public function format_price( $product, $price ) {
 
-		$string = html_entity_decode( wp_strip_all_tags( wc_price( wc_get_price_to_display( $product, array( 'price' => $price ) ) ) ) );
+		$string = html_entity_decode( wp_strip_all_tags( wc_price( wc_get_price_to_display( $product, array( 'price' => $price ) ) ) ), ENT_QUOTES | ENT_SUBSTITUTE | ENT_HTML401 );
 
 		// Escape $ for regex replacement.
 		return str_replace( '$', '\$', $string );
-
 	}
 
 	/**
@@ -325,7 +318,6 @@ class Joinchat_Woo_Public {
 		$price = 'variable' === $product->get_type() ? $product->get_variation_regular_price( 'min' ) : $product->get_regular_price();
 
 		return $this->format_price( $product, $price );
-
 	}
 
 	/**
@@ -340,7 +332,6 @@ class Joinchat_Woo_Public {
 		$price = 'variable' === $product->get_type() ? $product->get_variation_price( 'min' ) : $product->get_price();
 
 		return $this->format_price( $product, $price );
-
 	}
 
 	/**
@@ -361,7 +352,6 @@ class Joinchat_Woo_Public {
 		}
 
 		return $percentage ? "-$percentage%" : '';
-
 	}
 
 	/**
@@ -377,13 +367,12 @@ class Joinchat_Woo_Public {
 
 		add_filter(
 			'joinchat_classes',
-			function( $classes ) {
+			function ( $classes ) {
 				return array_merge( $classes, array( 'joinchat--footer-bar' ) );
 			}
 		);
 
 		return $links;
-
 	}
 
 	/**
@@ -405,7 +394,6 @@ class Joinchat_Woo_Public {
 			'<div class="joinchat__woo-btn__wrapper"><div class="joinchat__woo-btn joinchat_app">%s</div></div>',
 			esc_html( jc_common()->settings['woo_btn_text'] )
 		);
-
 	}
 
 	/**
@@ -424,7 +412,5 @@ class Joinchat_Woo_Public {
 			wp_style_add_data( 'joinchat-woo', 'path', JOINCHAT_DIR . "public/css/joinchat-woo{$min}.css" );
 
 		}
-
 	}
-
 }

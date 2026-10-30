@@ -26,7 +26,6 @@ class Joinchat_Elementor_Finder extends \Elementor\Core\Common\Modules\Finder\Ba
 	public function get_title() {
 
 		return 'Joinchat';
-
 	}
 
 	/**
@@ -38,7 +37,6 @@ class Joinchat_Elementor_Finder extends \Elementor\Core\Common\Modules\Finder\Ba
 	public function get_id() {
 
 		return 'joinchat';
-
 	}
 
 	/**
@@ -68,7 +66,5 @@ class Joinchat_Elementor_Finder extends \Elementor\Core\Common\Modules\Finder\Ba
 		);
 
 		return apply_filters( 'joinchat_elementor_finder_items', $items );
-
 	}
-
 }

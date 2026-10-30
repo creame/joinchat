@@ -4,9 +4,16 @@
 
 	<file>.</file>
 
+	<arg name="extensions" value="php"/>
+
+	<config name="testVersion" value="7.4-"/>
+	<config name="minimum_wp_version" value="5.9"/>
+
 	<rule ref="WordPress-Core" />
 	<rule ref="WordPress-Docs" />
 	<rule ref="WordPress-Extra" />
+
+	<rule ref="PHPCompatibilityWP" />
 
 	<rule ref="WordPress.WP.I18n">
 		<properties>
@@ -16,4 +23,6 @@
 
 	<exclude-pattern>*/node_modules/*</exclude-pattern>
 	<exclude-pattern>*/vendor/*</exclude-pattern>
+	<exclude-pattern>*/gutenberg/build/*</exclude-pattern>
+	<exclude-pattern>*/languages/*.l10n.php</exclude-pattern>
 </ruleset>

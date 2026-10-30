@@ -50,5 +50,4 @@ class Joinchat_Elementor_Admin {
 
 		return $custom_post_types;
 	}
-
 }

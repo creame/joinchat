@@ -54,7 +54,6 @@ class Joinchat_I18n {
 			add_filter( 'joinchat_get_settings', array( $this, 'load_translations' ), 20 );
 			add_filter( 'joinchat_show', array( $this, 'trp_hide' ) );
 		}
-
 	}
 
 	/**
@@ -88,7 +87,6 @@ class Joinchat_I18n {
 		}
 
 		return false;
-
 	}
 
 	/**
@@ -120,7 +118,6 @@ class Joinchat_I18n {
 		}
 
 		return (array) apply_filters( 'joinchat_settings_i18n', $localized, $settings, $option );
-
 	}
 
 	/**
@@ -133,7 +130,6 @@ class Joinchat_I18n {
 	private function get_domain( $option = JOINCHAT_SLUG ) {
 
 		return apply_filters( 'joinchat_i18n_domain', self::DOMAIN_GROUP, $option );
-
 	}
 
 	/**
@@ -145,7 +141,6 @@ class Joinchat_I18n {
 	private function get_prefix( $option = JOINCHAT_SLUG ) {
 
 		return apply_filters( 'joinchat_trp_prefix', 'JC/ ', $option );
-
 	}
 
 	/**
@@ -182,7 +177,6 @@ class Joinchat_I18n {
 			$need_translation ? 'warning' : 'info', // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			$this->language_notice( $msg ) // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		);
-
 	}
 
 	/**
@@ -241,7 +235,6 @@ class Joinchat_I18n {
 		$message = $this->language_notice( '</strong>' . esc_html__( 'There are changes in fields that can be translated', 'creame-whatsapp-me' ) . '<strong>' );
 
 		add_settings_error( $option, 'review_i18n', $message, 'warning' );
-
 	}
 
 	/**
@@ -287,7 +280,6 @@ class Joinchat_I18n {
 		}
 
 		return $settings;
-
 	}
 
 	/**
@@ -305,7 +297,6 @@ class Joinchat_I18n {
 		}
 
 		return $show;
-
 	}
 
 	/**
@@ -343,7 +334,6 @@ class Joinchat_I18n {
 		}
 
 		return '';
-
 	}
 
 	/**
@@ -375,7 +365,6 @@ class Joinchat_I18n {
 		}
 
 		return get_locale();
-
 	}
 
 	/**
@@ -415,7 +404,6 @@ class Joinchat_I18n {
 		}
 
 		return '';
-
 	}
 
 	/**
@@ -463,6 +451,5 @@ class Joinchat_I18n {
 		}
 
 		return "{$lang}{$ds}{$msg}.{$ds}{$translate}";
-
 	}
 }

@@ -30,7 +30,6 @@ class Joinchat_Preview {
 		if ( ! defined( 'DONOTCACHEPAGE' ) ) {
 			define( 'DONOTCACHEPAGE', true );
 		}
-
 	}
 
 	/**
@@ -43,7 +42,6 @@ class Joinchat_Preview {
 	public function blank_template( $template ) {
 
 		return JOINCHAT_DIR . 'admin/partials/page-preview.php';
-
 	}
 
 	/**
@@ -58,7 +56,6 @@ class Joinchat_Preview {
 	public function disable_postmeta( $value, $object_id, $meta_key ) {
 
 		return '_joinchat' === $meta_key ? false : $value;
-
 	}
 
 	/**
@@ -71,7 +68,6 @@ class Joinchat_Preview {
 	public function hide_admin_bar( $show_admin_bar ) {
 
 		return false;
-
 	}
 
 	/**
@@ -84,7 +80,6 @@ class Joinchat_Preview {
 	public function always_show( $show ) {
 
 		return true;
-
 	}
 
 	/**
@@ -105,7 +100,6 @@ class Joinchat_Preview {
 		}
 
 		return $classes;
-
 	}
 
 	/**
@@ -118,7 +112,6 @@ class Joinchat_Preview {
 	public function preview_template( $template ) {
 
 		return str_replace( '/html.php', '/preview.php', $template );
-
 	}
 
 	/**
@@ -131,7 +124,6 @@ class Joinchat_Preview {
 	public function inline_style( string $css ) {
 
 		return empty( $css ) ? 'body{}' : $css;
-
 	}
 
 	/**
@@ -146,7 +138,6 @@ class Joinchat_Preview {
 		global $wp_scripts;
 
 		$wp_scripts->queue = array( 'joinchat-qr', 'wp-api-fetch' );
-
 	}
 
 	/**
@@ -162,7 +153,6 @@ class Joinchat_Preview {
 		$wp_styles->queue = array_filter( $wp_styles->queue, function( $handle ) { // phpcs:ignore
 			return false !== strpos( $handle, 'joinchat' );
 		} ); // phpcs:ignore
-
 	}
 
 	/**
@@ -178,6 +168,5 @@ class Joinchat_Preview {
 		wp_enqueue_scripts();
 		wp_print_scripts();
 		wp_print_styles();
-
 	}
 }

@@ -117,7 +117,6 @@ class Joinchat_Integrations {
 		} else {
 			$categories_manager->add_category( 'joinchat', new Joinchat_Elementor_Finder() );
 		}
-
 	}
 
 	/**
@@ -138,7 +137,6 @@ class Joinchat_Integrations {
 		);
 
 		return $items;
-
 	}
 
 	/**
@@ -168,7 +166,6 @@ class Joinchat_Integrations {
 		$builder_show = apply_filters( 'joinchat_page_builder_show', false );
 
 		return $is_builder ? $show && $builder_show : $show;
-
 	}
 
 	/**
@@ -194,7 +191,6 @@ class Joinchat_Integrations {
 		}
 
 		return $external_exclusions;
-
 	}
 
 	/**
@@ -209,7 +205,6 @@ class Joinchat_Integrations {
 		$tcb_style_classes[] = 'joinchat-';
 
 		return $tcb_style_classes;
-
 	}
 
 	/**

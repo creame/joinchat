@@ -123,7 +123,6 @@ class Joinchat_Formatter {
 		$messages = str_replace( ' src="', ' data-src="', $messages ); // For delayed loading.
 
 		return $messages;
-
 	}
 
 	/**
@@ -177,7 +176,7 @@ class Joinchat_Formatter {
 		 * Markdown image
 		 * ![alt text](image.jpg width) => <img src="image.jpg" alt="alt text" width="width">
 		 */
-		$formats['/!\[(?<alt>.*?)\]\((?<src>[^\) ]*)(?: (?<w>\d+))?\)/u'] = function( $groups ) {
+		$formats['/!\[(?<alt>.*?)\]\((?<src>[^\) ]*)(?: (?<w>\d+))?\)/u'] = function ( $groups ) {
 			return self::image( $groups );
 		};
 
@@ -185,7 +184,7 @@ class Joinchat_Formatter {
 		 * Markdown link
 		 * [title](https://www.example.com) => <a href="https://www.example.com">title</a>
 		 */
-		$formats['/\[(?<text>[^\[\]]+)?\]\((?<href>[^)]+)\)/u'] = function( $groups ) {
+		$formats['/\[(?<text>[^\[\]]+)?\]\((?<href>[^)]+)\)/u'] = function ( $groups ) {
 			return self::link( $groups );
 		};
 
@@ -193,7 +192,7 @@ class Joinchat_Formatter {
 		 * Joinchat image
 		 * {IMG image.jpg width alt_text} => <img src="image.jpg" alt="alt_text" width="width">
 		 */
-		$formats['/{IMG (?<src>[^ }]+)(?: (?<w>\d+))?(?: (?<alt>[^}]+))?}/u'] = function( $groups ) {
+		$formats['/{IMG (?<src>[^ }]+)(?: (?<w>\d+))?(?: (?<alt>[^}]+))?}/u'] = function ( $groups ) {
 			return self::image( $groups );
 		};
 
@@ -201,7 +200,7 @@ class Joinchat_Formatter {
 		 * Joinchat link
 		 * {LINK https://www.example.com title} => <a href="https://www.example.com">title</a>
 		 */
-		$formats['/{LINK (?<href>[^ }]+)(?: (?<text>[^}]+))?}/u'] = function( $groups ) {
+		$formats['/{LINK (?<href>[^ }]+)(?: (?<text>[^}]+))?}/u'] = function ( $groups ) {
 			return self::link( $groups );
 		};
 
@@ -209,7 +208,7 @@ class Joinchat_Formatter {
 		 * Joinchat link button
 		 * {BTN https://www.example.com title} => <a class="joinchat__btn" href="https://www.example.com">title</a>
 		 */
-		$formats['/{BTN (?<href>[^ }]+)(?: (?<text>[^}]+))?}/u'] = function( $groups ) {
+		$formats['/{BTN (?<href>[^ }]+)(?: (?<text>[^}]+))?}/u'] = function ( $groups ) {
 			return self::button( $groups );
 		};
 
@@ -217,12 +216,11 @@ class Joinchat_Formatter {
 		 * Joinchat random text
 		 * {RAND texto 1||texto 2||texto n} => "texto 1" or "texto 2" or "texto n"
 		 */
-		$formats['/{RAND (?<text>[^}]+)}/u'] = function( $groups ) {
+		$formats['/{RAND (?<text>[^}]+)}/u'] = function ( $groups ) {
 			return self::random( $groups );
 		};
 
 		return array_merge( $before, $replacements, $formats );
-
 	}
 
 	/**
@@ -238,7 +236,6 @@ class Joinchat_Formatter {
 		$restore   = array( '/&lcub;([A-Z]+)&rcub;/' => '{$1}' );
 
 		return $transform + $replacements + $restore;
-
 	}
 
 	/**
@@ -269,7 +266,6 @@ class Joinchat_Formatter {
 		$output = sprintf( '<a href="%s"%s%s%s>%s</a>', esc_url( $href ), $class, $rel, $blank, $text );
 
 		return $output;
-
 	}
 
 	/**
@@ -287,7 +283,6 @@ class Joinchat_Formatter {
 		$groups['class'] = 'joinchat__btn';
 
 		return self::link( $groups );
-
 	}
 
 	/**
@@ -307,7 +302,6 @@ class Joinchat_Formatter {
 		}
 
 		return '<jc-rand>' . join( '', $texts ) . '</jc-rand>';
-
 	}
 
 	/**
@@ -395,7 +389,6 @@ class Joinchat_Formatter {
 		$output = preg_replace( '/\s+/', ' ', $output );
 
 		return $output;
-
 	}
 
 	/**

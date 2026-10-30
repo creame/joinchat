@@ -69,7 +69,6 @@ class Joinchat_Common {
 		}
 
 		return self::$instance;
-
 	}
 
 	/**
@@ -82,7 +81,6 @@ class Joinchat_Common {
 
 		add_action( 'admin_init', array( $this, 'load_settings' ), 5 );
 		add_action( 'wp', array( $this, 'load_settings' ) );
-
 	}
 
 	/**
@@ -132,7 +130,6 @@ class Joinchat_Common {
 		}
 
 		return $defaults[ $key ] ?? false;
-
 	}
 
 	/**
@@ -213,7 +210,6 @@ class Joinchat_Common {
 		$this->settings = apply_filters( 'joinchat_settings', $settings );
 
 		return $this->settings;
-
 	}
 
 	/**
@@ -228,7 +224,6 @@ class Joinchat_Common {
 	public function get_iti_version() {
 
 		return apply_filters( 'joinchat_enhanced_phone', self::INTL_TEL_INPUT_VERSION );
-
 	}
 
 	/**
@@ -262,7 +257,6 @@ class Joinchat_Common {
 		$post_types = (array) apply_filters( 'joinchat_post_types', $post_types );
 
 		return array_unique( $post_types );
-
 	}
 
 	/**
@@ -288,7 +282,6 @@ class Joinchat_Common {
 		$taxonomies = (array) apply_filters( 'joinchat_taxonomies', $taxonomies );
 
 		return array_unique( $taxonomies );
-
 	}
 
 	/**
@@ -310,7 +303,6 @@ class Joinchat_Common {
 			$obj,
 			$this->settings
 		);
-
 	}
 
 	/**
@@ -323,7 +315,6 @@ class Joinchat_Common {
 	public function get_obj_vars( $obj ) {
 
 		return (array) apply_filters( 'joinchat_metabox_vars', array( 'SITE', 'TITLE', 'HOME', 'URL', 'HREF' ), $obj );
-
 	}
 
 	/**
@@ -369,7 +360,6 @@ class Joinchat_Common {
 		list($h, $s, $l)    = Joinchat_Util::rgb2hsl( $r, $g, $b );
 
 		return array( $h, $s, $l, (int) $text );
-
 	}
 }
 
@@ -383,5 +373,4 @@ class Joinchat_Common {
 function jc_common() {
 
 	return Joinchat_Common::instance();
-
 }

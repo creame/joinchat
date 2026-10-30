@@ -35,7 +35,6 @@ class Joinchat_Admin_Onboard {
 		}
 
 		add_action( "load-{$page_hook}", function() { do_action( 'load_joinchat_onboard_page' ); } ); // phpcs:ignore
-
 	}
 
 	/**
@@ -60,7 +59,6 @@ class Joinchat_Admin_Onboard {
 				remove_submenu_page( JOINCHAT_SLUG, JOINCHAT_SLUG );
 			}
 		}
-
 	}
 
 	/**
@@ -75,7 +73,6 @@ class Joinchat_Admin_Onboard {
 
 		add_filter( 'admin_title', array( $this, 'admin_title' ) );
 		add_filter( 'submenu_file', array( $this, 'submenu_file' ) );
-
 	}
 
 
@@ -116,7 +113,6 @@ class Joinchat_Admin_Onboard {
 	public static function admin_title( $admin_title ) {
 
 		return sprintf( '%s &lsaquo; %s', esc_html__( 'Welcome to Joinchat', 'creame-whatsapp-me' ), esc_html( get_bloginfo( 'name' ) ) );
-
 	}
 
 	/**
@@ -129,7 +125,6 @@ class Joinchat_Admin_Onboard {
 	public function submenu_file( $submenu_file ) {
 
 		return JOINCHAT_SLUG;
-
 	}
 
 	/**
@@ -209,7 +204,6 @@ class Joinchat_Admin_Onboard {
 		wp_enqueue_script( $handle, plugins_url( "js/joinchat-onboard{$min}.js", __FILE__ ), $js_deps, JOINCHAT_VERSION, true );
 		wp_add_inline_script( $handle, 'var joinchat_settings = ' . wp_json_encode( $config ) . ';', 'before' );
 		wp_localize_script( $handle, 'joinchat_l10n', $l10n );
-
 	}
 
 	/**
@@ -257,6 +251,5 @@ class Joinchat_Admin_Onboard {
 		} else {
 			wp_send_json_success();
 		}
-
 	}
 }

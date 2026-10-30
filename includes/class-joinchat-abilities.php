@@ -40,7 +40,6 @@ class Joinchat_Abilities {
 
 		add_action( 'wp_abilities_api_categories_init', array( __CLASS__, 'register_categories' ) );
 		add_action( 'wp_abilities_api_init', array( __CLASS__, 'register_abilities' ) );
-
 	}
 
 	/**

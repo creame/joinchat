@@ -179,7 +179,6 @@ class Joinchat_Util {
 		}
 
 		return $thumb;
-
 	}
 
 	/**
@@ -199,7 +198,6 @@ class Joinchat_Util {
 		}
 
 		return false;
-
 	}
 
 	/**
@@ -269,7 +267,6 @@ class Joinchat_Util {
 		}
 
 		return preg_replace( $patterns, $replacements, $string );
-
 	}
 
 	/**
@@ -300,7 +297,6 @@ class Joinchat_Util {
 		}
 
 		return $replacements;
-
 	}
 
 	/**
@@ -337,7 +333,6 @@ class Joinchat_Util {
 		}
 
 		return $replacement;
-
 	}
 
 	/**
@@ -371,7 +366,6 @@ class Joinchat_Util {
 		remove_filter( 'document_title_parts', $filter, 100 ); // Remove our filter.
 
 		return apply_filters( 'joinchat_get_title', $title );
-
 	}
 
 	/**
@@ -386,7 +380,6 @@ class Joinchat_Util {
 		$json_options = JSON_HEX_APOS | JSON_HEX_QUOT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES;
 
 		return wp_json_encode( $data, apply_filters( 'joinchat_json_options', $json_options ) );
-
 	}
 
 	/**
@@ -401,7 +394,6 @@ class Joinchat_Util {
 	public static function capability( $capability = '' ) {
 
 		return apply_filters( 'joinchat_capability', $capability ?: 'manage_options' ); //phpcs:ignore WordPress.PHP.DisallowShortTernary
-
 	}
 
 	/**
@@ -414,7 +406,6 @@ class Joinchat_Util {
 	public static function options_submenu() {
 
 		return 'manage_options' === self::capability() && apply_filters( 'joinchat_submenu', false );
-
 	}
 
 	/**
@@ -428,21 +419,6 @@ class Joinchat_Util {
 	public static function admin_url( $page = JOINCHAT_SLUG ) {
 
 		return add_query_arg( 'page', $page, admin_url( self::options_submenu() ? 'options-general.php' : 'admin.php' ) );
-
-	}
-
-	/**
-	 * Can use Gutenberg
-	 *
-	 * Require at least WordPress 5.9
-	 *
-	 * @since    4.5.2
-	 * @return bool
-	 */
-	public static function can_gutenberg() {
-
-		return function_exists( 'register_block_type' ) && is_wp_version_compatible( '5.9' );
-
 	}
 
 	/**
@@ -464,7 +440,6 @@ class Joinchat_Util {
 		}
 
 		return false;
-
 	}
 
 	/**
@@ -486,7 +461,6 @@ class Joinchat_Util {
 		);
 
 		return add_query_arg( $args, "https://join.chat/$lang/$path" );
-
 	}
 
 	/**
@@ -516,7 +490,6 @@ class Joinchat_Util {
 		}
 
 		return $css;
-
 	}
 
 	/**
@@ -597,17 +570,17 @@ class Joinchat_Util {
 		$l = ( $max + $min ) / 2;
 		$d = $max - $min;
 
-		if ( $d == 0 ) {
+		if ( 0 == $d ) { // phpcs:ignore Universal.Operators.StrictComparisons
 			$h = $s = 0;
 		} else {
 			$s = $d / ( 1 - abs( 2 * $l - 1 ) );
 
-			if ( $max == $r ) {
+			if ( $max == $r ) { // phpcs:ignore Universal.Operators.StrictComparisons
 				$h = 60 * fmod( ( ( $g - $b ) / $d ), 6 );
 				if ( $b > $g ) {
 					$h += 360;
 				}
-			} elseif ( $max == $g ) {
+			} elseif ( $max == $g ) { // phpcs:ignore Universal.Operators.StrictComparisons
 				$h = 60 * ( ( $b - $r ) / $d + 2 );
 			} else {
 				$h = 60 * ( ( $r - $g ) / $d + 4 );
@@ -671,16 +644,5 @@ if ( ! function_exists( 'did_filter' ) ) {
 		}
 
 		return $wp_filters[ $hook_name ];
-	}
-}
-
-/**
- * Checks compatibility with the current WordPress version.
- *
- * In WordPress since 5.2.0
- */
-if ( ! function_exists( 'is_wp_version_compatible' ) ) {
-	function is_wp_version_compatible( $version ) {
-		return version_compare( get_bloginfo( 'version' ), $version, '>=' );
 	}
 }
