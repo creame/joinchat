@@ -384,14 +384,16 @@ class Joinchat_I18n {
 				return '';
 			}
 
-			return '<img src="' . esc_url( $language['country_flag_url'] ) . '" alt="' . esc_attr( $language['language_code'] ?? '' ) . '" height="12" width="18" />';
+			return '<img src="' . esc_url( $language['country_flag_url'] ) . '" alt="' . esc_attr( $language['language_code'] ) . '" height="12" width="18" style="vertical-align:middle;" />';
 		}
 
 		if ( $this->is_ml( 'polylang' ) ) {
 			$languages = pll_the_languages( array( 'raw' => 1, 'show_flags' => 1 ) ); // phpcs:ignore WordPress.Arrays.ArrayDeclarationSpacing.AssociativeArrayFound
 			$language  = $languages[ (string) pll_default_language() ] ?? array();
 
-			return $language['flag'] ?? '';
+			$flag = preg_replace( '/\sstyle=(["\']).*?\1/i', '', $language['flag'] ?? '' );
+
+			return str_replace( '<img ', '<img style="vertical-align:middle;" ', $flag );
 		}
 
 		if ( $this->is_ml( 'translatepress' ) ) {
@@ -400,7 +402,7 @@ class Joinchat_I18n {
 			$flag_path = apply_filters( 'trp_flags_path', TRP_PLUGIN_URL . 'assets/images/flags/', $language );
 			$flag_file = apply_filters( 'trp_flag_file_name', $language . '.png', $language );
 
-			return '<img src="' . esc_url( $flag_path . $flag_file ) . '" alt="' . esc_attr( $language ) . '" height="12" width="18" />';
+			return '<img src="' . esc_url( $flag_path . $flag_file ) . '" alt="' . esc_attr( $language ) . '" height="12" width="18" style="vertical-align:middle;" />';
 		}
 
 		return '';
