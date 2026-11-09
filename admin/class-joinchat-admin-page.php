@@ -743,6 +743,8 @@ class Joinchat_Admin_Page {
 					'<span><strong>' . esc_html__( 'Horizontal Rule', 'creame-whatsapp-me' ) . '</strong> ➜ <code>---</code></span><br>' .
 					'<span><strong>' . esc_html__( 'Random Text', 'creame-whatsapp-me' ) . '</strong> ➜ <code>{RAND text_1||text_2||...||text_n}</code> (' . esc_html__( 'show a random option', 'creame-whatsapp-me' ) . ')</span>' .
 				'</p>' .
+				/* translators: %s: the code. */
+				'<p>' . sprintf( esc_html__( 'On links and buttons, add %s at the start of the URL to force opening in a new tab:', 'creame-whatsapp-me' ), '<code>!</code>' ) . ' <code>{BTN !https://www.example.com title}</code></p>' .
 				'<p>' . esc_html__( 'Elements can be combined. For example, for an image with link:', 'creame-whatsapp-me' ) . ' <code>{LINK https://www.example.com {IMG image.jpg}}</code></p>' .
 				'<p>' .
 					esc_html__( 'On images you can use the image url or the image ID of your Media Library.', 'creame-whatsapp-me' ) . ' ' .
