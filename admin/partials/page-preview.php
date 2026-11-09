@@ -204,7 +204,7 @@ defined( 'WPINC' ) || exit;
 		if (!src) return '<code class="not-found">Image not found</code>';
 
 		const width = w ? ` width="${w}"` : '';
-		const altText = alt ? ` alt="${alt}"` : '';
+		const altText = alt ? ` alt="${alt.replace(/<[^>]*>/g, '')}"` : '';
 		const cls = w <= 340 ? ' class="joinchat--inline"' : '';
 
 		if (src.endsWith('.webm') || src.endsWith('.mp4')) return `<video${cls} autoplay loop muted playsinline src="${src}"${width}></video>`;
@@ -245,6 +245,8 @@ defined( 'WPINC' ) || exit;
 		str = str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
 		// Transform placeholders
 		str = str.replace(/{([A-Z]+)}/g, '&lcub;$1&rcub;');
+		// Protect link and image URLs from text formats
+		str = str.replace(/\]\([^)]+\)|\{(?:LINK|BTN|IMG) [^ }]+/gu, match => match.replace(/[_*~`]/g, char => `&#${char.charCodeAt(0)};`));
 
 		str = str.replace(/(^|\W)_(.+?)_(\W|$)/gu, '$1<em>$2</em>$3');           // Italic
 		str = str.replace(/(^|\W)\*(.+?)\*(\W|$)/gu, '$1<strong>$2</strong>$3'); // Bold

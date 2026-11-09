@@ -28,6 +28,19 @@ class Joinchat_Formatter {
 	private static $initialized = false;
 
 	/**
+	 * URL characters that would trigger text formats and their placeholders.
+	 *
+	 * @since    6.3.2
+	 * @var array<string, string>
+	 */
+	private const URL_CHARS = array(
+		'_' => '&#95;',
+		'*' => '&#42;',
+		'~' => '&#126;',
+		'`' => '&#96;',
+	);
+
+	/**
 	 * Initialize the formatter hooks.
 	 *
 	 * @since    6.3.2
@@ -134,10 +147,14 @@ class Joinchat_Formatter {
 	 */
 	public static function formatter( $replacements ) {
 
-		// MarkDown bold to WhatsApp bold.
 		$before = array(
-			'/(^|\W)\*\*(.+?)\*\*(\W|$)/u' => '$1*$2*$3',
-			'/(^|\W)__(.+?)__(\W|$)/u'     => '$1*$2*$3',
+			// Protect link and image URLs from text formats.
+			'/\]\([^)]+\)|\{(?:LINK|BTN|IMG) [^ }]+/u' => function ( $groups ) {
+				return strtr( $groups[0], self::URL_CHARS );
+			},
+			// MarkDown bold to WhatsApp bold.
+			'/(^|\W)\*\*(.+?)\*\*(\W|$)/u'             => '$1*$2*$3',
+			'/(^|\W)__(.+?)__(\W|$)/u'                 => '$1*$2*$3',
 		);
 
 		$formats = array();
@@ -252,8 +269,9 @@ class Joinchat_Formatter {
 	private static function link( $groups ) {
 
 		// A leading "!" forces the link to open in a new tab.
-		$new_tab = '!' === substr( $groups['href'], 0, 1 );
-		$href    = self::restore_and_replace( $new_tab ? substr( $groups['href'], 1 ) : $groups['href'], 'raw' );
+		$url     = self::restore_url( $groups['href'] );
+		$new_tab = '!' === substr( $url, 0, 1 );
+		$href    = self::restore_and_replace( $new_tab ? substr( $url, 1 ) : $url, 'raw' );
 		$text    = ! empty( $groups['text'] ) ? self::restore_and_replace( $groups['text'], 'html' ) : preg_replace( '/^https?:\/\//u', '', $href );
 		$class   = ! empty( $groups['class'] ) ? ' class="' . esc_attr( $groups['class'] ) . '"' : '';
 		$rel     = '';
@@ -329,9 +347,9 @@ class Joinchat_Formatter {
 
 		$chat_max = 340; // Chat window max width.
 
-		$src = self::restore_and_replace( $groups['src'], 'raw' );
+		$src = self::restore_and_replace( self::restore_url( $groups['src'] ), 'raw' );
 		$w   = isset( $groups['w'] ) && is_numeric( $groups['w'] ) ? $groups['w'] : $chat_max;
-		$alt = isset( $groups['alt'] ) ? self::restore_and_replace( $groups['alt'], 'attr' ) : '';
+		$alt = isset( $groups['alt'] ) ? self::restore_and_replace( wp_strip_all_tags( $groups['alt'] ), 'attr' ) : '';
 		$alt = 'alt="' . $alt . '"';
 
 		// If is post featured image.
@@ -393,6 +411,17 @@ class Joinchat_Formatter {
 		$output = preg_replace( '/\s+/', ' ', $output );
 
 		return $output;
+	}
+
+	/**
+	 * Restore URL characters protected from text formats.
+	 *
+	 * @since 6.3.2
+	 * @param string $url url to restore.
+	 * @return string
+	 */
+	private static function restore_url( $url ) {
+		return strtr( $url, array_flip( self::URL_CHARS ) );
 	}
 
 	/**
