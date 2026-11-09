@@ -260,13 +260,13 @@ class Joinchat_Util {
 
 		$replacements = self::get_variable_replacements( $context );
 
-		// Patterns as regex {VAR}.
-		$patterns = array();
+		// Use strtr() so values are literal and never replaced again.
+		$pairs = array();
 		foreach ( $replacements as $var => $replacement ) {
-			$patterns[] = "/\{$var\}/u";
+			$pairs[ '{' . $var . '}' ] = $replacement;
 		}
 
-		return preg_replace( $patterns, $replacements, $string );
+		return strtr( $string, $pairs );
 	}
 
 	/**

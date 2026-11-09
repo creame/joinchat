@@ -248,10 +248,10 @@ defined( 'WPINC' ) || exit;
 		// Protect link and image URLs from text formats
 		str = str.replace(/\]\([^)]+\)|\{(?:LINK|BTN|IMG) [^ }]+/gu, match => match.replace(/[_*~`]/g, char => `&#${char.charCodeAt(0)};`));
 
-		str = str.replace(/(^|\W)_(.+?)_(\W|$)/gu, '$1<em>$2</em>$3');           // Italic
-		str = str.replace(/(^|\W)\*(.+?)\*(\W|$)/gu, '$1<strong>$2</strong>$3'); // Bold
-		str = str.replace(/(^|\W)~(.+?)~(\W|$)/gu, '$1<del>$2</del>$3');         // Strikethrough
-		str = str.replace(/(^|\W)`(.+?)`(\W|$)/gu, '$1<code>$2</code>$3');       // Code
+		str = str.replace(/(^|\W)_(\S(?:.*?\S)??)_(?!\w)/gu, '$1<em>$2</em>');           // Italic
+		str = str.replace(/(^|\W)\*(\S(?:.*?\S)??)\*(?!\w)/gu, '$1<strong>$2</strong>'); // Bold
+		str = str.replace(/(^|\W)~(\S(?:.*?\S)??)~(?!\w)/gu, '$1<del>$2</del>');         // Strikethrough
+		str = str.replace(/(^|\W)`(\S(?:.*?\S)??)`(?!\w)/gu, '$1<code>$2</code>');       // Code
 		str = str.replace(/\n-{3,}\n/gu, '<hr>');                                // Horizontal rule
 		str = str.replace(/\n/g, '<br>');                                        // Line breaks
 

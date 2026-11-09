@@ -30,7 +30,7 @@ class Joinchat_Formatter {
 	/**
 	 * URL characters that would trigger text formats and their placeholders.
 	 *
-	 * @since    6.3.2
+	 * @since    6.4.3
 	 * @var array<string, string>
 	 */
 	private const URL_CHARS = array(
@@ -150,11 +150,11 @@ class Joinchat_Formatter {
 		$before = array(
 			// Protect link and image URLs from text formats.
 			'/\]\([^)]+\)|\{(?:LINK|BTN|IMG) [^ }]+/u' => function ( $groups ) {
-				return strtr( $groups[0], self::URL_CHARS );
+				return self::protect_attr( $groups[0] );
 			},
 			// MarkDown bold to WhatsApp bold.
-			'/(^|\W)\*\*(.+?)\*\*(\W|$)/u'             => '$1*$2*$3',
-			'/(^|\W)__(.+?)__(\W|$)/u'                 => '$1*$2*$3',
+			'/(^|\W)\*\*(\S(?:.*?\S)??)\*\*(?!\w)/u'   => '$1*$2*',
+			'/(^|\W)__(\S(?:.*?\S)??)__(?!\w)/u'       => '$1*$2*',
 		);
 
 		$formats = array();
@@ -163,25 +163,25 @@ class Joinchat_Formatter {
 		 * WhatsApp italic
 		 * *text* => <em>text</em>
 		 */
-		$formats['/(^|\W)_(.+?)_(\W|$)/u'] = '$1<em>$2</em>$3';
+		$formats['/(^|\W)_(\S(?:.*?\S)??)_(?!\w)/u'] = '$1<em>$2</em>';
 
 		/**
 		 * WhatsApp bold
 		 * *text* => <strong>text</strong>
 		 */
-		$formats['/(^|\W)\*(.+?)\*(\W|$)/u'] = '$1<strong>$2</strong>$3';
+		$formats['/(^|\W)\*(\S(?:.*?\S)??)\*(?!\w)/u'] = '$1<strong>$2</strong>';
 
 		/**
 		 * WhatsApp strikethrough
 		 * ~text~ => <del>text</del>
 		 */
-		$formats['/(^|\W)~(.+?)~(\W|$)/u'] = '$1<del>$2</del>$3';
+		$formats['/(^|\W)~(\S(?:.*?\S)??)~(?!\w)/u'] = '$1<del>$2</del>';
 
 		/**
 		 * Markdown code
 		 * `your code` => <code>your code</code>
 		 */
-		$formats['/(^|\W)`(.+?)`(\W|$)/u'] = '$1<code>$2</code>$3';
+		$formats['/(^|\W)`(\S(?:.*?\S)??)`(?!\w)/u'] = '$1<code>$2</code>';
 
 		/**
 		 * Markdown horizontal rule
@@ -414,9 +414,23 @@ class Joinchat_Formatter {
 	}
 
 	/**
+	 * Keep text formats (italic, bold...) out of a URL or html attribute value.
+	 *
+	 * For replacements that output html before text formats are applied.
+	 * The browser decodes these entities when it parses the attribute.
+	 *
+	 * @since 6.4.3
+	 * @param string $value url or attribute value.
+	 * @return string
+	 */
+	public static function protect_attr( $value ) {
+		return strtr( $value, self::URL_CHARS );
+	}
+
+	/**
 	 * Restore URL characters protected from text formats.
 	 *
-	 * @since 6.3.2
+	 * @since 6.4.3
 	 * @param string $url url to restore.
 	 * @return string
 	 */
