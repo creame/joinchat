@@ -176,7 +176,7 @@ class Joinchat_Formatter {
 		 * Markdown image
 		 * ![alt text](image.jpg width) => <img src="image.jpg" alt="alt text" width="width">
 		 */
-		$formats['/!\[(?<alt>.*?)\]\((?<src>[^\) ]*)(?: (?<w>\d+))?\)/u'] = function ( $groups ) {
+		$formats['/!\[(?<alt>[^\]]*)\]\((?<src>[^\) ]*)(?: (?<w>\d+))?\)/u'] = function ( $groups ) {
 			return self::image( $groups );
 		};
 
@@ -251,14 +251,18 @@ class Joinchat_Formatter {
 	 */
 	private static function link( $groups ) {
 
-		$href  = self::restore_and_replace( $groups['href'], 'raw' );
-		$text  = ! empty( $groups['text'] ) ? self::restore_and_replace( $groups['text'], 'html' ) : preg_replace( '/^https?:\/\//u', '', $href );
-		$class = ! empty( $groups['class'] ) ? ' class="' . esc_attr( $groups['class'] ) . '"' : '';
-		$rel   = '';
-		$blank = '';
+		// A leading "!" forces the link to open in a new tab.
+		$new_tab = '!' === substr( $groups['href'], 0, 1 );
+		$href    = self::restore_and_replace( $new_tab ? substr( $groups['href'], 1 ) : $groups['href'], 'raw' );
+		$text    = ! empty( $groups['text'] ) ? self::restore_and_replace( $groups['text'], 'html' ) : preg_replace( '/^https?:\/\//u', '', $href );
+		$class   = ! empty( $groups['class'] ) ? ' class="' . esc_attr( $groups['class'] ) . '"' : '';
+		$rel     = '';
+		$blank   = $new_tab ? ' target="_blank"' : '';
 
 		// Check if is an external link and add rel attribute for better SEO & Security.
-		if ( wp_parse_url( $href, PHP_URL_HOST ) !== wp_parse_url( get_home_url(), PHP_URL_HOST ) ) {
+		$host = wp_parse_url( $href, PHP_URL_HOST );
+
+		if ( $host && wp_parse_url( get_home_url(), PHP_URL_HOST ) !== $host ) {
 			$rel   = ' rel="external nofollow noopener noreferrer"';
 			$blank = ' target="_blank"';
 		}

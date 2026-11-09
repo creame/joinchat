@@ -254,13 +254,13 @@ defined( 'WPINC' ) || exit;
 		str = str.replace(/\n/g, '<br>');                                        // Line breaks
 
 		// Images
-		str = str.replace(/!\[(?<alt>.*?)\]\((?<src>[^\) ]*)(?: (?<w>\d+))?\)/gu, (match, alt, src, w) => getImage(src, alt, w));
+		str = str.replace(/!\[(?<alt>[^\]]*)\]\((?<src>[^\) ]*)(?: (?<w>\d+))?\)/gu, (match, alt, src, w) => getImage(src, alt, w));
 		str = str.replace(/{IMG (?<src>[^ }]+)(?: (?<w>\d+))?(?: (?<alt>[^}]+))?}/g, (match, src, w, alt) => getImage(src, alt, w));
 
 		// Links
-		str = str.replace(/\[([^\]]+)\]\((https?:\/\/[^\s]+)\)/gu, '<a href="$2" target="_blank" rel="noopener">$1</a>');
-		str = str.replace(/\{LINK\s+([^\s]+)\s+([^\}]+)\}/gu, '<a href="$1" target="_blank" rel="noopener">$2</a>');
-		str = str.replace(/\{BTN\s+([^\s]+)\s+([^\}]+)\}/gu, '<a href="$1" class="joinchat__btn" target="_blank" rel="noopener">$2</a>');
+		str = str.replace(/\[([^\]]+)\]\(!?(https?:\/\/[^\s]+)\)/gu, '<a href="$2" target="_blank" rel="noopener">$1</a>');
+		str = str.replace(/\{LINK\s+!?([^\s]+)\s+([^\}]+)\}/gu, '<a href="$1" target="_blank" rel="noopener">$2</a>');
+		str = str.replace(/\{BTN\s+!?([^\s]+)\s+([^\}]+)\}/gu, '<a href="$1" class="joinchat__btn" target="_blank" rel="noopener">$2</a>');
 
 		// Random text
 		str = str.replace(/{RAND (?<text>[^}]+)}/g, (match, text) => {
