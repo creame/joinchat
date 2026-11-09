@@ -268,15 +268,15 @@ msgstr "Call to Action"
 
 #: admin/class-joinchat-woo-admin.php:211
 msgid "Call to Action for Products"
-msgstr "Chiamata all'azione per i prodotti"
+msgstr "Call to Action per i prodotti"
 
 #: admin/class-joinchat-woo-admin.php:212
 msgid "Call to Action for Products on Sale"
-msgstr "Chiamata all'azione per i prodotti in saldo"
+msgstr "Call to Action per i prodotti in saldo"
 
 #: includes/class-joinchat-abilities.php:364
 msgid "Call to Action text"
-msgstr "Testo della chiamata all'azione"
+msgstr "Testo della Call to Action"
 
 #: admin/class-joinchat-admin-page.php:766
 msgid "Can set delay in seconds, default is 0."
@@ -490,7 +490,7 @@ msgstr ""
 
 #: admin/class-joinchat-admin-page.php:719
 msgid "Enhance your Calls to Action with a rich chat."
-msgstr "Potenzia le tue chiamate all'azione con una chat ricca."
+msgstr "Potenzia le tue Call to Action con una chat ricca."
 
 #: admin/class-joinchat-admin-onboard.php:93
 msgid "Exit the wizard and"
@@ -519,8 +519,8 @@ msgid ""
 "For the <strong>Call to Action for Products on Sale</strong>, you can also "
 "use:"
 msgstr ""
-"Per la <strong>Chiamata all'azione per i prodotti in saldo</strong>, puoi "
-"anche usare:"
+"Per la <strong>Call to Action per i prodotti in saldo</strong>, puoi anche "
+"usare:"
 
 #: admin/class-joinchat-admin-page.php:686
 msgid ""
@@ -999,7 +999,7 @@ msgstr ""
 #: admin/class-joinchat-admin-onboard.php:188
 msgctxt "onboard"
 msgid "I don't want a CTA"
-msgstr "Non voglio un CTA"
+msgstr "Non voglio una CTA"
 
 #: admin/class-joinchat-admin-onboard.php:183
 msgctxt "onboard"
@@ -1055,7 +1055,7 @@ msgstr "Solo se è definita una \"Call to Action\"."
 
 #: admin/class-joinchat-admin-page.php:794
 msgid "only show if it's an not seen CTA."
-msgstr "mostra solo se si tratta di un CTA non visto."
+msgstr "mostra solo se si tratta di una CTA non vista."
 
 #: admin/class-joinchat-woo-admin.php:133
 msgid "Only when product has price"
@@ -1272,15 +1272,15 @@ msgstr "Invia automaticamente la conversione all'inizio della chat"
 
 #: includes/class-joinchat-abilities.php:355
 msgid "Set Call to Action"
-msgstr "Imposta la chiamata all'azione"
+msgstr "Imposta la Call to Action"
 
 #: includes/class-joinchat-abilities.php:356
 msgid ""
 "Set the call to action text for the Joinchat chat window globally or for "
 "current context"
 msgstr ""
-"Imposta il testo della chiamata all'azione per la finestra di chat Joinchat "
-"a livello globale o per il contesto attuale"
+"Imposta il testo della Call to Action per la finestra di chat Joinchat a "
+"livello globale o per il contesto attuale"
 
 #: admin/class-joinchat-admin-page.php:317
 msgid ""
