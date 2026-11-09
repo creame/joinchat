@@ -199,9 +199,10 @@ defined( 'WPINC' ) || exit;
 	};
 
 	let images_cache = {};
+	const image_not_found = '<code class="not-found"><?php echo esc_js( __( 'Image not found', 'creame-whatsapp-me' ) ); ?></code>';
 
 	const getImageTag = (src, alt, w) => {
-		if (!src) return '<code class="not-found">Image not found</code>';
+		if (!src) return image_not_found;
 
 		const width = w ? ` width="${w}"` : '';
 		const altText = alt ? ` alt="${alt.replace(/<[^>]*>/g, '')}"` : '';
@@ -234,7 +235,7 @@ defined( 'WPINC' ) || exit;
 		try {
 			new URL(src);
 		} catch (_) {
-			return '<code class="not-found">Image not found</code>';
+			return image_not_found;
 		}
 
 		return getImageTag(src, alt, w);

@@ -400,7 +400,7 @@ class Joinchat_Formatter {
 		}
 
 		if ( ! count( $sizes ) ) {
-			$output = '<code class="not-found">Image not found</code>';
+			$output = '<code class="not-found">' . esc_html__( 'Image not found', 'creame-whatsapp-me' ) . '</code>';
 		} elseif ( $is_video ) {
 			$output = sprintf( '<video src="%s" %s %s autoplay loop muted playsinline></video>', $sizes[1], $width, $class );
 		} else {

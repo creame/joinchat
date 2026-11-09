@@ -5,7 +5,7 @@ Tags: WhatsApp, WhatsApp Button, Click to Chat, Floating Button, Chat
 Requires at least: 5.9
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 6.4.2
+Stable tag: 6.4.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -37,7 +37,7 @@ A complete WhatsApp conversion toolkit for WordPress, designed to capture more l
 * **Eye-catching CTAs** to greet visitors, present offers and start the chat with the right message.
 * **Dynamic start messages** so every conversation arrives with full context (the page, the product, the price, the discount…).
 * **WooCommerce integration**, with a contact button next to "Add to cart" and shop-specific CTAs.
-* **Analytics built in** — 🆕 — Clicks counter in your WordPress dashboard. Events for Google Analytics 4, Google Tag Manager and Facebook Pixel, plus Google Ads conversions.
+* **Analytics built in** — Clicks counter in your WordPress dashboard. Events for Google Analytics 4, Google Tag Manager and Facebook Pixel, plus Google Ads conversions.
 * **Lightweight and fast** — JavaScript with no dependencies and lazy-loaded styles. No render-blocking.
 * **Customizable site-wide** or at the page, product, category, etc. level.
 
@@ -61,6 +61,8 @@ Joinchat Free is just the start. **Premium and AI** unlock its full conversion p
 
 **[👉 Get Joinchat Premium](https://join.chat/en/premium/?utm_source=wporg&utm_medium=web)** | **[👉 Get Joinchat AI](https://join.chat/en/ai/?utm_source=wporg&utm_medium=web)**
 
+## Features
+
 ### 📝 Settings at page or archive level
 You can **change main settings on every Post, Page, Product or CPT and for Tag or Category archive pages**. Edit your WhatsApp number, CTA, Start Message and Visibility options.
 
@@ -68,13 +70,13 @@ You can **change main settings on every Post, Page, Product or CPT and for Tag o
 Use a balloon on the button to get the visitor's attention. In this way, you ensure that you do not miss any important message you want to give them, surprise them in a less intrusive way.
 
 ### 📯 Create call-to-action messages
-CTAs with **Rich Chat**: multiple chat bubbles with links, buttons, images or random text. Encourage users to contact you with a welcome message, offering help or promotions and offers. [Read more](https://join.chat/es/joinchat-mucho-mas-que-un-click-to-chat/?utm_source=wporg&utm_medium=web)
+CTAs with **Rich Chat**: multiple chat bubbles with links, buttons, images or random text. Encourage users to contact you with a welcome message, offering help or promotions and offers. [Read more](https://join.chat/en/whatsapp-tips/joinchat-much-more-than-a-click-to-chat/?utm_source=wporg&utm_medium=web)
 
 ### 💬 Customize conversation start messages
-Defines a pre-loaded initial message for when the user contacts via WhatsApp. Add context with our "Dynamic Variables" and you will know what page the visitor is coming from or what product they are looking at when they start the chat.
+Define a pre-loaded initial message for when the user contacts via WhatsApp. Add context with our "Dynamic Variables" and you will know what page the visitor is coming from or what product they are looking at when they start the chat.
 
 ### ✅ Opt-in text
-Opt-in is a users' consent to receive messages from a business.
+Opt-in is a user's consent to receive messages from a business.
 
 Write a text with the conditions under which the visitor contacts you (or other info that you consider important).
 
@@ -102,15 +104,15 @@ Use variables in your CTAs and Start Messages that change dynamically for each p
 - **{SKU}** ➡ Product SKU (Woo)
 - **{REGULAR}** ➡ Product regular price (Woo)
 - **{PRICE}** ➡ Product current price (Woo)
-- **{DISCOUNT}** ➡ Product percent discount when is on sale (Woo)
+- **{DISCOUNT}** ➡ Product percent discount when it's on sale (Woo)
 
 ### 📈 Analytics Integration
 Automatically send events to **Google Analytics, Google Tag Manager and Facebook Pixel** when the user opens WhatsApp.
 
-- — 🆕 — **Clicks counter** in your WordPress dashboard
-- **Google Analytics 4** send the recommended `"generate_lead"` event
-- **Google Tag Manager** send `"JoinChat"` event
-- **Facebook Pixel**  send `"JoinChat"` event
+- **Clicks counter** in your WordPress dashboard
+- **Google Analytics 4** sends the recommended `"generate_lead"` event
+- **Google Tag Manager** sends `"JoinChat"` event
+- **Facebook Pixel** sends `"JoinChat"` event
 - **Google Ads** conversion, just add your Conversion ID and Conversion Label
 
 You can also **create your own custom events or add event parameters**. [View FAQs](https://wordpress.org/plugins/creame-whatsapp-me/faq/) / [Read more](https://join.chat/en/joinchat-measures-whatsapp-events-in-google-analytics/?utm_source=wporg&utm_medium=web)
@@ -141,13 +143,13 @@ Set **custom phone and initial message** for direct WhatsApp triggers:
 * class `"joinchat_force_show"` opens Joinchat CTA (always)
 
 ### 💱 Multi-Language & RTL Support
-To be able to support all your users, wherever they are. Our plugin is **compatible with WPML, Polylang and — 🆕 — TranslatePress** and also **RTL languages** are supported.
+To be able to support all your users, wherever they are. Our plugin is **compatible with WPML, Polylang and TranslatePress** and also **RTL languages** are supported.
 
 ### 🌈 Theme Colors & 🌚 Dark Mode
-You choose a color and we customize the entire visual theme of the widget. With Dark Mode display the chat window with dark colors and white text. From settings you can activate it or leave it automatic and detects devices' configuration.
+You choose a color and we customize the entire visual theme of the widget. With Dark Mode display the chat window with dark colors and white text. From settings you can activate it or leave it on automatic to detect the device's configuration.
 
 ### ⚡ Fast & Light
-Only load what need when needed. Joinchat is lightweight and follow best coding practices. Use vanilla **JavaScript without dependencies**, deferred scripts and lazy load of styles to **prevent render-blocking**.
+Only loads what's needed, when it's needed. Joinchat is lightweight and follows best coding practices. Uses vanilla **JavaScript without dependencies**, deferred scripts and lazy load of styles to **prevent render-blocking**.
 
 See [Tests Report](https://wphive.com/plugins/creame-whatsapp-me/) and [Speed Score](https://makewpfast.com/plugins/creame-whatsapp-me/).
 
@@ -157,9 +159,9 @@ Joinchat integrates with all major Visual Editors and Page Builders and will not
 Supported editors: **Beaver Builder**, **Brizy Page Builder**, **Elementor**, **Oxygen Builder**, **Page Builder by SiteOrigin**, **Thrive Architect**, **Visual Composer** and **WP Page Builder**.
 
 ### 🍪 Cookies & GDPR
-Joinchat can be used without any cookies or persisten storage and don't collect personal data.
+Joinchat can be used without any cookies or persistent storage and doesn't collect personal data.
 
-Joinchat integrates with *Wordpress's Privacy Policy Guide* and suggests the necessary text.
+Joinchat integrates with *WordPress's Privacy Policy Guide* and suggests the necessary text.
 
 ### 👨‍💻 Developer friendly
 Fully extensible, with lots of filters and actions to extend its functionality or change behavior.
@@ -229,7 +231,7 @@ For custom direct WhatsApp links you can add `data-phone` and `data-message` att
 
 = Disable enhanced telephone input =
 
-Joinchat uses International Telephone Input library to facilitate and validate the introduction of the phone number in the format of each country. If you have problems with your phone number or you want to write it directly without any changes you can disable it with this filter *(remember follow [WhatsApp guidelines](https://faq.whatsapp.com/general/contacts/how-to-add-an-international-phone-number))*:
+Joinchat uses International Telephone Input library to facilitate and validate the introduction of the phone number in the format of each country. If you have problems with your phone number or you want to write it directly without any changes you can disable it with this filter *(remember to follow [WhatsApp guidelines](https://faq.whatsapp.com/general/contacts/how-to-add-an-international-phone-number))*:
 
 `add_filter( 'joinchat_enhanced_phone', '__return_false' );`
 
@@ -259,7 +261,7 @@ If you have any errors with Gutenberg and Joinchat or simply prefer the old Join
 
 = WPML/Polylang/TranslatePress translations =
 
-Joinchat settings are saved in your site's main language. For other languages translation go to your multilanguage plugin on string translations, filter strings group by "Joinchat" on WPML/Polylang or filter by "JC" on TranslatePress. Then update the strings for each language.
+Joinchat settings are saved in your site's main language. For other languages translation go to your multilanguage plugin on string translations, filter strings group by "Join.chat" on WPML/Polylang or filter by "JC" on TranslatePress. Then update the strings for each language.
 
 = Google Tag with multiple destinations =
 
@@ -267,7 +269,7 @@ Joinchat since 5.1 can detect multiple destinations in Google Tag and send event
 
 = Google Analytics 4 integration =
 
-Joinchat sends a custom event when user launch WhatsApp.
+Joinchat sends a custom event when the user launches WhatsApp.
 
 If Google Analytics 4 (gtag.js) is detected, use the recommended `'generate_lead'` event:
 
@@ -280,7 +282,7 @@ If Google Analytics 4 (gtag.js) is detected, use the recommended `'generate_lead
     is_mobile: 'yes' | 'no',
 });`
 
-If your site don't have standard names for data layer ('dataLayer') you can set your custom names with this PHP filter. **Also can set a different event name for GA4**:
+If your site doesn't have standard names for data layer ('dataLayer') you can set your custom names with this PHP filter. **Also can set a different event name for GA4**:
 
 `// Rename GA4 event / Rename dataLayer name
 add_filter( 'joinchat_get_settings', function( $settings ){
@@ -299,7 +301,7 @@ Joinchat is compatible with plugins **MonsterInsights – Google Analytics Dashb
 
 = Google Tag Manager integration =
 
-Joinchat sends a `'JoinChat'` event if GTM is detected when user launch WhatsApp:
+Joinchat sends a `'JoinChat'` event if GTM is detected when the user launches WhatsApp:
 
 `dataLayer.push({
     event: 'JoinChat',
@@ -314,7 +316,7 @@ Joinchat sends a `'JoinChat'` event if GTM is detected when user launch WhatsApp
 
 = Facebook Pixel integration =
 
-Joinchat sends a `'JoinChat'` custom event if Facebook Pixel is detected when user launch WhatsApp:
+Joinchat sends a `'JoinChat'` custom event if Facebook Pixel is detected when the user launches WhatsApp:
 
 `fbq('trackCustom', 'JoinChat', {
     event_action: 'whatsapp: 99999999999',
@@ -328,18 +330,18 @@ Joinchat sends a `'JoinChat'` custom event if Facebook Pixel is detected when us
 
 = Custom Events / add Event Parameters =
 
-Joinchat triggers custom events before launch WhatsApp `'joinchat:open'` and before send analytics events `'joinchat:event'`.
+Joinchat triggers custom events before launching WhatsApp `'joinchat:open'` and before sending analytics events `'joinchat:event'`.
 
 You can use them to extend them to your needs, add extra functions, cancel events or add extra parameters.
 
 `// e.g.: Send webhook to Zapier
-jQuery(document).on('joinchat:event', function (event, params) {
-  jQuery.post('https://hooks.zapier.com/hooks/catch/123456/xxxxxx/', params );
+document.addEventListener('joinchat:event', function (event) {
+  fetch('https://hooks.zapier.com/hooks/catch/123456/xxxxxx/', { method: 'POST', body: new URLSearchParams(event.detail) });
 });
 
 // e.g.: Add user_is_logged param for GA4/GTM event
-jQuery(document).on('joinchat:event', function (event, params) {
-  params.user_is_logged = document.body.classList.contains('logged-in') ? 'yes' : 'no';
+document.addEventListener('joinchat:event', function (event) {
+  event.detail.user_is_logged = document.body.classList.contains('logged-in') ? 'yes' : 'no';
 });`
 
 = What about GDPR? =
@@ -379,9 +381,18 @@ To ensure a non-persistent data mode, you can use **Joinchat Premium** privacy c
 
 == Changelog ==
 
+= 6.4.3 =
+* **NEW** Add "!" at the start of link and button URLs to force opening in a new tab
+* Bump min WordPress version to 5.9 and PHP to 7.4
+* Change relative, anchor, `tel:` and `mailto:` links no longer open in a new tab
+* Change text formats no longer apply with spaces inside the marks (e.g. `* text *`)
+* Fix text formats breaking link and image URLs and image alt text
+* Fix adjacent text formats and "$" or "\" in dynamic variable values
+* Tweak smoother CSS animations
+
 = 6.4.2 =
 * Tweak prevent context menu in floating contact button
-* **Security fix** scape custom message in Joinchat Button block
+* **Security fix** escape custom message in Joinchat Button block
 
 = 6.4.1 =
 * Fix allow Google Ads conversions labels with more than 20 characters
@@ -504,4 +515,5 @@ See [changelog.txt](https://plugins.svn.wordpress.org/creame-whatsapp-me/trunk/c
 
 == Upgrade Notice ==
 
-For **Joinchat Premium** users it is recommended to update to v6.8.0
+= 6.4.3 =
+Requires WordPress 5.9 and PHP 7.4 or higher. For Joinchat Premium users it is recommended to update to v6.8.0 or later.
