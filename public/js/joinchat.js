@@ -5,7 +5,9 @@
   let is_starting = false;
   let start_blocked = false;
 
+
   // MARK: joinchat_obj
+
   joinchat_obj = {
     $div: null,
     settings: null,
@@ -320,7 +322,9 @@
     return joinchat_magic(true);
   }
 
+
   // MARK: Magic
+
   function joinchat_magic(skip_start_event = false) {
     if (joinchat_obj.is_ready || is_starting) return false;
 
@@ -532,6 +536,7 @@
       nextBubble();
     }, { once: true });
 
+
     // MARK: Triggers
 
     // TRIGGERS: open chatbox on load if query or anchor "joinchat" exists
@@ -580,7 +585,54 @@
   }
 
 
+  // MARK: Storage
+
+  /**
+   * Storage wrapper with the Web Storage methods (getItem, setItem, removeItem) that never throws.
+   * Falls back to memory (doesn't persist between page loads) when the browser storage
+   * isn't available (private mode, blocked site data...) or a write fails (quota exceeded).
+   *
+   * @param {string} type 'localStorage' or 'sessionStorage'
+   * @returns {object}
+   */
+  const create_storage = (type) => {
+    const memory = {};
+    let storage = null;
+
+    try {
+      storage = window[type];
+      storage.setItem('joinchat_test', '1');
+      storage.removeItem('joinchat_test');
+    } catch (e) {
+      storage = null;
+    }
+
+    return {
+      getItem(key) {
+        if (Object.prototype.hasOwnProperty.call(memory, key)) return memory[key];
+        try { return storage ? storage.getItem(key) : null; } catch (e) { return null; }
+      },
+      setItem(key, value) {
+        value = String(value);
+        try {
+          if (!storage) throw new Error('No storage');
+          storage.setItem(key, value);
+          delete memory[key];
+        } catch (e) {
+          memory[key] = value;
+          try { storage && storage.removeItem(key); } catch (e) { } // Don't keep a stale value
+        }
+      },
+      removeItem(key) {
+        delete memory[key];
+        try { storage && storage.removeItem(key); } catch (e) { }
+      },
+    };
+  };
+
+
   // MARK: Page Ready
+
   const on_page_ready = () => {
     joinchat_obj.$div = document.querySelector('.joinchat');
 
@@ -592,20 +644,8 @@
     // Only works if joinchat is defined
     if (!joinchat_obj.settings || !joinchat_obj.settings.telephone) return;
 
-    // Fallback if xStorage not supported (private mode)
-    // Implements functional storage in memory and will not persist between page loads
-    try {
-      const storage = joinchat_obj.settings.cookieless ? sessionStorage : localStorage;
-      storage.test = 2;
-      joinchat_obj.storage = storage;
-      storage.removeItem('test');
-    } catch (e) {
-      joinchat_obj.storage = {
-        _data: {},
-        setItem: function (id, val) { this._data[id] = String(val); },
-        getItem: function (id) { return this._data.hasOwnProperty(id) ? this._data[id] : null; }
-      };
-    }
+    // Common storage for Joinchat and its add-ons (sessionStorage on cookieless mode)
+    joinchat_obj.storage = create_storage(joinchat_obj.settings.cookieless ? 'sessionStorage' : 'localStorage');
 
     if (joinchat_obj.is_mobile || !joinchat_obj.settings.mobile_only) {
       joinchat_obj.start();
