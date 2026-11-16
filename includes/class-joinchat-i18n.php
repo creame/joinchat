@@ -48,6 +48,12 @@ class Joinchat_I18n {
 			// Allow third party plugins to register translations.
 			add_action( 'joinchat_register_translations', array( $this, 'register_translations' ), 10, 3 );
 
+			if ( $this->is_ml( 'wpml' ) ) {
+				// Allow translate numeric phone fields in WPML Translation Editor.
+				add_filter( 'wpml_tm_job_field_is_translatable', array( $this, 'wpml_phone_is_translatable' ), 10, 2 );
+				// Readable labels and field styles in WPML Translation Editor.
+				add_filter( 'wpml_tm_adjust_translation_fields', array( $this, 'wpml_adjust_translation_fields' ) );
+			}
 		} else {
 
 			// Load translations for TranslatePress after apply Post/Page settings.
@@ -280,6 +286,63 @@ class Joinchat_I18n {
 		}
 
 		return $settings;
+	}
+
+	/**
+	 * Make Joinchat phone fields translatable in WPML Translation Editor
+	 *
+	 * WPML skips numeric fields (e.g. "34600123456") from translation jobs.
+	 * Force post/term meta "_joinchat[telephone]" to be translatable.
+	 * Note: also requires "allow-translatable-job-fields" in wpml-config.xml for ATE.
+	 *
+	 * @since 6.4.4
+	 * @param  bool  $is_translatable Whether the field is translatable.
+	 * @param  array $field           Translation job field.
+	 * @return bool
+	 */
+	public function wpml_phone_is_translatable( $is_translatable, $field ) {
+
+		$type = is_array( $field ) && isset( $field['field_type'] ) ? (string) $field['field_type'] : '';
+
+		if ( 'field-_joinchat-0-telephone' === $type ) {
+			return true;
+		}
+
+		return $is_translatable;
+	}
+
+	/**
+	 * Set readable titles and styles for Joinchat fields in WPML Translation Editor
+	 *
+	 * Field styles: '0' single line, '1' textarea, '2' visual editor.
+	 *
+	 * @since 6.4.4
+	 * @param  array $fields Translation job fields.
+	 * @return array
+	 */
+	public function wpml_adjust_translation_fields( $fields ) {
+
+		if ( ! is_array( $fields ) ) {
+			return $fields;
+		}
+
+		$joinchat_fields = array(
+			'field-_joinchat-0-telephone'    => array( __( 'Telephone', 'creame-whatsapp-me' ), '0' ),
+			'field-_joinchat-0-message_text' => array( __( 'Call to Action', 'creame-whatsapp-me' ), '1' ),
+			'field-_joinchat-0-message_send' => array( __( 'Message', 'creame-whatsapp-me' ), '1' ),
+		);
+
+		foreach ( $fields as &$field ) {
+			$type = is_array( $field ) && isset( $field['field_type'] ) ? (string) $field['field_type'] : '';
+
+			if ( isset( $joinchat_fields[ $type ] ) ) {
+				$field['title']       = 'Joinchat: ' . $joinchat_fields[ $type ][0];
+				$field['field_style'] = $joinchat_fields[ $type ][1];
+			}
+		}
+		unset( $field );
+
+		return $fields;
 	}
 
 	/**

@@ -1,0 +1,24 @@
+<wpml-config>
+  <custom-fields>
+    <custom-field action="translate" label="Joinchat" group="Joinchat">_joinchat</custom-field>
+  </custom-fields>
+  <custom-fields-texts>
+    <key name="_joinchat">
+      <key name="telephone" label="Telephone" />
+      <key name="message_text" label="Call to Action" />
+      <key name="message_send" label="Message" />
+    </key>
+  </custom-fields-texts>
+  <allow-translatable-job-fields>
+    <allow-translatable-job-field type="/^field-_joinchat-0-telephone$/" value="/^\d+$/" />
+  </allow-translatable-job-fields>
+  <custom-term-fields>
+    <custom-term-field action="translate" label="Joinchat" group="Joinchat">_joinchat</custom-term-field>
+  </custom-term-fields>
+  <gutenberg-blocks>
+    <gutenberg-block type="joinchat/button" translate="1">
+      <key name="phone" label="Telephone" />
+      <key name="message" label="Message" />
+    </gutenberg-block>
+  </gutenberg-blocks>
+</wpml-config>
