@@ -5,7 +5,7 @@ Tags: WhatsApp, WhatsApp Button, Click to Chat, Floating Button, Chat
 Requires at least: 5.9
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 6.4.3
+Stable tag: 6.4.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -380,6 +380,13 @@ To ensure a non-persistent data mode, you can use **Joinchat Premium** privacy c
 
 
 == Changelog ==
+
+= 6.4.4 =
+* **NEW** WPML config to translate Joinchat post/term settings and Joinchat Button block (phone and message)
+* Readable labels and translatable phone field for Joinchat settings in WPML Translation Editor
+* Change frontend storage wrapper that never throws and falls back to memory when browser storage fails
+* Fix big multilingual plugin flag size in Joinchat settings notice (Polylang)
+* Updated IntlTelInput library to 29.5.11
 
 = 6.4.3 =
 * **NEW** Add "!" at the start of link and button URLs to force opening in a new tab
